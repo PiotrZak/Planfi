@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React  from 'react';
+import {Button} from "../common/buttons/Button"
+
 
 export const Plans = () => {
 
@@ -11,6 +13,7 @@ export const Plans = () => {
             <h1>Plans</h1>
 
             <br/><br/>
+            <Button className ="btn btn--primary btn--sm" name = {"Click Here"}></Button>
 
             <button className="btn btn--primary btn--sm" onClick={sayHello}>Default</button>
             <button className="btn btn--primary btn--sm" onClick={sayHello}>Pressed</button>
