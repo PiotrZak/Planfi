@@ -1,31 +1,33 @@
-import React  from 'react';
-import {Button} from "../common/buttons/Button"
+import React from 'react';
+import { Button } from "../common/buttons/Button"
 
 
 export const Plans = () => {
 
-    function sayHello() {
+
+    const sayHello = () => {
         console.log("Hello");
     }
+
 
     return (
         <div className="container">
             <h1>Plans</h1>
 
-            <br/><br/>
-            <Button className ="btn btn--primary btn--sm" name = {"Click Here"}></Button>
+            <br /><br />
+            <Button className="btn btn--primary btn--sm" name={"Click Here"} onClick={() =>sayHello()}></Button>
 
             <button className="btn btn--primary btn--sm" onClick={sayHello}>Default</button>
             <button className="btn btn--primary btn--sm" onClick={sayHello}>Pressed</button>
             <button className="btn btn--primary btn--sm" onClick={sayHello} disabled>Disabled</button>
 
-            <br/><br/>
+            <br /><br />
 
             <button className="btn btn--primary btn--sm btn--icon" onClick={sayHello}>Default</button>
             <button className="btn btn--primary btn--sm btn--icon" onClick={sayHello}>Pressed</button>
             <button className="btn btn--primary btn--sm btn--icon" onClick={sayHello} disabled>Disabled</button>
 
-            <br/><br/>
+            <br /><br />
 
             <button className="btn btn--primary btn--sm btn--icon-dropdown" onClick={sayHello}>Default</button>
             <button className="btn btn--primary btn--md btn--icon-dropdown" onClick={sayHello}>Pressed</button>
