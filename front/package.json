@@ -15,7 +15,8 @@
     "react-scripts": "3.4.1",
     "reactstrap": "^8.5.1",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "svg-fill": "git+https://github.com/c1rrus/svg-fill.git"
   },
   "scripts": {
     "start": "react-scripts start",

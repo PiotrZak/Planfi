@@ -10,6 +10,8 @@ import { Users } from "./pages/Users"
 import { createBrowserHistory } from 'history';
 import Alert from "../src/common/Alert"
 
+import './styles.scss';
+
 export const history = createBrowserHistory();
 
 function App() {
@@ -17,10 +19,23 @@ function App() {
     <div className="App">
       <Alert />
       <Router history={history}>
+
+
+    <div className ="navigation">
+    
+    
+    
+    </div>
+
         <Route path="/register" component={RegisterPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/plans" component={Plans} />
         <Route path="/users" component={Users} />
+
+
+
+
+
       </Router>
     </div>
   );
