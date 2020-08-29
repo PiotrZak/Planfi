@@ -18,7 +18,6 @@ const Button = ({type, buttonFunction, size, onClick, icon, value, disabled}) =>
                 {value}
             </button>
     }
-
     return jsx;
 }
 
