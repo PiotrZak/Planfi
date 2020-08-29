@@ -7,7 +7,6 @@ import { store } from "./redux/store"
 
 import './designsystem/main.scss';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

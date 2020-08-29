@@ -8,64 +8,17 @@
   outline: none;
   border: none;
 
-  &--sm,
-  &--md,
-  &--lg {
-    //button right square
-    &.btn--icon-dropdown::after {
-      content: "";
-      display: inline-block;
-
-      background: $color-primary-darkest;
-
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-  }
-
   //button sizes
   &--sm {
     height: 2.4rem;
-
-    //right padding
-    &.btn--icon-dropdown {
-      padding-right: 4rem;
-    }
-
-    //right square size
-    &.btn--icon-dropdown::after {
-      padding: 1.2rem;
-    }
-
   }
 
   &--md {
     height: 3.2rem;
-
-    //right padding
-    &.btn--icon-dropdown {
-      padding-right: 5rem;
-    }
-
-    //right square size
-    &.btn--icon-dropdown::after {
-      padding: 1.6rem;
-    }
   }
 
   &--lg {
     height: 4.8rem;
-
-    //right padding
-    &.btn--icon-dropdown {
-      padding-right: 6rem;
-    }
-
-    //right square size
-    &.btn--icon-dropdown::after {
-      padding: 2.4rem;
-    }
   }
 
   //disabled button style
@@ -75,7 +28,7 @@
 
     //overwrite hover effect for disabled button
     &:hover {
-      background: $color-gray-30;
+      background: $color-gray-30 !important;
     }
   }
 
@@ -89,17 +42,6 @@
     &:active {
       background: $color-neutral-dark;
     }
-
-    &:hover::after {
-      background: $color-primary-darkest;
-    }
-
-    //overwrite hover effect
-    &.btn--icon-dropdown{
-      &:hover{
-        background: $color-primary-default;
-      }
-    }
   }
 
   //secondary buttons colors & hover effect
@@ -111,11 +53,6 @@
     &:hover,
     &:active {
       background: $color-secondary-darkest !important;
-    }
-
-    //right square in btn--icon-dropdown
-    &:hover::after {
-      background: $color-secondary-darkest;
     }
   }
 
@@ -129,7 +66,6 @@
     &:active {
       background: $color-error-darkest !important;
     }
-
   }
 
   //Dangerous buttons colors & hover effect
@@ -142,77 +78,18 @@
     &:active {
       background: $color-disabled !important;
     }
-
-    //overwrite disabled style
-    &:disabled {
-      background: $color-gray-30;
-      color: $color-disabled;
-    }
-
-    &:hover::after {
-      background: $color-secondary;
-    }
-
-    //
-    &:hover::after {
-      background: $color-secondary-darkest;
-    }
   }
 
-  //button with left circle
-  &--icon {
-    //left circle
-    &::before {
-      content: "";
-      display: inline-block;
+  &--icon{
+    width: 1.5rem;
+    height: 1.5rem;
 
-      height: .8rem;
-      width: .8rem;
-      border: 1.4px solid $color-white;
-      border-radius: 50%;
-
-      position: relative;
-      top: 1px;
-      left: -5px;
-    }
-
-    //overwrite hover effects
-    &:hover {
-      background: $color-primary-darkest;
-    }
-
-    &:disabled::before {
-      border: 1.4px solid $color-disabled;
-    }
-  }
-
-  //button with left & right circle
-  &--icon-dropdown {
     position: relative;
+    bottom: -2.25px;
 
-    //left circle
-    &::before {
-      content: "";
-      display: inline-block;
-
-      height: .8rem;
-      width: .8rem;
-      border: 1.4px solid $color-white;
-      border-radius: 50%;
-
-      position: relative;
-      top: 1px;
-      left: -5px;
-    }
-
-    //right circle is in btn sizes style
-
-    //overwrite disabled button with left & right circle
-    &:disabled::before,
-    &:disabled::after {
-      border: 1.4px solid $color-disabled;
-    }
+    margin-right: .8rem;
   }
+
 }
 
 
