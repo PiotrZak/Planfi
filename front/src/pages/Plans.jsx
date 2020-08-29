@@ -1,14 +1,11 @@
 import React from 'react';
 import { Button } from "../common/buttons/Button"
 
-
 export const Plans = () => {
-
 
     const sayHello = () => {
         console.log("Hello");
     }
-
 
     return (
         <div className="container">
