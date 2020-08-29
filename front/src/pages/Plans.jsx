@@ -7,7 +7,7 @@ export const Plans = () => {
         <div className="container">
             <h1>Plans</h1>
 
-            <Button type="primary" size="lg" value="Default" icon="circle"/>
+            <Button type="primary" size="lg" icon="circle">Default</Button>
         </div>
     );
 }
