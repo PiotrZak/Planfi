@@ -1,0 +1,24 @@
+input {
+    margin:0 0 20px 0;
+    padding:10px 20px;
+    width:100%;
+    text-align:left;
+    font-size:1.4rem;
+    font-family:Montserrat;
+
+  }
+
+  label{
+      margin:20px 0 0 0;
+      font-size:1.6rem;
+      text-align:left;
+  }
+
+  .input-error {
+    border-color: $color-error-default !important;
+    color: $color-error-default;
+  }
+  .error-hint {
+    font-style: italic;
+    font-size: 12px;
+  }

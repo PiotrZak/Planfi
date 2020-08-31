@@ -1,7 +1,8 @@
 import React from 'react';
-import { Router, Route, NavLink, Switch, BrowserRouter } from 'react-router-dom';
-import { withRouter } from 'react-router';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+
 import { RegisterPage } from "./pages/Register"
+import { ActivatePage } from "./pages/Activate"
 import { LoginPage } from "./pages/Login"
 
 import { Plans } from "./pages/Plans"
@@ -13,7 +14,9 @@ import Alert from "../src/common/Alert"
 import Menu from "./Menu"
 
 import './styles.scss';
-import { Exercises } from './pages/Exercises';
+import { Exercises } from './pages/Exercises/Exercises';
+import { Exercise } from './pages/Exercises/Exercise';
+import { AddExercise } from './pages/Exercises/AddExercise';
 
 export const history = createBrowserHistory();
 
@@ -26,11 +29,14 @@ const App = () => {
           <Menu />
           <Switch>
           <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/activate" component={ActivatePage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/exercises" component={Exercises} />
+          <Route path="/add-exercise" component={AddExercise} />
           <Route path="/plans" component={Plans} />
           <Route path="/users" component={Users} />
         </Switch>
+        <Route path ="/exercise/:id" component ={Exercise}/>
       </BrowserRouter>
     </div>
   );
