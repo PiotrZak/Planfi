@@ -1,21 +1,8 @@
 
-import React, { useState, useEffect } from "react";
-import { NavLink, Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { userService } from "../services/userServices";
-import { alertActions } from "../redux/actions/alert.actions";
+import React from "react";
+import { Link } from 'react-router-dom';
+import Icon from "./Icon"
 
-//todo make generic
-const UserComponent = ({ user }) => {
-
-  return (
-    <div className="user-component">
-      <h1>{user.email}</h1>
-      <p>{user.role}</p>
-      <Arrow />
-    </div>
-  );
-};
 
 const ExerciseComponent = ({ exercise }) => {
 
@@ -30,17 +17,12 @@ const ExerciseComponent = ({ exercise }) => {
         pathname: `/exercise/${exercise.exerciseId}`,
         state: { id: exercise.exerciseId }
       }}>
-        <button>View</button></Link>
-    <Arrow />
+            <Icon name={"arrow-right"} fill={"white"} />
+        </Link>
     </div>
   );
 };
 
-const Arrow = () => {
-  return (
-    <div className="arrow">
-    </div>
-  );
-}
+
 
 export default ExerciseComponent;

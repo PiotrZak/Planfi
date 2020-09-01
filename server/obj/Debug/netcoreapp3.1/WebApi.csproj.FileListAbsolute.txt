@@ -126,3 +126,6 @@
 /Users/admin/Desktop/FitApp/server/obj/Debug/netcoreapp3.1/WebApi.genruntimeconfig.cache
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Dockerrun.aws.json
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/hostsettings.json
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/MailKit.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/MimeKit.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll

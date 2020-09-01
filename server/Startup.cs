@@ -34,7 +34,7 @@ namespace WebApi
             services.AddControllers();
 
              // Use a PostgreSQL database
-            var sqlConnectionString = Configuration.GetConnectionString("AmazonRDS");
+            var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
@@ -75,10 +75,16 @@ namespace WebApi
                 };
             });
 
+
+            // email configuration
+            services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            services.AddTransient<IEmailService, EmailService>();
+
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IExerciseService, ExerciseService>();
+            services.AddScoped<IEmailService, EmailService>();
 
         }
 

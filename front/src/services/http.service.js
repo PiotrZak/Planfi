@@ -4,6 +4,7 @@ export const http = {
   get,
   post,
   postFile,
+  del
 };
 
 async function handleResponseError(response) {
@@ -46,5 +47,8 @@ function postFile(url, body) {
   });
 }
 
-
-
+function del(url) {
+  return axios.delete(url).then((response) => {
+    return handleResponseError(response);
+  });
+}

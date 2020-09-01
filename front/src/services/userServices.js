@@ -6,10 +6,8 @@ export const userService = {
     allUsers,
   };
 
-const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
+// const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
 const localapiURL = "http://localhost:5005"
-
-//
 const USER_URL = `${localapiURL}/Users/`;
 
 

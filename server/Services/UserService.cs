@@ -1,14 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using WebApi.Entities;
 using WebApi.Helpers;
-using WebApi.Models;
 
 namespace WebApi.Services
 {
@@ -16,10 +10,9 @@ namespace WebApi.Services
     {
         User Authenticate(string email, string password);
         IEnumerable<User> GetAll();
-        User GetById(int id);
+        User GetById(string id);
         User Create(User user, string password);
-        //todo - implement deleting user
-        // void Delete(int id);
+        void Delete(string id);
     }
 
     public class UserService : IUserService
@@ -57,12 +50,23 @@ namespace WebApi.Services
             return _context.Users.WithoutPasswords();
         }
 
-        public User GetById(int id)
+        public User GetById(string id)
         {
 
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = _context.Users.FirstOrDefault(x => x.UserId == id);
             return user.WithoutPassword();
         }
+
+        public void Delete(string id)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                _context.SaveChanges();
+            }
+        }
+
 
         public User Create(User user, string password)
         {
@@ -84,6 +88,8 @@ namespace WebApi.Services
 
             return user;
         }
+
+
 
  private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
@@ -110,11 +116,9 @@ namespace WebApi.Services
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
+            using var hmac = new System.Security.Cryptography.HMACSHA512();
+            passwordSalt = hmac.Key;
+            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
     }
 }

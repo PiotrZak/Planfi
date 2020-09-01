@@ -46,11 +46,11 @@ namespace WebApi.Migrations
                 columns: table => new
                 {
                     ExerciseId = table.Column<string>(nullable: false),
-                    Materials = table.Column<string[]>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Times = table.Column<int>(nullable: false),
                     Series = table.Column<int>(nullable: false),
+                    File = table.Column<byte[]>(nullable: true),
                     PlanId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

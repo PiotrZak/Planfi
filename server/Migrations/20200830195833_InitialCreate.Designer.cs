@@ -10,7 +10,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200814152121_InitialCreate")]
+    [Migration("20200830195833_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +29,8 @@ namespace WebApi.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string[]>("Materials")
-                        .HasColumnType("text[]");
+                    b.Property<byte[]>("File")
+                        .HasColumnType("bytea");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

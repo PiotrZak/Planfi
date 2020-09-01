@@ -1,11 +1,9 @@
-import React, { useState, useCallbackm } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
-
 import Icon from "../src/common/Icon"
 import Spacer from "../src/common/Spacer"
 
-const useForceUpdate = () => useState()[1];
 
 const Menu = () => {
     return (

@@ -12,7 +12,6 @@ import {Icon} from "../common/Icon"
 export const LoginPage = (props) => {
 
     const [userData, setUserData] = useState({})
-    const [user, setUser] = useState()
     const [errors, setErrors] = useState({})
     const history = useHistory();
 
@@ -59,8 +58,6 @@ export const LoginPage = (props) => {
         userService
             .login(userData)
             .then((data) => {
-                setUser(data)
-                console.log(data)
                 dispatch(alertActions.success("Congratulations! You are log in."))
                 localStorage.setItem("token", data.token);
                 if(data.firstName === null){

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FormInput } from "../common/FormInput"
 import { useDispatch } from 'react-redux'
 import { userService } from '../services/userServices';
@@ -14,8 +14,6 @@ export const RegisterPage = (props) => {
 
     const dispatch = useDispatch()
     const requiredFields = ["email", "password"];
-
-
 
     const handleInput = (e) => {
 
@@ -35,8 +33,8 @@ export const RegisterPage = (props) => {
                 userData
             )
         );
-        {passwordValidation && setErrors({ ...errors, password: passwordValidation })}
-        {mailValidation && setErrors({ ...errors, email: mailValidation })}
+        passwordValidation && setErrors({ ...errors, password: passwordValidation }) 
+        mailValidation && setErrors({ ...errors, email: mailValidation })
     }
 
     const submitForm = (e) => {
@@ -63,7 +61,7 @@ export const RegisterPage = (props) => {
                 dispatch(alertActions.success("User succesfully added!"))
             })
             .catch((error) => {
-    
+
                 dispatch(alertActions.error(error.title))
             });
     }
@@ -73,7 +71,7 @@ export const RegisterPage = (props) => {
         <div className="container">
             <div className="container__content">
                 <FormInput id="email" name="email" onChange={handleInput} label="Email" hasError={errors.email} />
-                <FormInput id="password" name="password" type = "password" onChange={handleInput} label="Password" hasError={errors.password} />
+                <FormInput id="password" name="password" type="password" onChange={handleInput} label="Password" hasError={errors.password} />
                 <Button className="btn btn--primary btn--lg" onClick={submitForm} name={"Register"}></Button>
             </div>
         </div>

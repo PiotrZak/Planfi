@@ -1,17 +1,11 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Entities
+namespace WebApi.Models
 {
-    public class Exercise
+    public class ExerciseModel
     {
-        public Exercise()
-        {
-            ExerciseId = Guid.NewGuid().ToString();
-        }
-
         [Key]
-        public string ExerciseId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Times { get; set; }
