@@ -1,23 +1,23 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/AccountController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="appsettings.json">
     <Files>
       <File FileName="Startup.cs" Line="78" Column="1" />
-      <File FileName="Controllers/AccountController.cs" Line="34" Column="25" />
+      <File FileName="Controllers/AccountController.cs" Line="22" Column="1" />
       <File FileName="Entities/Exercises.cs" Line="9" Column="10" />
       <File FileName="Models/EmailConfiguration.cs" Line="8" Column="35" />
+      <File FileName="appsettings.json" Line="22" Column="33" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="AccountController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Entities" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="wwwroot" expanded="True" />
+              <Node name="appsettings.json" selected="True" />
             </Node>
           </Node>
         </State>
