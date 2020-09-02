@@ -24,6 +24,12 @@ const Menu = () => {
                 >
                     <div className="navigation__menu__icon"><Icon name="clipboard-notes" fill="white" /></div>
                 </NavLink>
+                <NavLink
+                    to="/users"
+                    activeClassName="active"
+                >
+                    <div className="navigation__menu__icon"><Icon name="user" fill="white" /></div>
+                </NavLink>
             </div>
         </div>
     );
