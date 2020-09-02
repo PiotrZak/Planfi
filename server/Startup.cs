@@ -11,8 +11,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
 using WebApi.Entities;
-using Microsoft.Extensions.Hosting.Internal;
 
 namespace WebApi
 {
@@ -33,21 +33,26 @@ namespace WebApi
             // services.AddCors();
             services.AddControllers();
 
-             // Use a PostgreSQL database
+
+            // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
 
+
+            // todo
+            services.AddIdentityCore<User>()   //<<<<<< You have IdentityUser
+                .AddDefaultTokenProviders();
+                //.AddEntityFrameworkStores<DataContext>();
+
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
-
             // Swagger
-
             services.AddSwaggerGen(c =>
             {
-               c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger App Demo", Version = "v1" });
+               c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fit App", Version = "v1" });
             });
 
             // configure strongly typed settings objects
@@ -75,6 +80,10 @@ namespace WebApi
                 };
             });
 
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+
 
             // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
@@ -94,11 +103,11 @@ namespace WebApi
 
                 dataContext.Database.Migrate();
                 app.UseRouting();
-
                 app.UseSwagger();
+
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger App Demo V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fit App");
                 });
 
                 // global cors policy

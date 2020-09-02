@@ -23,7 +23,7 @@ export const AddExercise = () => {
 
     const [exerciseData, setExerciseData] = useState(initialData)
     const [errors, setErrors] = useState({})
-    const requiredFields = ["name", "description"];
+    const requiredFields = ["name", "description", ""];
 
     const dispatch = useDispatch()
 
@@ -51,6 +51,7 @@ export const AddExercise = () => {
         formData.append("Times", exerciseData.times)
         formData.append("Series", exerciseData.series)
         formData.append("File", exerciseData.file)
+        console.log(exerciseData.file)
 
         exerciseService
             .addExercise(formData)
@@ -78,40 +79,52 @@ export const AddExercise = () => {
     }
 
     const handleSeries = (data) => {
-        setExerciseData({ ...exerciseData, series: data })
+        setExerciseData({ ...exerciseData, series: data + 1 })
     }
 
     const handleTime = (data) => {
-        setExerciseData({ ...exerciseData, times: data })
+        setExerciseData({ ...exerciseData, times: data + 1 })
     }
 
     const handleFileData = (data) => {
-    setExerciseData({ ...exerciseData, file: data[0] })
+        for (let i = 0; i < data.length; i++) {
+            setExerciseData({ ...exerciseData, file: data[i] })
+        }
     }
+
+    const AddExercise = "Add Exercise"
+    const Times = "Times"
+    const Series = "Series"
+    const Save = "Save"
 
     return (
         <div className="container">
             <div className="container__title">
+            <div className="container__title__left">
                 <Return />
-                <h2>Dodaj ćwiczenie</h2>
-                <Button className="btn btn--primary btn--sm" onClick={submit} name={"Zapisz"}></Button>
+                <h4>{AddExercise}</h4>
+            </div>
+                <Button className="btn btn--primary btn--sm" onClick={submit} name={Save}></Button>
             </div>
 
             <FormInput id="name" name="name" onChange={handleInput} label="Exercise Name" hasError={errors.name} />
-            <div className="exercise__form">
-                <h3>Powtórzenia</h3>
-                <Counter defaultQuantity={9} handleData={handleSeries} />
-            </div>
 
-            <div className="exercise__form">
-                <h3>Czas ćwiczenia</h3>
-                <Counter defaultQuantity={9} handleData={handleTime} />
+            <div className ="exercise-counter">
+                <div className="exercise__form">
+                    <h4>{Times}</h4>
+                    <Counter handleData={handleSeries} />
+                </div>
+
+                <div className="exercise__form">
+                    <h4>{Series}</h4>
+                    <Counter handleData={handleTime} />
+                </div>
             </div>
 
             <div className="exercise__dropzone">
                 <Dropzone handleFileData={handleFileData} />
             </div>
-            <FormInput id="description" name="description" onChange={handleInput} label="Description" hasError={errors.description} />
+            <FormInput type="textarea" id="description" name="description" onChange={handleInput} label="Description" hasError={errors.description} />
         </div>
     );
 }

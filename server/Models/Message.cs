@@ -11,9 +11,9 @@ namespace WebApi.Models
 			public string Address { get; set; }
 		}
 
-		public EmailMessage()
-		{
-			ToAddresses = new List<EmailAddress>();
+        public EmailMessage()
+        {
+            ToAddresses = new List<EmailAddress>();
             FromAddresses = new List<EmailAddress>();
         }
 

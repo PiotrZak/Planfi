@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Col, Row, Input } from "reactstrap";
 import Icon from "./Icon"
 
-const Counter = ({ handleData }) => {
+const Counter = ({ handleData}) => {
 
     const [value, setValue] = useState(0);
     const increment = () => {
@@ -18,9 +19,9 @@ const Counter = ({ handleData }) => {
 
     return (
         <div className="counter">
-            <div onClick={increment}><Icon name={"plus-circle"} /></div>
-            <h2>{value}</h2>
-            <div onClick={decrement}><Icon name={"minus-circle"} /></div>
+                <div onClick={increment}><Icon name={"plus-circle"} /></div>
+                <h2>{value}</h2>
+                <div onClick={decrement}><Icon name={"minus-circle"} /></div>
         </div>
     )
 };

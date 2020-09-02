@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
@@ -16,6 +17,6 @@ namespace WebApi.Entities
         public string Description { get; set; }
         public int Times { get; set; }
         public int Series { get; set; }
-        public byte[] File { get; set; }
+        public List<File> File { get; set; }
     }
 }

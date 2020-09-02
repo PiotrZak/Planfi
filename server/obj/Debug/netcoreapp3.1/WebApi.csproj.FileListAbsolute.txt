@@ -129,3 +129,8 @@
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/MailKit.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/MimeKit.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/BouncyCastle.Crypto.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll

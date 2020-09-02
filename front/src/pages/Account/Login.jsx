@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FormInput } from "../common/FormInput"
-import { Button } from "../common/buttons/Button"
+import { FormInput } from "../../common/FormInput"
+import { Button } from "../../common/buttons/Button"
 import { useDispatch } from 'react-redux'
-import { userService } from '../services/userServices';
-import { validationUtil } from "../../src/utils/validation.util"
-import { alertActions } from '../redux/actions/alert.actions'
+import { userService } from '../../services/userServices';
+import { validationUtil } from "../../../src/utils/validation.util"
+import { alertActions } from '../../redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
-import {Icon} from "../common/Icon"
+import {Icon} from "../../common/Icon"
 
 export const LoginPage = (props) => {
 
@@ -79,7 +79,7 @@ export const LoginPage = (props) => {
                 <FormInput id="password" name="password" type = "password" onChange={handleInput} label="Password" hasError={errors.password} />
                 <Button className="btn btn--primary btn--lg" onClick={submitForm} name={"Login"}></Button>
                 <NavLink
-                    to="/plans"
+                    to="/forgotpassword"
                     activeClassName="active"
                 >
                     <div className="navigation__menu__icon"><Icon name="forget" fill="white" />Forget password?</div>

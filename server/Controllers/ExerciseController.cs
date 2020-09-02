@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
 using System.IO;
+using File = WebApi.Entities.File;
 
 namespace WebApi.Controllers
 {
@@ -33,12 +34,25 @@ namespace WebApi.Controllers
         [HttpPost("create")]
         public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
         {
-            
-            //transform IFormFile to byte[]
-            using var memoryStream = new MemoryStream();
-            model.File.CopyTo(memoryStream);
 
-            var model2 = new ExerciseModel
+            //transform IFormFile to byte[]
+            //using var memoryStream = new MemoryStream();
+            //model.File.CopyTo(memoryStream);
+
+            foreach (var file in model.File)
+            {
+
+                    using var memoryStream = new MemoryStream();
+                    file.CopyTo(memoryStream);
+
+                    var fileModel = new File
+                    {
+                        FileData = memoryStream.ToArray()
+                    };
+
+            }
+
+            var transformModel = new ExerciseModel
             {
                 Name = model.Name,
                 Description = model.Description,
@@ -47,7 +61,7 @@ namespace WebApi.Controllers
                 File = memoryStream.ToArray()
             };
 
-            var Exercise = _mapper.Map<Exercise>(model2);
+            var Exercise = _mapper.Map<Exercise>(transformModel);
 
             try
             {

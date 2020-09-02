@@ -40,7 +40,6 @@ namespace WebApi.Controllers
 
             try
             {
-                // create plan
                 _planService.Create(plan);
                 return Ok(new
                 {
@@ -50,7 +49,6 @@ namespace WebApi.Controllers
             }
             catch (AppException ex)
             {
-                // return error message if there was an cexception
                 return BadRequest(new { message = ex.Message });
             }
         }

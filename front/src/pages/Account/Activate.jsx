@@ -1,7 +1,7 @@
 import React, { useState} from 'react';
-import { FormInput } from "../common/FormInput"
-import { validationUtil } from "../../src/utils/validation.util"
-import { Button } from "../common/buttons/Button"
+import { FormInput } from "../../common/FormInput"
+import { validationUtil } from "../../../src/utils/validation.util"
+import { Button } from "../../common/buttons/Button"
 
 
 export const ActivatePage = (props) => {

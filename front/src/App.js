@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import { RegisterPage } from "./pages/Register"
-import { ActivatePage } from "./pages/Activate"
-import { LoginPage } from "./pages/Login"
+import { RegisterPage } from "./pages/Account/Register"
+import { ActivatePage } from "./pages/Account/Activate"
+import { LoginPage } from "./pages/Account/Login"
+import { ForgotPassword } from "./pages/Account/ForgotPassword"
 
 import { Plans } from "./pages/Plans"
 import { Users } from "./pages/Users"
@@ -31,6 +32,8 @@ const App = () => {
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/activate" component={ActivatePage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/forgotpassword" component={ForgotPassword} />
+
           <Route path="/exercises" component={Exercises} />
           <Route path="/add-exercise" component={AddExercise} />
           <Route path="/plans" component={Plans} />

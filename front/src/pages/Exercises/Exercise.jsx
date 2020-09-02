@@ -67,7 +67,6 @@ export const Exercise = (props) => {
                 <button onClick = {() => deleteExercise()} className='bottom-sheet-item'>Delete</button>
             </ReactBottomsheet>
 
-
         </div>
     );
 }

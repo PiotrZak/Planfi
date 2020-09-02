@@ -64,10 +64,8 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("text");
@@ -96,7 +94,7 @@ namespace WebApi.Migrations
                     b.Property<string>("Token")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });

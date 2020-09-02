@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Entities;
 
@@ -8,7 +8,7 @@ namespace WebApi.Helpers
     {
 
         public DataContext(DbContextOptions<DataContext> options)
-            :base(options)
+            : base(options)
         {
         }
 
