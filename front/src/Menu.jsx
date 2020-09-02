@@ -14,7 +14,6 @@ const Menu = () => {
                     to="/exercises"
                     activeClassName="active"
                 >
-                    {/* <Icon iconName="dumbbell" fill="#666674" /> */}
                     <div className="navigation__menu__icon"><Icon name="dumbbell" fill="white" /></div>
                 </NavLink>
                 <Spacer h={20} />
@@ -24,6 +23,7 @@ const Menu = () => {
                 >
                     <div className="navigation__menu__icon"><Icon name="clipboard-notes" fill="white" /></div>
                 </NavLink>
+                <Spacer h={20} />
                 <NavLink
                     to="/users"
                     activeClassName="active"

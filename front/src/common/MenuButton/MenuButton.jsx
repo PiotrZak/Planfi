@@ -1,21 +1,23 @@
 import React from "react";
 import Checkbox from "./checkbox/Checkbox";
 import CircleButton from "../CircleButton/CircleButton";
+import { Link } from 'react-router-dom';
+import Icon from "../../../src/common/Icon"
 
 const Button = ({
-                    headline,
-                    subline,
-                    avatar,
-                    checkbox,
-                    secondaryMenu
-
-                }) => {
+    headline,
+    subline,
+    image,
+    checkbox,
+    secondaryMenu,
+    exercise
+}) => {
 
     return (
         <div className="rectangleButton">
             <div className="rectangleButton__wrapper">
-                {checkbox && <Checkbox/> }
-                {avatar && <div className="menuButton__avatar-empty"/> }
+                {checkbox && <Checkbox />}
+                {image && <div className="menuButton__image"><img src={`data:image/jpeg;base64,${image}`} /></div>}
 
                 <div className="rectangleButton-info">
                     <h3 className="rectangleButton-info__headline">{headline}</h3>
@@ -23,10 +25,17 @@ const Button = ({
                 </div>
 
             </div>
-
             <div className="rectangleButton__menu">
-                <CircleButton iconName="ellipsis-h"/>
-                {secondaryMenu && <CircleButton iconName="draggabledots"/>}
+                <CircleButton iconName="ellipsis-h" />
+
+                {secondaryMenu && <CircleButton iconName="draggabledots" />}
+
+                {exercise && <Link to={{
+                    pathname: `/exercise/${exercise.exerciseId}`,
+                    state: { id: exercise.exerciseId }
+                }}>
+                    <Icon name={"arrow-right"} fill={"white"} />
+                </Link>}
             </div>
         </div>
     )

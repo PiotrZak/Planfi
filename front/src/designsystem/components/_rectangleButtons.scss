@@ -8,6 +8,7 @@
   padding: 1.8rem 1.6rem;
   border-radius: 4px;
 
+
   &__wrapper{
     display: flex;
   }
@@ -31,14 +32,14 @@
     align-items: center;
   }
 
-  &__avatar{
+  &__image{
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
     margin-right: 8px;
 
     &-empty{
-      @extend .rectangleButton__avatar;
+      @extend .rectangleButton__image;
       background-color: $color-gray-60;
     }
   }

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { exerciseService } from "../../services/exerciseService";
 import Icon from "../../../src/common/Icon"
 import { NavLink } from 'react-router-dom';
-import ExerciseComponent from "../../common/UserComponent"
 import Return from "../../common/Return"
+import Button from "../../common/MenuButton/MenuButton"
 
 export const Exercises = () => {
     const [exercises, setExercises] = useState();
@@ -37,7 +37,7 @@ export const Exercises = () => {
             </div>
 
             <div className="users">
-                {exercises ? exercises.map((exercise) => <ExerciseComponent exercise={exercise} />)
+                {exercises ? exercises.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files[0]} exercise={exercise} />)
                     : noExercises}
             </div>
         </div>
