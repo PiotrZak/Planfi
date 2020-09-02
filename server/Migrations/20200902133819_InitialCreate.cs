@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace WebApi.Migrations
 {
@@ -24,9 +24,8 @@ namespace WebApi.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Avatar = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false),
+                    Avatar = table.Column<byte[]>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -38,7 +37,7 @@ namespace WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,11 +45,11 @@ namespace WebApi.Migrations
                 columns: table => new
                 {
                     ExerciseId = table.Column<string>(nullable: false),
-                    Materials = table.Column<string[]>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     Times = table.Column<int>(nullable: false),
                     Series = table.Column<int>(nullable: false),
+                    Files = table.Column<List<byte[]>>(nullable: true),
                     PlanId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>

@@ -8,7 +8,7 @@ export const Icon = ({name, fill, width, height}) => {
   return (
       <ReactSVG src={selectedIcon} fill={fill} 
         beforeInjection={(svg) => {
-          svg.setAttribute('fill', fill)
+          fill && svg.setAttribute('fill', fill)
           svg.setAttribute("width", width ? width : "38px");
           svg.setAttribute("height", height ? height : "38px;");
         }}

@@ -1,6 +1,6 @@
 
 let id = 0
-let defaultDelay = 50000
+let defaultDelay = 500000
 
 const alertConstants = {
     SUCCESS: 'ALERT_SUCCESS',
@@ -10,7 +10,6 @@ const alertConstants = {
     CLEAR: 'ALERT_CLEAR'
   }
   
-
 export const alertActions = {
     success,
     warn,

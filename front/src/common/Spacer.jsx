@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const Spacer = ({ w = 0, h = 0 }) => {
   return (

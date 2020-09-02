@@ -1,0 +1,57 @@
+
+.dropzone {
+    text-align: center;
+    width:100%;
+    border-radius: 16px;
+    border: 1px dashed rgba(181, 189, 207, 0.7);
+    padding: 50px;
+    transition: border .15s ease-in-out;
+    &.drop-active {
+      border-color: #009fda;
+      border-style: solid;
+      border-width: 2px;
+    }
+}
+
+.exercise-counter{
+    margin:2% 0 2% 0;
+}
+
+.exercise{
+    img{
+        width:100%;
+    }
+    &__dropzone{
+        margin:8% 0 8% 0;
+    }
+}
+
+.exercise__form{
+    display:inline-flex;
+    width:100%;
+    text-align:left;
+    align-items:center;
+    justify-content: space-between;
+
+    h2:first-child {
+        margin:0 25% 0 0;
+      }
+    }
+
+.file {
+    background: #C4C4C4;
+    border-radius: 2px;
+    height:42px;
+    width:42px;
+    display:inline-flex;
+}
+
+.exercise__form{
+    display:inline-flex;
+    width:100%;
+    text-align:left;
+    align-items:center;
+    justify-content: space-between;
+
+    }
+

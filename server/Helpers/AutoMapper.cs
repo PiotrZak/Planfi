@@ -11,6 +11,7 @@ namespace WebApi.Helpers
             CreateMap<RegisterModel, User>();
             CreateMap<CreatePlan, Plan>();
             CreateMap<CreateExercise, Exercise>();
+            CreateMap<ExerciseModel, Exercise>();
         }
     }
 }

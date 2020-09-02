@@ -6,24 +6,19 @@ export const userService = {
     allUsers,
   };
 
-const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
+// const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
 const localapiURL = "http://localhost:5005"
-
-//
-const USER_URL = `${localapiURL}/Users/register`;
-const USER_URL3 = `${localapiURL}/Users`;
-
-const USER_URL2 = `${localapiURL}/Users/authenticate`;
+const USER_URL = `${localapiURL}/Users/`;
 
 
   function register(body) {
-    return http.post(USER_URL, body);
+    return http.post(`${USER_URL}register`, body);
   }
 
   function login(body) {
-    return http.post(USER_URL2, body);
+    return http.post(`${USER_URL}authenticate`, body);
   }
 
   function allUsers(body) {
-    return http.get(USER_URL3, body);
+    return http.get(USER_URL, body);
   }

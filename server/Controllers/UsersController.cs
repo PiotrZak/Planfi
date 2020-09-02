@@ -52,7 +52,7 @@ namespace WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
             // return basic user info and authentication token
             return Ok(new
             {
-                user.Id,
+                user.UserId,
                 user.Email,
                 user.FirstName,
                 user.LastName,
@@ -82,7 +82,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(string id)
         {
             // only allow admins to access other user records
             //var currentUserId = int.TryParse(User.Identity.Name, out number);
@@ -116,5 +116,14 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [AllowAnonymous]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _userService.Delete(id);
+            return Ok();
+        }
+
     }
 }

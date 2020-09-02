@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Entities;
 
@@ -8,14 +8,14 @@ namespace WebApi.Helpers
     {
 
         public DataContext(DbContextOptions<DataContext> options)
-            :base(options)
+            : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
-            optionsBuilder.UseNpgsql("Host=fitdb.clbfkbqft4wd.eu-west-1.rds.amazonaws.com;Port=5432;Username=postgres;Password=postgres;Database=fitDB;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
+            //optionsBuilder.UseNpgsql("Host=fitdb.clbfkbqft4wd.eu-west-1.rds.amazonaws.com;Port=5432;Username=postgres;Password=postgres;Database=fitDB;");
 
         }
 

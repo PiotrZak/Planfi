@@ -4,12 +4,11 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
-
-
 using AutoMapper;
-
 using WebApi.Models;
-using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Generic;
+using System;
 
 namespace WebApi.Controllers
 {
@@ -21,33 +20,52 @@ namespace WebApi.Controllers
         private IExerciseService _ExerciseService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
-       
+
         public ExercisesController(
             IExerciseService ExerciseService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
-            _ExerciseService = ExerciseService ;
+            _ExerciseService = ExerciseService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
         [HttpPost("create")]
-        public ActionResult<Exercise> CreateExercise([FromBody] CreateExercise model)
+        public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
         {
-            // map model to entity
-            var Exercise = _mapper.Map<Exercise>(model);
+
+            //transform IFormFile List to byte[]
+            var FilesList = new List<byte[]>();
+            foreach (var formFile in model.Files)
+            {
+                if (formFile.Length > 0)
+                {
+                    using var memoryStream = new MemoryStream();
+                    formFile.CopyTo(memoryStream);
+                    FilesList.Add(memoryStream.ToArray());
+                }
+            }
+
+            var transformModel = new ExerciseModel
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Times = model.Times,
+                Series = model.Series,
+                Files = FilesList
+            };
+
+            var Exercise = _mapper.Map<Exercise>(transformModel);
 
             try
             {
-                // create Exercise
                 _ExerciseService.Create(Exercise);
                 return Ok();
             }
             catch (AppException ex)
             {
-                // return error message if there was an cexception
                 return BadRequest(new { message = ex.Message });
             }
         }
@@ -70,6 +88,14 @@ namespace WebApi.Controllers
         {
             var exercises = _ExerciseService.GetAll();
             return Ok(exercises);
+        }
+
+        [AllowAnonymous]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _ExerciseService.Delete(id);
+            return Ok();
         }
     }
 }
