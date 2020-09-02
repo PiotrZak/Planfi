@@ -12,6 +12,7 @@ export const Exercises = () => {
         exerciseService
             .getAllExercises()
             .then((data) => {
+                console.log(data)
                 setExercises(data);
             })
             .catch(() => {

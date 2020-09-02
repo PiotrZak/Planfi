@@ -14,6 +14,6 @@ namespace WebApi.Models
         public int Times { get; set; }
         public int Series { get; set; }
         [Required]
-        public List<IFormFile> File { get; set; }
+        public List<IFormFile> Files { get; set; }
     }
 }

@@ -5,6 +5,8 @@ import Return from "../../common/Return"
 import { useDispatch } from 'react-redux';
 import { alertActions } from '../../redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
+import Carousel from 'react-multi-carousel';
+import "react-multi-carousel/lib/styles.css";
 var ReactBottomsheet = require('react-bottomsheet');
 
 export const Exercise = (props) => {
@@ -38,19 +40,41 @@ export const Exercise = (props) => {
             });
     }
 
-    // const editExercise = () => {
-    //     console.log('edit')
-    // }
+    const editExercise = () => {
+        console.log('edit')
+    }
+
+    const Breakpoints = {
+        desktop: {
+          breakpoint: { max: 5000, min: 768 },
+          items: 1,
+        },
+        laptop: {
+          breakpoint: { max: 1024, min: 0 },
+          items: 1,
+        },
+        mobile: {
+          breakpoint: { max: 768, min: 0 },
+          items: 1,
+        },
+      };
+
 
     return (
         <div className="container">
             <div className="container__title">
                 <Return />
-                <div onClick = {() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} /></div>
+                <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} /></div>
             </div>
             {exercise &&
                 <div className="exercise">
-                    <img src={`data:image/jpeg;base64,${exercise.file}`} />
+                    <Carousel
+                        swipeable={true}
+                        responsive={Breakpoints}
+                    >
+                        {exercise.files.map((file, i) =>
+                            <Slide key={i} img={file} />)}
+                    </Carousel>
                     <h1>{exercise.name}</h1>
                     <Icon name={"ellipsisv"} fill={"#5E4AE3"} />
                     Series: <p>{exercise.series}</p>
@@ -59,17 +83,23 @@ export const Exercise = (props) => {
 
                 </div>
             }
-
             <ReactBottomsheet
                 visible={bottomSheet}
                 onClose={() => setBottomSheet(false)}>
                 <button className='bottom-sheet-item'>Edit</button>
-                <button onClick = {() => deleteExercise()} className='bottom-sheet-item'>Delete</button>
+                <button onClick={() => deleteExercise()} className='bottom-sheet-item'>Delete</button>
             </ReactBottomsheet>
-
         </div>
     );
 }
+
+const Slide = ({ key, img }) => {
+    return (
+        <div>
+            <img key={key} src={`data:image/jpeg;base64,${img}`} />
+        </div>
+    );
+};
 
 
 export default Exercise;

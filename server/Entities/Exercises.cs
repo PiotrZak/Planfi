@@ -17,6 +17,6 @@ namespace WebApi.Entities
         public string Description { get; set; }
         public int Times { get; set; }
         public int Series { get; set; }
-        public List<File> File { get; set; }
+        public List<byte[]> Files { get; set; }
     }
 }

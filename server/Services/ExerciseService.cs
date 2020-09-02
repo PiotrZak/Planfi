@@ -39,6 +39,9 @@ namespace WebApi.Services
         {
 
             var exercise = _context.Exercises.FirstOrDefault(x => x.ExerciseId == id);
+
+
+
             return exercise;
         }
 

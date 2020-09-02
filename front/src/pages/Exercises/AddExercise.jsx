@@ -23,7 +23,7 @@ export const AddExercise = () => {
 
     const [exerciseData, setExerciseData] = useState(initialData)
     const [errors, setErrors] = useState({})
-    const requiredFields = ["name", "description", ""];
+    const requiredFields = ["name", "description"];
 
     const dispatch = useDispatch()
 
@@ -45,13 +45,19 @@ export const AddExercise = () => {
     }
 
     const addExercise = () => {
+
         const formData = new FormData();
         formData.append("Name", exerciseData.name)
         formData.append("Description", exerciseData.description)
         formData.append("Times", exerciseData.times)
         formData.append("Series", exerciseData.series)
-        formData.append("File", exerciseData.file)
-        console.log(exerciseData.file)
+        
+            for (let i = 0; i < exerciseData.files.length; i++) {
+                formData.append(`Files`, exerciseData.files[i])
+            }
+
+        console.log(exerciseData.files)
+
 
         exerciseService
             .addExercise(formData)
@@ -87,9 +93,7 @@ export const AddExercise = () => {
     }
 
     const handleFileData = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            setExerciseData({ ...exerciseData, file: data[i] })
-        }
+        setExerciseData({ ...exerciseData, files: data})
     }
 
     const AddExercise = "Add Exercise"

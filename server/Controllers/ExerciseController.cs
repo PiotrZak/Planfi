@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
 using System.IO;
-using File = WebApi.Entities.File;
+using System.Collections.Generic;
+using System;
 
 namespace WebApi.Controllers
 {
@@ -35,21 +36,16 @@ namespace WebApi.Controllers
         public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
         {
 
-            //transform IFormFile to byte[]
-            //using var memoryStream = new MemoryStream();
-            //model.File.CopyTo(memoryStream);
-
-            foreach (var file in model.File)
+            //transform IFormFile List to byte[]
+            var FilesList = new List<byte[]>();
+            foreach (var formFile in model.Files)
             {
-
+                if (formFile.Length > 0)
+                {
                     using var memoryStream = new MemoryStream();
-                    file.CopyTo(memoryStream);
-
-                    var fileModel = new File
-                    {
-                        FileData = memoryStream.ToArray()
-                    };
-
+                    formFile.CopyTo(memoryStream);
+                    FilesList.Add(memoryStream.ToArray());
+                }
             }
 
             var transformModel = new ExerciseModel
@@ -58,20 +54,18 @@ namespace WebApi.Controllers
                 Description = model.Description,
                 Times = model.Times,
                 Series = model.Series,
-                File = memoryStream.ToArray()
+                Files = FilesList
             };
 
             var Exercise = _mapper.Map<Exercise>(transformModel);
 
             try
             {
-                // create Exercise
                 _ExerciseService.Create(Exercise);
                 return Ok();
             }
             catch (AppException ex)
             {
-                // return error message if there was an cexception
                 return BadRequest(new { message = ex.Message });
             }
         }

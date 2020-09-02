@@ -8,7 +8,7 @@ const ExerciseComponent = ({ exercise }) => {
 
   return (
     <div className="user-component">
-      <img src={`data:image/jpeg;base64,${exercise.file}`} />
+      <img src={`data:image/jpeg;base64,${exercise.files[0]}`} />
       <div>
         <h3>{exercise.name}</h3>
         <p>{exercise.series} / {exercise.times}</p>

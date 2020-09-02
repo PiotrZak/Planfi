@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi.Migrations
@@ -24,7 +25,7 @@ namespace WebApi.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    Avatar = table.Column<string>(nullable: true),
+                    Avatar = table.Column<byte[]>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
@@ -48,7 +49,7 @@ namespace WebApi.Migrations
                     Description = table.Column<string>(nullable: true),
                     Times = table.Column<int>(nullable: false),
                     Series = table.Column<int>(nullable: false),
-                    File = table.Column<byte[]>(nullable: true),
+                    Files = table.Column<List<byte[]>>(nullable: true),
                     PlanId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
