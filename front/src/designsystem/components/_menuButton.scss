@@ -1,0 +1,13 @@
+.menuButton{
+  &__avatar{
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 3px;
+    margin-right: 8px;
+
+    &-empty{
+      @extend .menuButton__avatar;
+      background-color: $color-gray-60;
+    }
+  }
+}

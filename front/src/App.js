@@ -23,7 +23,7 @@ const App = () => {
     <div className="App">
       <Alert />
       <BrowserRouter history={history}>
-          <Menu />
+          {/*<Menu /> */}
           <Switch>
           <Route exact path="/register" component={RegisterPage} />
           <Route path="/login" component={LoginPage} />
