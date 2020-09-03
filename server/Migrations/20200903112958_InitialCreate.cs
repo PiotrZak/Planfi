@@ -9,6 +9,18 @@ namespace WebApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Plans",
                 columns: table => new
                 {
@@ -50,11 +62,18 @@ namespace WebApi.Migrations
                     Times = table.Column<int>(nullable: false),
                     Series = table.Column<int>(nullable: false),
                     Files = table.Column<List<byte[]>>(nullable: true),
+                    CategoryId = table.Column<string>(nullable: true),
                     PlanId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exercises", x => x.ExerciseId);
+                    table.ForeignKey(
+                        name: "FK_Exercises_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Exercises_Plans_PlanId",
                         column: x => x.PlanId,
@@ -62,6 +81,11 @@ namespace WebApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exercises_CategoryId",
+                table: "Exercises",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exercises_PlanId",
@@ -76,6 +100,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Plans");

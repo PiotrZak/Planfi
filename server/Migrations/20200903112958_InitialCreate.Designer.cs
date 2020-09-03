@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200902133819_InitialCreate")]
+    [Migration("20200903112958_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,9 +22,25 @@ namespace WebApi.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("WebApi.Entities.Category", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>
                 {
                     b.Property<string>("ExerciseId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CategoryId")
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -46,6 +62,8 @@ namespace WebApi.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("ExerciseId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("PlanId");
 
@@ -104,6 +122,10 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>
                 {
+                    b.HasOne("WebApi.Entities.Category", null)
+                        .WithMany("Exercises")
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("WebApi.Entities.Plan", null)
                         .WithMany("Exercises")
                         .HasForeignKey("PlanId");

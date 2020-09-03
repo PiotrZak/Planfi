@@ -8,7 +8,7 @@ import { alertActions } from '../../redux/actions/alert.actions'
 import Dropzone from "../../common/Dropzone"
 import Counter from "../../common/Counter"
 import { validationUtil } from "../../../src/utils/validation.util"
-
+import { useHistory } from "react-router-dom";
 
 export const AddExercise = () => {
 
@@ -23,6 +23,7 @@ export const AddExercise = () => {
 
     const [exerciseData, setExerciseData] = useState(initialData)
     const [errors, setErrors] = useState({})
+    const history = useHistory();
     const requiredFields = ["name", "description"];
 
     const dispatch = useDispatch()
@@ -51,18 +52,15 @@ export const AddExercise = () => {
         formData.append("Description", exerciseData.description)
         formData.append("Times", exerciseData.times)
         formData.append("Series", exerciseData.series)
-        
-            for (let i = 0; i < exerciseData.files.length; i++) {
-                formData.append(`Files`, exerciseData.files[i])
-            }
-
-        console.log(exerciseData.files)
-
+        for (let i = 0; i < exerciseData.files.length; i++) {
+            formData.append(`Files`, exerciseData.files[i])
+        }
 
         exerciseService
             .addExercise(formData)
             .then(() => {
                 dispatch(alertActions.success("Exercise succesfully added!"))
+                history.push('/exercises');
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))
@@ -93,7 +91,7 @@ export const AddExercise = () => {
     }
 
     const handleFileData = (data) => {
-        setExerciseData({ ...exerciseData, files: data})
+        setExerciseData({ ...exerciseData, files: data })
     }
 
     const AddExercise = "Add Exercise"
@@ -104,16 +102,16 @@ export const AddExercise = () => {
     return (
         <div className="container">
             <div className="container__title">
-            <div className="container__title__left">
-                <Return />
-                <h4>{AddExercise}</h4>
-            </div>
+                <div className="container__title__left">
+                    <Return />
+                    <h4>{AddExercise}</h4>
+                </div>
                 <Button className="btn btn--primary btn--sm" onClick={submit} name={Save}></Button>
             </div>
 
             <FormInput id="name" name="name" onChange={handleInput} label="Exercise Name" hasError={errors.name} />
 
-            <div className ="exercise-counter">
+            <div className="exercise-counter">
                 <div className="exercise__form">
                     <h4>{Times}</h4>
                     <Counter handleData={handleSeries} />

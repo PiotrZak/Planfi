@@ -11,7 +11,7 @@ const Menu = () => {
             <div className="navigation__menu">
                 <NavLink
                     exact
-                    to="/exercises"
+                    to="/categories"
                     activeClassName="active"
                 >
                     <div className="navigation__menu__icon"><Icon name="dumbbell" fill="white" /></div>

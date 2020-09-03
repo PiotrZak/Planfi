@@ -26,7 +26,7 @@ export const Exercises = () => {
         <div className="container">
             <div className="container__title">
                 <Return />
-                <h2>Ćwiczenia</h2>
+                <h2>Category Name</h2>
                 <NavLink
                     exact
                     to="/add-exercise"

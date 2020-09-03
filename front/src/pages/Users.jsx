@@ -76,7 +76,7 @@ export const Users = (props) => {
                 </NavLink>
             </div>
             <div className="users">
-                {data && data.map((user) => <EmployeeButton user={user} headline="Tadeusz Olszewski" subline="Trener" avatar/>)}
+                {users && users.map((user) => <EmployeeButton user={user} headline="Tadeusz Olszewski" subline="Trener" avatar/>)}
             </div>
         </div>
     );

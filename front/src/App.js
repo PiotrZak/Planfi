@@ -14,6 +14,12 @@ import Alert from "../src/common/Alert"
 
 import Menu from "./Menu"
 
+
+import { Categories } from './pages/Exercises/Category/Categories';
+import { Category } from './pages/Exercises/Exercise';
+import { AddCategory } from './pages/Exercises/AddExercise';
+
+
 import './styles.scss';
 import { Exercises } from './pages/Exercises/Exercises';
 import { Exercise } from './pages/Exercises/Exercise';
@@ -34,8 +40,13 @@ const App = () => {
           <Route path="/login" component={LoginPage} />
           <Route path="/forgotpassword" component={ForgotPassword} />
 
+          <Route path="/categories" component={Categories} />
+
           <Route path="/exercises" component={Exercises} />
           <Route path="/add-exercise" component={AddExercise} />
+
+
+
           <Route path="/plans" component={Plans} />
           <Route path="/users" component={Users} />
         </Switch>
