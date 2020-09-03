@@ -21,8 +21,6 @@ export const AddExercise = (props) => {
         file: null,
     }
 
-    console.log(props)
-
     const [exerciseData, setExerciseData] = useState(initialData)
     const [errors, setErrors] = useState({})
     const history = useHistory();
@@ -57,12 +55,13 @@ export const AddExercise = (props) => {
         for (let i = 0; i < exerciseData.files.length; i++) {
             formData.append(`Files`, exerciseData.files[i])
         }
+        formData.append("CategoryId", props.location.state.id)
 
         exerciseService
             .addExercise(formData)
             .then(() => {
                 dispatch(alertActions.success("Exercise succesfully added!"))
-                history.push('/exercises');
+                history.push(`/category/${props.location.state.id}`);
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))

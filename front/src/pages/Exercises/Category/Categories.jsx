@@ -15,7 +15,6 @@ export const Categories = () => {
         categoryService
             .getAllCategories()
             .then((data) => {
-                console.log(data)
                 setCategories(data);
             })
             .catch(() => {

@@ -42,10 +42,12 @@ const App = () => {
 
           <Route path="/categories" component={Categories} />
 
-          <Route path="/exercises" component={Exercises} />
+          {/* all Exercises */}
+          {/* <Route path="/exercises" component={Exercises} /> */}
+
+
+
           <Route path="/add-exercise" component={AddExercise} />
-
-
 
           <Route path="/plans" component={Plans} />
           <Route path="/users" component={Users} />

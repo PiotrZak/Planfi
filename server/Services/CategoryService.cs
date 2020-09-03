@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
@@ -11,6 +12,7 @@ namespace WebApi.Services
         Category Create(Category Category);
         IEnumerable<Category> GetAll();
         void Delete(string id);
+        void AssignExercise(string id, Exercise Exercise);
     }
 
     public class CategoryService : ICategoryService
@@ -51,6 +53,19 @@ namespace WebApi.Services
                 _context.SaveChanges();
             }
         }
+
+
+        public void AssignExercise(string id, Exercise Exercise)
+        {
+            var Category = _context.Categories.Find(id);
+
+            Category.Exercises.Add(Exercise);
+
+
+            _context.Categories.Update(Category);
+            _context.SaveChanges();
+        }
+
     }
 }
 

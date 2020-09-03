@@ -17,14 +17,17 @@ namespace WebApi.Controllers
     public class ExercisesController : ControllerBase
     {
         private IExerciseService _ExerciseService;
+        private ICategoryService _CategoryService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
 
         public ExercisesController(
+            ICategoryService CategoryService,
             IExerciseService ExerciseService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
+            _CategoryService = CategoryService;
             _ExerciseService = ExerciseService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
@@ -53,14 +56,18 @@ namespace WebApi.Controllers
                 Description = model.Description,
                 Times = model.Times,
                 Series = model.Series,
-                Files = FilesList
+                Files = FilesList,
+                CategoryId = model.CategoryId
+
             };
+
 
             var Exercise = _mapper.Map<Exercise>(transformModel);
 
             try
             {
-                _ExerciseService.Create(Exercise);
+                _CategoryService.AssignExercise(model.CategoryId, Exercise);
+                //_ExerciseService.Create(Exercise);
                 return Ok();
             }
             catch (AppException ex)
@@ -68,6 +75,27 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var exercises = _ExerciseService.GetAll();
+            return Ok(exercises);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("category/{categoryId}")]
+        public IActionResult GetExercisesByCategory(string categoryId)
+        {
+            var exercises = _ExerciseService.GetAllOfCategory(categoryId);
+
+            if (exercises == null)
+                return NotFound();
+
+            return Ok(exercises);
+        }
+
 
         [AllowAnonymous]
         [HttpGet("{id}")]
@@ -79,14 +107,6 @@ namespace WebApi.Controllers
                 return NotFound();
 
             return Ok(exercise);
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var exercises = _ExerciseService.GetAll();
-            return Ok(exercises);
         }
 
         [AllowAnonymous]

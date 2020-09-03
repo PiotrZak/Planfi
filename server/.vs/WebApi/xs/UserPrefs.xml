@@ -1,17 +1,13 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ExerciseController.cs">
-    <Files>
-      <File FileName="Controllers/ExerciseController.cs" Line="52" Column="31" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="ViewModels" expanded="True">
-                  <Node name="CreateExercise.cs" selected="True" />
-                </Node>
+                <Node name="ViewModels" expanded="True" />
+                <Node name="ExerciseController.cs" selected="True" />
               </Node>
               <Node name="Entities" expanded="True" />
               <Node name="Helpers" expanded="True" />

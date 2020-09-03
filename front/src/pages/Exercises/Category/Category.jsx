@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from "../../../services/categoryService";
+import { exerciseService } from "../../../services/exerciseService";
 import { Link, useHistory } from 'react-router-dom';
 import { alertActions } from '../../../redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
 import Icon from "../../../common/Icon"
 import Return from "../../../common/Return"
 import "react-multi-carousel/lib/styles.css";
+import Button from "../../../common/MenuButton/MenuButton"
+
 var ReactBottomsheet = require('react-bottomsheet');
 
 export const Category = (props) => {
 
     const [category, setCategory] = useState();
+    const [exercises, setExercises] = useState()
+
+
     const [bottomSheet, setBottomSheet] = useState(false)
 
     const history = useHistory();
@@ -20,15 +26,31 @@ export const Category = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        getCategory(id.id)
+        getCategoryExercise(id.id)
+    }, [id.id]);
+
+
+    const getCategory = (id) => {
         categoryService
-            .getCategoryById(id.id)
+            .getCategoryById(id)
             .then((data) => {
                 setCategory(data);
-                console.log(data.categoryId)
             })
             .catch((error) => {
             });
-    }, [id.id]);
+    }
+
+    const getCategoryExercise = (id) => {
+        exerciseService
+            .getExercisesByCategory(id)
+            .then((data) => {
+                setExercises(data);
+                console.log(data)
+            })
+            .catch((error) => {
+            });
+    }
 
     const deleteCategory = () => {
         categoryService
@@ -63,8 +85,10 @@ export const Category = (props) => {
                 </Link>
                 }
             </div>
-            {category &&  category.exercises === null ? noExerciseInCategory
-                : <p>yes</p>}
+
+              {exercises ? exercises.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files[0]} exercise={exercise} />)
+                    : noExerciseInCategory}
+
             <ReactBottomsheet
                 visible={bottomSheet}
                 onClose={() => setBottomSheet(false)}>

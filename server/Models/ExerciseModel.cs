@@ -12,5 +12,6 @@ namespace WebApi.Models
         public int Times { get; set; }
         public int Series { get; set; }
         public List<byte[]> Files { get; set; }
+        public string CategoryId { get; internal set; }
     }
 }

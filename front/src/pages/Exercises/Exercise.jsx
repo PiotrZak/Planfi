@@ -34,7 +34,7 @@ export const Exercise = (props) => {
             .deleteExerciseById(id.id)
             .then(() => {
                 dispatch(alertActions.success("Exercise succesfully deleted!"))
-                history.push('/exercises');
+                history.push('/categories');
             })
             .catch(() => {
             });
