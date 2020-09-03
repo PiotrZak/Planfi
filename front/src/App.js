@@ -16,7 +16,7 @@ import Menu from "./Menu"
 
 
 import { Categories } from './pages/Exercises/Category/Categories';
-import { Category } from './pages/Exercises/Exercise';
+import { Category } from './pages/Exercises/Category/Category';
 import { AddCategory } from './pages/Exercises/AddExercise';
 
 
@@ -50,7 +50,9 @@ const App = () => {
           <Route path="/plans" component={Plans} />
           <Route path="/users" component={Users} />
         </Switch>
+        
         <Route path ="/exercise/:id" component ={Exercise}/>
+        <Route path ="/category/:id" component ={Category}/>
       </BrowserRouter>
     </div>
   );

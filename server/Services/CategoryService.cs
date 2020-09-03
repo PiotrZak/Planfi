@@ -10,6 +10,7 @@ namespace WebApi.Services
         Category GetById(string id);
         Category Create(Category Category);
         IEnumerable<Category> GetAll();
+        void Delete(string id);
     }
 
     public class CategoryService : ICategoryService
@@ -33,13 +34,22 @@ namespace WebApi.Services
         public Category GetById(string id)
         {
 
-            var Category = _context.Categories.FirstOrDefault(x => x.Id == id);
+            var Category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
             return Category;
         }
         public IEnumerable<Category> GetAll()
         {
 
             return _context.Categories;
+        }
+        public void Delete(string id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category != null)
+            {
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+            }
         }
     }
 }

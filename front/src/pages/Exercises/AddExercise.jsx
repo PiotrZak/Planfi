@@ -10,7 +10,7 @@ import Counter from "../../common/Counter"
 import { validationUtil } from "../../../src/utils/validation.util"
 import { useHistory } from "react-router-dom";
 
-export const AddExercise = () => {
+export const AddExercise = (props) => {
 
     const initialData =
     {
@@ -20,6 +20,8 @@ export const AddExercise = () => {
         series: null,
         file: null,
     }
+
+    console.log(props)
 
     const [exerciseData, setExerciseData] = useState(initialData)
     const [errors, setErrors] = useState({})

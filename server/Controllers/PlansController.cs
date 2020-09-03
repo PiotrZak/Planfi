@@ -73,5 +73,14 @@ namespace WebApi.Controllers
             var plans = _planService.GetAll();
             return Ok(plans);
         }
+
+        [AllowAnonymous]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _planService.Delete(id);
+            return Ok();
+        }
+
     }
 }

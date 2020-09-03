@@ -43,7 +43,7 @@ namespace WebApi.Controllers
                 _CategoryService.Create(Category);
                 return Ok(new
                 {
-                    Category.Id,
+                    Category.CategoryId,
                     Category.Title,
                 });
             }
@@ -72,6 +72,14 @@ namespace WebApi.Controllers
         {
             var Category = _CategoryService.GetAll();
             return Ok(Category);
+        }
+
+        [AllowAnonymous]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            _CategoryService.Delete(id);
+            return Ok();
         }
     }
 }

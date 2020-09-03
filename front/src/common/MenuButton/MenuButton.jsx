@@ -10,7 +10,8 @@ const Button = ({
     image,
     checkbox,
     secondaryMenu,
-    exercise
+    exercise,
+    category,
 }) => {
 
     return (
@@ -36,6 +37,14 @@ const Button = ({
                 }}>
                     <Icon name={"arrow-right"} fill={"white"} />
                 </Link>}
+
+                {category && <Link to={{
+                    pathname: `/category/${category.categoryId}`,
+                    state: { id: category.categoryId }
+                }}>
+                    <Icon name={"arrow-right"} fill={"white"} />
+                </Link>}
+
             </div>
         </div>
     )
