@@ -34,7 +34,7 @@ namespace WebApi.Services
         public Plan GetById(string id)
         {
 
-            var plan = _context.Plans.FirstOrDefault(x => x.Id == id);
+            var plan = _context.Plans.FirstOrDefault(x => x.PlanId == id);
             return plan;
         }
         public IEnumerable<Plan> GetAll()

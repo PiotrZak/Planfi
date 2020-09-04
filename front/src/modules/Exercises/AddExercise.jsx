@@ -95,7 +95,7 @@ export const AddExercise = (props) => {
         setExerciseData({ ...exerciseData, files: data })
     }
 
-    const AddExercise = "Add Exercise"
+    const AddExercise = "Add exercise to"
     const Times = "Times"
     const Series = "Series"
     const Save = "Save"

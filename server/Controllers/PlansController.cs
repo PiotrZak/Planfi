@@ -43,7 +43,7 @@ namespace WebApi.Controllers
                 _planService.Create(plan);
                 return Ok(new
                 {
-                    plan.Id,
+                    plan.PlanId,
                     plan.Title,
                 });
             }

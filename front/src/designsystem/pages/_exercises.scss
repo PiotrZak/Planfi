@@ -1,17 +1,4 @@
 
-.dropzone {
-    text-align: center;
-    width:100%;
-    border-radius: 16px;
-    border: 1px dashed rgba(181, 189, 207, 0.7);
-    padding: 50px;
-    transition: border .15s ease-in-out;
-    &.drop-active {
-      border-color: #009fda;
-      border-style: solid;
-      border-width: 2px;
-    }
-}
 
 .exercise-counter{
     margin:2% 0 2% 0;

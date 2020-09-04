@@ -16,7 +16,6 @@ export const Category = (props) => {
     const [category, setCategory] = useState();
     const [exercises, setExercises] = useState()
 
-
     const [bottomSheet, setBottomSheet] = useState(false)
 
     const history = useHistory();
@@ -64,6 +63,15 @@ export const Category = (props) => {
     }
 
 
+    const filterExercises = (e) => {
+        const input = new RegExp(e.target.value, 'i');
+        const newItems = exercises.filter(
+          (item) => item.name.match(input)
+        );
+        setExercises(newItems);
+      };
+    
+
     const noExerciseInCategory = "There are no added exercises in this category"
 
     return (
@@ -85,6 +93,12 @@ export const Category = (props) => {
                 </Link>
                 }
             </div>
+
+            <input
+              type='text'
+              onChange={filterExercises}
+              placeholder={"find exercises"}
+            />
 
               {exercises ? exercises.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files[0]} exercise={exercise} />)
                     : noExerciseInCategory}
