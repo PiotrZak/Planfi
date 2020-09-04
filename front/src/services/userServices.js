@@ -4,6 +4,7 @@ export const userService = {
     register,
     login,
     allUsers,
+    getUserById,
   };
 
 // const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
@@ -17,6 +18,10 @@ const USER_URL = `${localapiURL}/Users/`;
 
   function login(body) {
     return http.post(`${USER_URL}authenticate`, body);
+  }
+
+  function getUserById(id) {
+    return http.get(`${USER_URL}${id}`);
   }
 
   function allUsers(body) {

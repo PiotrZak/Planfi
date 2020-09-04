@@ -1,16 +1,16 @@
 import React from "react";
 import CircleButton from "../CircleButton/CircleButton";
+import { Link } from 'react-router-dom';
+import Icon from "../../../src/common/Icon"
 
 const EmployeeButton = ({
-        user,
-        subline
-
-    }) => {
-
+    user,
+    subline
+}) => {
     return (
         <div className="rectangleButton">
             <div className="rectangleButton__wrapper">
-                <div className="employee__avatar-empty"/>
+                <div className="employee__avatar-empty" />
 
                 <div className="rectangleButton-info">
                     <h3 className="rectangleButton-info__headline">{user.firstName} {user.lastName}</h3>
@@ -20,8 +20,14 @@ const EmployeeButton = ({
             </div>
 
             <div className="rectangleButton-menu">
-                <CircleButton iconName="ellipsis-h"/>
+                <CircleButton iconName="ellipsis-h" />
             </div>
+            {user && <Link to={{
+                    pathname: `/user/${user.userId}`,
+                    state: { id: user.userId }
+                }}>
+                    <Icon name={"arrow-right"} fill={"white"} />
+                </Link>}
         </div>
     )
 }

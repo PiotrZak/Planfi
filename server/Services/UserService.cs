@@ -12,6 +12,7 @@ namespace WebApi.Services
         IEnumerable<User> GetAll();
         User GetById(string id);
         User Create(User user, string password);
+        void Update(User user, string password = null);
         void Delete(string id);
     }
 
@@ -56,6 +57,47 @@ namespace WebApi.Services
             var user = _context.Users.FirstOrDefault(x => x.UserId == id);
             return user.WithoutPassword();
         }
+
+        public void Update(User userParam, string password = null)
+        {
+            var user = _context.Users.Find(userParam.UserId);
+
+            if (user == null)
+                throw new AppException("User not found");
+
+            // update username if it has changed
+            if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
+            {
+                // throw error if the new username is already taken
+                if (_context.Users.Any(x => x.Email == userParam.Email))
+                    throw new AppException("Username " + userParam.Email + " is already taken");
+
+                user.Email = userParam.Email;
+            }
+
+            // update user properties if provided
+            if (!string.IsNullOrWhiteSpace(userParam.FirstName))
+                user.FirstName = userParam.FirstName;
+
+            if (!string.IsNullOrWhiteSpace(userParam.LastName))
+                user.LastName = userParam.LastName;
+
+
+            // update password if provided
+            if (!string.IsNullOrWhiteSpace(password))
+            {
+                byte[] passwordHash, passwordSalt;
+                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
+
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+
 
         public void Delete(string id)
         {

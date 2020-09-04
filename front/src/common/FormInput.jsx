@@ -26,11 +26,7 @@ export const FormInput = ({
   onKeyDown,
 }) => (
   <React.Fragment>
-    <Row className={className}>
-      <Col sm={labelWidth}>
         <Label label={label} required={required} hasError={hasError} />
-      </Col>
-      <Col sm={inputWidth}>
         <Input
           invalid={hasError ? true : false}
           id={id}
@@ -50,8 +46,6 @@ export const FormInput = ({
           onKeyUp={onKeyUp}
           onKeyDown={onKeyDown}
         />
-      </Col>
-    </Row>
     <ValidationHint hasError={hasError} />
   </React.Fragment>
 );

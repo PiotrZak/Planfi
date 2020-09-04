@@ -1,27 +1,22 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/ExerciseService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Services/UserService.cs">
     <Files>
-      <File FileName="Controllers/ExerciseController.cs" Line="77" Column="48" />
-      <File FileName="Controllers/PlansController.cs" Line="1" Column="1" />
-      <File FileName="Entities/Plans.cs" Line="16" Column="28" />
-      <File FileName="Entities/Exercises.cs" Line="20" Column="31" />
-      <File FileName="Entities/User.cs" Line="8" Column="6" />
-      <File FileName="Models/ExerciseModel.cs" Line="14" Column="26" NotebookId="1" />
-      <File FileName="Controllers/ViewModels/CreateExercise.cs" Line="18" Column="6" NotebookId="1" />
-      <File FileName="Services/ExerciseService.cs" Line="13" Column="18" NotebookId="1" />
+      <File FileName="Controllers/UsersController.cs" Line="115" Column="43" />
+      <File FileName="Models/UpdateModel.cs" Line="6" Column="32" />
+      <File FileName="Services/UserService.cs" Line="69" Column="75" NotebookId="1" />
+      <File FileName="Entities/User.cs" Line="15" Column="29" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="ViewModels" expanded="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Entities" expanded="True" />
+              <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True">
-                <Node name="ExerciseService.cs" selected="True" />
+                <Node name="UserService.cs" selected="True" />
               </Node>
             </Node>
           </Node>

@@ -3,6 +3,7 @@ import Checkbox from "./checkbox/Checkbox";
 import CircleButton from "../CircleButton/CircleButton";
 import { Link } from 'react-router-dom';
 import Icon from "../../../src/common/Icon"
+import { planService } from "../../services/planService";
 
 const Button = ({
     headline,
@@ -10,7 +11,9 @@ const Button = ({
     image,
     checkbox,
     secondaryMenu,
-    exercise
+    exercise,
+    category,
+    plan,
 }) => {
 
     return (
@@ -36,6 +39,21 @@ const Button = ({
                 }}>
                     <Icon name={"arrow-right"} fill={"white"} />
                 </Link>}
+
+                {category && <Link to={{
+                    pathname: `/category/${category.categoryId}`,
+                    state: { id: category.categoryId }
+                }}>
+                    <Icon name={"arrow-right"} fill={"white"} />
+                </Link>}
+
+                {plan && <Link to={{
+                    pathname: `/plan/${plan.planId}`,
+                    state: { id: plan.planId }
+                }}>
+                    <Icon name={"arrow-right"} fill={"white"} />
+                </Link>}
+
             </div>
         </div>
     )

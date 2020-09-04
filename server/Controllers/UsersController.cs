@@ -117,6 +117,26 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Update(string id, [FromBody] UpdateModel model)
+        {
+            var user = _mapper.Map<User>(model);
+            user.UserId = id;
+
+            try
+            {
+                _userService.Update(user, model.Password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+
+
+
         [AllowAnonymous]
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
