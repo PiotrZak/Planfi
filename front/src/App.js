@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { PrivateRoute } from './utils/PrivateRoute';
 
 import { RegisterPage } from "./modules/Account/Register"
 import { ActivatePage } from "./modules/Account/Activate"
@@ -62,7 +63,9 @@ let App = () => {
         <Route path="/exercise/:id" component={Exercise} />
         <Route path="/category/:id" component={Category} />
         <Route path="/plan/:id" component={Plan} />
-        <Route path="/user/:id" component={User} />
+
+        {/* All routes should be private */}
+        <PrivateRoute path="/user/:id" accessRole={[1, 2, 3]} component={User} />
       </BrowserRouter>
     </div>
   );
