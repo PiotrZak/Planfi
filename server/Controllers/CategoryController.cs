@@ -15,36 +15,36 @@ namespace WebApi.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class PlansController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-        private IPlanService _planService;
+        private ICategoryService _CategoryService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
        
-        public PlansController(
-            IPlanService planService,
+        public CategoryController(
+            ICategoryService CategoryService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
-            _planService = planService ;
+            _CategoryService = CategoryService ;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
         [HttpPost("create")]
-        public IActionResult Create([FromBody]CreatePlan model)
+        public IActionResult Create([FromBody]CreateCategory model)
         {
 
-            var plan = _mapper.Map<Plan>(model);
+            var Category = _mapper.Map<Category>(model);
 
             try
             {
-                _planService.Create(plan);
+                _CategoryService.Create(Category);
                 return Ok(new
                 {
-                    plan.PlanId,
-                    plan.Title,
+                    Category.CategoryId,
+                    Category.Title,
                 });
             }
             catch (AppException ex)
@@ -58,29 +58,28 @@ namespace WebApi.Controllers
         public IActionResult GetById(string id)
         {
 
-            var plan = _planService.GetById(id);
+            var Category = _CategoryService.GetById(id);
 
-            if (plan == null)
+            if (Category == null)
                 return NotFound();
 
-            return Ok(plan);
+            return Ok(Category);
         }
 
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
         {
-            var plans = _planService.GetAll();
-            return Ok(plans);
+            var Category = _CategoryService.GetAll();
+            return Ok(Category);
         }
 
         [AllowAnonymous]
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            _planService.Delete(id);
+            _CategoryService.Delete(id);
             return Ok();
         }
-
     }
 }

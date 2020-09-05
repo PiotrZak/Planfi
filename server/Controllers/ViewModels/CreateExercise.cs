@@ -15,5 +15,6 @@ namespace WebApi.Models
         public int Series { get; set; }
         [Required]
         public List<IFormFile> Files { get; set; }
+        public string CategoryId { get; set; }
     }
 }

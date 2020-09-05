@@ -24,10 +24,15 @@ namespace WebApi.Helpers
             modelBuilder.Entity<Plan>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
+
+            modelBuilder.Entity<Category>()
+                .HasMany(b => b.Exercises)
+                .WithOne();
         }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
     }
 }

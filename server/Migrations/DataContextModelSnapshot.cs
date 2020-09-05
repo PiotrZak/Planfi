@@ -20,9 +20,25 @@ namespace WebApi.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("WebApi.Entities.Category", b =>
+                {
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>
                 {
                     b.Property<string>("ExerciseId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CategoryId")
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -44,6 +60,8 @@ namespace WebApi.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("ExerciseId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("PlanId");
 
@@ -102,6 +120,10 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>
                 {
+                    b.HasOne("WebApi.Entities.Category", null)
+                        .WithMany("Exercises")
+                        .HasForeignKey("CategoryId");
+
                     b.HasOne("WebApi.Entities.Plan", null)
                         .WithMany("Exercises")
                         .HasForeignKey("PlanId");

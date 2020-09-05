@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -13,7 +10,9 @@ namespace WebApi.Services
         Exercise GetById(string id);
         Exercise Create(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
+        IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         void Delete(string id);
+
     }
 
     public class ExerciseService : IExerciseService
@@ -39,9 +38,6 @@ namespace WebApi.Services
         {
 
             var exercise = _context.Exercises.FirstOrDefault(x => x.ExerciseId == id);
-
-
-
             return exercise;
         }
 
@@ -50,6 +46,13 @@ namespace WebApi.Services
 
             return _context.Exercises;
         }
+
+        public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
+        {
+            var Exercises = _context.Exercises.Where(x => x.CategoryId == categoryId);
+            return Exercises;
+        }
+
 
         public void Delete(string id)
         {
@@ -60,6 +63,7 @@ namespace WebApi.Services
                 _context.SaveChanges();
             }
         }
+
     }
 }
 

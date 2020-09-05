@@ -8,11 +8,12 @@ namespace WebApi.Entities
     {
         public Category()
         {
-            Id = Guid.NewGuid().ToString();
+            CategoryId = Guid.NewGuid().ToString();
+            Exercises = new List<Exercise>();
         }
 
         [Key]
-        public string Id { get; set; }
+        public string CategoryId { get ; set; }
         public string Title { get; set; }
         public List<Exercise> Exercises { get; set; }
     }

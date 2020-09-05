@@ -1,3 +1,5 @@
+@import "../abstracts/variables";
+
 // *--------- RESET ---------*
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -51,4 +53,49 @@ table {
 
 a {
   text-decoration: none;
+}
+
+.nav{
+  display:flex !important;
+  align-items:center;
+  justify-content: center;
+}
+
+.nav-tabs{
+  width:100% !important;
+  border-bottom:none !important;
+  a{
+    color:$color-gray-40 !important;
+  }
+}
+
+li.nav-item{
+  min-width:180px;
+  &:hover{
+    color:$color-white !important;
+    cursor:pointer;
+    border:none !important;
+  }
+}
+
+.nav-link{
+  &:hover{
+    color:$color-white !important;
+    cursor:pointer;
+    border:none !important;
+  }
+}
+.nav-link.active{
+  background-color:transparent !important;
+  border:none !important;
+  border-bottom: 3px solid $color-primary-dark !important;
+  color:$color-white !important;
+  a{
+    color:$color-white !important;
+  }
+  &:hover{
+    color:$color-white !important;
+    cursor:pointer;
+    border:none !important;
+  }
 }

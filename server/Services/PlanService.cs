@@ -10,6 +10,7 @@ namespace WebApi.Services
         Plan GetById(string id);
         Plan Create(Plan plan);
         IEnumerable<Plan> GetAll();
+        void Delete(string id);
     }
 
     public class PlanService : IPlanService
@@ -33,13 +34,22 @@ namespace WebApi.Services
         public Plan GetById(string id)
         {
 
-            var plan = _context.Plans.FirstOrDefault(x => x.Id == id);
+            var plan = _context.Plans.FirstOrDefault(x => x.PlanId == id);
             return plan;
         }
         public IEnumerable<Plan> GetAll()
         {
 
             return _context.Plans;
+        }
+        public void Delete(string id)
+        {
+            var plan = _context.Plans.Find(id);
+            if (plan != null)
+            {
+                _context.Plans.Remove(plan);
+                _context.SaveChanges();
+            }
         }
     }
 }
