@@ -5,28 +5,42 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import { store } from "./redux/store"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './designsystem/main.scss';
 
-import ApolloClient, { createNetworkInterface } from 'apollo-client'
-import { ApolloProvider } from 'react-apollo'
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 
+// import GraphQLClient from './services/graphql/graphqlclient'
+// import GraphQLClientContext from './utils/graphqlcontext';
 
-const networkInterface = createNetworkInterface({
-  uri: 'https://api.graph.cool/simple/v1/__PROJECT_ID__',
+// const client = new GraphQLClient({
+//   baseURL: 'http://localhost:5005',
+//   headers: {
+//     Authorization: `bearer ${
+//       process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
+//     }`,
+//   },
+// });
+
+const httpLink = createHttpLink({
+  uri: 'https://48p1r2roz4.sse.codesandbox.io'
 })
 
 const client = new ApolloClient({
-  networkInterface,
+  link: httpLink,
+  cache: new InMemoryCache()
 })
 
-import './designsystem/main.scss';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
       <Provider store={store}>
+      <ApolloProvider client={client}>
         <App />
-      </Provider>,
-  </ApolloProvider>
+        </ApolloProvider>
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

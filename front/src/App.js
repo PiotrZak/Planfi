@@ -10,7 +10,7 @@ import { ForgotPassword } from "./modules/Account/ForgotPassword"
 import { Plans } from "./modules/Plans/Plans"
 import { Plan } from "./modules/Plans/Plan"
 
-import { Users } from "./modules/Users/Users"
+import { UsersList } from "./modules/Users/Users"
 import { User } from './modules/Users/User';
 
 import { createBrowserHistory } from 'history';
@@ -57,7 +57,7 @@ let App = () => {
           <Route path="/add-exercise" component={AddExercise} />
 
           <Route path="/plans" component={Plans} />
-          <Route path="/users" component={Users} />
+          <Route path="/users" component={UsersList} />
         </Switch>
 
         <Route path="/exercise/:id" component={Exercise} />
