@@ -70,13 +70,13 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Plan", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("PlanId")
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("PlanId");
 
                     b.ToTable("Plans");
                 });

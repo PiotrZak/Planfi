@@ -24,12 +24,12 @@ namespace WebApi.Migrations
                 name: "Plans",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    PlanId = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Plans", x => x.Id);
+                    table.PrimaryKey("PK_Plans", x => x.PlanId);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,7 +78,7 @@ namespace WebApi.Migrations
                         name: "FK_Exercises_Plans_PlanId",
                         column: x => x.PlanId,
                         principalTable: "Plans",
-                        principalColumn: "Id",
+                        principalColumn: "PlanId",
                         onDelete: ReferentialAction.Restrict);
                 });
 

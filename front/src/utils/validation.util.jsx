@@ -4,7 +4,9 @@ export const validationUtil = {
   validateAllRequiredFields,
   validateInput,
   validateEmail,
-  validatePassword
+  validatePassword,
+  runSetErrors,
+  runValidateOnSubmit,
 };
 // regex from org.hibernate.validator.constraints.impl.EmailValidator
 const ATOM = "[a-z0-9!#$%&'*+/=?^_`{|}~-]";
@@ -67,5 +69,31 @@ function validateInput(e, validatedForm, errors, validationFunction) {
     currentErrors: currentErrors,
     validatedForm: validatedForm
   };
+}
+
+function runSetErrors(name, setErrors, errors, requiredFields, data) {
+  setErrors(
+    validationUtil.validateRequiredField(
+        name,
+        { ...errors },
+        requiredFields,
+        data
+    )
+);
+}
+
+function runValidateOnSubmit(setErrors, errors, requiredFields, data) {
+  let currentErrors = validationUtil.validateAllRequiredFields(
+    requiredFields,
+    data
+);
+
+setErrors({ ...errors, ...currentErrors });
+if (
+    Object.getOwnPropertyNames(currentErrors).length === 0 &&
+    Object.getOwnPropertyNames(errors).length === 0
+) {
+  return true;  
+}
 }
 export default validationUtil;

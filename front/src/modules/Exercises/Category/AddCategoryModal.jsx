@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
 import { FormInput } from "../../../common/FormInput"
@@ -67,7 +67,6 @@ const AddCategoryModal = ({ openModal, onClose }) => {
 
     return (
         <div>
-
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{addCategoryTitle}</h2></ModalHeader>
                 <ModalBody>

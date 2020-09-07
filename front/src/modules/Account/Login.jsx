@@ -7,9 +7,9 @@ import { userService } from '../../services/userServices';
 import { validationUtil } from "../../../src/utils/validation.util"
 import { alertActions } from '../../redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
-import {Icon} from "../../common/Icon"
+import { Icon } from "../../common/Icon"
 
-export const LoginPage = (props) => {
+export const LoginPage = () => {
 
     const [userData, setUserData] = useState({})
     const [errors, setErrors] = useState({})
@@ -18,52 +18,28 @@ export const LoginPage = (props) => {
     const requiredFields = ["email", "password"];
     const dispatch = useDispatch()
 
-    useEffect(() => {
-
-    });
-
     const handleInput = (e) => {
         let name = e.target.name
         userData[name] = e.target.value;
         setUserData(userData);
-        setErrors(
-            validationUtil.validateRequiredField(
-                name,
-                { ...errors },
-                requiredFields,
-                userData
-            )
-        );
+        validationUtil.runSetErrors(name, setErrors, errors, requiredFields, userData)
     }
 
-    const submitForm = (e) => {
-
-        e.preventDefault();
-
-        let currentErrors = validationUtil.validateAllRequiredFields(
-            requiredFields,
-            userData
-        );
-
-        setErrors({ ...errors, ...currentErrors });
-        if (
-            Object.getOwnPropertyNames(currentErrors).length === 0 &&
-            Object.getOwnPropertyNames(errors).length === 0
-        ) {
-            authenticateUser(userData)
-        }
+    const submitForm = () => {
+        const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, userData)
+        confirm && authenticateUser(userData)
     }
 
-    const authenticateUser = (userData) =>{
+    const authenticateUser = (userData) => {
         userService
             .login(userData)
             .then((data) => {
                 dispatch(alertActions.success("Congratulations! You are log in."))
                 localStorage.setItem("token", data.token);
-                if(data.firstName === null){
+                if (data.firstName === null) {
                     history.push('/activate');
                 }
-                else{
+                else {
                     history.push('/plans');
                 }
             })
@@ -76,7 +52,7 @@ export const LoginPage = (props) => {
         <div className="container">
             <div className="container__content">
                 <FormInput id="email" name="email" onChange={handleInput} label="Email" hasError={errors.email} />
-                <FormInput id="password" name="password" type = "password" onChange={handleInput} label="Password" hasError={errors.password} />
+                <FormInput id="password" name="password" type="password" onChange={handleInput} label="Password" hasError={errors.password} />
                 <Button className="btn btn--primary btn--lg" onClick={submitForm} name={"Login"}></Button>
                 <NavLink
                     to="/forgotpassword"
