@@ -1,27 +1,30 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/CategoryService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/DataContext.cs">
     <Files>
-      <File FileName="Helpers/AppException.cs" Line="1" Column="1" />
-      <File FileName="Helpers/AutoMapper.cs" />
-      <File FileName="Helpers/DataContext.cs" />
-      <File FileName="Entities/Role.cs" Line="5" Column="1" />
-      <File FileName="Controllers/PlansController.cs" Line="35" Column="23" />
-      <File FileName="Controllers/CategoryController.cs" Line="1" Column="1" />
-      <File FileName="Controllers/ExerciseController.cs" Line="69" Column="44" />
-      <File FileName="Services/CategoryService.cs" Line="62" Column="34" />
+      <File FileName="Controllers/PlansController.cs" Line="78" Column="28" />
+      <File FileName="Controllers/ExerciseController.cs" />
+      <File FileName="Services/CategoryService.cs" />
+      <File FileName="Entities/Plans.cs" />
+      <File FileName="Entities/Category.cs" />
+      <File FileName="Entities/Role.cs" />
+      <File FileName="Helpers/DataContext.cs" Line="61" Column="31" />
+      <File FileName="Services/PlanService.cs" Line="64" Column="14" NotebookId="1" />
+      <File FileName="Services/ExerciseService.cs" NotebookId="1" />
+      <File FileName="Entities/Exercises.cs" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Entities" expanded="True" />
-              <Node name="Helpers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="CategoryService.cs" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="ViewModels" expanded="True" />
               </Node>
+              <Node name="Entities" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="DataContext.cs" selected="True" />
+              </Node>
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>

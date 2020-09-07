@@ -4,7 +4,8 @@ export const planService = {
   getAllPlans,
   addPlan,
   getPlanById,
-  deletePlanById
+  deletePlanById,
+  assignExercises
   };
 
 // const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
@@ -18,6 +19,10 @@ const CATEGORIES_URL = `${localapiURL}/Plans`;
 
   function addPlan(body) {
     return http.post(`${CATEGORIES_URL}/create`, body);
+  }
+
+  function assignExercises(body) {
+    return http.post(`${CATEGORIES_URL}/assignExercises`, body);
   }
 
   function getPlanById(id) {

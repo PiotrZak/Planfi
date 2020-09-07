@@ -2,6 +2,7 @@ import { http } from "./http.service";
 
 export const exerciseService = {
   getExercisesByCategory,
+  getExercisesByPlan,
   getAllExercises,
   addExercise,
   getExerciseById,
@@ -19,6 +20,10 @@ const EXERCISES_URL = `${localapiURL}/Exercises`;
 
   function getExercisesByCategory(id) {
     return http.get(`${EXERCISES_URL}/category/${id}`);
+  }
+
+  function getExercisesByPlan(id) {
+    return http.get(`${EXERCISES_URL}/plan/${id}`);
   }
 
   function addExercise(body) {

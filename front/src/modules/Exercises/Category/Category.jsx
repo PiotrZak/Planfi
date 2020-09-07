@@ -14,7 +14,8 @@ var ReactBottomsheet = require('react-bottomsheet');
 export const Category = (props) => {
 
     const [category, setCategory] = useState();
-    const [exercises, setExercises] = useState()
+    const [exercises, setExercises] = useState();
+    const [searchTerm, setSearchTerm] = React.useState("");
 
     const [bottomSheet, setBottomSheet] = useState(false)
 
@@ -63,14 +64,16 @@ export const Category = (props) => {
     }
 
 
-    const filterExercises = (e) => {
-        const input = new RegExp(e.target.value, 'i');
-        const newItems = exercises.filter(
-          (item) => item.name.match(input)
+    const filterExercises = event => {
+        setSearchTerm(event.target.value);
+    };
+
+    const results = !searchTerm
+        ? exercises
+        : exercises.filter(exercise =>
+            exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         );
-        setExercises(newItems);
-      };
-    
+
 
     const noExerciseInCategory = "There are no added exercises in this category"
 
@@ -83,25 +86,25 @@ export const Category = (props) => {
 
                 <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} /></div>
                 {category &&
-                <Link
-                    to ={{
-                        pathname: "/add-exercise",
-                        state: { id: category.categoryId }
-                    }}
-                >
-                    <Icon name={"plus"} fill={"#5E4AE3"} />
-                </Link>
+                    <Link
+                        to={{
+                            pathname: "/add-exercise",
+                            state: { id: category.categoryId }
+                        }}
+                    >
+                        <Icon name={"plus"} fill={"#5E4AE3"} />
+                    </Link>
                 }
             </div>
 
             <input
-              type='text'
-              onChange={filterExercises}
-              placeholder={"find exercises"}
+                type='text'
+                onChange={filterExercises}
+                placeholder={"find exercises"}
             />
 
-              {exercises ? exercises.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files[0]} exercise={exercise} />)
-                    : noExerciseInCategory}
+            {exercises ? results.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files && exercise.files[0]} exercise={exercise} />)
+                : noExerciseInCategory}
 
             <ReactBottomsheet
                 visible={bottomSheet}

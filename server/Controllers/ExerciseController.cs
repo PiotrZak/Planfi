@@ -56,9 +56,9 @@ namespace WebApi.Controllers
                 Description = model.Description,
                 Times = model.Times,
                 Series = model.Series,
+                Weight = model.Weight,
                 Files = FilesList,
                 CategoryId = model.CategoryId
-
             };
 
 
@@ -89,6 +89,18 @@ namespace WebApi.Controllers
         public IActionResult GetExercisesByCategory(string categoryId)
         {
             var exercises = _ExerciseService.GetAllOfCategory(categoryId);
+
+            if (exercises == null)
+                return NotFound();
+
+            return Ok(exercises);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("plan/{planId}")]
+        public IActionResult GetExercisesByPlan(string planId)
+        {
+            var exercises = _ExerciseService.GetAllOfPlan(planId);
 
             if (exercises == null)
                 return NotFound();

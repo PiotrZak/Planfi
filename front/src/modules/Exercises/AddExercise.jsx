@@ -18,6 +18,7 @@ export const AddExercise = (props) => {
         description: null,
         times: null,
         series: null,
+        weight:null,
         file: null,
     }
 
@@ -95,6 +96,10 @@ export const AddExercise = (props) => {
         setExerciseData({ ...exerciseData, files: data })
     }
 
+    const handleWeight = (data) => {
+        setExerciseData({ ...exerciseData, weight: data + 1 })
+    }
+
     const AddExercise = "Add exercise to"
     const Times = "Times"
     const Series = "Series"
@@ -121,6 +126,11 @@ export const AddExercise = (props) => {
                 <div className="exercise__form">
                     <h4>{Series}</h4>
                     <Counter handleData={handleTime} />
+                </div>
+
+                <div className="exercise__form">
+                    <h4>{Series}</h4>
+                    <Counter handleData={handleWeight} />
                 </div>
             </div>
 

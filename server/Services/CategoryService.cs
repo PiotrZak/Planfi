@@ -61,7 +61,6 @@ namespace WebApi.Services
 
             Category.Exercises.Add(Exercise);
 
-
             _context.Categories.Update(Category);
             _context.SaveChanges();
         }

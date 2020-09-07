@@ -11,8 +11,8 @@ namespace WebApi.Services
         Exercise Create(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
+        IEnumerable<Exercise> GetAllOfPlan(string planId);
         void Delete(string id);
-
     }
 
     public class ExerciseService : IExerciseService
@@ -50,6 +50,12 @@ namespace WebApi.Services
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
             var Exercises = _context.Exercises.Where(x => x.CategoryId == categoryId);
+            return Exercises;
+        }
+
+        public IEnumerable<Exercise> GetAllOfPlan(string planId)
+        {
+            var Exercises = _context.Exercises.Where(x => x.PlanId == planId);
             return Exercises;
         }
 

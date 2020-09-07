@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import Icon from "./../../common/Icon"
 import Return from "./../../common/Return"
 import "react-multi-carousel/lib/styles.css";
-import Button from "./../../common/MenuButton/MenuButton"
+import Button from "../../common/MenuButton/MenuButton"
 import { CheckboxList } from '../../common/CheckboxList';
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -16,6 +16,8 @@ export const Plan = (props) => {
 
     const [plan, setPlan] = useState();
     const [exercises, setExercises] = useState()
+    const [activeExercise, setActiveExercise] = useState([])
+    const [searchTerm, setSearchTerm] = React.useState("");
 
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState()
@@ -30,8 +32,9 @@ export const Plan = (props) => {
 
     useEffect(() => {
         getPlan(id.id)
+        getAllCategories()
         assignExerciseToPlan()
-        // getPlanExercise(id.id)
+        getPlanExercise(id.id)
     }, [id.id]);
 
 
@@ -39,32 +42,45 @@ export const Plan = (props) => {
         planService
             .getPlanById(id)
             .then((data) => {
-                console.log(data)
+
                 setPlan(data);
             })
             .catch((error) => {
             });
     }
 
-    // const getPlanExercise = (id) => {
-    //     exerciseService
-    //         .getExercisesByPlan(id)
-    //         .then((data) => {
-    //             setExercises(data);
-    //             console.log(data)
-    //         })
-    //         .catch((error) => {
-    //         });
-    // }
-
-    const assignExerciseToPlan = () => {
+    const getAllCategories = () => {
         categoryService
             .getAllCategories()
             .then((data) => {
+                setCategories(data);
+            })
+            .catch(() => {
+            });
+    }
+
+    const getPlanExercise = (id) => {
+        exerciseService
+            .getExercisesByPlan(id)
+            .then((data) => {
+                setExercises(data);
                 console.log(data)
-                setCategories(data)
             })
             .catch((error) => {
+            });
+    }
+
+    const assignExerciseToPlan = () => {
+
+        const data = { planId: id.id, exerciseId: activeExercise }
+
+        planService
+            .assignExercises(data)
+            .then(() => {
+                console.log('success')
+            })
+            .catch((error) => {
+                console.log(error)
             });
     }
 
@@ -80,33 +96,34 @@ export const Plan = (props) => {
     }
 
 
-    const filterExercises = (e) => {
-        const input = new RegExp(e.target.value, 'i');
-        const newItems = exercises.filter(
-            (item) => item.name.match(input)
-        );
-        setExercises(newItems);
+    const filterExercises = event => {
+        setSearchTerm(event.target.value);
     };
+
+    const results = !searchTerm
+        ? exercises
+        : exercises.filter(exercise =>
+            exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+        );
 
     const selectActiveId = (selectedData) => {
         const categoryIds = selectedData
             .filter((el) => el.value === true)
-            .map((a) => a.categoryId);
+            .map((a) => a.exerciseId);
+        setActiveExercise([...new Set([...activeExercise, ...categoryIds])])
 
-        console.log(categoryIds)
     }
+
 
     const loadExercises = (id) => {
         exerciseService
             .getExercisesByCategory(id)
             .then((data) => {
-                console.log(data)
                 setCategoryExercises(data);
             })
             .catch((error) => {
             });
     }
-
 
     const addExerciseToPlan = "Add Exercises to plan";
     const noExerciseInPlan = "There are no added exercises in this Plan";
@@ -118,7 +135,6 @@ export const Plan = (props) => {
                 <Return />
 
                 {plan && <h2>{plan.title}</h2>}
-
                 <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
 
             </div>
@@ -129,10 +145,10 @@ export const Plan = (props) => {
                 placeholder={"find exercises"}
             />
 
-
-
-            {exercises ? exercises.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files[0]} exercise={exercise} />)
+            {exercises ? results.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files && exercise.files[0]} exercise={exercise} />)
                 : noExerciseInPlan}
+
+
 
             <ReactBottomsheet
                 visible={bottomSheet}
@@ -144,11 +160,13 @@ export const Plan = (props) => {
                         <div>
                             <p onClick={() => setCategoryExercises()}><Icon name={"arrow-left"} fill={"#5E4AE3"} />{returnToCategories}</p>
                             <CheckboxList dataList={categoryExercises} displayedValue={"name"} onSelect={selectActiveId} selectAll={true} />
+                            <h1 onClick={assignExerciseToPlan}>Assign Exercises to Plan</h1>
+                            {/* <Button className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={"Assign Exercises to Plan"}></Button> */}
                         </div>
                         :
                         categories ?
                             categories.map((category, i) =>
-                                <div key = {i}className="micro-bottom" onClick={() => loadExercises(category.categoryId)}>
+                                <div key={i} className="micro-bottom" onClick={() => loadExercises(category.categoryId)}>
                                     <h3>{category.title}</h3>
                                     <Icon name={"plus"} fill={"#5E4AE3"} />
                                 </div>)

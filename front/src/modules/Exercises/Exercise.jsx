@@ -68,6 +68,7 @@ export const Exercise = (props) => {
             </div>
             {exercise &&
                 <div className="exercise">
+                {exercise.files &&
                     <Carousel
                         swipeable={true}
                         responsive={Breakpoints}
@@ -75,6 +76,7 @@ export const Exercise = (props) => {
                         {exercise.files.map((file, i) =>
                             <Slide key={i} img={file} />)}
                     </Carousel>
+                }
                     <h1>{exercise.name}</h1>
                     <Icon name={"ellipsisv"} fill={"#5E4AE3"} />
                     Series: <p>{exercise.series}</p>
