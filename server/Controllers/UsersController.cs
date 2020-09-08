@@ -15,6 +15,7 @@ using System;
 using System.Text;
 
 using AutoMapper;
+using System.IO;
 
 namespace WebApi.Controllers
 {
@@ -117,9 +118,19 @@ namespace WebApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody] UpdateModel model)
         {
+
+            //transform IFormFile List to byte[
+  
+            //using var memoryStream = new MemoryStream();
+            //model.Avatar.CopyTo(memoryStream);
+            //Avatar.Add(memoryStream.ToArray());
+
+
+
             var user = _mapper.Map<User>(model);
             user.UserId = id;
 

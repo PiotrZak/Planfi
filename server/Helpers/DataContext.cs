@@ -221,6 +221,63 @@ namespace WebApi.Helpers
                 }
             );
 
+        //public string UserId { get; set; }
+        //public byte[] Avatar { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string Email { get; set; }
+        //public int PhoneNumber { get; set; }
+        //public string Password { get; set; }
+        //public byte[] PasswordHash { get; set; }
+        //public byte[] PasswordSalt { get; set; }
+        //public string Role { get; set; }
+        //public string Token { get; set; }
+
+        modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    UserId = "u1",
+                    Avatar = null,
+                    FirstName = "Teodoor",
+                    LastName = "Gianelli",
+                    Email = "tgianelli0@eventbrite.com",
+                    PhoneNumber =  555555555,
+                    Password = "Teodor",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.User,
+                    Token = "t-user",
+                },
+                new User
+                {
+                    UserId = "u2",
+                    Avatar = null,
+                    FirstName = "Jillana",
+                    LastName = "Casson",
+                    Email = "jcasson3@prlog.org",
+                    PhoneNumber = 666666666,
+                    Password = "Jillana",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.Trainer,
+                    Token = "t-trainer",
+                },
+                new User
+                {
+                    UserId = "u3",
+                    Avatar = null,
+                    FirstName = "Kimmi",
+                    LastName = "Sarll",
+                    Email = "ksarllr@disqus.com",
+                    PhoneNumber = 777777777,
+                    Password = "Kimmi",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.Organization,
+                    Token = "t-organization",
+                }
+            );
+
         }
 
 

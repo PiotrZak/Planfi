@@ -12,7 +12,7 @@ namespace WebApi.Services
         IEnumerable<User> GetAll();
         User GetById(string id);
         User Create(User user, string password);
-        void Update(User user, string password = null);
+        void Update(User user, string password);
         void Delete(string id);
     }
 
@@ -58,7 +58,7 @@ namespace WebApi.Services
             return user.WithoutPassword();
         }
 
-        public void Update(User userParam, string password = null)
+        public void Update(User userParam, string newPassword)
         {
             var user = _context.Users.Find(userParam.UserId);
 
@@ -66,13 +66,17 @@ namespace WebApi.Services
                 throw new AppException("User not found");
 
             // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.Email) && userParam.Email != user.Email)
+            if (!string.IsNullOrWhiteSpace(userParam.Email))
             {
                 // throw error if the new username is already taken
                 if (_context.Users.Any(x => x.Email == userParam.Email))
                     throw new AppException("Username " + userParam.Email + " is already taken");
 
-                user.Email = userParam.Email;
+                // throw error if the password is incorrect
+                if (user.Password != userParam.Password)
+                    throw new AppException("Incorrect password");
+
+                    user.Email = userParam.Email;
             }
 
             // update user properties if provided
@@ -82,12 +86,19 @@ namespace WebApi.Services
             if (!string.IsNullOrWhiteSpace(userParam.LastName))
                 user.LastName = userParam.LastName;
 
+            if (!string.IsNullOrWhiteSpace(userParam.PhoneNumber.ToString()))
+                user.PhoneNumber = userParam.PhoneNumber;
 
             // update password if provided
-            if (!string.IsNullOrWhiteSpace(password))
+            if (!string.IsNullOrWhiteSpace(newPassword))
             {
+                // throw error if the password is incorrect
+                if (user.Password != userParam.Password)
+                    throw new AppException("Incorrect password");
+
+                user.Password = newPassword;
                 byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(password, out passwordHash, out passwordSalt);
+                CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;

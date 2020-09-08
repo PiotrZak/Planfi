@@ -6,8 +6,13 @@ export const validationUtil = {
   validateEmail,
   validatePassword,
   runSetErrors,
+  validatePhone,
   runValidateOnSubmit,
 };
+
+const phoneValidationMessage = "Telephone number should be correct";
+
+
 // regex from org.hibernate.validator.constraints.impl.EmailValidator
 const ATOM = "[a-z0-9!#$%&'*+/=?^_`{|}~-]";
 const DOMAIN = "(" + ATOM + "+(\\." + ATOM + "+)*";
@@ -15,6 +20,7 @@ const IP_DOMAIN = "\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\]";
 const REGEX =
   "^" + ATOM + "+(\\." + ATOM + "+)*@" + DOMAIN + "|" + IP_DOMAIN + ")$";
 const PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)([a-zA-Z0-9@\\$=!:.#%]){6,}$";
+const PHONE_REGEX = "/^[0-9()-]+$/"
 
 function validateRequiredField(name, validationErrors, requiredFields, form) {
   if (requiredFields.includes(name) && !form[name]) {
@@ -74,26 +80,37 @@ function validateInput(e, validatedForm, errors, validationFunction) {
 function runSetErrors(name, setErrors, errors, requiredFields, data) {
   setErrors(
     validationUtil.validateRequiredField(
-        name,
-        { ...errors },
-        requiredFields,
-        data
+      name,
+      { ...errors },
+      requiredFields,
+      data
     )
-);
+  );
 }
 
 function runValidateOnSubmit(setErrors, errors, requiredFields, data) {
   let currentErrors = validationUtil.validateAllRequiredFields(
     requiredFields,
     data
-);
+  );
 
-setErrors({ ...errors, ...currentErrors });
-if (
+  setErrors({ ...errors, ...currentErrors });
+  if (
     Object.getOwnPropertyNames(currentErrors).length === 0 &&
     Object.getOwnPropertyNames(errors).length === 0
-) {
-  return true;  
+  ) {
+    return true;
+  }
 }
+
+//todo make phone validation
+function validatePhone(phone) {
+  let errorField = {};
+  if (phone && !phone.match(PHONE_REGEX)) {
+    errorField['phone'] = phoneValidationMessage;
+    return errorField['phone']
+  }
 }
+
+
 export default validationUtil;

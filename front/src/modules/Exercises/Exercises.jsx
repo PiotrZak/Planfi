@@ -19,7 +19,6 @@ export const Exercises = () => {
             });
     }, []);
 
-
     const noExercises = "There are no added exercises in this category"
 
     return (

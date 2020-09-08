@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200907202414_InitialCreate")]
+    [Migration("20200908163759_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -281,6 +281,9 @@ namespace WebApi.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("bytea");
 
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
@@ -290,6 +293,41 @@ namespace WebApi.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "u1",
+                            Email = "tgianelli0@eventbrite.com",
+                            FirstName = "Teodoor",
+                            LastName = "Gianelli",
+                            Password = "Teodor",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user"
+                        },
+                        new
+                        {
+                            UserId = "u2",
+                            Email = "jcasson3@prlog.org",
+                            FirstName = "Jillana",
+                            LastName = "Casson",
+                            Password = "Jillana",
+                            PhoneNumber = 666666666,
+                            Role = "Trainer",
+                            Token = "t-trainer"
+                        },
+                        new
+                        {
+                            UserId = "u3",
+                            Email = "ksarllr@disqus.com",
+                            FirstName = "Kimmi",
+                            LastName = "Sarll",
+                            Password = "Kimmi",
+                            PhoneNumber = 777777777,
+                            Role = "Organization",
+                            Token = "t-organization"
+                        });
                 });
 
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>

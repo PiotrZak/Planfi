@@ -9,6 +9,10 @@ import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
 import { alertActions } from './../../redux/actions/alert.actions'
 
+import EditUserPasswordModal from "./Edit/EditUserPassword"
+import EditUserEmailModal from "./Edit/EditUserEmail"
+import EditUserDataModal from "./Edit/EditUserData"
+
 var ReactBottomsheet = require('react-bottomsheet');
 
 export const User = (props) => {
@@ -16,6 +20,10 @@ export const User = (props) => {
     const [user, setUser] = useState();
     const [exercises, setExercises] = useState()
     const [bottomSheet, setBottomSheet] = useState(false)
+
+    const [openEditUserData, setOpenEditUserData] = useState(false)
+    const [openEditMailModal, setOpenEditMailModal] = useState(false);
+    const [openEditUserPasswordModal , setOpenEditUserPasswordModal] = useState(false);
 
     const history = useHistory();
     const { match } = props;
@@ -33,6 +41,7 @@ export const User = (props) => {
             .getUserById(id)
             .then((data) => {
                 setUser(data);
+                console.log(data)
             })
             .catch((error) => {
             });
@@ -55,12 +64,19 @@ export const User = (props) => {
 
             <Navs />
 
+             <EditUserDataModal id = {id.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
+             <EditUserEmailModal id = {id.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
+             {/* todo - verify password + security issues */}
+             <EditUserPasswordModal id = {id.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
+            {/* todo - logout -session/localstorage etc. */}
+
+
             <ReactBottomsheet
                 visible={bottomSheet}
                 onClose={() => setBottomSheet(false)}>
-                <button className='bottom-sheet-item'>{userEdit}</button>
-                <button className='bottom-sheet-item'>{changeMail}</button>
-                <button className='bottom-sheet-item'>{changePassword}</button>
+                <button onClick = {() => setOpenEditUserData(true)} className='bottom-sheet-item'>{userEdit}</button>
+                <button onClick = {() => setOpenEditMailModal(true)} className='bottom-sheet-item'>{changeMail}</button>
+                <button onClick = {() => setOpenEditUserPasswordModal(true)} className='bottom-sheet-item'>{changePassword}</button>
                 <button className='bottom-sheet-item'>{logout}</button>
             </ReactBottomsheet>
         </div>
@@ -76,6 +92,8 @@ const UserInfo = ({ user }) => {
                     <Avatar />
                     <h2>{user.firstName} {user.lastName}</h2>
                     <p>{user.role}</p>
+                    <p>{user.phoneNumber}</p>
+                    <p>{user.email}</p>
                 </div>
             }
         </div>
@@ -93,9 +111,6 @@ const Avatar = () => {
         </div>
     );
 }
-
-
-
 
 
 const Navs = () => {

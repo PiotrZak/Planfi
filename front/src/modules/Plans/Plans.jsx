@@ -18,7 +18,7 @@ export const Plans = () => {
             })
             .catch(() => {
             });
-    }, [setOpenModal]);
+    }, [setOpenModal, openModal]);
 
     const openAddPlanModal = () => {
         setOpenModal(!openModal)

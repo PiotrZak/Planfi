@@ -33,7 +33,6 @@ export const Plan = (props) => {
     useEffect(() => {
         getPlan(id.id)
         getAllCategories()
-        assignExerciseToPlan()
         getPlanExercise(id.id)
     }, [id.id]);
 
@@ -77,10 +76,11 @@ export const Plan = (props) => {
         planService
             .assignExercises(data)
             .then(() => {
-                console.log('success')
+                setCategoryExercises()
+                dispatch(alertActions.success("Exercises succesfully allocated!"))
             })
             .catch((error) => {
-                console.log(error)
+                dispatch(alertActions.error(error))
             });
     }
 
@@ -91,7 +91,8 @@ export const Plan = (props) => {
                 dispatch(alertActions.success("Plan succesfully deleted!"))
                 history.push('/categories');
             })
-            .catch(() => {
+            .catch((error) => {
+                dispatch(alertActions.error(error))
             });
     }
 
@@ -140,6 +141,7 @@ export const Plan = (props) => {
             </div>
 
             <input
+                className ="search"
                 type='text'
                 onChange={filterExercises}
                 placeholder={"find exercises"}
@@ -147,8 +149,6 @@ export const Plan = (props) => {
 
             {exercises ? results.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files && exercise.files[0]} exercise={exercise} />)
                 : noExerciseInPlan}
-
-
 
             <ReactBottomsheet
                 visible={bottomSheet}

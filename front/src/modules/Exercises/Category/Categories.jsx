@@ -19,7 +19,7 @@ export const Categories = () => {
             })
             .catch(() => {
             });
-    }, [setOpenModal]);
+    }, [setOpenModal, openModal]);
 
     const openAddCategoryModal = () =>{
         setOpenModal(!openModal)

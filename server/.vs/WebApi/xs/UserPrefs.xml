@@ -1,16 +1,12 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/DataContext.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UsersController.cs">
     <Files>
-      <File FileName="Controllers/PlansController.cs" Line="78" Column="28" />
-      <File FileName="Controllers/ExerciseController.cs" />
-      <File FileName="Services/CategoryService.cs" />
-      <File FileName="Entities/Plans.cs" />
-      <File FileName="Entities/Category.cs" />
-      <File FileName="Entities/Role.cs" />
-      <File FileName="Helpers/DataContext.cs" Line="61" Column="31" />
-      <File FileName="Services/PlanService.cs" Line="64" Column="14" NotebookId="1" />
-      <File FileName="Services/ExerciseService.cs" NotebookId="1" />
-      <File FileName="Entities/Exercises.cs" NotebookId="1" />
+      <File FileName="Controllers/UsersController.cs" Line="123" Column="65" />
+      <File FileName="Startup.cs" Line="15" Column="23" />
+      <File FileName="Services/UserService.cs" Line="11" Column="18" NotebookId="1" />
+      <File FileName="Helpers/DataContext.cs" Line="271" Column="50" NotebookId="1" />
+      <File FileName="Entities/User.cs" Line="7" Column="18" NotebookId="1" />
+      <File FileName="Entities/Role.cs" Line="7" Column="41" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,11 +15,11 @@
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="ViewModels" expanded="True" />
+                <Node name="UsersController.cs" selected="True" />
               </Node>
               <Node name="Entities" expanded="True" />
-              <Node name="Helpers" expanded="True">
-                <Node name="DataContext.cs" selected="True" />
-              </Node>
+              <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>
           </Node>

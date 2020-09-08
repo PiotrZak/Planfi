@@ -41,6 +41,7 @@ namespace WebApi.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<int>(nullable: false),
                     Password = table.Column<string>(nullable: true),
                     PasswordHash = table.Column<byte[]>(nullable: true),
                     PasswordSalt = table.Column<byte[]>(nullable: true),
@@ -91,6 +92,16 @@ namespace WebApi.Migrations
                     { "1", "Amatorskie" },
                     { "2", "Średnio-Zaawansowane" },
                     { "3", "Profesjonalistyczne" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Avatar", "Email", "FirstName", "LastName", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token" },
+                values: new object[,]
+                {
+                    { "u1", null, "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", "Teodor", null, null, 555555555, "User", "t-user" },
+                    { "u2", null, "jcasson3@prlog.org", "Jillana", "Casson", "Jillana", null, null, 666666666, "Trainer", "t-trainer" },
+                    { "u3", null, "ksarllr@disqus.com", "Kimmi", "Sarll", "Kimmi", null, null, 777777777, "Organization", "t-organization" }
                 });
 
             migrationBuilder.InsertData(
