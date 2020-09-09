@@ -13,14 +13,11 @@ export const Users = () => {
         userService
             .allUsers()
             .then((data) => {
-                console.log(data);
                 setUsers(data);
                 // dispatch(alertActions.success("User succesfully loaded!"));
             })
             .catch((error) => {
-                console.log(error);
                 dispatch(alertActions.error(error.title));
-                console.log(error);
             });
     }, []);
 

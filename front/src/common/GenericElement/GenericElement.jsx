@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Icon from "../../../src/common/Icon"
 import { planService } from "../../services/planService";
 
-const Button = ({
+const GenericElement = ({
     headline,
     subline,
     image,
@@ -59,4 +59,4 @@ const Button = ({
     )
 }
 
-export default Button;
+export default GenericElement;

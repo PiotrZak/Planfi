@@ -9,6 +9,8 @@ import { alertActions } from '../../redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
 import { Icon } from "../../common/Icon"
 
+import loginPhoto from "../../designsystem/login.jpg"
+
 export const LoginPage = () => {
 
     const [userData, setUserData] = useState({})
@@ -35,22 +37,46 @@ export const LoginPage = () => {
             .login(userData)
             .then((data) => {
                 dispatch(alertActions.success("Congratulations! You are log in."))
-                localStorage.setItem("token", data.token);
-                if (data.firstName === null) {
-                    history.push('/activate');
+                localStorage.setItem('user', JSON.stringify(data));
+                if (data.role === "Trainer") {
+                    console.log('lol')
+                    history.push('/users');
                 }
-                else {
-                    history.push('/plans');
+                else if(data.role === "Organization") {
+                    history.push('/users');
+                }
+                else if(data.role === "User"){
+                    history.push(`/user/${data.userId}`);
                 }
             })
             .catch((error) => {
-                dispatch(alertActions.error(error.title))
+                dispatch(alertActions.error(loginError))
             });
     }
 
+    const loginError = "Try again! those credentials are invalid"
+
     return (
-        <div className="container">
-            <div className="container__content">
+        <div className="container-login">
+        <div className ="container-login__image">
+        <img src={loginPhoto} alt="Logo" />;
+        </div>
+            <div className="container-login__content">
+                <div>
+                    <h4>Organizator:</h4>
+                    <p>ksarllr@disqus.com - Kimmi</p>
+                </div>
+
+                <div>
+                    <h4>Trainer:</h4>
+                    <p>jcasson3@prlog.org - Jillana</p>
+                </div>
+
+                <div>
+                    <h4>User:</h4>
+                    <p>tgianelli0@eventbrite.com - Teodor</p>
+                </div>
+                <hr/>
                 <FormInput id="email" name="email" onChange={handleInput} label="Email" hasError={errors.email} />
                 <FormInput id="password" name="password" type="password" onChange={handleInput} label="Password" hasError={errors.password} />
                 <Button className="btn btn--primary btn--lg" onClick={submitForm} name={"Login"}></Button>

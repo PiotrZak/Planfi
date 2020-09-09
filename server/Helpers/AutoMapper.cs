@@ -1,4 +1,5 @@
 using AutoMapper;
+using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Models;
 

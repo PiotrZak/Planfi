@@ -41,7 +41,6 @@ export const Exercise = (props) => {
     }
 
     const editExercise = () => {
-        console.log('edit')
     }
 
     const Breakpoints = {

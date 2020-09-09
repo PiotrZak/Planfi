@@ -34,7 +34,6 @@ function del(url) {
 
 function put(url, body) {
   return axios.put(url, body).then((response) => {
-    console.log(response)
     return handleResponseError(response);
   });
 }

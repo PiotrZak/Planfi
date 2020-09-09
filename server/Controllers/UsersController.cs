@@ -68,6 +68,8 @@ namespace WebApi.Controllers
                 user.Email,
                 user.FirstName,
                 user.LastName,
+                user.Avatar,
+                user.Role,
                 Token = tokenString
             });
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Link } from 'react-router-dom';
 import { PrivateRoute } from './utils/PrivateRoute';
 
 import { RegisterPage } from "./modules/Account/Register"
@@ -33,42 +33,87 @@ export const history = createBrowserHistory();
 let App = () => {
 
   const [theme, setTheme] = useState(true)
+  const [user, setUser] = useState()
 
-    // theme
-    // ? import("./designsystem/_dark.scss")
-    // : import("./designsystem/_light.scss")
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    setUser(JSON.parse(userData))
+  }, []);
+
+  // theme
+  // ? import("./designsystem/_dark.scss")
+  // : import("./designsystem/_light.scss")
+
+  const renderMenu = () => {
+    if (user) {
+      if (user.role == "Organization" || user.role == "Trainer") {
+        return <Menu />
+      }
+    }
+  }
+
+  const renderAvatarMenu = () => {
+    if (user) {
+      if (user.role == "Organization" || user.role == "Trainer") {
+        return <AvatarMenu user={user} />
+      }
+    }
+  }
 
   return (
     <div className="App">
-      {/* <div onClick={() => setTheme(!theme)}>test</div> */}
       <Alert />
       <BrowserRouter history={history}>
-        <Menu />
+        {renderMenu()}
+        {renderAvatarMenu()}
         <Switch>
-          <Route exact path="/register" component={RegisterPage} />
-          <Route exact path="/activate" component={ActivatePage} />
+          <PrivateRoute user={user} exact path="/register" component={RegisterPage} />
+          <PrivateRoute user={user} exact path="/activate" component={ActivatePage} />
           <Route path="/login" component={LoginPage} />
-          <Route path="/forgotpassword" component={ForgotPassword} />
+          <Route user={user} path="/forgotpassword" component={ForgotPassword} />
 
-          <Route path="/categories" component={Categories} />
+          <PrivateRoute user={user} path="/categories" component={Categories} />
+          <PrivateRoute user={user} path="/category/:id" component={Category} />
+          <PrivateRoute user={user} path="/add-exercise" component={AddExercise} />
+          <PrivateRoute user={user} path="/exercise/:id" component={Exercise} />
 
-          {/* all Exercises */}
-          {/* <Route path="/exercises" component={Exercises} /> */}
-          <Route path="/add-exercise" component={AddExercise} />
+          <PrivateRoute user={user} path="/plans" component={Plans} />
+          <PrivateRoute user={user} path="/plan/:id" component={Plan} />
 
-          <Route path="/plans" component={Plans} />
-          <Route path="/users" component={Users} />
+          <PrivateRoute user={user} path="/users" component={Users} />
+          <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
         </Switch>
-
-        <Route path="/exercise/:id" component={Exercise} />
-        <Route path="/category/:id" component={Category} />
-        <Route path="/plan/:id" component={Plan} />
-
-        {/* All routes should be private */}
-        <PrivateRoute path="/user/:id" accessRole={[1, 2, 3]} component={User} />
       </BrowserRouter>
     </div>
   );
 }
 
+const AvatarMenu = ({ user }) => {
+
+  const toProfile = () => {
+    history.push(`/user/${user.userId}`);
+  }
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    history.push(`/login`);
+  }
+
+  return (
+    <div className="profile">
+      <ul id="mainmenu">
+        <li><h2>{user.firstName}</h2>
+          <ul>
+            <li onClick={() => toProfile()}>My Profile</li>
+            <li onClick={() => logout()}>Logout</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  )
+}
 export default App;
+
+
+{/* all Exercises */ }
+{/* <Route path="/exercises" component={Exercises} /> */ }

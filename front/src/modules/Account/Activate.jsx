@@ -35,7 +35,6 @@ export const ActivatePage = (props) => {
     }
 
     const activateUser = () => {
-        console.log('activate')
     }
 
 

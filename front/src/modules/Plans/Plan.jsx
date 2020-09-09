@@ -8,8 +8,15 @@ import { useDispatch } from 'react-redux';
 import Icon from "./../../common/Icon"
 import Return from "./../../common/Return"
 import "react-multi-carousel/lib/styles.css";
-import Button from "../../common/MenuButton/MenuButton"
+
+import {Button} from "../../common/buttons/Button"
+import GenericElement from "../../common/GenericElement/GenericElement"
+
+
+
 import { CheckboxList } from '../../common/CheckboxList';
+
+
 var ReactBottomsheet = require('react-bottomsheet');
 
 export const Plan = (props) => {
@@ -34,7 +41,7 @@ export const Plan = (props) => {
         getPlan(id.id)
         getAllCategories()
         getPlanExercise(id.id)
-    }, [id.id]);
+    }, [id.id, planService.assignExercises]);
 
 
     const getPlan = (id) => {
@@ -63,7 +70,6 @@ export const Plan = (props) => {
             .getExercisesByPlan(id)
             .then((data) => {
                 setExercises(data);
-                console.log(data)
             })
             .catch((error) => {
             });
@@ -76,8 +82,8 @@ export const Plan = (props) => {
         planService
             .assignExercises(data)
             .then(() => {
-                setCategoryExercises()
-                dispatch(alertActions.success("Exercises succesfully allocated!"))
+                dispatch(alertActions.success({allocateExercises}))
+                setBottomSheet(true)
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))
@@ -88,14 +94,13 @@ export const Plan = (props) => {
         planService
             .deletePlanById(id.id)
             .then(() => {
-                dispatch(alertActions.success("Plan succesfully deleted!"))
+                dispatch(alertActions.success({planDeleted}))
                 history.push('/categories');
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))
             });
     }
-
 
     const filterExercises = event => {
         setSearchTerm(event.target.value);
@@ -126,6 +131,8 @@ export const Plan = (props) => {
             });
     }
 
+    const allocateExercises = "Exercises succesfully allocated!";
+    const planDeleted = "Plan succesfully deleted!";
     const addExerciseToPlan = "Add Exercises to plan";
     const noExerciseInPlan = "There are no added exercises in this Plan";
     const returnToCategories = "return to categories"
@@ -147,7 +154,7 @@ export const Plan = (props) => {
                 placeholder={"find exercises"}
             />
 
-            {exercises ? results.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files && exercise.files[0]} exercise={exercise} />)
+            {exercises ? results.map((exercise) => <GenericElement headline={exercise.name} subline={exercise.description} image={exercise.files && exercise.files[0]} exercise={exercise} />)
                 : noExerciseInPlan}
 
             <ReactBottomsheet
@@ -160,8 +167,7 @@ export const Plan = (props) => {
                         <div>
                             <p onClick={() => setCategoryExercises()}><Icon name={"arrow-left"} fill={"#5E4AE3"} />{returnToCategories}</p>
                             <CheckboxList dataList={categoryExercises} displayedValue={"name"} onSelect={selectActiveId} selectAll={true} />
-                            <h1 onClick={assignExerciseToPlan}>Assign Exercises to Plan</h1>
-                            {/* <Button className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={"Assign Exercises to Plan"}></Button> */}
+                            <Button className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={"Assign Exercises to Plan"}></Button>
                         </div>
                         :
                         categories ?

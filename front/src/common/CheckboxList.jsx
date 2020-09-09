@@ -14,7 +14,6 @@ export const CheckboxList = ({
   const [initialSelect, setInitialSelect] = useState();
 
   useEffect(() => {
-    console.log(dataList)
     if (dataList) setList(dataList);
     if (initialSelected) {
       setInitialSelect(initialSelected);

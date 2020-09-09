@@ -3,7 +3,7 @@ import { categoryService } from "../../../services/categoryService";
 import Icon from "../../../../src/common/Icon"
 
 import Return from "../../../common/Return"
-import Button from "../../../common/MenuButton/MenuButton"
+import Button from "../../../common/GenericElement/GenericElement"
 
 import AddCategoryModal from "./AddCategoryModal";
 
@@ -23,7 +23,6 @@ export const Categories = () => {
 
     const openAddCategoryModal = () =>{
         setOpenModal(!openModal)
-        console.log('test')
     }
 
     const noCategories = "No Categories"

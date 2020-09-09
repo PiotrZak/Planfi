@@ -93,6 +93,7 @@ namespace WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
 

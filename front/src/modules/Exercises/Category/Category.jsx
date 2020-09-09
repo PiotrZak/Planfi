@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import Icon from "../../../common/Icon"
 import Return from "../../../common/Return"
 import "react-multi-carousel/lib/styles.css";
-import Button from "../../../common/MenuButton/MenuButton"
+import Button from "../../../common/GenericElement/GenericElement"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -46,7 +46,6 @@ export const Category = (props) => {
             .getExercisesByCategory(id)
             .then((data) => {
                 setExercises(data);
-                console.log(data)
             })
             .catch((error) => {
             });
