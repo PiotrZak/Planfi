@@ -80,6 +80,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()

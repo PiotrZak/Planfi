@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { FormInput } from "../../../common/FormInput"
 
-const Checkbox = () => {
+
+const Checkbox = ({ handleElement, id }) => {
+
+    const [select, setSelect] = useState(false);
+    const [transformedId, setTransformedId] = useState([])
+
+    useEffect(() => {
+    }, [handleElement]);
+
+    const handleChange = () => {
+        select ? setTransformedId({ id: id, selected: true }) : setTransformedId({ id: id, selected: false })
+        setSelect(!select)
+        handleElement(transformedId)
+    }
+
     return (
-        <form className="menuButton-form">
-            <input type="checkbox" className="menuButton-form__checkbox"/>
-        </form>
+        <FormInput
+            type="checkbox"
+            checked={select ? true : false}
+            onChange={handleChange}
+        ></FormInput>
     )
 }
 

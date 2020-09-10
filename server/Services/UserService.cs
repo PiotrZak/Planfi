@@ -86,7 +86,7 @@ namespace WebApi.Services
             if (!string.IsNullOrWhiteSpace(userParam.LastName))
                 user.LastName = userParam.LastName;
 
-            if (!string.IsNullOrWhiteSpace(userParam.PhoneNumber.ToString()))
+            if (userParam.PhoneNumber != user.PhoneNumber)
                 user.PhoneNumber = userParam.PhoneNumber;
 
             // update password if provided

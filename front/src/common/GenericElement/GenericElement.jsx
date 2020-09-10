@@ -6,6 +6,8 @@ import Icon from "../../../src/common/Icon"
 import { planService } from "../../services/planService";
 
 const GenericElement = ({
+    handleElement,
+    id,
     headline,
     subline,
     image,
@@ -19,7 +21,7 @@ const GenericElement = ({
     return (
         <div className="rectangleButton">
             <div className="rectangleButton__wrapper">
-                {checkbox && <Checkbox />}
+                {checkbox && <Checkbox handleElement ={handleElement} id ={id}/>}
                 {image && <div className="menuButton__image"><img src={`data:image/jpeg;base64,${image}`} /></div>}
 
                 <div className="rectangleButton-info">

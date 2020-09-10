@@ -5,7 +5,7 @@ import { FormInput } from "./../../common/FormInput"
 import { validationUtil } from "./../../utils/validation.util"
 import { alertActions } from './../../redux/actions/alert.actions'
 import { planService } from "./../../services/planService";
-import { Button }  from "./../../common/buttons/Button"
+import { Button } from "./../../common/buttons/Button"
 
 const AddPlanModal = ({ openModal, onClose }) => {
 
@@ -16,37 +16,15 @@ const AddPlanModal = ({ openModal, onClose }) => {
     const dispatch = useDispatch()
 
     const handleInput = (e) => {
-        
         let name = e.target.name
         addPlanData[name] = e.target.value;
-
         setAddPlan(addPlanData);
-
-        setErrors(
-            validationUtil.validateRequiredField(
-                name,
-                { ...errors },
-                requiredFields,
-                addPlanData
-            )
-        );
+        validationUtil.runSetErrors(name, setErrors, errors, requiredFields, addPlanData)
     }
 
-    const submitForm = (e) => {
-        e.preventDefault();
-
-        let currentErrors = validationUtil.validateAllRequiredFields(
-            requiredFields,
-            addPlanData
-        );
-
-        setErrors({ ...errors, ...currentErrors });
-        if (
-            Object.getOwnPropertyNames(currentErrors).length === 0 &&
-            Object.getOwnPropertyNames(errors).length === 0
-        ) {
-            createPlan(addPlanData)
-        }
+    const submitForm = () => {
+        const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, addPlanData)
+        confirm && createPlan(addPlanData)
     }
 
     const createPlan = (addPlanData) => {
@@ -75,7 +53,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
                     <p>{addPlanTip}</p>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="btn btn--primary btn--lg" onClick={submitForm}>{addPlanButton}</Button>{' '}
+                    <Button className="btn btn--primary btn--lg" onClick={submitForm} name ={addPlanButton}/>
                 </ModalFooter>
             </Modal>
         </div>

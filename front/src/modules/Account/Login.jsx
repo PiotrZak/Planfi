@@ -39,7 +39,6 @@ export const LoginPage = () => {
                 dispatch(alertActions.success("Congratulations! You are log in."))
                 localStorage.setItem('user', JSON.stringify(data));
                 if (data.role === "Trainer") {
-                    console.log('lol')
                     history.push('/users');
                 }
                 else if(data.role === "Organization") {

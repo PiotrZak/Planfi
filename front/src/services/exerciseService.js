@@ -5,6 +5,7 @@ export const exerciseService = {
   getExercisesByPlan,
   getAllExercises,
   addExercise,
+  editExercise,
   getExerciseById,
   deleteExerciseById
   };
@@ -28,6 +29,10 @@ const EXERCISES_URL = `${localapiURL}/Exercises`;
 
   function addExercise(body) {
     return http.postFile(`${EXERCISES_URL}/create`, body);
+  }
+
+  function editExercise(id, body) {
+    return http.put(`${EXERCISES_URL}/${id}`, body);
   }
 
   function getExerciseById(id) {

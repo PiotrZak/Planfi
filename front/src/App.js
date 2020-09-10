@@ -18,7 +18,6 @@ import Alert from "../src/common/Alert"
 
 import Menu from "./Menu"
 
-
 import { Categories } from './modules/Exercises/Category/Categories';
 import { Category } from './modules/Exercises/Category/Category';
 
@@ -27,6 +26,7 @@ import './styles.scss';
 import { Exercises } from './modules/Exercises/Exercises';
 import { Exercise } from './modules/Exercises/Exercise';
 import { AddExercise } from './modules/Exercises/AddExercise';
+import { EditExercise } from './modules/Exercises/EditExercise';
 
 export const history = createBrowserHistory();
 
@@ -65,7 +65,7 @@ let App = () => {
       <Alert />
       <BrowserRouter history={history}>
         {renderMenu()}
-        {renderAvatarMenu()}
+        {/* {renderAvatarMenu()} */}
         <Switch>
           <PrivateRoute user={user} exact path="/register" component={RegisterPage} />
           <PrivateRoute user={user} exact path="/activate" component={ActivatePage} />
@@ -75,6 +75,7 @@ let App = () => {
           <PrivateRoute user={user} path="/categories" component={Categories} />
           <PrivateRoute user={user} path="/category/:id" component={Category} />
           <PrivateRoute user={user} path="/add-exercise" component={AddExercise} />
+          <PrivateRoute user={user} path="/edit-exercise/:id" component={EditExercise} />
           <PrivateRoute user={user} path="/exercise/:id" component={Exercise} />
 
           <PrivateRoute user={user} path="/plans" component={Plans} />

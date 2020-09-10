@@ -9,6 +9,7 @@ namespace WebApi.Entities
         public Exercise()
         {
             ExerciseId = Guid.NewGuid().ToString();
+            Files = new List<byte[]> ();
         }
 
         [Key]

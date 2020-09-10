@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Models
 {
-    public class UpdateModel
+    public class UpdateUserModel
     {
         public IFormFile Avatar { get; set; }
         public string Email { get; set; }

@@ -4,7 +4,7 @@ import Icon from "../../../src/common/Icon"
 import Return from "../../common/Return"
 import { useDispatch } from 'react-redux';
 import { alertActions } from '../../redux/actions/alert.actions'
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 var ReactBottomsheet = require('react-bottomsheet');
@@ -40,23 +40,20 @@ export const Exercise = (props) => {
             });
     }
 
-    const editExercise = () => {
-    }
-
     const Breakpoints = {
         desktop: {
-          breakpoint: { max: 5000, min: 768 },
-          items: 1,
+            breakpoint: { max: 5000, min: 768 },
+            items: 1,
         },
         laptop: {
-          breakpoint: { max: 1024, min: 0 },
-          items: 1,
+            breakpoint: { max: 1024, min: 0 },
+            items: 1,
         },
         mobile: {
-          breakpoint: { max: 768, min: 0 },
-          items: 1,
+            breakpoint: { max: 768, min: 0 },
+            items: 1,
         },
-      };
+    };
 
 
     return (
@@ -67,19 +64,19 @@ export const Exercise = (props) => {
             </div>
             {exercise &&
                 <div className="exercise">
-                {exercise.files &&
-                    <Carousel
-                        swipeable={true}
-                        responsive={Breakpoints}
-                    >
-                        {exercise.files.map((file, i) =>
-                            <Slide key={i} img={file} />)}
-                    </Carousel>
-                }
+                    {exercise.files &&
+                        <Carousel
+                            swipeable={true}
+                            responsive={Breakpoints}
+                        >
+                            {exercise.files.map((file, i) =>
+                                <Slide key={i} img={file} />)}
+                        </Carousel>
+                    }
                     <h1>{exercise.name}</h1>
-                    <Icon name={"ellipsisv"} fill={"#5E4AE3"} />
                     Series: <p>{exercise.series}</p>
                     Times: <p>{exercise.times}</p>
+                    Weight: <p>{exercise.weight}</p>
                     Description: <p>{exercise.description}</p>
 
                 </div>
@@ -87,7 +84,10 @@ export const Exercise = (props) => {
             <ReactBottomsheet
                 visible={bottomSheet}
                 onClose={() => setBottomSheet(false)}>
-                <button className='bottom-sheet-item'>Edit</button>
+                <button className='bottom-sheet-item'><Link to={{
+                    pathname: `/edit-exercise/${props.location.state.id}`,
+                    state: { exercise: exercise }
+                }}>Edit</Link></button>
                 <button onClick={() => deleteExercise()} className='bottom-sheet-item'>Delete</button>
             </ReactBottomsheet>
         </div>

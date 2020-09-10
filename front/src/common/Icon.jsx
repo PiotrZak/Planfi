@@ -3,7 +3,7 @@ import { ReactSVG } from 'react-svg';
 
 export const Icon = ({name,text, fill, width, height}) => {
 
-  const selectedIcon =`./icons/library/${name}.svg`
+  const selectedIcon =`../icons/library/${name}.svg`
 
   return (
     <div className = "icon">

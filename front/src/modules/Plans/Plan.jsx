@@ -9,7 +9,11 @@ import Icon from "./../../common/Icon"
 import Return from "./../../common/Return"
 import "react-multi-carousel/lib/styles.css";
 
-import {Button} from "../../common/buttons/Button"
+import { Button } from "../../common/buttons/Button"
+
+import {CheckboxGenericComponent} from "../../common/CheckboxGenericComponent"
+
+
 import GenericElement from "../../common/GenericElement/GenericElement"
 
 
@@ -23,12 +27,17 @@ export const Plan = (props) => {
 
     const [plan, setPlan] = useState();
     const [exercises, setExercises] = useState()
+
     const [activeExercise, setActiveExercise] = useState([])
-    const [searchTerm, setSearchTerm] = React.useState("");
+    const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
+
+
+    const [searchTerm, setSearchTerm] = useState("");
 
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState()
 
+    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
     const [bottomSheet, setBottomSheet] = useState(false)
 
     const history = useHistory();
@@ -82,7 +91,7 @@ export const Plan = (props) => {
         planService
             .assignExercises(data)
             .then(() => {
-                dispatch(alertActions.success({allocateExercises}))
+                dispatch(alertActions.success({ allocateExercises }))
                 setBottomSheet(true)
             })
             .catch((error) => {
@@ -94,7 +103,7 @@ export const Plan = (props) => {
         planService
             .deletePlanById(id.id)
             .then(() => {
-                dispatch(alertActions.success({planDeleted}))
+                dispatch(alertActions.success({ planDeleted }))
                 history.push('/categories');
             })
             .catch((error) => {
@@ -113,11 +122,11 @@ export const Plan = (props) => {
         );
 
     const selectActiveId = (selectedData) => {
+
         const categoryIds = selectedData
             .filter((el) => el.value === true)
             .map((a) => a.exerciseId);
         setActiveExercise([...new Set([...activeExercise, ...categoryIds])])
-
     }
 
 
@@ -131,6 +140,26 @@ export const Plan = (props) => {
             });
     }
 
+    function filteringArraysScopes(allElements, removeElementsFromList) {
+        return allElements.filter((el) => !removeElementsFromList.includes(el));
+      }
+
+    const submissionHandleElement = (selectedData) => {
+
+            const selectedExercisesIds = selectedData
+            .filter((el) => el.value === true)
+            .map((a) => a.exerciseId);
+      
+          const unSelectedExercisesIds = selectedData
+            .filter((el) => el.value === false || !el.value)
+            .map((a) => a.exerciseId);
+
+            const finallyExercises = filteringArraysScopes(selectedExercisesIds, unSelectedExercisesIds)
+
+            setActiveSelectedExercise(finallyExercises)
+            console.log(activeSelectedExercise)
+    }
+
     const allocateExercises = "Exercises succesfully allocated!";
     const planDeleted = "Plan succesfully deleted!";
     const addExerciseToPlan = "Add Exercises to plan";
@@ -141,21 +170,40 @@ export const Plan = (props) => {
         <div className="container">
             <div className="container__title">
                 <Return />
-
                 {plan && <h2>{plan.title}</h2>}
                 <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
-
             </div>
 
             <input
-                className ="search"
+                className="search"
                 type='text'
                 onChange={filterExercises}
                 placeholder={"find exercises"}
             />
 
-            {exercises ? results.map((exercise) => <GenericElement headline={exercise.name} subline={exercise.description} image={exercise.files && exercise.files[0]} exercise={exercise} />)
-                : noExerciseInPlan}
+            <CheckboxGenericComponent dataList={exercises} displayedValue={"name"}  onSelect={submissionHandleElement} selectAll={true} />)
+
+            {/* {exercises ? results.map((exercise) => <GenericElement handleElement={submissionHandleElement} id={exercise.exerciseId} checkbox={true} headline={exercise.name} subline={`${exercise.series} / ${exercise.times}`} image={exercise.files && exercise.files[0]} exercise={exercise} />)
+                : noExerciseInPlan} */}
+
+            <ReactBottomsheet
+                visible={selectedElementsBottomSheet}
+                onClose={() => setSelectedElementsBottomSheet(false)}
+                appendCancelBtn={false}>
+
+                <div>
+                    {activeSelectedExercise.length == 1 ?
+                        <h1>Only one element is checked</h1>
+
+                        : <h1>More elements is checked</h1>
+                    }
+                </div>
+            </ReactBottomsheet>
+
+
+
+
+
 
             <ReactBottomsheet
                 visible={bottomSheet}
@@ -180,6 +228,11 @@ export const Plan = (props) => {
                     }}
                 </div>
             </ReactBottomsheet>
+
+
+
+
+
         </div>
     );
 }
