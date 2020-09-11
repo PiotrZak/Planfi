@@ -80,6 +80,16 @@ namespace WebApi.Controllers
             return Ok();
         }
 
+        [AllowAnonymous]
+        [HttpPost("unassignExercises")]
+        public IActionResult UnassignToPlan([FromBody] AssignExerciseToPlan model)
+        {
+
+            _planService.UnassignExercisesToPlan(model.PlanId, model.ExerciseId);
+
+            return Ok();
+        }
+
 
         [AllowAnonymous]
         [HttpGet]

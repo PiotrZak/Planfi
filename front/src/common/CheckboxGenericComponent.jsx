@@ -78,19 +78,18 @@ export const CheckboxGenericComponent = ({
     if (Array.isArray(list))
       dataList.map((element, i) => {
         row.push(
-          <div>
-          <GenericElement key = {i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`}  exercise={element} />
-            <FormInput
-              className ="micro-bottom"
+          <div className="checkbox-generic-list__element">
+            <input
+              className="checkbox-generic-list__checkbox"
               id={`${element[displayedValue]}-checkbox-${id}`}
               key={`${element[displayedValue]}-checkbox-${id}`}
               name={element[displayedValue]}
-              labelWidth="10"
               inputWidth="1"
               type="checkbox"
               checked={element.value ? true : false}
               onChange={handleChange}
-            ></FormInput>
+            ></input>
+            <GenericElement key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
           </div>
         );
         return element;

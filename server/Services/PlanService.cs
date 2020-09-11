@@ -12,6 +12,7 @@ namespace WebApi.Services
         IEnumerable<Plan> GetAll();
         void Delete(string id);
         void AssignExercisesToPlan(string planId, string[] exerciseId);
+        void UnassignExercisesToPlan(string planId, string[] exerciseId);
     }
 
     public class PlanService : IPlanService
@@ -65,6 +66,20 @@ namespace WebApi.Services
             _context.Plans.Update(plan);
             _context.SaveChanges();
         }
+
+        public void UnassignExercisesToPlan(string planId, string[] exerciseId)
+        {
+            var plan = GetById(planId);
+
+            foreach (var id in exerciseId)
+            {
+                var element = _context.Exercises.Find(id);
+                plan.Exercises.Remove(element);
+            }
+            _context.Plans.Update(plan);
+            _context.SaveChanges();
+        }
+
     }
 }
 

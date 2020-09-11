@@ -51,32 +51,32 @@ export const User = (props) => {
     const logout = "Logout";
 
     return (
-        <div className="container">
+        <div className="user-container">
+            <div className="container">
 
-            <div className="container__title">
-                <Return />
-                <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} /></div>
+                <div className="user-container__container__title">
+                    <Return fill = {"white"} />
+                    <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"white"} /></div>
+                </div>
+
+                    {user && <UserInfo user={user} />}
+
+                <Navs />
+
+                <EditUserDataModal id={id.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
+                <EditUserEmailModal id={id.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
+                <EditUserPasswordModal id={id.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
+
+
+                <ReactBottomsheet
+                    visible={bottomSheet}
+                    onClose={() => setBottomSheet(false)}>
+                    <button onClick={() => setOpenEditUserData(true)} className='bottom-sheet-item'>{userEdit}</button>
+                    <button onClick={() => setOpenEditMailModal(true)} className='bottom-sheet-item'>{changeMail}</button>
+                    <button onClick={() => setOpenEditUserPasswordModal(true)} className='bottom-sheet-item'>{changePassword}</button>
+                    <button className='bottom-sheet-item'>{logout}</button>
+                </ReactBottomsheet>
             </div>
-
-            <div className="user-container">
-                {user && <UserInfo user={user} />}
-            </div>
-
-            <Navs />
-
-            <EditUserDataModal id={id.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
-            <EditUserEmailModal id={id.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
-            <EditUserPasswordModal id={id.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
-
-
-            <ReactBottomsheet
-                visible={bottomSheet}
-                onClose={() => setBottomSheet(false)}>
-                <button onClick={() => setOpenEditUserData(true)} className='bottom-sheet-item'>{userEdit}</button>
-                <button onClick={() => setOpenEditMailModal(true)} className='bottom-sheet-item'>{changeMail}</button>
-                <button onClick={() => setOpenEditUserPasswordModal(true)} className='bottom-sheet-item'>{changePassword}</button>
-                <button className='bottom-sheet-item'>{logout}</button>
-            </ReactBottomsheet>
         </div>
     );
 }
@@ -179,82 +179,82 @@ const Avatar = ({ avatar, id }) => {
                             ' avatar__imghover'
                             }`} src={`data:image/jpeg;base64,${avatar}`} />
                     <input
-                            ref={fileInputRef}
-                            className="file-input"
-                            type="file"
-                            multiple
-                            onChange={filesSelected}
-                        />
-                        {hover && <p>Change Avatar</p>}
+                        ref={fileInputRef}
+                        className="file-input"
+                        type="file"
+                        multiple
+                        onChange={filesSelected}
+                    />
+                    {hover && <p>Change Avatar</p>}
                 </div>
-                    :
+                :
                 <div
-                        onMouseEnter={() => setHover(true)}
-                        onMouseLeave={() => setHover(false)}
-                        onDrop={fileDrop}
-                        onClick={fileInputClicked}
-                        className={`avatar ${
-                            hover &&
-                            ' avatar__hover'
-                            }`}>
-                        <input
-                            ref={fileInputRef}
-                            className="file-input"
-                            type="file"
-                            multiple
-                            onChange={filesSelected}
-                        />
-                        {hover && <p><Icon name={"plus"} fill={"white"}/>Add Avatar</p>}
-                    </div>
-                    }
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                    onDrop={fileDrop}
+                    onClick={fileInputClicked}
+                    className={`avatar ${
+                        hover &&
+                        ' avatar__hover'
+                        }`}>
+                    <input
+                        ref={fileInputRef}
+                        className="file-input"
+                        type="file"
+                        multiple
+                        onChange={filesSelected}
+                    />
+                    {hover && <p><Icon name={"plus"} fill={"white"} />Add Avatar</p>}
+                </div>
+            }
         </>
     );
-        }
-        
-        
+}
+
+
 const Navs = () => {
 
     const [activeTab, setActiveTab] = useState('1');
-            const myPlans = "Plans";
-            const myTrainers = "Trainers";
-        
+    const myPlans = "Plans";
+    const myTrainers = "Trainers";
+
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
-        }
-        return (
+    }
+    return (
         <div className="user-container__tabs">
-                <Nav tabs>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '1' })}
-                            onClick={() => { toggle('1'); }}
-                        >
-                            <h2>{myPlans}</h2>
-                        </NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink
-                            className={classnames({ active: activeTab === '2' })}
-                            onClick={() => { toggle('2'); }}
-                        >
-                            <h2>{myTrainers}</h2>
-                        </NavLink>
-                    </NavItem>
-                </Nav>
-                <TabContent activeTab={activeTab}>
+            <Nav tabs>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === '1' })}
+                        onClick={() => { toggle('1'); }}
+                    >
+                        <h2>{myPlans}</h2>
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink
+                        className={classnames({ active: activeTab === '2' })}
+                        onClick={() => { toggle('2'); }}
+                    >
+                        <h2>{myTrainers}</h2>
+                    </NavLink>
+                </NavItem>
+            </Nav>
+            <TabContent activeTab={activeTab}>
 
-                    <TabPane tabId="1">
-                        <h1>My Plans</h1>
-                    </TabPane>
+                <TabPane tabId="1">
+                    <h1>My Plans</h1>
+                </TabPane>
 
-                    <TabPane tabId="2">
-                        <h1>My Trainers</h1>
-                    </TabPane>
-                </TabContent>
-            </div>
-            )
-        }
-        
-        
-        
+                <TabPane tabId="2">
+                    <h1>My Trainers</h1>
+                </TabPane>
+            </TabContent>
+        </div>
+    )
+}
+
+
+
 export default User;

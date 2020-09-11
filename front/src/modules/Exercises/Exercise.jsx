@@ -97,7 +97,7 @@ export const Exercise = (props) => {
 const Slide = ({ key, img }) => {
     return (
         <div>
-            <img key={key} src={`data:image/jpeg;base64,${img}`} />
+            <img key={key} alt = {key} src={`data:image/jpeg;base64,${img}`} />
         </div>
     );
 };

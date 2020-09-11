@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
 import { FormInput } from "../../../common/FormInput"
@@ -11,7 +11,7 @@ import { Button } from "../../../common/buttons/Button"
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
 
-    const [userData, setUserData] = useState({});
+    const [userData] = useState({});
     const [errors, setErrors] = useState({})
 
     const requiredFields = ["firstName", "lastName", "phone"];

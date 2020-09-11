@@ -40,7 +40,7 @@ export const Categories = () => {
             </div>
             <AddCategoryModal openModal = {openModal} onClose={() => setOpenModal(false)}/>
             <div>
-            {categories ? categories.map((category) => <Button headline={category.title} category ={category}/>)
+            {categories ? categories.map((category, i) => <Button key = {i} headline={category.title} category ={category}/>)
                     : noCategories + addExerciseToCategory}
             </div>
         </div>

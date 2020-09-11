@@ -1,4 +1,5 @@
 import { http } from "./http.service";
+import { USER_URL } from "./utils"
 
 export const userService = {
     register,
@@ -7,11 +8,6 @@ export const userService = {
     getUserById,
     editUser,
   };
-
-// const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
-const localapiURL = "http://localhost:5005"
-const USER_URL = `${localapiURL}/Users/`;
-
 
   function register(body) {
     return http.post(`${USER_URL}register`, body);

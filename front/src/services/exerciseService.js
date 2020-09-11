@@ -1,4 +1,5 @@
 import { http } from "./http.service";
+import { EXERCISES_URL } from "./utils"
 
 export const exerciseService = {
   getExercisesByCategory,
@@ -8,37 +9,32 @@ export const exerciseService = {
   editExercise,
   getExerciseById,
   deleteExerciseById
-  };
+};
 
-// const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
-const localapiURL = "http://localhost:5005"
+function getAllExercises(body) {
+  return http.get(EXERCISES_URL, body);
+}
 
-const EXERCISES_URL = `${localapiURL}/Exercises`;
+function getExercisesByCategory(id) {
+  return http.get(`${EXERCISES_URL}/category/${id}`);
+}
 
-  function getAllExercises(body) {
-    return http.get(EXERCISES_URL, body);
-  }
+function getExercisesByPlan(id) {
+  return http.get(`${EXERCISES_URL}/plan/${id}`);
+}
 
-  function getExercisesByCategory(id) {
-    return http.get(`${EXERCISES_URL}/category/${id}`);
-  }
+function addExercise(body) {
+  return http.postFile(`${EXERCISES_URL}/create`, body);
+}
 
-  function getExercisesByPlan(id) {
-    return http.get(`${EXERCISES_URL}/plan/${id}`);
-  }
+function editExercise(id, body) {
+  return http.put(`${EXERCISES_URL}/${id}`, body);
+}
 
-  function addExercise(body) {
-    return http.postFile(`${EXERCISES_URL}/create`, body);
-  }
+function getExerciseById(id) {
+  return http.get(`${EXERCISES_URL}/${id}`);
+}
 
-  function editExercise(id, body) {
-    return http.put(`${EXERCISES_URL}/${id}`, body);
-  }
-
-  function getExerciseById(id) {
-    return http.get(`${EXERCISES_URL}/${id}`);
-  }
-
-  function deleteExerciseById(id) {
-    return http.del(`${EXERCISES_URL}/${id}`);
-  }
+function deleteExerciseById(id) {
+  return http.del(`${EXERCISES_URL}/${id}`);
+}

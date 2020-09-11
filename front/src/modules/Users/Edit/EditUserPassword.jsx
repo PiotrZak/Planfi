@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
 import { FormInput } from "../../../common/FormInput"
@@ -9,7 +9,7 @@ import { Button } from "../../../common/buttons/Button"
 
 const EditUserPasswordModal = ({ id, openModal, onClose }) => {
 
-    const [userData, setUserData] = useState({});
+    const [userData] = useState({});
     const [errors, setErrors] = useState({})
 
     const requiredFields = ["password", "newPassword", "repeatNewPassword"];
@@ -37,9 +37,7 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
 
     // todo - exclude this logic
     const changePassword = (userData) => {
-
         const transformedUserData = { password: userData.password, newPassword: userData.newPassword }
-
         userService
             .editUser(id, transformedUserData)
             .then(() => {

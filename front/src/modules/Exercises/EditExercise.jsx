@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FormInput } from "../../common/FormInput";
 import { useDispatch } from 'react-redux';
 import { Button } from "../../common/buttons/Button"
@@ -129,7 +129,7 @@ export const EditExercise = (props) => {
             </div>
 
             {initialExerciseData.files && initialExerciseData.files.map((file, i) =>
-                <img className ="exercise-image" key={i} src={`data:image/jpeg;base64,${file}`} />)}
+                <img className ="exercise-image" key={i} alt = {i} src={`data:image/jpeg;base64,${file}`} />)}
                 
 
 

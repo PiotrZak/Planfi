@@ -21,9 +21,8 @@ import Menu from "./Menu"
 import { Categories } from './modules/Exercises/Category/Categories';
 import { Category } from './modules/Exercises/Category/Category';
 
-
 import './styles.scss';
-import { Exercises } from './modules/Exercises/Exercises';
+// import { Exercises } from './modules/Exercises/Exercises';
 import { Exercise } from './modules/Exercises/Exercise';
 import { AddExercise } from './modules/Exercises/AddExercise';
 import { EditExercise } from './modules/Exercises/EditExercise';

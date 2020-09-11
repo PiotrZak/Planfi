@@ -8,10 +8,20 @@
   top:0;
   width:100%;
   height:400px;
-  position:absolute;
   display:flex;
   text-align: center;
   z-index:0;
+  &__container__title{
+    margin:0 0 0% 0;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    &__left{
+        display:inline-flex;
+        align-items:center;
+    }
+  }
   &__info{
       width:100%;
       display: flex;

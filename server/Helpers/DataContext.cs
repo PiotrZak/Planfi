@@ -8,15 +8,19 @@ namespace WebApi.Helpers
     public class DataContext : DbContext
     {
 
-        public DataContext(DbContextOptions<DataContext> options)
+        public IConfiguration Configuration { get; }
+
+        public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration)
             : base(options)
         {
+            Configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
-            //optionsBuilder.UseNpgsql("Host=fitdb.clbfkbqft4wd.eu-west-1.rds.amazonaws.com;Port=5432;Username=postgres;Password=postgres;Database=fitDB;");
+            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
+            optionsBuilder.UseNpgsql("Host=fitdb.cc6bodfcsdgg.us-east-2.rds.amazonaws.com;Port=5432;Username=postgres;Password=postgres;Database=fitdb;");
+            //optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AmazonRDS"));
 
         }
 

@@ -38,7 +38,7 @@ export const Plans = () => {
             </div>
             <AddPlanModal openModal={openModal} onClose={() => setOpenModal(false)} />
             <div>
-                {plans ? plans.map((plan) => <Button headline={plan.title} plan={plan} />)
+                {plans ? plans.map((plan, i) => <Button key={i} headline={plan.title} plan={plan} />)
                     : noplans + addExerciseToCategory}
             </div>
         </div>
