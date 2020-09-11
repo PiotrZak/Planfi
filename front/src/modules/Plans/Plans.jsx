@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { planService } from "./../../services/planService";
 import Icon from "./../../../src/common/Icon"
 import Return from "./../../common/Return"
-import Button from "./../../common/MenuButton/MenuButton"
+import Button from "./../../common/GenericElement/GenericElement"
 import AddPlanModal from "./AddPlanModal";
 
 export const Plans = () => {
@@ -14,15 +14,13 @@ export const Plans = () => {
             .getAllPlans()
             .then((data) => {
                 setPlans(data);
-                console.log(data)
             })
             .catch(() => {
             });
-    }, [setOpenModal]);
+    }, [setOpenModal, openModal]);
 
     const openAddPlanModal = () => {
         setOpenModal(!openModal)
-        console.log('test')
     }
 
     const noplans = "No plans"
@@ -40,7 +38,7 @@ export const Plans = () => {
             </div>
             <AddPlanModal openModal={openModal} onClose={() => setOpenModal(false)} />
             <div>
-                {plans ? plans.map((plan) => <Button headline={plan.title} plan={plan} />)
+                {plans ? plans.map((plan, i) => <Button key={i} headline={plan.title} plan={plan} />)
                     : noplans + addExerciseToCategory}
             </div>
         </div>

@@ -15,6 +15,7 @@ using System;
 using System.Text;
 
 using AutoMapper;
+using System.IO;
 
 namespace WebApi.Controllers
 {
@@ -67,6 +68,8 @@ namespace WebApi.Controllers
                 user.Email,
                 user.FirstName,
                 user.LastName,
+                user.Avatar,
+                user.Role,
                 Token = tokenString
             });
         }
@@ -117,8 +120,9 @@ namespace WebApi.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody] UpdateModel model)
+        public IActionResult Update(string id, [FromBody] UpdateUserModel model)
         {
             var user = _mapper.Map<User>(model);
             user.UserId = id;

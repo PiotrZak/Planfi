@@ -18,6 +18,7 @@ export const AddExercise = (props) => {
         description: null,
         times: null,
         series: null,
+        weight:null,
         file: null,
     }
 
@@ -28,21 +29,9 @@ export const AddExercise = (props) => {
 
     const dispatch = useDispatch()
 
-    const submit = (e) => {
-        e.preventDefault();
-
-        let currentErrors = validationUtil.validateAllRequiredFields(
-            requiredFields,
-            exerciseData
-        );
-
-        setErrors({ ...errors, ...currentErrors });
-        if (
-            Object.getOwnPropertyNames(currentErrors).length === 0 &&
-            Object.getOwnPropertyNames(errors).length === 0
-        ) {
-            addExercise()
-        }
+    const submit = () => {
+        const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, exerciseData)
+        confirm && addExercise(exerciseData)
     }
 
     const addExercise = () => {
@@ -52,6 +41,7 @@ export const AddExercise = (props) => {
         formData.append("Description", exerciseData.description)
         formData.append("Times", exerciseData.times)
         formData.append("Series", exerciseData.series)
+        formData.append("Weight", exerciseData.weight)
         for (let i = 0; i < exerciseData.files.length; i++) {
             formData.append(`Files`, exerciseData.files[i])
         }
@@ -69,18 +59,10 @@ export const AddExercise = (props) => {
     }
 
     const handleInput = (e) => {
-
         let name = e.target.name
         exerciseData[name] = e.target.value;
         setExerciseData(exerciseData);
-        setErrors(
-            validationUtil.validateRequiredField(
-                name,
-                { ...errors },
-                requiredFields,
-                exerciseData
-            )
-        );
+        validationUtil.runSetErrors(name, setErrors, errors, requiredFields, exerciseData)
     }
 
     const handleSeries = (data) => {
@@ -93,6 +75,10 @@ export const AddExercise = (props) => {
 
     const handleFileData = (data) => {
         setExerciseData({ ...exerciseData, files: data })
+    }
+
+    const handleWeight = (data) => {
+        setExerciseData({ ...exerciseData, weight: data + 1 })
     }
 
     const AddExercise = "Add exercise to"
@@ -121,6 +107,11 @@ export const AddExercise = (props) => {
                 <div className="exercise__form">
                     <h4>{Series}</h4>
                     <Counter handleData={handleTime} />
+                </div>
+
+                <div className="exercise__form">
+                    <h4>{Series}</h4>
+                    <Counter handleData={handleWeight} />
                 </div>
             </div>
 

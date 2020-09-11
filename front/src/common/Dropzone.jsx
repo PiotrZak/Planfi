@@ -50,7 +50,6 @@ const Dropzone = ({handleFileData}) => {
     const filesSelected = () => {
         if (fileInputRef.current.files.length) {
             handleFiles(fileInputRef.current.files);
-
         }
     }
 
@@ -99,12 +98,6 @@ const Dropzone = ({handleFileData}) => {
         }
     }
 
-    const uploadFiles = async () => {
-        for (let i = 0; i < validFiles.length; i++) {
-            handleFileData(validFiles)
-        }
-    }
-
     const openImageModal = (file) => {
         const reader = new FileReader();
         modalRef.current.style.display = "block";
@@ -113,7 +106,6 @@ const Dropzone = ({handleFileData}) => {
             modalImageRef.current.style.backgroundImage = `url(${e.target.result})`;
         }
     }
-
 
     return (
         <>

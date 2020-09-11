@@ -4,7 +4,7 @@ import Icon from "../../../../src/common/Icon"
 import Dropzone from "../../../../src/common/Dropzone"
 
 import Return from "../../../common/Return"
-import Button from "../../../common/MenuButton/MenuButton"
+import Button from "../../../common/GenericElement/GenericElement"
 
 import AddCategoryModal from "./AddCategoryModal";
 
@@ -20,11 +20,10 @@ export const Categories = () => {
             })
             .catch(() => {
             });
-    }, [setOpenModal]);
+    }, [setOpenModal, openModal]);
 
     const openAddCategoryModal = () =>{
         setOpenModal(!openModal)
-        console.log('test')
     }
 
     const noCategories = "No Categories"
@@ -42,7 +41,7 @@ export const Categories = () => {
             </div>
             <AddCategoryModal openModal = {openModal} onClose={() => setOpenModal(false)}/>
             <div>
-            {categories ? categories.map((category) => <Button headline={category.title} category ={category}/>)
+            {categories ? categories.map((category, i) => <Button key = {i} headline={category.title} category ={category}/>)
                     : noCategories + addExerciseToCategory}
             </div>
 

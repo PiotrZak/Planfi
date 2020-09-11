@@ -8,8 +8,12 @@ import { useDispatch } from 'react-redux';
 import Icon from "./../../common/Icon"
 import Return from "./../../common/Return"
 import "react-multi-carousel/lib/styles.css";
-import Button from "./../../common/MenuButton/MenuButton"
+import { Loader } from "../../common/Loader"
+import { Button } from "../../common/buttons/Button"
+import { CheckboxGenericComponent } from "../../common/CheckboxGenericComponent"
 import { CheckboxList } from '../../common/CheckboxList';
+import Spacer from "../../common/Spacer"
+
 var ReactBottomsheet = require('react-bottomsheet');
 
 export const Plan = (props) => {
@@ -17,9 +21,20 @@ export const Plan = (props) => {
     const [plan, setPlan] = useState();
     const [exercises, setExercises] = useState()
 
+    const [activeExercise, setActiveExercise] = useState([])
+    const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
+
+    const [isLoading, setIsLoading] = useState(true)
+
+
+    const [searchTerm, setSearchTerm] = useState("");
+
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState()
 
+    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
+
+    const [editable, setEditable] = useState(false)
     const [bottomSheet, setBottomSheet] = useState(false)
 
     const history = useHistory();
@@ -30,8 +45,8 @@ export const Plan = (props) => {
 
     useEffect(() => {
         getPlan(id.id)
-        assignExerciseToPlan()
-        // getPlanExercise(id.id)
+        getAllCategories()
+        getPlanExercise(id.id)
     }, [id.id]);
 
 
@@ -39,32 +54,58 @@ export const Plan = (props) => {
         planService
             .getPlanById(id)
             .then((data) => {
-                console.log(data)
+
                 setPlan(data);
             })
             .catch((error) => {
             });
     }
 
-    // const getPlanExercise = (id) => {
-    //     exerciseService
-    //         .getExercisesByPlan(id)
-    //         .then((data) => {
-    //             setExercises(data);
-    //             console.log(data)
-    //         })
-    //         .catch((error) => {
-    //         });
-    // }
-
-    const assignExerciseToPlan = () => {
+    const getAllCategories = () => {
         categoryService
             .getAllCategories()
             .then((data) => {
-                console.log(data)
-                setCategories(data)
+                setCategories(data);
+            })
+            .catch(() => {
+            });
+    }
+
+    const getPlanExercise = (id) => {
+        exerciseService
+            .getExercisesByPlan(id)
+            .then((data) => {
+                setExercises(data);
+                setIsLoading(false)
             })
             .catch((error) => {
+            });
+    }
+
+    const assignExerciseToPlan = () => {
+        const data = { planId: id.id, exerciseId: activeExercise }
+        planService
+            .assignExercises(data)
+            .then(() => {
+                dispatch(alertActions.success(allocateExercises))
+                setBottomSheet(false)
+            })
+            .catch((error) => {
+                dispatch(alertActions.error(error))
+            });
+    }
+
+    const unAssignExerciseToPlan = () => {
+        console.log(activeExercise)
+        const data = { planId: id.id, exerciseId: activeSelectedExercise }
+        planService
+            .unAssignExercises(data)
+            .then(() => {
+                dispatch(alertActions.success(unAllocateExercises))
+                setSelectedElementsBottomSheet(false)
+            })
+            .catch((error) => {
+                dispatch(alertActions.error(error))
             });
     }
 
@@ -72,42 +113,70 @@ export const Plan = (props) => {
         planService
             .deletePlanById(id.id)
             .then(() => {
-                dispatch(alertActions.success("Plan succesfully deleted!"))
+                dispatch(alertActions.success(planDeleted))
                 history.push('/categories');
             })
-            .catch(() => {
+            .catch((error) => {
+                dispatch(alertActions.error(error))
             });
     }
 
-
-    const filterExercises = (e) => {
-        const input = new RegExp(e.target.value, 'i');
-        const newItems = exercises.filter(
-            (item) => item.name.match(input)
-        );
-        setExercises(newItems);
+    const filterExercises = event => {
+        setSearchTerm(event.target.value);
     };
+
+    const results = !searchTerm
+        ? exercises
+        : exercises.filter(exercise =>
+            exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+        );
 
     const selectActiveId = (selectedData) => {
         const categoryIds = selectedData
             .filter((el) => el.value === true)
-            .map((a) => a.categoryId);
-
-        console.log(categoryIds)
+            .map((a) => a.exerciseId);
+        setActiveExercise([...new Set([...activeExercise, ...categoryIds])])
     }
+
 
     const loadExercises = (id) => {
         exerciseService
             .getExercisesByCategory(id)
             .then((data) => {
-                console.log(data)
                 setCategoryExercises(data);
             })
             .catch((error) => {
             });
     }
 
+    function filteringArraysScopes(allElements, removeElementsFromList) {
+        return allElements.filter((el) => !removeElementsFromList.includes(el));
+    }
 
+    const submissionHandleElement = (selectedData) => {
+
+        const selectedExercisesIds = selectedData
+            .filter((el) => el.value === true)
+            .map((a) => a.exerciseId);
+
+        const unSelectedExercisesIds = selectedData
+            .filter((el) => el.value === false || !el.value)
+            .map((a) => a.exerciseId);
+
+        const finallyExercises = filteringArraysScopes(selectedExercisesIds, unSelectedExercisesIds)
+
+        setActiveSelectedExercise(finallyExercises)
+        console.log(activeSelectedExercise)
+        if (selectedExercisesIds.length > 0) {
+            setEditable(true)
+            setSelectedElementsBottomSheet(true)
+        }
+    }
+
+    const allocateExercises = "Exercises succesfully allocated!";
+    const unAssignFromPlan = "Unassign from plan"
+    const unAllocateExercises = "Exercises succesfully deleted!";
+    const planDeleted = "Plan succesfully deleted!";
     const addExerciseToPlan = "Add Exercises to plan";
     const noExerciseInPlan = "There are no added exercises in this Plan";
     const returnToCategories = "return to categories"
@@ -116,23 +185,43 @@ export const Plan = (props) => {
         <div className="container">
             <div className="container__title">
                 <Return />
-
                 {plan && <h2>{plan.title}</h2>}
-
                 <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
-
             </div>
 
-            <input
-                type='text'
-                onChange={filterExercises}
-                placeholder={"find exercises"}
-            />
+            <div class="search-box">
+              <input onChange={filterExercises} class="search-txt" type="text" placeholder="What are you looking for?" />
+              <a class="search-btn" href="#">
+                <div className="search-box__icon"><Icon name={"search"} fill={"#5E4AE3"} width={"24px"} height={"24px"} /></div>
+              </a>
+            </div>
+            <Spacer h ={90}/>
 
 
+            <Loader isLoading={isLoading}>
+                {results ? <CheckboxGenericComponent dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
+            </Loader>
 
-            {exercises ? exercises.map((exercise) => <Button headline={exercise.name} subline={exercise.description} image={exercise.files[0]} exercise={exercise} />)
-                : noExerciseInPlan}
+            <ReactBottomsheet
+                visible={selectedElementsBottomSheet}
+                onClose={() => setSelectedElementsBottomSheet(false)}
+                appendCancelBtn={false}>
+
+                <div>
+                    {activeSelectedExercise.length == 1 ?
+                        <div onClick={() => unAssignExerciseToPlan()} className="micro-bottom">
+                        {/* todo - edit */}
+                            <p >{unAssignFromPlan}</p>
+                            {/* <button className='bottom-sheet-item'><Link to={{
+                                pathname: `/edit-exercise/${props.location.state.id}`,
+                                state: { activeSelectedExercise: activeSelectedExercise }
+                            }}>Edit</Link></button> */}
+                        </div>
+                        : <div className="micro-bottom"><p onClick={() => unAssignExerciseToPlan()}>Delete</p></div>
+                    }
+                </div>
+            </ReactBottomsheet>
+
 
             <ReactBottomsheet
                 visible={bottomSheet}
@@ -144,11 +233,12 @@ export const Plan = (props) => {
                         <div>
                             <p onClick={() => setCategoryExercises()}><Icon name={"arrow-left"} fill={"#5E4AE3"} />{returnToCategories}</p>
                             <CheckboxList dataList={categoryExercises} displayedValue={"name"} onSelect={selectActiveId} selectAll={true} />
+                            <Button className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={"Assign Exercises to Plan"}></Button>
                         </div>
                         :
                         categories ?
                             categories.map((category, i) =>
-                                <div key = {i}className="micro-bottom" onClick={() => loadExercises(category.categoryId)}>
+                                <div key={i} className="micro-bottom" onClick={() => loadExercises(category.categoryId)}>
                                     <h3>{category.title}</h3>
                                     <Icon name={"plus"} fill={"#5E4AE3"} />
                                 </div>)

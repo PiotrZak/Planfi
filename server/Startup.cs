@@ -31,11 +31,11 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
 
             // Use a PostgreSQL database
-            var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
+            var sqlConnectionString = Configuration.GetConnectionString("AmazonRDS");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
@@ -93,6 +93,7 @@ namespace WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
 

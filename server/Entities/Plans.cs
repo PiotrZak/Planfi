@@ -9,6 +9,7 @@ namespace WebApi.Entities
         public Plan()
         {
             PlanId = Guid.NewGuid().ToString();
+            Exercises = new List<Exercise>();
         }
 
         [Key]

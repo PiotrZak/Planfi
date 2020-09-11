@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 
 using WebApi.Models;
+using System.Collections.Generic;
+using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -26,7 +28,7 @@ namespace WebApi.Controllers
             IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
-            _planService = planService ;
+            _planService = planService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
@@ -65,6 +67,29 @@ namespace WebApi.Controllers
 
             return Ok(plan);
         }
+
+
+        //todo - think about simplicity - when write edited endpoint
+        [AllowAnonymous]
+        [HttpPost("assignExercises")]
+        public IActionResult AssignToPlan([FromBody]AssignExerciseToPlan model)
+        {
+
+            _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId);
+
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("unassignExercises")]
+        public IActionResult UnassignToPlan([FromBody] AssignExerciseToPlan model)
+        {
+
+            _planService.UnassignExercisesToPlan(model.PlanId, model.ExerciseId);
+
+            return Ok();
+        }
+
 
         [AllowAnonymous]
         [HttpGet]

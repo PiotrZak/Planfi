@@ -4,9 +4,9 @@
     width:50%;
     margin:0 25% 10% 25%;
     padding:2% 0;
-    z-index:1;
+    z-index:2;
     &__title{
-        margin:0 0 15% 0;
+        margin:0 0 10% 0;
         width:100%;
         display:flex;
         align-items:center;
@@ -22,6 +22,29 @@
     }
 }
 
+.container-login{
+    display:flex;
+    width:100%;
+    height:100%;
+    overflow-y: hidden; // hide vertical
+    overflow-x: hidden; // hide horizontal
+    &__image{
+        width:50%;
+        height:100%;
+        img{
+            width:100%;
+            height:100%;
+            object-fit: contain;
+            max-width: initial;
+            max-height: initial;
+            background-size:cover;
+        }
+    }
+    &__content{
+        padding:4% 4%;
+    }
+}
+
 
 .navigation{
     height: 100%;
@@ -29,12 +52,14 @@
     position: fixed;
     z-index: 1;
     left: 0;
+    border-top: solid 2px #666674;
     background-color: #31313D;;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
-
+    text-align:center;
     &__menu{
+        width:80%;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -42,6 +67,7 @@
 
         &__icon{
             padding:5px;
+
         }
 
         @include xs{
@@ -111,3 +137,92 @@ a.active{
             cursor:pointer;
         }
     }
+
+
+    .profile{
+        position:absolute;
+        right:6%;
+        top:4%;
+        width:42px;
+        height:42px;
+    }
+
+
+    #mainmenu ul {width: 160px;}
+    #mainmenu ul li {clear: both;}
+
+
+    ul ul {display: none;}
+    ul li:hover > ul {display: block;}
+    
+    /*POZIOMY NIŻSZE*/
+    #mainmenu ul {font-size: 12px; border-radius: 3px; background: #F6F6F6;margin-top:-4px;}
+    #mainmenu ul li  {color:black; display: block; padding: 10px; border-radius: 6px; text-decoration: none;text-align:left;}
+    #mainmenu ul li:hover {color: #007bff;cursor:pointer;}
+
+    .checkbox-generic-list{
+        &__element{
+            display:grid;
+        }
+        &__checkbox{
+            position:absolute;
+            left:0;
+            width:800px;
+        }
+    }
+
+    .form-check-input{
+        width:50px;
+    }
+
+
+    .search-box
+    {
+      position : absolute;
+      box-shadow: 0 8px 24px 0 rgba(147, 179, 158, 0.15);
+      background-color: #ffffff;
+      height : 40px;
+      border-radius : 40px;
+      padding : 10px;
+      &__icon{
+        position:absolute;
+        top:5px;
+      }
+    }
+    .search-btn
+    {
+      color : #4097FF;
+      float : right;
+      width : 40px;
+      height : 40px;
+      border-radius: 50%;
+      color:blue;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      transition:0.4s;
+    }
+    .search-txt
+    {
+      border:none;
+      background:none;
+      outline:none;
+      float:left;
+      padding:0;
+      color: blue;
+      font-size:16px;
+      transition : 0.4s;
+      line-height: 40px;
+      width : 0px;
+    }
+    .search-box:hover > .search-txt
+    {
+      width: 240px;
+      padding: 0 6px;
+    }
+    .search-box:hover > .search-btn
+    {
+     background:white;
+    }
+    

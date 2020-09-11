@@ -3,7 +3,7 @@ import { exerciseService } from "../../services/exerciseService";
 import Icon from "../../../src/common/Icon"
 import { NavLink } from 'react-router-dom';
 import Return from "../../common/Return"
-import Button from "../../common/MenuButton/MenuButton"
+import Button from "../../common/GenericElement/GenericElement"
 
 export const Exercises = () => {
     const [exercises, setExercises] = useState();
@@ -12,13 +12,11 @@ export const Exercises = () => {
         exerciseService
             .getAllExercises()
             .then((data) => {
-                console.log(data)
                 setExercises(data);
             })
             .catch(() => {
             });
     }, []);
-
 
     const noExercises = "There are no added exercises in this category"
 

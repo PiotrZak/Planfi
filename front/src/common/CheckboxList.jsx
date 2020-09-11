@@ -14,7 +14,6 @@ export const CheckboxList = ({
   const [initialSelect, setInitialSelect] = useState();
 
   useEffect(() => {
-    console.log(dataList)
     if (dataList) setList(dataList);
     if (initialSelected) {
       setInitialSelect(initialSelected);
@@ -77,7 +76,7 @@ export const CheckboxList = ({
       dataList.map((element, i) => {
         row.push(
           <div className="micro-bottom">
-            <img key={i} src={`data:image/jpeg;base64,${element.files[0]}`} />
+          {image && <img key={i} src={`data:image/jpeg;base64,${element.files[0]}`} />}
             <FormInput
               className ="micro-bottom"
               id={`${element[displayedValue]}-checkbox-${id}`}

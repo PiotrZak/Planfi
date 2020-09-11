@@ -1,4 +1,5 @@
 import { http } from "./http.service";
+import { CATEGORIES_URL } from "./utils"
 
 export const categoryService = {
   getAllCategories,
@@ -6,11 +7,6 @@ export const categoryService = {
   getCategoryById,
   deleteCategoryById
   };
-
-// const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
-const localapiURL = "http://localhost:5005"
-
-const CATEGORIES_URL = `${localapiURL}/Category`;
 
   function getAllCategories(body) {
     return http.get(CATEGORIES_URL, body);

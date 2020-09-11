@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Col, Row, Input } from "reactstrap";
 import Icon from "./Icon"
 
-const Counter = ({ handleData}) => {
+const Counter = ({defaultValue,  handleData}) => {
 
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(defaultValue ? defaultValue : 0);
     const increment = () => {
         setValue(value + 1)
         handleData(value)

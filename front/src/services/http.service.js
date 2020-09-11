@@ -4,30 +4,9 @@ export const http = {
   get,
   post,
   postFile,
-  del
+  del,
+  put
 };
-
-async function handleResponseError(response) {
-
-  if (response.ok || response.status === 200 || response.status === 201) {
-    if (response.status === 204) {
-      return response;
-    }
-    return response.data;
-  }
-
-  if (response.status === 409)
-    throw ("The data was modified in the meantime. Please refresh the page.");
-
-  if (response.status === 401) {
-    throw ("Unathorized");
-  }
-
-  if (response.status === 400) {
-    let error = await response.json();
-    throw error;
-  }
-}
 
 function get(url) {
   return axios.get(url).then((response) => {
@@ -52,3 +31,34 @@ function del(url) {
     return handleResponseError(response);
   });
 }
+
+function put(url, body) {
+  return axios.put(url, body).then((response) => {
+    return handleResponseError(response);
+  });
+}
+
+
+
+async function handleResponseError(response) {
+
+  if (response.ok || response.status === 200 || response.status === 201) {
+    if (response.status === 204) {
+      return response;
+    }
+    return response.data;
+  }
+
+  if (response.status === 409)
+    throw ("The data was modified in the meantime. Please refresh the page.");
+
+  if (response.status === 401) {
+    throw ("Unathorized");
+  }
+
+  if (response.status === 400) {
+    let error = await response.json();
+    throw error;
+  }
+}
+
