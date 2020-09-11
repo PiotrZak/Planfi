@@ -13,6 +13,8 @@
     "*"
   ],
   "AllowedMethods": [
+    "POST",
+    "PUT",
     "GET",
     "HEAD"
   ],

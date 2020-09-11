@@ -44,8 +44,6 @@ export const Categories = () => {
             {categories ? categories.map((category, i) => <Button key = {i} headline={category.title} category ={category}/>)
                     : noCategories + addExerciseToCategory}
             </div>
-
-            <Dropzone/>
         </div>
     );
 }

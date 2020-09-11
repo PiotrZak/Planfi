@@ -1,5 +1,6 @@
 const devEnvironmentURL = "http://fitapptest-env.eba-wpmv3mgp.us-east-2.elasticbeanstalk.com/"
-const localapiURL = "http://localhost:5005"
+// const localapiURL = "http://fitapp-env.eba-waxg3ip9.us-east-2.elasticbeanstalk.com"
+const localapiURL = "http://fitapp-env.eba-waxg3ip9.us-east-2.elasticbeanstalk.com"
 
 export const ACCOUNT_URL = `${localapiURL}/Account/`;
 export const CATEGORIES_URL = `${localapiURL}/Category`;

@@ -64,7 +64,7 @@ let App = () => {
       <Alert />
       <BrowserRouter history={history}>
         {renderMenu()}
-        {/* {renderAvatarMenu()} */}
+        {renderAvatarMenu()}
         <Switch>
           <PrivateRoute user={user} exact path="/register" component={RegisterPage} />
           <PrivateRoute user={user} exact path="/activate" component={ActivatePage} />
