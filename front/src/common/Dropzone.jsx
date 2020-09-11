@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Icon from "./Icon"
 
-const Dropzone = ({ handleFileData }) => {
+const Dropzone = ({handleFileData}) => {
     const fileInputRef = useRef();
     const modalImageRef = useRef();
     const modalRef = useRef();
@@ -105,7 +105,6 @@ const Dropzone = ({ handleFileData }) => {
         }
     }
 
-
     const openImageModal = (file) => {
         const reader = new FileReader();
         modalRef.current.style.display = "block";
@@ -127,7 +126,7 @@ const Dropzone = ({ handleFileData }) => {
                 onDrop={fileDrop}
                 onClick={fileInputClicked}
             >
-                <Icon name={"file-plus"} fill={"#5E4AE3"} />
+                <Icon name={"file-plus"} fill={"#5E4AE3"}/>
                 <h4>Wybierz Pliki</h4>
                 <input
                     ref={fileInputRef}
@@ -143,9 +142,10 @@ const Dropzone = ({ handleFileData }) => {
                         <div className="file-status-bar" key={i}>
                             {/* <div onClick={openImageModal(data)}> */}
                             <div>
-                                <div className="file-item" >
+                                <div className="file-item">
                                     <div className="file-item__type">{fileType(data.name)}</div>
-                                    <div className="file-item__remove" onClick={() => removeFile(data.name)}><Icon name={"remove-container"} width={"24px"} height={"24px"} /></div>
+                                    <div className="file-item__remove" onClick={() => removeFile(data.name)}><Icon
+                                        name={"remove-container"} width={"24px"} height={"24px"}/></div>
                                 </div>
 
                             </div>

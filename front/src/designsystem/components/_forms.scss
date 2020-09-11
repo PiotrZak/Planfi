@@ -1,25 +1,26 @@
 input, textarea {
-    margin:10px 0 10px 0;
-    padding:10px 20px;
-    width:100%;
-    text-align:left;
-    font-size:1.4rem;
-    font-family:Montserrat;
+  margin: 1rem 0 1rem 0;
+  padding: 1rem 2rem;
+  width: 100%;
+  text-align: left;
+  font-size: 1.4rem;
+  font-family: 'Montserrat', sans-serif;
 
-  }
+}
 
-  label{
-      margin:20px 0 0 0;
-      font-size:1.6rem;
-      text-align:left;
-  }
+label {
+  margin: 2rem 0 0 0;
+  font-size: 1.6rem;
+  text-align: left;
+}
 
-  .input-error {
-    border-color: $color-error-default !important;
-    color: $color-error-default;
-  }
-  .error-hint {
-    font-style: italic;
-    font-size: 12px;
-  }
+.input-error {
+  border-color: $color-error-default !important;
+  color: $color-error-default;
+}
+
+.error-hint {
+  font-style: italic;
+  font-size: 1.2rem;
+}
 

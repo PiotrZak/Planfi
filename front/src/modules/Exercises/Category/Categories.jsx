@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from "../../../services/categoryService";
 import Icon from "../../../../src/common/Icon"
+import Dropzone from "../../../../src/common/Dropzone"
 
 import Return from "../../../common/Return"
 import Button from "../../../common/MenuButton/MenuButton"
@@ -44,6 +45,8 @@ export const Categories = () => {
             {categories ? categories.map((category) => <Button headline={category.title} category ={category}/>)
                     : noCategories + addExerciseToCategory}
             </div>
+
+            <Dropzone/>
         </div>
     );
 }
