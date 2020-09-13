@@ -1,11 +1,11 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useContext } from 'react';
 import { userService } from "../../services/userServices";
 import Icon from "./../../common/Icon"
 import Return from "./../../common/Return"
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
-
+import { userContext } from '../../App';
 import { UserInfo } from "../../common/users/UserInfo"
 
 import EditUserPasswordModal from "./Edit/EditUserPassword"
@@ -17,8 +17,9 @@ var ReactBottomsheet = require('react-bottomsheet');
 
 export const User = (props) => {
 
-    const [user, setUser] = useState();
     const [bottomSheet, setBottomSheet] = useState(false)
+
+    const { user } = useContext(userContext)
 
     const [openEditUserData, setOpenEditUserData] = useState(false)
     const [openEditMailModal, setOpenEditMailModal] = useState(false);
@@ -26,21 +27,6 @@ export const User = (props) => {
 
     const { match } = props;
     let id = match.params;
-
-    useEffect(() => {
-        getUserData(id.id)
-    }, [id.id]);
-
-
-    const getUserData = (id) => {
-        userService
-            .getUserById(id)
-            .then((data) => {
-                setUser(data);
-            })
-            .catch((error) => {
-            });
-    }
 
     const userEdit = "Edit Your Data";
     const changeMail = "Change Email";
@@ -52,11 +38,11 @@ export const User = (props) => {
             <div className="container">
 
                 <div className="user-container__container__title">
-                    <Return fill = {"white"} />
+                    <Return fill={"white"} />
                     <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"white"} /></div>
                 </div>
 
-                    {user && <UserInfo user={user} />}
+                {user && <UserInfo user={user} />}
 
                 <Navs />
 

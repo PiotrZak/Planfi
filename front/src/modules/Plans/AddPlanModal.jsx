@@ -49,8 +49,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{addPlanTitle}</h2></ModalHeader>
                 <ModalBody>
-                    <FormInput id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} />
-                    <p>{addPlanTip}</p>
+                    <FormInput type = "textarea" id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} placeholder = {addPlanTip} />
                 </ModalBody>
                 <ModalFooter>
                     <Button className="btn btn--primary btn--lg" onClick={submitForm} name ={addPlanButton}/>

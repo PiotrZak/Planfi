@@ -21,7 +21,6 @@ export const Users = () => {
             .then((data) => {
                 setUsers(data);
                 setIsLoading(false)
-                // dispatch(alertActions.success("User succesfully loaded!"));
             })
             .catch((error) => {
                 dispatch(alertActions.error(error.title));

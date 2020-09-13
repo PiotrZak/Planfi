@@ -29,91 +29,121 @@ import { EditExercise } from './modules/Exercises/EditExercise';
 
 export const history = createBrowserHistory();
 
+
+export const themes = {
+    light: {
+        foreground: '#000000',
+        background: '#eeeeee',
+    },
+    dark: {
+        foreground: '#ffffff',
+        background: '#222222',
+    },
+};
+
+export const userContext = React.createContext();
+export const ThemeContext = React.createContext(themes.dark);
+export const LanguageContext = React.createContext()
+
+
 let App = () => {
 
-  const [theme, setTheme] = useState(true)
-  const [user, setUser] = useState()
+    const themeHook = useState("light");
+    const [user, setUser] = useState('test');
+    const [selectedLanguage, setSelectedLanguage] = useState('en')
 
-  useEffect(() => {
-    const userData = localStorage.getItem('user')
-    setUser(JSON.parse(userData))
-  }, []);
+    useEffect(() => {
+        const userData = localStorage.getItem('user')
+        setUser(JSON.parse(userData))
+    }, []);
 
-  // theme
-  // ? import("./designsystem/_dark.scss")
-  // : import("./designsystem/_light.scss")
+    // theme
+    // ? import("./designsystem/_dark.scss")
+    // : import("./designsystem/_light.scss")
 
-  const renderMenu = () => {
-    if (user) {
-      if (user.role == "Organization" || user.role == "Trainer") {
-        return <Menu />
-      }
+    const renderMenu = () => {
+        if (user) {
+            if (user.role == "Organization" || user.role == "Trainer") {
+                return <Menu />
+            }
+        }
     }
-  }
 
-  const renderAvatarMenu = () => {
-    if (user) {
-      if (user.role == "Organization" || user.role == "Trainer") {
-        return <AvatarMenu user={user} />
-      }
+    const renderAvatarMenu = () => {
+        if (user) {
+            if (user.role == "Organization" || user.role == "Trainer") {
+                return <AvatarMenu user={user} />
+            }
+        }
     }
-  }
 
-  return (
-    <div className="App">
-      <Alert />
-      <BrowserRouter history={history}>
-        {renderMenu()}
-        {renderAvatarMenu()}
-        <Switch>
-          <PrivateRoute user={user} exact path="/register" component={RegisterPage} />
-          <PrivateRoute user={user} exact path="/activate" component={ActivatePage} />
-          <Route path="/login" component={LoginPage} />
-          <Route user={user} path="/forgotpassword" component={ForgotPassword} />
+    return (
+        <div className="App">
+            <LanguageContext.Provider
+                value={{
+                    lang: selectedLanguage,
+                }}
+            >
+                <ThemeContext.Provider value={{theme: themeHook}}>
+                    <userContext.Provider value={{user: user}}>
+                        <Alert />
+                        <BrowserRouter history={history}>
+                            {renderMenu()}
+                            {renderAvatarMenu()}
+                            <Switch>
+                                <PrivateRoute user={user} exact path="/register" component={RegisterPage} />
+                                <PrivateRoute user={user} exact path="/activate" component={ActivatePage} />
+                                <Route path="/login" component={LoginPage} />
+                                <Route user={user} path="/forgotpassword" component={ForgotPassword} />
 
-          <PrivateRoute user={user} path="/categories" component={Categories} />
-          <PrivateRoute user={user} path="/category/:id" component={Category} />
-          <PrivateRoute user={user} path="/add-exercise" component={AddExercise} />
-          <PrivateRoute user={user} path="/edit-exercise/:id" component={EditExercise} />
-          <PrivateRoute user={user} path="/exercise/:id" component={Exercise} />
+                                <PrivateRoute user={user} path="/categories" component={Categories} />
+                                <PrivateRoute user={user} path="/category/:id" component={Category} />
+                                <PrivateRoute user={user} path="/add-exercise" component={AddExercise} />
+                                <PrivateRoute user={user} path="/edit-exercise/:id" component={EditExercise} />
+                                <PrivateRoute user={user} path="/exercise/:id" component={Exercise} />
 
-          <PrivateRoute user={user} path="/plans" component={Plans} />
-          <PrivateRoute user={user} path="/plan/:id" component={Plan} />
+                                <PrivateRoute user={user} path="/plans" component={Plans} />
+                                <PrivateRoute user={user} path="/plan/:id" component={Plan} />
 
-          <PrivateRoute user={user} path="/users" component={Users} />
-          <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
-        </Switch>
-      </BrowserRouter>
-    </div>
-  );
-}
-
-const AvatarMenu = ({ user }) => {
-
-  const toProfile = () => {
-    history.push(`/user/${user.userId}`);
-  }
-
-  const logout = () => {
-    localStorage.removeItem('user');
-    history.push(`/login`);
-  }
-
-  return (
-    <div className="profile">
-      <ul id="mainmenu">
-        <li><h2>{user.firstName}</h2>
-          <ul>
-            <li onClick={() => toProfile()}>My Profile</li>
-            <li onClick={() => logout()}>Logout</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  )
-}
-export default App;
+                                <PrivateRoute user={user} path="/users" component={Users} />
 
 
-{/* all Exercises */ }
-{/* <Route path="/exercises" component={Exercises} /> */ }
+                                <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
+                            </Switch>
+                        </BrowserRouter>
+                    </userContext.Provider>
+                </ThemeContext.Provider>
+                </LanguageContext.Provider>
+        </div>
+            );
+        }
+        
+const AvatarMenu = ({user}) => {
+
+    const toProfile = () => {
+                history.push(`/user/${user.userId}`);
+            }
+        
+    const logout = () => {
+                localStorage.removeItem('user');
+            history.push(`/login`);
+        }
+    
+        return (
+        <div className="profile">
+                <ul id="mainmenu">
+                    <li><h2>{user.firstName}</h2>
+                        <ul>
+                            <li onClick={() => toProfile()}>My Profile</li>
+                            <li onClick={() => logout()}>Logout</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            )
+        }
+        export default App;
+        
+        
+{/* all Exercises */}
+            {/* <Route path="/exercises" component={Exercises} /> */}

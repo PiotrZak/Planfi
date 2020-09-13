@@ -47,6 +47,14 @@ namespace WebApi.Services
         public void Delete(string id)
         {
             var category = _context.Categories.Find(id);
+            var exercisesInCategory = _context.Exercises.Where(x => x.CategoryId == id);
+
+            foreach (var item in exercisesInCategory)
+            {
+                var element = _context.Exercises.Find(item.ExerciseId);
+                category.Exercises.Remove(element);
+            }
+
             if (category != null)
             {
                 _context.Categories.Remove(category);

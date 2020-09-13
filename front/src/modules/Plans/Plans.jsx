@@ -4,16 +4,19 @@ import Icon from "./../../../src/common/Icon"
 import Return from "./../../common/Return"
 import Button from "./../../common/GenericElement/GenericElement"
 import AddPlanModal from "./AddPlanModal";
+import { Loader } from "../../common/Loader"
 
 export const Plans = () => {
     const [plans, setPlans] = useState();
     const [openModal, setOpenModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         planService
             .getAllPlans()
             .then((data) => {
                 setPlans(data);
+                setIsLoading(false)
             })
             .catch(() => {
             });
@@ -38,8 +41,10 @@ export const Plans = () => {
             </div>
             <AddPlanModal openModal={openModal} onClose={() => setOpenModal(false)} />
             <div>
-                {plans ? plans.map((plan, i) => <Button key={i} headline={plan.title} plan={plan} />)
-                    : noplans + addExerciseToCategory}
+                <Loader isLoading={isLoading}>
+                    {plans ? plans.map((plan, i) => <Button key={i} headline={plan.title} plan={plan} />)
+                        : noplans + addExerciseToCategory}
+                </Loader>
             </div>
         </div>
     );

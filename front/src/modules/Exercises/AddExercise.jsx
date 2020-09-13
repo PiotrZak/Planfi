@@ -84,6 +84,7 @@ export const AddExercise = (props) => {
     const AddExercise = "Add exercise to"
     const Times = "Times"
     const Series = "Series"
+    const Weight = "Weight"
     const Save = "Save"
 
     return (
@@ -110,7 +111,7 @@ export const AddExercise = (props) => {
                 </div>
 
                 <div className="exercise__form">
-                    <h4>{Series}</h4>
+                    <h4>{Weight}</h4>
                     <Counter handleData={handleWeight} />
                 </div>
             </div>

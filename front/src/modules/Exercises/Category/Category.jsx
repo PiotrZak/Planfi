@@ -102,7 +102,8 @@ export const Category = (props) => {
                 placeholder={"find exercises"}
             />
 
-            {exercises ? results.map((exercise) => <Button headline={exercise.name} subline={`${exercise.series} / ${exercise.times}`}  image={exercise.files && exercise.files[0]} exercise={exercise} />)
+            {exercises ? results.map((exercise) => 
+            <Button headline={exercise.name} subline={`${exercise.series} / ${exercise.times}`}  image={exercise.files && exercise.files[0]} exercise={exercise} />)
                 : noExerciseInCategory}
 
             <ReactBottomsheet

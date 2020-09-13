@@ -16,37 +16,15 @@ const AddCategoryModal = ({ openModal, onClose }) => {
     const dispatch = useDispatch()
 
     const handleInput = (e) => {
-        
         let name = e.target.name
         addCategoryData[name] = e.target.value;
-
         setAddCategory(addCategoryData);
-
-        setErrors(
-            validationUtil.validateRequiredField(
-                name,
-                { ...errors },
-                requiredFields,
-                addCategoryData
-            )
-        );
+        validationUtil.runSetErrors(name, setErrors, errors, requiredFields, addCategoryData)
     }
 
-    const submitForm = (e) => {
-        e.preventDefault();
-
-        let currentErrors = validationUtil.validateAllRequiredFields(
-            requiredFields,
-            addCategoryData
-        );
-
-        setErrors({ ...errors, ...currentErrors });
-        if (
-            Object.getOwnPropertyNames(currentErrors).length === 0 &&
-            Object.getOwnPropertyNames(errors).length === 0
-        ) {
-            createCategory(addCategoryData)
-        }
+    const submitForm = () => {
+        const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, addCategoryData)
+        confirm && createCategory(addCategoryData)
     }
 
     const createCategory = (addCategoryData) => {
@@ -70,7 +48,7 @@ const AddCategoryModal = ({ openModal, onClose }) => {
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{addCategoryTitle}</h2></ModalHeader>
                 <ModalBody>
-                    <FormInput type = "textarea" id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} defaultValue = {addCategoryTip}/>
+                    <FormInput type = "textarea" id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} placeholder= {addCategoryTip}/>
                 </ModalBody>
                 <ModalFooter>
                     <Button name = {addCategoryButton} className="btn btn--primary btn--lg" onClick={submitForm}></Button>

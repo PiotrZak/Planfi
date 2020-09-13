@@ -1,5 +1,4 @@
-﻿using System;
-namespace WebApi.Controllers.ViewModels
+﻿namespace WebApi.Controllers.ViewModels
 {
     public class AssignPlansToUser
     {

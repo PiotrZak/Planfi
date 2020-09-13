@@ -1,16 +1,13 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/UserService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Services/CategoryService.cs">
     <Files>
-      <File FileName="Controllers/ViewModels/AssignPlansToUser.cs" Line="7" Column="29" />
-      <File FileName="Controllers/UsersController.cs" Line="137" Column="69" />
-      <File FileName="Controllers/AccountController.cs" Line="18" Column="16" />
-      <File FileName="Controllers/PlansController.cs" Line="65" Column="30" />
-      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" Line="5" Column="1" />
-      <File FileName="Controllers/ViewModels/AssignUsersToTrainer.cs" Line="6" Column="30" />
-      <File FileName="Entities/Trainer.cs" Line="28" Column="41" />
-      <File FileName="Services/AccountService.cs" Line="34" Column="1" />
-      <File FileName="Services/UserService.cs" Line="185" Column="21" NotebookId="1" />
-      <File FileName="Services/PlanService.cs" Line="59" Column="1" NotebookId="1" />
+      <File FileName="Controllers/CategoryController.cs" Line="66" Column="33" />
+      <File FileName="Services/PlanService.cs" Line="70" Column="74" />
+      <File FileName="Controllers/ExerciseController.cs" Line="38" Column="23" />
+      <File FileName="Services/UserService.cs" Line="113" Column="30" />
+      <File FileName="Entities/Exercises.cs" Line="23" Column="33" />
+      <File FileName="Services/CategoryService.cs" Line="52" Column="32" NotebookId="1" />
+      <File FileName="Services/ExerciseService.cs" Line="54" Column="1" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -24,7 +21,7 @@
               <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True">
-                <Node name="UserService.cs" selected="True" />
+                <Node name="CategoryService.cs" selected="True" />
               </Node>
             </Node>
           </Node>

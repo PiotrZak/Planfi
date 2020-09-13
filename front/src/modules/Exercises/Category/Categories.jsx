@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { categoryService } from "../../../services/categoryService";
 import Icon from "../../../../src/common/Icon"
 import Dropzone from "../../../../src/common/Dropzone"
-
+import { Loader } from "../../../common/Loader"
 import Return from "../../../common/Return"
 import Button from "../../../common/GenericElement/GenericElement"
 
@@ -11,12 +11,14 @@ import AddCategoryModal from "./AddCategoryModal";
 export const Categories = () => {
     const [categories, setCategories] = useState();
     const [openModal, setOpenModal] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         categoryService
             .getAllCategories()
             .then((data) => {
                 setCategories(data);
+                setIsLoading(false)
             })
             .catch(() => {
             });
@@ -41,8 +43,10 @@ export const Categories = () => {
             </div>
             <AddCategoryModal openModal = {openModal} onClose={() => setOpenModal(false)}/>
             <div>
+            <Loader isLoading={isLoading}>
             {categories ? categories.map((category, i) => <Button key = {i} headline={category.title} category ={category}/>)
                     : noCategories + addExerciseToCategory}
+            </Loader>    
             </div>
         </div>
     );

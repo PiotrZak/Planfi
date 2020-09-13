@@ -15,6 +15,7 @@ export const FormInput = ({
   hasError,
   type,
   value,
+  placeholder,
   disabled,
   labelWidth,
   inputWidth,
@@ -32,6 +33,7 @@ export const FormInput = ({
           id={id}
           name={name}
           max={max}
+          placeholder = {placeholder}
           min={min}
           maxLength={maxLength}
           type={type ? type : "text"}

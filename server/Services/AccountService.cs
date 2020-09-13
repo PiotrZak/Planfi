@@ -31,6 +31,7 @@ namespace WebApi.Services
         public User ResetPassword(User user, string token, string password)
         {
             // todo - implement method
+
             //byte[] passwordHash, passwordSalt;
             //CreatePasswordHash(password, out passwordHash, out passwordSalt);
 

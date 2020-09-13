@@ -54,7 +54,6 @@ namespace WebApi.Services
 
         public IEnumerable<User> GetAll()
         {
-
             return _context.Users.WithoutPasswords();
         }
 
