@@ -1,18 +1,19 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Entities
 {
-    public class User
+    public class Trainer
     {
-        public User()
+        public Trainer()
         {
-            UserId = Guid.NewGuid().ToString();
+            TrainerId = Guid.NewGuid().ToString();
+            Users = new List<User>();
         }
 
         [Key]
-        public string UserId { get; set; }
+        public string TrainerId { get; set; }
         public byte[] Avatar { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -24,7 +25,7 @@ namespace WebApi.Entities
         public string Role { get; set; }
         public string Token { get; set; }
 
-        public string TrainerId { get; set; }
         public List<Plan> Plans { get; set; }
+        public List<User> Users { get; set; }
     }
 }

@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
 using Microsoft.AspNetCore.Identity;
-using WebApi.Entities;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using WebApi.Controllers.ViewModels;
+using static WebApi.Models.EmailMessage;
+using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
@@ -70,67 +73,44 @@ namespace WebApi.Controllers
         }
 
 
+        [AllowAnonymous]
+        [HttpPost("forgot")]
+        public IActionResult ForgotPassword([FromBody] ForgotPassword forgotPasswordModel)
+        {
 
-        //[AllowAnonymous]
-        //[HttpPost("forgot")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPassword forgotPasswordModel)
-        //{
+            var user = _AccountService.FindUserByEmail(forgotPasswordModel.Email);
 
-        //    var user = await _userManager.FindByEmailAsync(forgotPasswordModel.Email);
-        //    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            //var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-        //    var callback = Url.Action(nameof(ResetPassword), nameof(AccountController), new { token, email = user.Email }, Request.Scheme);
+            //var callback = Url.Action(nameof(ResetPassword), nameof(AccountController), new { token, email = user.Email }, Request.Scheme);
+            //var callback = Url.Action(nameof(ResetPassword), nameof(AccountController), new { email = user.Email }, Request.Scheme);
 
+            var message = new EmailMessage
+            {
+                ToAddresses = new List<EmailAddress>()
+              {
+                 new EmailAddress()
+                 {
+                     Name = "Test",
+                     Address = forgotPasswordModel.Email
+                 }
+              },
+                FromAddresses = new List<EmailAddress>()
+              {
+                 new EmailAddress()
+                 {
+                     Name = "Test",
+                     Address = "test@gmail.com"
+                 }
+              },
 
-        //    var message = new EmailMessage
-        //    { 
-        //      ToAddresses = new List<EmailAddress>()
-        //      {
-        //         new EmailAddress()
-        //         {
-        //             Name = "Test",
-        //             Address = "test@gmail.com"
-        //         }
-        //      },
-        //      FromAddresses = new List<EmailAddress>()
-        //      {
-        //         new EmailAddress()
-        //         {
-        //             Name = "Test",
-        //             Address = "test@gmail.com"
-        //         }
-        //      },
-
-        //        Subject = "Reset password token",
-        //        Content = "test",
-        //    };
-
-
-        //    _EmailService.SendEmail(message);
-        //    return Ok(message);
-        //}
-
-        //[AllowAnonymous]
-        //[HttpPost("resetpassword")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
-        //{
-
-        //    var user = await _userManager.FindByEmailAsync(resetPasswordModel.Email);
+                Subject = "Reset password token",
+                Content = "test",
+            };
 
 
-        //    var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
-
-        //    if (!resetPassResult.Succeeded)
-        //    {
-        //        foreach (var error in resetPassResult.Errors)
-        //        {
-        //            ModelState.TryAddModelError(error.Code, error.Description);
-        //        }
-        //        return Ok("Error");
-        //    }
-        //    return Ok("Password reset completed!");
-        //}
+            _EmailService.SendEmail(message);
+            return Ok(message);
+        }
     }
 }

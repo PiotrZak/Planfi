@@ -15,7 +15,7 @@ using System;
 using System.Text;
 
 using AutoMapper;
-using System.IO;
+using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -101,6 +101,51 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("role/{role}")]
+        public IActionResult GetByRole(string role)
+        {
+
+            var user = _userService.GetByRole(role);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("assignUsers")]
+        public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
+        {
+            _userService.AssignUsersToTrainer(model.TrainerId, model.UsersId);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("unassingUsers")]
+        public IActionResult UnassignUsersToTrainer([FromBody] AssignUsersToTrainer model)
+        {
+            _userService.UnassignUsersToTrainer(model.TrainerId, model.UsersId);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("assignPlans")]
+        public IActionResult AssignPlanToUser([FromBody] AssignPlansToUser model)
+        {
+            _userService.AssignPlanToUser(model.UserId, model.PlanId);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("unAssignPlans")]
+        public IActionResult UnassignPlanToUser([FromBody] AssignPlansToUser model)
+        {
+            _userService.UnassignPlanToUser(model.UserId, model.PlanId);
+            return Ok();
+        }
+
+        [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model)
         {
@@ -119,6 +164,8 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+
 
         [AllowAnonymous]
         [HttpPut("{id}")]

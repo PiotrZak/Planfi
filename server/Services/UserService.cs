@@ -14,6 +14,13 @@ namespace WebApi.Services
         User Create(User user, string password);
         void Update(User user, string password);
         void Delete(string id);
+        IEnumerable<User> GetByRole(string role);
+
+        void AssignUsersToTrainer(string trainerId, string[] usersId);
+        void UnassignUsersToTrainer(string trainerId, string[] usersId);
+
+        void AssignPlanToUser(string userId, string[] planId);
+        void UnassignPlanToUser(string userId, string[] planId);
     }
 
     public class UserService : IUserService
@@ -142,9 +149,67 @@ namespace WebApi.Services
             return user;
         }
 
+        public IEnumerable<User> GetByRole(string role)
+        {
+            var Users = _context.Users.Where(x => x.Role == role);
+            return Users;
+        }
 
 
- private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
+        // todo - find way to refactor this logic
+        public void AssignUsersToTrainer(string trainerId, string[] usersId)
+        {
+            var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
+
+            foreach (var id in usersId)
+            {
+                var element = _context.Users.Find(id);
+                trainer.Users.Add(element);
+            }
+            _context.Trainers.Update(trainer);
+            _context.SaveChanges();
+        }
+
+        public void UnassignUsersToTrainer(string trainerId, string[] usersId)
+        {
+            var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
+
+            foreach (var id in usersId)
+            {
+                var element = _context.Users.Find(id);
+                trainer.Users.Remove(element);
+            }
+            _context.Trainers.Update(trainer);
+            _context.SaveChanges();
+        }
+
+        public void AssignPlanToUser(string UserId, string[] PlanId)
+        {
+            var user = GetById(UserId);
+
+            foreach (var id in PlanId)
+            {
+                var element = _context.Plans.Find(id);
+                user.Plans.Add(element);
+            }
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        public void UnassignPlanToUser(string UserId, string[] PlanId)
+        {
+            var user = GetById(UserId);
+
+            foreach (var id in PlanId)
+            {
+                var element = _context.Plans.Find(id);
+                user.Plans.Remove(element);
+            }
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");

@@ -16,7 +16,8 @@
     "POST",
     "PUT",
     "GET",
-    "HEAD"
+    "HEAD",
+    "OPTIONS"
   ],
   "AllowedOrigins": [
     "*"

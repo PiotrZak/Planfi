@@ -7,6 +7,7 @@ export const userService = {
     allUsers,
     getUserById,
     editUser,
+    getUserByRole,
   };
 
   function register(body) {
@@ -23,6 +24,10 @@ export const userService = {
 
   function getUserById(id) {
     return http.get(`${USER_URL}${id}`);
+  }
+
+  function getUserByRole(role) {
+    return http.get(`${USER_URL}role/${role}`);
   }
 
   function allUsers(body) {

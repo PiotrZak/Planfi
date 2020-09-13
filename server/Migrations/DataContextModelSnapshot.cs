@@ -248,9 +248,59 @@ namespace WebApi.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
+                    b.Property<string>("TrainerId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("PlanId");
 
+                    b.HasIndex("TrainerId");
+
+                    b.HasIndex("UserId");
+
                     b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Trainer", b =>
+                {
+                    b.Property<string>("TrainerId")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("bytea");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("bytea");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("bytea");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("text");
+
+                    b.HasKey("TrainerId");
+
+                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("WebApi.Entities.User", b =>
@@ -288,7 +338,12 @@ namespace WebApi.Migrations
                     b.Property<string>("Token")
                         .HasColumnType("text");
 
+                    b.Property<string>("TrainerId")
+                        .HasColumnType("text");
+
                     b.HasKey("UserId");
+
+                    b.HasIndex("TrainerId");
 
                     b.ToTable("Users");
 
@@ -337,6 +392,24 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Plan", null)
                         .WithMany("Exercises")
                         .HasForeignKey("PlanId");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Plan", b =>
+                {
+                    b.HasOne("WebApi.Entities.Trainer", null)
+                        .WithMany("Plans")
+                        .HasForeignKey("TrainerId");
+
+                    b.HasOne("WebApi.Entities.User", null)
+                        .WithMany("Plans")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.User", b =>
+                {
+                    b.HasOne("WebApi.Entities.Trainer", null)
+                        .WithMany("Users")
+                        .HasForeignKey("TrainerId");
                 });
 #pragma warning restore 612, 618
         }

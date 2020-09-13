@@ -70,11 +70,10 @@ const AddCategoryModal = ({ openModal, onClose }) => {
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{addCategoryTitle}</h2></ModalHeader>
                 <ModalBody>
-                    <FormInput id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} />
-                    <p>{addCategoryTip}</p>
+                    <FormInput type = "textarea" id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} defaultValue = {addCategoryTip}/>
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="btn btn--primary btn--lg" onClick={submitForm}>{addCategoryButton}</Button>{' '}
+                    <Button name = {addCategoryButton} className="btn btn--primary btn--lg" onClick={submitForm}></Button>
                 </ModalFooter>
             </Modal>
         </div>

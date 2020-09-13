@@ -24,6 +24,13 @@ namespace WebApi.Helpers
 
         }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<Trainer> Trainers { get; set; }
+
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Plan>()
@@ -32,6 +39,14 @@ namespace WebApi.Helpers
 
             modelBuilder.Entity<Category>()
                 .HasMany(b => b.Exercises)
+                .WithOne();
+
+            modelBuilder.Entity<Trainer>()
+                .HasMany(b => b.Users)
+                .WithOne();
+
+            modelBuilder.Entity<User>()
+                .HasMany(b => b.Plans)
                 .WithOne();
 
 
@@ -283,11 +298,5 @@ namespace WebApi.Helpers
             );
 
         }
-
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Plan> Plans { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Exercise> Exercises { get; set; }
     }
 }
