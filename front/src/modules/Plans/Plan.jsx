@@ -13,6 +13,7 @@ import { Button } from "../../common/buttons/Button"
 import { CheckboxGenericComponent } from "../../common/CheckboxGenericComponent"
 import { CheckboxList } from '../../common/CheckboxList';
 import Spacer from "../../common/Spacer"
+import { commonUtil } from "../../../src/utils/common.util"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -132,10 +133,8 @@ export const Plan = (props) => {
         );
 
     const selectActiveId = (selectedData) => {
-        const categoryIds = selectedData
-            .filter((el) => el.value === true)
-            .map((a) => a.exerciseId);
-        setActiveExercise([...new Set([...activeExercise, ...categoryIds])])
+        const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
+        setActiveExercise(selectedExercises)
     }
 
 
@@ -149,25 +148,12 @@ export const Plan = (props) => {
             });
     }
 
-    function filteringArraysScopes(allElements, removeElementsFromList) {
-        return allElements.filter((el) => !removeElementsFromList.includes(el));
-    }
-
     const submissionHandleElement = (selectedData) => {
 
-        const selectedExercisesIds = selectedData
-            .filter((el) => el.value === true)
-            .map((a) => a.exerciseId);
-
-        const unSelectedExercisesIds = selectedData
-            .filter((el) => el.value === false || !el.value)
-            .map((a) => a.exerciseId);
-
-        const finallyExercises = filteringArraysScopes(selectedExercisesIds, unSelectedExercisesIds)
-
-        setActiveSelectedExercise(finallyExercises)
-        console.log(activeSelectedExercise)
-        if (selectedExercisesIds.length > 0) {
+        const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
+        setActiveSelectedExercise(selectedExercises)
+  
+        if (activeSelectedExercise.length > 0) {
             setEditable(true)
             setSelectedElementsBottomSheet(true)
         }
@@ -189,17 +175,12 @@ export const Plan = (props) => {
                 <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
             </div>
 
-            <div class="search-box">
-              <input onChange={filterExercises} class="search-txt" type="text" placeholder="What are you looking for?" />
-              <a class="search-btn" href="#">
-                <div className="search-box__icon"><Icon name={"search"} fill={"#5E4AE3"} width={"24px"} height={"24px"} /></div>
-              </a>
-            </div>
-            <Spacer h ={90}/>
 
+            <Search callBack = {filterExercises}/>
+            <Spacer h={90} />
 
             <Loader isLoading={isLoading}>
-                {results ? <CheckboxGenericComponent dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
+                {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
             </Loader>
 
             <ReactBottomsheet
@@ -210,7 +191,7 @@ export const Plan = (props) => {
                 <div>
                     {activeSelectedExercise.length == 1 ?
                         <div onClick={() => unAssignExerciseToPlan()} className="micro-bottom">
-                        {/* todo - edit */}
+                            {/* todo - edit */}
                             <p >{unAssignFromPlan}</p>
                             {/* <button className='bottom-sheet-item'><Link to={{
                                 pathname: `/edit-exercise/${props.location.state.id}`,
@@ -248,6 +229,17 @@ export const Plan = (props) => {
             </ReactBottomsheet>
         </div>
     );
+}
+
+const Search = ({callBack}) => {
+    return(
+        <div class="search-box">
+        <input onChange={callBack} class="search-txt" type="text" placeholder="What are you looking for?" />
+        <a class="search-btn" href="#">
+            <div className="search-box__icon"><Icon name={"search"} fill={"#5E4AE3"} width={"24px"} height={"24px"} /></div>
+        </a>
+    </div>
+    )
 }
 
 

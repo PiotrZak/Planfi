@@ -37,7 +37,7 @@ export const themes = {
     },
     dark: {
         foreground: '#ffffff',
-        background: '#222222',
+        background: '#303030',
     },
 };
 
@@ -48,7 +48,7 @@ export const LanguageContext = React.createContext()
 
 let App = () => {
 
-    const themeHook = useState("light");
+    const themeHook = useState("dark");
     const [user, setUser] = useState('test');
     const [selectedLanguage, setSelectedLanguage] = useState('en')
 

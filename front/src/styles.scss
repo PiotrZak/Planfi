@@ -194,9 +194,8 @@ a.active{
       color : #4097FF;
       float : right;
       width : 40px;
-      height : 40px;
       border-radius: 50%;
-      color:blue;
+      color:#5E4AE3;
       display:flex;
       justify-content: center;
       align-items: center;
@@ -209,6 +208,7 @@ a.active{
       background:none;
       outline:none;
       float:left;
+      margin-top:-10px;
       padding:0;
       color: blue;
       font-size:16px;
@@ -226,3 +226,9 @@ a.active{
      background:white;
     }
     
+    .bottomsheet-without-background{
+        position:initial !important;
+        bottom:0;
+        left:0;
+        height:200px !important;
+    }

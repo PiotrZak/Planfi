@@ -8,6 +8,11 @@ export const userService = {
     getUserById,
     editUser,
     getUserByRole,
+
+    assignUsersToTrainer,
+    unAssignUsersToTrainer,
+    assignPlanToUser,
+    unAssignPlanToUser,
   };
 
   function register(body) {
@@ -33,3 +38,23 @@ export const userService = {
   function allUsers(body) {
     return http.get(USER_URL, body);
   }
+
+
+  function assignUsersToTrainer(body) {
+    return http.post(`${USER_URL}assignUsers`, body);
+  }
+
+  function unAssignUsersToTrainer(body) {
+    return http.post(`${USER_URL}unassignUsers`);
+  }
+
+  function assignPlanToUser(body) {
+    return http.post(`${USER_URL}assignPlans`, body);
+  }
+
+  function unAssignPlanToUser(body) {
+    return http.post(`${USER_URL}unAssignUsers`, body);
+  }
+
+
+

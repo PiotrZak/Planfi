@@ -7,6 +7,7 @@ export const CheckboxGenericComponent = ({
   id,
   selectAll,
   image,
+  dataType,
   dataList, //list of objects
   displayedValue, //value to be displayed on chekbox list
   onSelect,
@@ -15,8 +16,10 @@ export const CheckboxGenericComponent = ({
   const [list, setList] = useState();
   // eslint-disable-next-line
   const [initialSelect, setInitialSelect] = useState();
+  const [type, setType] = useState()
 
   useEffect(() => {
+    setType(dataType)
     if (dataList) setList(dataList);
     if (initialSelected) {
       setInitialSelect(initialSelected);
@@ -78,18 +81,27 @@ export const CheckboxGenericComponent = ({
     if (Array.isArray(list))
       dataList.map((element, i) => {
         row.push(
-          <div className="checkbox-generic-list__element">
+          <div key={i} className="checkbox-generic-list__element">
             <input
               className="checkbox-generic-list__checkbox"
               id={`${element[displayedValue]}-checkbox-${id}`}
               key={`${element[displayedValue]}-checkbox-${id}`}
               name={element[displayedValue]}
-              inputWidth="1"
               type="checkbox"
               checked={element.value ? true : false}
               onChange={handleChange}
             ></input>
-            <GenericElement key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+
+            {type === "users" &&
+              <GenericElement circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
+            }
+            {type === "plans" &&
+              <GenericElement key={i} headline={element.title} plan={element} />
+            }
+            {type === "exercises" &&
+              <GenericElement key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+            }
+
           </div>
         );
         return element;
