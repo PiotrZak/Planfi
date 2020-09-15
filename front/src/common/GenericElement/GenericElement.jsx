@@ -8,6 +8,7 @@ import { planService } from "../../services/planService";
 const GenericElement = ({
     handleElement,
     id,
+    className,
     headline,
     subline,
     image,
@@ -23,7 +24,7 @@ const GenericElement = ({
     const types = [exercise, category, plan, user]
 
     return (
-        <div className="rectangleButton">
+        <div className={className  ? className : "rectangleButton"}>
             <div className="rectangleButton__wrapper">
                 {checkbox && <Checkbox handleElement={handleElement} id={id} />}
 

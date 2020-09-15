@@ -26,6 +26,7 @@ import './styles.scss';
 import { Exercise } from './modules/Exercises/Exercise';
 import { AddExercise } from './modules/Exercises/AddExercise';
 import { EditExercise } from './modules/Exercises/EditExercise';
+import { MyProfile } from './modules/Users/MyProfile';
 
 export const history = createBrowserHistory();
 
@@ -106,9 +107,9 @@ let App = () => {
                                 <PrivateRoute user={user} path="/plan/:id" component={Plan} />
 
                                 <PrivateRoute user={user} path="/users" component={Users} />
-
-
                                 <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
+                                <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={MyProfile} />
+
                             </Switch>
                         </BrowserRouter>
                     </userContext.Provider>

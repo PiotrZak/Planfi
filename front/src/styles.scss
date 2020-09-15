@@ -128,6 +128,10 @@ a.active{
         border: 1px solid $color-primary-default;
         cursor:pointer;
     }
+
+    h3{
+        color:$color-gray-60;
+    }
     }
 
     .icon{
@@ -147,15 +151,11 @@ a.active{
         height:42px;
     }
 
-
     #mainmenu ul {width: 160px;}
     #mainmenu ul li {clear: both;}
 
-
     ul ul {display: none;}
     ul li:hover > ul {display: block;}
-    
-    /*POZIOMY NIŻSZE*/
     #mainmenu ul {font-size: 12px; border-radius: 3px; background: #F6F6F6;margin-top:-4px;}
     #mainmenu ul li  {color:black; display: block; padding: 10px; border-radius: 6px; text-decoration: none;text-align:left;}
     #mainmenu ul li:hover {color: #007bff;cursor:pointer;}
@@ -174,7 +174,6 @@ a.active{
     .form-check-input{
         width:50px;
     }
-
 
     .search-box
     {
@@ -227,8 +226,13 @@ a.active{
     }
     
     .bottomsheet-without-background{
+        border-top: solid 1px #666674;
         position:initial !important;
         bottom:0;
         left:0;
         height:200px !important;
+        margin:0 0 0 74px;
+        padding: 1.8rem 1.6rem;
+        width:calc(100% - 74px) !important;
+
     }

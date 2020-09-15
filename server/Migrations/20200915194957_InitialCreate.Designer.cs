@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200913141158_InitialCreate")]
+    [Migration("20200915194957_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,21 @@ namespace WebApi.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("WebApi.Controllers.ViewModels.UsersPlans", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PlanId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "PlanId");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("UsersPlans");
+                });
 
             modelBuilder.Entity("WebApi.Entities.Category", b =>
                 {
@@ -247,20 +262,18 @@ namespace WebApi.Migrations
                     b.Property<string>("PlanId")
                         .HasColumnType("text");
 
+                    b.Property<string>("Creator")
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.Property<string>("TrainerId")
                         .HasColumnType("text");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
                     b.HasKey("PlanId");
 
                     b.HasIndex("TrainerId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Plans");
                 });
@@ -385,6 +398,21 @@ namespace WebApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WebApi.Controllers.ViewModels.UsersPlans", b =>
+                {
+                    b.HasOne("WebApi.Entities.Plan", "Plan")
+                        .WithMany("UsersPlans")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Entities.User", "User")
+                        .WithMany("UsersPlans")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>
                 {
                     b.HasOne("WebApi.Entities.Category", null)
@@ -401,10 +429,6 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Trainer", null)
                         .WithMany("Plans")
                         .HasForeignKey("TrainerId");
-
-                    b.HasOne("WebApi.Entities.User", null)
-                        .WithMany("Plans")
-                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WebApi.Entities.User", b =>

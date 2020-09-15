@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -16,11 +17,11 @@ namespace WebApi.Services
         void Delete(string id);
         IEnumerable<User> GetByRole(string role);
 
-        void AssignUsersToTrainer(string trainerId, string[] usersId);
-        void UnassignUsersToTrainer(string trainerId, string[] usersId);
+        //void AssignUsersToTrainer(string trainerId, string[] usersId);
+        //void UnassignUsersToTrainer(string trainerId, string[] usersId);
 
-        void AssignPlanToUser(string userId, string[] planId);
-        void UnassignPlanToUser(string userId, string[] planId);
+        void AssignPlanToUser(string[] userIds, string[] planIds);
+        //void UnassignPlanToUser(string[] userIds, string[] planIds);
     }
 
     public class UserService : IUserService
@@ -156,57 +157,58 @@ namespace WebApi.Services
 
 
         // todo - find way to refactor this logic
-        public void AssignUsersToTrainer(string trainerId, string[] usersId)
-        {
-            var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
+        //public void AssignUsersToTrainer(string trainerId, string[] usersId)
+        //{
+        //    var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
 
-            foreach (var id in usersId)
+        //    foreach (var id in usersId)
+        //    {
+        //        var element = _context.Users.Find(id);
+        //        trainer.Users.Add(element);
+        //    }
+        //    _context.Trainers.Update(trainer);
+        //    _context.SaveChanges();
+        //}
+
+        //public void UnassignUsersToTrainer(string trainerId, string[] usersId)
+        //{
+        //    var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
+
+        //    foreach (var id in usersId)
+        //    {
+        //        var element = _context.Users.Find(id);
+        //        trainer.Users.Remove(element);
+        //    }
+        //    _context.Trainers.Update(trainer);
+        //    _context.SaveChanges();
+        //}
+
+
+
+        public void AssignPlanToUser(string[] UserIds, string[] PlanIds)
+        {
+
+        // [u1, u2]
+        // to every user add plan
+        // [p1, p2, p3, p4]
+
+            foreach (var userId in UserIds)
             {
-                var element = _context.Users.Find(id);
-                trainer.Users.Add(element);
+                //finding an user
+                var user = _context.Users.Find(userId);
+
+                foreach (var planId in PlanIds)
+                {
+                    //finding a plan
+                    var plan = _context.Plans.Find(planId);
+
+                    var usersPlans = new UsersPlans { User = user, Plan = plan };
+                    _context.UsersPlans.Add(usersPlans);
+                    _context.SaveChanges();
+                }
             }
-            _context.Trainers.Update(trainer);
-            _context.SaveChanges();
         }
 
-        public void UnassignUsersToTrainer(string trainerId, string[] usersId)
-        {
-            var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
-
-            foreach (var id in usersId)
-            {
-                var element = _context.Users.Find(id);
-                trainer.Users.Remove(element);
-            }
-            _context.Trainers.Update(trainer);
-            _context.SaveChanges();
-        }
-
-        public void AssignPlanToUser(string UserId, string[] PlanId)
-        {
-            var user = GetById(UserId);
-
-            foreach (var id in PlanId)
-            {
-                var element = _context.Plans.Find(id);
-                user.Plans.Add(element);
-            }
-            _context.Users.Update(user);
-            _context.SaveChanges();
-        }
-
-        public void UnassignPlanToUser(string UserId, string[] PlanId)
-        {
-            var user = GetById(UserId);
-
-            foreach (var id in PlanId)
-            {
-                var element = _context.Plans.Find(id);
-                user.Plans.Remove(element);
-            }
-            _context.Users.Update(user);
-            _context.SaveChanges();
-        }
 
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {

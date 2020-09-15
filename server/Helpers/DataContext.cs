@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 
 namespace WebApi.Helpers
@@ -28,14 +29,36 @@ namespace WebApi.Helpers
         public DbSet<Trainer> Trainers { get; set; }
 
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<UsersPlans> UsersPlans { get; set; }
+
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Plan>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
+
+
+
+            // Plans <-> Users relationship
+            modelBuilder.Entity<UsersPlans>()
+                .HasKey(e => new { e.UserId, e.PlanId });
+
+            modelBuilder.Entity<UsersPlans>()
+                .HasOne(e => e.User)
+                .WithMany(p => p.UsersPlans);
+
+            modelBuilder.Entity<UsersPlans>()
+                .HasOne(e => e.Plan)
+                .WithMany(p => p.UsersPlans);
+
+
+
+
 
             modelBuilder.Entity<Category>()
                 .HasMany(b => b.Exercises)
@@ -45,7 +68,8 @@ namespace WebApi.Helpers
                 .HasMany(b => b.Users)
                 .WithOne();
 
-            modelBuilder.Entity<User>()
+
+            modelBuilder.Entity<Trainer>()
                 .HasMany(b => b.Plans)
                 .WithOne();
 

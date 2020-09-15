@@ -10,6 +10,7 @@ namespace WebApi.Entities
         {
             TrainerId = Guid.NewGuid().ToString();
             Users = new List<User>();
+            Plans = new List<Plan>();
         }
 
         [Key]

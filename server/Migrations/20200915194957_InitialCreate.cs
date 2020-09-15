@@ -42,6 +42,26 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Plans",
+                columns: table => new
+                {
+                    PlanId = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Creator = table.Column<string>(nullable: true),
+                    TrainerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plans", x => x.PlanId);
+                    table.ForeignKey(
+                        name: "FK_Plans_Trainers_TrainerId",
+                        column: x => x.TrainerId,
+                        principalTable: "Trainers",
+                        principalColumn: "TrainerId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -66,32 +86,6 @@ namespace WebApi.Migrations
                         column: x => x.TrainerId,
                         principalTable: "Trainers",
                         principalColumn: "TrainerId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Plans",
-                columns: table => new
-                {
-                    PlanId = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    TrainerId = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Plans", x => x.PlanId);
-                    table.ForeignKey(
-                        name: "FK_Plans_Trainers_TrainerId",
-                        column: x => x.TrainerId,
-                        principalTable: "Trainers",
-                        principalColumn: "TrainerId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Plans_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -124,6 +118,30 @@ namespace WebApi.Migrations
                         principalTable: "Plans",
                         principalColumn: "PlanId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsersPlans",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(nullable: false),
+                    PlanId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersPlans", x => new { x.UserId, x.PlanId });
+                    table.ForeignKey(
+                        name: "FK_UsersPlans_Plans_PlanId",
+                        column: x => x.PlanId,
+                        principalTable: "Plans",
+                        principalColumn: "PlanId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UsersPlans_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -184,20 +202,23 @@ namespace WebApi.Migrations
                 column: "TrainerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Plans_UserId",
-                table: "Plans",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_TrainerId",
                 table: "Users",
                 column: "TrainerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UsersPlans_PlanId",
+                table: "UsersPlans",
+                column: "PlanId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Exercises");
+
+            migrationBuilder.DropTable(
+                name: "UsersPlans");
 
             migrationBuilder.DropTable(
                 name: "Categories");

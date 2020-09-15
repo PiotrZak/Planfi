@@ -1,56 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { userService } from "../../services/userServices";
 import Icon from "./../../common/Icon"
-import { useDispatch } from "react-redux";
 import Return from "./../../common/Return"
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
 import { userContext } from '../../App';
 import { UserInfo } from "../../common/users/UserInfo"
+
 import EditUserPasswordModal from "./Edit/EditUserPassword"
-import EditUserEmailModal from "./Edit/EditUserEmail";
-import EditUserDataModal from "./Edit/EditUserData";
-import { alertActions } from "../../redux/actions/alert.actions";
+import EditUserEmailModal from "./Edit/EditUserEmail"
+import EditUserDataModal from "./Edit/EditUserData"
 import { accountService } from '../../services/accountServices';
 
 var ReactBottomsheet = require('react-bottomsheet');
 
-const userEdit = "Edit Your Data";
-const changeMail = "Change Email";
-const changePassword = "Change Paassword";
-const logout = "Logout";
-
-
-export const User = (props) => {
+export const MyProfile = (props) => {
 
     const [bottomSheet, setBottomSheet] = useState(false)
-    const [user, setUser] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const dispatch = useDispatch();
 
-    useEffect(() => {
-        getUserById()
-    }, []);
-
-    const { match } = props;
-    let id = match.params;
-
-    const getUserById = () => {
-        userService
-            .getUserById(id.id)
-            .then((data) => {
-                setUser(data);
-                setIsLoading(false)
-            })
-            .catch((error) => {
-                dispatch(alertActions.error(error.title));
-            });
-    }
+    const { user } = useContext(userContext)
 
     const [openEditUserData, setOpenEditUserData] = useState(false)
     const [openEditMailModal, setOpenEditMailModal] = useState(false);
     const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
+
+    const { match } = props;
+    let id = match.params;
+
+    const userEdit = "Edit Your Data";
+    const changeMail = "Change Email";
+    const changePassword = "Change Paassword";
+    const logout = "Logout";
 
     return (
         <div className="user-container">
@@ -88,12 +69,6 @@ export const User = (props) => {
 
 // My trainers - list of trainers assigned to user
 // My plans - list of plans assigned to user
-
-const userPlans = () => {
-    return(
-        <div>Test</div>
-    )
-}
 
 
 const Navs = () => {
@@ -141,4 +116,4 @@ const Navs = () => {
 
 
 
-export default User;
+export default MyProfile;

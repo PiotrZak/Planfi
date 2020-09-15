@@ -5,6 +5,7 @@ import GenericElement from "./GenericElement/GenericElement"
 
 export const CheckboxGenericComponent = ({
   id,
+  className,
   selectAll,
   image,
   dataType,
@@ -93,13 +94,13 @@ export const CheckboxGenericComponent = ({
             ></input>
 
             {type === "users" &&
-              <GenericElement circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
+              <GenericElement className = {className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
             }
             {type === "plans" &&
-              <GenericElement key={i} headline={element.title} plan={element} />
+              <GenericElement className = {className}key={i} headline={element.title} plan={element} />
             }
             {type === "exercises" &&
-              <GenericElement key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+              <GenericElement className = {className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
             }
 
           </div>

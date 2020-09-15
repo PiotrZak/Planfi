@@ -16,6 +16,7 @@ using System.Text;
 
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
+using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
@@ -113,35 +114,21 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
-        [AllowAnonymous]
-        [HttpPost("assignUsers")]
-        public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
-        {
-            _userService.AssignUsersToTrainer(model.TrainerId, model.UsersId);
-            return Ok();
-        }
-
-        [AllowAnonymous]
-        [HttpPost("unassingUsers")]
-        public IActionResult UnassignUsersToTrainer([FromBody] AssignUsersToTrainer model)
-        {
-            _userService.UnassignUsersToTrainer(model.TrainerId, model.UsersId);
-            return Ok();
-        }
+        //[AllowAnonymous]
+        //[HttpPost("assignUsers")]
+        //public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
+        //{
+        //    _userService.AssignUsersToTrainer(model.TrainerId, model.UsersId);
+        //    return Ok();
+        //}
 
         [AllowAnonymous]
         [HttpPost("assignPlans")]
         public IActionResult AssignPlanToUser([FromBody] AssignPlansToUser model)
         {
-            _userService.AssignPlanToUser(model.UserId, model.PlanId);
-            return Ok();
-        }
 
-        [AllowAnonymous]
-        [HttpPost("unAssignPlans")]
-        public IActionResult UnassignPlanToUser([FromBody] AssignPlansToUser model)
-        {
-            _userService.UnassignPlanToUser(model.UserId, model.PlanId);
+            _userService.AssignPlanToUser(model.UserIds, model.PlanIds);
+
             return Ok();
         }
 

@@ -1,14 +1,14 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Entities/Plans.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/AutoMapper.cs">
     <Files>
-      <File FileName="Controllers/CategoryController.cs" Line="66" Column="33" />
-      <File FileName="Services/PlanService.cs" Line="70" Column="74" />
-      <File FileName="Controllers/ExerciseController.cs" Line="38" Column="23" />
-      <File FileName="Services/UserService.cs" Line="113" Column="30" />
-      <File FileName="Entities/Exercises.cs" Line="24" Column="37" />
-      <File FileName="Entities/Plans.cs" Line="18" Column="41" />
-      <File FileName="Services/CategoryService.cs" Line="18" Column="19" NotebookId="1" />
-      <File FileName="Services/ExerciseService.cs" Line="54" Column="1" NotebookId="1" />
+      <File FileName="Entities/Plans.cs" Line="14" Column="10" />
+      <File FileName="Entities/User.cs" Line="14" Column="47" />
+      <File FileName="Controllers/ViewModels/AssignPlansToUser.cs" Line="14" Column="27" />
+      <File FileName="Controllers/ExerciseController.cs" Line="29" Column="10" />
+      <File FileName="Services/UserService.cs" Line="189" Column="10" NotebookId="1" />
+      <File FileName="Controllers/UsersController.cs" Line="134" Column="1" NotebookId="1" />
+      <File FileName="Helpers/DataContext.cs" Line="24" Column="69" NotebookId="1" />
+      <File FileName="Helpers/AutoMapper.cs" Line="15" Column="43" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,10 +18,10 @@
               <Node name="Controllers" expanded="True">
                 <Node name="ViewModels" expanded="True" />
               </Node>
-              <Node name="Entities" expanded="True">
-                <Node name="Plans.cs" selected="True" />
+              <Node name="Entities" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="AutoMapper.cs" selected="True" />
               </Node>
-              <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>
