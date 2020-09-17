@@ -5,7 +5,7 @@ export const planService = {
   getAllPlans,
   addPlan,
   getPlanById,
-  deletePlanById,
+  deletePlans,
   assignExercises,
   unAssignExercises,
   };
@@ -30,6 +30,6 @@ export const planService = {
     return http.get(`${PLANS_URL}/${id}`);
   }
 
-  function deletePlanById(id) {
-    return http.del(`${PLANS_URL}/${id}`);
+  function deletePlans(body) {
+    return http.post(`${PLANS_URL}delete`, body);
   }

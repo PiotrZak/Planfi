@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { planService } from "services/planService";
 import Icon from "common/Icon"
 import Return from "common/Return"
-import Button from "common/GenericElement/GenericElement"
+import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import AddPlanModal from "./AddPlanModal";
 import { Loader } from "common/Loader"
+
+const noPlans = "No plans"
+const plansTitle = "Plans"
+const addExerciseToCategory = "To be able to add exercises you need to add a category first"
 
 export const Plans = () => {
     const [plans, setPlans] = useState();
@@ -26,10 +30,9 @@ export const Plans = () => {
         setOpenModal(!openModal)
     }
 
-    const noplans = "No plans"
-    const plansTitle = "Plans"
-    const addExerciseToCategory = "To be able to add exercises you need to add a category first"
-
+    const submissionHandleElement = () => {
+        console.log('test')
+    }
 
     return (
         <div className="container">
@@ -42,8 +45,7 @@ export const Plans = () => {
             <AddPlanModal openModal={openModal} onClose={() => setOpenModal(false)} />
             <div>
                 <Loader isLoading={isLoading}>
-                    {plans ? plans.map((plan, i) => <Button key={i} headline={plan.title} plan={plan} />)
-                        : noplans + addExerciseToCategory}
+                    {plans ? <CheckboxGenericComponent dataType="plans" displayedValue="title" dataList={plans} onSelect={submissionHandleElement} /> : <h1>{noPlans}</h1>}
                 </Loader>
             </div>
         </div>

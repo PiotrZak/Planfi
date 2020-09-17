@@ -10,7 +10,7 @@ namespace WebApi.Services
         Plan GetById(string id);
         Plan Create(Plan plan);
         IEnumerable<Plan> GetAll();
-        void Delete(string id);
+        void Delete(string[] id);
         void AssignExercisesToPlan(string planId, string[] exerciseId);
         void UnassignExercisesToPlan(string planId, string[] exerciseId);
     }
@@ -44,13 +44,17 @@ namespace WebApi.Services
 
             return _context.Plans;
         }
-        public void Delete(string id)
+
+        public void Delete(string[] id)
         {
-            var plan = _context.Plans.Find(id);
-            if (plan != null)
+            foreach (var planId in id)
             {
-                _context.Plans.Remove(plan);
-                _context.SaveChanges();
+                var plan = _context.Plans.Find(planId);
+                if (plan != null)
+                {
+                    _context.Plans.Remove(plan);
+                    _context.SaveChanges();
+                }
             }
         }
 

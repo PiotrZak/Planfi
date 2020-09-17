@@ -8,6 +8,7 @@ export const userService = {
     getUserById,
     editUser,
     getUserByRole,
+    deleteUsers,
 
     assignUsersToTrainer,
     unAssignUsersToTrainer,
@@ -37,6 +38,10 @@ export const userService = {
 
   function allUsers(body) {
     return http.get(USER_URL, body);
+  }
+// todo - research with del
+  function deleteUsers(body) {
+    return http.post(`${USER_URL}delete`, body);
   }
 
 

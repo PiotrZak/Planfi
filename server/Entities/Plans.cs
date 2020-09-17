@@ -22,7 +22,6 @@ namespace WebApi.Entities
 
         public virtual ICollection<UsersPlans> UsersPlans { get; set; }
 
-
         //public List<AssignPlansToUser> UserIds{ get; set; }
         //public List<Trainer> Trainers { get; set; }
     }

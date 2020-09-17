@@ -54,34 +54,6 @@ const GenericElement = ({
                 {/* <CircleButton iconName="ellipsis-h" />
                 {secondaryMenu && <CircleButton iconName="draggabledots" />} */}
 
-                {types[0] && <Link to={{
-                    pathname: `/exercise/${exercise.exerciseId}`,
-                    state: { id: exercise.exerciseId }
-                }}>
-                    <Icon name={"arrow-right"} fill={"white"} />
-                </Link>}
-
-                {types[1] && <Link to={{
-                    pathname: `/category/${category.categoryId}`,
-                    state: { id: category.categoryId }
-                }}>
-                    <Icon name={"arrow-right"} fill={"white"} />
-                </Link>}
-
-                {types[2] && <Link to={{
-                    pathname: `/plan/${plan.planId}`,
-                    state: { id: plan.planId }
-                }}>
-                    <Icon name={"arrow-right"} fill={"white"} />
-                </Link>}
-
-                {types[3] && <Link to={{
-                    pathname: `/user/${user.userId}`,
-                    state: { id: user.userId }
-                }}>
-                    <Icon name={"arrow-right"} fill={"white"} />
-                </Link>}
-
             </div>
         </div>
     )

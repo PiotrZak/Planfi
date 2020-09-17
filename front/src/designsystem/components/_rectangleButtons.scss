@@ -4,9 +4,8 @@
   align-items: center;
   background-color: $color-gray-80;
   margin: 0 0 0 0;
-  padding: 1.8rem 1.6rem;
+  padding: 1.8rem 4.2rem;
   border-radius: 4px;
-
 
   &__wrapper{
     display: flex;
@@ -55,6 +54,10 @@
       font-size: 1.4rem;
       line-height: 2.1rem;
     }
+  }
+
+  @include sm{
+    padding: 1.8rem 1.6rem;
   }
 }
 

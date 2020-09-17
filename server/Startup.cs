@@ -35,7 +35,8 @@ namespace WebApi
 
 
             // Use a PostgreSQL database
-            var sqlConnectionString = Configuration.GetConnectionString("AmazonRDS");
+            var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
+            //var sqlConnectionString = Configuration.GetConnectionString("AmazonRDS");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));

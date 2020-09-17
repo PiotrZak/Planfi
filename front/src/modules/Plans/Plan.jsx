@@ -14,28 +14,35 @@ import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
 import { CheckboxList } from 'common/CheckboxList';
 import Spacer from "common/Spacer"
 import { commonUtil } from "utils/common.util"
+import { Search } from "common/Search"
+import {
+    isMobile
+} from "react-device-detect";
 
 var ReactBottomsheet = require('react-bottomsheet');
+
+const allocateExercises = "Exercises succesfully allocated!";
+const unAssignFromPlan = "Unassign from plan"
+const unAllocateExercises = "Exercises succesfully deleted!";
+const planDeleted = "Plan succesfully deleted!";
+const addExerciseToPlan = "Add Exercises to plan";
+const noExerciseInPlan = "There are no added exercises in this Plan";
+const returnToCategories = "return to categories"
+const editExercise = "Edit exercise"
+const selected = "selected";
+
 
 export const Plan = (props) => {
 
     const [plan, setPlan] = useState();
     const [exercises, setExercises] = useState()
-
     const [activeExercise, setActiveExercise] = useState([])
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
-
     const [isLoading, setIsLoading] = useState(true)
-
-
     const [searchTerm, setSearchTerm] = useState("");
-
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState()
-
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
-
-    const [editable, setEditable] = useState(false)
     const [bottomSheet, setBottomSheet] = useState(false)
 
     const history = useHistory();
@@ -55,7 +62,6 @@ export const Plan = (props) => {
         planService
             .getPlanById(id)
             .then((data) => {
-
                 setPlan(data);
             })
             .catch((error) => {
@@ -97,7 +103,6 @@ export const Plan = (props) => {
     }
 
     const unAssignExerciseToPlan = () => {
-        console.log(activeExercise)
         const data = { planId: id.id, exerciseId: activeSelectedExercise }
         planService
             .unAssignExercises(data)
@@ -149,98 +154,129 @@ export const Plan = (props) => {
     }
 
     const submissionHandleElement = (selectedData) => {
-
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setActiveSelectedExercise(selectedExercises)
-  
-        if (activeSelectedExercise.length > 0) {
-            setEditable(true)
-            setSelectedElementsBottomSheet(true)
+        if (selectedExercises.length > 0) {
+            setSelectedElementsBottomSheet(true);
+        } else {
+            setSelectedElementsBottomSheet(false);
         }
     }
 
-    const allocateExercises = "Exercises succesfully allocated!";
-    const unAssignFromPlan = "Unassign from plan"
-    const unAllocateExercises = "Exercises succesfully deleted!";
-    const planDeleted = "Plan succesfully deleted!";
-    const addExerciseToPlan = "Add Exercises to plan";
-    const noExerciseInPlan = "There are no added exercises in this Plan";
-    const returnToCategories = "return to categories"
+
 
     return (
-        <div className="container">
-            <div className="container__title">
-                <Return />
-                {plan && <h2>{plan.title}</h2>}
-                <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
+        <div>
+            <div className="container">
+                <div className="container__title">
+                    <Return />
+                    {plan && <h2>{plan.title}</h2>}
+                    <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
+                </div>
+                <Search callBack={filterExercises} />
+                <Spacer h={90} />
+
+                <Loader isLoading={isLoading}>
+                    {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
+                </Loader>
+
+
+
+
+                <ReactBottomsheet
+                    visible={bottomSheet}
+                    onClose={() => setBottomSheet(false)}
+                    appendCancelBtn={false}>
+
+                    <div>
+                        {categoryExercises ?
+                            <div>
+                                <p onClick={() => setCategoryExercises()}><Icon name={"arrow-left"} fill={"#5E4AE3"} />{returnToCategories}</p>
+                                <CheckboxGenericComponent className="micro-bottom" dataType="category" displayedValue="title" dataList={categoryExercises} onSelect={selectActiveId} selectAll={true} />
+                                <Button className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={"Assign Exercises to Plan"}></Button>
+                            </div>
+                            :
+                            categories ?
+                                categories.map((category, i) =>
+                                    <div key={i} className="micro-bottom" onClick={() => loadExercises(category.categoryId)}>
+                                        <h3>{category.title}</h3>
+                                        <Icon name={"plus"} fill={"#5E4AE3"} />
+                                    </div>)
+                                : <p>Currently there is not category</p>
+                        }}
+                </div>
+                </ReactBottomsheet>
+
+
             </div>
-
-
-            <Search callBack = {filterExercises}/>
-            <Spacer h={90} />
-
-            <Loader isLoading={isLoading}>
-                {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
-            </Loader>
-
-            <ReactBottomsheet
-                visible={selectedElementsBottomSheet}
-                onClose={() => setSelectedElementsBottomSheet(false)}
-                appendCancelBtn={false}>
-
-                <div>
-                    {activeSelectedExercise.length == 1 ?
-                        <div onClick={() => unAssignExerciseToPlan()} className="micro-bottom">
-                            {/* todo - edit */}
-                            <p >{unAssignFromPlan}</p>
-                            {/* <button className='bottom-sheet-item'><Link to={{
-                                pathname: `/edit-exercise/${props.location.state.id}`,
-                                state: { activeSelectedExercise: activeSelectedExercise }
-                            }}>Edit</Link></button> */}
-                        </div>
-                        : <div className="micro-bottom"><p onClick={() => unAssignExerciseToPlan()}>Delete</p></div>
-                    }
-                </div>
-            </ReactBottomsheet>
-
-
-            <ReactBottomsheet
-                visible={bottomSheet}
-                onClose={() => setBottomSheet(false)}
-                appendCancelBtn={false}>
-
-                <div>
-                    {categoryExercises ?
-                        <div>
-                            <p onClick={() => setCategoryExercises()}><Icon name={"arrow-left"} fill={"#5E4AE3"} />{returnToCategories}</p>
-                            <CheckboxList dataList={categoryExercises} displayedValue={"name"} onSelect={selectActiveId} selectAll={true} />
-                            <Button className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={"Assign Exercises to Plan"}></Button>
-                        </div>
-                        :
-                        categories ?
-                            categories.map((category, i) =>
-                                <div key={i} className="micro-bottom" onClick={() => loadExercises(category.categoryId)}>
-                                    <h3>{category.title}</h3>
-                                    <Icon name={"plus"} fill={"#5E4AE3"} />
-                                </div>)
-                            : <p>Currently there is not category</p>
-                    }}
-                </div>
-            </ReactBottomsheet>
+            <PlanExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
         </div>
     );
 }
 
-const Search = ({callBack}) => {
-    return(
-        <div class="search-box">
-        <input onChange={callBack} class="search-txt" type="text" placeholder="What are you looking for?" />
-        <a class="search-btn" href="#">
-            <div className="search-box__icon"><Icon name={"search"} fill={"#5E4AE3"} width={"24px"} height={"24px"} /></div>
-        </a>
-    </div>
+
+
+
+
+const PlanExercises = ({ activeSelectedExercise, id, setSelectedElementsBottomSheet, selectedElementsBottomSheet, props }) => {
+
+    const dispatch = useDispatch()
+
+    const unAssignExerciseToPlan = () => {
+        const data = { planId: id.id, exerciseId: activeSelectedExercise }
+        planService
+            .unAssignExercises(data)
+            .then(() => {
+                dispatch(alertActions.success(unAllocateExercises))
+                setSelectedElementsBottomSheet(false)
+            })
+            .catch((error) => {
+                dispatch(alertActions.error(error))
+            });
+    }
+
+    const editExercise = () => {
+
+        // <button className='bottom-sheet-item'><Link to={{
+        //     pathname: `/edit-exercise/${props.location.state.id}`,
+        //     state: { activeSelectedExercise: activeSelectedExercise }
+        // }}>{editExercise}</Link></button>
+
+    }
+
+    return (
+        <ReactBottomsheet
+            showBlockLayer={false}
+            className="bottomsheet-without-background"
+            visible={selectedElementsBottomSheet}
+            onClose={() => setSelectedElementsBottomSheet(false)}
+            appendCancelBtn={false}>
+            {isMobile ?
+                <>
+                    <button onClick={() => unAssignExerciseToPlan()} className="bottom-sheet-item">{unAssignFromPlan}</button>
+                    {activeSelectedExercise.length < 2 &&
+                        <button className='bottom-sheet-item'><Link to={{
+                            pathname: `/edit-exercise/${props.location.state.id}`,
+                            state: { activeSelectedExercise: activeSelectedExercise }
+                        }}>{editExercise}</Link></button>
+                    }
+                </>
+                :
+                <>
+                    <div className="bottom-sheet-item__oneline">
+                        <Icon name="check" fill="#2E6D2C" />
+                        <p>{activeSelectedExercise.length} {selected}</p>
+                        <div onClick={() => unAssignExerciseToPlan()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{unAssignFromPlan}</div>
+                        {activeSelectedExercise.length < 2 &&
+                            <button className='bottom-sheet-item'><Link to={{
+                                pathname: `/edit-exercise/${props.location.state.id}`,
+                                state: { activeSelectedExercise: activeSelectedExercise }
+                            }}>{editExercise}</Link></button>
+                        }
+                    </div>
+                </>
+            }
+        </ReactBottomsheet>
     )
 }
-
-
 export default Plan;

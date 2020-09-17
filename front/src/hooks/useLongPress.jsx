@@ -6,7 +6,7 @@ export function Holdable({id, onClick, onHold, children, forx}) {
     const [className, setClassName] = useState(false)
     
     function onPointerDown(evt) {
-      const event = { ...evt } // convert synthetic event to real object
+      const event = { ...evt }
       const timeoutId = window.setTimeout(timesup.bind(null, event), 500)
       setTimer(timeoutId)
     }

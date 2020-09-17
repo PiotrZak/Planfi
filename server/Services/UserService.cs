@@ -14,13 +14,14 @@ namespace WebApi.Services
         User GetById(string id);
         User Create(User user, string password);
         void Update(User user, string password);
-        void Delete(string id);
+        void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
 
         //void AssignUsersToTrainer(string trainerId, string[] usersId);
         //void UnassignUsersToTrainer(string trainerId, string[] usersId);
 
         void AssignPlanToUser(string[] userIds, string[] planIds);
+
         //void UnassignPlanToUser(string[] userIds, string[] planIds);
     }
 
@@ -117,13 +118,17 @@ namespace WebApi.Services
 
 
 
-        public void Delete(string id)
+        public void Delete(string[] id)
         {
-            var user = _context.Users.Find(id);
-            if (user != null)
+
+            foreach (var UserId in id)
             {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
+                var user = _context.Users.Find(UserId);
+                if (user != null)
+                {
+                    _context.Users.Remove(user);
+                    _context.SaveChanges();
+                }
             }
         }
 

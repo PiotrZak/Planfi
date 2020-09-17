@@ -14,6 +14,9 @@ import { Button } from 'common/buttons/Button';
 import { Search } from 'common/Search';
 import Spacer from 'common/Spacer';
 import InviteUserModal from './InviteUsersModal';
+import {
+  isMobile
+} from "react-device-detect";
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -30,6 +33,8 @@ const assignToTrainerText = "Assign to trainer"
 const assignPlanText = "Assign plan"
 const selectFromPlans = "Select from plans"
 const selectFromTrainers = "Select from trainers";
+const selected = "selected";
+const userDeleted = "Users sucessfully deleted!"
 
 export const Users = () => {
   const { user } = useContext(userContext);
@@ -89,6 +94,14 @@ export const Users = () => {
 
   const deleteUser = () => {
 
+    userService
+      .deleteUsers(activeUsers)
+      .then((data) => {
+        dispatch(alertActions.success(userDeleted));
+      })
+      .catch((error) => {
+        dispatch(alertActions.error(error.title));
+      });
   };
 
   const assignUserToTrainer = (selectedData) => {
@@ -149,23 +162,50 @@ export const Users = () => {
         appendCancelBtn={false}
       >
 
-        <Icon name="check" fill="#2E6D2C" />
-        <p>
-          {activeUsers.length}
-          {' '}
-          selected
-        </p>
+        {isMobile ?
+          <>
+            <button onClick={() => deleteUser()} className="bottom-sheet-item">{deleteUserText}</button>
+            <button onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item">{assignPlanText}</button>
+            <button onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item">{assignToTrainerText}</button>
+          </>
+          :
+          <>
+          <div className="bottom-sheet-item__oneline">
+            <Icon name="check" fill="#2E6D2C" />
+            <p>{activeUsers.length} {selected}</p>
+            <div onClick={() => deleteUser()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deleteUserText}</div>
+              <div onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item__content"><Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />{assignPlanText}</div>
+              <div onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item__content"><Icon height={"18px"} name="user-circle" fill="#C3C3CF" />{assignToTrainerText}</div>
+              </div>
+          </>
+        }
 
-        <button onClick={() => deleteUser()} className="bottom-sheet-item">{deleteUserText}</button>
-        <button onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item">{assignPlanText}</button>
-        <button onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item">{assignToTrainerText}</button>
       </ReactBottomsheet>
-
       <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
-
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const AssignUsersToPlans = ({
   assignPlan, setAssignPlan, bottomSheet, activeUsers, setBottomSheet,

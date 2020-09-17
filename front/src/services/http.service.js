@@ -26,8 +26,8 @@ function postFile(url, body) {
   });
 }
 
-function del(url) {
-  return axios.delete(url).then((response) => {
+function del(url, body) {
+  return axios.delete(url, body).then((response) => {
     return handleResponseError(response);
   });
 }

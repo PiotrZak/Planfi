@@ -19,8 +19,8 @@ namespace WebApi.Helpers
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
-            optionsBuilder.UseNpgsql("Host=fitdb.cc6bodfcsdgg.us-east-2.rds.amazonaws.com;Port=5432;Username=postgres;Password=postgres;Database=fitdb;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
+            //optionsBuilder.UseNpgsql("Host=fitdb.cc6bodfcsdgg.us-east-2.rds.amazonaws.com;Port=5432;Username=postgres;Password=postgres;Database=fitdb;");
             //optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AmazonRDS"));
 
         }

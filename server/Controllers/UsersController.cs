@@ -173,11 +173,9 @@ namespace WebApi.Controllers
         }
 
 
-
-
         [AllowAnonymous]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        [HttpPost("delete")]
+        public IActionResult Delete([FromBody] string[] id)
         {
             _userService.Delete(id);
             return Ok();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormInput } from "common/FormInput";
 import { useDispatch } from 'react-redux';
 import { Button } from "common/buttons/Button"
@@ -21,6 +21,15 @@ export const EditExercise = (props) => {
         weight: null,
         file: null,
     }
+
+
+    useEffect(() => {
+        console.log('test')
+        console.log(props)
+        if(initialExerciseData.name == undefined){
+            console.log('test')
+        }
+    }, []);
 
     const [initialExerciseData] = useState(props.location.state.exercise)
     const [exerciseData, setExerciseData] = useState(initialData)
