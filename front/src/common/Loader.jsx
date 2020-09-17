@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Spinner } from "reactstrap";
+
 export const Loader = ({ children, isLoading, className, rowClass, small }) => {
   if (isLoading) {
     return (
@@ -13,7 +14,7 @@ export const Loader = ({ children, isLoading, className, rowClass, small }) => {
                   : `spinner-large ${className}`
               }
               color="primary"
-            ></Spinner>
+             />
           </Col>
         </Row>
       </Container>

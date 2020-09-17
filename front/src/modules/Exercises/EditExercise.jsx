@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { FormInput } from "../../common/FormInput";
+import { FormInput } from "common/FormInput";
 import { useDispatch } from 'react-redux';
-import { Button } from "../../common/buttons/Button"
-import Return from "../../common/Return"
-import { exerciseService } from '../../services/exerciseService';
-import { alertActions } from '../../redux/actions/alert.actions'
-import Dropzone from "../../common/Dropzone"
-import Counter from "../../common/Counter"
-import { validationUtil } from "../../../src/utils/validation.util"
+import { Button } from "common/buttons/Button"
+import Return from "common/Return"
+import { exerciseService } from 'services/exerciseService';
+import { alertActions } from 'redux/actions/alert.actions'
+import Dropzone from "common/Dropzone"
+import Counter from "common/Counter"
+import { validationUtil } from "utils/validation.util"
 import { useHistory } from "react-router-dom";
 
 export const EditExercise = (props) => {

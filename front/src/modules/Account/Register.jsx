@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { FormInput } from "../../common/FormInput"
+import { FormInput } from "common/FormInput"
 import { useDispatch } from 'react-redux'
-import { userService } from '../../services/userServices';
-import { alertActions } from '../../redux/actions/alert.actions'
-import { validationUtil } from "../../../src/utils/validation.util"
-import { Button } from "../../common/buttons/Button"
+import { userService } from 'services/userServices';
+import { alertActions } from 'redux/actions/alert.actions'
+import { validationUtil } from "utils/validation.util"
+import { Button } from "common/buttons/Button"
 
 
 export const RegisterPage = (props) => {

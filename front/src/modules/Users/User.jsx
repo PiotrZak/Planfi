@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { userService } from "../../services/userServices";
-import Icon from "./../../common/Icon"
+import { userService } from "services/userServices";
+import Icon from "common/Icon"
 import { useDispatch } from "react-redux";
-import Return from "./../../common/Return"
+import Return from "common/Return"
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
-import { userContext } from '../../App';
-import { UserInfo } from "../../common/users/UserInfo"
+import { UserInfo } from "common/users/UserInfo"
+
 import EditUserPasswordModal from "./Edit/EditUserPassword"
 import EditUserEmailModal from "./Edit/EditUserEmail";
 import EditUserDataModal from "./Edit/EditUserData";
-import { alertActions } from "../../redux/actions/alert.actions";
-import { accountService } from '../../services/accountServices';
+import { alertActions } from "redux/actions/alert.actions";
 
 var ReactBottomsheet = require('react-bottomsheet');
 

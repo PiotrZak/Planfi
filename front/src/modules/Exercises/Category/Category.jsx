@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { categoryService } from "../../../services/categoryService";
-import { exerciseService } from "../../../services/exerciseService";
+import { categoryService } from "services/categoryService";
+import { exerciseService } from "services/exerciseService";
 import { Link, useHistory } from 'react-router-dom';
-import { alertActions } from '../../../redux/actions/alert.actions'
+import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
-import Icon from "../../../common/Icon"
-import Return from "../../../common/Return"
+import Icon from "common/Icon"
+import Return from "common/Return"
 import "react-multi-carousel/lib/styles.css";
-import Button from "../../../common/GenericElement/GenericElement"
+import Button from "common/GenericElement/GenericElement"
 
 var ReactBottomsheet = require('react-bottomsheet');
 

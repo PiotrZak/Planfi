@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { FormInput } from "./FormInput";
-import GenericElement from "./GenericElement/GenericElement"
-
+import React, { useState, useEffect } from 'react';
+import { FormInput } from './FormInput';
+import GenericElement from './GenericElement/GenericElement';
 
 export const CheckboxGenericComponent = ({
   id,
@@ -9,18 +8,18 @@ export const CheckboxGenericComponent = ({
   selectAll,
   image,
   dataType,
-  dataList, //list of objects
-  displayedValue, //value to be displayed on chekbox list
+  dataList, // list of objects
+  displayedValue, // value to be displayed on chekbox list
   onSelect,
   initialSelected, // list of IDs - which elements should be selected initially
 }) => {
   const [list, setList] = useState();
   // eslint-disable-next-line
   const [initialSelect, setInitialSelect] = useState();
-  const [type, setType] = useState()
+  const [type, setType] = useState();
 
   useEffect(() => {
-    setType(dataType)
+    setType(dataType);
     if (dataList) setList(dataList);
     if (initialSelected) {
       setInitialSelect(initialSelected);
@@ -30,7 +29,7 @@ export const CheckboxGenericComponent = ({
   }, [dataList]);
 
   function handleChange(e) {
-    var checkedItemsCount = 0;
+    let checkedItemsCount = 0;
     dataList.map((el) => {
       if (el[displayedValue] === e.target.name) {
         el.value = e.target.checked;
@@ -52,7 +51,7 @@ export const CheckboxGenericComponent = ({
   }
 
   function handleSelectAll(e) {
-    var checkedItemsCount = 0;
+    let checkedItemsCount = 0;
     dataList.map((el) => {
       el.value = e.target.checked;
       if (el.value) checkedItemsCount++;
@@ -63,7 +62,7 @@ export const CheckboxGenericComponent = ({
   }
 
   function renderSelectAll() {
-    if (selectAll)
+    if (selectAll) {
       return (
         <FormInput
           id={`select-all-checkbox-${id}`}
@@ -73,13 +72,14 @@ export const CheckboxGenericComponent = ({
           inputWidth="1"
           type="checkbox"
           onChange={handleSelectAll}
-        ></FormInput>
+        />
       );
+    }
   }
 
   function renderRows() {
-    let row = [];
-    if (Array.isArray(list))
+    const row = [];
+    if (Array.isArray(list)) {
       dataList.map((element, i) => {
         row.push(
           <div key={i} className="checkbox-generic-list__element">
@@ -89,24 +89,22 @@ export const CheckboxGenericComponent = ({
               key={`${element[displayedValue]}-checkbox-${id}`}
               name={element[displayedValue]}
               type="checkbox"
-              checked={element.value ? true : false}
+              checked={!!element.value}
               onChange={handleChange}
-            ></input>
+            />
 
-            {type === "users" &&
-              <GenericElement className = {className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
-            }
-            {type === "plans" &&
-              <GenericElement className = {className}key={i} headline={element.title} plan={element} />
-            }
-            {type === "exercises" &&
-              <GenericElement className = {className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
-            }
+            {type === 'users'
+              && <GenericElement className={className} circle image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />}
+            {type === 'plans'
+              && <GenericElement className={className} key={i} headline={element.title} plan={element} />}
+            {type === 'exercises'
+              && <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />}
 
-          </div>
+          </div>,
         );
         return element;
       });
+    }
     return row;
   }
   return (

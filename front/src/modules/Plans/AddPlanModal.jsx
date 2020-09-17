@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
-import { FormInput } from "./../../common/FormInput"
-import { validationUtil } from "./../../utils/validation.util"
-import { alertActions } from './../../redux/actions/alert.actions'
-import { planService } from "./../../services/planService";
-import { Button } from "./../../common/buttons/Button"
+import { FormInput } from "common/FormInput"
+import { validationUtil } from "utils/validation.util"
+import { alertActions } from 'redux/actions/alert.actions'
+import { planService } from "services/planService";
+import { Button } from "common/buttons/Button"
 
 const AddPlanModal = ({ openModal, onClose }) => {
 

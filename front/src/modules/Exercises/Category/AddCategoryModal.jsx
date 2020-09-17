@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
-import { FormInput } from "../../../common/FormInput"
-import { validationUtil } from "../../../utils/validation.util"
-import { alertActions } from '../../../redux/actions/alert.actions'
-import { categoryService } from '../../../services/categoryService';
-import { Button }  from "../../../common/buttons/Button"
+import { FormInput } from "common/FormInput"
+import { validationUtil } from "utils/validation.util"
+import { alertActions } from 'redux/actions/alert.actions'
+import { categoryService } from 'services/categoryService';
+import { Button }  from "common/buttons/Button"
 
 const AddCategoryModal = ({ openModal, onClose }) => {
 

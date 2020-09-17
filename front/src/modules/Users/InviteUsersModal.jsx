@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
-import { FormInput } from "./../../common/FormInput"
-import { validationUtil } from "./../../utils/validation.util"
-import { alertActions } from './../../redux/actions/alert.actions'
-import { userService } from './../../services/userServices'
-import { Button } from "./../../common/buttons/Button"
+import { FormInput } from "common/FormInput"
+import { validationUtil } from "utils/validation.util"
+import { alertActions } from 'redux/actions/alert.actions'
+import { userService } from 'services/userServices'
+import { Button } from "common/buttons/Button"
 import { ReactMultiEmail, isEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 

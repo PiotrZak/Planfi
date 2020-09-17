@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormInput } from "../../../common/FormInput"
+import { FormInput } from "common/FormInput"
 
 
 const Checkbox = ({ handleElement, id }) => {

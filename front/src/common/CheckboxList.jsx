@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { FormInput } from "./FormInput";
+import React, { useState, useEffect } from 'react';
+import { FormInput } from './FormInput';
+
 export const CheckboxList = ({
   id,
   selectAll,
   image,
-  dataList, //list of objects
-  displayedValue, //value to be displayed on chekbox list
+  dataList, // list of objects
+  displayedValue, // value to be displayed on chekbox list
   onSelect,
   initialSelected, // list of IDs - which elements should be selected initially
 }) => {
@@ -23,7 +24,7 @@ export const CheckboxList = ({
   }, [dataList]);
 
   function handleChange(e) {
-    var checkedItemsCount = 0;
+    let checkedItemsCount = 0;
     dataList.map((el) => {
       if (el[displayedValue] === e.target.name) {
         el.value = e.target.checked;
@@ -45,7 +46,7 @@ export const CheckboxList = ({
   }
 
   function handleSelectAll(e) {
-    var checkedItemsCount = 0;
+    let checkedItemsCount = 0;
     dataList.map((el) => {
       el.value = e.target.checked;
       if (el.value) checkedItemsCount++;
@@ -56,7 +57,7 @@ export const CheckboxList = ({
   }
 
   function renderSelectAll() {
-    if (selectAll)
+    if (selectAll) {
       return (
         <FormInput
           id={`select-all-checkbox-${id}`}
@@ -66,19 +67,20 @@ export const CheckboxList = ({
           inputWidth="1"
           type="checkbox"
           onChange={handleSelectAll}
-        ></FormInput>
+        />
       );
+    }
   }
 
   function renderRows() {
-    let row = [];
-    if (Array.isArray(list))
+    const row = [];
+    if (Array.isArray(list)) {
       dataList.map((element, i) => {
         row.push(
           <div className="micro-bottom">
-          {image && <img key={i} src={`data:image/jpeg;base64,${element.files[0]}`} />}
+            {image && <img key={i} src={`data:image/jpeg;base64,${element.files[0]}`} />}
             <FormInput
-              className ="micro-bottom"
+              className="micro-bottom"
               id={`${element[displayedValue]}-checkbox-${id}`}
               key={`${element[displayedValue]}-checkbox-${id}`}
               name={element[displayedValue]}
@@ -86,13 +88,14 @@ export const CheckboxList = ({
               labelWidth="10"
               inputWidth="1"
               type="checkbox"
-              checked={element.value ? true : false}
+              checked={!!element.value}
               onChange={handleChange}
-            ></FormInput>
-          </div>
+            />
+          </div>,
         );
         return element;
       });
+    }
     return row;
   }
   return (

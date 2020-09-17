@@ -6,10 +6,7 @@ const AVATAR_TYPES = {
     square: "square",
     circle: "circle"
 }
-
-const ExerciseComponent = ({ exercise }) => {
-
-  return (
+const ExerciseComponent = ({ exercise }) => (
     <div className="user-component">
       <img src={`data:image/jpeg;base64,${exercise.files[0]}`} />
       <div>
@@ -20,11 +17,10 @@ const ExerciseComponent = ({ exercise }) => {
         pathname: `/exercise/${exercise.exerciseId}`,
         state: { id: exercise.exerciseId }
       }}>
-            <Icon name={"arrow-right"} fill={"white"} />
+            <Icon name="arrow-right" fill="white" />
         </Link>
     </div>
-  );
-};
+);
 
 
 export default ExerciseComponent;

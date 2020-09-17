@@ -2,8 +2,8 @@ import React from "react";
 import Checkbox from "./checkbox/Checkbox";
 import CircleButton from "../CircleButton/CircleButton";
 import { Link } from 'react-router-dom';
-import Icon from "../../../src/common/Icon"
-import { planService } from "../../services/planService";
+import Icon from "common/Icon"
+import { planService } from "services/planService";
 
 const GenericElement = ({
     handleElement,

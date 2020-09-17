@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { planService } from "./../../services/planService";
-import { exerciseService } from "./../../services/exerciseService";
-import { categoryService } from "./../../services/categoryService";
+import { planService } from "services/planService";
+import { exerciseService } from "services/exerciseService";
+import { categoryService } from "services/categoryService";
 import { Link, useHistory } from 'react-router-dom';
-import { alertActions } from './../../redux/actions/alert.actions'
+import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
-import Icon from "./../../common/Icon"
-import Return from "./../../common/Return"
+import Icon from "common/Icon"
+import Return from "common/Return"
 import "react-multi-carousel/lib/styles.css";
-import { Loader } from "../../common/Loader"
-import { Button } from "../../common/buttons/Button"
-import { CheckboxGenericComponent } from "../../common/CheckboxGenericComponent"
-import { CheckboxList } from '../../common/CheckboxList';
-import Spacer from "../../common/Spacer"
-import { commonUtil } from "../../../src/utils/common.util"
+import { Loader } from "common/Loader"
+import { Button } from "common/buttons/Button"
+import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
+import { CheckboxList } from 'common/CheckboxList';
+import Spacer from "common/Spacer"
+import { commonUtil } from "utils/common.util"
 
 var ReactBottomsheet = require('react-bottomsheet');
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { planService } from "./../../services/planService";
-import Icon from "./../../../src/common/Icon"
-import Return from "./../../common/Return"
-import Button from "./../../common/GenericElement/GenericElement"
+import { planService } from "services/planService";
+import Icon from "common/Icon"
+import Return from "common/Return"
+import Button from "common/GenericElement/GenericElement"
 import AddPlanModal from "./AddPlanModal";
-import { Loader } from "../../common/Loader"
+import { Loader } from "common/Loader"
 
 export const Plans = () => {
     const [plans, setPlans] = useState();
