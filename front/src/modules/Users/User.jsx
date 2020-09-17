@@ -13,6 +13,7 @@ import EditUserEmailModal from "./Edit/EditUserEmail";
 import EditUserDataModal from "./Edit/EditUserData";
 import { alertActions } from "redux/actions/alert.actions";
 
+
 var ReactBottomsheet = require('react-bottomsheet');
 
 const userEdit = "Edit Your Data";
@@ -20,13 +21,14 @@ const changeMail = "Change Email";
 const changePassword = "Change Paassword";
 const logout = "Logout";
 
-
 export const User = (props) => {
 
     const [bottomSheet, setBottomSheet] = useState(false)
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch();
+
+
 
     useEffect(() => {
         getUserById()

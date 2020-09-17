@@ -1,6 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { FormInput } from './FormInput';
-import GenericElement from './GenericElement/GenericElement';
+import React, { useState, useEffect } from "react";
+import { FormInput } from "./FormInput";
+import { Link } from 'react-router-dom';
+import GenericElement from "./GenericElement/GenericElement"
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
+
+
+import useLongPress from "../../src/hooks/useLongPress";
+import { Holdable } from "../../src/hooks/useLongPress";
+
 
 export const CheckboxGenericComponent = ({
   id,
@@ -28,15 +40,34 @@ export const CheckboxGenericComponent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataList]);
 
+
   function handleChange(e) {
     let checkedItemsCount = 0;
+
+    if (isMobile) {
+      e.currentTarget.nextElementSibling.checked = !e.currentTarget.nextElementSibling.checked;
+    }
+
+    var checkedItemsCount = 0;
+
     dataList.map((el) => {
-      if (el[displayedValue] === e.target.name) {
-        el.value = e.target.checked;
+
+      if (isMobile) {
+        if (el[displayedValue] === e.currentTarget.nextElementSibling.name) {
+          el.value = e.currentTarget.nextElementSibling.checked;
+        }
       }
+      else {
+        if (el[displayedValue] === e.target.name) {
+          el.value = e.target.checked;
+        }
+      }
+
       if (el.value) checkedItemsCount++;
       return el;
     });
+
+    console.log(dataList)
     setList([...dataList]);
     onSelect([...dataList], checkedItemsCount);
   }
@@ -77,12 +108,61 @@ export const CheckboxGenericComponent = ({
     }
   }
 
+
   function renderRows() {
     const row = [];
     if (Array.isArray(list)) {
       dataList.map((element, i) => {
         row.push(
           <div key={i} className="checkbox-generic-list__element">
+
+            {isMobile ?
+              <Holdable
+                onHold={handleChange}
+                onClick={(e) => e.preventDefault()}
+                id={id}
+                key={id}
+                for={`${element[displayedValue]}-checkbox-${id}`}
+              >
+                {type === "users" &&
+                  <Link to={{
+                    pathname: `/user/${element.userId}`,
+                    state: { id: element.userId }
+                  }}>
+                    <GenericElement className={className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
+                  </Link>
+                }
+                {type === "plans" &&
+                  <GenericElement className={className} key={i} headline={element.title} plan={element} />
+                }
+                {type === "exercises" &&
+                  <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+                }
+              </Holdable>
+
+              :
+              <>
+                <label
+                  for={`${element[displayedValue]}-checkbox-${id}`}
+                  className="checkbox-label">
+                </label>
+                {type === "users" &&
+                  <Link to={{
+                    pathname: `/user/${element.userId}`,
+                    state: { id: element.userId }
+                  }}>
+                    <GenericElement className={className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
+                  </Link>
+                }
+                {type === "plans" &&
+                  <GenericElement className={className} key={i} headline={element.title} plan={element} />
+                }
+                {type === "exercises" &&
+                  <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+                }
+              </>
+
+            }
             <input
               className="checkbox-generic-list__checkbox"
               id={`${element[displayedValue]}-checkbox-${id}`}
@@ -93,6 +173,7 @@ export const CheckboxGenericComponent = ({
               onChange={handleChange}
             />
 
+
             {type === 'users'
               && <GenericElement className={className} circle image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />}
             {type === 'plans'
@@ -101,6 +182,9 @@ export const CheckboxGenericComponent = ({
               && <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />}
 
           </div>,
+
+          </div>
+
         );
         return element;
       });
@@ -114,3 +198,7 @@ export const CheckboxGenericComponent = ({
     </>
   );
 };
+
+
+
+

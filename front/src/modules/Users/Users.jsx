@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
@@ -14,21 +15,21 @@ import { Search } from 'common/Search';
 import Spacer from 'common/Spacer';
 import InviteUserModal from './InviteUsersModal';
 
-const ReactBottomsheet = require('react-bottomsheet');
+var ReactBottomsheet = require('react-bottomsheet');
 
-const usersText = 'Users';
-const trainersText = 'Trainers';
-const clients = 'Clients';
-const organization = 'Organization';
-const returnToSubMenu = 'return';
-const assignPlanToUserNotification = 'Plan sucesfully assigned to users!';
-const assignTrainerToUserNotification = 'Trainer sucesfully assigned to users!';
-const noUsers = 'There are no Users';
-const deleteUserText = 'Delete user';
-const assignToTrainerText = 'Assign to trainer';
-const assignPlanText = 'Assign plan';
-const selectFromPlans = 'Select from plans';
-const selectFromTrainers = 'Select from trainers';
+const usersText = "Users";
+const trainersText = "Trainers";
+const clients = "Clients";
+const organization = "Organization"
+const returnToSubMenu = "return"
+const assignPlanToUserNotification = "Plan sucesfully assigned to users!";
+const assignTrainerToUserNotification = "Trainer sucesfully assigned to users!"
+const noUsers = "There are no Users";
+const deleteUserText = "Delete user"
+const assignToTrainerText = "Assign to trainer"
+const assignPlanText = "Assign plan"
+const selectFromPlans = "Select from plans"
+const selectFromTrainers = "Select from trainers";
 
 export const Users = () => {
   const { user } = useContext(userContext);
