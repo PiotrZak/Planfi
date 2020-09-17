@@ -8,7 +8,6 @@ import { commonUtil } from "../../utils/common.util"
 import { Loader } from "../../common/Loader"
 import Icon from "./../../common/Icon"
 import { CheckboxGenericComponent } from "../../common/CheckboxGenericComponent"
-import { CheckboxList } from "../../common/CheckboxList"
 import InviteUserModal from "./InviteUsersModal"
 import { userContext } from '../../App';
 import { Button } from "../../common/buttons/Button"
@@ -30,6 +29,7 @@ const assignToTrainerText = "Assign to trainer"
 const assignPlanText = "Assign plan"
 const selectFromPlans = "Select from plans"
 const selectFromTrainers = "Select from trainers";
+
 
 
 export const Users = () => {
