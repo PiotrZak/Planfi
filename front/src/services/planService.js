@@ -31,5 +31,5 @@ export const planService = {
   }
 
   function deletePlans(body) {
-    return http.post(`${PLANS_URL}delete`, body);
+    return http.post(`${PLANS_URL}/delete`, body);
   }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { alertActions } from 'redux/actions/alert.actions';
 
 export class Alert extends Component {
+
   componentWillReceiveProps(nextProps) {
     nextProps.alerts.alerts.map((alert) => {
       if (alert.delay > 0) {
@@ -24,7 +25,7 @@ export class Alert extends Component {
         {alerts.map((alert, index) => (
           <div key={index} className={`alert alert-${alert.type} alert-dismissible fade show`} role="alert">
             <p dangerouslySetInnerHTML={{ __html: alert.message }} />
-            <button type="button" className="alert-close" onClick={(e) => props.clear(alert.id)}>
+            <button type="button" className="alert-close" onClick={(e) => this.props.clear(alert.id)}>
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

@@ -8,6 +8,7 @@ import Return from 'common/Return';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'common/Loader';
 import Icon from 'common/Icon';
+import { Link } from 'react-router-dom';
 import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import { userContext } from 'App';
 import { Button } from 'common/buttons/Button';
@@ -20,9 +21,9 @@ import {
 
 var ReactBottomsheet = require('react-bottomsheet');
 
-const usersText = "Users";
+const usersText = "All Users";
 const trainersText = "Trainers";
-const clients = "Clients";
+const clientsText = "Clients";
 const organization = "Organization"
 const returnToSubMenu = "return"
 const assignPlanToUserNotification = "Plan sucesfully assigned to users!";
@@ -36,10 +37,16 @@ const selectFromTrainers = "Select from trainers";
 const selected = "selected";
 const userDeleted = "Users sucessfully deleted!"
 
-export const Users = () => {
+export const AllUsers = () => {
+
+
   const { user } = useContext(userContext);
+
+
   const [users, setUsers] = useState();
-  const [trainers, setTrainers] = useState([]);
+
+  const [clients, setClients] = useState();
+  const [trainers, setTrainers] = useState();
 
   const [activeUsers, setActiveUsers] = useState([]);
 
@@ -54,14 +61,29 @@ export const Users = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getAllUsers();
+    getAllClients();
+    getAllTrainers();
+    
   }, []);
 
-  const getAllUsers = () => {
+  const getAllClients = () => {
     userService
-      .allUsers()
+      .allClients()
       .then((data) => {
-        setUsers(data);
+        setClients(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        dispatch(alertActions.error(error.title));
+      });
+
+  };
+
+  const getAllTrainers = () => {
+    userService
+      .allTrainers()
+      .then((data) => {
+        setTrainers(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -69,17 +91,9 @@ export const Users = () => {
       });
   };
 
-  const getRole = (role) => {
-    userService
-      .getUserByRole(role)
-      .then((data) => {
-        setUsers(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        dispatch(alertActions.error(error.title));
-      });
-  };
+  const getAllUsers = () => {
+    setUsers(clients.concat(trainers))
+  }
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
@@ -141,16 +155,24 @@ export const Users = () => {
         <div className="users">
 
           <div className="users__filters">
-            <p onClick={() => getRole('Organization')}>{organization}</p>
-            <p onClick={() => getRole('Trainer')}>{trainersText}</p>
-            <p onClick={() => getRole('User')}>{clients}</p>
+            <Link to={{
+              pathname: `/trainers`,
+            }}><p>Trainers page</p></Link>
+            <Link to={{
+              pathname: `/clients`,
+            }}><p>Clients page</p></Link>
+            <hr />
+            <p onClick={() => getAllClients()}>{clientsText}</p>
+            <p onClick={() => getAllTrainers()}>{trainersText}</p>
+            <p onClick={() => getAllUsers()}>all</p>
           </div>
-
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
 
           <Loader isLoading={isLoading}>
             {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{noUsers}</h1>}
           </Loader>
+
+
         </div>
       </div>
 
@@ -170,13 +192,13 @@ export const Users = () => {
           </>
           :
           <>
-          <div className="bottom-sheet-item__oneline">
-            <Icon name="check" fill="#2E6D2C" />
-            <p>{activeUsers.length} {selected}</p>
-            <div onClick={() => deleteUser()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deleteUserText}</div>
+            <div className="bottom-sheet-item__oneline">
+              <Icon name="check" fill="#2E6D2C" />
+              <p>{activeUsers.length} {selected}</p>
+              <div onClick={() => deleteUser()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deleteUserText}</div>
               <div onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item__content"><Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />{assignPlanText}</div>
               <div onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item__content"><Icon height={"18px"} name="user-circle" fill="#C3C3CF" />{assignToTrainerText}</div>
-              </div>
+            </div>
           </>
         }
 
@@ -204,10 +226,7 @@ export const Users = () => {
 
 
 
-
-
-
-const AssignUsersToPlans = ({
+export const AssignUsersToPlans = ({
   assignPlan, setAssignPlan, bottomSheet, activeUsers, setBottomSheet,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');

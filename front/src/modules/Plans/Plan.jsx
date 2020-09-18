@@ -11,13 +11,10 @@ import "react-multi-carousel/lib/styles.css";
 import { Loader } from "common/Loader"
 import { Button } from "common/buttons/Button"
 import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
-import { CheckboxList } from 'common/CheckboxList';
 import Spacer from "common/Spacer"
 import { commonUtil } from "utils/common.util"
 import { Search } from "common/Search"
-import {
-    isMobile
-} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -102,19 +99,6 @@ export const Plan = (props) => {
             });
     }
 
-    const unAssignExerciseToPlan = () => {
-        const data = { planId: id.id, exerciseId: activeSelectedExercise }
-        planService
-            .unAssignExercises(data)
-            .then(() => {
-                dispatch(alertActions.success(unAllocateExercises))
-                setSelectedElementsBottomSheet(false)
-            })
-            .catch((error) => {
-                dispatch(alertActions.error(error))
-            });
-    }
-
     const deletePlan = () => {
         planService
             .deletePlanById(id.id)
@@ -163,7 +147,10 @@ export const Plan = (props) => {
         }
     }
 
-
+    const openBottomSheet = () => {
+        setBottomSheet(true)
+        setSelectedElementsBottomSheet(false)
+    }
 
     return (
         <div>
@@ -171,7 +158,7 @@ export const Plan = (props) => {
                 <div className="container__title">
                     <Return />
                     {plan && <h2>{plan.title}</h2>}
-                    <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
+                    <div onClick={() => openBottomSheet()}><Icon name={"plus"} fill={"#5E4AE3"} text={addExerciseToPlan} /></div>
                 </div>
                 <Search callBack={filterExercises} />
                 <Spacer h={90} />

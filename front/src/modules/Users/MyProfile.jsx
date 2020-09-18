@@ -66,6 +66,9 @@ export const MyProfile = (props) => {
 // My clients - list of users assigned to trainer
 // My plans - list of plans assigned to trainer
 
+
+
+
 // My trainers - list of trainers assigned to user
 // My plans - list of plans assigned to user
 

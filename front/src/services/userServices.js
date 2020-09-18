@@ -4,7 +4,10 @@ import { USER_URL } from "./utils"
 export const userService = {
     register,
     login,
-    allUsers,
+    allClients,
+    allTrainers,
+
+    
     getUserById,
     editUser,
     getUserByRole,
@@ -36,8 +39,12 @@ export const userService = {
     return http.get(`${USER_URL}role/${role}`);
   }
 
-  function allUsers(body) {
-    return http.get(USER_URL, body);
+  function allClients() {
+    return http.get(`${USER_URL}clients`);
+  }
+
+  function allTrainers() {
+    return http.get(`${USER_URL}trainers`);
   }
 // todo - research with del
   function deleteUsers(body) {

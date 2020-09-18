@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Route, Switch, BrowserRouter, Link,
+  Route, Switch, BrowserRouter, Link, NavLink
 } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { PrivateRoute } from './utils/PrivateRoute';
@@ -13,7 +13,10 @@ import { ForgotPassword } from './modules/Account/ForgotPassword';
 import { Plans } from './modules/Plans/Plans';
 import { Plan } from './modules/Plans/Plan';
 
-import { Users } from './modules/Users/Users';
+import { AllUsers } from './modules/Users/AllUsers';
+import { Trainers } from './modules/Users/Trainers';
+import { Clients } from './modules/Users/Clients';
+
 import { User } from './modules/Users/User';
 
 import Alert from './common/Alert';
@@ -70,11 +73,11 @@ const App = () => {
   };
 
   const renderAvatarMenu = () => {
-    if (user) {
-      if (user.role === 'Organization' || user.role === 'Trainer') {
-        return <AvatarMenu user={user} />;
-      }
-    }
+    // if (user) {
+    //   if (user.role === 'Organization' || user.role === 'Trainer') {
+    return <AvatarMenu user={user} />;
+    //   }
+    // }
   };
 
   return (
@@ -105,7 +108,16 @@ const App = () => {
                 <PrivateRoute user={user} path="/plans" component={Plans} />
                 <PrivateRoute user={user} path="/plan/:id" component={Plan} />
 
-                <PrivateRoute user={user} path="/users" component={Users} />
+                <PrivateRoute user={user} path="/users" component={AllUsers} />
+
+
+
+                {/* Only Owner */}
+                <PrivateRoute user={user} path="/trainers" component={Trainers} />
+
+                {/* Only Trainers */}
+                <PrivateRoute user={user} path="/clients" component={Clients} />
+
                 <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
                 <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={MyProfile} />
 
@@ -119,6 +131,7 @@ const App = () => {
 };
 
 const AvatarMenu = ({ user }) => {
+
   const toProfile = () => {
     history.push(`/user/${user.userId}`);
   };
@@ -132,19 +145,32 @@ const AvatarMenu = ({ user }) => {
     <div className="profile">
       <ul id="mainmenu">
         <li>
-          <h2>{user.firstName}</h2>
-          <ul>
-            <li onClick={() => toProfile()}>My Profile</li>
-            <li onClick={() => logout()}>Logout</li>
-          </ul>
+            {user.avatar ?
+              <img alt ={"test"} src={`data:image/jpeg;base64,${user.avatar}`} />
+              : <h3> Welcome{user.firstName}</h3>
+            }
+
+            <ul>
+              <li onClick={() => toProfile()}>
+                <NavLink
+                  to={`user}/${user.userId}`}
+                  activeClassName="active"
+                >
+                  My Profile
+                </NavLink></li>
+              <li onClick={() => logout()}>Logout</li>
+            </ul>
+
         </li>
       </ul>
     </div>
-  );
-};
-export default App;
-
+      );
+    };
+    
+    
+    export default App;
+    
 { /* all Exercises */
-}
-{ /* <Route path="/exercises" component={Exercises} /> */
-}
+      }
+      { /* <Route path="/exercises" component={Exercises} /> */
+      }

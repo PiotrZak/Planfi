@@ -78,7 +78,6 @@ export const Exercise = (props) => {
                     Times: <p>{exercise.times}</p>
                     Weight: <p>{exercise.weight}</p>
                     Description: <p>{exercise.description}</p>
-
                 </div>
             }
             <ReactBottomsheet

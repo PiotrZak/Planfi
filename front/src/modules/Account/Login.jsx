@@ -8,10 +8,14 @@ import { validationUtil } from "utils/validation.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
 import { Icon } from "common/Icon"
+import { motivationalQuotesEnglish } from "utils/motivationalQuotes"
+
 
 import loginPhoto from "assets/img/login.jpg"
 
 export const LoginPage = () => {
+
+    const loginError = "Try again! those credentials are invalid"
 
     const [userData, setUserData] = useState({})
     const [errors, setErrors] = useState({})
@@ -53,7 +57,12 @@ export const LoginPage = () => {
             });
     }
 
-    const loginError = "Try again! those credentials are invalid"
+    const renderRandomQuote = () =>{
+        var randomIndex = Math.floor(Math.random() * motivationalQuotesEnglish.length); 
+        return motivationalQuotesEnglish[randomIndex];
+    }
+
+
 
     return (
         <div className="container-login">
@@ -61,21 +70,7 @@ export const LoginPage = () => {
         <img src={loginPhoto} alt="Logo" />;
         </div>
             <div className="container-login__content">
-                <div>
-                    <h4>Organizator:</h4>
-                    <p>ksarllr@disqus.com - Kimmi</p>
-                </div>
-
-                <div>
-                    <h4>Trainer:</h4>
-                    <p>jcasson3@prlog.org - Jillana</p>
-                </div>
-
-                <div>
-                    <h4>User:</h4>
-                    <p>tgianelli0@eventbrite.com - Teodor</p>
-                </div>
-                <hr/>
+            <h3>{renderRandomQuote()}</h3>
                 <FormInput id="email" name="email" onChange={handleInput} label="Email" hasError={errors.email} />
                 <FormInput id="password" name="password" type="password" onChange={handleInput} label="Password" hasError={errors.password} />
                 <Button className="btn btn--primary btn--lg" onClick={submitForm} name={"Login"} />
