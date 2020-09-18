@@ -4,13 +4,8 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
-
-
 using AutoMapper;
-
 using WebApi.Models;
-using System.Collections.Generic;
-using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -47,6 +42,8 @@ namespace WebApi.Controllers
                 {
                     plan.PlanId,
                     plan.Title,
+                    plan.CreatorId,
+                    plan.CreatorName,
                 });
             }
             catch (AppException ex)
@@ -59,7 +56,6 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-
             var plan = _planService.GetById(id);
 
             if (plan == null)
@@ -68,13 +64,10 @@ namespace WebApi.Controllers
             return Ok(plan);
         }
 
-
-        //todo - think about simplicity - when write edited endpoint
         [AllowAnonymous]
         [HttpPost("assignExercises")]
         public IActionResult AssignToPlan([FromBody]AssignExerciseToPlan model)
         {
-
             _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId);
 
             return Ok();
@@ -84,7 +77,6 @@ namespace WebApi.Controllers
         [HttpPost("unassignExercises")]
         public IActionResult UnassignToPlan([FromBody] AssignExerciseToPlan model)
         {
-
             _planService.UnassignExercisesToPlan(model.PlanId, model.ExerciseId);
 
             return Ok();

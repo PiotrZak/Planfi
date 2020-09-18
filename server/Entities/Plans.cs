@@ -16,7 +16,8 @@ namespace WebApi.Entities
         [Key]
         public string PlanId { get; set; }
         public string Title { get; set; }
-        public string Creator { get; set; }
+        public string CreatorId { get; set; }
+        public string CreatorName { get; set; }
 
         public List<Exercise> Exercises { get; set; }
 

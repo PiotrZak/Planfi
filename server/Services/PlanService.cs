@@ -26,7 +26,10 @@ namespace WebApi.Services
 
         public Plan Create(Plan plan)
         {
-           
+            // throw error if the new plan is already taken
+            if (_context.Plans.Any(x => x.Title == plan.Title))
+                throw new AppException("Plan " + plan.Title + " is already exist");
+
             _context.Plans.Add(plan);
             _context.SaveChanges();
 
@@ -47,8 +50,17 @@ namespace WebApi.Services
 
         public void Delete(string[] id)
         {
-            foreach (var planId in id)
+
+
+            foreach(var planId in id)
             {
+                var exercisesInPlan = _context.Exercises.Where(x => x.PlanId == planId);
+
+                foreach(var exerciseItem in exercisesInPlan)
+                {
+                    exerciseItem.PlanId = null;
+                }
+
                 var plan = _context.Plans.Find(planId);
                 if (plan != null)
                 {
