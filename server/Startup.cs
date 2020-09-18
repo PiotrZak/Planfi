@@ -43,7 +43,7 @@ namespace WebApi
 
 
             // todo
-            services.AddIdentityCore<User>()   //<<<<<< You have IdentityUser
+            services.AddIdentityCore<IdentityUser>()   //<<<<<< You have IdentityUser
                 .AddDefaultTokenProviders();
                 //.AddEntityFrameworkStores<DataContext>();
 

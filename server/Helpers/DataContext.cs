@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
@@ -6,7 +7,7 @@ using WebApi.Entities;
 
 namespace WebApi.Helpers
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<ApplicationUser>
     {
 
         public IConfiguration Configuration { get; }
@@ -25,12 +26,15 @@ namespace WebApi.Helpers
 
         }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
+
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
+
+        public DbSet<UsersTrainers> UsersTrainers { get; set; }
 
         public DbSet<Plan> Plans { get; set; }
         public DbSet<UsersPlans> UsersPlans { get; set; }
-
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
@@ -38,18 +42,12 @@ namespace WebApi.Helpers
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<Plan>()
-                .HasMany(b => b.Exercises)
-                .WithOne();
-
-
-
             // Plans <-> Users relationship
             modelBuilder.Entity<UsersPlans>()
-                .HasKey(e => new { e.UserId, e.PlanId });
+                .HasKey(e => new { e.ClientId, e.PlanId });
 
             modelBuilder.Entity<UsersPlans>()
-                .HasOne(e => e.User)
+                .HasOne(e => e.Client)
                 .WithMany(p => p.UsersPlans);
 
             modelBuilder.Entity<UsersPlans>()
@@ -57,22 +55,32 @@ namespace WebApi.Helpers
                 .WithMany(p => p.UsersPlans);
 
 
+            // Trainers <-> Client relationship
+            modelBuilder.Entity<UsersTrainers>()
+                .HasKey(e => new { e.ClientId, e.TrainerId });
+
+            modelBuilder.Entity<UsersTrainers>()
+                .HasOne(e => e.Client)
+                .WithMany(p => p.UsersTrainers);
+
+            modelBuilder.Entity<UsersTrainers>()
+                .HasOne(e => e.Trainer)
+                .WithMany(p => p.UsersTrainers);
 
 
+
+
+            modelBuilder.Entity<Plan>()
+                .HasMany(b => b.Exercises)
+                .WithOne();
 
             modelBuilder.Entity<Category>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
 
             modelBuilder.Entity<Trainer>()
-                .HasMany(b => b.Users)
-                .WithOne();
-
-
-            modelBuilder.Entity<Trainer>()
                 .HasMany(b => b.Plans)
                 .WithOne();
-
 
 
 
@@ -264,63 +272,124 @@ namespace WebApi.Helpers
                 }
             );
 
-        //public string UserId { get; set; }
-        //public byte[] Avatar { get; set; }
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Email { get; set; }
-        //public int PhoneNumber { get; set; }
-        //public string Password { get; set; }
-        //public byte[] PasswordHash { get; set; }
-        //public byte[] PasswordSalt { get; set; }
-        //public string Role { get; set; }
-        //public string Token { get; set; }
+            //modelBuilder.Entity<User>().HasData(
+            //        new User
+            //        {
+            //            UserId = "u1",
+            //            Avatar = null,
+            //            FirstName = "Teodoor",
+            //            LastName = "Gianelli",
+            //            Email = "tgianelli0@eventbrite.com",
+            //            PhoneNumber = 555555555,
+            //            Password = "Teodor",
+            //            PasswordHash = null,
+            //            PasswordSalt = null,
+            //            Role = Role.User,
+            //            Token = "t-user",
+            //        },
+            //        new User
+            //        {
+            //            UserId = "u2",
+            //            Avatar = null,
+            //            FirstName = "Jillana",
+            //            LastName = "Casson",
+            //            Email = "jcasson3@prlog.org",
+            //            PhoneNumber = 666666666,
+            //            Password = "Jillana",
+            //            PasswordHash = null,
+            //            PasswordSalt = null,
+            //            Role = Role.User,
+            //            Token = "t-trainer",
+            //        },
+            //        new User
+            //        {
+            //            UserId = "u3",
+            //            Avatar = null,
+            //            FirstName = "Camille",
+            //            LastName = "Teloinic",
+            //            Email = "Teloinic@gmail.com",
+            //            PhoneNumber = 555555555,
+            //            Password = "Teodor",
+            //            PasswordHash = null,
+            //            PasswordSalt = null,
+            //            Role = Role.User,
+            //            Token = "t-user",
+            //        },
+            //        new User
+            //        {
+            //            UserId = "u4",
+            //            Avatar = null,
+            //            FirstName = "Kiel",
+            //            LastName = "Burgne",
+            //            Email = "kburgne2@hp.com",
+            //            PhoneNumber = 777777777,
+            //            Password = "Kiel",
+            //            PasswordHash = null,
+            //            PasswordSalt = null,
+            //            Role = Role.User,
+            //            Token = "t-trainer",
+            //        },
+            //        new User
+            //        {
+            //            UserId = "u5",
+            //            Avatar = null,
+            //            FirstName = "Augustus",
+            //            LastName = "Wharin",
+            //            Email = "awharinu@tmall.com",
+            //            PhoneNumber = 555555555,
+            //            Password = "Augustus",
+            //            PasswordHash = null,
+            //            PasswordSalt = null,
+            //            Role = Role.User,
+            //            Token = "t-user",
+            //        },
+            //        new User
+            //        {
+            //            UserId = "u6",
+            //            Avatar = null,
+            //            FirstName = "Bondy",
+            //            LastName = "Caulliere",
+            //            Email = "bcaullieres@auda.org.au",
+            //            PhoneNumber = 666666666,
+            //            Password = "Bondy",
+            //            PasswordHash = null,
+            //            PasswordSalt = null,
+            //            Role = Role.User,
+            //            Token = "t-trainer",
+            //        }
+            //        );
 
-        modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    UserId = "u1",
-                    Avatar = null,
-                    FirstName = "Teodoor",
-                    LastName = "Gianelli",
-                    Email = "tgianelli0@eventbrite.com",
-                    PhoneNumber =  555555555,
-                    Password = "Teodor",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = Role.User,
-                    Token = "t-user",
-                },
-                new User
-                {
-                    UserId = "u2",
-                    Avatar = null,
-                    FirstName = "Jillana",
-                    LastName = "Casson",
-                    Email = "jcasson3@prlog.org",
-                    PhoneNumber = 666666666,
-                    Password = "Jillana",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = Role.Trainer,
-                    Token = "t-trainer",
-                },
-                new User
-                {
-                    UserId = "u3",
-                    Avatar = null,
-                    FirstName = "Kimmi",
-                    LastName = "Sarll",
-                    Email = "ksarllr@disqus.com",
-                    PhoneNumber = 777777777,
-                    Password = "Kimmi",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = Role.Organization,
-                    Token = "t-organization",
-                }
-            );
+            //modelBuilder.Entity<Trainer>().HasData(
+            //    new Trainer
+            //    {
+            //        TrainerId = "t1",
+            //        Avatar = null,
+            //        FirstName = "Valentia",
+            //        LastName = "MacCathay",
+            //        Email = "vmaccathay17@house.gov",
+            //        PhoneNumber = 777777777,
+            //        Password = "Valentia",
+            //        PasswordHash = null,
+            //        PasswordSalt = null,
+            //        Role = Role.Trainer,
+            //        Token = "t-organization",
+            //    },
 
+            //    new Trainer
+            //    {
+            //        TrainerId = "t2",
+            //        Avatar = null,
+            //        FirstName = "Eadith",
+            //        LastName = "Fearey",
+            //        Email = "efearey1f@mlb.com",
+            //        PhoneNumber = 777777777,
+            //        Password = "Eadith",
+            //        PasswordHash = null,
+            //        PasswordSalt = null,
+            //        Role = Role.Trainer,
+            //        Token = "t-organization",
+            //    }
+            //    );
         }
     }
 }

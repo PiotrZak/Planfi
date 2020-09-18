@@ -9,8 +9,8 @@ namespace WebApi.Services
     public interface IAccountService
     {
         void UploadAvatar(string userId, byte[] avatar);
-        User FindUserByEmail(string email);
-        User ResetPassword(User user, string token, string password);
+        Client FindUserByEmail(string email);
+        Client ResetPassword(Client user, string token, string password);
     }
 
     public class AccountService : IAccountService
@@ -22,13 +22,13 @@ namespace WebApi.Services
             _context = context;
         }
 
-        public User FindUserByEmail(string email)
+        public Client FindUserByEmail(string email)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Email == email);
+            var user = _context.Clients.FirstOrDefault(x => x.Email == email);
             return user.WithoutPassword();
         }
 
-        public User ResetPassword(User user, string token, string password)
+        public Client ResetPassword(Client user, string token, string password)
         {
             // todo - implement method
 
@@ -47,10 +47,10 @@ namespace WebApi.Services
 
         public void UploadAvatar(string userId, byte[] avatar)
         {
-            var user = _context.Users.Find(userId);
+            var user = _context.Clients.Find(userId);
 
             user.Avatar = avatar;
-            _context.Users.Update(user);
+            _context.Clients.Update(user);
             _context.SaveChanges();
         }
     }

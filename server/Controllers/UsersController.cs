@@ -1,22 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using WebApi.Services;
 using WebApi.Entities;
 using WebApi.Models;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
-
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
-
 using System;
 using System.Text;
-
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
-using System.Collections.Generic;
 
 namespace WebApi.Controllers
 {
@@ -45,8 +40,15 @@ namespace WebApi.Controllers
         {
             var user = _userService.Authenticate(model.Email, model.Password);
 
+
             if (user == null)
+            {
                 return BadRequest(new { message = "Email or password is incorrect" });
+            }
+
+
+            // important todo - make work in new user structure
+            //token - make security
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -54,7 +56,7 @@ namespace WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.UserId.ToString())
+                    new Claim(ClaimTypes.Name, user.ClientId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -62,10 +64,11 @@ namespace WebApi.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
+
             // return basic user info and authentication token
             return Ok(new
             {
-                user.UserId,
+                //user.UserId,
                 user.Email,
                 user.FirstName,
                 user.LastName,
@@ -76,23 +79,28 @@ namespace WebApi.Controllers
         }
 
         // [Authorize(Roles = Role.Admin)]
+        // All existing users include clients + trainers
         [AllowAnonymous]
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("clients")]
+        public IActionResult GetAllClients()
         {
-            var users =  _userService.GetAll();
-            return Ok(users);
+            var clients =  _userService.GetAllClients();
+            return Ok(clients);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("trainers")]
+        public IActionResult GetAllTrainers()
+        {
+            var trainers = _userService.GetAllTrainers();
+
+            return Ok(trainers);
         }
 
         [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-            // only allow admins to access other user records
-            //var currentUserId = int.TryParse(User.Identity.Name, out number);
-            //if (id != currentUserId && !User.IsInRole(Role.Admin))
-            //    return Forbid();
-
             var user =  _userService.GetById(id);
 
             if (user == null)
@@ -114,21 +122,20 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
-        //[AllowAnonymous]
-        //[HttpPost("assignUsers")]
-        //public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
-        //{
-        //    _userService.AssignUsersToTrainer(model.TrainerId, model.UsersId);
-        //    return Ok();
-        //}
+        [AllowAnonymous]
+        [HttpPost("assignUsers")]
+        public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
+        {
+            _userService.AssignUsersToTrainer(model.TrainerIds, model.UserIds);
+            return Ok();
+        }
 
         [AllowAnonymous]
         [HttpPost("assignPlans")]
         public IActionResult AssignPlanToUser([FromBody] AssignPlansToUser model)
         {
 
-            _userService.AssignPlanToUser(model.UserIds, model.PlanIds);
-
+            _userService.AssignPlanToUser(model.ClientIds, model.PlanIds);
             return Ok();
         }
 
@@ -137,7 +144,7 @@ namespace WebApi.Controllers
         public IActionResult Register([FromBody] RegisterModel model)
         {
             // map model to entity
-            var user = _mapper.Map<User>(model);
+            var user = _mapper.Map<Client>(model);
 
             try
             {
@@ -153,13 +160,13 @@ namespace WebApi.Controllers
         }
 
 
-
+        // todo - make edit Client and Trainer - separately? - different values
         [AllowAnonymous]
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody] UpdateUserModel model)
         {
-            var user = _mapper.Map<User>(model);
-            user.UserId = id;
+            var user = _mapper.Map<Client>(model);
+            user.ClientId = id;
 
             try
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Entities
 {
@@ -9,12 +10,16 @@ namespace WebApi.Entities
         public Trainer()
         {
             TrainerId = Guid.NewGuid().ToString();
-            Users = new List<User>();
+            Avatar = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
             Plans = new List<Plan>();
+            UsersTrainers = new List<UsersTrainers>();
         }
+
+        public virtual ApplicationUser User { get; set; }
 
         [Key]
         public string TrainerId { get; set; }
+
         public byte[] Avatar { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -27,6 +32,6 @@ namespace WebApi.Entities
         public string Token { get; set; }
 
         public List<Plan> Plans { get; set; }
-        public List<User> Users { get; set; }
+        public virtual ICollection<UsersTrainers> UsersTrainers { get; set; }
     }
 }
