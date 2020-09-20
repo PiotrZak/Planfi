@@ -12,6 +12,8 @@ using System;
 using System.Text;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApi.Controllers
 {
@@ -46,9 +48,7 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = "Email or password is incorrect" });
             }
 
-
             // important todo - make work in new user structure
-            //token - make security
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -56,7 +56,7 @@ namespace WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.ClientId.ToString())
+                    new Claim(ClaimTypes.Name, user.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -68,7 +68,7 @@ namespace WebApi.Controllers
             // return basic user info and authentication token
             return Ok(new
             {
-                //user.UserId,
+                user.UserId,
                 user.Email,
                 user.FirstName,
                 user.LastName,
@@ -77,6 +77,15 @@ namespace WebApi.Controllers
                 Token = tokenString
             });
         }
+
+        [AllowAnonymous]
+        [HttpGet("users")]
+        public IActionResult GetAllUsers()
+        {
+            var users = _userService.GetAllUsers();
+            return Ok(users);
+        }
+
 
         // [Authorize(Roles = Role.Admin)]
         // All existing users include clients + trainers
@@ -126,7 +135,7 @@ namespace WebApi.Controllers
         [HttpPost("assignUsers")]
         public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
         {
-            _userService.AssignUsersToTrainer(model.TrainerIds, model.UserIds);
+            _userService.AssignClientsToTrainers(model.TrainerIds, model.UserIds);
             return Ok();
         }
 
@@ -135,7 +144,7 @@ namespace WebApi.Controllers
         public IActionResult AssignPlanToUser([FromBody] AssignPlansToUser model)
         {
 
-            _userService.AssignPlanToUser(model.ClientIds, model.PlanIds);
+            _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
             return Ok();
         }
 
@@ -165,8 +174,8 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody] UpdateUserModel model)
         {
-            var user = _mapper.Map<Client>(model);
-            user.ClientId = id;
+            var user = _mapper.Map<User>(model);
+            user.UserId = id;
 
             try
             {
@@ -186,6 +195,23 @@ namespace WebApi.Controllers
         {
             _userService.Delete(id);
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("trainerClients/{id}")]
+        public IActionResult GetClientsByTrainer(string id)
+        {
+            var clients = _userService.GetClientsByTrainer(id);
+
+            if (clients == null)
+                return NotFound();
+
+            // Convert it to the DTO
+            var transformedClients = _mapper.Map<List<Client>, List<TrainerClient>>(clients.ToList());
+
+            return Ok(transformedClients);
+            //return Ok(transformedClient);
+
         }
 
     }

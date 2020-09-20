@@ -8,7 +8,7 @@ namespace WebApi.Controllers.ViewModels
         public string[] UserIds { get; set; }
     }
 
-    public class UsersTrainers
+    public class ClientsTrainers
     {
         public string TrainerId { get; set; }
         public Trainer Trainer { get; set; }

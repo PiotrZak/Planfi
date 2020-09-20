@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { userService } from "services/userServices";
 import Icon from "common/Icon"
 import { useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ import EditUserPasswordModal from "./Edit/EditUserPassword"
 import EditUserEmailModal from "./Edit/EditUserEmail";
 import EditUserDataModal from "./Edit/EditUserData";
 import { alertActions } from "redux/actions/alert.actions";
-
+import { userContext } from 'App';
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -23,12 +23,11 @@ const logout = "Logout";
 
 export const User = (props) => {
 
+     const { loggedUser } = useContext(userContext);
     const [bottomSheet, setBottomSheet] = useState(false)
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const dispatch = useDispatch();
-
-
 
     useEffect(() => {
         getUserById()
@@ -126,6 +125,9 @@ const Navs = () => {
                     </NavLink>
                 </NavItem>
             </Nav>
+
+
+            
             <TabContent activeTab={activeTab}>
 
                 <TabPane tabId="1">

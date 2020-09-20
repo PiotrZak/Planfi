@@ -61,16 +61,16 @@ export const AllUsers = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getAllClients();
-    getAllTrainers();
-    
+    getAllUsers();
+    // getAllTrainers();
+    console.log(user)
   }, []);
 
-  const getAllClients = () => {
+  const getAllUsers = () => {
     userService
-      .allClients()
+      .allUsers()
       .then((data) => {
-        setClients(data);
+        setUsers(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -91,9 +91,9 @@ export const AllUsers = () => {
       });
   };
 
-  const getAllUsers = () => {
-    setUsers(clients.concat(trainers))
-  }
+  // const getAllUsers = () => {
+  //   setUsers(clients.concat(trainers))
+  // }
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
@@ -162,9 +162,9 @@ export const AllUsers = () => {
               pathname: `/clients`,
             }}><p>Clients page</p></Link>
             <hr />
-            <p onClick={() => getAllClients()}>{clientsText}</p>
+            {/* <p onClick={() => getAllClients()}>{clientsText}</p>
             <p onClick={() => getAllTrainers()}>{trainersText}</p>
-            <p onClick={() => getAllUsers()}>all</p>
+            <p onClick={() => getAllUsers()}>all</p> */}
           </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
 

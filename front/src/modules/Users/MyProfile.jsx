@@ -1,36 +1,39 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { userService } from "services/userServices";
+import { Link } from 'react-router-dom';
 import Icon from "common/Icon"
+import { useDispatch } from "react-redux";
 import Return from "common/Return"
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
-import { userContext } from 'App';
 import { UserInfo } from "common/users/UserInfo"
+import GenericElement from "common/GenericElement/GenericElement"
 
 import EditUserPasswordModal from "./Edit/EditUserPassword"
-import EditUserEmailModal from "./Edit/EditUserEmail"
-import EditUserDataModal from "./Edit/EditUserData"
+import EditUserEmailModal from "./Edit/EditUserEmail";
+import EditUserDataModal from "./Edit/EditUserData";
+import { alertActions } from "redux/actions/alert.actions";
+import { userContext } from 'App';
 
 var ReactBottomsheet = require('react-bottomsheet');
 
+const userEdit = "Edit Your Data";
+const changeMail = "Change Email";
+const changePassword = "Change Paassword";
+const logout = "Logout";
+
 export const MyProfile = (props) => {
 
-    const [bottomSheet, setBottomSheet] = useState(false)
+    const { user } = useContext(userContext);
 
-    const { user } = useContext(userContext)
+    const [bottomSheet, setBottomSheet] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const dispatch = useDispatch();
 
     const [openEditUserData, setOpenEditUserData] = useState(false)
     const [openEditMailModal, setOpenEditMailModal] = useState(false);
     const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
-
-    const { match } = props;
-    let id = match.params;
-
-    const userEdit = "Edit Your Data";
-    const changeMail = "Change Email";
-    const changePassword = "Change Paassword";
-    const logout = "Logout";
 
     return (
         <div className="user-container">
@@ -43,11 +46,11 @@ export const MyProfile = (props) => {
 
                 {user && <UserInfo user={user} />}
 
-                <Navs />
+                <Navs user={user} />
 
-                <EditUserDataModal id={id.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
-                <EditUserEmailModal id={id.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
-                <EditUserPasswordModal id={id.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
+                <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
+                <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
+                <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
 
                 <ReactBottomsheet
                     visible={bottomSheet}
@@ -66,14 +69,45 @@ export const MyProfile = (props) => {
 // My clients - list of users assigned to trainer
 // My plans - list of plans assigned to trainer
 
-
-
-
 // My trainers - list of trainers assigned to user
 // My plans - list of plans assigned to user
 
+const ClientsOfTrainer = ({ id }) => {
 
-const Navs = () => {
+    const [clients, setClients] = useState([])
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        userService
+            .allClientsByTrainer(id)
+            .then((data) => {
+                setClients(data)
+                console.log(data)
+            })
+            .catch((error) => {
+                dispatch(alertActions.error(error))
+            });
+    }, []);
+
+    return (
+        <div>
+            {clients && clients.map((element, i) => (
+                <div key={i}>
+                    <Link to={{
+                        pathname: `/user/${element.userId}`,
+                        state: { id: element.userId }
+                    }}>
+                        <GenericElement circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
+                    </Link>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+
+const Navs = ({ user }) => {
 
     const [activeTab, setActiveTab] = useState('1');
     const myPlans = "Plans";
@@ -82,6 +116,7 @@ const Navs = () => {
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }
+
     return (
         <div className="user-container__tabs">
             <Nav tabs>
@@ -98,10 +133,17 @@ const Navs = () => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                     >
-                        <h2>{myTrainers}</h2>
+                    {user.role === "Trainer"
+                        ? <h2>My Clients</h2>
+                        : <h2>My Trainers</h2>
+                    }
                     </NavLink>
                 </NavItem>
             </Nav>
+
+
+
+
             <TabContent activeTab={activeTab}>
 
                 <TabPane tabId="1">
@@ -109,9 +151,25 @@ const Navs = () => {
                 </TabPane>
 
                 <TabPane tabId="2">
-                    <h1>My Trainers</h1>
+                    {user.role === "Trainer"
+                        ? <h1><ClientsOfTrainer id={user.userId} /></h1>
+                        : <h1>My Trainers</h1>
+                    }
                 </TabPane>
             </TabContent>
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     )
 }
