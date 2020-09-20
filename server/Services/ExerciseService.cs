@@ -45,7 +45,6 @@ namespace WebApi.Services
 
         public IEnumerable<Exercise> GetAll()
         {
-
             return _context.Exercises;
         }
 

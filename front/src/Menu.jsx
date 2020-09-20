@@ -23,7 +23,6 @@ const Menu = () => {
     useEffect(() => {
         const currentUrl = window.location.href.split('/')
         setCurrentUrl(currentUrl[3])
-        console.log(user.userId)
     }, [window.location.href]);
 
 

@@ -10,7 +10,7 @@ namespace WebApi.Services
     {
         void UploadAvatar(string userId, byte[] avatar);
         User FindUserByEmail(string email);
-        User ResetPassword(User user, string token, string password);
+        //User ResetPassword(Client user, string token, string password);
     }
 
     public class AccountService : IAccountService
@@ -28,29 +28,29 @@ namespace WebApi.Services
             return user.WithoutPassword();
         }
 
-        public User ResetPassword(User user, string token, string password)
-        {
-            // todo - implement method
+        //public User ResetPassword(User user, string token, string password)
+        //{
+        //    // todo - implement method
 
-            //byte[] passwordHash, passwordSalt;
-            //CreatePasswordHash(password, out passwordHash, out passwordSalt);
+        //    //byte[] passwordHash, passwordSalt;
+        //    //CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            //user.PasswordHash = passwordHash;
-            //user.PasswordSalt = passwordSalt;
+        //    //user.PasswordHash = passwordHash;
+        //    //user.PasswordSalt = passwordSalt;
 
-            //_context.Users.Update(user);
-            //_context.SaveChanges();
+        //    //_context.Users.Update(user);
+        //    //_context.SaveChanges();
 
-            return user;
-        }
+        //    return user;
+        //}
 
 
         public void UploadAvatar(string userId, byte[] avatar)
         {
-            var user = _context.Users.Find(userId);
+            var user = _context.Clients.Find(userId);
 
             user.Avatar = avatar;
-            _context.Users.Update(user);
+            _context.Clients.Update(user);
             _context.SaveChanges();
         }
     }

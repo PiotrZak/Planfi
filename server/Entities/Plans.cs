@@ -21,7 +21,7 @@ namespace WebApi.Entities
 
         public List<Exercise> Exercises { get; set; }
 
-        public virtual ICollection<UsersPlans> UsersPlans { get; set; }
+        public virtual ICollection<ClientsPlans> ClientsPlans { get; set; }
 
         //public List<AssignPlansToUser> UserIds{ get; set; }
         //public List<Trainer> Trainers { get; set; }

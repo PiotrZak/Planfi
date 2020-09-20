@@ -21,47 +21,6 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trainers",
-                columns: table => new
-                {
-                    TrainerId = table.Column<string>(nullable: false),
-                    Avatar = table.Column<byte[]>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<int>(nullable: false),
-                    Password = table.Column<string>(nullable: true),
-                    PasswordHash = table.Column<byte[]>(nullable: true),
-                    PasswordSalt = table.Column<byte[]>(nullable: true),
-                    Role = table.Column<string>(nullable: true),
-                    Token = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Trainers", x => x.TrainerId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Plans",
-                columns: table => new
-                {
-                    PlanId = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Creator = table.Column<string>(nullable: true),
-                    TrainerId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Plans", x => x.PlanId);
-                    table.ForeignKey(
-                        name: "FK_Plans_Trainers_TrainerId",
-                        column: x => x.TrainerId,
-                        principalTable: "Trainers",
-                        principalColumn: "TrainerId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -76,17 +35,89 @@ namespace WebApi.Migrations
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     Role = table.Column<string>(nullable: true),
                     Token = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    ClientId = table.Column<string>(nullable: true),
                     TrainerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClientsTrainers",
+                columns: table => new
+                {
+                    TrainerId = table.Column<string>(nullable: false),
+                    ClientId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientsTrainers", x => new { x.ClientId, x.TrainerId });
                     table.ForeignKey(
-                        name: "FK_Users_Trainers_TrainerId",
+                        name: "FK_ClientsTrainers_Users_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClientsTrainers_Users_TrainerId",
                         column: x => x.TrainerId,
-                        principalTable: "Trainers",
-                        principalColumn: "TrainerId",
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plans",
+                columns: table => new
+                {
+                    PlanId = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    CreatorId = table.Column<string>(nullable: true),
+                    CreatorName = table.Column<string>(nullable: true),
+                    ClientUserId = table.Column<string>(nullable: true),
+                    TrainerUserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plans", x => x.PlanId);
+                    table.ForeignKey(
+                        name: "FK_Plans_Users_ClientUserId",
+                        column: x => x.ClientUserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Plans_Users_TrainerUserId",
+                        column: x => x.TrainerUserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ClientsPlans",
+                columns: table => new
+                {
+                    ClientId = table.Column<string>(nullable: false),
+                    PlanId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientsPlans", x => new { x.ClientId, x.PlanId });
+                    table.ForeignKey(
+                        name: "FK_ClientsPlans_Users_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClientsPlans_Plans_PlanId",
+                        column: x => x.PlanId,
+                        principalTable: "Plans",
+                        principalColumn: "PlanId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,30 +151,6 @@ namespace WebApi.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "UsersPlans",
-                columns: table => new
-                {
-                    UserId = table.Column<string>(nullable: false),
-                    PlanId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UsersPlans", x => new { x.UserId, x.PlanId });
-                    table.ForeignKey(
-                        name: "FK_UsersPlans_Plans_PlanId",
-                        column: x => x.PlanId,
-                        principalTable: "Plans",
-                        principalColumn: "PlanId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UsersPlans_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "CategoryId", "Title" },
@@ -156,12 +163,24 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Email", "FirstName", "LastName", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
                 values: new object[,]
                 {
-                    { "u1", null, "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", "Teodor", null, null, 555555555, "User", "t-user", null },
-                    { "u2", null, "jcasson3@prlog.org", "Jillana", "Casson", "Jillana", null, null, 666666666, "Trainer", "t-trainer", null },
-                    { "u3", null, "ksarllr@disqus.com", "Kimmi", "Sarll", "Kimmi", null, null, 777777777, "Organization", "t-organization", null }
+                    { "u1", null, "Client", "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", "Teodor", null, null, 555555555, "User", "t-user", "u1" },
+                    { "u2", null, "Client", "jcasson3@prlog.org", "Jillana", "Casson", "Jillana", null, null, 666666666, "User", "t-trainer", "u2" },
+                    { "u3", null, "Client", "Teloinic@gmail.com", "Camille", "Teloinic", "Teodor", null, null, 555555555, "User", "t-user", "u3" },
+                    { "u4", null, "Client", "kburgne2@hp.com", "Kiel", "Burgne", "Kiel", null, null, 777777777, "User", "t-trainer", "u4" },
+                    { "u5", null, "Client", "awharinu@tmall.com", "Augustus", "Wharin", "Augustus", null, null, 555555555, "User", "t-user", "u5" },
+                    { "u6", null, "Client", "bcaullieres@auda.org.au", "Bondy", "Caulliere", "Bondy", null, null, 666666666, "User", "t-trainer", "u6" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
+                values: new object[,]
+                {
+                    { "t1", null, "Trainer", "vmaccathay17@house.gov", "Valentia", "MacCathay", "Valentia", null, null, 777777777, "Trainer", "t-organization", "t1" },
+                    { "t2", null, "Trainer", "efearey1f@mlb.com", "Eadith", "Fearey", "Eadith", null, null, 777777777, "Trainer", "t-organization", "t2" }
                 });
 
             migrationBuilder.InsertData(
@@ -187,6 +206,16 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientsPlans_PlanId",
+                table: "ClientsPlans",
+                column: "PlanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClientsTrainers_TrainerId",
+                table: "ClientsTrainers",
+                column: "TrainerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Exercises_CategoryId",
                 table: "Exercises",
                 column: "CategoryId");
@@ -197,28 +226,26 @@ namespace WebApi.Migrations
                 column: "PlanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Plans_TrainerId",
+                name: "IX_Plans_ClientUserId",
                 table: "Plans",
-                column: "TrainerId");
+                column: "ClientUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_TrainerId",
-                table: "Users",
-                column: "TrainerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersPlans_PlanId",
-                table: "UsersPlans",
-                column: "PlanId");
+                name: "IX_Plans_TrainerUserId",
+                table: "Plans",
+                column: "TrainerUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Exercises");
+                name: "ClientsPlans");
 
             migrationBuilder.DropTable(
-                name: "UsersPlans");
+                name: "ClientsTrainers");
+
+            migrationBuilder.DropTable(
+                name: "Exercises");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -228,9 +255,6 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Trainers");
         }
     }
 }

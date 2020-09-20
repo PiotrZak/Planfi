@@ -1,14 +1,13 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="hostsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UsersController.cs">
     <Files>
-      <File FileName="Controllers/UsersController.cs" Line="177" Column="1" />
-      <File FileName="Services/PlanService.cs" Line="83" Column="41" />
-      <File FileName="Controllers/PlansController.cs" Line="88" Column="41" />
-      <File FileName="appsettings.json" Line="14" Column="20" />
-      <File FileName="Helpers/DataContext.cs" Line="21" Column="10" />
-      <File FileName="Program.cs" Line="1" Column="1" />
-      <File FileName="hostsettings.json" Line="1" Column="1" />
-      <File FileName="Services/UserService.cs" Line="21" Column="16" NotebookId="1" />
+      <File FileName="Controllers/UsersController.cs" Line="204" Column="64" />
+      <File FileName="Services/UserService.cs" Line="243" Column="23" />
+      <File FileName="Helpers/ExtensionMethods.cs" Line="1" Column="1" />
+      <File FileName="Models/TrainerClient.cs" Line="4" Column="31" />
+      <File FileName="Entities/Users/User.cs" Line="17" Column="1" />
+      <File FileName="Models/AuthenticateModel.cs" Line="10" Column="1" />
+      <File FileName="Entities/Users/Client.cs" Line="20" Column="64" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,10 +16,14 @@
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="ViewModels" expanded="True" />
+                <Node name="UsersController.cs" selected="True" />
+              </Node>
+              <Node name="Entities" expanded="True">
+                <Node name="Users" expanded="True" />
               </Node>
               <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
-              <Node name="hostsettings.json" selected="True" />
             </Node>
           </Node>
         </State>

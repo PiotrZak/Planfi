@@ -4,9 +4,11 @@ import { USER_URL } from "./utils"
 export const userService = {
     register,
     login,
+    allUsers,
+
     allClients,
     allTrainers,
-
+    allClientsByTrainer,
     
     getUserById,
     editUser,
@@ -39,6 +41,10 @@ export const userService = {
     return http.get(`${USER_URL}role/${role}`);
   }
 
+  function allUsers() {
+    return http.get(`${USER_URL}users`);
+  }
+
   function allClients() {
     return http.get(`${USER_URL}clients`);
   }
@@ -46,6 +52,12 @@ export const userService = {
   function allTrainers() {
     return http.get(`${USER_URL}trainers`);
   }
+
+  function allClientsByTrainer(id) {
+    return http.get(`${USER_URL}trainerClients/${id}`);
+  }
+
+
 // todo - research with del
   function deleteUsers(body) {
     return http.post(`${USER_URL}delete`, body);

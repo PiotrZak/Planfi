@@ -43,9 +43,9 @@ namespace WebApi
 
 
             // todo
-            services.AddIdentityCore<User>()   //<<<<<< You have IdentityUser
-                .AddDefaultTokenProviders();
-                //.AddEntityFrameworkStores<DataContext>();
+            services.AddIdentityCore<IdentityUser>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<DataContext>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
@@ -80,6 +80,10 @@ namespace WebApi
                     ValidateAudience = false
                 };
             });
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<DataContext>()

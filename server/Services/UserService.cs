@@ -10,19 +10,25 @@ namespace WebApi.Services
     public interface IUserService
     {
         User Authenticate(string email, string password);
-        IEnumerable<User> GetAll();
+
+        IEnumerable<User> GetAllUsers();
+
+        IEnumerable<Client> GetAllClients();
+        IEnumerable<Trainer> GetAllTrainers();
+
         User GetById(string id);
         User Create(User user, string password);
         void Update(User user, string password);
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
 
-        //void AssignUsersToTrainer(string trainerId, string[] usersId);
-        //void UnassignUsersToTrainer(string trainerId, string[] usersId);
+        void AssignClientsToTrainers(string[] TrainerIds, string[] UsersIds);
+        void AssignPlanToClients(string[] userIds, string[] planIds);
 
-        void AssignPlanToUser(string[] userIds, string[] planIds);
+        IEnumerable<Client> GetClientsByTrainer(string TrainerId);
 
-        //void UnassignPlanToUser(string[] userIds, string[] planIds);
+        //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
+        //void UnAssignPlanToClients(string[] userIds, string[] planIds);
     }
 
     public class UserService : IUserService
@@ -46,17 +52,32 @@ namespace WebApi.Services
             if (user == null)
                 return null;
 
-            // check if password is correct
-            if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-                return null;
+            //todo - security hashiing & salting password
+            //check if password is correct
+            //if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
+            //        return null;
 
             // authentication successful
-            return user;
+            return user.WithoutPassword(); ;
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<User> GetAllUsers ()
         {
-            return _context.Users.WithoutPasswords();
+            var users = _context.Users;
+            return users;
+        }
+
+        public IEnumerable<Client> GetAllClients()
+        {
+            var clients = _context.Clients;
+            return clients;
+        }
+
+        public IEnumerable<Trainer> GetAllTrainers()
+        {
+            //security issues
+            var trainers = _context.Trainers;
+            return trainers;
         }
 
         public User GetById(string id)
@@ -77,7 +98,7 @@ namespace WebApi.Services
             if (!string.IsNullOrWhiteSpace(userParam.Email))
             {
                 // throw error if the new username is already taken
-                if (_context.Users.Any(x => x.Email == userParam.Email))
+                if (_context.Clients.Any(x => x.Email == userParam.Email))
                     throw new AppException("Username " + userParam.Email + " is already taken");
 
                 // throw error if the password is incorrect
@@ -139,7 +160,7 @@ namespace WebApi.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
-            if (_context.Users.Any(x => x.Email == user.Email))
+            if (_context.Clients.Any(x => x.Email == user.Email))
                 throw new AppException("Email \"" + user.Email + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
@@ -151,46 +172,40 @@ namespace WebApi.Services
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return user;
+            return user.WithoutPassword();
         }
 
         public IEnumerable<User> GetByRole(string role)
         {
-            var Users = _context.Users.Where(x => x.Role == role);
+            var Users = _context.Clients.Where(x => x.Role == role);
             return Users;
         }
 
+        public void AssignClientsToTrainers(string[] TrainersId, string[] UsersId)
+        {         
+            // [t1]
+            // to every trainer add user
+            // [u1, u2, u3, u4]
 
-        // todo - find way to refactor this logic
-        //public void AssignUsersToTrainer(string trainerId, string[] usersId)
-        //{
-        //    var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
+            foreach (var trainerId in TrainersId)
+            {
+                //finding an trainer
+                var trainer = _context.Trainers.Find(trainerId);
 
-        //    foreach (var id in usersId)
-        //    {
-        //        var element = _context.Users.Find(id);
-        //        trainer.Users.Add(element);
-        //    }
-        //    _context.Trainers.Update(trainer);
-        //    _context.SaveChanges();
-        //}
+                foreach (var userId in UsersId)
+                {
+                    //finding a clients
+                    var client = _context.Clients.Find(userId);
+                    var usersTrainers = new ClientsTrainers { Trainer = trainer, Client = client };
 
-        //public void UnassignUsersToTrainer(string trainerId, string[] usersId)
-        //{
-        //    var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainerId);
-
-        //    foreach (var id in usersId)
-        //    {
-        //        var element = _context.Users.Find(id);
-        //        trainer.Users.Remove(element);
-        //    }
-        //    _context.Trainers.Update(trainer);
-        //    _context.SaveChanges();
-        //}
+                    _context.ClientsTrainers.Add(usersTrainers);
+                    _context.SaveChanges();
+                }
+            }
+        }
 
 
-
-        public void AssignPlanToUser(string[] UserIds, string[] PlanIds)
+        public void AssignPlanToClients(string[] UserIds, string[] PlanIds)
         {
 
         // [u1, u2]
@@ -199,26 +214,59 @@ namespace WebApi.Services
 
             foreach (var userId in UserIds)
             {
-                //finding an user
-                var user = _context.Users.Find(userId);
+                //finding an client
+                var client = _context.Clients.Find(userId);
 
                 foreach (var planId in PlanIds)
                 {
                     //finding a plan
                     var plan = _context.Plans.Find(planId);
 
-                    var usersPlans = new UsersPlans { User = user, Plan = plan };
-                    _context.UsersPlans.Add(usersPlans);
+                    var usersPlans = new ClientsPlans { Client = client, Plan = plan };
+                    _context.ClientsPlans.Add(usersPlans);
                     _context.SaveChanges();
                 }
             }
         }
+
+        public IEnumerable<Client> GetClientsByTrainer(string id)
+
+        // [t1]
+        // ["u1","u2","u3"]
+        // full list of clients
+
+        {
+
+            var clientsTrainers = _context.ClientsTrainers.Where(x => x.TrainerId == id);
+
+            var clientIds = new List<string>();
+            var clients = new List<Client>();
+
+            foreach (var i in clientsTrainers)
+            {
+                var clientId = i.ClientId;
+                clientIds.Add(clientId);
+
+            }
+
+            for (int i = 0; i < clientIds.Count; i++)
+            {
+                var client = _context.Clients.FirstOrDefault(x => x.ClientId == clientIds[i]);
+                clients.Add(client);
+            }
+
+
+            return clients;
+        }
+
+
 
 
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
+
             if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
             if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
@@ -244,6 +292,7 @@ namespace WebApi.Services
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
+
     }
 }
 

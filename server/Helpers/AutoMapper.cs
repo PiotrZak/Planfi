@@ -12,7 +12,9 @@ namespace WebApi.Helpers
             CreateMap<RegisterModel, User>();
             CreateMap<UpdateUserModel, User>();
 
-            CreateMap<CreatePlan, Plan>();
+            CreateMap<UpdateUserModel, User>();
+
+            CreateMap<Client, TrainerClient>();
 
             CreateMap<CreateCategory, Category>();
 

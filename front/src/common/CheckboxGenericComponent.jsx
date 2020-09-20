@@ -150,7 +150,7 @@ export const CheckboxGenericComponent = ({
                     pathname: `/plan/${element.planId}`,
                     state: { id: element.planId }
                   }}>
-                    <GenericElement className={className} key={i} headline={element.title} plan={element} />
+                    <GenericElement className={className} key={i} headline={element.title} subline ={element.creatorName} plan={element} />
                   </Link>
                 }
                 {type === "exercises" &&

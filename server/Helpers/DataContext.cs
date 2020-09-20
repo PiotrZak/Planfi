@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
@@ -25,12 +26,16 @@ namespace WebApi.Helpers
 
         }
 
+
         public DbSet<User> Users { get; set; }
+
+        public DbSet<Client> Clients { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
 
-        public DbSet<Plan> Plans { get; set; }
-        public DbSet<UsersPlans> UsersPlans { get; set; }
+        public DbSet<ClientsTrainers> ClientsTrainers { get; set; }
 
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<ClientsPlans> ClientsPlans { get; set; }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
@@ -38,41 +43,45 @@ namespace WebApi.Helpers
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            // Plans <-> Users relationship
+            modelBuilder.Entity<ClientsPlans>()
+                .HasKey(e => new { e.ClientId, e.PlanId });
+
+            modelBuilder.Entity<ClientsPlans>()
+                .HasOne(e => e.Client)
+                .WithMany(p => p.ClientsPlans);
+
+            modelBuilder.Entity<ClientsPlans>()
+                .HasOne(e => e.Plan)
+                .WithMany(p => p.ClientsPlans);
+
+
+            // Trainers <-> Client relationship
+            modelBuilder.Entity<ClientsTrainers>()
+                .HasKey(e => new { e.ClientId, e.TrainerId });
+
+            modelBuilder.Entity<ClientsTrainers>()
+                .HasOne(e => e.Client)
+                .WithMany(p => p.ClientsTrainers);
+
+            modelBuilder.Entity<ClientsTrainers>()
+                .HasOne(e => e.Trainer)
+                .WithMany(p => p.ClientsTrainers);
+
+
+
+
             modelBuilder.Entity<Plan>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
-
-
-
-            // Plans <-> Users relationship
-            modelBuilder.Entity<UsersPlans>()
-                .HasKey(e => new { e.UserId, e.PlanId });
-
-            modelBuilder.Entity<UsersPlans>()
-                .HasOne(e => e.User)
-                .WithMany(p => p.UsersPlans);
-
-            modelBuilder.Entity<UsersPlans>()
-                .HasOne(e => e.Plan)
-                .WithMany(p => p.UsersPlans);
-
-
-
-
 
             modelBuilder.Entity<Category>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
 
             modelBuilder.Entity<Trainer>()
-                .HasMany(b => b.Users)
-                .WithOne();
-
-
-            modelBuilder.Entity<Trainer>()
                 .HasMany(b => b.Plans)
                 .WithOne();
-
 
 
 
@@ -264,63 +273,132 @@ namespace WebApi.Helpers
                 }
             );
 
-        //public string UserId { get; set; }
-        //public byte[] Avatar { get; set; }
-        //public string FirstName { get; set; }
-        //public string LastName { get; set; }
-        //public string Email { get; set; }
-        //public int PhoneNumber { get; set; }
-        //public string Password { get; set; }
-        //public byte[] PasswordHash { get; set; }
-        //public byte[] PasswordSalt { get; set; }
-        //public string Role { get; set; }
-        //public string Token { get; set; }
+            modelBuilder.Entity<Client>().HasData(
+                    new Client
+                    {
+                        UserId = "u1",
+                        ClientId = "u1",
+                        Avatar = null,
+                        FirstName = "Teodoor",
+                        LastName = "Gianelli",
+                        Email = "tgianelli0@eventbrite.com",
+                        PhoneNumber = 555555555,
+                        Password = "Teodor",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        UserId = "u2",
+                        ClientId = "u2",
+                        Avatar = null,
+                        FirstName = "Jillana",
+                        LastName = "Casson",
+                        Email = "jcasson3@prlog.org",
+                        PhoneNumber = 666666666,
+                        Password = "Jillana",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    },
+                    new Client
+                    {
+                        UserId = "u3",
+                        ClientId = "u3",
+                        Avatar = null,
+                        FirstName = "Camille",
+                        LastName = "Teloinic",
+                        Email = "Teloinic@gmail.com",
+                        PhoneNumber = 555555555,
+                        Password = "Teodor",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        UserId = "u4",
+                        ClientId = "u4",
+                        Avatar = null,
+                        FirstName = "Kiel",
+                        LastName = "Burgne",
+                        Email = "kburgne2@hp.com",
+                        PhoneNumber = 777777777,
+                        Password = "Kiel",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    },
+                    new Client
+                    {
+                        UserId = "u5",
+                        ClientId = "u5",
+                        Avatar = null,
+                        FirstName = "Augustus",
+                        LastName = "Wharin",
+                        Email = "awharinu@tmall.com",
+                        PhoneNumber = 555555555,
+                        Password = "Augustus",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        UserId = "u6",
+                        ClientId = "u6",
+                        Avatar = null,
+                        FirstName = "Bondy",
+                        LastName = "Caulliere",
+                        Email = "bcaullieres@auda.org.au",
+                        PhoneNumber = 666666666,
+                        Password = "Bondy",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    }
+                    );
 
-        modelBuilder.Entity<User>().HasData(
-                new User
+            modelBuilder.Entity<Trainer>().HasData(
+                new Trainer
                 {
-                    UserId = "u1",
+                    UserId = "t1",
+                    TrainerId = "t1",
                     Avatar = null,
-                    FirstName = "Teodoor",
-                    LastName = "Gianelli",
-                    Email = "tgianelli0@eventbrite.com",
-                    PhoneNumber =  555555555,
-                    Password = "Teodor",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = Role.User,
-                    Token = "t-user",
-                },
-                new User
-                {
-                    UserId = "u2",
-                    Avatar = null,
-                    FirstName = "Jillana",
-                    LastName = "Casson",
-                    Email = "jcasson3@prlog.org",
-                    PhoneNumber = 666666666,
-                    Password = "Jillana",
+                    FirstName = "Valentia",
+                    LastName = "MacCathay",
+                    Email = "vmaccathay17@house.gov",
+                    PhoneNumber = 777777777,
+                    Password = "Valentia",
                     PasswordHash = null,
                     PasswordSalt = null,
                     Role = Role.Trainer,
-                    Token = "t-trainer",
+                    Token = "t-organization",
                 },
-                new User
+
+                new Trainer
                 {
-                    UserId = "u3",
+                    UserId = "t2",
+                    TrainerId = "t2",
                     Avatar = null,
-                    FirstName = "Kimmi",
-                    LastName = "Sarll",
-                    Email = "ksarllr@disqus.com",
+                    FirstName = "Eadith",
+                    LastName = "Fearey",
+                    Email = "efearey1f@mlb.com",
                     PhoneNumber = 777777777,
-                    Password = "Kimmi",
+                    Password = "Eadith",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Organization,
+                    Role = Role.Trainer,
                     Token = "t-organization",
                 }
-            );
-
+                );
         }
     }
 }

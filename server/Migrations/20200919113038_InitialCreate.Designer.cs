@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200915194957_InitialCreate")]
+    [Migration("20200919113038_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,19 +22,34 @@ namespace WebApi.Migrations
                 .HasAnnotation("ProductVersion", "3.1.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("WebApi.Controllers.ViewModels.UsersPlans", b =>
+            modelBuilder.Entity("WebApi.Controllers.ViewModels.ClientsPlans", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("ClientId")
                         .HasColumnType("text");
 
                     b.Property<string>("PlanId")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId", "PlanId");
+                    b.HasKey("ClientId", "PlanId");
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("UsersPlans");
+                    b.ToTable("ClientsPlans");
+                });
+
+            modelBuilder.Entity("WebApi.Controllers.ViewModels.ClientsTrainers", b =>
+                {
+                    b.Property<string>("ClientId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TrainerId")
+                        .HasColumnType("text");
+
+                    b.HasKey("ClientId", "TrainerId");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("ClientsTrainers");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Category", b =>
@@ -262,60 +277,28 @@ namespace WebApi.Migrations
                     b.Property<string>("PlanId")
                         .HasColumnType("text");
 
-                    b.Property<string>("Creator")
+                    b.Property<string>("ClientUserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatorName")
                         .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<string>("TrainerId")
+                    b.Property<string>("TrainerUserId")
                         .HasColumnType("text");
 
                     b.HasKey("PlanId");
 
-                    b.HasIndex("TrainerId");
+                    b.HasIndex("ClientUserId");
+
+                    b.HasIndex("TrainerUserId");
 
                     b.ToTable("Plans");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.Trainer", b =>
-                {
-                    b.Property<string>("TrainerId")
-                        .HasColumnType("text");
-
-                    b.Property<byte[]>("Avatar")
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("bytea");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("bytea");
-
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Token")
-                        .HasColumnType("text");
-
-                    b.HasKey("TrainerId");
-
-                    b.ToTable("Trainers");
                 });
 
             modelBuilder.Entity("WebApi.Entities.User", b =>
@@ -326,6 +309,10 @@ namespace WebApi.Migrations
                     b.Property<byte[]>("Avatar")
                         .HasColumnType("bytea");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -353,14 +340,21 @@ namespace WebApi.Migrations
                     b.Property<string>("Token")
                         .HasColumnType("text");
 
-                    b.Property<string>("TrainerId")
-                        .HasColumnType("text");
-
                     b.HasKey("UserId");
 
-                    b.HasIndex("TrainerId");
-
                     b.ToTable("Users");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Client", b =>
+                {
+                    b.HasBaseType("WebApi.Entities.User");
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Client");
 
                     b.HasData(
                         new
@@ -372,7 +366,8 @@ namespace WebApi.Migrations
                             Password = "Teodor",
                             PhoneNumber = 555555555,
                             Role = "User",
-                            Token = "t-user"
+                            Token = "t-user",
+                            ClientId = "u1"
                         },
                         new
                         {
@@ -382,33 +377,122 @@ namespace WebApi.Migrations
                             LastName = "Casson",
                             Password = "Jillana",
                             PhoneNumber = 666666666,
-                            Role = "Trainer",
-                            Token = "t-trainer"
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "u2"
                         },
                         new
                         {
                             UserId = "u3",
-                            Email = "ksarllr@disqus.com",
-                            FirstName = "Kimmi",
-                            LastName = "Sarll",
-                            Password = "Kimmi",
+                            Email = "Teloinic@gmail.com",
+                            FirstName = "Camille",
+                            LastName = "Teloinic",
+                            Password = "Teodor",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "u3"
+                        },
+                        new
+                        {
+                            UserId = "u4",
+                            Email = "kburgne2@hp.com",
+                            FirstName = "Kiel",
+                            LastName = "Burgne",
+                            Password = "Kiel",
                             PhoneNumber = 777777777,
-                            Role = "Organization",
-                            Token = "t-organization"
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "u4"
+                        },
+                        new
+                        {
+                            UserId = "u5",
+                            Email = "awharinu@tmall.com",
+                            FirstName = "Augustus",
+                            LastName = "Wharin",
+                            Password = "Augustus",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "u5"
+                        },
+                        new
+                        {
+                            UserId = "u6",
+                            Email = "bcaullieres@auda.org.au",
+                            FirstName = "Bondy",
+                            LastName = "Caulliere",
+                            Password = "Bondy",
+                            PhoneNumber = 666666666,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "u6"
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Controllers.ViewModels.UsersPlans", b =>
+            modelBuilder.Entity("WebApi.Entities.Trainer", b =>
                 {
-                    b.HasOne("WebApi.Entities.Plan", "Plan")
-                        .WithMany("UsersPlans")
-                        .HasForeignKey("PlanId")
+                    b.HasBaseType("WebApi.Entities.User");
+
+                    b.Property<string>("TrainerId")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Trainer");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "t1",
+                            Email = "vmaccathay17@house.gov",
+                            FirstName = "Valentia",
+                            LastName = "MacCathay",
+                            Password = "Valentia",
+                            PhoneNumber = 777777777,
+                            Role = "Trainer",
+                            Token = "t-organization",
+                            TrainerId = "t1"
+                        },
+                        new
+                        {
+                            UserId = "t2",
+                            Email = "efearey1f@mlb.com",
+                            FirstName = "Eadith",
+                            LastName = "Fearey",
+                            Password = "Eadith",
+                            PhoneNumber = 777777777,
+                            Role = "Trainer",
+                            Token = "t-organization",
+                            TrainerId = "t2"
+                        });
+                });
+
+            modelBuilder.Entity("WebApi.Controllers.ViewModels.ClientsPlans", b =>
+                {
+                    b.HasOne("WebApi.Entities.Client", "Client")
+                        .WithMany("ClientsPlans")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Entities.User", "User")
-                        .WithMany("UsersPlans")
-                        .HasForeignKey("UserId")
+                    b.HasOne("WebApi.Entities.Plan", "Plan")
+                        .WithMany("ClientsPlans")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Controllers.ViewModels.ClientsTrainers", b =>
+                {
+                    b.HasOne("WebApi.Entities.Client", "Client")
+                        .WithMany("ClientsTrainers")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Entities.Trainer", "Trainer")
+                        .WithMany("ClientsTrainers")
+                        .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -426,16 +510,13 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Plan", b =>
                 {
+                    b.HasOne("WebApi.Entities.Client", null)
+                        .WithMany("Plans")
+                        .HasForeignKey("ClientUserId");
+
                     b.HasOne("WebApi.Entities.Trainer", null)
                         .WithMany("Plans")
-                        .HasForeignKey("TrainerId");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.User", b =>
-                {
-                    b.HasOne("WebApi.Entities.Trainer", null)
-                        .WithMany("Users")
-                        .HasForeignKey("TrainerId");
+                        .HasForeignKey("TrainerUserId");
                 });
 #pragma warning restore 612, 618
         }

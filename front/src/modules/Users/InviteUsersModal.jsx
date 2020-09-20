@@ -52,9 +52,9 @@ const InviteUserModal = ({ openModal, onClose }) => {
                             return isEmail(email); // return boolean
                         }}
                         getLabel={(
-                            email: string,
-                            index: number,
-                            removeEmail: (index: number) => void,
+                            email,
+                            index,
+                            removeEmail,
                         ) => {
                             return (
                                 <div data-tag key={index}>

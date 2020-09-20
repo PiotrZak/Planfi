@@ -99,7 +99,7 @@ export const Clients = () => {
     // }
 
     // later assign propertly variable
-    const data = { trainerIds: ["t1"], userIds: activeUsers };
+    const data = { trainerIds: [user.userId], userIds: activeUsers };
 
     userService
       .assignUsersToTrainer(data)

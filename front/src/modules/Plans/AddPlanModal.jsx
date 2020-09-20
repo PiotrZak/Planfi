@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
 import { FormInput } from "common/FormInput"
@@ -6,9 +6,11 @@ import { validationUtil } from "utils/validation.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { planService } from "services/planService";
 import { Button } from "common/buttons/Button"
+import { userContext } from 'App';
 
 const AddPlanModal = ({ openModal, onClose }) => {
 
+    const { user } = useContext(userContext);
     const [addPlanData, setAddPlan] = useState({});
     const [errors, setErrors] = useState({})
 
@@ -27,9 +29,18 @@ const AddPlanModal = ({ openModal, onClose }) => {
         confirm && createPlan(addPlanData)
     }
 
+    // {
+    //     "title": "string",
+    //     "creatorId": "string",
+    //     "creatorName": "string"
+    //   }
+
     const createPlan = (addPlanData) => {
+
+        const transformedData = {title: addPlanData.title, creatorId: user.userId, creatorName: user.firstName}
+
         planService
-            .addPlan(addPlanData)
+            .addPlan(transformedData)
             .then(() => {
                 dispatch(alertActions.success("Plan succesfully added!"))
                 onClose()

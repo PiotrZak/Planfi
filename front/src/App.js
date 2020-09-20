@@ -73,11 +73,11 @@ const App = () => {
   };
 
   const renderAvatarMenu = () => {
-    // if (user) {
-    //   if (user.role === 'Organization' || user.role === 'Trainer') {
-    return <AvatarMenu user={user} />;
-    //   }
-    // }
+    if (user) {
+        if (user.role === 'Organization' || user.role === 'Trainer') {
+      return <AvatarMenu user={user} />;
+      }
+    }
   };
 
   return (
@@ -118,7 +118,7 @@ const App = () => {
                 {/* Only Trainers */}
                 <PrivateRoute user={user} path="/clients" component={Clients} />
 
-                <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
+{/* <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} /> */}
                 <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={MyProfile} />
 
               </Switch>
