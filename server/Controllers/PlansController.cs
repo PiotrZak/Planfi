@@ -6,6 +6,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApi.Controllers
 {
@@ -80,6 +82,33 @@ namespace WebApi.Controllers
             _planService.UnassignExercisesToPlan(model.PlanId, model.ExerciseId);
 
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("usersplan/{id}")]
+        public IActionResult GetUserPlans(string id)
+        {
+            var plans = _planService.GetUserPlans(id);
+
+            if (plans == null)
+                return NotFound();
+
+            // Convert it to the DTO
+            var transformedPlans = _mapper.Map<List<Plan>, List<ResultPlan>>(plans.ToList());
+
+            return Ok(transformedPlans);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("trainerplans/{id}")]
+        public IActionResult GetCreatorPlans(string id)
+        {
+            var plans = _planService.GetCreatorPlans(id);
+
+            if (plans == null)
+                return NotFound();
+
+            return Ok(plans);
         }
 
 

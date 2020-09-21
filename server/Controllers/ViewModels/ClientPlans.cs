@@ -1,9 +1,16 @@
-﻿using WebApi.Entities;
+﻿using System;
+using WebApi.Entities;
 
 namespace WebApi.Controllers.ViewModels
 {
-    public class AssignPlansToUser
+    public class AssignPlansToClient
     {
+        public AssignPlansToClient()
+        {
+            ClientIds = new string[] { };
+            PlanIds = new string[] { };
+        }
+
         public string[] ClientIds { get; set; }
         public string[] PlanIds { get; set; }
     }

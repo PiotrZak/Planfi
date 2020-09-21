@@ -141,7 +141,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("assignPlans")]
-        public IActionResult AssignPlanToUser([FromBody] AssignPlansToUser model)
+        public IActionResult AssignPlanToUser([FromBody] AssignPlansToClient model)
         {
 
             _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
@@ -210,6 +210,23 @@ namespace WebApi.Controllers
             var transformedClients = _mapper.Map<List<Client>, List<TrainerClient>>(clients.ToList());
 
             return Ok(transformedClients);
+            //return Ok(transformedClient);
+
+        }
+
+        [AllowAnonymous]
+        [HttpGet("clientTrainers/{id}")]
+        public IActionResult GetTrainersByClient(string id)
+        {
+            var trainers = _userService.GetTrainersByClient(id);
+
+            if (trainers == null)
+                return NotFound();
+
+            // Convert it to the DTO
+            var transformedTrainers = _mapper.Map<List<Trainer>, List<TrainerClient>>(trainers.ToList());
+
+            return Ok(transformedTrainers);
             //return Ok(transformedClient);
 
         }

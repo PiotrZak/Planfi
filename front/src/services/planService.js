@@ -8,6 +8,8 @@ export const planService = {
   deletePlans,
   assignExercises,
   unAssignExercises,
+  userPlans,
+  getCreatorPlans,
   };
 
   function getAllPlans(body) {
@@ -16,6 +18,10 @@ export const planService = {
 
   function addPlan(body) {
     return http.post(`${PLANS_URL}/create`, body);
+  }
+
+  function getCreatorPlans(id){
+    return http.get(`${PLANS_URL}/trainerplans/${id}`);
   }
 
   function assignExercises(body) {
@@ -28,6 +34,10 @@ export const planService = {
 
   function getPlanById(id) {
     return http.get(`${PLANS_URL}/${id}`);
+  }
+
+  function userPlans(id) {
+    return http.get(`${PLANS_URL}/usersplan/${id}`);
   }
 
   function deletePlans(body) {

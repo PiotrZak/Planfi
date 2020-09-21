@@ -86,7 +86,19 @@
     }
 }
 
-
+.checkbox-generic-list{
+    &__element{
+        margin:  0 0;
+        @include sm{
+            margin:  0 0;
+        }
+    }
+    &__checkbox{
+        &:hover{
+            cursor:pointer;
+        }
+    }
+  }
 
 a.active{
     background-color:#5E4AE3;

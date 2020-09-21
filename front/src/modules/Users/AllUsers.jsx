@@ -118,27 +118,6 @@ export const AllUsers = () => {
       });
   };
 
-  const assignUserToTrainer = (selectedData) => {
-    console.log(selectedData);
-    // {
-    //     "trainerId": "string",
-    //     "usersId": [
-    //       "string"
-    //     ]
-    //   }
-
-    const data = { trainerId: 'lol', usersId: activeUsers };
-
-    userService
-      .assignUsersToTrainer(data)
-      .then(() => {
-        dispatch(alertActions.success(assignTrainerToUserNotification));
-      })
-      .catch((error) => {
-        dispatch(alertActions.error(error.title));
-      });
-  };
-
   const openAssignPlansToUsers = () => {
     setAssignPlan(true);
     setBottomSheet(false);
@@ -270,7 +249,7 @@ export const AssignUsersToPlans = ({
   };
 
   const assignUserToPlan = () => {
-    const data = { userIds: activeUsers, planIds: activePlans };
+    const data = { clientIds: activeUsers, planIds: activePlans };
 
     userService
       .assignPlanToUser(data)

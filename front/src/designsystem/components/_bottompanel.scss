@@ -31,12 +31,10 @@
     }
 
 
-     
-
     .bottomsheet-without-background{
         height: 0 !important;
         width: 0 !important;
-        position:initial !important;
+        position:sticky !important;
         bottom:0;
         left:0;
         height:200px !important;

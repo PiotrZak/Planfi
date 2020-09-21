@@ -1,13 +1,17 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UsersController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/AutoMapper.cs">
     <Files>
-      <File FileName="Controllers/UsersController.cs" Line="204" Column="64" />
-      <File FileName="Services/UserService.cs" Line="243" Column="23" />
-      <File FileName="Helpers/ExtensionMethods.cs" Line="1" Column="1" />
+      <File FileName="Controllers/PlansController.cs" Line="88" Column="19" />
+      <File FileName="Controllers/UsersController.cs" Line="226" Column="37" />
+      <File FileName="Controllers/ViewModels/ClientPlans.cs" />
+      <File FileName="Controllers/ViewModels/CreatePlan.cs" Line="5" Column="28" />
+      <File FileName="Controllers/ViewModels/CreateCategory.cs" />
+      <File FileName="Entities/Users/Trainer.cs" />
+      <File FileName="Entities/Plans.cs" Line="10" Column="1" />
       <File FileName="Models/TrainerClient.cs" Line="4" Column="31" />
-      <File FileName="Entities/Users/User.cs" Line="17" Column="1" />
-      <File FileName="Models/AuthenticateModel.cs" Line="10" Column="1" />
-      <File FileName="Entities/Users/Client.cs" Line="20" Column="64" />
+      <File FileName="Services/PlanService.cs" Line="114" Column="32" NotebookId="1" />
+      <File FileName="Services/UserService.cs" Line="263" Column="10" NotebookId="1" />
+      <File FileName="Helpers/AutoMapper.cs" Line="11" Column="10" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,12 +20,13 @@
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="ViewModels" expanded="True" />
-                <Node name="UsersController.cs" selected="True" />
               </Node>
               <Node name="Entities" expanded="True">
                 <Node name="Users" expanded="True" />
               </Node>
-              <Node name="Helpers" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="AutoMapper.cs" selected="True" />
+              </Node>
               <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>
@@ -38,6 +43,7 @@
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/FileModel.cs" relfile="Controllers/ViewModels/FileModel.cs" line="11" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/ForgotPassword.cs" relfile="Controllers/ViewModels/ForgotPassword.cs" line="13" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Models/Message.cs" relfile="Models/Message.cs" line="19" column="1" />
+      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Services/PlanService.cs" relfile="Services/PlanService.cs" line="26" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

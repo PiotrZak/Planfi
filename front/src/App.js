@@ -110,16 +110,13 @@ const App = () => {
 
                 <PrivateRoute user={user} path="/users" component={AllUsers} />
 
-
-
                 {/* Only Owner */}
                 <PrivateRoute user={user} path="/trainers" component={Trainers} />
 
                 {/* Only Trainers */}
                 <PrivateRoute user={user} path="/clients" component={Clients} />
-
-{/* <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} /> */}
-                <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={MyProfile} />
+                <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
+                <PrivateRoute user={user} path="/myprofile/:id" accessRole={[1, 2, 3]} component={MyProfile} />
 
               </Switch>
             </BrowserRouter>

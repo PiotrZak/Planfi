@@ -11,6 +11,7 @@ namespace WebApi.Entities
         {
             PlanId = Guid.NewGuid().ToString();
             Exercises = new List<Exercise>();
+            ClientsPlans = new List<ClientsPlans>();
         }
 
         [Key]

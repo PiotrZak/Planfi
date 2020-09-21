@@ -9,7 +9,7 @@ const routes = {
     categories: "/categories",
     plans: "/plans",
     users: "/users",
-    myProfile: "/user"
+    myProfile: "/myprofile"
 }
 
 const Menu = () => {

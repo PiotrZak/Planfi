@@ -9,6 +9,7 @@ export const userService = {
     allClients,
     allTrainers,
     allClientsByTrainer,
+    allTrainersByClient,
     
     getUserById,
     editUser,
@@ -55,6 +56,10 @@ export const userService = {
 
   function allClientsByTrainer(id) {
     return http.get(`${USER_URL}trainerClients/${id}`);
+  }
+
+  function allTrainersByClient(id) {
+    return http.get(`${USER_URL}clientTrainers/${id}`);
   }
 
 

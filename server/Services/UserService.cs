@@ -25,10 +25,11 @@ namespace WebApi.Services
         void AssignClientsToTrainers(string[] TrainerIds, string[] UsersIds);
         void AssignPlanToClients(string[] userIds, string[] planIds);
 
-        IEnumerable<Client> GetClientsByTrainer(string TrainerId);
-
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
+
+        IEnumerable<Client> GetClientsByTrainer(string TrainerId);
+        IEnumerable<Trainer> GetTrainersByClient(string ClientId);
     }
 
     public class UserService : IUserService
@@ -205,17 +206,17 @@ namespace WebApi.Services
         }
 
 
-        public void AssignPlanToClients(string[] UserIds, string[] PlanIds)
+        public void AssignPlanToClients(string[] ClientIds, string[] PlanIds)
         {
 
         // [u1, u2]
         // to every user add plan
         // [p1, p2, p3, p4]
 
-            foreach (var userId in UserIds)
+            foreach (var clientId in ClientIds)
             {
-                //finding an client
-                var client = _context.Clients.Find(userId);
+                //finding an client 
+                var client = _context.Clients.Find(clientId);
 
                 foreach (var planId in PlanIds)
                 {
@@ -236,7 +237,6 @@ namespace WebApi.Services
         // full list of clients
 
         {
-
             var clientsTrainers = _context.ClientsTrainers.Where(x => x.TrainerId == id);
 
             var clientIds = new List<string>();
@@ -255,8 +255,30 @@ namespace WebApi.Services
                 clients.Add(client);
             }
 
-
             return clients;
+        }
+
+        public IEnumerable<Trainer> GetTrainersByClient(string id)
+
+        {
+            var clientsTrainers = _context.ClientsTrainers.Where(x => x.ClientId == id);
+
+            var trainersIds = new List<string>();
+            var trainers = new List<Trainer>();
+
+            foreach (var i in clientsTrainers)
+            {
+                var trainerId = i.TrainerId;
+                trainersIds.Add(trainerId);
+            }
+
+            for (int i = 0; i < trainersIds.Count; i++)
+            {
+                var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainersIds[i]);
+                trainers.Add(trainer);
+            }
+
+            return trainers;
         }
 
 

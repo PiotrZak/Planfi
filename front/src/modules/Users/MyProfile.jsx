@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { userService } from "services/userServices";
-import { Link } from 'react-router-dom';
+
 import Icon from "common/Icon"
 import { useDispatch } from "react-redux";
 import Return from "common/Return"
@@ -8,13 +7,17 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
 import { UserInfo } from "common/users/UserInfo"
-import GenericElement from "common/GenericElement/GenericElement"
 
 import EditUserPasswordModal from "./Edit/EditUserPassword"
 import EditUserEmailModal from "./Edit/EditUserEmail";
 import EditUserDataModal from "./Edit/EditUserData";
-import { alertActions } from "redux/actions/alert.actions";
+
 import { userContext } from 'App';
+
+import { ClientsOfTrainer } from "./microModules/ClientOfTrainer"
+import { PlansOfTrainer } from "./microModules/PlansOfTrainer"
+import { PlansOfUser } from "./microModules/PlansOfUser"
+import { TrainersOfClient } from "./microModules/TrainersOfClient"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -65,48 +68,6 @@ export const MyProfile = (props) => {
     );
 }
 
-
-// My clients - list of users assigned to trainer
-// My plans - list of plans assigned to trainer
-
-// My trainers - list of trainers assigned to user
-// My plans - list of plans assigned to user
-
-const ClientsOfTrainer = ({ id }) => {
-
-    const [clients, setClients] = useState([])
-    const dispatch = useDispatch()
-
-
-    useEffect(() => {
-        userService
-            .allClientsByTrainer(id)
-            .then((data) => {
-                setClients(data)
-                console.log(data)
-            })
-            .catch((error) => {
-                dispatch(alertActions.error(error))
-            });
-    }, []);
-
-    return (
-        <div>
-            {clients && clients.map((element, i) => (
-                <div key={i}>
-                    <Link to={{
-                        pathname: `/user/${element.userId}`,
-                        state: { id: element.userId }
-                    }}>
-                        <GenericElement circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
-                    </Link>
-                </div>
-            ))}
-        </div>
-    )
-}
-
-
 const Navs = ({ user }) => {
 
     const [activeTab, setActiveTab] = useState('1');
@@ -133,47 +94,30 @@ const Navs = ({ user }) => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                     >
-                    {user.role === "Trainer"
-                        ? <h2>My Clients</h2>
-                        : <h2>My Trainers</h2>
-                    }
+                        {user.role === "Trainer"
+                            ? <h2>My Clients</h2>
+                            : <h2>My Trainers</h2>
+                        }
                     </NavLink>
                 </NavItem>
             </Nav>
 
-
-
-
             <TabContent activeTab={activeTab}>
-
                 <TabPane tabId="1">
-                    <h1>My Plans</h1>
+                    {user.role === "Trainer"
+                        ? <h1><PlansOfTrainer id={user.userId} /></h1>
+                        : <h1><PlansOfUser id={user.userId} /></h1>
+                    }
                 </TabPane>
-
                 <TabPane tabId="2">
                     {user.role === "Trainer"
                         ? <h1><ClientsOfTrainer id={user.userId} /></h1>
-                        : <h1>My Trainers</h1>
+                        : <h1><TrainersOfClient id={user.userId} /></h1>
                     }
                 </TabPane>
             </TabContent>
-
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
     )
 }
-
-
 
 export default MyProfile;

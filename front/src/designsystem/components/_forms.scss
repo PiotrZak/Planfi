@@ -41,20 +41,7 @@ label {
   font-size: 1.2rem;
 }
 
-.checkbox-generic-list{
-  &__element{
-      display:grid;
-      margin:  0 0;
-      @include sm{
-          margin:  1.6rem 0;
-      }
-  }
-  &__checkbox{
-      &:hover{
-          cursor:pointer;
-      }
-  }
-}
+
 
 input[type=checkbox]{
   margin: 0 0 0 0 !important;

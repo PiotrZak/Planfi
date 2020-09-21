@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -13,6 +14,8 @@ namespace WebApi.Services
         void Delete(string[] id);
         void AssignExercisesToPlan(string planId, string[] exerciseId);
         void UnassignExercisesToPlan(string planId, string[] exerciseId);
+        IEnumerable<Plan> GetUserPlans(string id);
+        IEnumerable<Plan> GetCreatorPlans(string id);
     }
 
     public class PlanService : IPlanService
@@ -96,6 +99,34 @@ namespace WebApi.Services
             _context.SaveChanges();
         }
 
+        public IEnumerable<Plan> GetUserPlans(string userId)
+        {
+            var userPlans = _context.ClientsPlans.Where(x => x.ClientId == userId);
+
+            var planIds = new List<string>();
+            var plans = new List<Plan>();
+
+            foreach (var i in userPlans)
+            {
+                var planId = i.PlanId;
+                planIds.Add(planId);
+            }
+
+            for (int i = 0; i < planIds.Count; i++)
+            {
+                var plan = _context.Plans.FirstOrDefault(x => x.PlanId == planIds[i]);
+                plans.Add(plan);
+            }
+
+            return plans;
+
+        }
+
+        public IEnumerable<Plan> GetCreatorPlans(string id)
+        {
+            var plans = _context.Plans.Where(x => x.CreatorId == id);
+            return plans;
+        }
     }
 }
 

@@ -12,7 +12,11 @@ import EditUserPasswordModal from "./Edit/EditUserPassword"
 import EditUserEmailModal from "./Edit/EditUserEmail";
 import EditUserDataModal from "./Edit/EditUserData";
 import { alertActions } from "redux/actions/alert.actions";
-import { userContext } from 'App';
+
+import { ClientsOfTrainer } from "./microModules/ClientOfTrainer"
+import { PlansOfTrainer } from "./microModules/PlansOfTrainer"
+import { PlansOfUser } from "./microModules/PlansOfUser"
+import { TrainersOfClient } from "./microModules/TrainersOfClient"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -23,7 +27,6 @@ const logout = "Logout";
 
 export const User = (props) => {
 
-     const { loggedUser } = useContext(userContext);
     const [bottomSheet, setBottomSheet] = useState(false)
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -63,7 +66,7 @@ export const User = (props) => {
 
                 {user && <UserInfo user={user} />}
 
-                <Navs />
+                <Navs user = {user} />
 
                 <EditUserDataModal id={id.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
                 <EditUserEmailModal id={id.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
@@ -82,21 +85,7 @@ export const User = (props) => {
     );
 }
 
-
-// My clients - list of users assigned to trainer
-// My plans - list of plans assigned to trainer
-
-// My trainers - list of trainers assigned to user
-// My plans - list of plans assigned to user
-
-const userPlans = () => {
-    return(
-        <div>Test</div>
-    )
-}
-
-
-const Navs = () => {
+const Navs = ({ user }) => {
 
     const [activeTab, setActiveTab] = useState('1');
     const myPlans = "Plans";
@@ -105,6 +94,9 @@ const Navs = () => {
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }
+
+    console.log(user.userId)
+
     return (
         <div className="user-container__tabs">
             <Nav tabs>
@@ -121,21 +113,26 @@ const Navs = () => {
                         className={classnames({ active: activeTab === '2' })}
                         onClick={() => { toggle('2'); }}
                     >
-                        <h2>{myTrainers}</h2>
+                        {user.role === "Trainer"
+                            ? <h2>Clients</h2>
+                            : <h2>Trainers</h2>
+                        }
                     </NavLink>
                 </NavItem>
             </Nav>
 
-
-            
             <TabContent activeTab={activeTab}>
-
                 <TabPane tabId="1">
-                    <h1>My Plans</h1>
+                    {user.role === "Trainer"
+                        ? <h1><PlansOfTrainer id={user.userId} /></h1>
+                        : <h1><PlansOfUser id={user.userId} /></h1>
+                    }
                 </TabPane>
-
                 <TabPane tabId="2">
-                    <h1>My Trainers</h1>
+                    {user.role === "Trainer"
+                        ? <h1><ClientsOfTrainer id={user.userId} /></h1>
+                        : <h1><TrainersOfClient id={user.userId} /></h1>
+                    }
                 </TabPane>
             </TabContent>
         </div>

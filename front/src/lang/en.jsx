@@ -1,5 +1,4 @@
-
-// Plans
+  Plans
 
 export const allocateExercises = "Exercises succesfully allocated!";
 export const unAssignFromPlan = "Unassign from plan"

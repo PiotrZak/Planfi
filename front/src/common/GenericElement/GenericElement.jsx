@@ -47,7 +47,6 @@ const GenericElement = ({
                     <h3 className="rectangleButton-info__headline">{headline}</h3>
                     <p className="rectangleButton-info__subline">{subline}</p>
                 </div>
-
             </div>
             <div className="rectangleButton__menu">
 

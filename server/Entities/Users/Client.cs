@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Entities
@@ -11,6 +9,8 @@ namespace WebApi.Entities
         public Client()
         {
             ClientId = Guid.NewGuid().ToString();
+            ClientsPlans = new List<ClientsPlans>();
+            ClientsTrainers = new List<ClientsTrainers>();
         }
 
         public string ClientId { get; set; }
