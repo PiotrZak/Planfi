@@ -10,18 +10,9 @@ html{
 }
 
 body{
-  // background: #303030;
+  overflow-x: hidden; //horizontal
+  overflow-y: hidden; //vertical
 }
-
-// .dark-theme{
-
-//   background-color:#303030;
-
-//   h1, h2, h3, p{
-//     color:white !important;
-//   }
-  
-// }
 
 h1,
 h2,

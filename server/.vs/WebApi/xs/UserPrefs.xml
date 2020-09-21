@@ -1,18 +1,5 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/AutoMapper.cs">
-    <Files>
-      <File FileName="Controllers/PlansController.cs" Line="88" Column="19" />
-      <File FileName="Controllers/UsersController.cs" Line="226" Column="37" />
-      <File FileName="Controllers/ViewModels/ClientPlans.cs" />
-      <File FileName="Controllers/ViewModels/CreatePlan.cs" Line="5" Column="28" />
-      <File FileName="Controllers/ViewModels/CreateCategory.cs" />
-      <File FileName="Entities/Users/Trainer.cs" />
-      <File FileName="Entities/Plans.cs" Line="10" Column="1" />
-      <File FileName="Models/TrainerClient.cs" Line="4" Column="31" />
-      <File FileName="Services/PlanService.cs" Line="114" Column="32" NotebookId="1" />
-      <File FileName="Services/UserService.cs" Line="263" Column="10" NotebookId="1" />
-      <File FileName="Helpers/AutoMapper.cs" Line="11" Column="10" NotebookId="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
@@ -24,10 +11,10 @@
               <Node name="Entities" expanded="True">
                 <Node name="Users" expanded="True" />
               </Node>
-              <Node name="Helpers" expanded="True">
-                <Node name="AutoMapper.cs" selected="True" />
+              <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True">
+                <Node name="TrainerClient.cs" selected="True" />
               </Node>
-              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>
           </Node>

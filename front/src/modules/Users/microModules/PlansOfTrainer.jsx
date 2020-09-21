@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { userService } from "services/userServices";
 import { planService } from 'services/planService';
 import { useDispatch } from "react-redux";
 import { alertActions } from "redux/actions/alert.actions";
@@ -8,8 +7,10 @@ import GenericElement from "common/GenericElement/GenericElement"
 import messages from 'lang/eng'
 
 export const PlansOfTrainer = ({ id }) => {
+
     const [plans, setPlans] = useState([])
     const dispatch = useDispatch()
+
     useEffect(() => {
         planService
             .getCreatorPlans(id)
@@ -23,7 +24,7 @@ export const PlansOfTrainer = ({ id }) => {
 
     return (
         <div>
-            {plans.length > 1 ? plans.map((element, i) => (
+            {plans.length >= 1 ? plans.map((element, i) => (
                 <div key={i}>
                     <Link to={{
                         pathname: `/plan/${element.planId}`,

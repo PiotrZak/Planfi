@@ -141,3 +141,20 @@ a.active{
     #mainmenu ul li:hover {color: #007bff;cursor:pointer;}
 
     
+.lang-switcher{
+    position:absolute;
+    right:0;
+    bottom: 0;
+    font-size:24px;
+    color:red;
+    margin:40px;
+}
+
+.theme-switcher{
+    position:absolute;
+    right:0;
+    bottom: 0;
+    font-size:24px;
+    color:red;
+    margin:40px 240px 40px 80px;
+}

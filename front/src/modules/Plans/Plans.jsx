@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { planService } from "services/planService";
 import Icon from "common/Icon"
 import Return from "common/Return"
@@ -9,6 +9,7 @@ import {commonUtil} from "utils/common.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
 import { isMobile } from "react-device-detect";
+import { ThemeContext } from 'App';
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -22,6 +23,9 @@ const selected = "selected"
 const planDeleted = "Plan succesfully deleted!";
 
 export const Plans = () => {
+
+    const { theme } = useContext(ThemeContext);
+
     const [plans, setPlans] = useState();
     const [selectedPlans, setSelectedPlans] = useState([]);
 
@@ -32,6 +36,8 @@ export const Plans = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+
+        console.log(theme)
         planService
             .getAllPlans()
             .then((data) => {
@@ -69,7 +75,7 @@ export const Plans = () => {
 
     return (
         <div>
-            <div className="container">
+            <div className={"container " + (theme)}>
                 <div className="container__title">
                     <Return />
                     <h2>{plansTitle}</h2>

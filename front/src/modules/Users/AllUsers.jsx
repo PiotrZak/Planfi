@@ -141,9 +141,6 @@ export const AllUsers = () => {
               pathname: `/clients`,
             }}><p>Clients page</p></Link>
             <hr />
-            {/* <p onClick={() => getAllClients()}>{clientsText}</p>
-            <p onClick={() => getAllTrainers()}>{trainersText}</p>
-            <p onClick={() => getAllUsers()}>all</p> */}
           </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
 
@@ -157,7 +154,7 @@ export const AllUsers = () => {
 
       <ReactBottomsheet
         showBlockLayer={false}
-        className="bottomsheet-without-background"
+        className={!isMobile && "bottomsheet-without-background"}
         visible={bottomSheet}
         onClose={() => setBottomSheet(false)}
         appendCancelBtn={false}
@@ -186,23 +183,6 @@ export const AllUsers = () => {
     </div>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 export const AssignUsersToPlans = ({

@@ -2,8 +2,13 @@ import React, { useState, useEffect } from 'react';
 import {
   Route, Switch, BrowserRouter, Link, NavLink
 } from 'react-router-dom';
+import {
+  isMobile
+} from "react-device-detect";
+
 import { createBrowserHistory } from 'history';
 import { PrivateRoute } from './utils/PrivateRoute';
+
 
 import { RegisterPage } from './modules/Account/Register';
 import { ActivatePage } from './modules/Account/Activate';
@@ -47,11 +52,12 @@ export const themes = {
 };
 
 export const userContext = React.createContext();
-export const ThemeContext = React.createContext(themes.dark);
+export const ThemeContext = React.createContext();
 export const LanguageContext = React.createContext();
 
-const App = () => {
-  const themeHook = useState('dark');
+let App = () => {
+
+  const [theme, setTheme] = useState('dark')
   const [user, setUser] = useState('test');
   const [selectedLanguage, setSelectedLanguage] = useState('en');
 
@@ -60,9 +66,18 @@ const App = () => {
     setUser(JSON.parse(userData));
   }, []);
 
-  // theme
-  // ? import("./designsystem/_dark.scss")
-  // : import("./designsystem/_light.scss")
+
+const toggleTheme = () => {
+    setTheme(theme == 'dark' ? 'light' : 'dark')
+}
+
+  const renderLangChange = () => {
+    return <LanguageSelector />
+  }
+
+  const renderThemeChange = () => {
+    return <ThemeSelector toggleTheme={toggleTheme} />
+  }
 
   const renderMenu = () => {
     if (user) {
@@ -74,23 +89,25 @@ const App = () => {
 
   const renderAvatarMenu = () => {
     if (user) {
-        if (user.role === 'Organization' || user.role === 'Trainer') {
-      return <AvatarMenu user={user} />;
+      if (user.role === 'Organization' || user.role === 'Trainer') {
+        return !isMobile && <AvatarMenu user={user} />;
       }
     }
   };
 
   return (
-    <div className="App">
+    <div className={"App " + (theme)}>
       <LanguageContext.Provider
         value={{
           lang: selectedLanguage,
         }}
       >
-        <ThemeContext.Provider value={{ theme: themeHook }}>
+        <ThemeContext.Provider value={{ theme }}>
           <userContext.Provider value={{ user }}>
             <Alert />
             <BrowserRouter history={history}>
+              {renderLangChange()}
+              {renderThemeChange()}
               {renderMenu()}
               {renderAvatarMenu()}
               <Switch>
@@ -142,32 +159,38 @@ const AvatarMenu = ({ user }) => {
     <div className="profile">
       <ul id="mainmenu">
         <li>
-            {user.avatar ?
-              <img alt ={"test"} src={`data:image/jpeg;base64,${user.avatar}`} />
-              : <h3> Welcome{user.firstName}</h3>
-            }
+          {user.avatar ?
+            <img alt={"test"} src={`data:image/jpeg;base64,${user.avatar}`} />
+            : <h3> Welcome{user.firstName}</h3>
+          }
 
-            <ul>
-              <li onClick={() => toProfile()}>
-                <NavLink
-                  to={`user}/${user.userId}`}
-                  activeClassName="active"
-                >
-                  My Profile
+          <ul>
+            <li onClick={() => toProfile()}>
+              <NavLink
+                to={`user}/${user.userId}`}
+                activeClassName="active"
+              >
+                My Profile
                 </NavLink></li>
-              <li onClick={() => logout()}>Logout</li>
-            </ul>
+            <li onClick={() => logout()}>Logout</li>
+          </ul>
 
         </li>
       </ul>
     </div>
-      );
-    };
-    
-    
-    export default App;
-    
-{ /* all Exercises */
-      }
-      { /* <Route path="/exercises" component={Exercises} /> */
-      }
+  );
+};
+
+const LanguageSelector = () => {
+
+  return (
+    <div className="lang-switcher">set language</div>
+  )
+}
+
+const ThemeSelector = ({toggleTheme}) => {
+  return (
+    <div className="theme-switcher" onClick = {()=> toggleTheme()}>set theme</div>
+  )
+}
+export default App;

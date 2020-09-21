@@ -1,6 +1,6 @@
 @import "vendor/reset";
 @import "abstracts/variables";
-@import "theme/dark";
+@import "theme/theme";
 
 @import "base/typography";
 @import "base/alert";
@@ -12,7 +12,6 @@
 @import "components/buttons";
 
 @import "components/bottompanel";
-@import "components/employeeButton";
 @import "components/menuButton";
 @import "components/rectangleButtons";
 @import "components/dropzone";

@@ -1,5 +1,4 @@
 import React from "react";
-import Checkbox from "./checkbox/Checkbox";
 import CircleButton from "../CircleButton/CircleButton";
 import { Link } from 'react-router-dom';
 import Icon from "common/Icon"
@@ -26,8 +25,6 @@ const GenericElement = ({
     return (
         <div className={className  ? className : "rectangleButton"}>
             <div className="rectangleButton__wrapper">
-                {checkbox && <Checkbox handleElement={handleElement} id={id} />}
-
                 {image
                     ? <div
                         className={`menuButton__image ${

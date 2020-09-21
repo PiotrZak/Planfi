@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { userService } from "services/userServices";
-import { planService } from 'services/planService';
 import { useDispatch } from "react-redux";
 import { alertActions } from "redux/actions/alert.actions";
 import GenericElement from "common/GenericElement/GenericElement"
@@ -26,7 +25,7 @@ export const ClientsOfTrainer = ({ id }) => {
 
     return (
         <div>
-            {clients.length > 1 ? clients.map((element, i) => (
+            {clients.length >= 1 ? clients.map((element, i) => (
                 <div key={i}>
                     <Link to={{
                         pathname: `/user/${element.userId}`,
