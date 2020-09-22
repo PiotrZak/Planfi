@@ -21,7 +21,7 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Organization",
+                name: "Organizations",
                 columns: table => new
                 {
                     OrganizationId = table.Column<string>(nullable: false),
@@ -29,7 +29,7 @@ namespace WebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Organization", x => x.OrganizationId);
+                    table.PrimaryKey("PK_Organizations", x => x.OrganizationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,9 +56,9 @@ namespace WebApi.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Users_Organization_OrganizationId",
+                        name: "FK_Users_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
-                        principalTable: "Organization",
+                        principalTable: "Organizations",
                         principalColumn: "OrganizationId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -281,7 +281,7 @@ namespace WebApi.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
-                name: "Organization");
+                name: "Organizations");
         }
     }
 }

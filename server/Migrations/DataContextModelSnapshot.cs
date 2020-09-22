@@ -280,7 +280,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("OrganizationId");
 
-                    b.ToTable("Organization");
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Plan", b =>

@@ -95,6 +95,7 @@ namespace WebApi
             services.AddTransient<IEmailService, EmailService>();
 
             // configure DI for application services
+            services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<ICategoryService, CategoryService>();

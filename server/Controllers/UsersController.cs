@@ -49,7 +49,6 @@ namespace WebApi.Controllers
             }
 
             // important todo - make work in new user structure
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -169,7 +168,7 @@ namespace WebApi.Controllers
         }
 
 
-        // todo - make edit Client and Trainer - separately? - different values
+        // todo - repair edition 
         [AllowAnonymous]
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody] UpdateUserModel model)

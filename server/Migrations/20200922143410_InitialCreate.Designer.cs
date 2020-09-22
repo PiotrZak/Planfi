@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200922094520_InitialCreate")]
+    [Migration("20200922143410_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -282,7 +282,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("OrganizationId");
 
-                    b.ToTable("Organization");
+                    b.ToTable("Organizations");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Plan", b =>

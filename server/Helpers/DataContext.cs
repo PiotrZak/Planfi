@@ -44,7 +44,6 @@ namespace WebApi.Helpers
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            //todo - analyse organizationId should be on user on roles?
             modelBuilder.Entity<Organization>()
                 .HasMany(b => b.Users)
                 .WithOne();

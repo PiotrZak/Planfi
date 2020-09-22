@@ -1,23 +1,25 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UsersController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/DataContext.cs">
     <Files>
+      <File FileName="Controllers/OrganizationController.cs" Line="40" Column="25" />
       <File FileName="Services/UserService.cs" Line="7" Column="1" />
-      <File FileName="Controllers/PlansController.cs" Line="87" Column="62" />
-      <File FileName="Controllers/UsersController.cs" Line="40" Column="35" />
-      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" Line="3" Column="18" />
-      <File FileName="Services/PlanService.cs" Line="55" Column="49" NotebookId="1" />
+      <File FileName="Controllers/PlansController.cs" Line="71" Column="56" />
+      <File FileName="Controllers/UsersController.cs" />
+      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" />
+      <File FileName="Startup.cs" Line="90" Column="27" />
+      <File FileName="Services/PlanService.cs" Line="58" Column="1" NotebookId="1" />
+      <File FileName="Services/OrganizationService.cs" Line="12" Column="32" NotebookId="1" />
+      <File FileName="Helpers/DataContext.cs" Line="29" Column="40" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="ViewModels" expanded="True" />
-                <Node name="UsersController.cs" selected="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Helpers" expanded="True">
+                <Node name="DataContext.cs" selected="True" />
               </Node>
-              <Node name="Entities" expanded="True" />
-              <Node name="Helpers" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>
           </Node>
