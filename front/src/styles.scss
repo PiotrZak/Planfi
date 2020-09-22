@@ -125,11 +125,10 @@ a.active{
 
     .profile{
         position:absolute;
-        right:6%;
+        right:8%;
         top:4%;
-        width:42px;
-        height:42px;
-
+        width:32px;
+        height:32px;
     }
 
     #mainmenu ul {width: 160px;}
@@ -146,8 +145,11 @@ a.active{
     right:0;
     bottom: 0;
     font-size:24px;
-    color:red;
+    color:blue;
     margin:40px;
+    &:hover{
+        cursor:pointer;
+    }
 }
 
 .theme-switcher{
@@ -155,6 +157,18 @@ a.active{
     right:0;
     bottom: 0;
     font-size:24px;
-    color:red;
+    color:blue;
     margin:40px 240px 40px 80px;
+    &:hover{
+        cursor:pointer;
+    }
+}
+
+.bottom-nav{
+    display:flex;
+    &__item{
+        display:flex;
+        align-items:center;
+        margin:0 0 0 3.6rem;
+    }
 }

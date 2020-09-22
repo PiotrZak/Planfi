@@ -30,18 +30,23 @@
     }
     }
 
+    .bottom-sheet-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        padding: 0 0 0 0;
+        position: fixed;
+        bottom: 0;
+        height: 72px;
+        width: 100%;
+        backdrop-filter: blur(4px);
+        background-color: white;
+        z-index: 4;
+    }
 
     .bottomsheet-without-background{
-        height: 0 !important;
-        width: 0 !important;
-        position:sticky !important;
-        bottom:0;
-        left:0;
-        height:200px !important;
-        margin:0 0 0 74px;
-        padding: 1.8rem 1.6rem;
-        width:calc(100% - 74px) !important;
-
+        z-index:2;
         @include sm{
             width:100% !important;
             padding:0;

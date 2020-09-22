@@ -16,6 +16,7 @@ namespace WebApi.Services
         void UnassignExercisesToPlan(string planId, string[] exerciseId);
         IEnumerable<Plan> GetUserPlans(string id);
         IEnumerable<Plan> GetCreatorPlans(string id);
+        void Update(string id, string title);
     }
 
     public class PlanService : IPlanService
@@ -50,6 +51,22 @@ namespace WebApi.Services
 
             return _context.Plans;
         }
+
+        public void Update(string id, string title)
+        {
+            var plan = _context.Plans.Find(id);
+
+            if (plan == null)
+                throw new AppException("Plan not found");
+
+            // update user properties if provided
+            if (!string.IsNullOrWhiteSpace(title))
+                plan.Title = title;
+
+            _context.Plans.Update(plan);
+            _context.SaveChanges();
+        }
+
 
         public void Delete(string[] id)
         {

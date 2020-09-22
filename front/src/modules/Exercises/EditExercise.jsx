@@ -22,12 +22,9 @@ export const EditExercise = (props) => {
         file: null,
     }
 
-
     useEffect(() => {
-        console.log('test')
-        console.log(props)
+        // todo - editting from another level
         if(initialExerciseData.name == undefined){
-            console.log('test')
         }
     }, []);
 

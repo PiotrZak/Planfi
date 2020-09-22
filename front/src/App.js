@@ -81,7 +81,7 @@ const toggleTheme = () => {
 
   const renderMenu = () => {
     if (user) {
-      if (user.role === 'Organization' || user.role === 'Trainer') {
+      if (user.role === 'Trainer') {
         return <Menu />;
       }
     }
@@ -89,7 +89,7 @@ const toggleTheme = () => {
 
   const renderAvatarMenu = () => {
     if (user) {
-      if (user.role === 'Organization' || user.role === 'Trainer') {
+      if (user.role === 'Trainer') {
         return !isMobile && <AvatarMenu user={user} />;
       }
     }
@@ -159,15 +159,18 @@ const AvatarMenu = ({ user }) => {
     <div className="profile">
       <ul id="mainmenu">
         <li>
-          {user.avatar ?
-            <img alt={"test"} src={`data:image/jpeg;base64,${user.avatar}`} />
-            : <h3> Welcome{user.firstName}</h3>
-          }
-
+        {user.avatar
+                    ? <div
+                        className={`menuButton__image circle`}
+                    ><img src={`data:image/jpeg;base64,${user.avatar}`} /></div>
+                    : <div
+                        className={`menuButton__image-empty circle
+                            }`}
+                    />}
           <ul>
-            <li onClick={() => toProfile()}>
+            <li >
               <NavLink
-                to={`user}/${user.userId}`}
+                to={`user/${user.userId}`}
                 activeClassName="active"
               >
                 My Profile

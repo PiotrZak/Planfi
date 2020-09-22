@@ -39,19 +39,11 @@ const userDeleted = "Users sucessfully deleted!"
 
 export const AllUsers = () => {
 
-
   const { user } = useContext(userContext);
-
-
   const [users, setUsers] = useState();
-
-  const [clients, setClients] = useState();
-  const [trainers, setTrainers] = useState();
-
   const [activeUsers, setActiveUsers] = useState([]);
 
   const [assignPlan, setAssignPlan] = useState(false);
-  const [assignTrainer, setAssignTrainer] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
@@ -62,8 +54,6 @@ export const AllUsers = () => {
 
   useEffect(() => {
     getAllUsers();
-    // getAllTrainers();
-    console.log(user)
   }, []);
 
   const getAllUsers = () => {
@@ -79,25 +69,11 @@ export const AllUsers = () => {
 
   };
 
-  const getAllTrainers = () => {
-    userService
-      .allTrainers()
-      .then((data) => {
-        setTrainers(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        dispatch(alertActions.error(error.title));
-      });
-  };
-
-  // const getAllUsers = () => {
-  //   setUsers(clients.concat(trainers))
-  // }
-
   const submissionHandleElement = (selectedData) => {
+    console.log(selectedData)
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
+    console.log(selectedUsers)
     if (selectedUsers.length > 0) {
       setBottomSheet(true);
     } else {
@@ -105,6 +81,41 @@ export const AllUsers = () => {
       setAssignPlan(false);
     }
   };
+
+
+  return (
+    <div>
+      <div className="container">
+        <div className="container__title">
+          <Return />
+          <h2>{usersText}</h2>
+          <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
+        </div>
+        <div className="users">
+          <div className="users__filters">
+            <Link to={{
+              pathname: `/trainers`,
+            }}><p>Trainers page</p></Link>
+            <Link to={{
+              pathname: `/clients`,
+            }}><p>Clients page</p></Link>
+            <hr />
+          </div>
+          <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
+          <Loader isLoading={isLoading}>
+            {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{noUsers}</h1>}
+          </Loader>
+        </div>
+      </div>
+      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers = {activeUsers} setAssignPlan ={setAssignPlan}/>
+      <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
+    </div>
+  );
+};
+
+export const UsersPanel = ({bottomSheet, setBottomSheet, activeUsers, setAssignPlan}) => {
+  const dispatch = useDispatch();
+  const [assignTrainer, setAssignTrainer] = useState(false);
 
   const deleteUser = () => {
 
@@ -123,66 +134,36 @@ export const AllUsers = () => {
     setBottomSheet(false);
   };
 
-  return (
-    <div>
-      <div className="container">
-        <div className="container__title">
-          <Return />
-          <h2>{usersText}</h2>
-          <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
+  return(
+    <ReactBottomsheet
+    showBlockLayer={false}
+    className={!isMobile && "bottomsheet-without-background"}
+    visible={bottomSheet}
+    onClose={() => setBottomSheet(false)}
+    appendCancelBtn={false}
+  >
+
+    {isMobile ?
+      <>
+        <button onClick={() => deleteUser()} className="bottom-sheet-item">{deleteUserText}</button>
+        <button onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item">{assignPlanText}</button>
+        <button onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item">{assignToTrainerText}</button>
+      </>
+      :
+      <>
+        <div className="bottom-sheet-item__oneline">
+          <Icon name="check" fill="#2E6D2C" />
+          <p>{activeUsers.length} {selected}</p>
+          <div onClick={() => deleteUser()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deleteUserText}</div>
+          <div onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item__content"><Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />{assignPlanText}</div>
+          <div onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item__content"><Icon height={"18px"} name="user-circle" fill="#C3C3CF" />{assignToTrainerText}</div>
         </div>
-        <div className="users">
+      </>
+    }
 
-          <div className="users__filters">
-            <Link to={{
-              pathname: `/trainers`,
-            }}><p>Trainers page</p></Link>
-            <Link to={{
-              pathname: `/clients`,
-            }}><p>Clients page</p></Link>
-            <hr />
-          </div>
-          <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
-
-          <Loader isLoading={isLoading}>
-            {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{noUsers}</h1>}
-          </Loader>
-
-
-        </div>
-      </div>
-
-      <ReactBottomsheet
-        showBlockLayer={false}
-        className={!isMobile && "bottomsheet-without-background"}
-        visible={bottomSheet}
-        onClose={() => setBottomSheet(false)}
-        appendCancelBtn={false}
-      >
-
-        {isMobile ?
-          <>
-            <button onClick={() => deleteUser()} className="bottom-sheet-item">{deleteUserText}</button>
-            <button onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item">{assignPlanText}</button>
-            <button onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item">{assignToTrainerText}</button>
-          </>
-          :
-          <>
-            <div className="bottom-sheet-item__oneline">
-              <Icon name="check" fill="#2E6D2C" />
-              <p>{activeUsers.length} {selected}</p>
-              <div onClick={() => deleteUser()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deleteUserText}</div>
-              <div onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item__content"><Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />{assignPlanText}</div>
-              <div onClick={() => setAssignTrainer(!assignTrainer)} className="bottom-sheet-item__content"><Icon height={"18px"} name="user-circle" fill="#C3C3CF" />{assignToTrainerText}</div>
-            </div>
-          </>
-        }
-
-      </ReactBottomsheet>
-      <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
-    </div>
-  );
-};
+  </ReactBottomsheet>
+  )
+}
 
 
 export const AssignUsersToPlans = ({
@@ -235,6 +216,8 @@ export const AssignUsersToPlans = ({
       .assignPlanToUser(data)
       .then(() => {
         dispatch(alertActions.success(assignPlanToUserNotification));
+        setAssignPlan(false);
+        setBottomSheet(false);
       })
       .catch((error) => {
         dispatch(alertActions.error(error.title));
@@ -250,27 +233,35 @@ export const AssignUsersToPlans = ({
       appendCancelBtn={false}
     >
 
-      <Icon name="check" fill="#2E6D2C" />
-      <p>
-        {activeUsers.length}
-        {' '}
-        selected
+      <div className="bottom-nav">
+        <div className="bottom-nav__item">
+          <Icon name="check" fill="#2E6D2C" />
+          <p>
+            {activeUsers.length}
+            {' '}
+            selected
       </p>
-      <p onClick={() => closeAssignPlansToUser()}>
+        </div>
+
+        <div className="bottom-nav__item">
         <Icon name="arrow-left" fill="#5E4AE3" />
-        {returnToSubMenu}
-      </p>
+          <p onClick={() => closeAssignPlansToUser()}>
+            {returnToSubMenu}
+          </p>
+        </div>
+      </div>
+
       <div>
-        <h2>{selectFromPlans}</h2>
-        <Spacer h={40} />
+        <h4>{selectFromPlans}</h4>
+        {/* <Spacer h={40} />
         <Search callback={filterPlans} />
-        <Spacer h={60} />
+        <Spacer h={60} /> */}
 
         <Loader isLoading={isLoading}>
-          {plansResults ? <CheckboxGenericComponent className="micro-bottom" dataType="plans" displayedValue="title" dataList={plansResults} onSelect={getSelectedPlanIds} /> : <p>No Plans</p>}
+          {plansResults ? <CheckboxGenericComponent dataType="plans" displayedValue="title" dataList={plansResults} onSelect={getSelectedPlanIds} /> : <p>No Plans</p>}
         </Loader>
 
-        <Button disabled={activePlans.length === 0} className="btn btn--primary btn--lg" onClick={assignUserToPlan} name="Assign Plans to Users" />
+        <Button disabled={activePlans.length === 0} className="btn btn--primary btn--lg" onClick={assignUserToPlan} name={activePlans.length === 0 ? "Select Plan" : "Assign Plans to Users"} />
       </div>
 
     </ReactBottomsheet>

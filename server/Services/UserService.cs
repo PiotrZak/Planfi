@@ -142,7 +142,6 @@ namespace WebApi.Services
 
         public void Delete(string[] id)
         {
-
             foreach (var UserId in id)
             {
                 var user = _context.Users.Find(UserId);
@@ -224,6 +223,11 @@ namespace WebApi.Services
                     var plan = _context.Plans.Find(planId);
 
                     var usersPlans = new ClientsPlans { Client = client, Plan = plan };
+
+                    // todo here handle duplication
+                    //if()
+                    //    throw new ArgumentException("");
+
                     _context.ClientsPlans.Add(usersPlans);
                     _context.SaveChanges();
                 }

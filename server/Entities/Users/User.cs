@@ -13,6 +13,8 @@ namespace WebApi.Entities
             Avatar = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 };
         }
 
+        public string OrganizationId { get; set; }
+
         [Key]
         public string UserId { get; set; }
 

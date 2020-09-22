@@ -22,5 +22,36 @@ $color-input-hover: #9898A5;
     .rectangleButton {
         background: #31313D !important; 
     }
+
+    .bottom-sheet-item__oneline, .bottom-sheet, .bottom-sheet-wrapper{
+        background-color:#31313d;        
+    }
+
+    .modal-content{
+        background-color:#31313d !important;        
+        z-index:3;
+        h1{
+            color:white;
+        }
+    }
+  }
+
+  .light{
+    .rectangleButton {
+    background: #FFFFFF;
+    box-shadow: 0px 0.3px 0.9px rgba(34, 34, 34, 0.1), 0px 1.6px 3.6px rgba(34, 34, 34, 0.13);
+    border-radius: 5px;
+    }
+    h1, h2, h3, h4, p{
+        color:#1D1D25;
+    }
+    .user-container{
+        background-color:rgb(226, 243, 242);
+    }
+
+    .navigation{
+        background: #FFFFFF;
+        box-shadow: 0px 0.3px 0.9px rgba(34, 34, 34, 0.1), 0px 1.6px 3.6px rgba(34, 34, 34, 0.13);
+    }
   }
   

@@ -67,6 +67,22 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
+        [HttpPut("{id}")]
+        public IActionResult Update(string id,[FromForm]string title)
+        {
+
+            try
+            {
+                _planService.Update(id, title);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
         [HttpPost("assignExercises")]
         public IActionResult AssignToPlan([FromBody]AssignExerciseToPlan model)
         {

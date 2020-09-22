@@ -11,6 +11,7 @@
   display:flex;
   text-align: center;
   z-index:0;
+
   &__container__title{
     margin:0 0 0% 0;
     width:100%;
@@ -36,6 +37,10 @@
       margin-top:354px;
       position:absolute;
       text-align:center;
+      @include sm{
+          width:100%;
+      }
+
   }
 }
 

@@ -26,6 +26,7 @@ namespace WebApi.Helpers
 
         }
 
+        public DbSet<Organization> Organizations { get; set; }
 
         public DbSet<User> Users { get; set; }
 
@@ -42,6 +43,12 @@ namespace WebApi.Helpers
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //todo - analyse organizationId should be on user on roles?
+            modelBuilder.Entity<Organization>()
+                .HasMany(b => b.Users)
+                .WithOne();
+
 
             // Plans <-> Users relationship
             modelBuilder.Entity<ClientsPlans>()

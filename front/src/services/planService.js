@@ -4,6 +4,7 @@ import { PLANS_URL } from "./utils"
 export const planService = {
   getAllPlans,
   addPlan,
+  editPlan,
   getPlanById,
   deletePlans,
   assignExercises,
@@ -18,6 +19,10 @@ export const planService = {
 
   function addPlan(body) {
     return http.post(`${PLANS_URL}/create`, body);
+  }
+
+  function editPlan(id, body) {
+    return http.put(`${PLANS_URL}/${id}`, body);
   }
 
   function getCreatorPlans(id){

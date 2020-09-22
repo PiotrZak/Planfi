@@ -21,10 +21,23 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Organization",
+                columns: table => new
+                {
+                    OrganizationId = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Organization", x => x.OrganizationId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
+                    OrganizationId = table.Column<string>(nullable: true),
                     Avatar = table.Column<byte[]>(nullable: true),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
@@ -42,6 +55,12 @@ namespace WebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Users_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "OrganizationId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -163,24 +182,24 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
                 values: new object[,]
                 {
-                    { "u1", null, "Client", "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", "Teodor", null, null, 555555555, "User", "t-user", "u1" },
-                    { "u2", null, "Client", "jcasson3@prlog.org", "Jillana", "Casson", "Jillana", null, null, 666666666, "User", "t-trainer", "u2" },
-                    { "u3", null, "Client", "Teloinic@gmail.com", "Camille", "Teloinic", "Teodor", null, null, 555555555, "User", "t-user", "u3" },
-                    { "u4", null, "Client", "kburgne2@hp.com", "Kiel", "Burgne", "Kiel", null, null, 777777777, "User", "t-trainer", "u4" },
-                    { "u5", null, "Client", "awharinu@tmall.com", "Augustus", "Wharin", "Augustus", null, null, 555555555, "User", "t-user", "u5" },
-                    { "u6", null, "Client", "bcaullieres@auda.org.au", "Bondy", "Caulliere", "Bondy", null, null, 666666666, "User", "t-trainer", "u6" }
+                    { "u1", null, "Client", "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", null, "Teodor", null, null, 555555555, "User", "t-user", "u1" },
+                    { "u2", null, "Client", "jcasson3@prlog.org", "Jillana", "Casson", null, "Jillana", null, null, 666666666, "User", "t-trainer", "u2" },
+                    { "u3", null, "Client", "Teloinic@gmail.com", "Camille", "Teloinic", null, "Teodor", null, null, 555555555, "User", "t-user", "u3" },
+                    { "u4", null, "Client", "kburgne2@hp.com", "Kiel", "Burgne", null, "Kiel", null, null, 777777777, "User", "t-trainer", "u4" },
+                    { "u5", null, "Client", "awharinu@tmall.com", "Augustus", "Wharin", null, "Augustus", null, null, 555555555, "User", "t-user", "u5" },
+                    { "u6", null, "Client", "bcaullieres@auda.org.au", "Bondy", "Caulliere", null, "Bondy", null, null, 666666666, "User", "t-trainer", "u6" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
                 values: new object[,]
                 {
-                    { "t1", null, "Trainer", "vmaccathay17@house.gov", "Valentia", "MacCathay", "Valentia", null, null, 777777777, "Trainer", "t-organization", "t1" },
-                    { "t2", null, "Trainer", "efearey1f@mlb.com", "Eadith", "Fearey", "Eadith", null, null, 777777777, "Trainer", "t-organization", "t2" }
+                    { "t1", null, "Trainer", "vmaccathay17@house.gov", "Valentia", "MacCathay", null, "Valentia", null, null, 777777777, "Trainer", "t-organization", "t1" },
+                    { "t2", null, "Trainer", "efearey1f@mlb.com", "Eadith", "Fearey", null, "Eadith", null, null, 777777777, "Trainer", "t-organization", "t2" }
                 });
 
             migrationBuilder.InsertData(
@@ -234,6 +253,11 @@ namespace WebApi.Migrations
                 name: "IX_Plans_TrainerUserId",
                 table: "Plans",
                 column: "TrainerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_OrganizationId",
+                table: "Users",
+                column: "OrganizationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -255,6 +279,9 @@ namespace WebApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Organization");
         }
     }
 }

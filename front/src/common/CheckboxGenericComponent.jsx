@@ -58,8 +58,6 @@ export const CheckboxGenericComponent = ({
       if (el.value) checkedItemsCount++;
       return el;
     });
-
-    console.log(dataList)
     setList([...dataList]);
     onSelect([...dataList], checkedItemsCount);
   }

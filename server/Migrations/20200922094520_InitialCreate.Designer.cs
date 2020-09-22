@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200919113038_InitialCreate")]
+    [Migration("20200922094520_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,6 +272,19 @@ namespace WebApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WebApi.Entities.Organization", b =>
+                {
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("OrganizationId");
+
+                    b.ToTable("Organization");
+                });
+
             modelBuilder.Entity("WebApi.Entities.Plan", b =>
                 {
                     b.Property<string>("PlanId")
@@ -322,6 +335,9 @@ namespace WebApi.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
@@ -341,6 +357,8 @@ namespace WebApi.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Users");
 
@@ -517,6 +535,13 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Trainer", null)
                         .WithMany("Plans")
                         .HasForeignKey("TrainerUserId");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.User", b =>
+                {
+                    b.HasOne("WebApi.Entities.Organization", null)
+                        .WithMany("Users")
+                        .HasForeignKey("OrganizationId");
                 });
 #pragma warning restore 612, 618
         }

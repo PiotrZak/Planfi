@@ -4,6 +4,7 @@ import Icon from "common/Icon"
 import Return from "common/Return"
 import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import AddPlanModal from "./AddPlanModal";
+import EditPlanModal from "./EditPlanModal";
 import { Loader } from "common/Loader"
 import {commonUtil} from "utils/common.util"
 import { alertActions } from 'redux/actions/alert.actions'
@@ -30,6 +31,9 @@ export const Plans = () => {
     const [selectedPlans, setSelectedPlans] = useState([]);
 
     const [openModal, setOpenModal] = useState(false);
+
+    const [openEditModal, setOpenEditModal] = useState(false);
+
     const [isLoading, setIsLoading] = useState(true)
     const [bottomSheet, setBottomSheet] = useState(false)
 
@@ -83,6 +87,7 @@ export const Plans = () => {
                         <Icon name={"plus"} fill={"#5E4AE3"} /></div>
                 </div>
                 <AddPlanModal openModal={openModal} onClose={() => setOpenModal(false)} />
+                <EditPlanModal selectedPlansId ={selectedPlans} openModal={openEditModal} onClose={() => setOpenEditModal(false)} />
                 <div>
                     <Loader isLoading={isLoading}>
                         {plans ? <CheckboxGenericComponent dataType="plans" displayedValue="title" dataList={plans} onSelect={submissionHandleElement} /> : <h1>{noPlans}</h1>}
@@ -106,7 +111,7 @@ export const Plans = () => {
                             <Icon name="check" fill="#2E6D2C" />
                             <p>{selectedPlans.length} {selected}</p>
                             <div onClick={() => deletePlans()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deletePlan}</div>
-                            {selectedPlans.length < 2 && <button className='bottom-sheet-item'>{editPlan}</button>}
+                            {selectedPlans.length < 2 && <div onClick = {() => setOpenEditModal(true)} className='bottom-sheet-item__content'><Icon height={"18px"} name="edit" fill="#C3C3CF" />{editPlan}</div>}
                         </div>
                     </>
                 }

@@ -4,6 +4,7 @@ const devEnvironmentURL = "http://fitapptest-env.eba-wpmv3mgp.us-east-2.elasticb
 const localapiURL = "http://localhost:5005"
 
 
+export const ORGANIZATION_URL = `${localapiURL}/Organization/`;
 export const ACCOUNT_URL = `${localapiURL}/Account/`;
 export const CATEGORIES_URL = `${localapiURL}/Category`;
 export const EXERCISES_URL = `${localapiURL}/Exercises`;
