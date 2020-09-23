@@ -11,7 +11,7 @@ namespace WebApi.Services
         Category GetById(string id);
         Category Create(Category Category);
         IEnumerable<Category> GetAll();
-        void Delete(string id);
+        void Delete(string[] id);
         void AssignExercise(string id, Exercise Exercise);
     }
 
@@ -41,27 +41,29 @@ namespace WebApi.Services
         }
         public IEnumerable<Category> GetAll()
         {
-
             return _context.Categories;
         }
-        public void Delete(string id)
+
+
+        public void Delete(string[] id)
         {
-            var category = _context.Categories.Find(id);
-            var exercisesInCategory = _context.Exercises.Where(x => x.CategoryId == id);
-
-            foreach (var item in exercisesInCategory)
+            foreach (var categoryId in id)
             {
-                var element = _context.Exercises.Find(item.ExerciseId);
-                category.Exercises.Remove(element);
-            }
+                var exercisesInCategory = _context.Exercises.Where(x => x.CategoryId == categoryId);
 
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-                _context.SaveChanges();
+                foreach (var exerciseItem in exercisesInCategory)
+                {
+                    exerciseItem.CategoryId = null;
+                }
+
+                var category = _context.Categories.Find(categoryId);
+                if (category != null)
+                {
+                    _context.Categories.Remove(category);
+                    _context.SaveChanges();
+                }
             }
         }
-
 
         public void AssignExercise(string id, Exercise Exercise)
         {

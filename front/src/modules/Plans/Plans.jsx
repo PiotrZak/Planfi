@@ -116,7 +116,6 @@ export const Plans = () => {
                     </>
                 }
             </ReactBottomsheet>
-
         </div>
     );
 }

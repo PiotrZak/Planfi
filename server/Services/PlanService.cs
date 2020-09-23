@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -11,11 +10,11 @@ namespace WebApi.Services
         Plan GetById(string id);
         Plan Create(Plan plan);
         IEnumerable<Plan> GetAll();
+        IEnumerable<Plan> GetUserPlans(string id);
+        IEnumerable<Plan> GetCreatorPlans(string id);
         void Delete(string[] id);
         void AssignExercisesToPlan(string planId, string[] exerciseId);
         void UnassignExercisesToPlan(string planId, string[] exerciseId);
-        IEnumerable<Plan> GetUserPlans(string id);
-        IEnumerable<Plan> GetCreatorPlans(string id);
         void Update(string id, string title);
     }
 
@@ -70,8 +69,6 @@ namespace WebApi.Services
 
         public void Delete(string[] id)
         {
-
-
             foreach(var planId in id)
             {
                 var exercisesInPlan = _context.Exercises.Where(x => x.PlanId == planId);

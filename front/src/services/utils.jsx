@@ -6,7 +6,7 @@ const localapiURL = "http://localhost:5005"
 
 export const ORGANIZATION_URL = `${localapiURL}/Organization/`;
 export const ACCOUNT_URL = `${localapiURL}/Account/`;
-export const CATEGORIES_URL = `${localapiURL}/Category`;
+export const CATEGORIES_URL = `${localapiURL}/Category/`;
 export const EXERCISES_URL = `${localapiURL}/Exercises`;
 export const PLANS_URL = `${localapiURL}/Plans`;
 export const USER_URL = `${localapiURL}/Users/`;

@@ -159,6 +159,14 @@ export const CheckboxGenericComponent = ({
                     <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
                   </Link>
                 }
+                {type === "categories" &&
+                  <Link to={{
+                    pathname: `/category/${element.categoryId}`,
+                    state: { id: element.categoryId }
+                  }}>
+                    <GenericElement className={className} key={i} headline={element.title} subline={`${element.series} / ${element.times}`} category={element.category} />
+                  </Link>
+                }
               </>
             }
             <input

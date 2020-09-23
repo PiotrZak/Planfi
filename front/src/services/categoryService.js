@@ -5,7 +5,7 @@ export const categoryService = {
   getAllCategories,
   addCategory,
   getCategoryById,
-  deleteCategoryById
+  deleteCategories
   };
 
   function getAllCategories(body) {
@@ -13,13 +13,13 @@ export const categoryService = {
   }
 
   function addCategory(body) {
-    return http.post(`${CATEGORIES_URL}/create`, body);
+    return http.post(`${CATEGORIES_URL}create`, body);
   }
 
   function getCategoryById(id) {
-    return http.get(`${CATEGORIES_URL}/${id}`);
+    return http.get(`${CATEGORIES_URL}${id}`);
   }
 
-  function deleteCategoryById(id) {
-    return http.del(`${CATEGORIES_URL}/${id}`);
+  function deleteCategories(ids) {
+    return http.post(`${CATEGORIES_URL}delete`, ids);
   }

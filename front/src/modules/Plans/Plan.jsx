@@ -140,11 +140,7 @@ export const Plan = (props) => {
     const submissionHandleElement = (selectedData) => {
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setActiveSelectedExercise(selectedExercises)
-        if (selectedExercises.length > 0) {
-            setSelectedElementsBottomSheet(true);
-        } else {
-            setSelectedElementsBottomSheet(false);
-        }
+        selectedExercises.length > 0 ? setSelectedElementsBottomSheet(true) : setSelectedElementsBottomSheet(false);
     }
 
     const openBottomSheet = () => {
@@ -166,9 +162,6 @@ export const Plan = (props) => {
                 <Loader isLoading={isLoading}>
                     {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
                 </Loader>
-
-
-
 
                 <ReactBottomsheet
                     visible={bottomSheet}
@@ -193,8 +186,6 @@ export const Plan = (props) => {
                         }}
                 </div>
                 </ReactBottomsheet>
-
-
             </div>
             <PlanExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
         </div>
@@ -202,10 +193,7 @@ export const Plan = (props) => {
 }
 
 
-
-
-
-const PlanExercises = ({ activeSelectedExercise, id, setSelectedElementsBottomSheet, selectedElementsBottomSheet, props }) => {
+export const PlanExercises = ({ activeSelectedExercise, id, setSelectedElementsBottomSheet, selectedElementsBottomSheet, props }) => {
 
     const dispatch = useDispatch()
 
@@ -223,12 +211,10 @@ const PlanExercises = ({ activeSelectedExercise, id, setSelectedElementsBottomSh
     }
 
     const editExercise = () => {
-
         // <button className='bottom-sheet-item'><Link to={{
         //     pathname: `/edit-exercise/${props.location.state.id}`,
         //     state: { activeSelectedExercise: activeSelectedExercise }
         // }}>{editExercise}</Link></button>
-
     }
 
     return (

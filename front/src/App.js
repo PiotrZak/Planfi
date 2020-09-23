@@ -28,14 +28,14 @@ import Alert from './common/Alert';
 
 import Menu from './Menu';
 
-import { Categories } from './modules/Exercises/Category/Categories';
-import { Category } from './modules/Exercises/Category/Category';
+import { Categories } from './modules/Exercises/Categories';
+import { Category } from './modules/Exercises/Category';
 
 import './styles.scss';
 // import { Exercises } from './modules/Exercises/Exercises';
-import { Exercise } from './modules/Exercises/Exercise';
-import { AddExercise } from './modules/Exercises/AddExercise';
-import { EditExercise } from './modules/Exercises/EditExercise';
+import { Exercise } from './modules/Exercises/Exercises/Exercise';
+import { AddExercise } from './modules/Exercises/Exercises/AddExercise';
+import { EditExercise } from './modules/Exercises/Exercises/EditExercise';
 import { MyProfile } from './modules/Users/MyProfile';
 
 export const history = createBrowserHistory();

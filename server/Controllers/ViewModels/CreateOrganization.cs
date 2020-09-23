@@ -7,7 +7,7 @@ namespace WebApi.Models
     public class CreateOrganization
     {
         [Required]
-        public string Title { get; set; }
+        public string Name { get; set; }
         //public string[] ExerciseId { get; set; }
     }
 }

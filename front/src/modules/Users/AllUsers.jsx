@@ -12,12 +12,8 @@ import { Link } from 'react-router-dom';
 import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import { userContext } from 'App';
 import { Button } from 'common/buttons/Button';
-import { Search } from 'common/Search';
-import Spacer from 'common/Spacer';
 import InviteUserModal from './InviteUsersModal';
-import {
-  isMobile
-} from "react-device-detect";
+import { isMobile} from "react-device-detect";
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -118,7 +114,6 @@ export const UsersPanel = ({bottomSheet, setBottomSheet, activeUsers, setAssignP
   const [assignTrainer, setAssignTrainer] = useState(false);
 
   const deleteUser = () => {
-
     userService
       .deleteUsers(activeUsers)
       .then((data) => {
