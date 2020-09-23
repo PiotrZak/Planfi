@@ -13,6 +13,7 @@ namespace WebApi.Services
         IEnumerable<Category> GetAll();
         void Delete(string[] id);
         void AssignExercise(string id, Exercise Exercise);
+        void AssignExercisesToCategory(string categoryId, string[] id);
     }
 
     public class CategoryService : ICategoryService
@@ -75,6 +76,18 @@ namespace WebApi.Services
             _context.SaveChanges();
         }
 
+        public void AssignExercisesToCategory(string categoryId, string[] exerciseId)
+        {
+            var category = GetById(categoryId);
+
+            foreach (var id in exerciseId)
+            {
+                var element = _context.Exercises.Find(id);
+                category.Exercises.Add(element);
+            }
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+        }
     }
 }
 
