@@ -10,7 +10,7 @@ import Return from "common/Return"
 import { commonUtil } from "utils/common.util"
 import { Loader } from "common/Loader"
 import "react-multi-carousel/lib/styles.css";
-import { PlanExercises } from "../Plans/Plan"
+import { PlanPanelExercises } from "../Plans/microModules/PlanPanelExercises"
 import { Search } from "common/Search"
 import Spacer from "common/Spacer"
 
@@ -131,7 +131,7 @@ export const Category = (props) => {
                     <button onClick={() => deleteCategory()} className='bottom-sheet-item'>Delete</button>
                 </ReactBottomsheet>
             </div>
-            <PlanExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
+            <PlanPanelExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
         </div>
     );
 }

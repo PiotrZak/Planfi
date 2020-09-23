@@ -109,6 +109,10 @@ export const AllUsers = () => {
   );
 };
 
+
+
+
+
 export const UsersPanel = ({bottomSheet, setBottomSheet, activeUsers, setAssignPlan}) => {
   const dispatch = useDispatch();
   const [assignTrainer, setAssignTrainer] = useState(false);
@@ -155,10 +159,12 @@ export const UsersPanel = ({bottomSheet, setBottomSheet, activeUsers, setAssignP
         </div>
       </>
     }
-
   </ReactBottomsheet>
   )
 }
+
+
+
 
 
 export const AssignUsersToPlans = ({

@@ -4,6 +4,8 @@ import { planService } from 'services/planService';
 import { useDispatch } from "react-redux";
 import { alertActions } from "redux/actions/alert.actions";
 import GenericElement from "common/GenericElement/GenericElement"
+
+//todo - care about lang
 import messages from 'lang/eng'
 
 export const PlansOfUser = ({ id }) => {

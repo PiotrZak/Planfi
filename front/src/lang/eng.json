@@ -2,6 +2,29 @@
     "plans": {
       "notPlans": "There isn't plans",
       "notTrainers": "There isn't trainers",
-      "notClients": "There isn't clients"
+      "notClients": "There isn't clients",
+      
+
+       "noPlans": "No plans",
+       "plansTitle": "Plans",
+       "deletePlan": "Delete plan",
+       "deletePlansText": "Delete plans",
+       "addExerciseToCategory": "To be able to add exercises you need to add a category first",
+       "editPlan": "Edit plan",
+
+      "allocateExercises": "Exercises succesfully allocated!",
+      "assignToPlan": "Assign Exercises to Plan",
+      "unAssignFromPlan": "Unassign from plan",
+      "unAllocateExercises": "Exercises succesfully deleted!",
+      "planDeleted": "Plan succesfully deleted!",
+      "addExerciseToPlan": "Add Exercises to plan",
+      "noExerciseInPlan": "There are no added exercises in this Plan",
+      "returnToSubMenu": "return to categories",
+      "editExercise": "Edit exercise",
+      "selected": "selected",
+      "noCategories": "Currently there isn't categories"
     }
   }
+
+
+

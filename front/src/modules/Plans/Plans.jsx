@@ -12,16 +12,10 @@ import { useDispatch } from 'react-redux';
 import { isMobile } from "react-device-detect";
 import { ThemeContext } from 'App';
 
-var ReactBottomsheet = require('react-bottomsheet');
+//todo - care about lang
+import messages from 'lang/eng'
 
-const noPlans = "No plans"
-const plansTitle = "Plans"
-const deletePlan = "Delete plan"
-const deletePlansText = "Delete plans"
-const addExerciseToCategory = "To be able to add exercises you need to add a category first"
-const editPlan = "Edit plan"
-const selected = "selected"
-const planDeleted = "Plan succesfully deleted!";
+var ReactBottomsheet = require('react-bottomsheet');
 
 export const Plans = () => {
 
@@ -60,7 +54,7 @@ export const Plans = () => {
         planService
             .deletePlans(selectedPlans)
             .then(() => {
-                dispatch(alertActions.success(planDeleted))
+                dispatch(alertActions.success(messages.plans.planDeleted))
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))
@@ -82,7 +76,7 @@ export const Plans = () => {
             <div className={"container " + (theme)}>
                 <div className="container__title">
                     <Return />
-                    <h2>{plansTitle}</h2>
+                    <h2>{messages.plans.plansTitle}</h2>
                     <div onClick={openAddPlanModal}>
                         <Icon name={"plus"} fill={"#5E4AE3"} /></div>
                 </div>
@@ -90,7 +84,7 @@ export const Plans = () => {
                 <EditPlanModal selectedPlansId ={selectedPlans} openModal={openEditModal} onClose={() => setOpenEditModal(false)} />
                 <div>
                     <Loader isLoading={isLoading}>
-                        {plans ? <CheckboxGenericComponent dataType="plans" displayedValue="title" dataList={plans} onSelect={submissionHandleElement} /> : <h1>{noPlans}</h1>}
+                        {plans ? <CheckboxGenericComponent dataType="plans" displayedValue="title" dataList={plans} onSelect={submissionHandleElement} /> : <h1>{messages.plans.noPlans}</h1>}
                     </Loader>
                 </div>
             </div>
@@ -102,16 +96,16 @@ export const Plans = () => {
                 appendCancelBtn={false}>
                 {isMobile ?
                     <>
-                        <button onClick={() => deletePlans()} className="bottom-sheet-item">{selectedPlans.length == 1 ? deletePlan : deletePlansText}</button>
+                        <button onClick={() => deletePlans()} className="bottom-sheet-item">{selectedPlans.length == 1 ? messages.plans.deletePlan : messages.plans.deletePlansText}</button>
 
                     </>
                     :
                     <>
                         <div className="bottom-sheet-item__oneline">
                             <Icon name="check" fill="#2E6D2C" />
-                            <p>{selectedPlans.length} {selected}</p>
-                            <div onClick={() => deletePlans()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deletePlan}</div>
-                            {selectedPlans.length < 2 && <div onClick = {() => setOpenEditModal(true)} className='bottom-sheet-item__content'><Icon height={"18px"} name="edit" fill="#C3C3CF" />{editPlan}</div>}
+                            <p>{selectedPlans.length} {messages.plans.selected}</p>
+                            <div onClick={() => deletePlans()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{messages.plans.deletePlan}</div>
+                            {selectedPlans.length < 2 && <div onClick = {() => setOpenEditModal(true)} className='bottom-sheet-item__content'><Icon height={"18px"} name="edit" fill="#C3C3CF" />{messages.plans.editPlan}</div>}
                         </div>
                     </>
                 }
