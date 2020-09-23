@@ -28,13 +28,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
         const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, addPlanData)
         confirm && createPlan(addPlanData)
     }
-
-    // {
-    //     "title": "string",
-    //     "creatorId": "string",
-    //     "creatorName": "string"
-    //   }
-
+    
     const createPlan = (addPlanData) => {
 
         const transformedData = {title: addPlanData.title, creatorId: user.userId, creatorName: user.firstName}

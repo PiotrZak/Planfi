@@ -39,7 +39,6 @@ const EditPlanModal = ({ selectedPlansId, openModal, onClose }) => {
 
         const formData = new FormData();
         formData.append("Title", editPlanData.title)
-
         planService
             .editPlan(selectedPlansId, formData)
             .then(() => {
@@ -53,7 +52,6 @@ const EditPlanModal = ({ selectedPlansId, openModal, onClose }) => {
 
     return (
         <div>
-
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{editPlanTitle}</h2></ModalHeader>
                 <ModalBody>

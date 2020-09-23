@@ -97,7 +97,6 @@ export const Plans = () => {
                 {isMobile ?
                     <>
                         <button onClick={() => deletePlans()} className="bottom-sheet-item">{selectedPlans.length == 1 ? messages.plans.deletePlan : messages.plans.deletePlansText}</button>
-
                     </>
                     :
                     <>
@@ -113,8 +112,5 @@ export const Plans = () => {
         </div>
     );
 }
-
-
-
 
 export default Plans;

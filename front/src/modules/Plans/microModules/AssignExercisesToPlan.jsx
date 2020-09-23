@@ -12,16 +12,15 @@ import messages from 'lang/eng'
 var ReactBottomsheet = require('react-bottomsheet');
 
 export const AssignExercisesToPlan = ({ setAssignExercises, assignExerciseToPlan, closeAssignExercises, assignExercise, activeExercise, categoryExercises, setActiveExercise }) => {
-   
+
     const selectActiveId = (selectedData) => {
-        console.log(selectedData)
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setActiveExercise(selectedExercises)
     }
-   
+
     return (
         <ReactBottomsheet
-            showBlockLayer={false}z
+            showBlockLayer={false} z
             className={!isMobile && "bottomsheet-without-background"}
             visible={assignExercise}
             onClose={() => setAssignExercises(false)}
@@ -34,7 +33,7 @@ export const AssignExercisesToPlan = ({ setAssignExercises, assignExerciseToPlan
                             <p>
                                 {activeExercise.length}
                                 {messages.plans.selected}
-                    </p>
+                            </p>
                         </div>
 
                         <div onClick={() => closeAssignExercises()} className="bottom-nav__item">

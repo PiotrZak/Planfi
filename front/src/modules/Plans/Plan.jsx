@@ -30,7 +30,6 @@ export const Plan = (props) => {
     const [activeExercise, setActiveExercise] = useState([])
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
 
-
     const [isLoading, setIsLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState("");
     const [categories, setCategories] = useState()
@@ -104,7 +103,6 @@ export const Plan = (props) => {
         : exercises.filter(exercise =>
             exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         );
-
 
     const loadExercises = (id) => {
         exerciseService
