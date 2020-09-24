@@ -17,7 +17,7 @@ export const PlanPanelExercises = ({ activeSelectedExercise, id, setSelectedElem
     const dispatch = useDispatch()
 
     const unAssignExerciseToPlan = () => {
-        const data = { planId: id.id, exerciseId: activeSelectedExercise }
+        const data = { planId: id, exerciseId: activeSelectedExercise }
         planService
             .unAssignExercises(data)
             .then(() => {

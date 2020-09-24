@@ -23,7 +23,6 @@ export const PlansPanel = ({ bottomSheet, setBottomSheet, categories, openAssign
                     categories.map((element, i) =>
                         <div onClick={() => openAssignExercises(element.categoryId)}>
                             <GenericElement className="bottom-item" key={i} headline={element.title} subline={`${element.series} / ${element.times}`} category={element.category} />
-                            <Icon name={"plus"} fill={"#5E4AE3"} />
                         </div>)
                     : <p>{messages.plans.noCategories}</p>
                 }

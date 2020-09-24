@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, NavLink } from 'react-router-dom';
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
 import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
@@ -113,7 +113,16 @@ export const Category = (props) => {
                                 state: { id: category.categoryId }
                             }}
                         >
-                            <Icon name={"plus"} fill={"#5E4AE3"} />
+                       <Icon name={"plus"} fill={"#5E4AE3"} />
+                            {/* <ul id="mainmenu">
+                                <li>
+                                    <Icon name={"plus"} fill={"#5E4AE3"} />
+                                    <ul>
+                                        <li ><NavLink to ="/add-exercise">Add New Exercise</NavLink></li>
+                                        <li ><NavLink to ="/add-exercise">Add From Exercises</NavLink></li>
+                                    </ul>
+                                </li>
+                            </ul> */}
                         </Link>
                     }
                 </div>

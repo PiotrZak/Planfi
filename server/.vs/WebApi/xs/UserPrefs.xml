@@ -1,20 +1,25 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/CategoryService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ViewModels/ClientTrainers.cs">
     <Files>
-      <File FileName="Controllers/CategoryController.cs" Line="84" Column="52" />
-      <File FileName="Services/PlanService.cs" Line="92" Column="1" />
-      <File FileName="Services/CategoryService.cs" Line="89" Column="36" NotebookId="1" />
+      <File FileName="Services/PlanService.cs" Line="110" Column="45" />
+      <File FileName="Services/UserService.cs" Line="184" Column="37" />
+      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" Line="1" Column="1" />
+      <File FileName="Controllers/ViewModels/AssignExerciseToCategory.cs" Line="1" Column="1" />
+      <File FileName="Controllers/ViewModels/ClientPlans.cs" Line="8" Column="1" />
+      <File FileName="Controllers/ViewModels/ClientTrainers.cs" Line="13" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Entities" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="CategoryService.cs" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="ViewModels" expanded="True">
+                  <Node name="ClientTrainers.cs" selected="True" />
+                </Node>
               </Node>
+              <Node name="Entities" expanded="True" />
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -29,7 +34,6 @@
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/FileModel.cs" relfile="Controllers/ViewModels/FileModel.cs" line="11" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/ForgotPassword.cs" relfile="Controllers/ViewModels/ForgotPassword.cs" line="13" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Models/Message.cs" relfile="Models/Message.cs" line="19" column="1" />
-      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Services/PlanService.cs" relfile="Services/PlanService.cs" line="26" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

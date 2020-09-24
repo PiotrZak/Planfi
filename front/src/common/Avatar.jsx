@@ -84,8 +84,8 @@ export const Avatar = ({ avatar, id }) => {
             <img
               className={`avatar ${
                 hover
-                            && ' avatar__imghover'
-              }`}
+                && ' avatar__imghover'
+                }`}
               src={`data:image/jpeg;base64,${avatar}`}
             />
             <input
@@ -106,8 +106,8 @@ export const Avatar = ({ avatar, id }) => {
             onClick={fileInputClicked}
             className={`avatar ${
               hover
-                        && ' avatar__hover'
-            }`}
+              && ' avatar__hover'
+              }`}
           >
             <input
               ref={fileInputRef}
@@ -117,9 +117,9 @@ export const Avatar = ({ avatar, id }) => {
               onChange={filesSelected}
             />
             {hover && (
-            <p>
-              <Icon name="plus" fill="white" />
-              Add Avatar
+              <p>
+                <Icon name="plus" fill="white" />
+                Add Avatar
             </p>
             )}
           </div>

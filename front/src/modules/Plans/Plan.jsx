@@ -33,7 +33,7 @@ export const Plan = (props) => {
     const [isLoading, setIsLoading] = useState(true)
     const [searchTerm, setSearchTerm] = useState("");
     const [categories, setCategories] = useState()
-    const [categoryExercises, setCategoryExercises] = useState()
+    const [categoryExercises, setCategoryExercises] = useState([])
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
     const [bottomSheet, setBottomSheet] = useState(false)
 
@@ -88,6 +88,7 @@ export const Plan = (props) => {
             .then(() => {
                 dispatch(alertActions.success(messages.plans.allocateExercises))
                 setBottomSheet(false)
+                setAssignExercises(false)
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))
@@ -108,6 +109,7 @@ export const Plan = (props) => {
         exerciseService
             .getExercisesByCategory(id)
             .then((data) => {
+                data.length == 0 && dispatch(alertActions.warn('This category do not have exercises!'));
                 setCategoryExercises(data);
             })
             .catch((error) => {
@@ -127,8 +129,10 @@ export const Plan = (props) => {
 
     const openAssignExercises = (id) => {
         loadExercises(id)
-        setAssignExercises(true);
-        setBottomSheet(false);
+        if(categoryExercises.length > 0){
+            setAssignExercises(true);
+            setBottomSheet(false);
+        }
     }
 
     const closeAssignExercises = () => {
@@ -154,7 +158,7 @@ export const Plan = (props) => {
 
             <PlansPanel categories={categories} bottomSheet={bottomSheet} openAssignExercises={openAssignExercises} setBottomSheet={setBottomSheet} isLoading={isLoading} />
             <AssignExercisesToPlan setAssignExercises={setAssignExercises} assignExerciseToPlan={assignExerciseToPlan} closeAssignExercises={closeAssignExercises} assignExercise ={assignExercise} activeExercise ={activeExercise} categoryExercises ={categoryExercises} setActiveExercise ={setActiveExercise}/>
-            <PlanPanelExercises categories={categories} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} activeSelectedExercise={activeSelectedExercise} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
+            <PlanPanelExercises id = {id.id} categories={categories} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} activeSelectedExercise={activeSelectedExercise} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
         </div>
     );
 }

@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
-import { planService } from 'services/planService';
 import { alertActions } from 'redux/actions/alert.actions';
 import Return from 'common/Return';
 import { commonUtil } from 'utils/common.util';
@@ -12,15 +11,9 @@ import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import { userContext } from 'App';
 import { AssignUsersToPlans } from "./AllUsers"
 
-import { Button } from 'common/buttons/Button';
-import { Search } from 'common/Search';
-import Spacer from 'common/Spacer';
-
 
 import InviteUserModal from './InviteUsersModal';
-import {
-  isMobile
-} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -35,7 +28,6 @@ const assignPlanText = "Assign plan"
 export const Clients = () => {
   const { user } = useContext(userContext);
   const [users, setUsers] = useState();
-  const [trainers, setTrainers] = useState([]);
 
   const [activeUsers, setActiveUsers] = useState([]);
   const [assignPlan, setAssignPlan] = useState(false);
@@ -89,16 +81,6 @@ export const Clients = () => {
   const assignUserToTrainer = (selectedData) => {
     console.log(selectedData);
 
-    // {
-    //   "trainerIds": [
-    //     "string"
-    //   ],
-    //   "userIds": [
-    //     "string"
-    //   ]
-    // }
-
-    // later assign propertly variable
     const data = { trainerIds: [user.userId], userIds: activeUsers };
 
     userService

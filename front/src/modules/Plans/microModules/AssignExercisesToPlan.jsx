@@ -35,7 +35,6 @@ export const AssignExercisesToPlan = ({ setAssignExercises, assignExerciseToPlan
                                 {messages.plans.selected}
                             </p>
                         </div>
-
                         <div onClick={() => closeAssignExercises()} className="bottom-nav__item">
                             <Icon name="arrow-left" fill="#5E4AE3" />
                             <p>
@@ -43,7 +42,6 @@ export const AssignExercisesToPlan = ({ setAssignExercises, assignExerciseToPlan
                             </p>
                         </div>
                     </div>
-
                     <CheckboxGenericComponent className="bottom-item" dataType="exercises" displayedValue="name" dataList={categoryExercises} onSelect={selectActiveId} />
                     <Button disabled={activeExercise.length === 0} className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={messages.plans.assignToPlan}></Button>
                 </div>

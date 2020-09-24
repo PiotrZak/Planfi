@@ -4,6 +4,11 @@ namespace WebApi.Controllers.ViewModels
 {
     public class AssignUsersToTrainer
     {
+        public AssignUsersToTrainer()
+        {
+            TrainerIds = new string[] { };
+            UserIds = new string[] { };
+        }
         public string[] TrainerIds { get; set; }
         public string[] UserIds { get; set; }
     }

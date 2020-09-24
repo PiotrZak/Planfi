@@ -67,9 +67,9 @@ let App = () => {
   }, []);
 
 
-const toggleTheme = () => {
+  const toggleTheme = () => {
     setTheme(theme == 'dark' ? 'light' : 'dark')
-}
+  }
 
   const renderLangChange = () => {
     return <LanguageSelector />
@@ -159,14 +159,14 @@ const AvatarMenu = ({ user }) => {
     <div className="profile">
       <ul id="mainmenu">
         <li>
-        {user.avatar
-                    ? <div
-                        className={`menuButton__image circle`}
-                    ><img src={`data:image/jpeg;base64,${user.avatar}`} /></div>
-                    : <div
-                        className={`menuButton__image-empty circle
+          {user.avatar
+            ? <div
+              className={`menuButton__image circle`}
+            ><img src={`data:image/jpeg;base64,${user.avatar}`} /></div>
+            : <div
+              className={`menuButton__image-empty circle
                             }`}
-                    />}
+            />}
           <ul>
             <li >
               <NavLink
@@ -177,7 +177,6 @@ const AvatarMenu = ({ user }) => {
                 </NavLink></li>
             <li onClick={() => logout()}>Logout</li>
           </ul>
-
         </li>
       </ul>
     </div>
@@ -191,9 +190,9 @@ const LanguageSelector = () => {
   )
 }
 
-const ThemeSelector = ({toggleTheme}) => {
+const ThemeSelector = ({ toggleTheme }) => {
   return (
-    <div className="theme-switcher" onClick = {()=> toggleTheme()}>set theme</div>
+    <div className="theme-switcher" onClick={() => toggleTheme()}>set theme</div>
   )
 }
 export default App;

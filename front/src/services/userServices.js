@@ -61,9 +61,6 @@ export const userService = {
   function allTrainersByClient(id) {
     return http.get(`${USER_URL}clientTrainers/${id}`);
   }
-
-
-// todo - research with del
   function deleteUsers(body) {
     return http.post(`${USER_URL}delete`, body);
   }

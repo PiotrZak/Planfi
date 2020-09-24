@@ -103,8 +103,10 @@
 
 .bottom-item{
   border:1px solid $color-gray-90;
-
   padding:1.6rem;
-  margin:0 1.8rem;
+  margin:1.8rem 1.8rem;
   border-radius:8px;
+  &:hover{
+    cursor:pointer;
+  }
 }

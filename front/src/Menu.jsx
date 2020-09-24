@@ -17,8 +17,9 @@ const Menu = () => {
     const [currentUrl, setCurrentUrl] = useState()
 
     const { lang } = useContext(LanguageContext)
+    
     const { user } = useContext(userContext)
-    const { theme } = useContext(ThemeContext)
+
 
     useEffect(() => {
         const currentUrl = window.location.href.split('/')
