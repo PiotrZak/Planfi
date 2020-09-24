@@ -315,7 +315,7 @@ useEffect(() => {
   };
 
   const assignUserToPlan = () => {
-    const data = { clientIds: activeUsers, trainersIds: activeTrainers };
+    const data = { userIds: activeUsers, trainerIds: activeTrainers };
     userService
       .assignUsersToTrainer(data)
       .then(() => {

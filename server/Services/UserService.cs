@@ -22,7 +22,7 @@ namespace WebApi.Services
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
 
-        void AssignClientsToTrainers(string[] TrainerIds, string[] UsersIds);
+        void AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
         void AssignPlanToClients(string[] userIds, string[] planIds);
 
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
@@ -181,7 +181,7 @@ namespace WebApi.Services
             return Users;
         }
 
-        public void AssignClientsToTrainers(string[] TrainersId, string[] UsersId)
+        public void AssignClientsToTrainers(string[] TrainersId, string[] UserIds)
         {         
             // [t1]
             // to every trainer add user
@@ -192,7 +192,7 @@ namespace WebApi.Services
                 //finding an trainer
                 var trainer = _context.Trainers.Find(trainerId);
 
-                foreach (var userId in UsersId)
+                foreach (var userId in UserIds)
                 {
                     //finding a clients
                     var client = _context.Clients.Find(userId);
