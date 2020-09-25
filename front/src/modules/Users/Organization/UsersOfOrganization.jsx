@@ -15,22 +15,17 @@ import { UsersPanel } from "../Common/UsersPanel"
 import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
 import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
 
-var ReactBottomsheet = require('react-bottomsheet');
-
-export const AllUsersOfOrganization = () => {
+export const UsersOfOrganization = () => {
 
   const { user } = useContext(userContext);
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState(users);
   const [activeUsers, setActiveUsers] = useState([]);
-
   const [assignPlan, setAssignPlan] = useState(false);
   const [assignTrainer, setAssignTrainer] = useState(false);
-
   const [isLoading, setIsLoading] = useState(true);
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
-
   const [bottomSheet, setBottomSheet] = useState(false);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,6 +59,16 @@ export const AllUsersOfOrganization = () => {
     }
   };
 
+  const filterUsers = (role) => {
+    if (role == "All") {
+      setFilteredUsers(users)
+    }
+    else {
+      const filteredUsers = users.filter(x => x.role == role)
+      setFilteredUsers(filteredUsers)
+    }
+  }
+
   return (
     <div>
       <div className="container">
@@ -74,9 +79,14 @@ export const AllUsersOfOrganization = () => {
         </div>
         <div className="users">
           <h3> You are {user.role}</h3>
+
+          <p onClick={() => filterUsers("User")}> Show only Clients</p>
+          <p onClick={() => filterUsers("Trainer")}> Show only Trainers </p>
+          <p onClick={() => filterUsers("All")}> All </p>
+
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           <Loader isLoading={isLoading}>
-            {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
+            {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
           </Loader>
         </div>
       </div>

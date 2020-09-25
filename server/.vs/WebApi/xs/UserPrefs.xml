@@ -1,22 +1,28 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ExerciseController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Entities/Users/User.cs">
     <Files>
-      <File FileName="Controllers/OrganizationController.cs" Line="59" Column="26" />
+      <File FileName="Controllers/OrganizationController.cs" Line="69" Column="10" />
+      <File FileName="Controllers/UsersController.cs" Line="112" Column="35" />
       <File FileName="Controllers/ExerciseController.cs" Line="1" Column="1" />
-      <File FileName="Services/OrganizationService.cs" Line="81" Column="79" NotebookId="1" />
+      <File FileName="Entities/Users/Trainer.cs" Line="1" Column="1" />
+      <File FileName="Entities/Users/User.cs" Line="29" Column="27" />
+      <File FileName="Entities/Users/Role.cs" Line="8" Column="44" />
+      <File FileName="Startup.cs" Line="69" Column="62" NotebookId="1" />
+      <File FileName="Services/OrganizationService.cs" Line="84" Column="10" NotebookId="1" />
+      <File FileName="Program.cs" Line="11" Column="6" NotebookId="1" />
+      <File FileName="Services/UserService.cs" Line="270" Column="48" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="ExerciseController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Entities" expanded="True">
-                <Node name="Users" expanded="True" />
+                <Node name="Users" expanded="True">
+                  <Node name="User.cs" selected="True" />
+                </Node>
               </Node>
-              <Node name="Helpers" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>
           </Node>
@@ -32,7 +38,6 @@
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/FileModel.cs" relfile="Controllers/ViewModels/FileModel.cs" line="11" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/ForgotPassword.cs" relfile="Controllers/ViewModels/ForgotPassword.cs" line="13" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Models/Message.cs" relfile="Models/Message.cs" line="19" column="1" />
-      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/UsersController.cs" relfile="Controllers/UsersController.cs" line="76" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

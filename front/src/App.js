@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Route, Switch, BrowserRouter, Link, NavLink
-} from 'react-router-dom';
-import {
-  isMobile
-} from "react-device-detect";
+import {Route, Switch, BrowserRouter, Link, NavLink } from 'react-router-dom';
+import { isMobile } from "react-device-detect";
 
 import { createBrowserHistory } from 'history';
 import { PrivateRoute } from './utils/PrivateRoute';
-
+import { Role } from './utils/PrivateRoute'
 
 import { RegisterPage } from './modules/Account/Register';
 import { ActivatePage } from './modules/Account/Activate';
@@ -23,7 +19,8 @@ import { Trainers } from './modules/Users/Trainers';
 import { Clients } from './modules/Users/Clients';
 import { User } from './modules/Users/User';
 
-import { AllUsersOfOrganization } from './modules/Users/Organization/AllUsersOfOrganization';
+import { UsersOfOrganization } from './modules/Users/Organization/UsersOfOrganization';
+import { ClientsOfOrganization } from './modules/Users/Organization/ClientsOfOrganization';
 
 import Alert from './common/Alert';
 
@@ -89,11 +86,11 @@ let App = () => {
   };
 
   const renderAvatarMenu = () => {
-    if (user) {
-      if (user.role === 'Trainer') {
-        return !isMobile && <AvatarMenu user={user} />;
-      }
-    }
+    // if (user) {
+    //   if (user.role === 'Trainer') {
+    //     return !isMobile && <AvatarMenu  />;
+    //   }
+    // }
   };
 
   return (
@@ -112,31 +109,31 @@ let App = () => {
               {renderMenu()}
               {renderAvatarMenu()}
               <Switch>
-                <PrivateRoute user={user} exact path="/register" component={RegisterPage} />
-                <PrivateRoute user={user} exact path="/activate" component={ActivatePage} />
+                <PrivateRoute  exact path="/register" component={RegisterPage} />
+                <PrivateRoute  exact path="/activate" component={ActivatePage} />
                 <Route path="/login" component={LoginPage} />
-                <Route user={user} path="/forgotpassword" component={ForgotPassword} />
+                <Route  path="/forgotpassword" component={ForgotPassword} />
 
-                <PrivateRoute user={user} path="/categories" component={Categories} />
-                <PrivateRoute user={user} path="/category/:id" component={Category} />
-                <PrivateRoute user={user} path="/add-exercise" component={AddExercise} />
-                <PrivateRoute user={user} path="/edit-exercise/:id" component={EditExercise} />
-                <PrivateRoute user={user} path="/exercise/:id" component={Exercise} />
+                <PrivateRoute  path="/categories" component={Categories} />
+                <PrivateRoute  path="/category/:id" component={Category} />
+                <PrivateRoute  path="/add-exercise" component={AddExercise} />
+                <PrivateRoute  path="/edit-exercise/:id" component={EditExercise} />
+                <PrivateRoute  path="/exercise/:id" component={Exercise} />
 
-                <PrivateRoute user={user} path="/plans" component={Plans} />
-                <PrivateRoute user={user} path="/plan/:id" component={Plan} />
+                <PrivateRoute  path="/plans" component={Plans} />
+                <PrivateRoute  path="/plan/:id" component={Plan} />
 
-                <PrivateRoute user={user} path="/users" component={AllUsers} />
-                <PrivateRoute user={user} path="/trainers" component={Trainers} />
-                <PrivateRoute user={user} path="/clients" component={Clients} />
+                <PrivateRoute roles={[Role.Admin]}  path="/users" component={AllUsers} />
+                <PrivateRoute roles={[Role.Admin]}  path="/trainers" component={Trainers} />
+                <PrivateRoute roles={[Role.Admin]}  path="/clients" component={Clients} />
 
-                <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
-                <PrivateRoute user={user} path="/myprofile/:id" accessRole={[1, 2, 3]} component={MyProfile} />
+                <PrivateRoute  path="/user/:id" component={User} />
+                <PrivateRoute  path="/myprofile/:id" component={MyProfile} />
 
                 {/* Only Owner */}
-                <PrivateRoute user={user} path="/organizationusers" component={AllUsersOfOrganization} />
+                <PrivateRoute roles={[Role.Owner]}  path="/organizationusers" component={UsersOfOrganization} />
                 {/* Only Trainers */}
-                {/* <PrivateRoute user={user} path="/organizationclients" component={AllClientsOfOrganization} /> */}
+                <PrivateRoute roles={[Role.Owner]}   path="/organizationclients" component={ClientsOfOrganization} />
 
 
 

@@ -47,20 +47,20 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = "Email or password is incorrect" });
             }
 
-            // important todo - make work in new user structure
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId),
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
+            user.Token = tokenHandler.WriteToken(token);
 
             // return basic user info and authentication token
             return Ok(new
@@ -72,7 +72,7 @@ namespace WebApi.Controllers
                 user.LastName,
                 user.Avatar,
                 user.Role,
-                Token = tokenString
+                user.Token
             });
         }
 
@@ -105,6 +105,12 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
+
+            // only allow admins to access other user records
+            //var currentUserId = int.Parse(User.Identity.Name);
+            //if (id != currentUserId.ToString() && !User.IsInRole(Role.Admin))
+            //    return Forbid();
+
             var user =  _userService.GetById(id);
 
             if (user == null)

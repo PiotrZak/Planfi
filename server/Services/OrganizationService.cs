@@ -12,6 +12,7 @@ namespace WebApi.Services
         Organization Create(Organization Organization);
         IEnumerable<Organization> GetAll();
         IEnumerable<User> GetOrganizationUsers(string organizationId);
+        IEnumerable<User> GetOrganizationClients(string organizationId);
         User GetUserById(string organizationId, string userId);
         void Delete(string[] id);
         void AssignUsersToOrganization(string organizationId, string[] userIds);
@@ -80,6 +81,13 @@ namespace WebApi.Services
         {
             var users = _context.Users.Where(x => x.OrganizationId == organizationId);
             return users;
+        }
+
+        public IEnumerable<User> GetOrganizationClients(string organizationId)
+        {
+            var usersInOrganization = _context.Users.Where(x => x.OrganizationId == organizationId);
+            var clients = usersInOrganization.Where(x => x.Role == "User");
+            return clients;
         }
 
         public User GetUserById(string organizationId, string userId)

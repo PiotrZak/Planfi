@@ -63,6 +63,14 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
+        [Authorize(Roles = Role.Trainer)]
+        [HttpGet("clients/{id}")]
+        public IActionResult GetOrganizationClients(string id)
+        {
+            var clients = _OrganizationService.GetOrganizationClients(id);
+            return Ok(clients);
+        }
+
         [Authorize(Roles = Role.Admin + "," + Role.Owner)]
         [HttpGet("user/{id}")]
         public IActionResult GetUserById(string organizationId, [FromForm] string userId)
