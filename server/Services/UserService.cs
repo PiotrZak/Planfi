@@ -83,7 +83,6 @@ namespace WebApi.Services
 
         public User GetById(string id)
         {
-
             var user = _context.Users.FirstOrDefault(x => x.UserId == id);
             return user.WithoutPassword();
         }
@@ -224,6 +223,7 @@ namespace WebApi.Services
 
                     var usersPlans = new ClientsPlans { Client = client, Plan = plan };
 
+                    // todo - create exercises instances 
                     // todo here handle duplication
                     //if()
                     //    throw new ArgumentException("");

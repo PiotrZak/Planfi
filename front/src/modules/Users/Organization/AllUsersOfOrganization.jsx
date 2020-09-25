@@ -1,25 +1,23 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
-import { userService } from 'services/userServices';
+import { organizationService } from 'services/organizationServices';
 import { alertActions } from 'redux/actions/alert.actions';
 import Return from 'common/Return';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'common/Loader';
 import Icon from 'common/Icon';
-import { Link } from 'react-router-dom';
 import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import { userContext } from 'App';
-import InviteUserModal from './InviteUsersModal';
-
-//todo - care about lang
+import InviteUserModal from '../InviteUsersModal';
 import messages from 'lang/eng'
 
-import { UsersPanel } from "./Common/UsersPanel"
-import { AssignUsersToPlans } from "./Common/AssignUsersToPlans"
-import { AssignUsersToTrainers } from "./Common/AssignUsersToTrainers"
+import { UsersPanel } from "../Common/UsersPanel"
+import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
+import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
 
-export const AllUsers = () => {
+var ReactBottomsheet = require('react-bottomsheet');
+
+export const AllUsersOfOrganization = () => {
 
   const { user } = useContext(userContext);
   const [users, setUsers] = useState();
@@ -40,9 +38,11 @@ export const AllUsers = () => {
   }, []);
 
   const getAllUsers = () => {
-    userService
-      .allUsers()
+
+    organizationService
+      .getOrganizationUsers(user.organizationId)
       .then((data) => {
+        console.log(data)
         setUsers(data);
         setIsLoading(false);
       })
@@ -53,7 +53,6 @@ export const AllUsers = () => {
   };
 
   const submissionHandleElement = (selectedData) => {
-    console.log(selectedData)
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
     console.log(selectedUsers)
@@ -65,32 +64,23 @@ export const AllUsers = () => {
     }
   };
 
-
   return (
     <div>
       <div className="container">
         <div className="container__title">
           <Return />
-          <h2>{messages.users.usersText}</h2>
+          <h2>{messages.users.usersText} of - {user.organizationId}</h2>
           <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
         </div>
         <div className="users">
-          <div className="users__filters">
-            <Link to={{
-              pathname: `/trainers`,
-            }}><p>Trainers page</p></Link>
-            <Link to={{
-              pathname: `/clients`,
-            }}><p>Clients page</p></Link>
-            <hr />
-          </div>
+          <h3> You are {user.role}</h3>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           <Loader isLoading={isLoading}>
             {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
           </Loader>
         </div>
       </div>
-      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers = {activeUsers} setAssignPlan ={setAssignPlan} setAssignTrainer ={setAssignTrainer}/>
+      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer} />
       <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
     </div>

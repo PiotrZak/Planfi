@@ -9,21 +9,14 @@ import { Loader } from 'common/Loader';
 import Icon from 'common/Icon';
 import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import { userContext } from 'App';
-import { AssignUsersToPlans } from "./AllUsers"
+import { AssignUsersToPlans } from "./Common/AssignUsersToPlans"
 
+import messages from 'lang/eng'
 
 import InviteUserModal from './InviteUsersModal';
 import { isMobile } from "react-device-detect";
 
 var ReactBottomsheet = require('react-bottomsheet');
-
-const assignTrainerToUserNotification = "Trainer sucesfully assigned to users!"
-const noUsers = "There are no Users";
-const assignToTrainerText = "Assign to trainer"
-const selected = "selected";
-const userDeleted = "Users sucessfully deleted!"
-const assignToMe = "Assign to me"
-const assignPlanText = "Assign plan"
 
 export const Clients = () => {
   const { user } = useContext(userContext);
@@ -71,7 +64,7 @@ export const Clients = () => {
     userService
       .deleteUsers(activeUsers)
       .then((data) => {
-        dispatch(alertActions.success(userDeleted));
+        dispatch(alertActions.success(messages.users.userDeleted));
       })
       .catch((error) => {
         dispatch(alertActions.error(error.title));
@@ -86,7 +79,7 @@ export const Clients = () => {
     userService
       .assignUsersToTrainer(data)
       .then(() => {
-        dispatch(alertActions.success(assignTrainerToUserNotification));
+        dispatch(alertActions.success(messages.users.assignTrainerToUserNotification));
       })
       .catch((error) => {
         dispatch(alertActions.error(error.title));
@@ -116,7 +109,7 @@ export const Clients = () => {
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
 
           <Loader isLoading={isLoading}>
-            {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{noUsers}</h1>}
+            {users ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={users} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
           </Loader>
         </div>
       </div>
@@ -131,16 +124,16 @@ export const Clients = () => {
 
         {isMobile ?
           <>
-            <button onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item">{assignPlanText}</button>
-            <button onClick={() => assignUserToTrainer()} className="bottom-sheet-item">{assignToMe}</button>
+            <button onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item">{messages.users.assignPlanText}</button>
+            <button onClick={() => assignUserToTrainer()} className="bottom-sheet-item">{messages.users.assignToMe}</button>
           </>
           :
           <>
             <div className="bottom-sheet-item__oneline">
               <Icon name="check" fill="#2E6D2C" />
-              <p>{activeUsers.length} {selected}</p>
-              <div onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item__content"><Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />{assignPlanText}</div>
-              <div onClick={() => assignUserToTrainer()} className="bottom-sheet-item__content"><Icon height={"18px"} name="user-circle" fill="#C3C3CF" />{assignToMe}</div>
+              <p>{activeUsers.length} {messages.users.selected}</p>
+              <div onClick={() => openAssignPlansToUsers()} className="bottom-sheet-item__content"><Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />{messages.users.assignPlanText}</div>
+              <div onClick={() => assignUserToTrainer()} className="bottom-sheet-item__content"><Icon height={"18px"} name="user-circle" fill="#C3C3CF" />{messages.users.assignToMe}</div>
             </div>
           </>
         }

@@ -11,8 +11,11 @@ namespace WebApi.Services
         Organization GetById(string id);
         Organization Create(Organization Organization);
         IEnumerable<Organization> GetAll();
+        IEnumerable<User> GetOrganizationUsers(string organizationId);
+        User GetUserById(string organizationId, string userId);
         void Delete(string[] id);
         void AssignUsersToOrganization(string organizationId, string[] userIds);
+        void ChangeRole(string userId, string role);
     }
 
     public class OrganizationService : IOrganizationService
@@ -26,7 +29,6 @@ namespace WebApi.Services
 
         public Organization Create(Organization Organization)
         {
-            // throw error if the new Organization is already taken
             if (_context.Organizations.Any(x => x.Name == Organization.Name))
                 throw new AppException("Organization " + Organization.Name + " is already exist");
 
@@ -71,6 +73,30 @@ namespace WebApi.Services
                 organization.Users.Add(element);
             }
             _context.Organizations.Update(organization);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<User> GetOrganizationUsers(string organizationId)
+        {
+            var users = _context.Users.Where(x => x.OrganizationId == organizationId);
+            return users;
+        }
+
+        public User GetUserById(string organizationId, string userId)
+        {
+            var usersInOrganization = _context.Users.Where(x => x.OrganizationId == organizationId);
+            var user = usersInOrganization.FirstOrDefault(x => x.OrganizationId == organizationId);
+            return user;
+        }
+
+        public void ChangeRole(string userId, string role)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.UserId == userId);
+
+            if (!string.IsNullOrWhiteSpace(role))
+                user.Role = role;
+
+            _context.Users.Update(user);
             _context.SaveChanges();
         }
     }

@@ -30,7 +30,7 @@ namespace WebApi.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("create")]
         public IActionResult Create([FromBody]CreateOrganization model)
         {
@@ -46,7 +46,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -54,7 +54,24 @@ namespace WebApi.Controllers
             return Ok(organizations);
         }
 
+        //[Authorize(Roles = Role.Admin + "," + Role.Owner)]
         [AllowAnonymous]
+        [HttpGet("users/{id}")]
+        public IActionResult GetOrganizationUsers(string id)
+        {
+            var users = _OrganizationService.GetOrganizationUsers(id);
+            return Ok(users);
+        }
+
+        [Authorize(Roles = Role.Admin + "," + Role.Owner)]
+        [HttpGet("user/{id}")]
+        public IActionResult GetUserById(string organizationId, [FromForm] string userId)
+        {
+            var users = _OrganizationService.GetUserById(organizationId, userId);
+            return Ok(users);
+        }
+
+        [Authorize(Roles = Role.Owner)]
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
@@ -62,7 +79,16 @@ namespace WebApi.Controllers
             return Ok(organization);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Owner)]
+        [HttpPost("role/{id}")]
+        public IActionResult ChangeRole([FromBody] string userId, string Role)
+        {
+            _OrganizationService.ChangeRole(userId, Role) ;
+            return Ok();
+        }
+
+
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("delete")]
         public IActionResult Delete([FromBody] string[] id)
         {
@@ -70,7 +96,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Admin)]
         [HttpPost("assignUsers")]
         public IActionResult AssignUsersToOrganization([FromBody] AssignUsersToOrganization model)
         {

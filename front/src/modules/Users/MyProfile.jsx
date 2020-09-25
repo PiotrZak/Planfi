@@ -14,10 +14,10 @@ import EditUserDataModal from "./Edit/EditUserData";
 
 import { userContext } from 'App';
 
-import { ClientsOfTrainer } from "./microModules/ClientOfTrainer"
-import { PlansOfTrainer } from "./microModules/PlansOfTrainer"
-import { PlansOfUser } from "./microModules/PlansOfUser"
-import { TrainersOfClient } from "./microModules/TrainersOfClient"
+import { ClientsOfTrainer } from "./UserProfile/ClientOfTrainer"
+import { PlansOfTrainer } from "./UserProfile/PlansOfTrainer"
+import { PlansOfUser } from "./UserProfile/PlansOfUser"
+import { TrainersOfClient } from "./UserProfile/TrainersOfClient"
 
 var ReactBottomsheet = require('react-bottomsheet');
 

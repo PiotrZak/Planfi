@@ -281,6 +281,23 @@ namespace WebApi.Migrations
                     b.HasKey("OrganizationId");
 
                     b.ToTable("Organizations");
+
+                    b.HasData(
+                        new
+                        {
+                            OrganizationId = "O1",
+                            Name = "Apple"
+                        },
+                        new
+                        {
+                            OrganizationId = "O2",
+                            Name = "Google"
+                        },
+                        new
+                        {
+                            OrganizationId = "O3",
+                            Name = "Microsoft"
+                        });
                 });
 
             modelBuilder.Entity("WebApi.Entities.Plan", b =>
@@ -363,6 +380,30 @@ namespace WebApi.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
+            modelBuilder.Entity("WebApi.Entities.Admin", b =>
+                {
+                    b.HasBaseType("WebApi.Entities.User");
+
+                    b.Property<string>("AdminId")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Admin");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a1",
+                            Email = "tgianelli0@eventbrite.com",
+                            FirstName = "admin",
+                            LastName = "lol",
+                            OrganizationId = "O1",
+                            Password = "admin",
+                            PhoneNumber = 555555555,
+                            Role = "Admin",
+                            AdminId = "eec704f5-eab7-45fa-a2b6-1b31220eae5f"
+                        });
+                });
+
             modelBuilder.Entity("WebApi.Entities.Client", b =>
                 {
                     b.HasBaseType("WebApi.Entities.User");
@@ -379,6 +420,7 @@ namespace WebApi.Migrations
                             Email = "tgianelli0@eventbrite.com",
                             FirstName = "Teodoor",
                             LastName = "Gianelli",
+                            OrganizationId = "O1",
                             Password = "Teodor",
                             PhoneNumber = 555555555,
                             Role = "User",
@@ -391,6 +433,7 @@ namespace WebApi.Migrations
                             Email = "jcasson3@prlog.org",
                             FirstName = "Jillana",
                             LastName = "Casson",
+                            OrganizationId = "O1",
                             Password = "Jillana",
                             PhoneNumber = 666666666,
                             Role = "User",
@@ -403,6 +446,7 @@ namespace WebApi.Migrations
                             Email = "Teloinic@gmail.com",
                             FirstName = "Camille",
                             LastName = "Teloinic",
+                            OrganizationId = "O1",
                             Password = "Teodor",
                             PhoneNumber = 555555555,
                             Role = "User",
@@ -415,6 +459,7 @@ namespace WebApi.Migrations
                             Email = "kburgne2@hp.com",
                             FirstName = "Kiel",
                             LastName = "Burgne",
+                            OrganizationId = "O1",
                             Password = "Kiel",
                             PhoneNumber = 777777777,
                             Role = "User",
@@ -427,6 +472,7 @@ namespace WebApi.Migrations
                             Email = "awharinu@tmall.com",
                             FirstName = "Augustus",
                             LastName = "Wharin",
+                            OrganizationId = "O1",
                             Password = "Augustus",
                             PhoneNumber = 555555555,
                             Role = "User",
@@ -439,11 +485,216 @@ namespace WebApi.Migrations
                             Email = "bcaullieres@auda.org.au",
                             FirstName = "Bondy",
                             LastName = "Caulliere",
+                            OrganizationId = "O1",
                             Password = "Bondy",
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "u6"
+                        },
+                        new
+                        {
+                            UserId = "o2u1",
+                            Email = "jmeachem0@eventbrite.com",
+                            FirstName = "Jacklyn",
+                            LastName = "Meachem",
+                            OrganizationId = "O2",
+                            Password = "Jacklyn",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "o2u1"
+                        },
+                        new
+                        {
+                            UserId = "o2u2",
+                            Email = "gkryska1@about.com",
+                            FirstName = "Georgie",
+                            LastName = "Kryska",
+                            OrganizationId = "O2",
+                            Password = "Jillana",
+                            PhoneNumber = 666666666,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "o2u2"
+                        },
+                        new
+                        {
+                            UserId = "o2u3",
+                            Email = "kcridge2@xrea.com",
+                            FirstName = "Kiah",
+                            LastName = "Cridge",
+                            OrganizationId = "O2",
+                            Password = "Teodor",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "o2u3"
+                        },
+                        new
+                        {
+                            UserId = "o2u4",
+                            Email = "jsarrell3@whitehouse.gov",
+                            FirstName = "Jarret",
+                            LastName = "Sarrell",
+                            OrganizationId = "O2",
+                            Password = "Kiel",
+                            PhoneNumber = 777777777,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "o2u4"
+                        },
+                        new
+                        {
+                            UserId = "o2u5",
+                            Email = "flydiate5@biblegateway.com",
+                            FirstName = "Felice",
+                            LastName = "Lydiate",
+                            OrganizationId = "O2",
+                            Password = "Augustus",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "o2u5"
+                        },
+                        new
+                        {
+                            UserId = "o2u6",
+                            Email = "gpedlingham6@ow.ly",
+                            FirstName = "Gerald",
+                            LastName = "Pedlingham",
+                            OrganizationId = "O2",
+                            Password = "Bondy",
+                            PhoneNumber = 666666666,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "o2u6"
+                        },
+                        new
+                        {
+                            UserId = "o3u1",
+                            Email = "thilldrupe@berkeley.edu",
+                            FirstName = "Titus",
+                            LastName = "Hilldrup",
+                            OrganizationId = "O3",
+                            Password = "Titus",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "o3u1"
+                        },
+                        new
+                        {
+                            UserId = "o3u2",
+                            Email = "mtamesf@netvibes.com",
+                            FirstName = "Maribel",
+                            LastName = "Tames",
+                            OrganizationId = "O3",
+                            Password = "Maribel",
+                            PhoneNumber = 666666666,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "o3u2"
+                        },
+                        new
+                        {
+                            UserId = "o3u3",
+                            Email = "tknowldenh@wsj.com",
+                            FirstName = "Trumann",
+                            LastName = "Knowlden",
+                            OrganizationId = "O3",
+                            Password = "Trumann",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "o3u3"
+                        },
+                        new
+                        {
+                            UserId = "o3u4",
+                            Email = "jsarrell3@whitehouse.gov",
+                            FirstName = "Jarret",
+                            LastName = "Sarrell",
+                            OrganizationId = "O3",
+                            Password = "Jarret",
+                            PhoneNumber = 777777777,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "o2u4"
+                        },
+                        new
+                        {
+                            UserId = "o3u5",
+                            Email = "gcamidgej@umich.edu",
+                            FirstName = "Godfry",
+                            LastName = "Camidge",
+                            OrganizationId = "O3",
+                            Password = "Godfry",
+                            PhoneNumber = 555555555,
+                            Role = "User",
+                            Token = "t-user",
+                            ClientId = "o3u5"
+                        },
+                        new
+                        {
+                            UserId = "o3u6",
+                            Email = "mcorbyl@comsenz.com",
+                            FirstName = "Maison",
+                            LastName = "Corby",
+                            OrganizationId = "O3",
+                            Password = "Bondy",
+                            PhoneNumber = 666666666,
+                            Role = "User",
+                            Token = "t-trainer",
+                            ClientId = "o3u6"
+                        });
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Owner", b =>
+                {
+                    b.HasBaseType("WebApi.Entities.User");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Owner");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "owner1",
+                            Email = "owner1@eventbrite.com",
+                            FirstName = "Owner1",
+                            LastName = "LastName",
+                            OrganizationId = "O1",
+                            Password = "Owner1",
+                            PhoneNumber = 555555555,
+                            Role = "Owner",
+                            OwnerId = "50ed5772-d5b8-4013-9e7f-8bca7de6d525"
+                        },
+                        new
+                        {
+                            UserId = "owner2",
+                            Email = "owner2@eventbrite.com",
+                            FirstName = "Owner2",
+                            LastName = "lol",
+                            OrganizationId = "O2",
+                            Password = "Owner2",
+                            PhoneNumber = 555555555,
+                            Role = "Owner",
+                            OwnerId = "6292ff9d-e291-4889-8b58-64fabb2a7c0e"
+                        },
+                        new
+                        {
+                            UserId = "owner3",
+                            Email = "owner3@eventbrite.com",
+                            FirstName = "Owner3",
+                            LastName = "lol",
+                            OrganizationId = "O3",
+                            Password = "Owner3",
+                            PhoneNumber = 555555555,
+                            Role = "Owner",
+                            OwnerId = "47a7ab54-0fd6-4b1a-81e7-f069d13b246e"
                         });
                 });
 
@@ -463,6 +714,7 @@ namespace WebApi.Migrations
                             Email = "vmaccathay17@house.gov",
                             FirstName = "Valentia",
                             LastName = "MacCathay",
+                            OrganizationId = "O1",
                             Password = "Valentia",
                             PhoneNumber = 777777777,
                             Role = "Trainer",
@@ -475,11 +727,64 @@ namespace WebApi.Migrations
                             Email = "efearey1f@mlb.com",
                             FirstName = "Eadith",
                             LastName = "Fearey",
+                            OrganizationId = "O1",
                             Password = "Eadith",
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "t2"
+                        },
+                        new
+                        {
+                            UserId = "o2t1",
+                            Email = "tbullerwell1n@sitemeter.com",
+                            FirstName = "Talia",
+                            LastName = "Bullerwell",
+                            OrganizationId = "O2",
+                            Password = "Talia",
+                            PhoneNumber = 777777777,
+                            Role = "Trainer",
+                            Token = "t-organization",
+                            TrainerId = "o2t1"
+                        },
+                        new
+                        {
+                            UserId = "o2t2",
+                            Email = "mbabb1x@java.com",
+                            FirstName = "Malachi",
+                            LastName = "Babb",
+                            OrganizationId = "O2",
+                            Password = "Malachi",
+                            PhoneNumber = 777777777,
+                            Role = "Trainer",
+                            Token = "t-organization",
+                            TrainerId = "o2t2"
+                        },
+                        new
+                        {
+                            UserId = "o3t1",
+                            Email = "bdunstan8@dell.com",
+                            FirstName = "Benedikta",
+                            LastName = "Dunstan",
+                            OrganizationId = "O3",
+                            Password = "Valentia",
+                            PhoneNumber = 777777777,
+                            Role = "Trainer",
+                            Token = "t-organization",
+                            TrainerId = "o3t1"
+                        },
+                        new
+                        {
+                            UserId = "o3t2",
+                            Email = "fhobdena@census.gov",
+                            FirstName = "Freddie",
+                            LastName = "Hobden",
+                            OrganizationId = "O3",
+                            Password = "Eadith",
+                            PhoneNumber = 777777777,
+                            Role = "Trainer",
+                            Token = "t-organization",
+                            TrainerId = "o3t2"
                         });
                 });
 

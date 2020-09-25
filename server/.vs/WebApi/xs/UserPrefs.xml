@@ -1,8 +1,9 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/UserService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ExerciseController.cs">
     <Files>
-      <File FileName="Controllers/UsersController.cs" Line="137" Column="80" />
-      <File FileName="Services/UserService.cs" Line="184" Column="79" NotebookId="1" />
+      <File FileName="Controllers/OrganizationController.cs" Line="59" Column="26" />
+      <File FileName="Controllers/ExerciseController.cs" Line="1" Column="1" />
+      <File FileName="Services/OrganizationService.cs" Line="81" Column="79" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -10,12 +11,13 @@
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="ViewModels" expanded="True" />
+                <Node name="ExerciseController.cs" selected="True" />
               </Node>
-              <Node name="Entities" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="UserService.cs" selected="True" />
+              <Node name="Entities" expanded="True">
+                <Node name="Users" expanded="True" />
               </Node>
+              <Node name="Helpers" expanded="True" />
+              <Node name="Services" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -30,6 +32,7 @@
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/FileModel.cs" relfile="Controllers/ViewModels/FileModel.cs" line="11" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/ForgotPassword.cs" relfile="Controllers/ViewModels/ForgotPassword.cs" line="13" column="1" />
       <Breakpoint file="/Users/admin/Desktop/FitApp/server/Models/Message.cs" relfile="Models/Message.cs" line="19" column="1" />
+      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/UsersController.cs" relfile="Controllers/UsersController.cs" line="76" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

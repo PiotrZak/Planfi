@@ -5,7 +5,9 @@ export const organizationService = {
     createOrganization,
     getOrganizations,
     getOrganizationById,
-    assignMemberToOrganization
+    assignMemberToOrganization,
+
+    getOrganizationUsers
   };
 
   function createOrganization(body) {
@@ -22,4 +24,8 @@ export const organizationService = {
 
   function assignMemberToOrganization(body) {
     return http.post(`${ORGANIZATION_URL}assignUsers`, body);
+  }
+
+  function getOrganizationUsers(id) {
+    return http.get(`${ORGANIZATION_URL}users/${id}`);
   }

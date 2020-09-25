@@ -21,8 +21,9 @@ import { Plan } from './modules/Plans/Plan';
 import { AllUsers } from './modules/Users/AllUsers';
 import { Trainers } from './modules/Users/Trainers';
 import { Clients } from './modules/Users/Clients';
-
 import { User } from './modules/Users/User';
+
+import { AllUsersOfOrganization } from './modules/Users/Organization/AllUsersOfOrganization';
 
 import Alert from './common/Alert';
 
@@ -58,7 +59,7 @@ export const LanguageContext = React.createContext();
 let App = () => {
 
   const [theme, setTheme] = useState('dark')
-  const [user, setUser] = useState('test');
+  const [user, setUser] = useState(JSON.parse((localStorage.getItem('user'))));
   const [selectedLanguage, setSelectedLanguage] = useState('en');
 
   useEffect(() => {
@@ -126,14 +127,18 @@ let App = () => {
                 <PrivateRoute user={user} path="/plan/:id" component={Plan} />
 
                 <PrivateRoute user={user} path="/users" component={AllUsers} />
-
-                {/* Only Owner */}
                 <PrivateRoute user={user} path="/trainers" component={Trainers} />
-
-                {/* Only Trainers */}
                 <PrivateRoute user={user} path="/clients" component={Clients} />
+
                 <PrivateRoute user={user} path="/user/:id" accessRole={[1, 2, 3]} component={User} />
                 <PrivateRoute user={user} path="/myprofile/:id" accessRole={[1, 2, 3]} component={MyProfile} />
+
+                {/* Only Owner */}
+                <PrivateRoute user={user} path="/organizationusers" component={AllUsersOfOrganization} />
+                {/* Only Trainers */}
+                {/* <PrivateRoute user={user} path="/organizationclients" component={AllClientsOfOrganization} /> */}
+
+
 
               </Switch>
             </BrowserRouter>

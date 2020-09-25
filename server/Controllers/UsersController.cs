@@ -42,7 +42,6 @@ namespace WebApi.Controllers
         {
             var user = _userService.Authenticate(model.Email, model.Password);
 
-
             if (user == null)
             {
                 return BadRequest(new { message = "Email or password is incorrect" });
@@ -63,11 +62,11 @@ namespace WebApi.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
 
-
             // return basic user info and authentication token
             return Ok(new
             {
                 user.UserId,
+                user.OrganizationId,
                 user.Email,
                 user.FirstName,
                 user.LastName,
@@ -85,9 +84,6 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
-
-        // [Authorize(Roles = Role.Admin)]
-        // All existing users include clients + trainers
         [AllowAnonymous]
         [HttpGet("clients")]
         public IActionResult GetAllClients()
@@ -121,7 +117,6 @@ namespace WebApi.Controllers
         [HttpGet("role/{role}")]
         public IActionResult GetByRole(string role)
         {
-
             var user = _userService.GetByRole(role);
 
             if (user == null)

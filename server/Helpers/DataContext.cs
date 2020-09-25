@@ -48,7 +48,6 @@ namespace WebApi.Helpers
                 .HasMany(b => b.Users)
                 .WithOne();
 
-
             // Plans <-> Users relationship
             modelBuilder.Entity<ClientsPlans>()
                 .HasKey(e => new { e.ClientId, e.PlanId });
@@ -74,9 +73,6 @@ namespace WebApi.Helpers
                 .HasOne(e => e.Trainer)
                 .WithMany(p => p.ClientsTrainers);
 
-
-
-
             modelBuilder.Entity<Plan>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
@@ -90,6 +86,50 @@ namespace WebApi.Helpers
                 .WithOne();
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            modelBuilder.Entity<Organization>().HasData(
+                    new Organization
+                    {
+                        OrganizationId = "O1",
+                        Name = "Apple",
+                    },
+                    new Organization
+                    {
+                        OrganizationId = "O2",
+                        Name = "Google",
+                    },
+                    new Organization
+                    {
+                        OrganizationId = "O3",
+                        Name = "Microsoft",
+                    }
+                );
 
             modelBuilder.Entity<Category>().HasData(
                 new Category
@@ -279,9 +319,80 @@ namespace WebApi.Helpers
                 }
             );
 
+            modelBuilder.Entity<Admin>().HasData(
+                    new Admin
+                    {
+                        OrganizationId = "O1",
+                        UserId = "a1",
+                        Avatar = null,
+                        FirstName = "admin",
+                        LastName = "lol",
+                        Email = "tgianelli0@eventbrite.com",
+                        PhoneNumber = 555555555,
+                        Password = "admin",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.Admin,
+                    }
+                );
+
+            modelBuilder.Entity<Owner>().HasData(
+                    new Owner
+                        {
+                            OrganizationId = "O1",
+                            UserId = "owner1",
+                            Avatar = null,
+                            FirstName = "Owner1",
+                            LastName = "LastName",
+                            Email = "owner1@eventbrite.com",
+                            PhoneNumber = 555555555,
+                            Password = "Owner1",
+                            PasswordHash = null,
+                            PasswordSalt = null,
+                            Role = Role.Owner,
+                        }
+                    );
+
+                    modelBuilder.Entity<Owner>().HasData(
+                        new Owner
+                        {
+                            OrganizationId = "O2",
+                            UserId = "owner2",
+                            Avatar = null,
+                            FirstName = "Owner2",
+                            LastName = "lol",
+                            Email = "owner2@eventbrite.com",
+                            PhoneNumber = 555555555,
+                            Password = "Owner2",
+                            PasswordHash = null,
+                            PasswordSalt = null,
+                            Role = Role.Owner,
+                        }
+                    );
+
+                    modelBuilder.Entity<Owner>().HasData(
+                        new Owner
+                        {
+                            OrganizationId = "O3",
+                            UserId = "owner3",
+                            Avatar = null,
+                            FirstName = "Owner3",
+                            LastName = "lol",
+                            Email = "owner3@eventbrite.com",
+                            PhoneNumber = 555555555,
+                            Password = "Owner3",
+                            PasswordHash = null,
+                            PasswordSalt = null,
+                            Role = Role.Owner,
+                        }
+                    );
+
+            // O1
+
             modelBuilder.Entity<Client>().HasData(
                     new Client
                     {
+                        OrganizationId = "O1",
                         UserId = "u1",
                         ClientId = "u1",
                         Avatar = null,
@@ -297,6 +408,7 @@ namespace WebApi.Helpers
                     },
                     new Client
                     {
+                        OrganizationId = "O1",
                         UserId = "u2",
                         ClientId = "u2",
                         Avatar = null,
@@ -312,6 +424,7 @@ namespace WebApi.Helpers
                     },
                     new Client
                     {
+                        OrganizationId = "O1",
                         UserId = "u3",
                         ClientId = "u3",
                         Avatar = null,
@@ -327,6 +440,7 @@ namespace WebApi.Helpers
                     },
                     new Client
                     {
+                        OrganizationId = "O1",
                         UserId = "u4",
                         ClientId = "u4",
                         Avatar = null,
@@ -342,6 +456,7 @@ namespace WebApi.Helpers
                     },
                     new Client
                     {
+                        OrganizationId = "O1",
                         UserId = "u5",
                         ClientId = "u5",
                         Avatar = null,
@@ -357,6 +472,7 @@ namespace WebApi.Helpers
                     },
                     new Client
                     {
+                        OrganizationId = "O1",
                         UserId = "u6",
                         ClientId = "u6",
                         Avatar = null,
@@ -375,6 +491,7 @@ namespace WebApi.Helpers
             modelBuilder.Entity<Trainer>().HasData(
                 new Trainer
                 {
+                    OrganizationId = "O1",
                     UserId = "t1",
                     TrainerId = "t1",
                     Avatar = null,
@@ -391,12 +508,287 @@ namespace WebApi.Helpers
 
                 new Trainer
                 {
+                    OrganizationId = "O1",
                     UserId = "t2",
                     TrainerId = "t2",
                     Avatar = null,
                     FirstName = "Eadith",
                     LastName = "Fearey",
                     Email = "efearey1f@mlb.com",
+                    PhoneNumber = 777777777,
+                    Password = "Eadith",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.Trainer,
+                    Token = "t-organization",
+                }
+                );
+
+            // O2 
+
+            modelBuilder.Entity<Client>().HasData(
+                    new Client
+                    {
+                        OrganizationId = "O2",
+                        UserId = "o2u1",
+                        ClientId = "o2u1",
+                        Avatar = null,
+                        FirstName = "Jacklyn",
+                        LastName = "Meachem",
+                        Email = "jmeachem0@eventbrite.com",
+                        PhoneNumber = 555555555,
+                        Password = "Jacklyn",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O2",
+                        UserId = "o2u2",
+                        ClientId = "o2u2",
+                        Avatar = null,
+                        FirstName = "Georgie",
+                        LastName = "Kryska",
+                        Email = "gkryska1@about.com",
+                        PhoneNumber = 666666666,
+                        Password = "Jillana",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O2",
+                        UserId = "o2u3",
+                        ClientId = "o2u3",
+                        Avatar = null,
+                        FirstName = "Kiah",
+                        LastName = "Cridge",
+                        Email = "kcridge2@xrea.com",
+                        PhoneNumber = 555555555,
+                        Password = "Teodor",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O2",
+                        UserId = "o2u4",
+                        ClientId = "o2u4",
+                        Avatar = null,
+                        FirstName = "Jarret",
+                        LastName = "Sarrell",
+                        Email = "jsarrell3@whitehouse.gov",
+                        PhoneNumber = 777777777,
+                        Password = "Kiel",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O2",
+                        UserId = "o2u5",
+                        ClientId = "o2u5",
+                        Avatar = null,
+                        FirstName = "Felice",
+                        LastName = "Lydiate",
+                        Email = "flydiate5@biblegateway.com",
+                        PhoneNumber = 555555555,
+                        Password = "Augustus",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O2",
+                        UserId = "o2u6",
+                        ClientId = "o2u6",
+                        Avatar = null,
+                        FirstName = "Gerald",
+                        LastName = "Pedlingham",
+                        Email = "gpedlingham6@ow.ly",
+                        PhoneNumber = 666666666,
+                        Password = "Bondy",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    }
+                    );
+
+            modelBuilder.Entity<Trainer>().HasData(
+                new Trainer
+                {
+                    OrganizationId = "O2",
+                    UserId = "o2t1",
+                    TrainerId = "o2t1",
+                    Avatar = null,
+                    FirstName = "Talia",
+                    LastName = "Bullerwell",
+                    Email = "tbullerwell1n@sitemeter.com",
+                    PhoneNumber = 777777777,
+                    Password = "Talia",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.Trainer,
+                    Token = "t-organization",
+                },
+
+                new Trainer
+                {
+                    OrganizationId = "O2",
+                    UserId = "o2t2",
+                    TrainerId = "o2t2",
+                    Avatar = null,
+                    FirstName = "Malachi",
+                    LastName = "Babb",
+                    Email = "mbabb1x@java.com",
+                    PhoneNumber = 777777777,
+                    Password = "Malachi",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.Trainer,
+                    Token = "t-organization",
+                }
+                );
+
+            // O3 
+
+            modelBuilder.Entity<Client>().HasData(
+                    new Client
+                    {
+                        OrganizationId = "O3",
+                        UserId = "o3u1",
+                        ClientId = "o3u1",
+                        Avatar = null,
+                        FirstName = "Titus",
+                        LastName = "Hilldrup",
+                        Email = "thilldrupe@berkeley.edu",
+                        PhoneNumber = 555555555,
+                        Password = "Titus",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O3",
+                        UserId = "o3u2",
+                        ClientId = "o3u2",
+                        Avatar = null,
+                        FirstName = "Maribel",
+                        LastName = "Tames",
+                        Email = "mtamesf@netvibes.com",
+                        PhoneNumber = 666666666,
+                        Password = "Maribel",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O3",
+                        UserId = "o3u3",
+                        ClientId = "o3u3",
+                        Avatar = null,
+                        FirstName = "Trumann",
+                        LastName = "Knowlden",
+                        Email = "tknowldenh@wsj.com",
+                        PhoneNumber = 555555555,
+                        Password = "Trumann",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O3",
+                        UserId = "o3u4",
+                        ClientId = "o2u4",
+                        Avatar = null,
+                        FirstName = "Jarret",
+                        LastName = "Sarrell",
+                        Email = "jsarrell3@whitehouse.gov",
+                        PhoneNumber = 777777777,
+                        Password = "Jarret",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O3",
+                        UserId = "o3u5",
+                        ClientId = "o3u5",
+                        Avatar = null,
+                        FirstName = "Godfry",
+                        LastName = "Camidge",
+                        Email = "gcamidgej@umich.edu",
+                        PhoneNumber = 555555555,
+                        Password = "Godfry",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-user",
+                    },
+                    new Client
+                    {
+                        OrganizationId = "O3",
+                        UserId = "o3u6",
+                        ClientId = "o3u6",
+                        Avatar = null,
+                        FirstName = "Maison",
+                        LastName = "Corby",
+                        Email = "mcorbyl@comsenz.com",
+                        PhoneNumber = 666666666,
+                        Password = "Bondy",
+                        PasswordHash = null,
+                        PasswordSalt = null,
+                        Role = Role.User,
+                        Token = "t-trainer",
+                    }
+                    );
+
+            modelBuilder.Entity<Trainer>().HasData(
+                new Trainer
+                {
+                    OrganizationId = "O3",
+                    UserId = "o3t1",
+                    TrainerId = "o3t1",
+                    Avatar = null,
+                    FirstName = "Benedikta",
+                    LastName = "Dunstan",
+                    Email = "bdunstan8@dell.com",
+                    PhoneNumber = 777777777,
+                    Password = "Valentia",
+                    PasswordHash = null,
+                    PasswordSalt = null,
+                    Role = Role.Trainer,
+                    Token = "t-organization",
+                },
+
+                new Trainer
+                {
+                    OrganizationId = "O3",
+                    UserId = "o3t2",
+                    TrainerId = "o3t2",
+                    Avatar = null,
+                    FirstName = "Freddie",
+                    LastName = "Hobden",
+                    Email = "fhobdena@census.gov",
                     PhoneNumber = 777777777,
                     Password = "Eadith",
                     PasswordHash = null,

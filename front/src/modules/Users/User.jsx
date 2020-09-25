@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { userService } from "services/userServices";
 import Icon from "common/Icon"
 import { useDispatch } from "react-redux";
@@ -8,15 +8,18 @@ import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
 import { UserInfo } from "common/users/UserInfo"
 
+//todo - care about lang
+import messages from 'lang/eng'
+
 import EditUserPasswordModal from "./Edit/EditUserPassword"
 import EditUserEmailModal from "./Edit/EditUserEmail";
 import EditUserDataModal from "./Edit/EditUserData";
 import { alertActions } from "redux/actions/alert.actions";
 
-import { ClientsOfTrainer } from "./microModules/ClientOfTrainer"
-import { PlansOfTrainer } from "./microModules/PlansOfTrainer"
-import { PlansOfUser } from "./microModules/PlansOfUser"
-import { TrainersOfClient } from "./microModules/TrainersOfClient"
+import { ClientsOfTrainer } from "./UserProfile/ClientOfTrainer"
+import { PlansOfTrainer } from "./UserProfile/PlansOfTrainer"
+import { PlansOfUser } from "./UserProfile/PlansOfUser"
+import { TrainersOfClient } from "./UserProfile/TrainersOfClient"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -65,7 +68,6 @@ export const User = (props) => {
                 </div>
 
                 {user && <UserInfo user={user} />}
-
                 <Navs user = {user} />
 
                 <EditUserDataModal id={id.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
