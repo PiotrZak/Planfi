@@ -9,12 +9,10 @@ export const http = {
 };
 
 
-const user = localStorage.getItem('user');                    
-const temporaryToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Im8ydDIiLCJyb2xlIjoiVHJhaW5lciIsIm5iZiI6MTYwMTEzMzM4NCwiZXhwIjoxNjAxNzM4MTg0LCJpYXQiOjE2MDExMzMzODR9.4otgctx6r_RAliDINCdxjl8wFRF_0_9ZbjApyK3IpCY";
-
+const currentUser = JSON.parse((localStorage.getItem('user')));   
 
 const config = {
-  headers: { Authorization: `Bearer ${temporaryToken}` }
+  headers: { Authorization: `Bearer ${currentUser.token}` }
 };
 
 function get(url) {

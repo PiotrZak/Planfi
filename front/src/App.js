@@ -79,7 +79,7 @@ let App = () => {
 
   const renderMenu = () => {
     if (user) {
-      if (user.role === 'Trainer') {
+      if (user.role === 'Trainer' || user.role === 'Owner') {
         return <Menu />;
       }
     }

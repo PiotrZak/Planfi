@@ -33,11 +33,9 @@ export const UsersOfOrganization = () => {
   }, []);
 
   const getAllUsers = () => {
-
     organizationService
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
-        console.log(data)
         setUsers(data);
         setIsLoading(false);
       })
@@ -50,7 +48,6 @@ export const UsersOfOrganization = () => {
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
-    console.log(selectedUsers)
     if (selectedUsers.length > 0) {
       setBottomSheet(true);
     } else {
@@ -91,8 +88,8 @@ export const UsersOfOrganization = () => {
         </div>
       </div>
       <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer} />
-      <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
-      <AssignUsersToTrainers assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
+      <AssignUsersToPlans organizationId={user.organizationId} assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
+      <AssignUsersToTrainers organizationId={user.organizationId} assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
     </div>
   );
 };

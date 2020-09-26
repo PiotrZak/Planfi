@@ -8,8 +8,8 @@ export const organizationService = {
     assignMemberToOrganization,
     getOrganizationUsers,
     getOrganizationClients,
+    getOrganizationTrainers,
   };
-
 
   function createOrganization(body) {
     return http.post(`${ORGANIZATION_URL}create`, body);
@@ -35,5 +35,8 @@ export const organizationService = {
     return http.get(`${ORGANIZATION_URL}clients/${id}`);
   }
 
+  function getOrganizationTrainers(id) {
+    return http.get(`${ORGANIZATION_URL}trainers/${id}`);
+  }
   
   

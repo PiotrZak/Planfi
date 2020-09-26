@@ -4,7 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 export const Role = {
     Admin: 'Admin',
     Trainer: 'Trainer',
-    Ownerr: 'Owner',
+    Owner: 'Owner',
     User: 'User'    
 }
 
@@ -17,25 +17,13 @@ export const PrivateRoute = ({component: Component, roles, ...rest}) => (
             // not logged in so redirect to login page with the return url
             return <Redirect to={{pathname: '/login', state: {from: props.location}}} />
         }
-        console.log(currentUser)
-        console.log(currentUser.role)
         // check if route is restricted by role
         if (roles && roles.indexOf(currentUser.role) === -1) {
             // role not authorised so redirect to home page
             console.log('lol')
             return <Redirect to={{ pathname: '/'}} />
         }
-
-            // if user logged in
-            switch(props.location.pathname.split('/')[1]) {
-                case "User":
-                    if(currentUser.role === 'Organization')
-                        return <Redirect to="/admin" />
-                    return <Component {...props} />
-
-                default:
-                    return <Component {...props} />
-            }
-        // }
+        // authorised so return component
+        return <Component {...props} />
     }} />
 )

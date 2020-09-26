@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/OrganizationController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Services/OrganizationService.cs">
     <Files>
-      <File FileName="Controllers/OrganizationController.cs" Line="66" Column="13" IsPinned="True" />
-      <File FileName="Startup.cs" Line="73" Column="29" />
+      <File FileName="Controllers/OrganizationController.cs" Line="76" Column="61" IsPinned="True" />
+      <File FileName="Startup.cs" Line="79" Column="41" />
       <File FileName="Controllers/UsersController.cs" Line="52" Column="25" />
       <File FileName="Models/AuthenticateModel.cs" Line="6" Column="6" />
       <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" Line="1" Column="1" />
@@ -10,9 +10,9 @@
       <File FileName="Controllers/ViewModels/AssignUsersToOrganization.cs" Line="1" Column="1" />
       <File FileName="Helpers/AutoMapper.cs" Line="13" Column="50" />
       <File FileName="Entities/Users/User.cs" Line="12" Column="72" />
-      <File FileName="Services/OrganizationService.cs" NotebookId="1" />
+      <File FileName="Services/OrganizationService.cs" Line="93" Column="10" NotebookId="1" IsPinned="True" />
       <File FileName="Program.cs" NotebookId="1" />
-      <File FileName="Services/UserService.cs" Line="77" Column="1" NotebookId="1" />
+      <File FileName="Services/UserService.cs" Line="106" Column="21" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,14 +21,15 @@
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="ViewModels" expanded="True" />
-                <Node name="OrganizationController.cs" selected="True" />
               </Node>
               <Node name="Entities" expanded="True">
                 <Node name="Users" expanded="True" />
               </Node>
               <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True" />
-              <Node name="Services" expanded="True" />
+              <Node name="Services" expanded="True">
+                <Node name="OrganizationService.cs" selected="True" />
+              </Node>
               <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
