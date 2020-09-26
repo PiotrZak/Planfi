@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 namespace WebApi.Entities
 {
 
-
     abstract public class User
     {
         public User()

@@ -46,7 +46,7 @@ namespace WebApi.Controllers
             {
                 return BadRequest(new { message = "Email or password is incorrect" });
             }
-
+            // authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -59,10 +59,11 @@ namespace WebApi.Controllers
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
 
-            // return basic user info and authentication token
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+
             return Ok(new
             {
                 user.UserId,
@@ -72,8 +73,38 @@ namespace WebApi.Controllers
                 user.LastName,
                 user.Avatar,
                 user.Role,
-                user.Token
+                Token = tokenString
             });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] RegisterModel model)
+        {
+            // map model to entity
+            var user = _mapper.Map<Client>(model);
+
+            try
+            {
+                // create user
+                _userService.Create(user, model.Password);
+                return Ok(new
+                {
+                    user.UserId,
+                    user.OrganizationId,
+                    user.Email,
+                    user.FirstName,
+                    user.LastName,
+                    user.Avatar,
+                    user.Role,
+                    user.Token
+                });
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [AllowAnonymous]
@@ -146,26 +177,6 @@ namespace WebApi.Controllers
 
             _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
             return Ok();
-        }
-
-        [AllowAnonymous]
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterModel model)
-        {
-            // map model to entity
-            var user = _mapper.Map<Client>(model);
-
-            try
-            {
-                // create user
-                _userService.Create(user, model.Password);
-                return Ok();
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
-            }
         }
 
 

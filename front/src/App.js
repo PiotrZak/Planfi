@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Route, Switch, BrowserRouter, Link, NavLink } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Link, NavLink } from 'react-router-dom';
 import { isMobile } from "react-device-detect";
 
 import { createBrowserHistory } from 'history';
@@ -109,33 +109,33 @@ let App = () => {
               {renderMenu()}
               {renderAvatarMenu()}
               <Switch>
-                <PrivateRoute  exact path="/register" component={RegisterPage} />
-                <PrivateRoute  exact path="/activate" component={ActivatePage} />
+
+
+                <PrivateRoute exact path="/register" component={RegisterPage} />
+                <PrivateRoute exact path="/activate" component={ActivatePage} />
                 <Route path="/login" component={LoginPage} />
-                <Route  path="/forgotpassword" component={ForgotPassword} />
+                <Route path="/forgotpassword" component={ForgotPassword} />
 
-                <PrivateRoute  path="/categories" component={Categories} />
-                <PrivateRoute  path="/category/:id" component={Category} />
-                <PrivateRoute  path="/add-exercise" component={AddExercise} />
-                <PrivateRoute  path="/edit-exercise/:id" component={EditExercise} />
-                <PrivateRoute  path="/exercise/:id" component={Exercise} />
+                <PrivateRoute path="/categories" component={Categories} />
+                <PrivateRoute path="/category/:id" component={Category} />
+                <PrivateRoute path="/add-exercise" component={AddExercise} />
+                <PrivateRoute path="/edit-exercise/:id" component={EditExercise} />
+                <PrivateRoute path="/exercise/:id" component={Exercise} />
 
-                <PrivateRoute  path="/plans" component={Plans} />
-                <PrivateRoute  path="/plan/:id" component={Plan} />
+                <PrivateRoute path="/plans" component={Plans} />
+                <PrivateRoute path="/plan/:id" component={Plan} />
 
-                <PrivateRoute roles={[Role.Admin]}  path="/users" component={AllUsers} />
-                <PrivateRoute roles={[Role.Admin]}  path="/trainers" component={Trainers} />
-                <PrivateRoute roles={[Role.Admin]}  path="/clients" component={Clients} />
+                <PrivateRoute roles={[Role.Admin]} path="/users" component={AllUsers} />
+                <PrivateRoute roles={[Role.Admin]} path="/trainers" component={Trainers} />
+                <PrivateRoute roles={[Role.Admin]} path="/clients" component={Clients} />
 
-                <PrivateRoute  path="/user/:id" component={User} />
-                <PrivateRoute  path="/myprofile/:id" component={MyProfile} />
+                <PrivateRoute path="/user/:id" component={User} />
+                <PrivateRoute path="/myprofile/:id" component={MyProfile} />
 
                 {/* Only Owner */}
-                <PrivateRoute roles={[Role.Owner]}  path="/organizationusers" component={UsersOfOrganization} />
+                <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={UsersOfOrganization} />
                 {/* Only Trainers */}
-                <PrivateRoute roles={[Role.Owner]}   path="/organizationclients" component={ClientsOfOrganization} />
-
-
+                <PrivateRoute roles={[Role.Trainer, Role.Owner]} path="/organizationclients" component={ClientsOfOrganization} />
 
               </Switch>
             </BrowserRouter>

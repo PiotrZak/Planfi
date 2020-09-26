@@ -134,3 +134,5 @@
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (another copy).json
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (copy).json

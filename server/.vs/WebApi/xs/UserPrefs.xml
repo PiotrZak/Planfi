@@ -1,29 +1,35 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Entities/Users/User.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/OrganizationController.cs">
     <Files>
-      <File FileName="Controllers/OrganizationController.cs" Line="69" Column="10" />
-      <File FileName="Controllers/UsersController.cs" Line="112" Column="35" />
-      <File FileName="Controllers/ExerciseController.cs" Line="1" Column="1" />
-      <File FileName="Entities/Users/Trainer.cs" Line="1" Column="1" />
-      <File FileName="Entities/Users/User.cs" Line="29" Column="27" />
-      <File FileName="Entities/Users/Role.cs" Line="8" Column="44" />
-      <File FileName="Startup.cs" Line="69" Column="62" NotebookId="1" />
-      <File FileName="Services/OrganizationService.cs" Line="84" Column="10" NotebookId="1" />
-      <File FileName="Program.cs" Line="11" Column="6" NotebookId="1" />
-      <File FileName="Services/UserService.cs" Line="270" Column="48" NotebookId="1" />
+      <File FileName="Controllers/OrganizationController.cs" Line="66" Column="13" IsPinned="True" />
+      <File FileName="Startup.cs" Line="73" Column="29" />
+      <File FileName="Controllers/UsersController.cs" Line="52" Column="25" />
+      <File FileName="Models/AuthenticateModel.cs" Line="6" Column="6" />
+      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" Line="1" Column="1" />
+      <File FileName="Controllers/ViewModels/ClientPlans.cs" Line="8" Column="1" />
+      <File FileName="Controllers/ViewModels/AssignUsersToOrganization.cs" Line="1" Column="1" />
+      <File FileName="Helpers/AutoMapper.cs" Line="13" Column="50" />
+      <File FileName="Entities/Users/User.cs" Line="12" Column="72" />
+      <File FileName="Services/OrganizationService.cs" NotebookId="1" />
+      <File FileName="Program.cs" NotebookId="1" />
+      <File FileName="Services/UserService.cs" Line="77" Column="1" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Entities" expanded="True">
-                <Node name="Users" expanded="True">
-                  <Node name="User.cs" selected="True" />
-                </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="ViewModels" expanded="True" />
+                <Node name="OrganizationController.cs" selected="True" />
               </Node>
+              <Node name="Entities" expanded="True">
+                <Node name="Users" expanded="True" />
+              </Node>
+              <Node name="Helpers" expanded="True" />
+              <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
         </State>

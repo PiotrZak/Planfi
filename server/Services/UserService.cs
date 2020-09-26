@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -9,7 +13,8 @@ namespace WebApi.Services
 {
     public interface IUserService
     {
-        User Authenticate(string email, string password);
+        User Authenticate(string Email, string Password);
+        Client Create(Client user, string password);
 
         IEnumerable<User> GetAllUsers();
 
@@ -17,7 +22,6 @@ namespace WebApi.Services
         IEnumerable<Trainer> GetAllTrainers();
 
         User GetById(string id);
-        User Create(User user, string password);
         void Update(User user, string password);
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
@@ -42,12 +46,30 @@ namespace WebApi.Services
             _context = context;
         }
 
-        public User Authenticate(string email, string password)
+        public Client Create(Client user, string password)
         {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-                return null;
+            // validation
+            if (string.IsNullOrWhiteSpace(password))
+                throw new AppException("Password is required");
 
-            var user = _context.Users.SingleOrDefault(x => x.Email == email);
+            if (_context.Clients.Any(x => x.Email == user.Email))
+                throw new AppException("Email \"" + user.Email + "\" is already taken");
+
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(password, out passwordHash, out passwordSalt);
+
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return user;
+        }
+
+        public User Authenticate(string Email, string Password)
+        {
+            var user = _context.Users.SingleOrDefault(x => x.Email == Email);
 
             // check if email exists
             if (user == null)
@@ -150,28 +172,6 @@ namespace WebApi.Services
                     _context.SaveChanges();
                 }
             }
-        }
-
-
-        public User Create(User user, string password)
-        {
-            // validation
-            if (string.IsNullOrWhiteSpace(password))
-                throw new AppException("Password is required");
-
-            if (_context.Clients.Any(x => x.Email == user.Email))
-                throw new AppException("Email \"" + user.Email + "\" is already taken");
-
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return user.WithoutPassword();
         }
 
         public IEnumerable<User> GetByRole(string role)
