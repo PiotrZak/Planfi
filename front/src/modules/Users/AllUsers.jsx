@@ -2,12 +2,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
+
 import { alertActions } from 'redux/actions/alert.actions';
 import Return from 'common/Return';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'common/Loader';
 import Icon from 'common/Icon';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
 import { userContext } from 'App';
 import InviteUserModal from './InviteUsersModal';
@@ -21,7 +22,6 @@ import { AssignUsersToTrainers } from "./Common/AssignUsersToTrainers"
 
 export const AllUsers = () => {
 
-  const { user } = useContext(userContext);
   const [users, setUsers] = useState();
   const [activeUsers, setActiveUsers] = useState([]);
 
@@ -65,7 +65,6 @@ export const AllUsers = () => {
     }
   };
 
-
   return (
     <div>
       <div className="container">
@@ -76,12 +75,12 @@ export const AllUsers = () => {
         </div>
         <div className="users">
           <div className="users__filters">
-            <Link to={{
+            <NavLink to={{
               pathname: `/trainers`,
-            }}><p>Trainers page</p></Link>
-            <Link to={{
+            }}><p>Trainers page</p></NavLink>
+            <NavLink to={{
               pathname: `/clients`,
-            }}><p>Clients page</p></Link>
+            }}><p>Clients page</p></NavLink>
             <hr />
           </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
@@ -90,7 +89,7 @@ export const AllUsers = () => {
           </Loader>
         </div>
       </div>
-      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers = {activeUsers} setAssignPlan ={setAssignPlan} setAssignTrainer ={setAssignTrainer}/>
+      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers = {activeUsers} setAssignPlan ={setAssignPlan} setAssignTrainer ={setAssignTrainer} />
       <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
     </div>

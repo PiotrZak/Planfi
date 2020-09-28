@@ -96,10 +96,10 @@ namespace WebApi.Controllers
         }
 
         [Authorize(Roles = Role.Owner)]
-        [HttpPost("role/{id}")]
-        public IActionResult ChangeRole([FromBody] string userId, string Role)
+        [HttpPost("role")]
+        public IActionResult ChangeRole([FromBody]ChangeRole model)
         {
-            _OrganizationService.ChangeRole(userId, Role) ;
+            _OrganizationService.ChangeRole(model.UserId, model.Role) ;
             return Ok();
         }
 

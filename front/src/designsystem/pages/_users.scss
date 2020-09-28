@@ -94,7 +94,8 @@
   
   .users{
       &__filters{
-          display:flex;
+        display:flex;
+        justify-content: flex-end;
         margin:0 0 3.6rem 0;
         p{
             font-size:1.8rem;

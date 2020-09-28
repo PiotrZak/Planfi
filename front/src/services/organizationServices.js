@@ -9,6 +9,7 @@ export const organizationService = {
     getOrganizationUsers,
     getOrganizationClients,
     getOrganizationTrainers,
+    editRole,
   };
 
   function createOrganization(body) {
@@ -38,5 +39,10 @@ export const organizationService = {
   function getOrganizationTrainers(id) {
     return http.get(`${ORGANIZATION_URL}trainers/${id}`);
   }
+
+  function editRole(body) {
+    return http.post(`${ORGANIZATION_URL}role`, body);
+  }
+  
   
   

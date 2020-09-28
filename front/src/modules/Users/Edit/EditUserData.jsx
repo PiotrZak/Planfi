@@ -44,11 +44,9 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
 
     // todo - exclude this logic
     const changeUserDetails = (userData) => {
-    
-
         const transformedUserData = { firstName: userData.firstName, lastName: userData.lastName, phoneNumber: parseInt(userData.phone) }
         userService
-            .editUser(id, transformedUserData)
+            .editUser(transformedUserData)
             .then(() => {
                 dispatch(alertActions.success("User details edited!"))
                 onClose()

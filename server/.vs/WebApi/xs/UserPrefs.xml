@@ -1,18 +1,21 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Services/OrganizationService.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/AccountController.cs">
     <Files>
-      <File FileName="Controllers/OrganizationController.cs" Line="76" Column="61" IsPinned="True" />
+      <File FileName="Controllers/OrganizationController.cs" Line="83" Column="31" IsPinned="True" />
+      <File FileName="Controllers/ViewModels/ChangeRole.cs" Line="6" Column="24" />
       <File FileName="Startup.cs" Line="79" Column="41" />
-      <File FileName="Controllers/UsersController.cs" Line="52" Column="25" />
-      <File FileName="Models/AuthenticateModel.cs" Line="6" Column="6" />
-      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" Line="1" Column="1" />
+      <File FileName="Controllers/UsersController.cs" Line="173" Column="25" />
+      <File FileName="Models/AuthenticateModel.cs" />
+      <File FileName="Controllers/ViewModels/AssignExerciseToPlan.cs" />
       <File FileName="Controllers/ViewModels/ClientPlans.cs" Line="8" Column="1" />
       <File FileName="Controllers/ViewModels/AssignUsersToOrganization.cs" Line="1" Column="1" />
       <File FileName="Helpers/AutoMapper.cs" Line="13" Column="50" />
-      <File FileName="Entities/Users/User.cs" Line="12" Column="72" />
-      <File FileName="Services/OrganizationService.cs" Line="93" Column="10" NotebookId="1" IsPinned="True" />
+      <File FileName="Entities/Users/User.cs" Line="28" Column="23" />
+      <File FileName="Controllers/ViewModels/ClientTrainers.cs" Line="11" Column="10" />
+      <File FileName="Controllers/AccountController.cs" Line="62" Column="1" />
+      <File FileName="Services/OrganizationService.cs" Line="114" Column="31" NotebookId="1" IsPinned="True" />
       <File FileName="Program.cs" NotebookId="1" />
-      <File FileName="Services/UserService.cs" Line="106" Column="21" NotebookId="1" />
+      <File FileName="Services/UserService.cs" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -21,15 +24,14 @@
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True">
                 <Node name="ViewModels" expanded="True" />
+                <Node name="AccountController.cs" selected="True" />
               </Node>
               <Node name="Entities" expanded="True">
                 <Node name="Users" expanded="True" />
               </Node>
               <Node name="Helpers" expanded="True" />
               <Node name="Models" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="OrganizationService.cs" selected="True" />
-              </Node>
+              <Node name="Services" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>

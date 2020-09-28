@@ -8,11 +8,10 @@ export const http = {
   put
 };
 
-
 const currentUser = JSON.parse((localStorage.getItem('user')));   
 
 const config = {
-  headers: { Authorization: `Bearer ${currentUser.token}` }
+  headers: { Authorization: `Bearer ${currentUser && currentUser.token}` }
 };
 
 function get(url) {

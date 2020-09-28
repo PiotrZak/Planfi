@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, BrowserRouter, Link, NavLink } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, NavLink } from 'react-router-dom';
 import { isMobile } from "react-device-detect";
+import useGeolocation from "hooks/useWatchLocation.ts"
 
 import { createBrowserHistory } from 'history';
 import { PrivateRoute } from './utils/PrivateRoute';
@@ -23,7 +24,6 @@ import { UsersOfOrganization } from './modules/Users/Organization/UsersOfOrganiz
 import { ClientsOfOrganization } from './modules/Users/Organization/ClientsOfOrganization';
 
 import Alert from './common/Alert';
-
 import Menu from './Menu';
 
 import { Categories } from './modules/Exercises/Categories';
@@ -38,17 +38,6 @@ import { MyProfile } from './modules/Users/MyProfile';
 
 export const history = createBrowserHistory();
 
-export const themes = {
-  light: {
-    foreground: '#000000',
-    background: '#eeeeee',
-  },
-  dark: {
-    foreground: '#ffffff',
-    background: '#303030',
-  },
-};
-
 export const userContext = React.createContext();
 export const ThemeContext = React.createContext();
 export const LanguageContext = React.createContext();
@@ -58,6 +47,7 @@ let App = () => {
   const [theme, setTheme] = useState('dark')
   const [user, setUser] = useState(JSON.parse((localStorage.getItem('user'))));
   const [selectedLanguage, setSelectedLanguage] = useState('en');
+
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -86,11 +76,11 @@ let App = () => {
   };
 
   const renderAvatarMenu = () => {
-    // if (user) {
-    //   if (user.role === 'Trainer') {
-    //     return !isMobile && <AvatarMenu  />;
-    //   }
-    // }
+    if (user) {
+      if (user.role === 'Trainer') {
+        return !isMobile && <AvatarMenu />;
+      }
+    }
   };
 
   return (
@@ -148,6 +138,7 @@ let App = () => {
 
 const AvatarMenu = ({ user }) => {
 
+
   const toProfile = () => {
     history.push(`/user/${user.userId}`);
   };
@@ -160,6 +151,7 @@ const AvatarMenu = ({ user }) => {
   return (
     <div className="profile">
       <ul id="mainmenu">
+
         <li>
           {user.avatar
             ? <div
@@ -193,8 +185,14 @@ const LanguageSelector = () => {
 }
 
 const ThemeSelector = ({ toggleTheme }) => {
+
+  const location = useGeolocation();
+
   return (
-    <div className="theme-switcher" onClick={() => toggleTheme()}>set theme</div>
+    <div>
+      <div className="theme-switcher" onClick={() => toggleTheme()}>
+        set theme</div>
+    </div>
   )
 }
 export default App;

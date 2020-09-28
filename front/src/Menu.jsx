@@ -5,27 +5,39 @@ import Icon from "../src/common/Icon"
 import Spacer from "../src/common/Spacer"
 import { userContext, ThemeContext, LanguageContext } from './App';
 
+const currentUser = JSON.parse((localStorage.getItem('user')));
+
+const getUsersRoute = () => {
+    if (currentUser.role == "Admin") {
+        return "/users"
+    }
+    if (currentUser.role == "Owner") {
+        return "/organizationusers"
+    }
+    if (currentUser.role == "Trainer") {
+        return "/organizationclients"
+    }
+    if (currentUser.role == "User") {
+        return "/organizationclients"
+    }
+}
+
 const routes = {
     categories: "/categories",
     plans: "/plans",
-    users: "/users",
     myProfile: "/myprofile"
 }
 
 const Menu = () => {
 
     const [currentUrl, setCurrentUrl] = useState()
-
     const { lang } = useContext(LanguageContext)
-    
     const { user } = useContext(userContext)
-
 
     useEffect(() => {
         const currentUrl = window.location.href.split('/')
         setCurrentUrl(currentUrl[3])
     }, [window.location.href]);
-
 
     return (
         <div className="navigation">
@@ -39,10 +51,10 @@ const Menu = () => {
                 </NavLink>
                 <Spacer h={20} />
                 <NavLink
-                    to={routes.users}
+                    to={getUsersRoute()}
                     activeClassName="active"
                 >
-                    <div className="navigation__menu__icon"><Icon name="list-ul" fill={currentUrl === routes.users.substring(1) ? "white" : "#666674"} width={"28px"} /></div>
+                    <div className="navigation__menu__icon"><Icon name="list-ul" fill={currentUrl === "/organizationusers".substring(1) ? "white" : "#666674"} width={"28px"} /></div>
                 </NavLink>
                 <Spacer h={20} />
                 <NavLink

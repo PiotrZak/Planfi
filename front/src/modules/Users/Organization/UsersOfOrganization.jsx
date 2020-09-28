@@ -37,12 +37,12 @@ export const UsersOfOrganization = () => {
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
         setUsers(data);
+        setFilteredUsers(data)
         setIsLoading(false);
       })
       .catch((error) => {
         dispatch(alertActions.error(error.title));
       });
-
   };
 
   const submissionHandleElement = (selectedData) => {
@@ -76,20 +76,29 @@ export const UsersOfOrganization = () => {
         </div>
         <div className="users">
           <h3> You are {user.role}</h3>
-
-          <p onClick={() => filterUsers("User")}> Show only Clients</p>
-          <p onClick={() => filterUsers("Trainer")}> Show only Trainers </p>
+        <div className ="users__filters">
+          <p onClick={() => filterUsers("User")}>Clients</p>
+          <p onClick={() => filterUsers("Trainer")}>Trainers</p>
           <p onClick={() => filterUsers("All")}> All </p>
-
+        </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           <Loader isLoading={isLoading}>
             {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
           </Loader>
         </div>
       </div>
-      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer} />
+      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer}/>
       <AssignUsersToPlans organizationId={user.organizationId} assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers organizationId={user.organizationId} assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
+
     </div>
   );
 };
+
+const EditUserModal = () =>{
+  return (
+    <div>
+      <div>Edit user</div>
+    </div>
+  );
+}

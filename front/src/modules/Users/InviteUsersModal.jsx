@@ -1,40 +1,21 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { useDispatch } from 'react-redux'
-import { FormInput } from "common/FormInput"
-import { validationUtil } from "utils/validation.util"
-import { alertActions } from 'redux/actions/alert.actions'
-import { userService } from 'services/userServices'
 import { Button } from "common/buttons/Button"
 import { ReactMultiEmail, isEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 
+const saveChanges = "Send Emails";
+const inviteUsers = "Invite Users";
+const separateMails = "Separate individual e-mail addresses with a comma";
+
 const InviteUserModal = ({ openModal, onClose }) => {
 
-    const [userData] = useState({});
-    const [errors, setErrors] = useState({})
     const [emails, setEmails] = useState([])
 
-    const requiredFields = ["firstName", "lastName", "phone"];
-    const dispatch = useDispatch()
-
-    const handleInput = (e) => {
-        let name = e.target.name
-        userData[name] = e.target.value;
-
-        // const phoneValidation = validatePhone(userData['phone'])
-        // validationUtil.runSetErrors(name, setErrors, errors, requiredFields, userData)
-        // phoneValidation && setErrors({ ...errors, phone: phoneValidation }) 
-    }
-
     const submitForm = () => {
+        //todo sending mails
         console.log('test')
     }
-
-    // todo - exclude this logic
-    const saveChanges = "Send Emails";
-    const inviteUsers = "Invite Users";
-    const separateMails = "Separate individual e-mail addresses with a comma";
 
     return (
         <div>

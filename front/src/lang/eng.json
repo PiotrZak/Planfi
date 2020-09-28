@@ -34,7 +34,8 @@
       "assignToTrainerText": "Assign to trainer",
       "selectFromPlans": "Select from plans",
       "selected": "selected",
-      "userDeleted": "Users sucessfully deleted!"
+      "userDeleted": "Users sucessfully deleted!",
+      "editUserRole": "Edit User Role"
     }
   }
 
