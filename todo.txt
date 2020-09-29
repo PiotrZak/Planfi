@@ -1,0 +1,13 @@
+W MyProfile dodałbym zakładke settings gdzie byłyby ustawienia usera:
+	- Wybór języka (pl/en)
+	- Wybór theme (dark/light)
+	
+Duza redundancja: 
+ - Stworzyć jeden modal, który będzie przyjmowal parametry, aby był reużywalny.
+ - Przenieść icons do assets
+ - Styled Components
+ - Tests
+ - Graphql
+ - Atomic Design
+ - Jednostki relatynwe (rem)
+ 

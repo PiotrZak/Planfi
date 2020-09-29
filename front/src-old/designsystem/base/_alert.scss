@@ -1,0 +1,34 @@
+.alert {
+  &__container{
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+
+    span {
+      float: none;
+    }
+  }
+
+  &-danger {
+    background-color: $color-error-default;
+    padding: 1.5% 1.5%;
+    text-align: center;
+    color: $color-white;
+    border: 1px solid $color-error-darkest;
+  }
+
+  &-success {
+    background-color: $color-success-default;
+    padding: 1.5% 1.5%;
+    text-align: center;
+    color: white;
+    border: 1px solid $color-success-darkest;
+  }
+
+  &-close{
+    padding: 0;
+  }
+}
+

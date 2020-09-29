@@ -1,0 +1,50 @@
+.exercise {
+  img {
+    width: 100%;
+  }
+
+  &-counter {
+    margin: 2% 0 2% 0;
+  }
+
+  &__dropzone {
+    margin: 8% 0 8% 0;
+  }
+
+  &__form {
+    display: inline-flex;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+    justify-content: space-between;
+
+    h2:first-child {
+      margin: 0 25% 0 0;
+    }
+  }
+}
+
+.file {
+  background: #C4C4C4;
+  border-radius: 2px;
+  height: 4.2rem;
+  width: 4.2rem;
+  display: inline-flex;
+}
+
+
+.exercise-image{
+    width:120px;
+    height:120px;
+}
+
+.exercise__form{
+    display:inline-flex;
+    width:100%;
+    text-align:left;
+    align-items:center;
+    justify-content: space-between;
+
+    }
+
+

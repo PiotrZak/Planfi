@@ -1,0 +1,1 @@
+Fix height in ReactSVG <div fill="white"> 
