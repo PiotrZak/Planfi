@@ -48,6 +48,10 @@ namespace WebApi.Helpers
                 .HasMany(b => b.Users)
                 .WithOne();
 
+            modelBuilder.Entity<Organization>()
+                .HasMany(b => b.Plans)
+                .WithOne();
+
             // Plans <-> Users relationship
             modelBuilder.Entity<ClientsPlans>()
                 .HasKey(e => new { e.ClientId, e.PlanId });

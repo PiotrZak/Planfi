@@ -14,7 +14,6 @@ const InviteUserModal = ({ openModal, onClose }) => {
 
     const submitForm = () => {
         //todo sending mails
-        console.log('test')
     }
 
     return (

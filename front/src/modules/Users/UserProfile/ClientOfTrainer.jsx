@@ -16,7 +16,6 @@ export const ClientsOfTrainer = ({ id }) => {
             .allClientsByTrainer(id)
             .then((data) => {
                 setClients(data)
-                console.log(data)
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))

@@ -35,11 +35,9 @@ export const AssignUsersToTrainers = ({
   };
 
   const getAllTrainers = () => {
-    console.log(organizationId)
     organizationService
       .getOrganizationTrainers(organizationId)
       .then((data) => {
-        console.log(data)
         setTrainers(data);
         setIsLoading(false);
       })

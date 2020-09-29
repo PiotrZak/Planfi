@@ -40,7 +40,6 @@ export const LoginPage = () => {
         userService
             .login(userData)
             .then((data) => {
-                console.log(data)
                 dispatch(alertActions.success("Congratulations! You are log in."))
                 localStorage.setItem('user', JSON.stringify(data));
                 if (data.role === "Trainer") {

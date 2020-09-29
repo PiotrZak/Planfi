@@ -12,7 +12,6 @@ var ReactBottomsheet = require('react-bottomsheet');
 export const UsersPanel = ({ bottomSheet, setBottomSheet, activeUsers, setAssignPlan, setAssignTrainer }) => {
 
   const [openEditRoleModal, setOpenEditRoleModal] = useState(false)
-
   const dispatch = useDispatch();
 
   useEffect(() => {

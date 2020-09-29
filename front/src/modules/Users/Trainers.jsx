@@ -72,7 +72,6 @@ export const Trainers = () => {
   };
 
   const assignUserToTrainer = (selectedData) => {
-    console.log(selectedData);
     // {
     //     "trainerId": "string",
     //     "usersId": [

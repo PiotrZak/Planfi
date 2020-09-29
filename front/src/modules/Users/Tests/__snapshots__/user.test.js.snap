@@ -1,0 +1,560 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AllUsers Page  renders correctly 1`] = `
+<div>
+  <div
+    className="container"
+  >
+    <div
+      className="container__title"
+    >
+      <div
+        alt="Go back"
+        onClick={[Function]}
+      >
+        <div
+          fill="#5E4AE3"
+        />
+      </div>
+      <h2>
+        Users
+      </h2>
+      <div
+        onClick={[Function]}
+      >
+        <div
+          fill="#5e4ae3"
+        />
+      </div>
+    </div>
+    <div
+      className="users"
+    >
+      <div
+        className="users__filters"
+      >
+        <a
+          aria-current={null}
+          href="/trainers"
+          onClick={[Function]}
+        >
+          <p>
+            Trainers page
+          </p>
+        </a>
+        <a
+          aria-current={null}
+          href="/clients"
+          onClick={[Function]}
+        >
+          <p>
+            Clients page
+          </p>
+        </a>
+        <hr />
+      </div>
+      <div />
+      <div
+        className="container"
+      >
+        <div
+          className="justify-content-sm-center undefined row"
+        >
+          <div
+            className="col"
+          >
+            <div
+              className="spinner-large undefined spinner-border text-primary"
+              role="status"
+            >
+              <span
+                className="sr-only"
+              >
+                Loading...
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bottom-sheet-wrapper bottomsheet-without-background leave hide"
+  >
+    <div
+      className="bottom-sheet"
+    >
+      <div
+        className="bottom-sheet-item__oneline"
+      >
+        <div
+          fill="#2E6D2C"
+        />
+        <p>
+          0
+           
+          selected
+        </p>
+        <div
+          className="bottom-sheet-item__content"
+          onClick={[Function]}
+        >
+          <div
+            fill="#C3C3CF"
+          />
+          Delete user
+        </div>
+        <div
+          className="bottom-sheet-item__content"
+          onClick={[Function]}
+        >
+          <div
+            fill="#C3C3CF"
+          />
+          Assign plan
+        </div>
+        <div
+          className="bottom-sheet-item__content"
+          onClick={[Function]}
+        >
+          <div
+            fill="#C3C3CF"
+          />
+          Assign to trainer
+        </div>
+        <div
+          className="bottom-sheet-item__content"
+          onClick={[Function]}
+        >
+          <div
+            fill="#C3C3CF"
+          />
+          Edit User Role
+        </div>
+      </div>
+      <div />
+    </div>
+  </div>
+  <div
+    className="bottom-sheet-wrapper bottomsheet-without-background leave hide"
+  >
+    <div
+      className="bottom-sheet"
+    >
+      <div
+        className="bottom-nav"
+      >
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#2E6D2C"
+          />
+          <p>
+            0
+             
+            selected
+          </p>
+        </div>
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#5E4AE3"
+          />
+          <p
+            onClick={[Function]}
+          >
+            return
+          </p>
+        </div>
+      </div>
+      <div>
+        <h4>
+          Select from plans
+        </h4>
+        <div
+          className="container"
+        >
+          <div
+            className="justify-content-sm-center undefined row"
+          >
+            <div
+              className="col"
+            >
+              <div
+                className="spinner-large undefined spinner-border text-primary"
+                role="status"
+              >
+                <span
+                  className="sr-only"
+                >
+                  Loading...
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          className="btn btn--primary btn--lg"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Select Plan
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bottom-sheet-wrapper bottomsheet-without-background leave hide"
+  >
+    <div
+      className="bottom-sheet"
+    >
+      <div
+        className="bottom-nav"
+      >
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#2E6D2C"
+          />
+          <p>
+            0
+            selected
+          </p>
+        </div>
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#5E4AE3"
+          />
+          <p
+            onClick={[Function]}
+          >
+            return
+          </p>
+        </div>
+      </div>
+      <div>
+        <h4>
+          Select from plans
+        </h4>
+        <div
+          className="container"
+        >
+          <div
+            className="justify-content-sm-center undefined row"
+          >
+            <div
+              className="col"
+            >
+              <div
+                className="spinner-large undefined spinner-border text-primary"
+                role="status"
+              >
+                <span
+                  className="sr-only"
+                >
+                  Loading...
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          className="btn btn--primary btn--lg"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Select Plan
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserPage  renders correctly 1`] = `
+<div>
+  <div
+    className="user-container"
+  >
+    <div
+      className="container"
+    >
+      <div
+        className="user-container__container__title"
+      >
+        <div
+          alt="Go back"
+          onClick={[Function]}
+        >
+          <div
+            fill="white"
+          />
+        </div>
+        <div
+          onClick={[Function]}
+        >
+          <div
+            fill="white"
+          />
+        </div>
+      </div>
+      <div
+        className="user-container__info"
+      >
+        <div>
+          <div
+            className="avatar false"
+            onClick={[Function]}
+            onDrop={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <input
+              className="file-input"
+              multiple={true}
+              onChange={[Function]}
+              type="file"
+            />
+          </div>
+          <h2>
+             
+          </h2>
+          <p />
+          <p />
+          <p />
+        </div>
+      </div>
+      <div
+        className="user-container__tabs"
+      >
+        <ul
+          className="nav nav-tabs"
+        >
+          <li
+            className="nav-item"
+          >
+            <a
+              className="active nav-link"
+              onClick={[Function]}
+            >
+              <h2>
+                Plans
+              </h2>
+            </a>
+          </li>
+          <li
+            className="nav-item"
+          >
+            <a
+              className="nav-link"
+              onClick={[Function]}
+            >
+              <h2>
+                Trainers
+              </h2>
+            </a>
+          </li>
+        </ul>
+        <div
+          className="tab-content"
+        >
+          <div
+            className="tab-pane active"
+          >
+            <h1>
+              <div>
+                <h2>
+                  There isn't plans
+                </h2>
+              </div>
+            </h1>
+          </div>
+          <div
+            className="tab-pane"
+          >
+            <h1>
+              <div>
+                <h2>
+                  There isn't trainers
+                </h2>
+              </div>
+            </h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bottom-sheet-wrapper bottomsheet-without-background leave hide"
+  >
+    <div
+      className="bottom-sheet"
+    >
+      <div
+        className="bottom-sheet-item__oneline"
+      >
+        <div
+          className="bottom-sheet-item__content"
+          onClick={[Function]}
+        >
+          <div
+            fill="#C3C3CF"
+          />
+          Assign plan
+        </div>
+        <button
+          className="bottom-sheet-item"
+          onClick={[Function]}
+        >
+          Assign to me
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bottom-sheet-wrapper bottomsheet-without-background leave hide"
+  >
+    <div
+      className="bottom-sheet"
+    >
+      <div
+        className="bottom-nav"
+      >
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#2E6D2C"
+          />
+          <p>
+            1
+             
+            selected
+          </p>
+        </div>
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#5E4AE3"
+          />
+          <p
+            onClick={[Function]}
+          >
+            return
+          </p>
+        </div>
+      </div>
+      <div>
+        <h4>
+          Select from plans
+        </h4>
+        <div
+          className="container"
+        >
+          <div
+            className="justify-content-sm-center undefined row"
+          >
+            <div
+              className="col"
+            >
+              <div
+                className="spinner-large undefined spinner-border text-primary"
+                role="status"
+              >
+                <span
+                  className="sr-only"
+                >
+                  Loading...
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          className="btn btn--primary btn--lg"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Select Plan
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    className="bottom-sheet-wrapper bottomsheet-without-background leave hide"
+  >
+    <div
+      className="bottom-sheet"
+    >
+      <div
+        className="bottom-nav"
+      >
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#2E6D2C"
+          />
+          <p>
+            1
+            selected
+          </p>
+        </div>
+        <div
+          className="bottom-nav__item"
+        >
+          <div
+            fill="#5E4AE3"
+          />
+          <p
+            onClick={[Function]}
+          >
+            return
+          </p>
+        </div>
+      </div>
+      <div>
+        <h4>
+          Select from plans
+        </h4>
+        <div
+          className="container"
+        >
+          <div
+            className="justify-content-sm-center undefined row"
+          >
+            <div
+              className="col"
+            >
+              <div
+                className="spinner-large undefined spinner-border text-primary"
+                role="status"
+              >
+                <span
+                  className="sr-only"
+                >
+                  Loading...
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          className="btn btn--primary btn--lg"
+          disabled={true}
+          onClick={[Function]}
+        >
+          Select Plan
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

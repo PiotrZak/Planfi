@@ -25,7 +25,6 @@ export const ClientsOfOrganization = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [assignPlan, setAssignPlan] = useState(false);
 
-
   const [isLoading, setIsLoading] = useState(true);
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 
@@ -71,11 +70,8 @@ export const ClientsOfOrganization = () => {
       });
   };
 
-  const assignUserToTrainer = (selectedData) => {
-    console.log(selectedData);
-
+  const assignUserToTrainer = () => {
     const data = { trainerIds: [user.userId], userIds: activeUsers };
-
     userService
       .assignUsersToTrainer(data)
       .then(() => {
@@ -136,7 +132,6 @@ export const ClientsOfOrganization = () => {
             </div>
           </>
         }
-
       </ReactBottomsheet>
       <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
     </div>

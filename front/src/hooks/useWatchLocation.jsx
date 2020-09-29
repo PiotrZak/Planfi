@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-export interface GeoLocationSensorState {
-  accuracy: number,
-  altitude: number,
-  altitudeAccuracy: number,
-  heading: number,
-  latitude: number,
-  longitude: number,
-  speed: number,
-  timestamp: number
-}
+// export interface GeoLocationSensorState {
+//   accuracy: number,
+//   altitude: number,
+//   altitudeAccuracy: number,
+//   heading: number,
+//   latitude: number,
+//   longitude: number,
+//   speed: number,
+//   timestamp: number
+// }
 
 const useGeolocation = () => {
   const [state, setState] = useState({
@@ -23,9 +23,9 @@ const useGeolocation = () => {
     timestamp: Date.now(),
   });
   let mounted = true;
-  let watchId: any;
+  let watchId;
 
-  const onEvent = (event: any) => {
+  const onEvent = (event) => {
     if (mounted) {
       setState({
         accuracy: event.coords.accuracy,

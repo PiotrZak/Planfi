@@ -53,10 +53,9 @@ export const AllUsers = () => {
   };
 
   const submissionHandleElement = (selectedData) => {
-    console.log(selectedData)
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
-    console.log(selectedUsers)
+
     if (selectedUsers.length > 0) {
       setBottomSheet(true);
     } else {

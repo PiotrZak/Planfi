@@ -3,6 +3,7 @@ import { PLANS_URL } from "./utils"
 
 export const planService = {
   getAllPlans,
+  getOrganizationPlans,
   addPlan,
   editPlan,
   getPlanById,
@@ -15,6 +16,10 @@ export const planService = {
 
   function getAllPlans(body) {
     return http.get(PLANS_URL, body);
+  }
+
+  function getOrganizationPlans(id) {
+    return http.get(`${PLANS_URL}/organizationsplan/${id}`);
   }
 
   function addPlan(body) {

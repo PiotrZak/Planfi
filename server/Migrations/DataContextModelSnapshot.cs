@@ -314,6 +314,9 @@ namespace WebApi.Migrations
                     b.Property<string>("CreatorName")
                         .HasColumnType("text");
 
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
@@ -323,6 +326,8 @@ namespace WebApi.Migrations
                     b.HasKey("PlanId");
 
                     b.HasIndex("ClientUserId");
+
+                    b.HasIndex("OrganizationId");
 
                     b.HasIndex("TrainerUserId");
 
@@ -400,7 +405,7 @@ namespace WebApi.Migrations
                             Password = "admin",
                             PhoneNumber = 555555555,
                             Role = "Admin",
-                            AdminId = "eec704f5-eab7-45fa-a2b6-1b31220eae5f"
+                            AdminId = "a1a25b30-b3af-4373-9023-d8ebcf6ca550"
                         });
                 });
 
@@ -670,7 +675,7 @@ namespace WebApi.Migrations
                             Password = "Owner1",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "50ed5772-d5b8-4013-9e7f-8bca7de6d525"
+                            OwnerId = "ed39f480-fbf3-415e-9b00-22cb2fd3e848"
                         },
                         new
                         {
@@ -682,7 +687,7 @@ namespace WebApi.Migrations
                             Password = "Owner2",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "6292ff9d-e291-4889-8b58-64fabb2a7c0e"
+                            OwnerId = "7906be4a-5712-422b-ab32-cb6d6f83894d"
                         },
                         new
                         {
@@ -694,7 +699,7 @@ namespace WebApi.Migrations
                             Password = "Owner3",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "47a7ab54-0fd6-4b1a-81e7-f069d13b246e"
+                            OwnerId = "aa04d959-b923-4f65-a2aa-1826d2ca104c"
                         });
                 });
 
@@ -834,6 +839,10 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Client", null)
                         .WithMany("Plans")
                         .HasForeignKey("ClientUserId");
+
+                    b.HasOne("WebApi.Entities.Organization", null)
+                        .WithMany("Plans")
+                        .HasForeignKey("OrganizationId");
 
                     b.HasOne("WebApi.Entities.Trainer", null)
                         .WithMany("Plans")

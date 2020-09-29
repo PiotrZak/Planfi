@@ -39,31 +39,29 @@ export const MyProfile = (props) => {
     const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
     return (
-        <div className="user-container">
-            <div className="container">
+        <div>
+            <div className="user-container">
+                <div className="container">
 
-                <div className="user-container__container__title">
-                    <Return fill={"white"} />
-                    <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"white"} /></div>
+                    <div className="user-container__container__title">
+                        <Return fill={"white"} />
+                        <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"white"} /></div>
+                    </div>
+                    {user && <UserInfo user={user} />}
+                    <Navs user={user} />
+                    <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
+                    <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
+                    <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
                 </div>
-
-                {user && <UserInfo user={user} />}
-
-                <Navs user={user} />
-
-                <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
-                <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
-                <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
-
-                <ReactBottomsheet
-                    visible={bottomSheet}
-                    onClose={() => setBottomSheet(false)}>
-                    <button onClick={() => setOpenEditUserData(true)} className='bottom-sheet-item'>{userEdit}</button>
-                    <button onClick={() => setOpenEditMailModal(true)} className='bottom-sheet-item'>{changeMail}</button>
-                    <button onClick={() => setOpenEditUserPasswordModal(true)} className='bottom-sheet-item'>{changePassword}</button>
-                    <button className='bottom-sheet-item'>{logout}</button>
-                </ReactBottomsheet>
             </div>
+            <ReactBottomsheet
+                visible={bottomSheet}
+                onClose={() => setBottomSheet(false)}>
+                <button onClick={() => setOpenEditUserData(true)} className='bottom-sheet-item'>{userEdit}</button>
+                <button onClick={() => setOpenEditMailModal(true)} className='bottom-sheet-item'>{changeMail}</button>
+                <button onClick={() => setOpenEditUserPasswordModal(true)} className='bottom-sheet-item'>{changePassword}</button>
+                <button className='bottom-sheet-item'>{logout}</button>
+            </ReactBottomsheet>
         </div>
     );
 }
@@ -72,8 +70,6 @@ const Navs = ({ user }) => {
 
     const [activeTab, setActiveTab] = useState('1');
     const myPlans = "Plans";
-    const myTrainers = "Trainers";
-
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
     }

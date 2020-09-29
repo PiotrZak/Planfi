@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import Icon from "../src/common/Icon"
 import Spacer from "../src/common/Spacer"
-import { userContext, ThemeContext, LanguageContext } from './App';
+import { userContext, LanguageContext } from './App';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));
 

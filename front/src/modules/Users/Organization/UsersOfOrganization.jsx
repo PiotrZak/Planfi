@@ -90,15 +90,6 @@ export const UsersOfOrganization = () => {
       <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer}/>
       <AssignUsersToPlans organizationId={user.organizationId} assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers organizationId={user.organizationId} assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
-
     </div>
   );
 };
-
-const EditUserModal = () =>{
-  return (
-    <div>
-      <div>Edit user</div>
-    </div>
-  );
-}

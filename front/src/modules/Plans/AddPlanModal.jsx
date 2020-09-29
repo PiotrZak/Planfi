@@ -31,7 +31,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
     
     const createPlan = (addPlanData) => {
 
-        const transformedData = {title: addPlanData.title, creatorId: user.userId, creatorName: user.firstName}
+        const transformedData = {title: addPlanData.title, organizationId: user.organizationId, creatorId: user.userId, creatorName: user.firstName}
 
         planService
             .addPlan(transformedData)

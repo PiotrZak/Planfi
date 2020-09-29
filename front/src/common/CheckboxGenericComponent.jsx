@@ -129,10 +129,14 @@ export const CheckboxGenericComponent = ({
                   </Link>
                 }
                 {type === "exercises" &&
-                  <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+                  <Link to={{
+                    pathname: `/exercise/${element.exerciseId}`,
+                    state: { id: element.exerciseId }
+                  }}>
+                    <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+                  </Link>
                 }
               </Holdable>
-
               :
               <>
                 {type === "users" &&
@@ -148,7 +152,7 @@ export const CheckboxGenericComponent = ({
                     pathname: `/plan/${element.planId}`,
                     state: { id: element.planId }
                   }}>
-                    <GenericElement className={className} key={i} headline={element.title} subline ={element.creatorName} plan={element} />
+                    <GenericElement className={className} key={i} headline={element.title} subline={element.creatorName} plan={element} />
                   </Link>
                 }
                 {type === "exercises" &&

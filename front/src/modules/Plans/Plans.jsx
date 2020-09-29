@@ -10,7 +10,7 @@ import {commonUtil} from "utils/common.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
 import { isMobile } from "react-device-detect";
-import { ThemeContext } from 'App';
+import { userContext } from 'App';
 
 //todo - care about lang
 import messages from 'lang/eng'
@@ -19,25 +19,20 @@ var ReactBottomsheet = require('react-bottomsheet');
 
 export const Plans = () => {
 
-    const { theme } = useContext(ThemeContext);
+    const { user } = useContext(userContext);
 
     const [plans, setPlans] = useState();
     const [selectedPlans, setSelectedPlans] = useState([]);
-
     const [openModal, setOpenModal] = useState(false);
-
     const [openEditModal, setOpenEditModal] = useState(false);
-
     const [isLoading, setIsLoading] = useState(true)
     const [bottomSheet, setBottomSheet] = useState(false)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-
-        console.log(theme)
         planService
-            .getAllPlans()
+            .getOrganizationPlans(user.organizationId)
             .then((data) => {
                 setPlans(data);
                 setIsLoading(false)
@@ -73,7 +68,7 @@ export const Plans = () => {
 
     return (
         <div>
-            <div className={"container " + (theme)}>
+            <div className={"container "}>
                 <div className="container__title">
                     <Return />
                     <h2>{messages.plans.plansTitle}</h2>

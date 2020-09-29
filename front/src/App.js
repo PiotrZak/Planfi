@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter, NavLink } from 'react-router-dom';
 import { isMobile } from "react-device-detect";
-import useGeolocation from "hooks/useWatchLocation.ts"
+import useGeolocation from "hooks/useWatchLocation"
 
 import { createBrowserHistory } from 'history';
 import { PrivateRoute } from './utils/PrivateRoute';
@@ -30,7 +30,6 @@ import { Categories } from './modules/Exercises/Categories';
 import { Category } from './modules/Exercises/Category';
 
 import './styles.scss';
-// import { Exercises } from './modules/Exercises/Exercises';
 import { Exercise } from './modules/Exercises/Exercises/Exercise';
 import { AddExercise } from './modules/Exercises/Exercises/AddExercise';
 import { EditExercise } from './modules/Exercises/Exercises/EditExercise';

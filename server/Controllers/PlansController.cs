@@ -34,7 +34,6 @@ namespace WebApi.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromBody]CreatePlan model)
         {
-
             var plan = _mapper.Map<Plan>(model);
 
             try
@@ -70,7 +69,6 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id,[FromForm]string title)
         {
-
             try
             {
                 _planService.Update(id, title);
@@ -87,7 +85,6 @@ namespace WebApi.Controllers
         public IActionResult AssignToPlan([FromBody]AssignExerciseToPlan model)
         {
             _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId);
-
             return Ok();
         }
 
@@ -96,8 +93,22 @@ namespace WebApi.Controllers
         public IActionResult UnassignToPlan([FromBody] AssignExerciseToPlan model)
         {
             _planService.UnassignExercisesToPlan(model.PlanId, model.ExerciseId);
-
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpGet("organizationsplan/{id}")]
+        public IActionResult GetOrganizationPlans(string id)
+        {
+            var plans = _planService.GetOrganizationPlans(id);
+
+            if (plans == null)
+                return NotFound();
+
+            // Convert it to the DTO
+            var transformedPlans = _mapper.Map<List<Plan>, List<ResultPlan>>(plans.ToList());
+
+            return Ok(transformedPlans);
         }
 
         [AllowAnonymous]

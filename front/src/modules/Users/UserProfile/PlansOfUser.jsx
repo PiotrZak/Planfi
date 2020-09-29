@@ -18,7 +18,6 @@ export const PlansOfUser = ({ id }) => {
             .userPlans(id)
             .then((data) => {
                 setPlans(data)
-                console.log(data)
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))

@@ -72,7 +72,6 @@ export const Clients = () => {
   };
 
   const assignUserToTrainer = (selectedData) => {
-    console.log(selectedData);
 
     const data = { trainerIds: [user.userId], userIds: activeUsers };
 

@@ -10,6 +10,7 @@ namespace WebApi.Services
         Plan GetById(string id);
         Plan Create(Plan plan);
         IEnumerable<Plan> GetAll();
+        IEnumerable<Plan> GetOrganizationPlans(string id);
         IEnumerable<Plan> GetUserPlans(string id);
         IEnumerable<Plan> GetCreatorPlans(string id);
         void Delete(string[] id);
@@ -111,6 +112,13 @@ namespace WebApi.Services
             }
             _context.Plans.Update(plan);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Plan> GetOrganizationPlans(string organizationId)
+        {
+            var organizationPlans = _context.Plans.Where(x => x.OrganizationId == organizationId);
+            return organizationPlans;
+
         }
 
         public IEnumerable<Plan> GetUserPlans(string userId)

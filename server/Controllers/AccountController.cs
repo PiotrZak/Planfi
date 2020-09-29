@@ -60,7 +60,6 @@ namespace WebApi.Controllers
             memoryStream.ToArray();
             var Avatar = memoryStream.ToArray();
 
-
             try
             {
                 _AccountService.UploadAvatar(userId, Avatar);

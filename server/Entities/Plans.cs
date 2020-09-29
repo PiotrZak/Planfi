@@ -19,12 +19,10 @@ namespace WebApi.Entities
         public string Title { get; set; }
         public string CreatorId { get; set; }
         public string CreatorName { get; set; }
+        public string OrganizationId { get; set; }
 
         public List<Exercise> Exercises { get; set; }
 
         public virtual ICollection<ClientsPlans> ClientsPlans { get; set; }
-
-        //public List<AssignPlansToUser> UserIds{ get; set; }
-        //public List<Trainer> Trainers { get; set; }
     }
 }
