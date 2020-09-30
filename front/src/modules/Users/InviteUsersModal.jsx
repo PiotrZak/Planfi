@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Button } from "common/buttons/Button"
+import Button from "components/atoms/Button"
 import { ReactMultiEmail, isEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 

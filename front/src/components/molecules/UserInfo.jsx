@@ -1,5 +1,5 @@
 import React from 'react';
-import {Avatar} from "../Avatar"
+import {Avatar} from "../molecules/Avatar"
 
 export const UserInfo = ({user}) => (
   <div className="user-container__info">

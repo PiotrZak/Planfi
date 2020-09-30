@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { exerciseService } from "services/exerciseService";
-import Icon from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import { NavLink } from 'react-router-dom';
-import Return from "common/Return"
-import Button from "common/GenericElement/GenericElement"
+import Return from 'components/atoms/Return';
+import Button from "common/molecules/GenericElement/GenericElement"
 
 export const Exercises = () => {
     const [exercises, setExercises] = useState();

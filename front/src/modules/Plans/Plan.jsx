@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { planService } from "services/planService";
 import { exerciseService } from "services/exerciseService";
 import { categoryService } from "services/categoryService";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
-import Icon from "common/Icon"
-import Return from "common/Return"
+import Icon from 'components/atoms/Icon';
+import Return from 'components/atoms/Return';
 import "react-multi-carousel/lib/styles.css";
-import { Loader } from "common/Loader"
-import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
-import Spacer from "common/Spacer"
+import { Loader } from 'components/atoms/Loader';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import Spacer from "components/atoms/Spacer"
 import { commonUtil } from "utils/common.util"
-import { Search } from "common/Search"
+import Search  from "components/atoms/Search"
 
-//todo - care about lang
 import messages from 'lang/eng'
 
 import { PlansPanel } from "./microModules/PlansPanel"

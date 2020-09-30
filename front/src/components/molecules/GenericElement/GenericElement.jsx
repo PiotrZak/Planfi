@@ -1,7 +1,6 @@
 import React from "react";
-import CircleButton from "../CircleButton/CircleButton";
 import { Link } from 'react-router-dom';
-import Icon from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import { planService } from "services/planService";
 
 const GenericElement = ({
@@ -46,10 +45,6 @@ const GenericElement = ({
                 </div>
             </div>
             <div className="rectangleButton__menu">
-
-                {/* <CircleButton iconName="ellipsis-h" />
-                {secondaryMenu && <CircleButton iconName="draggabledots" />} */}
-
             </div>
         </div>
     )

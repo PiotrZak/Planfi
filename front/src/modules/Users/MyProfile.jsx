@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
-
-import Icon from "common/Icon"
+import React, { useState, useContext } from 'react';
+import Icon from 'components/atoms/Icon';
 import { useDispatch } from "react-redux";
-import Return from "common/Return"
+import Return from 'components/atoms/Return';
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
-import { UserInfo } from "common/users/UserInfo"
+import { UserInfo } from "components/molecules/UserInfo"
 
 import EditUserPasswordModal from "./Edit/EditUserPassword"
 import EditUserEmailModal from "./Edit/EditUserEmail";

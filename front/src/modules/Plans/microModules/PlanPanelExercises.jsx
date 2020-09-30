@@ -3,7 +3,7 @@ import { planService } from "services/planService";
 import { Link} from 'react-router-dom';
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
-import Icon from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import { isMobile } from "react-device-detect";
 

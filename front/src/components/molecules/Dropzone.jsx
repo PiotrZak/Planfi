@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Icon from './Icon';
+import Icon from 'components/atoms/Icon';
 
 const Dropzone = ({ handleFileData }) => {
   const fileInputRef = useRef();

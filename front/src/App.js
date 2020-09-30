@@ -15,15 +15,15 @@ import { ForgotPassword } from './modules/Account/ForgotPassword';
 import { Plans } from './modules/Plans/Plans';
 import { Plan } from './modules/Plans/Plan';
 
-import { AllUsers } from './modules/Users/AllUsers';
-import { Trainers } from './modules/Users/Trainers';
-import { Clients } from './modules/Users/Clients';
+import { AllUsers } from './modules/Users/Admin/AllUsers';
+import { Trainers } from './modules/Users/Admin/Trainers';
+import { Clients } from './modules/Users/Admin/Clients';
 import { User } from './modules/Users/User';
 
 import { UsersOfOrganization } from './modules/Users/Organization/UsersOfOrganization';
 import { ClientsOfOrganization } from './modules/Users/Organization/ClientsOfOrganization';
 
-import Alert from './common/Alert';
+import Alert from 'components/organisms/Alert';
 import Menu from './Menu';
 
 import { Categories } from './modules/Exercises/Categories';
@@ -98,7 +98,6 @@ let App = () => {
               {renderMenu()}
               {renderAvatarMenu()}
               <Switch>
-
 
                 <PrivateRoute exact path="/register" component={RegisterPage} />
                 <PrivateRoute exact path="/activate" component={ActivatePage} />

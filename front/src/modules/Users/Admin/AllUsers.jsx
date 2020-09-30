@@ -1,24 +1,22 @@
 
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
-
 import { alertActions } from 'redux/actions/alert.actions';
-import Return from 'common/Return';
+import Return from 'components/atoms/Return';
 import { commonUtil } from 'utils/common.util';
-import { Loader } from 'common/Loader';
-import Icon from 'common/Icon';
+import { Loader } from 'components/atoms/Loader';
+import Icon from 'components/atoms/Icon';
 import { NavLink } from 'react-router-dom';
-import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
-import { userContext } from 'App';
-import InviteUserModal from './InviteUsersModal';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import InviteUserModal from '../InviteUsersModal';
 
 //todo - care about lang
 import messages from 'lang/eng'
 
-import { UsersPanel } from "./Common/UsersPanel"
-import { AssignUsersToPlans } from "./Common/AssignUsersToPlans"
-import { AssignUsersToTrainers } from "./Common/AssignUsersToTrainers"
+import { UsersPanel } from "../Common/UsersPanel"
+import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
+import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
 
 export const AllUsers = () => {
 

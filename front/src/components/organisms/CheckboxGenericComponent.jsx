@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FormInput } from "./FormInput";
+import { FormInput } from "components/atoms/FormInput";
 import { Link } from 'react-router-dom';
-import GenericElement from "./GenericElement/GenericElement"
-import {
-  isMobile
-} from "react-device-detect";
-
-import { Holdable } from "../../src/hooks/useLongPress";
+import GenericElement from "components/molecules/GenericElement/GenericElement"
+import {isMobile} from "react-device-detect";
+import { Holdable } from "hooks/useLongPress";
 
 
 export const CheckboxGenericComponent = ({

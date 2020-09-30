@@ -3,8 +3,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
 import { alertActions } from 'redux/actions/alert.actions'
 import { organizationService } from 'services/organizationServices'
-import { Button } from "common/buttons/Button"
-import {DropdownInput} from "common/Dropdown"
+import Button from "components/atoms/Button"
+import {DropdownInput} from "components/atoms/Dropdown"
 import messages from 'lang/eng'
 
 const EditRoleModal = ({ id, openModal, onClose }) => {

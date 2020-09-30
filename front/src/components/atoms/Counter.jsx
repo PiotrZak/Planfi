@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Row, Input } from 'reactstrap';
-import Icon from './Icon';
+import Icon from 'components/atoms/Icon';
 
 const Counter = ({ defaultValue, handleData }) => {
   const [value, setValue] = useState(defaultValue || 0);

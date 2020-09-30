@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { FormInput } from 'common/FormInput';
+import { FormInput } from 'components/atoms/FormInput';
 import { validationUtil } from 'utils/validation.util';
-import { Button } from 'common/buttons/Button';
+import Button from "components/atoms/Button"
 
 export const ActivatePage = (props) => {
   const [userData, setUserData] = useState({});

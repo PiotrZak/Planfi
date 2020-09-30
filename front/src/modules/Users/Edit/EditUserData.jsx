@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
-import { FormInput } from "common/FormInput"
+import { FormInput } from "components/atoms/FormInput"
 import { validationUtil } from "utils/validation.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { userService } from 'services/userServices'
-import { Button } from "common/buttons/Button"
-
-
+import Button from "components/atoms/Button"
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
 
@@ -25,7 +23,6 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
         validationUtil.runSetErrors(name, setErrors, errors, requiredFields, userData)
         phoneValidation && setErrors({ ...errors, phone: phoneValidation }) 
     }
-
 
     function validatePhone(phone){
         let errorField = {};

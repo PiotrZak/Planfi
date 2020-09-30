@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { FormInput } from "common/FormInput";
+import { FormInput } from "components/atoms/FormInput"
 import { useDispatch } from 'react-redux';
-import { Button } from "common/buttons/Button"
-import Return from "common/Return"
+import Button from "components/atoms/Button"
+import Return from 'components/atoms/Return';
 import { exerciseService } from 'services/exerciseService';
 import { alertActions } from 'redux/actions/alert.actions'
-import Dropzone from "common/Dropzone"
-import Counter from "common/Counter"
+import Dropzone from "components/molecules/Dropzone"
+import Counter from "components/atoms/Counter"
 import { validationUtil } from "utils/validation.util"
 import { useHistory } from "react-router-dom";
 

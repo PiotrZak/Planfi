@@ -1,11 +1,9 @@
 import React from 'react';
-import Icon from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
-import { Loader } from "common/Loader"
-import GenericElement from "common/GenericElement/GenericElement";
+import { Loader } from 'components/atoms/Loader';
+import GenericElement from "components/molecules/GenericElement/GenericElement"
 import { isMobile } from "react-device-detect";
-
-//todo - care about lang
 import messages from 'lang/eng'
 
 var ReactBottomsheet = require('react-bottomsheet');

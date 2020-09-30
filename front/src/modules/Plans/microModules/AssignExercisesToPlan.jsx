@@ -1,8 +1,8 @@
 import React from 'react';
-import Icon from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
-import { Button } from "common/buttons/Button"
-import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
+import Button from "components/atoms/Button"
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import { commonUtil } from "utils/common.util"
 import { isMobile } from "react-device-detect";
 

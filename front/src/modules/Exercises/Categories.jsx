@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from 'services/categoryService';
-import Icon from 'common/Icon';
-import { Loader } from 'common/Loader';
-import Return from 'common/Return';
+import Icon from 'components/atoms/Icon';
+import { Loader } from 'components/atoms/Loader';
+import Return from 'components/atoms/Return';
 import { alertActions } from 'redux/actions/alert.actions'
-import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
 import AddCategoryModal from './AddCategoryModal';
 import { commonUtil } from "utils/common.util"
 import { isMobile } from "react-device-detect";

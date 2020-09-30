@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FormInput } from "common/FormInput"
-import { Button } from "common/buttons/Button"
+import { FormInput } from 'components/atoms/FormInput';
+import Button from "components/atoms/Button"
 import { useDispatch } from 'react-redux'
 import { userService } from 'services/userServices';
 import { validationUtil } from "utils/validation.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
-import { Icon } from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import { motivationalQuotesEnglish } from "utils/motivationalQuotes"
 
 

@@ -4,10 +4,10 @@ import { userService } from 'services/userServices';
 import { organizationService } from 'services/organizationServices';
 import { alertActions } from 'redux/actions/alert.actions';
 import { commonUtil } from 'utils/common.util';
-import { Loader } from 'common/Loader';
-import Icon from 'common/Icon';
-import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
-import { Button } from 'common/buttons/Button';
+import { Loader } from 'components/atoms/Loader';
+import Icon from 'components/atoms/Icon';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import Button from "components/atoms/Button"
 import messages from 'lang/eng'
 
 var ReactBottomsheet = require('react-bottomsheet');

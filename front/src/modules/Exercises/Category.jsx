@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
-import { Link, useHistory, NavLink } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
-import { CheckboxGenericComponent } from "common/CheckboxGenericComponent"
-import Icon from "common/Icon"
-import Return from "common/Return"
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import Icon from 'components/atoms/Icon';
+import Return from 'components/atoms/Return';
 import { commonUtil } from "utils/common.util"
-import { Loader } from "common/Loader"
+import { Loader } from 'components/atoms/Loader';
 import "react-multi-carousel/lib/styles.css";
 import { PlanPanelExercises } from "../Plans/microModules/PlanPanelExercises"
-import { Search } from "common/Search"
-import Spacer from "common/Spacer"
+import Search  from "components/atoms/Search"
+import Spacer from "components/atoms/Spacer"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
