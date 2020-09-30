@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Input } from 'reactstrap';
-import { Label } from './Label';
-import { ValidationHint } from './ValidationHint';
+import { Label } from 'components/atoms/Label';
+import { ValidationHint } from 'components/atoms/ValidationHint';
 
 export const FormInput = ({
   name,

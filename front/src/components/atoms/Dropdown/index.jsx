@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "reactstrap";
-import { ValidationHint } from "./ValidationHint";
-import { Label } from "./Label";
+import { ValidationHint } from "components/atoms/ValidationHint";
+import { Label } from "components/atoms/Label";
 import { Row, Col } from "reactstrap";
 import { Spinner } from "reactstrap";
 
