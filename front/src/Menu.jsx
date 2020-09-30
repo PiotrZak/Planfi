@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import Icon from "../src/common/Icon"
-import Spacer from "../src/common/Spacer"
+import Icon from 'components/atoms/Icon';
+import Spacer from "components/atoms/Spacer"
 import { userContext, LanguageContext } from './App';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));

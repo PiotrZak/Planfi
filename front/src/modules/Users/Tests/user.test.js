@@ -6,7 +6,7 @@ import configureStore from 'redux-mock-store'
 import { BrowserRouter } from 'react-router-dom'
 import renderer from 'react-test-renderer';
 
-import { AllUsers } from '../AllUsers';
+import { AllUsers } from '../Admin/AllUsers';
 import { User } from '../User';
 
 const currentOwner = {

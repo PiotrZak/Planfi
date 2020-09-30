@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { planService } from "services/planService";
-import Icon from "common/Icon"
-import Return from "common/Return"
-import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
+import Icon from 'components/atoms/Icon';
+import Return from 'components/atoms/Return';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import AddPlanModal from "./AddPlanModal";
 import EditPlanModal from "./EditPlanModal";
-import { Loader } from "common/Loader"
+import { Loader } from 'components/atoms/Loader';
 import {commonUtil} from "utils/common.util"
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';

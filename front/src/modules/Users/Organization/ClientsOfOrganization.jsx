@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
 import { alertActions } from 'redux/actions/alert.actions';
-import Return from 'common/Return';
+import Return from 'components/atoms/Return';
 import { commonUtil } from 'utils/common.util';
-import { Loader } from 'common/Loader';
-import Icon from 'common/Icon';
-import { CheckboxGenericComponent } from 'common/CheckboxGenericComponent';
+import { Loader } from 'components/atoms/Loader';
+import Icon from 'components/atoms/Icon';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import { userContext } from 'App';
 
 import messages from 'lang/eng'

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
 import { alertActions } from 'redux/actions/alert.actions';
-import Icon from 'common/Icon';
+import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import EditRoleModal from "./EditRoleModal";
 

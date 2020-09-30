@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { userService } from "services/userServices";
 import { useDispatch } from "react-redux";
 import { alertActions } from "redux/actions/alert.actions";
-import GenericElement from "common/GenericElement/GenericElement"
+import GenericElement from "components/molecules/GenericElement/GenericElement"
 import messages from 'lang/eng'
 
 export const TrainersOfClient = ({ id }) => {

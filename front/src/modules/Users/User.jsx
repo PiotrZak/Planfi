@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { userService } from "services/userServices";
-import Icon from "common/Icon"
+import Icon from 'components/atoms/Icon';
 import { useDispatch } from "react-redux";
-import Return from "common/Return"
+import Return from 'components/atoms/Return';
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import "react-multi-carousel/lib/styles.css";
-import { UserInfo } from "common/users/UserInfo"
+import { UserInfo } from "components/molecules/UserInfo"
 import { isMobile } from "react-device-detect";
 import messages from 'lang/eng'
 import { alertActions } from "redux/actions/alert.actions";

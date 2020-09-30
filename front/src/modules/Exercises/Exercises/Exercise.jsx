@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { exerciseService } from "services/exerciseService";
-import Icon from "common/Icon"
-import Return from "common/Return"
+import Icon from 'components/atoms/Icon';
+import Return from 'components/atoms/Return';
 import { useDispatch } from 'react-redux';
 import { alertActions } from 'redux/actions/alert.actions'
 import { useHistory, Link } from "react-router-dom";
