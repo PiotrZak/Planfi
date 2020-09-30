@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import handleButtonType from 'support/ButtonType';
+import handleButtonType from '../../../utils/ButtonType';
 import PropTypes from 'prop-types';
 import Icon from 'components/atoms/Icon';
 

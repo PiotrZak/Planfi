@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import handleButtonType from './ButtonType';
+import handleButtonType from '../../../utils/ButtonType';
 
 // Set button size
 const handleButtonSize = (size) => {
