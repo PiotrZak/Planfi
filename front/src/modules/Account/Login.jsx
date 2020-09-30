@@ -11,7 +11,7 @@ import Icon from 'components/atoms/Icon';
 import { motivationalQuotesEnglish } from "utils/motivationalQuotes"
 
 
-import loginPhoto from "assets/img/login.jpg"
+import loginPhoto from "assets/img/login2.jpg"
 
 export const LoginPage = () => {
 
