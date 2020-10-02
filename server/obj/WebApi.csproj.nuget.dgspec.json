@@ -17,7 +17,7 @@
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/Users/admin/.config/NuGet/NuGet.Config"
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -46,6 +46,18 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "HotChocolate": {
+              "target": "Package",
+              "version": "[10.5.3, )"
+            },
+            "HotChocolate.AspNetCore": {
+              "target": "Package",
+              "version": "[10.5.3, )"
+            },
+            "HotChocolate.AspNetCore.Playground": {
+              "target": "Package",
+              "version": "[10.5.3, )"
             },
             "MailKit": {
               "target": "Package",

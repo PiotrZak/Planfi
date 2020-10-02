@@ -1,6 +1,7 @@
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
+using WebApi.GraphQl;
 using WebApi.Models;
 
 namespace WebApi.Helpers

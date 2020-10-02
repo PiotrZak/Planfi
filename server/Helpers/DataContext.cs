@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
+using WebApi.GraphQl;
 
 namespace WebApi.Helpers
 {
@@ -25,6 +26,8 @@ namespace WebApi.Helpers
             //optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AmazonRDS"));
 
         }
+
+
 
         public DbSet<Organization> Organizations { get; set; }
 

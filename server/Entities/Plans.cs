@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Controllers.ViewModels;
+using WebApi.GraphQl;
 
 namespace WebApi.Entities
 {

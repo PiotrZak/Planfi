@@ -134,5 +134,20 @@
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Core.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll
-/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (another copy).json
-/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (copy).json
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GreenDonut.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Core.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Abstractions.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.Abstractions.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.Authorization.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.HttpGet.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.HttpGetSchema.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.HttpPost.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.Subscriptions.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Language.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Server.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Subscriptions.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Types.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.Utilities.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.DiagnosticAdapter.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/HotChocolate.AspNetCore.Playground.dll

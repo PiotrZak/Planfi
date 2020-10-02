@@ -5,6 +5,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="HotChocolate" Version="10.5.3" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="10.5.3" />
+    <PackageReference Include="HotChocolate.AspNetCore.Playground" Version="10.5.3" />
     <PackageReference Include="MailKit" Version="2.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
@@ -31,5 +34,6 @@
     <Folder Include="wwwroot\" />
     <Folder Include="Migrations\" />
     <Folder Include="Entities\Users\" />
+    <Folder Include="GraphQl\" />
   </ItemGroup>
 </Project>
