@@ -1,52 +1,22 @@
-﻿using System.Collections.Generic;
-using GraphQL;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using WebApi.GraphQl;
+using HotChocolate.Types;
 using WebApi.Helpers;
 
-namespace Api.Graphql
+namespace WebApi.GraphQl
 {
     public class Query
     {
-
-        [GraphQLMetadata("books")]
-        public IEnumerable<Book> GetBooks()
+        private readonly DataContext dbContext;
+        public Query(DataContext dbContext)
         {
-            using (var db = new DataContext())
-            {
-                return db.Books
-                .Include(b => b.Author)
-                .ToList();
-            }
+            this.dbContext = dbContext;
         }
 
-        [GraphQLMetadata("authors")]
-        public IEnumerable<Author> GetAuthors()
-        {
-            using (var db = new DataContext())
-            {
-                return db.Authors
-                .Include(a => a.Books)
-                .ToList();
-            }
-        }
-
-        [GraphQLMetadata("author")]
-        public Author GetAuthor(int id)
-        {
-            using (var db = new DataContext())
-            {
-                return db.Authors
-                .Include(a => a.Books)
-                .SingleOrDefault(a => a.Id == id);
-            }
-        }
-
-        [GraphQLMetadata("hello")]
-        public string GetHello()
-        {
-            return "World";
-        }
+        public IQueryable<Author> Authors => dbContext.Authors;
+        public IQueryable<Book> Books => dbContext.Books;
     }
 }
+
+

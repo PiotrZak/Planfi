@@ -47,9 +47,21 @@
               "target": "Package",
               "version": "[8.0.1, )"
             },
-            "GraphQL": {
+            "GraphQL.Server.Core": {
               "target": "Package",
-              "version": "[2.4.0, )"
+              "version": "[4.0.1, )"
+            },
+            "GraphQL.Server.Ui.Playground": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "HotChocolate.AspNetCore": {
+              "target": "Package",
+              "version": "[11.0.0-preview.147, )"
+            },
+            "HotChocolate.AspNetCore.Playground": {
+              "target": "Package",
+              "version": "[10.5.3, )"
             },
             "MailKit": {
               "target": "Package",
@@ -72,6 +84,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[3.1.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[3.1.7, )"
             },
             "MimeKit": {
               "target": "Package",

@@ -385,6 +385,70 @@ namespace WebApi.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
                 });
 
+            modelBuilder.Entity("WebApi.GraphQl.Author", b =>
+                {
+                    b.Property<int>("AuthorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("AuthorId");
+
+                    b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorId = 1,
+                            Name = "Stephen King"
+                        });
+                });
+
+            modelBuilder.Entity("WebApi.GraphQl.Book", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Genre")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4",
+                            AuthorId = 1,
+                            Genre = "Mystery",
+                            Name = "IT",
+                            Published = true
+                        },
+                        new
+                        {
+                            Id = "5",
+                            AuthorId = 1,
+                            Genre = "Mystery",
+                            Name = "The Langoleers",
+                            Published = true
+                        });
+                });
+
             modelBuilder.Entity("WebApi.Entities.Admin", b =>
                 {
                     b.HasBaseType("WebApi.Entities.User");
@@ -405,7 +469,7 @@ namespace WebApi.Migrations
                             Password = "admin",
                             PhoneNumber = 555555555,
                             Role = "Admin",
-                            AdminId = "a1a25b30-b3af-4373-9023-d8ebcf6ca550"
+                            AdminId = "9141a3b0-24a8-44d3-a7bc-7cb949e451ca"
                         });
                 });
 
@@ -675,7 +739,7 @@ namespace WebApi.Migrations
                             Password = "Owner1",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "ed39f480-fbf3-415e-9b00-22cb2fd3e848"
+                            OwnerId = "8dc73db1-9657-45b1-8773-63009fc2e941"
                         },
                         new
                         {
@@ -687,7 +751,7 @@ namespace WebApi.Migrations
                             Password = "Owner2",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "7906be4a-5712-422b-ab32-cb6d6f83894d"
+                            OwnerId = "fc599d0d-21a1-4a37-ba42-4975540a3741"
                         },
                         new
                         {
@@ -699,7 +763,7 @@ namespace WebApi.Migrations
                             Password = "Owner3",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "aa04d959-b923-4f65-a2aa-1826d2ca104c"
+                            OwnerId = "142efb3b-b584-4be2-b8d3-808145015b34"
                         });
                 });
 
@@ -854,6 +918,15 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Organization", null)
                         .WithMany("Users")
                         .HasForeignKey("OrganizationId");
+                });
+
+            modelBuilder.Entity("WebApi.GraphQl.Book", b =>
+                {
+                    b.HasOne("WebApi.GraphQl.Author", null)
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,19 +1,19 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CategoryController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GraphQl/Query.cs">
     <Files>
-      <File FileName="GraphQl/GraphQlController.cs" Line="7" Column="2" />
-      <File FileName="Startup.cs" Line="129" Column="41" />
-      <File FileName="Controllers/CategoryController.cs" Line="10" Column="1" />
+      <File FileName="Startup.cs" Line="121" Column="33" />
+      <File FileName="GraphQl/Query.cs" Line="18" Column="56" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="CategoryController.cs" selected="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Entities" expanded="True" />
+              <Node name="GraphQl" expanded="True">
+                <Node name="Query.cs" selected="True" />
               </Node>
-              <Node name="GraphQl" expanded="True" />
               <Node name="Helpers" expanded="True" />
               <Node name="Services" expanded="True" />
             </Node>

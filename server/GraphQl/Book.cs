@@ -3,7 +3,7 @@ namespace WebApi.GraphQl
 {
     public class Book
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -11,8 +11,9 @@ namespace WebApi.GraphQl
 
         public string Genre { get; set; }
 
+        public int Chapters { get; set; }
+
         public int AuthorId { get; set; }
 
-        public Author Author { get; set; }
     }
 }

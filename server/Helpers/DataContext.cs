@@ -35,6 +35,10 @@ namespace WebApi.Helpers
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
 
+
+
+
+
         public DbSet<Organization> Organizations { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -52,6 +56,38 @@ namespace WebApi.Helpers
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+            modelBuilder.Entity<Author>().HasData(
+                new Author
+                {
+                    AuthorId = 1,
+                    Name = "Stephen King",
+                }
+            );
+
+
+            modelBuilder.Entity<Book>().HasData(
+            new Book
+            {
+                Id = 4,
+                Name = "IT",
+                Published = true,
+                AuthorId = 1,
+                Genre = "Mystery"
+            },
+            new Book
+            {
+                Id = 5,
+                Name = "The Langoleers",
+                Published = true,
+                AuthorId = 1,
+                Genre = "Mystery"
+            }
+            ) ;
+
+
+            // stop graphql
 
             modelBuilder.Entity<Organization>()
                 .HasMany(b => b.Users)

@@ -13,7 +13,11 @@ using WebApi.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
-using GraphiQl;
+using HotChocolate.AspNetCore;
+using HotChocolate;
+using WebApi.GraphQl;
+using Microsoft.Extensions.Hosting;
+using HotChocolate.AspNetCore.Playground;
 
 namespace WebApi
 {
@@ -111,6 +115,11 @@ namespace WebApi
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
 
+            services.AddGraphQL(provider => SchemaBuilder.New().AddServices(provider)
+                .AddType<Author>()
+                .AddType<Book>()
+                .AddQueryType<Query>()
+                .Create());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,8 +134,6 @@ namespace WebApi
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fit App");
                 });
-
-                app.UseGraphiQl("/graphql");
                 // global cors policy
                 app.UseCors(x => x
                     .AllowAnyOrigin()
@@ -141,6 +148,17 @@ namespace WebApi
                     endpoints.MapControllers();
                 });
 
+            //if (env.IsDevelopment())
+            //{
+                app.UseDeveloperExceptionPage();
+                app.UsePlayground(new PlaygroundOptions
+                {
+                    QueryPath = "/api",
+                    Path = "/playground"
+                });
+            //}
+
+            app.UseGraphQL("/api");
         }
     }
 }
