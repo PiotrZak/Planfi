@@ -14,6 +14,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using WebApi.Entities;
 using GraphiQl;
+using System.Threading.Tasks;
 
 namespace WebApi
 {
@@ -32,13 +33,12 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // services.AddCors();
-            services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            );
+            services.AddControllers().AddNewtonsoftJson();
 
 
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
+            //var sqlConnectionString = Configuration.GetConnectionString("AmazonRDS");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
@@ -51,9 +51,9 @@ namespace WebApi
 
 
             // todo
-            services.AddIdentityCore<User>()   //<<<<<< You have IdentityUser
-                .AddDefaultTokenProviders();
-                //.AddEntityFrameworkStores<DataContext>();
+            services.AddIdentityCore<IdentityUser>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<DataContext>();
 
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
@@ -78,6 +78,21 @@ namespace WebApi
             })
             .AddJwtBearer(x =>
             {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userId = context.Principal.Identity.Name;
+                        var user = userService.GetById(userId);
+                        if (user == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -89,19 +104,17 @@ namespace WebApi
                 };
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
-
 
             // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
 
             // configure DI for application services
+            services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
 

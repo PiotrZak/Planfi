@@ -1,19 +1,17 @@
 @import "vendor/reset";
 @import "abstracts/variables";
-@import "theme/dark";
+@import "theme/theme";
 
 @import "base/typography";
-
 @import "base/alert";
 
 @import "components/buttons";
 @import "components/forms";
 
-
 @import "rwd";
 @import "components/buttons";
 
-@import "components/employeeButton";
+@import "components/bottompanel";
 @import "components/menuButton";
 @import "components/rectangleButtons";
 @import "components/dropzone";

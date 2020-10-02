@@ -1,29 +1,55 @@
 import { http } from "./http.service";
+import { PLANS_URL } from "./utils"
 
 export const planService = {
   getAllPlans,
+  getOrganizationPlans,
   addPlan,
+  editPlan,
   getPlanById,
-  deletePlanById
+  deletePlans,
+  assignExercises,
+  unAssignExercises,
+  userPlans,
+  getCreatorPlans,
   };
 
-// const apiURL = "http://test.eba-hxurpixx.eu-west-1.elasticbeanstalk.com"
-const localapiURL = "http://localhost:5005"
-
-const CATEGORIES_URL = `${localapiURL}/Plans`;
-
   function getAllPlans(body) {
-    return http.get(CATEGORIES_URL, body);
+    return http.get(PLANS_URL, body);
+  }
+
+  function getOrganizationPlans(id) {
+    return http.get(`${PLANS_URL}/organizationsplan/${id}`);
   }
 
   function addPlan(body) {
-    return http.post(`${CATEGORIES_URL}/create`, body);
+    return http.post(`${PLANS_URL}/create`, body);
+  }
+
+  function editPlan(id, body) {
+    return http.put(`${PLANS_URL}/${id}`, body);
+  }
+
+  function getCreatorPlans(id){
+    return http.get(`${PLANS_URL}/trainerplans/${id}`);
+  }
+
+  function assignExercises(body) {
+    return http.post(`${PLANS_URL}/assignExercises`, body);
+  }
+
+  function unAssignExercises(body) {
+    return http.post(`${PLANS_URL}/unassignExercises`, body);
   }
 
   function getPlanById(id) {
-    return http.get(`${CATEGORIES_URL}/${id}`);
+    return http.get(`${PLANS_URL}/${id}`);
   }
 
-  function deletePlanById(id) {
-    return http.del(`${CATEGORIES_URL}/${id}`);
+  function userPlans(id) {
+    return http.get(`${PLANS_URL}/usersplan/${id}`);
+  }
+
+  function deletePlans(body) {
+    return http.post(`${PLANS_URL}/delete`, body);
   }

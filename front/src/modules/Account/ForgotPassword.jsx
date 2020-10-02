@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { FormInput } from "../../common/FormInput"
-import { Button } from "../../common/buttons/Button"
+import { FormInput } from 'components/atoms/FormInput';
+import Button from "components/atoms/Button"
 import { useDispatch } from 'react-redux'
-import { userService } from '../../services/userServices';
-import { validationUtil } from "../../../src/utils/validation.util"
-import { alertActions } from '../../redux/actions/alert.actions'
+import { userService } from 'services/userServices';
+import { validationUtil } from "utils/validation.util"
+import { alertActions } from 'redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
 
 export const ForgotPassword = (props) => {

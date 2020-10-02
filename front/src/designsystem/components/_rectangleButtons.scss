@@ -1,13 +1,26 @@
+
+.tab-content{
+
+  .active{
+    border:0;
+  }
+
+.tab-pane 
+{ .rectangleButton {
+  margin: 1.8rem 4.2rem !important;
+}
+
+}
+}
+
 .rectangleButton{
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   background-color: $color-gray-80;
-  margin: 0 1.6rem .8rem 1.6rem;
-  padding: 1.8rem 1.6rem;
+  margin: 0 0 0 0;
+  padding: 1.8rem 4.2rem;
   border-radius: 4px;
-
 
   &__wrapper{
     display: flex;
@@ -57,6 +70,10 @@
       line-height: 2.1rem;
     }
   }
+
+  @include sm{
+    padding: 1.8rem 1.6rem;
+  }
 }
 
 @include lg{
@@ -80,5 +97,16 @@
 @include xs{
   html{
     font-size: 0.55rem;
+  }
+}
+
+
+.bottom-item{
+  border:1px solid $color-gray-90;
+  padding:1.6rem;
+  margin:1.8rem 1.8rem;
+  border-radius:8px;
+  &:hover{
+    cursor:pointer;
   }
 }

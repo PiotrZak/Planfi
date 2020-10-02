@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
+using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -72,10 +73,18 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        [HttpPost("delete")]
+        public IActionResult Delete([FromBody] string[] id)
         {
             _CategoryService.Delete(id);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("assignExercises")]
+        public IActionResult AssignExercisesToCategory([FromBody]AssignExercisesToCategory model)
+        {
+            _CategoryService.AssignExercisesToCategory(model.CategoryId, model.ExerciseId);
             return Ok();
         }
     }

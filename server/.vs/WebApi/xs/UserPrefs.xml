@@ -8,6 +8,12 @@
       <File FileName="Startup.cs" Line="22" Column="37" />
       <File FileName="Entities/GraphQl/Category.cs" Line="23" Column="29" />
       <File FileName="Entities/GraphQl/ExerciseQuery.cs" Line="15" Column="32" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Entities/Plans.cs">
+    <Files>
+      <File FileName="Helpers/DataContext.cs" Line="165" Column="32" />
+      <File FileName="Entities/Category.cs" Line="1" Column="1" />
+      <File FileName="Entities/Organization.cs" Line="1" Column="1" />
+      <File FileName="Entities/Plans.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,6 +26,8 @@
               </Node>
               <Node name="Helpers" expanded="True" />
               <Node name="Startup.cs" selected="True" />
+                <Node name="Plans.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>

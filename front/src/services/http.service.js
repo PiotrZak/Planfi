@@ -4,17 +4,24 @@ export const http = {
   get,
   post,
   postFile,
-  del
+  del,
+  put
+};
+
+const currentUser = JSON.parse((localStorage.getItem('user')));   
+
+const config = {
+  headers: { Authorization: `Bearer ${currentUser && currentUser.token}` }
 };
 
 function get(url) {
-  return axios.get(url).then((response) => {
+  return axios.get(url, config).then((response) => {
     return handleResponseError(response);
   });
 }
 
 function post(url, body) {
-  return axios.post(url, body).then((response) => {
+  return axios.post(url, body, config).then((response) => {
     return handleResponseError(response);
   });
 }
@@ -25,11 +32,19 @@ function postFile(url, body) {
   });
 }
 
-function del(url) {
-  return axios.delete(url).then((response) => {
+function del(url, body) {
+  return axios.delete(url, body).then((response) => {
     return handleResponseError(response);
   });
 }
+
+function put(url, body) {
+  return axios.put(url, body).then((response) => {
+    return handleResponseError(response);
+  });
+}
+
+
 
 async function handleResponseError(response) {
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models
 {
@@ -8,6 +6,9 @@ namespace WebApi.Models
     {
         [Required]
         public string Title { get; set; }
+        public string OrganizationId { get; set; }
+        public string CreatorId { get; set; }
+        public string CreatorName { get; set; }
         //public string[] ExerciseId { get; set; }
     }
 }

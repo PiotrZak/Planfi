@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
@@ -11,8 +12,9 @@ namespace WebApi.Services
         Exercise Create(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
+        IEnumerable<Exercise> GetAllOfPlan(string planId);
+        void Update(Exercise exercise, string id);
         void Delete(string id);
-
     }
 
     public class ExerciseService : IExerciseService
@@ -43,13 +45,18 @@ namespace WebApi.Services
 
         public IEnumerable<Exercise> GetAll()
         {
-
             return _context.Exercises;
         }
 
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
             var Exercises = _context.Exercises.Where(x => x.CategoryId == categoryId);
+            return Exercises;
+        }
+
+        public IEnumerable<Exercise> GetAllOfPlan(string planId)
+        {
+            var Exercises = _context.Exercises.Where(x => x.PlanId == planId);
             return Exercises;
         }
 
@@ -64,6 +71,57 @@ namespace WebApi.Services
             }
         }
 
+        public void Update(Exercise updateExercise, string id)
+        {
+            var exercise = _context.Exercises.Find(id);
+
+            if(exercise == null)
+                throw new AppException("Exercise not found!");
+
+            if (updateExercise.Files != null)
+            {
+                if (exercise.Files != null)
+                {
+                    foreach (var file in updateExercise.Files)
+                    {
+                        exercise.Files.Add(file);
+                    }
+                }
+                else
+                {
+                    exercise.Files = updateExercise.Files;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateExercise.Name))
+            {
+                exercise.Name = updateExercise.Name;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateExercise.Description))
+            {
+                exercise.Description = updateExercise.Description;
+            }
+
+            if (updateExercise.Series != exercise.Series)
+            {
+                exercise.Series = updateExercise.Series;
+            }
+
+            if (updateExercise.Times != exercise.Times)
+            {
+                exercise.Times = updateExercise.Times;
+            }
+
+            if (updateExercise.Weight != exercise.Weight)
+            {
+                exercise.Weight = updateExercise.Weight;
+            }
+
+            _context.Exercises.Update(exercise);
+            _context.SaveChanges();
+
+        }
     }
 }
 

@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { useDispatch } from 'react-redux'
-import { FormInput } from "./../../common/FormInput"
-import { validationUtil } from "./../../utils/validation.util"
-import { alertActions } from './../../redux/actions/alert.actions'
-import { planService } from "./../../services/planService";
-import { Button }  from "./../../common/buttons/Button"
+import { FormInput } from "components/atoms/FormInput"
+import { validationUtil } from "utils/validation.util"
+import { alertActions } from 'redux/actions/alert.actions'
+import { planService } from "services/planService";
+import Button from "components/atoms/Button"
+import { userContext } from 'App';
 
 const AddPlanModal = ({ openModal, onClose }) => {
 
+    const { user } = useContext(userContext);
     const [addPlanData, setAddPlan] = useState({});
     const [errors, setErrors] = useState({})
 
@@ -16,42 +18,23 @@ const AddPlanModal = ({ openModal, onClose }) => {
     const dispatch = useDispatch()
 
     const handleInput = (e) => {
-        
         let name = e.target.name
         addPlanData[name] = e.target.value;
-
         setAddPlan(addPlanData);
-
-        setErrors(
-            validationUtil.validateRequiredField(
-                name,
-                { ...errors },
-                requiredFields,
-                addPlanData
-            )
-        );
+        validationUtil.runSetErrors(name, setErrors, errors, requiredFields, addPlanData)
     }
 
-    const submitForm = (e) => {
-        e.preventDefault();
-
-        let currentErrors = validationUtil.validateAllRequiredFields(
-            requiredFields,
-            addPlanData
-        );
-
-        setErrors({ ...errors, ...currentErrors });
-        if (
-            Object.getOwnPropertyNames(currentErrors).length === 0 &&
-            Object.getOwnPropertyNames(errors).length === 0
-        ) {
-            createPlan(addPlanData)
-        }
+    const submitForm = () => {
+        const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, addPlanData)
+        confirm && createPlan(addPlanData)
     }
-
+    
     const createPlan = (addPlanData) => {
+
+        const transformedData = {title: addPlanData.title, organizationId: user.organizationId, creatorId: user.userId, creatorName: user.firstName}
+
         planService
-            .addPlan(addPlanData)
+            .addPlan(transformedData)
             .then(() => {
                 dispatch(alertActions.success("Plan succesfully added!"))
                 onClose()
@@ -71,11 +54,10 @@ const AddPlanModal = ({ openModal, onClose }) => {
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{addPlanTitle}</h2></ModalHeader>
                 <ModalBody>
-                    <FormInput id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} />
-                    <p>{addPlanTip}</p>
+                    <FormInput type = "textarea" id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} placeholder = {addPlanTip} />
                 </ModalBody>
                 <ModalFooter>
-                    <Button className="btn btn--primary btn--lg" onClick={submitForm}>{addPlanButton}</Button>{' '}
+                    <Button className="btn btn--primary btn--lg" onClick={submitForm} name ={addPlanButton}/>
                 </ModalFooter>
             </Modal>
         </div>

@@ -149,3 +149,5 @@
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GraphQL.Client.Abstractions.Websocket.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GraphQL.NewtonsoftJson.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GraphQL.Primitives.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (another copy).json
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (copy).json

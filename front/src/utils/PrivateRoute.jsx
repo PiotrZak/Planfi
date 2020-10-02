@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route } from "react-router-dom";
 
-// "Organization";
-// "Trainer";
-// "User";
+export const Role = {
+    Admin: 'Admin',
+    Trainer: 'Trainer',
+    Owner: 'Owner',
+    User: 'User'    
+}
 
-export const PrivateRoute = ({component: Component, userData, ...rest}) => (
+export const PrivateRoute = ({component: Component, roles, ...rest}) => (
+    
     <Route {...rest} render={props => {
-        if(userData === null) {
-            // if user logouted
-            return <Redirect to={{pathname: '/', state: {from: props.location}}} />
-        } else {
-
-            // if user logged in
-            switch(props.location.pathname.split('/')[1]) {
-                case "User":
-                    if(userData.role === 'Organization')
-                        return <Redirect to="/admin" />
-                    return <Component {...props} />
-
-                default:
-                    return <Component {...props} />
-            }
+        const currentUser = JSON.parse((localStorage.getItem('user')));
+        if(currentUser === null) {
+            // not logged in so redirect to login page with the return url
+            return <Redirect to={{pathname: '/login', state: {from: props.location}}} />
         }
+        // check if route is restricted by role
+        if (roles && roles.indexOf(currentUser.role) === -1) {
+            // role not authorised so redirect to home page
+            return <Redirect to={{ pathname: '/'}} />
+        }
+        // authorised so return component
+        return <Component {...props} />
     }} />
 )
