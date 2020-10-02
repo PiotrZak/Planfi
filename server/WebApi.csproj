@@ -35,10 +35,10 @@
     <Folder Include="Controllers\ViewModels\" />
     <Folder Include="wwwroot\" />
     <Folder Include="Entities\Types\" />
-    <Folder Include="Entities\Query\" />
     <Folder Include="Schema\" />
     <Folder Include="Entities\GraphQl\" />
     <Folder Include="Migrations\" />
     <Folder Include="Entities\Users\" />
+    <Folder Include="GraphQL\" />
   </ItemGroup>
 </Project>

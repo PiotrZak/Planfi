@@ -405,7 +405,7 @@ namespace WebApi.Migrations
                             Password = "admin",
                             PhoneNumber = 555555555,
                             Role = "Admin",
-                            AdminId = "a1a25b30-b3af-4373-9023-d8ebcf6ca550"
+                            AdminId = "d61cdadd-64fc-480b-875a-94e7159d7868"
                         });
                 });
 
@@ -675,7 +675,7 @@ namespace WebApi.Migrations
                             Password = "Owner1",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "ed39f480-fbf3-415e-9b00-22cb2fd3e848"
+                            OwnerId = "d2ffd2d1-5950-4603-ab1a-cdc8163f471d"
                         },
                         new
                         {
@@ -687,7 +687,7 @@ namespace WebApi.Migrations
                             Password = "Owner2",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "7906be4a-5712-422b-ab32-cb6d6f83894d"
+                            OwnerId = "7e8bd66e-29a8-44ee-8380-a9ceb0cccbf7"
                         },
                         new
                         {
@@ -699,7 +699,7 @@ namespace WebApi.Migrations
                             Password = "Owner3",
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "aa04d959-b923-4f65-a2aa-1826d2ca104c"
+                            OwnerId = "22c38ec5-7b20-4272-8a95-12f44ae957a9"
                         });
                 });
 

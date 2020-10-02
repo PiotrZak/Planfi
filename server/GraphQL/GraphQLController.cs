@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Api.Database;
 using GraphQL;
-using GraphQL.Types;
-using GraphQL.SystemTextJson;
 using GraphQL.NewtonsoftJson;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Entities.GraphQl;
 using WebApi.Helpers;
-using Newtonsoft.Json;
 
-namespace WebApi.Controllers
+namespace Api.GraphQL
 {
     [Route("graphql")]
     [ApiController]
@@ -20,12 +18,11 @@ namespace WebApi.Controllers
 
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
-
             var inputs = query.Variables.ToInputs();
 
             var schema = new Schema
             {
-                Query = new CategoryQuery(_db)
+                Query = new AuthorQuery(_db)
             };
 
             var result = await new DocumentExecuter().ExecuteAsync(_ =>
@@ -36,13 +33,12 @@ namespace WebApi.Controllers
                 _.Inputs = inputs;
             });
 
-            if (result.Errors?.Count > 0)
+            if(result.Errors?.Count > 0)
             {
-                return BadRequest(result);
+                return BadRequest();
             }
 
             return Ok(result);
         }
     }
-
 }

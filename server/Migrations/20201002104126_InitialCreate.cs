@@ -229,7 +229,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "OwnerId" },
-                values: new object[] { "owner2", null, "Owner", "owner2@eventbrite.com", "Owner2", "lol", "O2", "Owner2", null, null, 555555555, "Owner", null, "7906be4a-5712-422b-ab32-cb6d6f83894d" });
+                values: new object[] { "owner2", null, "Owner", "owner2@eventbrite.com", "Owner2", "lol", "O2", "Owner2", null, null, 555555555, "Owner", null, "7e8bd66e-29a8-44ee-8380-a9ceb0cccbf7" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -255,7 +255,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "OwnerId" },
-                values: new object[] { "owner3", null, "Owner", "owner3@eventbrite.com", "Owner3", "lol", "O3", "Owner3", null, null, 555555555, "Owner", null, "aa04d959-b923-4f65-a2aa-1826d2ca104c" });
+                values: new object[] { "owner3", null, "Owner", "owner3@eventbrite.com", "Owner3", "lol", "O3", "Owner3", null, null, 555555555, "Owner", null, "22c38ec5-7b20-4272-8a95-12f44ae957a9" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -282,7 +282,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "OwnerId" },
-                values: new object[] { "owner1", null, "Owner", "owner1@eventbrite.com", "Owner1", "LastName", "O1", "Owner1", null, null, 555555555, "Owner", null, "ed39f480-fbf3-415e-9b00-22cb2fd3e848" });
+                values: new object[] { "owner1", null, "Owner", "owner1@eventbrite.com", "Owner1", "LastName", "O1", "Owner1", null, null, 555555555, "Owner", null, "d2ffd2d1-5950-4603-ab1a-cdc8163f471d" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -304,7 +304,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "AdminId" },
-                values: new object[] { "a1", null, "Admin", "tgianelli0@eventbrite.com", "admin", "lol", "O1", "admin", null, null, 555555555, "Admin", null, "a1a25b30-b3af-4373-9023-d8ebcf6ca550" });
+                values: new object[] { "a1", null, "Admin", "tgianelli0@eventbrite.com", "admin", "lol", "O1", "admin", null, null, 555555555, "Admin", null, "d61cdadd-64fc-480b-875a-94e7159d7868" });
 
             migrationBuilder.InsertData(
                 table: "Users",

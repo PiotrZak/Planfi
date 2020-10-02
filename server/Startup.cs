@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
-using WebApi.Entities;
 using GraphiQl;
 using System.Threading.Tasks;
 
@@ -133,8 +132,9 @@ namespace WebApi
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fit App");
                 });
 
-            //GraphQl
+                //GraphQl
                 app.UseGraphiQl("/graphql");
+
                 // global cors policy
                 app.UseCors(x => x
                     .AllowAnyOrigin()

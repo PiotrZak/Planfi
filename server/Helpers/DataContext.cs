@@ -1,4 +1,5 @@
 ﻿using System;
+using Api.Database;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,10 @@ namespace WebApi.Helpers
             //optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AmazonRDS"));
 
         }
+
+        //graphql test
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         public DbSet<Organization> Organizations { get; set; }
 
