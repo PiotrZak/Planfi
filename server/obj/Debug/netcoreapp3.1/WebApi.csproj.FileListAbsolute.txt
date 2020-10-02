@@ -136,3 +136,14 @@
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.Extensions.Identity.Stores.dll
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (another copy).json
 /Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/appsettings (copy).json
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GraphiQL.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GraphQL.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/GraphQL-Parser.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.AspNetCore.Razor.Language.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.CSharp.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/Microsoft.CodeAnalysis.Razor.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/System.Reactive.Core.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/System.Reactive.Interfaces.dll
+/Users/admin/Desktop/FitApp/server/bin/Debug/netcoreapp3.1/System.Reactive.Linq.dll

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
+using WebApi.GraphQl;
 
 namespace WebApi.Helpers
 {
@@ -18,6 +19,10 @@ namespace WebApi.Helpers
             Configuration = configuration;
         }
 
+        public DataContext()
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
@@ -25,6 +30,10 @@ namespace WebApi.Helpers
             //optionsBuilder.UseNpgsql(Configuration.GetConnectionString("AmazonRDS"));
 
         }
+
+        //graphql test
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         public DbSet<Organization> Organizations { get; set; }
 
