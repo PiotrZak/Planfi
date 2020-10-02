@@ -4,10 +4,7 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
-
-
 using AutoMapper;
-
 using WebApi.Models;
 
 namespace WebApi.Controllers

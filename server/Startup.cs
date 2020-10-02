@@ -13,6 +13,7 @@ using WebApi.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using WebApi.Entities;
+using GraphiQl;
 
 namespace WebApi
 {
@@ -31,7 +32,9 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // services.AddCors();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
 
             // Use a PostgreSQL database
@@ -39,6 +42,12 @@ namespace WebApi
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
+
+            //todo - verify graphql to continue
+            //services.AddDbContext<DataContext>(context =>
+            //{
+            //    context.UseInMemoryDatabase("OktaGraphQL");
+            //});
 
 
             // todo
@@ -111,6 +120,8 @@ namespace WebApi
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fit App");
                 });
 
+            //GraphQl
+                app.UseGraphiQl("/graphql");
                 // global cors policy
                 app.UseCors(x => x
                     .AllowAnyOrigin()
