@@ -8,7 +8,6 @@ using AutoMapper;
 using WebApi.Models;
 using System.IO;
 using System.Collections.Generic;
-using WebApi.GraphQl;
 
 namespace WebApi.Controllers
 {

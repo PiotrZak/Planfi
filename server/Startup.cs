@@ -127,9 +127,7 @@ namespace WebApi
 
                 dataContext.Database.Migrate();
                 app.UseRouting();
-                app.UseGraphQL("/graphql");
-                app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
-            app.UseSwagger();
+                app.UseSwagger();
 
                 app.UseSwaggerUI(c =>
                 {
@@ -141,6 +139,9 @@ namespace WebApi
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
+
+                app.UseGraphQL("/graphql");
+                app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
 
                 app.UseAuthentication();
                 app.UseAuthorization();
