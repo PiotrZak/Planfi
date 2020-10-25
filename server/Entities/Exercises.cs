@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using HotChocolate;
 
 namespace WebApi.Entities
 {
@@ -9,7 +10,7 @@ namespace WebApi.Entities
         public Exercise()
         {
             ExerciseId = Guid.NewGuid().ToString();
-            Files = new List<byte[]> ();
+            Files = new List<byte[]>();
         }
 
         [Key]
@@ -19,6 +20,7 @@ namespace WebApi.Entities
         public int Times { get; set; }
         public int Series { get; set; }
         public int Weight { get; set; }
+        [GraphQLIgnore]
         public List<byte[]> Files { get; set; }
         public string CategoryId { get; set; }
         public string PlanId { get; set; }

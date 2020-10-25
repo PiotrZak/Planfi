@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
 using WebApi.Controllers.ViewModels;
+using WebApi.GraphQl;
 
 namespace WebApi.Controllers
 {

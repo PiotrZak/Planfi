@@ -1,11 +1,8 @@
 ﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/DataContext.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
     <Files>
-      <File FileName="Startup.cs" Line="32" Column="14" />
-      <File FileName="Controllers/CategoryController.cs" Line="32" Column="1" />
-      <File FileName="appsettings.json" Line="14" Column="73" />
-      <File FileName="appsettings.Development.json" Line="14" Column="12" />
-      <File FileName="Helpers/DataContext.cs" Line="16" Column="28" />
+      <File FileName="GraphQl/Book.cs" Line="21" Column="37" />
+      <File FileName="Startup.cs" Line="130" Column="44" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,11 +10,11 @@
           <Node name="WebApi" expanded="True">
             <Node name="WebApi" expanded="True">
               <Node name="Controllers" expanded="True" />
-              <Node name="Helpers" expanded="True">
-                <Node name="DataContext.cs" selected="True" />
-              </Node>
+              <Node name="Entities" expanded="True" />
+              <Node name="GraphQl" expanded="True" />
+              <Node name="Helpers" expanded="True" />
               <Node name="Services" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
             </Node>
           </Node>
         </State>

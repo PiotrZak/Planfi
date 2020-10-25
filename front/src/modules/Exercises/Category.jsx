@@ -14,6 +14,7 @@ import { PlanPanelExercises } from "../Plans/microModules/PlanPanelExercises"
 import Search  from "components/atoms/Search"
 import Spacer from "components/atoms/Spacer"
 
+
 var ReactBottomsheet = require('react-bottomsheet');
 
 const noExerciseInPlan = "There are no added exercises in this Plan";
@@ -114,6 +115,7 @@ export const Category = (props) => {
                             }}
                         >
                        <Icon name={"plus"} fill={"#5E4AE3"} />
+                       {/* select from all exercises */}
                             {/* <ul id="mainmenu">
                                 <li>
                                     <Icon name={"plus"} fill={"#5E4AE3"} />
@@ -129,7 +131,6 @@ export const Category = (props) => {
 
                 <Search callBack={filterExercises} />
                 <Spacer h={90} />
-
                 <Loader isLoading={isLoading}>
                     {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
                 </Loader>

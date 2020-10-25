@@ -9,6 +9,7 @@ import AddCategoryModal from './AddCategoryModal';
 import { commonUtil } from "utils/common.util"
 import { isMobile } from "react-device-detect";
 import { useDispatch } from 'react-redux';
+import { useQuery, gql } from '@apollo/client';
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -21,26 +22,25 @@ const deleteCategoriesText = "Delete categories"
 const editCategory = "Edit Category"
 const selected = "selected"
 
+const CATEGORY = gql`{
+  categories{
+         title
+         categoryId
+   }
+  }
+`;
+
 export const Categories = () => {
 
-  const [categories, setCategories] = useState();
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   const [openModal, setOpenModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [bottomSheet, setBottomSheet] = useState(false)
+  const { loading, error, data } = useQuery(CATEGORY);
 
-  useEffect(() => {
-    categoryService
-      .getAllCategories()
-      .then((data) => {
-        setCategories(data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-      });
-  }, [setOpenModal, openModal]);
-
+   if (loading) return <Loader isLoading={loading}></Loader>;
+   if (error) return <p>Error :(</p>;
+  
   const openAddCategoryModal = () => {
     setOpenModal(!openModal);
   };
@@ -67,9 +67,7 @@ export const Categories = () => {
         </div>
         <AddCategoryModal openModal={openModal} onClose={() => setOpenModal(false)} />
         <div>
-          <Loader isLoading={isLoading}>
-            {categories ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={categories} onSelect={submissionHandleElement} /> : <h1>{noCategories}</h1>}
-          </Loader>
+            {data.categories ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <h1>{noCategories}</h1>}
         </div>
       </div>
       <CategoriesPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} />

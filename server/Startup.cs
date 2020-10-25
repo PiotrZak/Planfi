@@ -14,6 +14,10 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
 using WebApi.Entities;
 using System.Threading.Tasks;
+using HotChocolate.AspNetCore.Playground;
+using WebApi.GraphQl;
+using HotChocolate.AspNetCore;
+using HotChocolate;
 
 namespace WebApi
 {
@@ -111,6 +115,10 @@ namespace WebApi
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
 
+            services.AddGraphQL(SchemaBuilder.New()
+                .AddQueryType<Query>()
+                //.AddMutationType<Mutation>()
+                .Create());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,6 +139,9 @@ namespace WebApi
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
+
+                app.UseGraphQL("/graphql");
+                app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
 
                 app.UseAuthentication();
                 app.UseAuthorization();
