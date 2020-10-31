@@ -36,7 +36,7 @@ const ForgotPasswordPage = () => (
             </Label>
             <ValidationHint name="email" />
           </InputContainer>
-          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">Wyślij</Button>
+          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Wyślij')}</Button>
         </Form>
       </Center>
     </Formik>
