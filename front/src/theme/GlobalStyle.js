@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-size: 1.6rem;
     font-family: "Montserrat", sans-serif;
+    background: ${({ theme }) => theme.colorGray90};
   }
   
   h1,

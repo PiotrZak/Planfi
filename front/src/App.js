@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, BrowserRouter, NavLink } from 'react-router-dom';
 import { isMobile } from "react-device-detect";
@@ -120,9 +121,9 @@ let App = () => {
                 <PrivateRoute path="/user/:id" component={User} />
                 <PrivateRoute path="/myprofile/:id" component={MyProfile} />
 
-                {/* Only Owner */}
+                {/!* Only Owner *!/}
                 <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={UsersOfOrganization} />
-                {/* Only Trainers */}
+                {/!* Only Trainers *!/}
                 <PrivateRoute roles={[Role.Trainer, Role.Owner]} path="/organizationclients" component={ClientsOfOrganization} />
 
               </Switch>
@@ -194,3 +195,4 @@ const ThemeSelector = ({ toggleTheme }) => {
   )
 }
 export default App;
+*/
