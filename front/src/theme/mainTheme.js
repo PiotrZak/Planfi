@@ -1,4 +1,4 @@
-export const theme = {
+export const mainTheme = {
 
   colorPrimary: '#FFFFFF',
   colorSecondary: '#C3C3CF',
@@ -36,7 +36,7 @@ export const theme = {
   colorNeutralDefault: '#5E4AE3',
   colorNeutralLight: '#C9C0FF',
 
-  colorGray110: '#C9C0FF',
+  colorGray110: '#09090B',
   colorGray100: '#101013',
   colorGray90: '#1D1D25',
   colorGray80: '#31313D',

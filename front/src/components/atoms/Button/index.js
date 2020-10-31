@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import handleButtonType from '../../../utils/ButtonType';
+import handleButtonType from 'support/ButtonType';
+import handleButtonPlace from 'support/handleButtonPlace';
 
 // Set button size
 const handleButtonSize = (size) => {
@@ -16,7 +17,6 @@ const handleButtonSize = (size) => {
 };
 
 const Button = styled.button`
-
   //button default styles
   padding: 0 1.6rem;
   cursor: pointer;
@@ -30,6 +30,7 @@ const Button = styled.button`
 
   //button size
   height: ${({ size }) => handleButtonSize(size)};
+  ${({ buttonPlace }) => handleButtonPlace(buttonPlace)};
   
   //disabled button 
   :disabled{

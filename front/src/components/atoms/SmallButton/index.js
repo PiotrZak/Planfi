@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import handleButtonType from '../../../utils/ButtonType';
+import handleButtonType from 'support/ButtonType';
 import PropTypes from 'prop-types';
-import Icon from 'components/atoms/Icon';
+import Icon from '../Icon';
 
 // set button type
 const SmallButtonStyled = styled.div`
@@ -43,19 +43,19 @@ const SmallButtonCircleStyled = styled(SmallButtonStyled)`
 const SmallButton = ({
   iconName,
   fill,
-  width,
-  height,
+  iconWidth,
+  iconHeight,
   buttonType,
   buttonShape,
 
 }) => (
   buttonShape === 'circle' ? (
     <SmallButtonCircleStyled buttonType={buttonType}>
-      <Icon name={iconName} fill={fill} width={width} height={height} />
+      <Icon name={iconName} fill={fill} width={iconWidth} height={iconHeight} />
     </SmallButtonCircleStyled>
   ) : (
     <SmallButtonSquareStyled buttonType={buttonType}>
-      <Icon name={iconName} fill={fill} width={width} height={height} />
+      <Icon name={iconName} fill={fill} width={iconWidth} height={iconHeight} />
     </SmallButtonSquareStyled>
   )
 );
@@ -63,16 +63,16 @@ const SmallButton = ({
 SmallButton.propTypes = {
   iconName: PropTypes.string.isRequired,
   fill: PropTypes.string,
-  width: PropTypes.string,
-  height: PropTypes.string,
+  iconWidth: PropTypes.string,
+  iconHeight: PropTypes.string,
   buttonType: PropTypes.oneOf(['primary', 'secondary', 'dangerous', 'regular']),
   buttonShape: PropTypes.oneOf(['square', 'circle']),
 };
 
 SmallButton.defaultProps = {
   fill: 'white',
-  width: '1.5rem',
-  height: '1.5rem',
+  iconWidth: '1.5rem',
+  iconHeight: '1.5rem',
   buttonType: 'primary',
   buttonShape: 'circle',
 };
