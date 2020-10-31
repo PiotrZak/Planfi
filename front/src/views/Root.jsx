@@ -43,7 +43,7 @@ const Root = () => (
 export default Root;
 */
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { mainTheme } from 'theme/mainTheme';
@@ -53,15 +53,31 @@ import { createBrowserHistory } from 'history';
 import MainTemplate from 'templates/MainTemplate';
 import { routes } from 'routes';
 import LoginPage from 'views/Auth/LoginPage';
-import ForgotPasswordPage from 'views/Auth/ForotPasswordPage';
+import ForgotPasswordPage from 'views/Auth/ForgotPasswordPage';
 import ResetPasswordPage from 'views/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'views/Auth/ActivateAccountPage';
 
 export const history = createBrowserHistory();
 
-const Root = () => (
-  <BrowserRouter history={history}>
-    <ThemeProvider theme={mainTheme}>
+export const userContext = React.createContext();
+export const ThemeContext = React.createContext();
+export const LanguageContext = React.createContext();
+
+const Root = () => {
+
+  const [theme] = useState(mainTheme)
+  const [user] = useState(JSON.parse((localStorage.getItem('user'))));
+  const [selectedLanguage] = useState('en');
+  
+  return(
+  <LanguageContext.Provider
+        value={{
+          lang: selectedLanguage,
+        }}
+      >
+    <ThemeProvider theme={theme}>
+    <userContext.Provider value={{ user }}>
+    <BrowserRouter history={history}>
       <MainTemplate>
         <Switch>
           <Route path={routes.login} component={LoginPage} />
@@ -70,8 +86,11 @@ const Root = () => (
           <Route path={routes.activate} component={ActivateAccountPage} />
         </Switch>
       </MainTemplate>
+      </BrowserRouter>
+    </userContext.Provider>
     </ThemeProvider>
-  </BrowserRouter>
-);
+    </LanguageContext.Provider>
+  )
+};
 
 export default Root;

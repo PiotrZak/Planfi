@@ -1,17 +1,25 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { translate } from 'app/myshare/utilities';
+import {pl as polish} from "./locales/pl";
+import {en as english} from "./locales/en";
+
+const Locales = {
+	English: 'en-GB',
+	Polish: 'pl-PL',
+	Nowergian: 'nb-NO',
+}
+
+const FALLBACK_TRANSLATION_LANGUAGE = 'en-GB';
 
 export const translate = (translationKey) => {
 
-    const currentLocale = useContext(LanguageContext)
+	// const { lang } = useContext(LanguageContext)
+	const lang = 'en-GB';
 
 	const supportedLocales = {
         [Locales.Polish]: polish,
 		[Locales.English]: english,
 	};
 
-	let translations = Object(supportedLocales)[currentLocale];
+	let translations = Object(supportedLocales)[lang];
 
 	if (!translations) {
 		translations = Object(supportedLocales)[FALLBACK_TRANSLATION_LANGUAGE];

@@ -20,24 +20,21 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly IEmailService _EmailService;
-        private readonly IAccountService _AccountService;
+        private readonly IEmailService _emailService;
+        private readonly IAccountService _accountService;
         private IMapper _mapper;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly AppSettings _appSettings;
 
         public AccountController(
-            IEmailService EmailService,
-            IAccountService AccountService,
-            SignInManager<IdentityUser> signInManager,
+            IEmailService emailService,
+            IAccountService accountService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
 
         {
-            _AccountService = AccountService;
-            _EmailService = EmailService;
+            _accountService = accountService;
+            _emailService = emailService;
             _mapper = mapper;
-            _signInManager = signInManager;
             _appSettings = appSettings.Value;
         }
 
@@ -46,7 +43,7 @@ namespace WebApi.Controllers
         public IActionResult SendEmail([FromBody] EmailMessage message)
         {
 
-            _EmailService.SendEmail(message);
+            _emailService.SendEmail(message);
             return Ok(message);
         }
 
@@ -62,7 +59,7 @@ namespace WebApi.Controllers
 
             try
             {
-                _AccountService.UploadAvatar(userId, Avatar);
+                _accountService.UploadAvatar(userId, Avatar);
                 return Ok();
             }
             catch (AppException ex)
@@ -77,13 +74,8 @@ namespace WebApi.Controllers
         public IActionResult ForgotPassword([FromBody] ForgotPassword forgotPasswordModel)
         {
 
-            var user = _AccountService.FindUserByEmail(forgotPasswordModel.Email);
-
-            //var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
-            //var callback = Url.Action(nameof(ResetPassword), nameof(AccountController), new { token, email = user.Email }, Request.Scheme);
-            //var callback = Url.Action(nameof(ResetPassword), nameof(AccountController), new { email = user.Email }, Request.Scheme);
-
+            var user = _accountService.FindUserByEmail(forgotPasswordModel.Email);
+            
             var message = new EmailMessage
             {
                 ToAddresses = new List<EmailAddress>()
@@ -108,7 +100,7 @@ namespace WebApi.Controllers
             };
 
 
-            _EmailService.SendEmail(message);
+            _emailService.SendEmail(message);
             return Ok(message);
         }
     }

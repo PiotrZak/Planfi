@@ -33,9 +33,17 @@ namespace WebApi.Services
 		private void Send(EmailMessage emailMessage)
 		{
 			var message = new MimeMessage();
+			
+			if (emailMessage.FromAddresses == null)
+			{
+				emailMessage.FromAddresses[0].Name = "Planfi";
+				emailMessage.FromAddresses[0].Address = "planfi.contact@gmail.com";
+			}
+			
 			message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
             message.From.AddRange(emailMessage.FromAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
 
+            
             message.Subject = emailMessage.Subject;
 			//We will say we are sending HTML. But there are options for plaintext etc. 
 			message.Body = new TextPart(TextFormat.Html)

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { routes } from 'routes';
 import Label from 'components/atoms/Label';
@@ -7,6 +7,11 @@ import Button from 'components/atoms/Button';
 import AuthTemplate from 'templates/AuthTemplate';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
+import { useDispatch } from 'react-redux'
+import { userService } from 'services/userServices';
+import { alertActions } from 'redux/actions/alert.actions'
+import { useHistory } from "react-router-dom";
+import { translate } from 'support/Translation';
 import {
   Formik, Field, Form,
 } from 'formik';
@@ -30,18 +35,19 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  email: Yup.string().email('Podaj poprawny adres E-mail').required('To pole jest wymagane'),
-  password: Yup.string().required('To pole jest wymagane'),
+  email: Yup.string().email(translate('EnterValidMail')).required(translate('Thisfieldisrequired')),
+  password: Yup.string().required(translate('Thisfieldisrequired')),
 });
 
 const onSubmit = (values) => {
   console.log('Form values', values);
 };
 
-
 const LoginPage = () => {
 
 const [userData, setUserData] = useState({})
+const dispatch = useDispatch()
+const history = useHistory();
 
   const handleInput = (e) => {
     let name = e.target.name
@@ -57,20 +63,22 @@ const authenticateUser = (userData) => {
   userService
       .login(userData)
       .then((data) => {
-          dispatch(alertActions.success("Congratulations! You are log in."))
+
+        //todo - alerts
+          // dispatch(alertActions.success(translate('CongratulationsLogin')))
           localStorage.setItem('user', JSON.stringify(data));
-          if (data.role === "Trainer") {
-              history.push('/users');
-          }
-          else if(data.role === "Organization") {
-              history.push('/users');
-          }
-          else if(data.role === "User"){
-              history.push(`/user/${data.userId}`);
-          }
+          // if (data.role === "Trainer") {
+          //     history.push('/users');
+          // }
+          // else if(data.role === "Organization") {
+          //     history.push('/users');
+          // }
+          // else if(data.role === "User"){
+          //     history.push(`/user/${data.userId}`);
+          // }
       })
       .catch((error) => {
-          dispatch(alertActions.error(loginError))
+          dispatch(alertActions.error(error))
       });
 }
 
@@ -80,23 +88,23 @@ return(
     <Logo src="logo.png" />
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
       <Form>
-        <InputContainer>
-          <Label type="top" text="Twój adres e-mail">
-            <Field onChange={handleInput} type="email" name="email" placeholder="Adres E-mail" as={Input} />
+        <InputContainer onChange={handleInput} >
+          <Label type="top" text={translate('YourMail')}>
+            <Field type="email" name="email" placeholder={translate('AdresEmail')} as={Input} />
           </Label>
           <ValidationHint name="email" />
         </InputContainer>
 
-        <InputContainer>
-          <Label type="top" text="Hasło">
-            <Field onChange={handleInput} type="password" name="password" placeholder="Wpisz swoje hasło" as={Input} />
+        <InputContainer onChange={handleInput}>
+          <Label type="top" text={translate('Password')}>
+            <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} />
           </Label>
           <ValidationHint name="password" />
         </InputContainer>
-        <Button onClick={submitForm} type="submit" buttonType="primary" size="lg" buttonPlace="auth">Zaloguj się</Button>
+        <Button onClick={submitForm} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
       </Form>
     </Formik>
-    <Link href={routes.forgotPassword}>Zapomniałem hasła</Link>
+    <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
   </AuthTemplate>
 )};
 
