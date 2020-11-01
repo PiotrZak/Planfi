@@ -3,12 +3,11 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 module.exports = {
-  entry: { main: './src/index.js' },
+  entry: { main: './src/role.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[chunkhash].js'
+    filename: '[name].[chunkhash].js',
   },
   module: {
     rules: [
@@ -16,28 +15,29 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: 'babel-loader',
+        },
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract(
           {
             fallback: 'style-loader',
-            use: ['css-loader', 'sass-loader']
-          })
-      }
-    ]
+            use: ['css-loader', 'sass-loader'],
+          },
+        ),
+      },
+    ],
   },
-  plugins: [ 
+  plugins: [
     new ExtractTextPlugin(
-      {filename: 'style.[chunkhash].css', disable: false, allChunks: true}
+      { filename: 'style.[chunkhash].css', disable: false, allChunks: true },
     ),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
       template: './src/index.html',
-      filename: 'index.html'
+      filename: 'index.html',
     }),
-  ]
+  ],
 };

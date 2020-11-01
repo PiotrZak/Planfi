@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { routes } from 'routes';
+import { routes } from 'utils/routes';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
 import AuthTemplate from 'templates/AuthTemplate';
-import ValidationHint from 'components/atoms/ErrorMessageForm';
+import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import {
   Formik, Field, Form,
@@ -42,22 +42,24 @@ const LoginPage = () => (
   <AuthTemplate>
     <Logo src="logo.png" />
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-      <Form>
-        <InputContainer>
-          <Label type="top" text="Twój adres e-mail">
-            <Field type="email" name="email" placeholder="Adres E-mail" as={Input} />
-          </Label>
-          <ValidationHint name="email" />
-        </InputContainer>
+      {({ errors, touched }) => (
+        <Form>
+          <InputContainer>
+            <Label type="top" text="Twój adres e-mail">
+              <Field type="email" name="email" placeholder="Adres E-mail" as={Input} error={errors.email && touched.email} />
+            </Label>
+            <ErrorMessageForm name="email" />
+          </InputContainer>
 
-        <InputContainer>
-          <Label type="top" text="Hasło">
-            <Field type="password" name="password" placeholder="Wpisz swoje hasło" as={Input} />
-          </Label>
-          <ValidationHint name="password" />
-        </InputContainer>
-        <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">Zaloguj się</Button>
-      </Form>
+          <InputContainer>
+            <Label type="top" text="Hasło">
+              <Field type="password" name="password" placeholder="Wpisz swoje hasło" as={Input} error={errors.password && touched.password} />
+            </Label>
+            <ErrorMessageForm name="password" />
+          </InputContainer>
+          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">Zaloguj się</Button>
+        </Form>
+      )}
     </Formik>
     <Link href={routes.forgotPassword}>Zapomniałem hasła</Link>
   </AuthTemplate>
