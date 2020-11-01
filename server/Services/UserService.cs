@@ -35,7 +35,6 @@ namespace WebApi.Services
     public class UserService : IUserService
     {
         private DataContext _context;
-        private readonly AppSettings _appSettings;
 
         public UserService(DataContext context)
         {

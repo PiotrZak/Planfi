@@ -15,6 +15,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.16.0",
     "eslint": "^6.6.0",
+    "formik": "^2.2.1",
     "graphql": "^15.3.0",
     "history": "^5.0.0",
     "history-prop-types": "^2.5.2",
@@ -42,7 +43,8 @@
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.0",
     "supertest": "^5.0.0",
-    "svg-fill": "git+https://github.com/c1rrus/svg-fill.git"
+    "svg-fill": "git+https://github.com/c1rrus/svg-fill.git",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",

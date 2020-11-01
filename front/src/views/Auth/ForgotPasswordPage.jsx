@@ -11,6 +11,7 @@ import {
 import * as Yup from 'yup';
 import BackTopNav from 'components/molecules/BackTopNav';
 import Center from 'components/atoms/Center';
+import { translate } from 'support/Translation';
 
 const initialValues = {
   email: '',
@@ -36,7 +37,7 @@ const ForgotPasswordPage = () => (
             </Label>
             <ValidationHint name="email" />
           </InputContainer>
-          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">Wyślij</Button>
+          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Wyślij')}</Button>
         </Form>
       </Center>
     </Formik>

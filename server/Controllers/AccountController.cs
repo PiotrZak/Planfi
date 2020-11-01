@@ -76,6 +76,25 @@ namespace WebApi.Controllers
 
             user.ResetToken = randomTokenString();
             user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
+            
+            var message = new EmailMessage
+            {
+                ToAddresses = new List<EmailAddress>()
+              {
+                 new EmailAddress()
+                 {
+                     Name = "Test",
+                     Address = forgotPasswordModel.Email
+                 }
+              },
+                FromAddresses = new List<EmailAddress>()
+              {
+                 new EmailAddress()
+                 {
+                     Name = "Test",
+                     Address = "test@gmail.com"
+                 }
+              },
 
             _emailService.SendEmail(message);
         }
@@ -103,6 +122,8 @@ namespace WebApi.Controllers
                          <p>Thanks for registering!</p>
                          {message}"
             );
+            _emailService.SendEmail(message);
+            return Ok(message);
         }
         
     }
