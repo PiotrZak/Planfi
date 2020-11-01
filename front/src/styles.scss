@@ -1,0 +1,173 @@
+@import "./designsystem/main.scss";
+
+.container{
+    width:50%;
+    margin:0 25% 10% 25%;
+    padding:2% 0;
+    z-index:2;
+    &__title{
+        margin:0 0 10% 0;
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content: space-between;
+        &__left{
+            display:inline-flex;
+            align-items:center;
+        }
+    }
+    @include xs{
+        width:90%;
+        margin:0 5%;
+    }
+}
+
+.container-login{
+    display:flex;
+    width:100%;
+    height:100%;
+    overflow-y: hidden; // hide vertical
+    overflow-x: hidden; // hide horizontal
+    &__image{
+        width:50%;
+        height:100%;
+        img{
+            width:100%;
+            height:100%;
+            object-fit: contain;
+            max-width: initial;
+            max-height: initial;
+            background-size:cover;
+        }
+    }
+    &__content{
+        padding:4% 4%;
+        max-width:600px;
+    }
+}
+
+.navigation{
+    height: 100%;
+    width: 74px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    border-top: solid 2px #666674;
+    background-color: #31313D;;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    text-align:center;
+    &__menu{
+        width:80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+
+        &__icon{
+            padding:5px;
+
+        }
+
+        @include xs{
+            display:inline-flex;
+        }
+    }
+
+    @include xs{
+        left:0;
+        position: fixed;
+        bottom:0;
+        height: 74px;
+        width: 100%;
+        
+    }
+}
+
+.checkbox-generic-list{
+    &__element{
+        margin:  0 0;
+        @include sm{
+            margin:  0 0;
+        }
+    }
+    &__checkbox{
+        &:hover{
+            cursor:pointer;
+        }
+    }
+  }
+
+a.active{
+    background-color:#5E4AE3;
+    border-radius:8px;
+    display:inline-flex;
+}
+
+.counter{
+    display:inline-flex;
+    text-align:center;
+}
+
+.error {
+    color: red;
+} 
+
+    .icon{
+        display:inline-flex;
+        align-items:center;
+        &:hover{
+            cursor:pointer;
+        }
+    }
+
+    .profile{
+        position:absolute;
+        right:8%;
+        top:4%;
+        width:32px;
+        height:32px;
+    }
+
+    #mainmenu ul {width: 160px;}
+    #mainmenu ul li {clear: both;}
+    ul ul {display: none;}
+    ul li:hover > ul {display: block;}
+    #mainmenu ul {font-size: 12px; border-radius: 3px; background: #F6F6F6;margin-top:-4px;}
+    #mainmenu ul li  {color:black; display: block; padding: 10px; border-radius: 6px; text-decoration: none;text-align:left;}
+    #mainmenu ul li:hover {color: #007bff;cursor:pointer;}
+
+    
+.lang-switcher{
+    position:absolute;
+    right:0;
+    bottom: 0;
+    font-size:24px;
+    color:blue;
+    margin:40px;
+    &:hover{
+        cursor:pointer;
+    }
+}
+
+.theme-switcher{
+    position:absolute;
+    right:0;
+    bottom: 0;
+    font-size:24px;
+    color:blue;
+    margin:40px 240px 40px 80px;
+    &:hover{
+        cursor:pointer;
+    }
+}
+
+.bottom-nav{
+    display:flex;
+    &__item{
+        display:flex;
+        align-items:center;
+        margin:0 0 0 3.6rem;
+    }
+}

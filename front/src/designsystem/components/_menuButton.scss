@@ -1,0 +1,26 @@
+.menuButton{
+
+  &__image{
+    border-radius: 3px;
+    margin-right: 8px;
+
+    img{
+      width: 4.8rem;
+      height: 4.8rem;
+    }
+
+    &-empty{
+      @extend .menuButton__image;
+      background-color: $color-gray-60;
+      width: 4.8rem;
+      height: 4.8rem;
+    }
+  }
+}
+
+.circle{
+  border-radius: 50%;
+  img{
+    border-radius: 50%;
+  }
+}

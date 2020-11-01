@@ -1,0 +1,42 @@
+.alert {
+  &__container{
+
+    position: fixed;
+    width:100%;
+    z-index: 9999;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  display:flex;
+  justify-content: center;
+  align-items:center;
+  padding: 1.5% 1.5%;
+  &-warning{
+    text-align: center;
+    border: 1px solid $color-error-darkest;
+    p{
+      color:$color-gray-80 !important;
+    }
+  }
+
+  &-danger {
+    background-color: $color-error-default;
+    color: $color-white;
+    border: 1px solid $color-error-darkest;
+  }
+
+  &-success {
+    background-color: $color-success-default;
+    color: $color-white;
+    border: 1px solid $color-success-darkest;
+  }
+
+  &-close{
+    display:flex;
+    padding: 0;
+    right:0;
+    font-size:32px;
+  }
+}
+
