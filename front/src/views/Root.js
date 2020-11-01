@@ -51,7 +51,7 @@ import { ThemeProvider } from 'styled-components';
 import { createBrowserHistory } from 'history';
 
 import MainTemplate from 'templates/MainTemplate';
-import { routes } from 'routes';
+import { routes } from 'utils/routes';
 import LoginPage from 'views/Auth/LoginPage';
 import ForgotPasswordPage from 'views/Auth/ForotPasswordPage';
 import ResetPasswordPage from 'views/Auth/ResetPasswordPage';
