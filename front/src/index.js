@@ -43,5 +43,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from 'views/Root';
 
+// we use redux or not?
+import { store } from 'redux/store';
+import { Provider } from 'react-redux';
+
 // eslint-disable-next-line no-undef
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+        <Root />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root'),
+);
