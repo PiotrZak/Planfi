@@ -29,5 +29,6 @@ namespace WebApi.Entities
         public string Token { get; set; }
         public string ResetToken { get; set; }
         public DateTime? ResetTokenExpires { get; set; }
+        public DateTime PasswordReset { get; set; }
     };
 }

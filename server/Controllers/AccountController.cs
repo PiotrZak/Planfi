@@ -1,12 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Services;
 using WebApi.Helpers;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
 using WebApi.Models;
 using System.IO;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
 using WebApi.Controllers.ViewModels;
 
@@ -19,21 +17,14 @@ namespace WebApi.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
 
         public AccountController(
             IEmailService emailService,
-            IAccountService accountService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
-
+            IAccountService accountService)
         {
             _accountService = accountService;
             _emailService = emailService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
-        }
+            }
 
         [AllowAnonymous]
         [HttpPost("sendMail")]
@@ -64,67 +55,22 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        
         [AllowAnonymous]
-        [HttpPost("forgot")]
-        public IActionResult ForgotPassword([FromBody] ForgotPassword forgotPasswordModel)
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword(ForgotPassword model)
         {
-
-            var user = _accountService.FindUserByEmail(forgotPasswordModel.Email);
-
-            if (user == null) return;
-
-            user.ResetToken = randomTokenString();
-            user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
-            
-            var message = new EmailMessage
-            {
-                ToAddresses = new List<EmailAddress>()
-              {
-                 new EmailAddress()
-                 {
-                     Name = "Test",
-                     Address = forgotPasswordModel.Email
-                 }
-              },
-                FromAddresses = new List<EmailAddress>()
-              {
-                 new EmailAddress()
-                 {
-                     Name = "Test",
-                     Address = "test@gmail.com"
-                 }
-              },
-
-            _emailService.SendEmail(message);
-        }
-
-        private void sendVerificationEmail(Account account, string origin)
-        {
-            string message;
-            if (!string.IsNullOrEmpty(origin))
-            {
-                var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
-                message = $@"<p>Please click the below link to verify your email address:</p>
-                             <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
-            }
-            else
-            {
-                message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
-                             <p><code>{account.VerificationToken}</code></p>";
-            }
-
-            _emailService.Send(
-                ToAddresses: account.Email,
-                FromAddresses: 
-                subject: "Sign-up Verification API - Verify Email",
-                Content: $@"<h4>Verify Email</h4>
-                         <p>Thanks for registering!</p>
-                         {message}"
-            );
-            _emailService.SendEmail(message);
-            return Ok(message);
+            _accountService.ForgotPassword(model, Request.Headers["origin"]);
+            return Ok(new { message = "Please check your email for password reset instructions" });
         }
         
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(ResetPasswordRequest model)
+        {
+            _accountService.ResetPassword(model);
+            return Ok(new { message = "Password reset successful, you can now login" });
+        }
+
     }
 }

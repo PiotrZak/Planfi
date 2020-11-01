@@ -30,6 +30,8 @@ namespace WebApi.Services
 
         IEnumerable<Client> GetClientsByTrainer(string TrainerId);
         IEnumerable<Trainer> GetTrainersByClient(string ClientId);
+
+        void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 
     public class UserService : IUserService
@@ -120,7 +122,7 @@ namespace WebApi.Services
 
                 // throw error if the password is incorrect
                 if (user.Password != userParam.Password)
-                    throw new AppssException("Incorrect password");
+                    throw new AppException("Incorrect password");
 
                 user.Email = userParam.Email;
             }
@@ -265,10 +267,7 @@ namespace WebApi.Services
 
             return trainersIds.Select((t, i) => (Trainer) _context.Trainers.FirstOrDefault(x => x.TrainerId == trainersIds[i])).ToList();
         }
-
-
-
-
+        
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
@@ -283,7 +282,7 @@ namespace WebApi.Services
         }
 
 
-        public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
