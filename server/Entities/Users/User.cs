@@ -27,5 +27,7 @@ namespace WebApi.Entities
         public byte[] PasswordSalt { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }
+        public string ResetToken { get; set; }
+        public DateTime? ResetTokenExpires { get; set; }
     };
 }
