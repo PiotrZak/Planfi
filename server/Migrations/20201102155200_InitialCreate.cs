@@ -48,6 +48,9 @@ namespace WebApi.Migrations
                     PasswordSalt = table.Column<byte[]>(nullable: true),
                     Role = table.Column<string>(nullable: true),
                     Token = table.Column<string>(nullable: true),
+                    ResetToken = table.Column<string>(nullable: true),
+                    ResetTokenExpires = table.Column<DateTime>(nullable: true),
+                    PasswordReset = table.Column<DateTime>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     AdminId = table.Column<string>(nullable: true),
                     ClientId = table.Column<string>(nullable: true),
@@ -223,98 +226,98 @@ namespace WebApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
-                values: new object[] { "o2u6", null, "Client", "gpedlingham6@ow.ly", "Gerald", "Pedlingham", "O2", "Bondy", null, null, 666666666, "User", "t-trainer", "o2u6" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "ClientId" },
+                values: new object[] { "o2u6", null, "Client", "gpedlingham6@ow.ly", "Gerald", "Pedlingham", "O2", "Bondy", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 666666666, null, null, "User", "t-trainer", "o2u6" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "OwnerId" },
-                values: new object[] { "owner2", null, "Owner", "owner2@eventbrite.com", "Owner2", "lol", "O2", "Owner2", null, null, 555555555, "Owner", null, "7906be4a-5712-422b-ab32-cb6d6f83894d" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "OwnerId" },
+                values: new object[] { "owner2", null, "Owner", "owner2@eventbrite.com", "Owner2", "lol", "O2", "Owner2", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "Owner", null, "28cb3610-652a-4557-960c-3282c89322fb" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "TrainerId" },
                 values: new object[,]
                 {
-                    { "o2t1", null, "Trainer", "tbullerwell1n@sitemeter.com", "Talia", "Bullerwell", "O2", "Talia", null, null, 777777777, "Trainer", "t-organization", "o2t1" },
-                    { "o2t2", null, "Trainer", "mbabb1x@java.com", "Malachi", "Babb", "O2", "Malachi", null, null, 777777777, "Trainer", "t-organization", "o2t2" }
+                    { "o2t1", null, "Trainer", "tbullerwell1n@sitemeter.com", "Talia", "Bullerwell", "O2", "Talia", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "Trainer", "t-organization", "o2t1" },
+                    { "o2t2", null, "Trainer", "mbabb1x@java.com", "Malachi", "Babb", "O2", "Malachi", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "Trainer", "t-organization", "o2t2" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "ClientId" },
                 values: new object[,]
                 {
-                    { "o3u1", null, "Client", "thilldrupe@berkeley.edu", "Titus", "Hilldrup", "O3", "Titus", null, null, 555555555, "User", "t-user", "o3u1" },
-                    { "o3u5", null, "Client", "gcamidgej@umich.edu", "Godfry", "Camidge", "O3", "Godfry", null, null, 555555555, "User", "t-user", "o3u5" },
-                    { "o3u3", null, "Client", "tknowldenh@wsj.com", "Trumann", "Knowlden", "O3", "Trumann", null, null, 555555555, "User", "t-user", "o3u3" },
-                    { "o3u4", null, "Client", "jsarrell3@whitehouse.gov", "Jarret", "Sarrell", "O3", "Jarret", null, null, 777777777, "User", "t-trainer", "o2u4" },
-                    { "o3u6", null, "Client", "mcorbyl@comsenz.com", "Maison", "Corby", "O3", "Bondy", null, null, 666666666, "User", "t-trainer", "o3u6" }
+                    { "o3u1", null, "Client", "thilldrupe@berkeley.edu", "Titus", "Hilldrup", "O3", "Titus", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "o3u1" },
+                    { "o3u5", null, "Client", "gcamidgej@umich.edu", "Godfry", "Camidge", "O3", "Godfry", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "o3u5" },
+                    { "o3u3", null, "Client", "tknowldenh@wsj.com", "Trumann", "Knowlden", "O3", "Trumann", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "o3u3" },
+                    { "o3u4", null, "Client", "jsarrell3@whitehouse.gov", "Jarret", "Sarrell", "O3", "Jarret", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "User", "t-trainer", "o2u4" },
+                    { "o3u6", null, "Client", "mcorbyl@comsenz.com", "Maison", "Corby", "O3", "Bondy", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 666666666, null, null, "User", "t-trainer", "o3u6" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "OwnerId" },
-                values: new object[] { "owner3", null, "Owner", "owner3@eventbrite.com", "Owner3", "lol", "O3", "Owner3", null, null, 555555555, "Owner", null, "aa04d959-b923-4f65-a2aa-1826d2ca104c" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "OwnerId" },
+                values: new object[] { "owner3", null, "Owner", "owner3@eventbrite.com", "Owner3", "lol", "O3", "Owner3", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "Owner", null, "5d58b65e-cdc5-467e-ad18-0838f46972f0" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "ClientId" },
                 values: new object[,]
                 {
-                    { "o2u5", null, "Client", "flydiate5@biblegateway.com", "Felice", "Lydiate", "O2", "Augustus", null, null, 555555555, "User", "t-user", "o2u5" },
-                    { "o3u2", null, "Client", "mtamesf@netvibes.com", "Maribel", "Tames", "O3", "Maribel", null, null, 666666666, "User", "t-trainer", "o3u2" },
-                    { "o2u4", null, "Client", "jsarrell3@whitehouse.gov", "Jarret", "Sarrell", "O2", "Kiel", null, null, 777777777, "User", "t-trainer", "o2u4" },
-                    { "u6", null, "Client", "bcaullieres@auda.org.au", "Bondy", "Caulliere", "O1", "Bondy", null, null, 666666666, "User", "t-trainer", "u6" },
-                    { "o2u2", null, "Client", "gkryska1@about.com", "Georgie", "Kryska", "O2", "Jillana", null, null, 666666666, "User", "t-trainer", "o2u2" },
-                    { "o2u1", null, "Client", "jmeachem0@eventbrite.com", "Jacklyn", "Meachem", "O2", "Jacklyn", null, null, 555555555, "User", "t-user", "o2u1" }
+                    { "o2u5", null, "Client", "flydiate5@biblegateway.com", "Felice", "Lydiate", "O2", "Augustus", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "o2u5" },
+                    { "o3u2", null, "Client", "mtamesf@netvibes.com", "Maribel", "Tames", "O3", "Maribel", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 666666666, null, null, "User", "t-trainer", "o3u2" },
+                    { "o2u4", null, "Client", "jsarrell3@whitehouse.gov", "Jarret", "Sarrell", "O2", "Kiel", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "User", "t-trainer", "o2u4" },
+                    { "u6", null, "Client", "bcaullieres@auda.org.au", "Bondy", "Caulliere", "O1", "Bondy", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 666666666, null, null, "User", "t-trainer", "u6" },
+                    { "o2u2", null, "Client", "gkryska1@about.com", "Georgie", "Kryska", "O2", "Jillana", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 666666666, null, null, "User", "t-trainer", "o2u2" },
+                    { "o2u1", null, "Client", "jmeachem0@eventbrite.com", "Jacklyn", "Meachem", "O2", "Jacklyn", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "o2u1" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "TrainerId" },
                 values: new object[,]
                 {
-                    { "t2", null, "Trainer", "efearey1f@mlb.com", "Eadith", "Fearey", "O1", "Eadith", null, null, 777777777, "Trainer", "t-organization", "t2" },
-                    { "t1", null, "Trainer", "vmaccathay17@house.gov", "Valentia", "MacCathay", "O1", "Valentia", null, null, 777777777, "Trainer", "t-organization", "t1" }
+                    { "t2", null, "Trainer", "efearey1f@mlb.com", "Eadith", "Fearey", "O1", "Eadith", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "Trainer", "t-organization", "t2" },
+                    { "t1", null, "Trainer", "vmaccathay17@house.gov", "Valentia", "MacCathay", "O1", "Valentia", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "Trainer", "t-organization", "t1" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "OwnerId" },
-                values: new object[] { "owner1", null, "Owner", "owner1@eventbrite.com", "Owner1", "LastName", "O1", "Owner1", null, null, 555555555, "Owner", null, "ed39f480-fbf3-415e-9b00-22cb2fd3e848" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "OwnerId" },
+                values: new object[] { "owner1", null, "Owner", "owner1@eventbrite.com", "Owner1", "LastName", "O1", "Owner1", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "Owner", null, "69890b28-415d-4af6-8348-2f1d9f2757f5" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
-                values: new object[] { "o3t1", null, "Trainer", "bdunstan8@dell.com", "Benedikta", "Dunstan", "O3", "Valentia", null, null, 777777777, "Trainer", "t-organization", "o3t1" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "TrainerId" },
+                values: new object[] { "o3t1", null, "Trainer", "bdunstan8@dell.com", "Benedikta", "Dunstan", "O3", "Valentia", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "Trainer", "t-organization", "o3t1" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "ClientId" },
                 values: new object[,]
                 {
-                    { "u5", null, "Client", "awharinu@tmall.com", "Augustus", "Wharin", "O1", "Augustus", null, null, 555555555, "User", "t-user", "u5" },
-                    { "u4", null, "Client", "kburgne2@hp.com", "Kiel", "Burgne", "O1", "Kiel", null, null, 777777777, "User", "t-trainer", "u4" },
-                    { "u3", null, "Client", "Teloinic@gmail.com", "Camille", "Teloinic", "O1", "Teodor", null, null, 555555555, "User", "t-user", "u3" },
-                    { "u2", null, "Client", "jcasson3@prlog.org", "Jillana", "Casson", "O1", "Jillana", null, null, 666666666, "User", "t-trainer", "u2" },
-                    { "u1", null, "Client", "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", "O1", "Teodor", null, null, 555555555, "User", "t-user", "u1" }
+                    { "u5", null, "Client", "awharinu@tmall.com", "Augustus", "Wharin", "O1", "Augustus", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "u5" },
+                    { "u4", null, "Client", "kburgne2@hp.com", "Kiel", "Burgne", "O1", "Kiel", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "User", "t-trainer", "u4" },
+                    { "u3", null, "Client", "Teloinic@gmail.com", "Camille", "Teloinic", "O1", "Teodor", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "u3" },
+                    { "u2", null, "Client", "jcasson3@prlog.org", "Jillana", "Casson", "O1", "Jillana", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 666666666, null, null, "User", "t-trainer", "u2" },
+                    { "u1", null, "Client", "tgianelli0@eventbrite.com", "Teodoor", "Gianelli", "O1", "Teodor", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "u1" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "AdminId" },
-                values: new object[] { "a1", null, "Admin", "tgianelli0@eventbrite.com", "admin", "lol", "O1", "admin", null, null, 555555555, "Admin", null, "a1a25b30-b3af-4373-9023-d8ebcf6ca550" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "AdminId" },
+                values: new object[] { "a1", null, "Admin", "tgianelli0@eventbrite.com", "admin", "lol", "O1", "admin", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "Admin", null, "aa05a67b-a5df-4314-bdf6-63dfb1636906" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "ClientId" },
-                values: new object[] { "o2u3", null, "Client", "kcridge2@xrea.com", "Kiah", "Cridge", "O2", "Teodor", null, null, 555555555, "User", "t-user", "o2u3" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "ClientId" },
+                values: new object[] { "o2u3", null, "Client", "kcridge2@xrea.com", "Kiah", "Cridge", "O2", "Teodor", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 555555555, null, null, "User", "t-user", "o2u3" });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordSalt", "PhoneNumber", "Role", "Token", "TrainerId" },
-                values: new object[] { "o3t2", null, "Trainer", "fhobdena@census.gov", "Freddie", "Hobden", "O3", "Eadith", null, null, 777777777, "Trainer", "t-organization", "o3t2" });
+                columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "TrainerId" },
+                values: new object[] { "o3t2", null, "Trainer", "fhobdena@census.gov", "Freddie", "Hobden", "O3", "Eadith", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 777777777, null, null, "Trainer", "t-organization", "o3t2" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClientsPlans_PlanId",

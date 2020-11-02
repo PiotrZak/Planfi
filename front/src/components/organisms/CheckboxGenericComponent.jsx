@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormInput } from "components/atoms/FormInput";
+// import FormInput from "components/atoms/FormInput";
 import { Link } from 'react-router-dom';
 import GenericElement from "components/molecules/GenericElement/GenericElement"
 import {isMobile} from "react-device-detect";
@@ -81,16 +81,17 @@ export const CheckboxGenericComponent = ({
 
   function renderSelectAll() {
     if (selectAll) {
-      return (
-        <FormInput
-          id={`select-all-checkbox-${id}`}
-          label="Select All"
-          className="select-all-input"
-          labelWidth="10"
-          inputWidth="1"
-          type="checkbox"
-          onChange={handleSelectAll}
-        />
+      return (<div></div>
+        //todo transform checkbox and overall checkbox generic component
+        // <FormInput
+        //   id={`select-all-checkbox-${id}`}
+        //   label="Select All"
+        //   className="select-all-input"
+        //   labelWidth="10"
+        //   inputWidth="1"
+        //   type="checkbox"
+        //   onChange={handleSelectAll}
+        // />
       );
     }
   }
