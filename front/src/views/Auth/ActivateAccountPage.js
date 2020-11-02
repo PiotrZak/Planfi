@@ -29,13 +29,13 @@ const onSubmit = (values) => {
   console.log('values', values);
 };
 
-const name = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
+const nameRegex = /^[a-zA-Z]{3,20} [a-zA-Z]{2,32}$/;
 const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
-const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,32}$/gm;
+const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .matches(name)
+    .matches(nameRegex)
     .required(translate('EnterFirstNameAndLastName')),
   phone: Yup.string()
     .matches(phoneRegex),
