@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import BackTopNav from 'components/molecules/BackTopNav';
 import Center from 'components/atoms/Center';
 import Paragraph from 'components/atoms/Paragraph';
+import { translate } from 'utils/Translation';
 
 const initialValues = {
   password: '',
@@ -27,13 +28,12 @@ const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,32}$/gm;
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
-    .matches(passwordRegex, 'Hasło musi spełniać powyższy warunek')
-    .min(8, 'Hasło musi zawieniać minimum 8 znaków !')
-    .max(32, 'Hasło nie może zawierać wiecej niz 32 znaki !')
-    .required('Uzupełnij wszystkie pola'),
+    .matches(passwordRegex, translate('PasswordNeedsCondition'))
+    .max(32, translate('PasswordMaxLength'))
+    .required(translate('FillAllFields')),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Podane hasła nie są takie same !')
-    .required('Uzupełnij wszystkie pola!'),
+    .oneOf([Yup.ref('password')], translate('PasswordsNotSame'))
+    .required(translate('FillAllFields')),
 });
 
 const StyledInputContainer = styled(InputContainer)`
@@ -42,28 +42,27 @@ const StyledInputContainer = styled(InputContainer)`
 
 const ResetPasswordPage = () => (
   <AuthTemplate>
-    <BackTopNav text="Przywracanie hasła" />
+    <BackTopNav text={translate('PasswordRecovery')} />
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
       {({ errors, touched }) => (
         <Center place="authForm">
           <Form>
             <StyledInputContainer>
-              <Label type="top" text="Podaj nowe hasło">
+              <Label type="top" text={translate('EnterNewPassword')}>
                 <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
               </Label>
               <Paragraph type="body-3-regular">
-                Hasło musi mieć conajmniej 8 znaków w tym jedną dużą literę i jeden znak
-                specjalny
+                {translate('PasswordRequirements')}
               </Paragraph>
             </StyledInputContainer>
             <InputContainer>
-              <Label type="top" text="Powtórz nowe hasło">
+              <Label type="top" text={translate('RepeatNewPassword')}>
                 <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
               </Label>
               <ErrorMessageForm name="password" />
               <ErrorMessageForm name="confirmPassword" />
             </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">Wyślij</Button>
+            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
           </Form>
         </Center>
       )}

@@ -15,6 +15,7 @@ import Center from 'components/atoms/Center';
 import Paragraph from 'components/atoms/Paragraph';
 import Checkbox from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
+import { translate } from 'utils/Translation';
 
 const initialValues = {
   name: '',
@@ -35,19 +36,18 @@ const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,32}$/gm;
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .matches(name)
-    .required('Uzupełnij imię i nazwisko'),
+    .required(translate('EnterFirstNameAndLastName')),
   phone: Yup.string()
     .matches(phoneRegex),
   password: Yup.string()
-    .matches(passwordRegex, 'Hasło musi spełniać powyższy warunek')
-    .max(32, 'Hasło nie może zawierać wiecej niz 32 znaki !')
+    .matches(passwordRegex, translate('PasswordNeedsCondition'))
+    .max(32, translate('PasswordMaxLength'))
     .required(),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Podane hasła nie są takie same !')
-    .required('Powtórz hasło'),
+    .oneOf([Yup.ref('password')], translate('PasswordsNotSame'))
+    .required(translate('RepeatPassword')),
   privacy: Yup.boolean()
-    .required('Musisz zaakceptować regulamin, aby aktywować konto')
-    .oneOf([true], 'Musisz zaakceptować regulamin, aby aktywować konto'),
+    .oneOf([true], translate('MustAcceptPrivacy')),
 });
 
 const StyledInputContainer = styled(InputContainer)`
@@ -71,6 +71,7 @@ const Link = styled.a`
   text-decoration: none;
   text-align: center;
   margin-top: 1.4rem;
+  margin-left: .5rem;
   cursor: pointer;
 
   &:visited{
@@ -85,31 +86,31 @@ const CheckboxContainer = styled.div`
 
 const ActivateAccountPage = () => (
   <AuthTemplate>
-    <Heading>Aktywacja konta</Heading>
-    <Paragraph type="body-2-regular">Do logowania będzie wykorzystywany adres e-mail na który otrzymałeś zaproszenie.</Paragraph>
+    <Heading>{translate('ActivateAccount')}</Heading>
+    <Paragraph type="body-2-regular">{translate('EmailLoginInfo')}</Paragraph>
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
       {({ errors, touched, values }) => (
         <Center place="auth">
           <Form>
             <InputContainer>
-              <Label type="top" text="Podaj swoje imię i nazwisko" required>
+              <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
                 <Field type="text" name="name" as={Input} error={errors.name && touched.name} />
               </Label>
-              <ValidateInvalidData errors={errors} touched={touched} text="Imię i Nazwisko musi być oddzielone spacją" inputName="name" />
+              <ValidateInvalidData errors={errors} touched={touched} text={translate('FirstNameAndLastNameMustSpace')} inputName="name" />
             </InputContainer>
             <StyledInputPhoneContainer>
-              <Label type="top" text="Podaj numer telefonu">
+              <Label type="top" text={translate('EnterPhoneNumber')}>
                 <Field type="text" name="phone" as={Input} error={errors.phone && touched.phone} />
               </Label>
             </StyledInputPhoneContainer>
             <StyledInputContainer>
-              <Label type="top" text="Podaj nowe hasło" required>
+              <Label type="top" text={translate('EnterNewPassword')} required>
                 <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
               </Label>
-              <ValidateInvalidData errors={errors} touched={touched} text="Hasło musi mieć conajmniej 8 znaków w tym jedną dużą literę i jeden znak specjalny" inputName="password" />
+              <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
             </StyledInputContainer>
             <InputContainer>
-              <Label type="top" text="Powtórz nowe hasło" required>
+              <Label type="top" text={translate('RepeatNewPassword')} required>
                 <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
               </Label>
               <ErrorMessageForm name="confirmPassword" />
@@ -126,13 +127,12 @@ const ActivateAccountPage = () => (
               <ValidateInvalidData
                 errors={errors}
                 touched={touched}
-                text="Zakładając konto akceptujesz naszą
-                politykę prywatności - poznasz ją "
+                text={translate('PolicyPrivacy')}
                 inputName="privacy"
               />
-              <Link href={routes.privacy}>tutaj.</Link>
+              <Link href={routes.privacy}>{translate('Here')}</Link>
             </Container>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">Zapisz</Button>
+            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
           </Form>
         </Center>
       )}
