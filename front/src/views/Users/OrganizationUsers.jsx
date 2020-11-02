@@ -7,7 +7,7 @@ import { commonUtil } from 'utils/common.util';
 import Loader  from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
-import { userContext } from 'App';
+import { userContext } from '../Root';
 import InviteUserModal from './InviteUsersModal';
 import messages from 'lang/eng'
 
@@ -23,12 +23,13 @@ const OrganizationUsers = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [assignPlan, setAssignPlan] = useState(false);
   const [assignTrainer, setAssignTrainer] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(user)
     getAllUsers();
   }, []);
 
@@ -82,9 +83,9 @@ const OrganizationUsers = () => {
           <p onClick={() => filterUsers("All")}> All </p>
         </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
-          <Loader isLoading={isLoading}>
+          {/* <Loader isLoading={isLoading}> */}
             {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
-          </Loader>
+          {/* </Loader> */}
         </div>
       </div>
       {/* <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer}/>

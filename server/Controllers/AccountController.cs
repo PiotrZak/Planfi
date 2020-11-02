@@ -60,8 +60,13 @@ namespace WebApi.Controllers
         [HttpPost("forgot-password")]
         public IActionResult ForgotPassword(ForgotPassword model)
         {
-            _accountService.ForgotPassword(model, Request.Headers["origin"]);
-            return Ok(new { message = "Please check your email for password reset instructions" });
+            var result = _accountService.ForgotPassword(model, Request.Headers["origin"]);
+
+            if (result)
+            {
+                return Ok(new { message = "Please check your email for password reset instructions" });
+            }
+            return Ok(new { message = "This User dont exist" });
         }
         
         [AllowAnonymous]

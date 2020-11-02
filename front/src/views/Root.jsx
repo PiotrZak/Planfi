@@ -79,7 +79,7 @@ const Root = () => {
         }}
       >
     <ThemeProvider theme={theme}>
-    <userContext.Provider value={{ user }}>
+    <userContext.Provider value={{user}}>
     <BrowserRouter history={history}>
       <MainTemplate>
         <Switch>

@@ -13,7 +13,7 @@ const InviteUserModal = ({ openModal, onClose }) => {
     const [emails, setEmails] = useState([])
 
     const submitForm = () => {
-        //todo sending mails
+        
     }
 
     return (

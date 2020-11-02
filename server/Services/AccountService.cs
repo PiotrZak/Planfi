@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -12,7 +13,7 @@ namespace WebApi.Services
     public interface IAccountService
     {
         void UploadAvatar(string userId, byte[] avatar);
-        void ForgotPassword(ForgotPassword model, string origin);
+        Boolean ForgotPassword(ForgotPassword model, string origin);
         void ResetPassword(ResetPasswordRequest model);
     }
 
@@ -29,16 +30,18 @@ namespace WebApi.Services
             _userService = userService;
         }
         
-        public void ForgotPassword(ForgotPassword model, string origin)
+        public Boolean ForgotPassword(ForgotPassword model, string origin)
         {
             var user = _context.Users.FirstOrDefault(x => x.Email == model.Email).WithoutPassword();
 
-            if (user == null) return;
+            if (user == null) return false;
 
+            // create reset token that expires after 1 day
             user.ResetToken = randomTokenString();
             user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
             
             SendPasswordResetEmail(user, origin);
+            return true;
         }
 
         public void UploadAvatar(string userId, byte[] avatar)
@@ -48,15 +51,6 @@ namespace WebApi.Services
             user.Avatar = avatar;
             _context.Clients.Update(user);
             _context.SaveChanges();
-        }
-        
-        private static string randomTokenString()
-        {
-            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
-            var randomBytes = new byte[40];
-            rngCryptoServiceProvider.GetBytes(randomBytes);
-            // convert random bytes to hex string
-            return BitConverter.ToString(randomBytes).Replace("-", "");
         }
         
         private void SendPasswordResetEmail(User account, string origin)
@@ -98,6 +92,27 @@ namespace WebApi.Services
             
             _emailService.Send(messageData);
         }
+
+        public void ActivateAccount(ActivateAccount model)
+        {
+            var resetPasswordModel = new ResetPasswordRequest
+            {
+                Token = randomTokenString(),
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword
+            };
+
+            ResetPassword(resetPasswordModel);
+        }
+        
+        private static string randomTokenString()
+        {
+            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
+            var randomBytes = new byte[40];
+            rngCryptoServiceProvider.GetBytes(randomBytes);
+            // convert random bytes to hex string
+            return BitConverter.ToString(randomBytes).Replace("-", "");
+        }
         
         public void ResetPassword(ResetPasswordRequest model)
         {
@@ -123,8 +138,7 @@ namespace WebApi.Services
             _context.SaveChanges();
         }
         
-        // 
-        /*private void SendVerificationEmail(Account account, string origin)
+        private void SendVerificationEmail(User account, string origin)
         {
             string message;
             if (!string.IsNullOrEmpty(origin))
@@ -139,17 +153,34 @@ namespace WebApi.Services
                              <p><code>{account.VerificationToken}</code></p>";
             }
 
-            _emailService.SendEmail(
-                ToAddresses: account.Email,
-                FromAddresses: 
-                subject: "Sign-up Verification API - Verify Email",
-                Content: $@"<h4>Verify Email</h4>
+            var messageData = new EmailMessage
+            {
+                ToAddresses = new List<EmailMessage.EmailAddress>()
+                {
+                    new EmailMessage.EmailAddress()
+                    {
+                        Name = account.Email,
+                        Address = account.Email
+                    }
+                },
+                FromAddresses = new List<EmailMessage.EmailAddress>()
+                {
+                    new EmailMessage.EmailAddress()
+                    {
+                        Name = "Planfi",
+                        Address = "planfi.contact@gmail.com",
+                    }
+                },
+                Subject = "Reset password E-mail",
+                Content = $@"<h4>Verify Email</h4>
                          <p>Thanks for registering!</p>
-                         {message}"
-            ); 
-                
-            return Ok(message);
-        }*/
+                         {message}",
+            };
+            
+            _emailService.Send(messageData);
+            
+            /*return Ok(messageData);*/
+        }
     }
 }
 
