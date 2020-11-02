@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { routes } from 'routes';
+import { routes } from 'utils/routes';
 import { withRouter, NavLink } from 'react-router-dom';
 import styled, { withTheme } from 'styled-components';
 import Icon from 'components/atoms/Icon';
-import { Role } from 'role';
+import { Role } from 'utils/role';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));
 

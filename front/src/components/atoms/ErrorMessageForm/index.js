@@ -7,14 +7,14 @@ import handleTextType from 'support/TextType';
 const StyledValidationHint = styled.p`
   color: ${({ theme }) => theme.colorErrorDefault};
   margin: .5rem 0 0 0;
-  
+
   ${() => handleTextType('body-3-regular')};
 `;
 
-const ValidationHint = ({ name }) => <ErrorMessage name={name} component={StyledValidationHint} />;
+const ErrorMessageForm = ({ name }) => <ErrorMessage name={name} component={StyledValidationHint} />;
 
-ValidationHint.propTypes = {
+ErrorMessageForm.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-export default ValidationHint;
+export default ErrorMessageForm;
