@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.5.3",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.0",
     "eslint": "^6.6.0",
@@ -32,6 +32,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "rxjs": "^6.6.3",
     "styled-components": "^5.2.0",
     "svg-fill": "git+https://github.com/c1rrus/svg-fill.git",
     "yup": "^0.29.3"

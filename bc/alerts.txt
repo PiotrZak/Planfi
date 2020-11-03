@@ -3,7 +3,6 @@ import styled, { css, withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
-import Random from 'utils/Random';
 
 const handleAlertType = (type, theme) => {
   switch (type) {
@@ -61,35 +60,27 @@ const StyledParagraph = styled(Paragraph)`
 const Alert = ({
   type, message, autoRemove, time, theme,
 }) => {
-  const [alert, setAlert] = useState([]);
-  const [ID] = useState(Random(1, 999999999));
-
-  const setAlertData = () => ({
-    timeCreated: new Date().getTime(),
-    timeToRemove: time,
-    ID,
-  });
+  const [alerts, setAlerts] = useState([]);
+  const [ID, setID] = useState();
 
   useEffect(() => {
+    const CurrentTime = new Date().getTime().toString();
+    setID(CurrentTime);
+    console.log(ID);
+
+    const addTimeOut = setTimeout(() => {
+      if (!alerts.includes(ID)) {
+        setAlerts((prevState) => [...prevState, ID]);
+      } else {
+        clearTimeout(addTimeOut);
+      }
+    }, (100000));
+
     if (autoRemove) {
-      if (alert.length === 0) {
-        setTimeout(() => {
-          setAlert(setAlertData);
-        }, 100);
-      }
+      setTimeout(() => {
+        document.getElementById('test').remove();
+      }, (time));
     }
-
-    const alertAutoRemoverTimer = setInterval(() => {
-      const currentTime = new Date().getTime();
-
-      if (alert.timeCreated + alert.timeToRemove < currentTime) {
-        try{
-          document.getElementById(alert.ID).remove();
-        } catch {
-          window.clearInterval(alertAutoRemoverTimer)
-        }
-      }
-    }, (100));
   });
 
   const close = (e) => {

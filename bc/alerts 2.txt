@@ -64,32 +64,22 @@ const Alert = ({
   const [alert, setAlert] = useState([]);
   const [ID] = useState(Random(1, 999999999));
 
-  const setAlertData = () => ({
-    timeCreated: new Date().getTime(),
-    timeToRemove: time,
-    ID,
-  });
-
   useEffect(() => {
     if (autoRemove) {
       if (alert.length === 0) {
-        setTimeout(() => {
-          setAlert(setAlertData);
-        }, 100);
+        const alertData = {
+          time: new Date().getTime(),
+          ID,
+        };
+        setAlert(alertData);
       }
     }
-
-    const alertAutoRemoverTimer = setInterval(() => {
-      const currentTime = new Date().getTime();
-
-      if (alert.timeCreated + alert.timeToRemove < currentTime) {
-        try{
-          document.getElementById(alert.ID).remove();
-        } catch {
-          window.clearInterval(alertAutoRemoverTimer)
-        }
-      }
-    }, (100));
+    
+    /* setTimeout(() => {
+        console.log(alerts);
+        document.getElementById('test').remove();
+      }, (time));
+    } */
   });
 
   const close = (e) => {

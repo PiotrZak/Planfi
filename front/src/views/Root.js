@@ -56,6 +56,7 @@ import LoginPage from 'views/Auth/LoginPage';
 import ForgotPasswordPage from 'views/Auth/ForotPasswordPage';
 import ResetPasswordPage from 'views/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'views/Auth/ActivateAccountPage';
+import Testpage from './Auth/TestPage';
 
 export const history = createBrowserHistory();
 
@@ -68,6 +69,7 @@ const Root = () => (
           <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
           <Route path={routes.activate} component={ActivateAccountPage} />
+          <Route path="/test" component={Testpage} />
         </Switch>
       </MainTemplate>
     </ThemeProvider>
