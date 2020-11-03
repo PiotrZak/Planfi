@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
+using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -15,6 +15,8 @@ namespace WebApi.Services
         void UploadAvatar(string userId, byte[] avatar);
         Boolean ForgotPassword(ForgotPassword model, string origin);
         void ResetPassword(ResetPasswordRequest model);
+        void SendVerificationEmail(RegisterModel register, string origin);
+        string RandomTokenString();
     }
 
     public class AccountService : IAccountService
@@ -22,12 +24,14 @@ namespace WebApi.Services
         private readonly IEmailService _emailService;
         private readonly DataContext _context;
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public AccountService(IEmailService emailService, DataContext context, IUserService userService)
+        public AccountService(IEmailService emailService, DataContext context, IUserService userService, IMapper mapper)
         {
             _emailService = emailService;
             _context = context;
             _userService = userService;
+            _mapper = mapper;
         }
         
         public Boolean ForgotPassword(ForgotPassword model, string origin)
@@ -37,7 +41,7 @@ namespace WebApi.Services
             if (user == null) return false;
 
             // create reset token that expires after 1 day
-            user.ResetToken = randomTokenString();
+            user.ResetToken = RandomTokenString();
             user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
             
             SendPasswordResetEmail(user, origin);
@@ -93,19 +97,7 @@ namespace WebApi.Services
             _emailService.Send(messageData);
         }
 
-        public void ActivateAccount(ActivateAccount model)
-        {
-            var resetPasswordModel = new ResetPasswordRequest
-            {
-                Token = randomTokenString(),
-                Password = model.Password,
-                ConfirmPassword = model.ConfirmPassword
-            };
-
-            ResetPassword(resetPasswordModel);
-        }
-        
-        private static string randomTokenString()
+        public string RandomTokenString()
         {
             using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
             var randomBytes = new byte[40];
@@ -138,19 +130,29 @@ namespace WebApi.Services
             _context.SaveChanges();
         }
         
-        private void SendVerificationEmail(User account, string origin)
+        public void SendVerificationEmail(RegisterModel model, string origin)
         {
+
+            if (_context.Clients.Any(x => x.Email == model.Email))
+                throw new AppException("Email \"" + model + "\" is already taken"); 
+            
+            var user = _mapper.Map<Client>(model);
+            user.VerificationToken = RandomTokenString();
+            
+            _context.Users.Add(user);
+            _context.SaveChanges();
+            
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var verifyUrl = $"{origin}/account/verify-email?token={account.VerificationToken}";
+                var verifyUrl = $"{origin}/account/verify-email?token={user.VerificationToken}";
                 message = $@"<p>Please click the below link to verify your email address:</p>
                              <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
             }
             else
             {
                 message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
-                             <p><code>{account.VerificationToken}</code></p>";
+                             <p><code>{user.VerificationToken}</code></p>";
             }
 
             var messageData = new EmailMessage
@@ -159,8 +161,8 @@ namespace WebApi.Services
                 {
                     new EmailMessage.EmailAddress()
                     {
-                        Name = account.Email,
-                        Address = account.Email
+                        Name = model.Email,
+                        Address = model.Email,
                     }
                 },
                 FromAddresses = new List<EmailMessage.EmailAddress>()
@@ -171,15 +173,13 @@ namespace WebApi.Services
                         Address = "planfi.contact@gmail.com",
                     }
                 },
-                Subject = "Reset password E-mail",
-                Content = $@"<h4>Verify Email</h4>
+                Subject = "Activate Your Account",
+                Content = $@"<h4>Activation</h4>
                          <p>Thanks for registering!</p>
                          {message}",
             };
             
             _emailService.Send(messageData);
-            
-            /*return Ok(messageData);*/
         }
     }
 }

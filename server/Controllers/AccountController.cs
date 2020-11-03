@@ -7,6 +7,7 @@ using System.IO;
 using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
 using WebApi.Controllers.ViewModels;
+using RegisterModel = WebApi.Models.RegisterModel;
 
 namespace WebApi.Controllers
 {
@@ -75,6 +76,14 @@ namespace WebApi.Controllers
         {
             _accountService.ResetPassword(model);
             return Ok(new { message = "Password reset successful, you can now login" });
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("activate")]
+        public IActionResult RegisterAccount(RegisterModel model)
+        {
+            _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
+            return Ok(new { message = "Activation mail sent!" });
         }
 
     }
