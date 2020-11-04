@@ -9,7 +9,7 @@ import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import { userContext } from '../Root';
 import InviteUserModal from './InviteUsersModal';
-import messages from 'lang/eng'
+// import messages from 'lang/eng'
 
 // import { UsersPanel } from "../Common/UsersPanel"
 // import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
@@ -72,7 +72,9 @@ const OrganizationUsers = () => {
       <div className="container">
         <div className="container__title">
           <Return />
-          <h2>{messages.users.usersText} of - {user.organizationId}</h2>
+          <h2>
+          {/* {messages.users.usersText}  */}
+          of - {user.organizationId}</h2>
           <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
         </div>
         <div className="users">
@@ -84,7 +86,11 @@ const OrganizationUsers = () => {
         </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           {/* <Loader isLoading={isLoading}> */}
-            {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
+            {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : 
+            <h1>
+            {/* {messages.users.noUsers} */}
+            </h1>
+            }
           {/* </Loader> */}
         </div>
       </div>

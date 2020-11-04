@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -16,6 +17,7 @@ import Paragraph from 'components/atoms/Paragraph';
 import Checkbox from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
+import { userService } from 'services/userServices';
 
 const initialValues = {
   name: '',
@@ -25,9 +27,6 @@ const initialValues = {
   privacy: false,
 };
 
-const onSubmit = (values) => {
-  console.log('values', values);
-};
 
 const nameRegex = /^[a-zA-Z]{3,20} [a-zA-Z]{2,32}$/;
 const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
@@ -84,7 +83,50 @@ const CheckboxContainer = styled.div`
   margin-right: .5rem;
 `;
 
-const ActivateAccountPage = () => (
+const ActivateAccountPage = () => {
+
+  const [userActivationData, setUserActivationData] = useState(initialValues)
+  const dispatch = useDispatch()
+
+  const handleInput = (e) => {
+    let name = e.target.name
+    console.log(userActivationData)
+    userActivationData[name] = e.target.value;
+    setUserActivationData(userActivationData);
+}
+
+const onSubmit = () => {
+
+  const arrayOfSplitted = userActivationData.name.split(/[ ,]+/);
+  const firstName = arrayOfSplitted[0];
+  const lastName = arrayOfSplitted[1];
+
+  const activateUserModel = {
+    firstName: firstName,
+    lastName: lastName,
+    phoneNumber: userActivationData.phoneNumber,
+    password: userActivationData.confirmPassword,
+    //todo - take from url.
+    verificationToken: "B3A40A8E0E206572BE6357E0FD72BCEF4585B8210FBE99AF688834AB2C02049A5EBC459EF352F3F3"
+  }
+
+  activateUser(activateUserModel)
+}
+
+const activateUser = (activateUserModel) => {
+
+  userService
+      .activate(activateUserModel)
+      .then((data) => {
+          localStorage.setItem('user', JSON.stringify(data));
+      })
+      .catch((error) => {
+        //todo - alerts
+        console.error(error)
+      });
+}
+
+return(
   <AuthTemplate>
     <Heading>{translate('ActivateAccount')}</Heading>
     <Paragraph type="body-2-regular">{translate('EmailLoginInfo')}</Paragraph>
@@ -92,13 +134,13 @@ const ActivateAccountPage = () => (
       {({ errors, touched, values }) => (
         <Center place="auth">
           <Form>
-            <InputContainer>
+            <InputContainer onChange={handleInput} >
               <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
                 <Field type="text" name="name" as={Input} error={errors.name && touched.name} />
               </Label>
               <ValidateInvalidData errors={errors} touched={touched} text={translate('FirstNameAndLastNameMustSpace')} inputName="name" />
             </InputContainer>
-            <StyledInputPhoneContainer>
+            <StyledInputPhoneContainer onChange={handleInput} >
               <Label type="top" text={translate('EnterPhoneNumber')}>
                 <Field type="text" name="phone" as={Input} error={errors.phone && touched.phone} />
               </Label>
@@ -109,7 +151,7 @@ const ActivateAccountPage = () => (
               </Label>
               <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
             </StyledInputContainer>
-            <InputContainer>
+            <InputContainer onChange={handleInput} >
               <Label type="top" text={translate('RepeatNewPassword')} required>
                 <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
               </Label>
@@ -132,12 +174,12 @@ const ActivateAccountPage = () => (
               />
               <Link href={routes.privacy}>{translate('Here')}</Link>
             </Container>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
+            <Button disabled = {errors} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
           </Form>
         </Center>
       )}
     </Formik>
   </AuthTemplate>
-);
+)};
 
 export default ActivateAccountPage;

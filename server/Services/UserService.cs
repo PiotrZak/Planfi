@@ -35,6 +35,7 @@ namespace WebApi.Services
         IEnumerable<Trainer> GetTrainersByClient(string ClientId);
 
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
+        User Activate(User user);
     }
 
     public class UserService : IUserService
@@ -46,29 +47,7 @@ namespace WebApi.Services
             _context = context;
             _mapper = mapper;
         }
-
-        /*public Client Register(Client user, string password)
-        {
-            // validation
-            if (string.IsNullOrWhiteSpace(password))
-                throw new AppException("Password is required");
-
-            if (_context.Clients.Any(x => x.Email == user.Email))
-                throw new AppException("Email \"" + user.Email + "\" is already taken");
-
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-            user.VerificationToken = _accountService.randomTokenString();
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-
-            return user;
-        }*/
-
+        
         public User Register(string Email)
         {
             if (_context.Clients.Any(x => x.Email == Email))
@@ -80,6 +59,27 @@ namespace WebApi.Services
             _context.SaveChanges();
 
             return user;
+        }
+
+        public User Activate(User user)
+        {
+            var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
+
+            selectedUser.FirstName = user.FirstName;
+            selectedUser.LastName = user.LastName;
+            selectedUser.PhoneNumber = user.PhoneNumber;
+            
+            byte[] passwordHash, passwordSalt;
+            CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+            
+            selectedUser.Password = user.Password;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            selectedUser.IsActivated = true;
+
+            _context.Users.Update(selectedUser);
+            _context.SaveChanges();
+            return selectedUser;
         }
 
         public User Authenticate(string Email, string Password)
@@ -309,6 +309,7 @@ namespace WebApi.Services
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
+
 
     }
 }
