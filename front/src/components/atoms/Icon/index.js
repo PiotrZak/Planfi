@@ -1,13 +1,18 @@
 import React from 'react';
 import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+const StyledSVG = styled(ReactSVG)`
+  cursor: pointer;
+`;
 
 const Icon = ({
   name, fill, width, height, onClick,
 }) => {
   const selectedIcon = `../icons/library/${name}.svg`;
   return (
-    <ReactSVG
+    <StyledSVG
       src={selectedIcon}
       fill={fill}
       onClick={onClick}
