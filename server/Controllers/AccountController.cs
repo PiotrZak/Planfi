@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Services;
 using WebApi.Helpers;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
 using WebApi.Models;
-using Microsoft.AspNetCore.Identity;
 using System.IO;
+using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
 using WebApi.Controllers.ViewModels;
-using static WebApi.Models.EmailMessage;
-using System.Collections.Generic;
+using RegisterModel = WebApi.Models.RegisterModel;
 
 namespace WebApi.Controllers
 {
@@ -22,21 +18,14 @@ namespace WebApi.Controllers
     {
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
 
         public AccountController(
             IEmailService emailService,
-            IAccountService accountService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
-
+            IAccountService accountService)
         {
             _accountService = accountService;
             _emailService = emailService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
-        }
+            }
 
         [AllowAnonymous]
         [HttpPost("sendMail")]
@@ -64,44 +53,38 @@ namespace WebApi.Controllers
             }
             catch (AppException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(new {message = ex.Message});
             }
         }
-
-
+        
         [AllowAnonymous]
-        [HttpPost("forgot")]
-        public IActionResult ForgotPassword([FromBody] ForgotPassword forgotPasswordModel)
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword(ForgotPassword model)
         {
+            var result = _accountService.ForgotPassword(model, Request.Headers["origin"]);
 
-            var user = _accountService.FindUserByEmail(forgotPasswordModel.Email);
-            
-            var message = new EmailMessage
+            if (result)
             {
-                ToAddresses = new List<EmailAddress>()
-              {
-                 new EmailAddress()
-                 {
-                     Name = "Test",
-                     Address = forgotPasswordModel.Email
-                 }
-              },
-                FromAddresses = new List<EmailAddress>()
-              {
-                 new EmailAddress()
-                 {
-                     Name = "Test",
-                     Address = "test@gmail.com"
-                 }
-              },
-
-                Subject = "Reset password token",
-                Content = "test",
-            };
-
-
-            _emailService.SendEmail(message);
-            return Ok(message);
+                return Ok(new { message = "Please check your email for password reset instructions" });
+            }
+            return Ok(new { message = "This User dont exist" });
         }
+        
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(ResetPasswordRequest model)
+        {
+            _accountService.ResetPassword(model);
+            return Ok(new { message = "Password reset successful, you can now login" });
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("activate")]
+        public IActionResult RegisterAccount(RegisterModel model)
+        {
+            _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
+            return Ok(new { message = "Activation mail sent!" });
+        }
+
     }
 }

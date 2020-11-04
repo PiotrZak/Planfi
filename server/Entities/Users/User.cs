@@ -16,7 +16,7 @@ namespace WebApi.Entities
 
         [Key]
         public string UserId { get; set; }
-
+        
         public byte[] Avatar { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -27,5 +27,11 @@ namespace WebApi.Entities
         public byte[] PasswordSalt { get; set; }
         public string Role { get; set; }
         public string Token { get; set; }
+        public string ResetToken { get; set; }
+        public DateTime? ResetTokenExpires { get; set; }
+        public DateTime PasswordReset { get; set; }
+        
+        public string VerificationToken { get; set; }
+        public bool IsActivated { get; set; }
     };
 }

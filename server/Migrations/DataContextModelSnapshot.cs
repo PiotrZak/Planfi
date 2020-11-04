@@ -352,6 +352,9 @@ namespace WebApi.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
@@ -364,16 +367,28 @@ namespace WebApi.Migrations
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("bytea");
 
+                    b.Property<DateTime>("PasswordReset")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("bytea");
 
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("integer");
 
+                    b.Property<string>("ResetToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ResetTokenExpires")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
                     b.Property<string>("Token")
+                        .HasColumnType("text");
+
+                    b.Property<string>("VerificationToken")
                         .HasColumnType("text");
 
                     b.HasKey("UserId");
@@ -400,12 +415,14 @@ namespace WebApi.Migrations
                             UserId = "a1",
                             Email = "tgianelli0@eventbrite.com",
                             FirstName = "admin",
+                            IsActivated = false,
                             LastName = "lol",
                             OrganizationId = "O1",
                             Password = "admin",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Admin",
-                            AdminId = "a1a25b30-b3af-4373-9023-d8ebcf6ca550"
+                            AdminId = "f1a26cad-6432-496f-b7e3-852f7746154c"
                         });
                 });
 
@@ -424,9 +441,11 @@ namespace WebApi.Migrations
                             UserId = "u1",
                             Email = "tgianelli0@eventbrite.com",
                             FirstName = "Teodoor",
+                            IsActivated = false,
                             LastName = "Gianelli",
                             OrganizationId = "O1",
                             Password = "Teodor",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -437,9 +456,11 @@ namespace WebApi.Migrations
                             UserId = "u2",
                             Email = "jcasson3@prlog.org",
                             FirstName = "Jillana",
+                            IsActivated = false,
                             LastName = "Casson",
                             OrganizationId = "O1",
                             Password = "Jillana",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
@@ -450,9 +471,11 @@ namespace WebApi.Migrations
                             UserId = "u3",
                             Email = "Teloinic@gmail.com",
                             FirstName = "Camille",
+                            IsActivated = false,
                             LastName = "Teloinic",
                             OrganizationId = "O1",
                             Password = "Teodor",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -463,9 +486,11 @@ namespace WebApi.Migrations
                             UserId = "u4",
                             Email = "kburgne2@hp.com",
                             FirstName = "Kiel",
+                            IsActivated = false,
                             LastName = "Burgne",
                             OrganizationId = "O1",
                             Password = "Kiel",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "User",
                             Token = "t-trainer",
@@ -476,9 +501,11 @@ namespace WebApi.Migrations
                             UserId = "u5",
                             Email = "awharinu@tmall.com",
                             FirstName = "Augustus",
+                            IsActivated = false,
                             LastName = "Wharin",
                             OrganizationId = "O1",
                             Password = "Augustus",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -489,9 +516,11 @@ namespace WebApi.Migrations
                             UserId = "u6",
                             Email = "bcaullieres@auda.org.au",
                             FirstName = "Bondy",
+                            IsActivated = false,
                             LastName = "Caulliere",
                             OrganizationId = "O1",
                             Password = "Bondy",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
@@ -502,9 +531,11 @@ namespace WebApi.Migrations
                             UserId = "o2u1",
                             Email = "jmeachem0@eventbrite.com",
                             FirstName = "Jacklyn",
+                            IsActivated = false,
                             LastName = "Meachem",
                             OrganizationId = "O2",
                             Password = "Jacklyn",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -515,9 +546,11 @@ namespace WebApi.Migrations
                             UserId = "o2u2",
                             Email = "gkryska1@about.com",
                             FirstName = "Georgie",
+                            IsActivated = false,
                             LastName = "Kryska",
                             OrganizationId = "O2",
                             Password = "Jillana",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
@@ -528,9 +561,11 @@ namespace WebApi.Migrations
                             UserId = "o2u3",
                             Email = "kcridge2@xrea.com",
                             FirstName = "Kiah",
+                            IsActivated = false,
                             LastName = "Cridge",
                             OrganizationId = "O2",
                             Password = "Teodor",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -541,9 +576,11 @@ namespace WebApi.Migrations
                             UserId = "o2u4",
                             Email = "jsarrell3@whitehouse.gov",
                             FirstName = "Jarret",
+                            IsActivated = false,
                             LastName = "Sarrell",
                             OrganizationId = "O2",
                             Password = "Kiel",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "User",
                             Token = "t-trainer",
@@ -554,9 +591,11 @@ namespace WebApi.Migrations
                             UserId = "o2u5",
                             Email = "flydiate5@biblegateway.com",
                             FirstName = "Felice",
+                            IsActivated = false,
                             LastName = "Lydiate",
                             OrganizationId = "O2",
                             Password = "Augustus",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -567,9 +606,11 @@ namespace WebApi.Migrations
                             UserId = "o2u6",
                             Email = "gpedlingham6@ow.ly",
                             FirstName = "Gerald",
+                            IsActivated = false,
                             LastName = "Pedlingham",
                             OrganizationId = "O2",
                             Password = "Bondy",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
@@ -580,9 +621,11 @@ namespace WebApi.Migrations
                             UserId = "o3u1",
                             Email = "thilldrupe@berkeley.edu",
                             FirstName = "Titus",
+                            IsActivated = false,
                             LastName = "Hilldrup",
                             OrganizationId = "O3",
                             Password = "Titus",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -593,9 +636,11 @@ namespace WebApi.Migrations
                             UserId = "o3u2",
                             Email = "mtamesf@netvibes.com",
                             FirstName = "Maribel",
+                            IsActivated = false,
                             LastName = "Tames",
                             OrganizationId = "O3",
                             Password = "Maribel",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
@@ -606,9 +651,11 @@ namespace WebApi.Migrations
                             UserId = "o3u3",
                             Email = "tknowldenh@wsj.com",
                             FirstName = "Trumann",
+                            IsActivated = false,
                             LastName = "Knowlden",
                             OrganizationId = "O3",
                             Password = "Trumann",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -619,9 +666,11 @@ namespace WebApi.Migrations
                             UserId = "o3u4",
                             Email = "jsarrell3@whitehouse.gov",
                             FirstName = "Jarret",
+                            IsActivated = false,
                             LastName = "Sarrell",
                             OrganizationId = "O3",
                             Password = "Jarret",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "User",
                             Token = "t-trainer",
@@ -632,9 +681,11 @@ namespace WebApi.Migrations
                             UserId = "o3u5",
                             Email = "gcamidgej@umich.edu",
                             FirstName = "Godfry",
+                            IsActivated = false,
                             LastName = "Camidge",
                             OrganizationId = "O3",
                             Password = "Godfry",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "User",
                             Token = "t-user",
@@ -645,9 +696,11 @@ namespace WebApi.Migrations
                             UserId = "o3u6",
                             Email = "mcorbyl@comsenz.com",
                             FirstName = "Maison",
+                            IsActivated = false,
                             LastName = "Corby",
                             OrganizationId = "O3",
                             Password = "Bondy",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 666666666,
                             Role = "User",
                             Token = "t-trainer",
@@ -670,36 +723,42 @@ namespace WebApi.Migrations
                             UserId = "owner1",
                             Email = "owner1@eventbrite.com",
                             FirstName = "Owner1",
+                            IsActivated = false,
                             LastName = "LastName",
                             OrganizationId = "O1",
                             Password = "Owner1",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "ed39f480-fbf3-415e-9b00-22cb2fd3e848"
+                            OwnerId = "8456a5b9-eb18-4856-b214-7c473c285961"
                         },
                         new
                         {
                             UserId = "owner2",
                             Email = "owner2@eventbrite.com",
                             FirstName = "Owner2",
+                            IsActivated = false,
                             LastName = "lol",
                             OrganizationId = "O2",
                             Password = "Owner2",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "7906be4a-5712-422b-ab32-cb6d6f83894d"
+                            OwnerId = "ff1871ba-174b-4ea9-a9ff-7e41c23b1ec1"
                         },
                         new
                         {
                             UserId = "owner3",
                             Email = "owner3@eventbrite.com",
                             FirstName = "Owner3",
+                            IsActivated = false,
                             LastName = "lol",
                             OrganizationId = "O3",
                             Password = "Owner3",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "aa04d959-b923-4f65-a2aa-1826d2ca104c"
+                            OwnerId = "34b32498-1480-4043-866c-74e342706d39"
                         });
                 });
 
@@ -718,9 +777,11 @@ namespace WebApi.Migrations
                             UserId = "t1",
                             Email = "vmaccathay17@house.gov",
                             FirstName = "Valentia",
+                            IsActivated = false,
                             LastName = "MacCathay",
                             OrganizationId = "O1",
                             Password = "Valentia",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",
@@ -731,9 +792,11 @@ namespace WebApi.Migrations
                             UserId = "t2",
                             Email = "efearey1f@mlb.com",
                             FirstName = "Eadith",
+                            IsActivated = false,
                             LastName = "Fearey",
                             OrganizationId = "O1",
                             Password = "Eadith",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",
@@ -744,9 +807,11 @@ namespace WebApi.Migrations
                             UserId = "o2t1",
                             Email = "tbullerwell1n@sitemeter.com",
                             FirstName = "Talia",
+                            IsActivated = false,
                             LastName = "Bullerwell",
                             OrganizationId = "O2",
                             Password = "Talia",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",
@@ -757,9 +822,11 @@ namespace WebApi.Migrations
                             UserId = "o2t2",
                             Email = "mbabb1x@java.com",
                             FirstName = "Malachi",
+                            IsActivated = false,
                             LastName = "Babb",
                             OrganizationId = "O2",
                             Password = "Malachi",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",
@@ -770,9 +837,11 @@ namespace WebApi.Migrations
                             UserId = "o3t1",
                             Email = "bdunstan8@dell.com",
                             FirstName = "Benedikta",
+                            IsActivated = false,
                             LastName = "Dunstan",
                             OrganizationId = "O3",
                             Password = "Valentia",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",
@@ -783,9 +852,11 @@ namespace WebApi.Migrations
                             UserId = "o3t2",
                             Email = "fhobdena@census.gov",
                             FirstName = "Freddie",
+                            IsActivated = false,
                             LastName = "Hobden",
                             OrganizationId = "O3",
                             Password = "Eadith",
+                            PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 777777777,
                             Role = "Trainer",
                             Token = "t-organization",

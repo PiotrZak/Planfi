@@ -3,6 +3,7 @@ using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.GraphQl;
 using WebApi.Models;
+using RegisterModel = WebApi.Models.RegisterModel;
 
 namespace WebApi.Helpers
 {
@@ -12,7 +13,7 @@ namespace WebApi.Helpers
         {
 
             CreateMap<CreateOrganization, Organization>();
-
+            
             CreateMap<RegisterModel, User>();
             CreateMap<RegisterModel, Client>();
             CreateMap<AuthenticateModel, User>();

@@ -57,6 +57,9 @@ import ForgotPasswordPage from 'views/Auth/ForgotPasswordPage';
 import ResetPasswordPage from 'views/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'views/Auth/ActivateAccountPage';
 
+import OrganizationUsers from 'views/Users/OrganizationUsers';
+import { PrivateRoute, Role } from '../utils/PrivateRoute';
+
 export const history = createBrowserHistory();
 
 export const userContext = React.createContext();
@@ -76,7 +79,7 @@ const Root = () => {
         }}
       >
     <ThemeProvider theme={theme}>
-    <userContext.Provider value={{ user }}>
+    <userContext.Provider value={{user}}>
     <BrowserRouter history={history}>
       <MainTemplate>
         <Switch>
@@ -84,6 +87,8 @@ const Root = () => {
           <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
           <Route path={routes.activate} component={ActivateAccountPage} />
+
+          <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={OrganizationUsers} />
         </Switch>
       </MainTemplate>
       </BrowserRouter>

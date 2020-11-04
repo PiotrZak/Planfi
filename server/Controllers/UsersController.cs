@@ -77,7 +77,7 @@ namespace WebApi.Controllers
             });
         }
 
-        [AllowAnonymous]
+        /*[AllowAnonymous]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model)
         {
@@ -87,7 +87,7 @@ namespace WebApi.Controllers
             try
             {
                 // create user
-                _userService.Create(user, model.Password);
+                _userService.Register(user, model.Password);
                 return Ok(new
                 {
                     user.UserId,
@@ -105,7 +105,7 @@ namespace WebApi.Controllers
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
             }
-        }
+        }*/
 
         [AllowAnonymous]
         [HttpGet("users")]

@@ -10,6 +10,7 @@ namespace WebApi.Services
     public interface IEmailService
     {
         void SendEmail(EmailMessage message);
+        void Send(EmailMessage messageData);
     }
 
 
@@ -30,7 +31,7 @@ namespace WebApi.Services
         }
 
 
-		private void Send(EmailMessage emailMessage)
+		public void Send(EmailMessage emailMessage)
 		{
 			var message = new MimeMessage();
 			

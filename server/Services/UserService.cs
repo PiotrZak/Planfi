@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -14,7 +11,9 @@ namespace WebApi.Services
     public interface IUserService
     {
         User Authenticate(string Email, string Password);
-        Client Create(Client user, string password);
+        /*Client Register(Client user, string password);*/
+
+        User Register(string email);
 
         IEnumerable<User> GetAllUsers();
 
@@ -34,18 +33,21 @@ namespace WebApi.Services
 
         IEnumerable<Client> GetClientsByTrainer(string TrainerId);
         IEnumerable<Trainer> GetTrainersByClient(string ClientId);
+
+        void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 
     public class UserService : IUserService
     {
-        private DataContext _context;
-
-        public UserService(DataContext context)
+        private readonly DataContext _context;
+        private readonly IMapper _mapper;
+        public UserService(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public Client Create(Client user, string password)
+        /*public Client Register(Client user, string password)
         {
             // validation
             if (string.IsNullOrWhiteSpace(password))
@@ -57,8 +59,22 @@ namespace WebApi.Services
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
+            user.VerificationToken = _accountService.randomTokenString();
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return user;
+        }*/
+
+        public User Register(string Email)
+        {
+            if (_context.Clients.Any(x => x.Email == Email))
+                throw new AppException("Email \"" + Email + "\" is already taken"); 
+            
+            var user = _mapper.Map<User>(Email);
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -126,7 +142,7 @@ namespace WebApi.Services
                 if (user.Password != userParam.Password)
                     throw new AppException("Incorrect password");
 
-                    user.Email = userParam.Email;
+                user.Email = userParam.Email;
             }
 
             // update user properties if provided
@@ -243,7 +259,6 @@ namespace WebApi.Services
             var clientsTrainers = _context.ClientsTrainers.Where(x => x.TrainerId == id);
 
             var clientIds = new List<string>();
-            var clients = new List<Client>();
 
             foreach (var i in clientsTrainers)
             {
@@ -252,13 +267,7 @@ namespace WebApi.Services
 
             }
 
-            for (int i = 0; i < clientIds.Count; i++)
-            {
-                var client = _context.Clients.FirstOrDefault(x => x.ClientId == clientIds[i]);
-                clients.Add(client);
-            }
-
-            return clients;
+            return clientIds.Select((t, i) => (Client) _context.Clients.FirstOrDefault(x => x.ClientId == clientIds[i])).ToList();
         }
 
         public IEnumerable<Trainer> GetTrainersByClient(string id)
@@ -267,7 +276,6 @@ namespace WebApi.Services
             var clientsTrainers = _context.ClientsTrainers.Where(x => x.ClientId == id);
 
             var trainersIds = new List<string>();
-            var trainers = new List<Trainer>();
 
             foreach (var i in clientsTrainers)
             {
@@ -275,18 +283,9 @@ namespace WebApi.Services
                 trainersIds.Add(trainerId);
             }
 
-            for (int i = 0; i < trainersIds.Count; i++)
-            {
-                var trainer = _context.Trainers.FirstOrDefault(x => x.TrainerId == trainersIds[i]);
-                trainers.Add(trainer);
-            }
-
-            return trainers;
+            return trainersIds.Select((t, i) => (Trainer) _context.Trainers.FirstOrDefault(x => x.TrainerId == trainersIds[i])).ToList();
         }
-
-
-
-
+        
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
@@ -295,20 +294,13 @@ namespace WebApi.Services
             if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
             if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
-            using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                for (int i = 0; i < computedHash.Length; i++)
-                {
-                    if (computedHash[i] != storedHash[i]) return false;
-                }
-            }
-
-            return true;
+            using var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt);
+            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            return !computedHash.Where((t, i) => t != storedHash[i]).Any();
         }
 
 
-        private static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
