@@ -46,13 +46,17 @@ import Root from 'views/Root';
 // we use redux or not?
 import { store } from 'redux/store';
 import { Provider } from 'react-redux';
+import { NotificationProvider } from './support/context/NotificationContext';
+import { ThemeContext } from 'views/Root';
 
 // eslint-disable-next-line no-undef
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-        <Root />
-    </Provider>
+      <NotificationProvider>
+        <Provider store={store}>
+          <Root />
+        </Provider>
+      </NotificationProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

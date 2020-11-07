@@ -59,6 +59,8 @@ import ActivateAccountPage from 'views/Auth/ActivateAccountPage';
 
 import OrganizationUsers from 'views/Users/OrganizationUsers';
 import { PrivateRoute, Role } from '../utils/PrivateRoute';
+import { useNotificationContext } from '../support/context/NotificationContext';
+import Alert from 'components/molecules/Alert';
 
 export const history = createBrowserHistory();
 
@@ -71,18 +73,14 @@ const Root = () => {
   const [theme] = useState(mainTheme)
   const [user] = useState(JSON.parse((localStorage.getItem('user'))));
   const [selectedLanguage] = useState('en');
-  
   return(
-  <LanguageContext.Provider
-        value={{
-          lang: selectedLanguage,
-        }}
-      >
+  <LanguageContext.Provider value={{lang: selectedLanguage}}>
     <ThemeProvider theme={theme}>
     <userContext.Provider value={{user}}>
     <BrowserRouter history={history}>
       <MainTemplate>
         <Switch>
+          {/* <Alert/> */}
           <Route path={routes.login} component={LoginPage} />
           <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
