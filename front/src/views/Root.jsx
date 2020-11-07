@@ -47,6 +47,7 @@ import React, {useState} from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { mainTheme } from 'theme/mainTheme';
+import { whiteTheme } from 'theme/whiteTheme';
 import { ThemeProvider } from 'styled-components';
 import { createBrowserHistory } from 'history';
 
@@ -78,6 +79,7 @@ const Root = () => {
   
   return(
   <LanguageContext.Provider value={{lang: selectedLanguage}}>
+  {/* is need to use theme context? */}
     <ThemeContext.Provider value={{theme}}>
     <ThemeProvider theme={theme}>
     <userContext.Provider value={{user}}>
