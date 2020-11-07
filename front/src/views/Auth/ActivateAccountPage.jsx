@@ -85,27 +85,16 @@ const CheckboxContainer = styled.div`
 
 const ActivateAccountPage = () => {
 
-  const [userActivationData, setUserActivationData] = useState(initialValues)
-  const dispatch = useDispatch()
-
-  const handleInput = (e) => {
-    let name = e.target.name
-    console.log(userActivationData)
-    userActivationData[name] = e.target.value;
-    setUserActivationData(userActivationData);
-}
-
-const onSubmit = () => {
-
-  const arrayOfSplitted = userActivationData.name.split(/[ ,]+/);
+const onSubmit = (values) => {
+  const arrayOfSplitted = values.name.split(/[ ,]+/);
   const firstName = arrayOfSplitted[0];
   const lastName = arrayOfSplitted[1];
 
   const activateUserModel = {
     firstName: firstName,
     lastName: lastName,
-    phoneNumber: userActivationData.phoneNumber,
-    password: userActivationData.confirmPassword,
+    phoneNumber: values.phoneNumber,
+    password: values.confirmPassword,
     //todo - take from url.
     verificationToken: "B3A40A8E0E206572BE6357E0FD72BCEF4585B8210FBE99AF688834AB2C02049A5EBC459EF352F3F3"
   }
@@ -121,7 +110,6 @@ const activateUser = (activateUserModel) => {
           localStorage.setItem('user', JSON.stringify(data));
       })
       .catch((error) => {
-        //todo - alerts
         console.error(error)
       });
 }
@@ -134,13 +122,13 @@ return(
       {({ errors, touched, values }) => (
         <Center place="auth">
           <Form>
-            <InputContainer onChange={handleInput} >
+            <InputContainer>
               <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
                 <Field type="text" name="name" as={Input} error={errors.name && touched.name} />
               </Label>
               <ValidateInvalidData errors={errors} touched={touched} text={translate('FirstNameAndLastNameMustSpace')} inputName="name" />
             </InputContainer>
-            <StyledInputPhoneContainer onChange={handleInput} >
+            <StyledInputPhoneContainer>
               <Label type="top" text={translate('EnterPhoneNumber')}>
                 <Field type="text" name="phone" as={Input} error={errors.phone && touched.phone} />
               </Label>
@@ -151,7 +139,7 @@ return(
               </Label>
               <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
             </StyledInputContainer>
-            <InputContainer onChange={handleInput} >
+            <InputContainer  >
               <Label type="top" text={translate('RepeatNewPassword')} required>
                 <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
               </Label>
@@ -174,7 +162,7 @@ return(
               />
               <Link href={routes.privacy}>{translate('Here')}</Link>
             </Container>
-            <Button disabled = {errors} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
+            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
           </Form>
         </Center>
       )}
