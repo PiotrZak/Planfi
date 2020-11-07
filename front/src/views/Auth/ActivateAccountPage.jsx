@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -85,9 +85,7 @@ const CheckboxContainer = styled.div`
 const ActivateAccountPage = () => {
 
   const { notificationDispatch } = useNotificationContext();
-
-
-const onSubmit = (values) => {
+  const onSubmit = (values) => {
   const arrayOfSplitted = values.name.split(/[ ,]+/);
   const firstName = arrayOfSplitted[0];
   const lastName = arrayOfSplitted[1];
@@ -99,7 +97,6 @@ const onSubmit = (values) => {
     password: values.confirmPassword,
     verificationToken: "B3A40A8E0E206572BE6357E0FD72BCEF4585B8210FBE99AF688834AB2C02049A5EBC459EF352F3F3"
   }
-
   activateUser(activateUserModel)
 }
 
@@ -112,7 +109,8 @@ const activateUser = (activateUserModel) => {
           notificationDispatch({
             type: ADD,
             payload: {
-              content: { success: 'OK', message: 'Hello World' }
+              content: { success: 'OK', message: 'Hello World' },
+              type: 'warning'
             }
           })
       })

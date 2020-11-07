@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import Alert from '../../components/molecules/Alert/index'
+import { useThemeContext } from '../../support/context/ThemeContext';
 
 export const NotificationContext = createContext();
 

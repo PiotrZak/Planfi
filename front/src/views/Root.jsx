@@ -59,39 +59,42 @@ import ActivateAccountPage from 'views/Auth/ActivateAccountPage';
 
 import OrganizationUsers from 'views/Users/OrganizationUsers';
 import { PrivateRoute, Role } from '../utils/PrivateRoute';
-import { useNotificationContext } from '../support/context/NotificationContext';
 import Alert from 'components/molecules/Alert';
+import { ThemeContext } from '../support/context/ThemeContext';
+import { LanguageContext } from '../support/context/LanguageContext';
+import { userContext } from '../support/context/UserContext';
 
 export const history = createBrowserHistory();
 
-export const userContext = React.createContext();
-export const ThemeContext = React.createContext();
-export const LanguageContext = React.createContext();
+
 
 const Root = () => {
 
   const [theme] = useState(mainTheme)
   const [user] = useState(JSON.parse((localStorage.getItem('user'))));
   const [selectedLanguage] = useState('en');
+
+  console.log(theme)
+  
   return(
   <LanguageContext.Provider value={{lang: selectedLanguage}}>
+    <ThemeContext.Provider value={{theme}}>
     <ThemeProvider theme={theme}>
     <userContext.Provider value={{user}}>
     <BrowserRouter history={history}>
       <MainTemplate>
         <Switch>
-          {/* <Alert/> */}
           <Route path={routes.login} component={LoginPage} />
           <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
           <Route path={routes.activate} component={ActivateAccountPage} />
-
           <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={OrganizationUsers} />
         </Switch>
       </MainTemplate>
       </BrowserRouter>
     </userContext.Provider>
     </ThemeProvider>
+    </ThemeContext.Provider>
     </LanguageContext.Provider>
   )
 };

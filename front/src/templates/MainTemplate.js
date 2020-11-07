@@ -1,9 +1,9 @@
 import React from 'react';
 import GlobalStyle from 'theme/GlobalStyle';
 
-const MainTemplate = ({ children }) => (
+const MainTemplate = ({ children, theme }) => (
   <div>
-    <GlobalStyle />
+    <GlobalStyle theme = {theme}/>
     {children}
   </div>
 );

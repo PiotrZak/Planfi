@@ -7,7 +7,8 @@ import { commonUtil } from 'utils/common.util';
 import Loader  from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
-import { userContext } from '../Root';
+import {useUserContext} from "../../support/context/UserContext"
+
 import InviteUserModal from './InviteUsersModal';
 // import messages from 'lang/eng'
 
@@ -17,7 +18,7 @@ import InviteUserModal from './InviteUsersModal';
 
 const OrganizationUsers = () => {
 
-  const { user } = useContext(userContext);
+  const { user } = useUserContext();
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState(users);
   const [activeUsers, setActiveUsers] = useState([]);
