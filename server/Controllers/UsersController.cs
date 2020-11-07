@@ -76,6 +76,20 @@ namespace WebApi.Controllers
                 Token = tokenString
             });
         }
+        
+        
+        [AllowAnonymous]
+        [HttpPost("activate")]
+        public IActionResult ActivateAccount(ActivateAccount model)
+        {
+            // map model to entity
+            var user = _mapper.Map<Client>(model);
+
+            _userService.Activate(user);
+            
+            
+            return Ok(user);
+        }
 
         /*[AllowAnonymous]
         [HttpPost("register")]

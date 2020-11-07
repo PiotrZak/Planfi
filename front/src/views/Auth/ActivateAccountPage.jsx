@@ -16,6 +16,8 @@ import Paragraph from 'components/atoms/Paragraph';
 import Checkbox from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
+import { userService } from 'services/userServices';
+import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
 
 const initialValues = {
   name: '',
@@ -23,10 +25,6 @@ const initialValues = {
   password: '',
   confirmPassword: '',
   privacy: false,
-};
-
-const onSubmit = (values) => {
-  console.log('values', values);
 };
 
 const nameRegex = /^[a-zA-Z]{3,20} [a-zA-Z]{2,32}$/;
@@ -84,7 +82,46 @@ const CheckboxContainer = styled.div`
   margin-right: .5rem;
 `;
 
-const ActivateAccountPage = () => (
+const ActivateAccountPage = () => {
+
+  const { notificationDispatch } = useNotificationContext();
+
+
+const onSubmit = (values) => {
+  const arrayOfSplitted = values.name.split(/[ ,]+/);
+  const firstName = arrayOfSplitted[0];
+  const lastName = arrayOfSplitted[1];
+
+  const activateUserModel = {
+    firstName: firstName,
+    lastName: lastName,
+    phoneNumber: values.phoneNumber,
+    password: values.confirmPassword,
+    verificationToken: "B3A40A8E0E206572BE6357E0FD72BCEF4585B8210FBE99AF688834AB2C02049A5EBC459EF352F3F3"
+  }
+
+  activateUser(activateUserModel)
+}
+
+const activateUser = (activateUserModel) => {
+  
+  userService
+      .activate(activateUserModel)
+      .then((data) => {
+          localStorage.setItem('user', JSON.stringify(data));
+          notificationDispatch({
+            type: ADD,
+            payload: {
+              content: { success: 'OK', message: 'Hello World' }
+            }
+          })
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+}
+
+return(
   <AuthTemplate>
     <Heading>{translate('ActivateAccount')}</Heading>
     <Paragraph type="body-2-regular">{translate('EmailLoginInfo')}</Paragraph>
@@ -109,7 +146,7 @@ const ActivateAccountPage = () => (
               </Label>
               <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
             </StyledInputContainer>
-            <InputContainer>
+            <InputContainer  >
               <Label type="top" text={translate('RepeatNewPassword')} required>
                 <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
               </Label>
@@ -138,6 +175,6 @@ const ActivateAccountPage = () => (
       )}
     </Formik>
   </AuthTemplate>
-);
+)};
 
 export default ActivateAccountPage;

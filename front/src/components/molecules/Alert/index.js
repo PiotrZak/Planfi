@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled, { css, withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import Random from 'utils/Random';
+import { useNotificationContext, REMOVE } from '../../../support/context/NotificationContext'
+import { ThemeContext } from 'views/Root';
+import { mainTheme } from '../../../theme/mainTheme';
 
 const handleAlertType = (type, theme) => {
   switch (type) {
@@ -58,69 +61,48 @@ const StyledParagraph = styled(Paragraph)`
   margin-left: 1.8rem;
 `;
 
-const Alert = ({
-  type, message, autoRemove, time, theme,
-}) => {
-  const [alert, setAlert] = useState([]);
-  const [ID] = useState(Random(1, 999999999));
+const Alert = ({ notification }) => {
+  const { notificationDispatch } = useNotificationContext();
 
-  const setAlertData = () => ({
-    timeCreated: new Date().getTime(),
-    timeToRemove: time,
-    ID,
-  });
+  //todo! make works with theme context
+  // const { theme } = useContext(ThemeContext);
+
+  const timeToRemove = 1000;
+
+  const [theme] = useState(mainTheme)
+  console.log(notification)
 
   useEffect(() => {
-    if (autoRemove) {
-      if (alert.length === 0) {
-        setTimeout(() => {
-          setAlert(setAlertData);
-        }, 100);
-      }
+    setTimeout(function(){notificationDispatch({ type: REMOVE, payload: { id: notification.id }})} , timeToRemove);
+  })
+
+  function renderItem(content) {
+    if (typeof content === 'function') {
+      return content();
+    } else {
+      return <pre>{JSON.stringify(content, null, 2)}</pre>;
     }
-
-    const alertAutoRemoverTimer = setInterval(() => {
-      const currentTime = new Date().getTime();
-
-      if (alert.timeCreated + alert.timeToRemove < currentTime) {
-        try{
-          document.getElementById(alert.ID).remove();
-        } catch {
-          window.clearInterval(alertAutoRemoverTimer)
-        }
-      }
-    }, (100));
-  });
-
-  const close = (e) => {
-    e.target.parentNode.parentNode.parentNode.parentNode.remove();
-  };
+  }
 
   return (
-    <Wrapper type={type} id={ID}>
-      <LeftContainer>
-        <IconWrapper>
-          <Icon name="check-circle" fill={handleIconColor(type, theme)} />
-        </IconWrapper>
-        <StyledParagraph type="body-3-medium">{message}</StyledParagraph>
-      </LeftContainer>
-      <RightContainer>
-        <Icon name="Union" width="1.2rem" height="1.2rem" onClick={(e) => close(e)} />
-      </RightContainer>
-    </Wrapper>
+    <>
+      {notification && notification.map(n => {
+        return (
+          <Wrapper key={n.id}>
+            <LeftContainer>
+              <IconWrapper>
+                <Icon name="check-circle" fill={handleIconColor(notification.type, theme)} />
+              </IconWrapper>
+              <StyledParagraph type="body-3-medium">{renderItem(n.content)}</StyledParagraph>
+            </LeftContainer>
+            <RightContainer>
+              <Icon name="Union" width="1.2rem" height="1.2rem" onClick={() => notificationDispatch({ type: REMOVE, payload: { id: n.id } })} />
+            </RightContainer>
+          </Wrapper>
+        );
+      })}
+    </>
   );
-};
-
-Alert.propTypes = {
-  type: PropTypes.oneOf(['error', 'warning', 'neutral']).isRequired,
-  message: PropTypes.string.isRequired,
-  autoRemove: PropTypes.bool,
-  time: PropTypes.number,
-};
-
-Alert.defaultProps = {
-  autoRemove: false,
-  time: 3000,
 };
 
 export default withTheme(Alert);

@@ -1,9 +1,7 @@
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
-using WebApi.GraphQl;
 using WebApi.Models;
-using RegisterModel = WebApi.Models.RegisterModel;
 
 namespace WebApi.Helpers
 {
@@ -13,11 +11,13 @@ namespace WebApi.Helpers
         {
 
             CreateMap<CreateOrganization, Organization>();
+
+            CreateMap<ActivateAccount, User>();
+            CreateMap<ActivateAccount, Client>();
             
             CreateMap<RegisterModel, User>();
             CreateMap<RegisterModel, Client>();
             CreateMap<AuthenticateModel, User>();
-
             CreateMap<UpdateUserModel, User>();
 
             CreateMap<Client, TrainerClient>();
