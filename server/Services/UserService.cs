@@ -35,7 +35,7 @@ namespace WebApi.Services
         IEnumerable<Trainer> GetTrainersByClient(string ClientId);
 
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
-        User Activate(User user);
+        User Activate(ActivateAccount user);
     }
 
     public class UserService : IUserService
@@ -61,10 +61,13 @@ namespace WebApi.Services
             return user;
         }
 
-        public User Activate(User user)
+        public User Activate(ActivateAccount user)
         {
             var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
 
+            selectedUser.Email = selectedUser.Email;
+            selectedUser.Role = "User";
+            selectedUser.PhoneNumber = user.PhoneNumber;
             selectedUser.FirstName = user.FirstName;
             selectedUser.LastName = user.LastName;
             selectedUser.PhoneNumber = user.PhoneNumber;
@@ -73,8 +76,8 @@ namespace WebApi.Services
             CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
             
             selectedUser.Password = user.Password;
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            selectedUser.PasswordHash = passwordHash;
+            selectedUser.PasswordSalt = passwordSalt;
             selectedUser.IsActivated = true;
 
             _context.Users.Update(selectedUser);
@@ -89,11 +92,10 @@ namespace WebApi.Services
             // check if email exists
             if (user == null)
                 return null;
-
-            //todo - security hashiing & salting password
+            
             //check if password is correct
-            //if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
-            //        return null;
+            if (!VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt))
+                    return null;
 
             // authentication successful
             return user.WithoutPassword(); ;

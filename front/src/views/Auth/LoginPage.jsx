@@ -7,9 +7,7 @@ import Button from 'components/atoms/Button';
 import AuthTemplate from 'templates/AuthTemplate';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
-import { useDispatch } from 'react-redux'
 import { userService } from 'services/userServices';
-import { alertActions } from 'redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
 import { translate } from 'support/Translation';
 import {
@@ -46,7 +44,6 @@ const onSubmit = (values) => {
 const LoginPage = () => {
 
 const [userData, setUserData] = useState({})
-const dispatch = useDispatch()
 const history = useHistory();
 
   const handleInput = (e) => {
@@ -78,7 +75,6 @@ const authenticateUser = (userData) => {
           // }
       })
       .catch((error) => {
-          dispatch(alertActions.error(error))
       });
 }
 

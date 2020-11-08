@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import { useParams} from "react-router-dom";
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -7,9 +8,7 @@ import AuthTemplate from 'templates/AuthTemplate';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
-import {
-  Formik, Field, Form,
-} from 'formik';
+import { Formik, Field, Form} from 'formik';
 import * as Yup from 'yup';
 import Center from 'components/atoms/Center';
 import Paragraph from 'components/atoms/Paragraph';
@@ -84,7 +83,10 @@ const CheckboxContainer = styled.div`
 
 const ActivateAccountPage = () => {
 
+  const { verificationToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
+
+  console.log(verificationToken)
   const onSubmit = (values) => {
   const arrayOfSplitted = values.name.split(/[ ,]+/);
   const firstName = arrayOfSplitted[0];
@@ -95,7 +97,7 @@ const ActivateAccountPage = () => {
     lastName: lastName,
     phoneNumber: values.phoneNumber,
     password: values.confirmPassword,
-    verificationToken: "B3A40A8E0E206572BE6357E0FD72BCEF4585B8210FBE99AF688834AB2C02049A5EBC459EF352F3F3"
+    verificationToken: verificationToken.substring(1),
   }
   activateUser(activateUserModel)
 }

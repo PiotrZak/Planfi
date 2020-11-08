@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/prefer-default-export
 export const routes = {
   register: '/register',
-  activate: '/activate',
-  login: '/login',
   forgotPassword: '/forgot',
+  activate: '/account/activate:verificationToken',
+  resetPassword: '/account/forgot:resetToken',
+  login: '/login',
   linkExpired: '/expired',
-  resetPassword: '/reset',
   privacy: '/privacy',
   passwordChanged: '/passwordChanged',
   categories: '/categories',

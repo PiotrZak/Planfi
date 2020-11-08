@@ -77,6 +77,7 @@ const Root = () => {
 
   console.log(theme)
   
+
   return(
   <LanguageContext.Provider value={{lang: selectedLanguage}}>
   {/* is need to use theme context? */}
@@ -90,7 +91,8 @@ const Root = () => {
           <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
           <Route path={routes.activate} component={ActivateAccountPage} />
-          <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={OrganizationUsers} />
+          {/* <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={OrganizationUsers} /> */}
+          <Route path="/organizationusers" component={OrganizationUsers} />
         </Switch>
       </MainTemplate>
       </BrowserRouter>

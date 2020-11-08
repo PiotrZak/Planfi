@@ -42,7 +42,6 @@ serviceWorker.unregister();
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from 'views/Root';
-import { Provider } from 'react-redux';
 import { NotificationProvider } from './support/context/NotificationContext';
 
 // eslint-disable-next-line no-undef

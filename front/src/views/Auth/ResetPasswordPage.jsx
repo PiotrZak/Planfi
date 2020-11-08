@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useParams} from "react-router-dom";
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
@@ -14,6 +15,8 @@ import BackTopNav from 'components/molecules/BackTopNav';
 import Center from 'components/atoms/Center';
 import { translate } from 'utils/Translation';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
+import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import { accountService } from '../../services/accountServices';
 
 const initialValues = {
   password: '',
@@ -40,7 +43,44 @@ const StyledInputContainer = styled(InputContainer)`
   height: 12.5rem;
 `;
 
-const ResetPasswordPage = () => (
+
+
+
+const ResetPasswordPage = () => {
+
+  const { resetToken } = useParams();
+  const { notificationDispatch } = useNotificationContext();
+
+  const onSubmit = (values) => {
+
+    const resetPasswordModel = {
+      token: resetToken.substring(1),
+      password: values.password,
+    }
+
+    accountService
+        .resetPassword(resetPasswordModel)
+        .then(() => {
+            notificationDispatch({
+              type: ADD,
+              payload: {
+                content: { success: 'OK', message: 'Password sucessfully changed!' },
+                type: 'positive'
+              }
+            })
+        })
+        .catch((error) => {
+          notificationDispatch({
+            type: ADD,
+            payload: {
+              content: { success: 'OK', message: 'Error' },
+              type: 'error'
+            }
+          })
+        });
+  };
+
+  return(
   <AuthTemplate>
     <BackTopNav text={translate('PasswordRecovery')} />
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
@@ -65,6 +105,7 @@ const ResetPasswordPage = () => (
       )}
     </Formik>
   </AuthTemplate>
-);
+  )
+};
 
 export default ResetPasswordPage;
