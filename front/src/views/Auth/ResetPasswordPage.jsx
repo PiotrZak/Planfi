@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useParams} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
@@ -23,10 +23,6 @@ const initialValues = {
   confirmPassword: '',
 };
 
-const onSubmit = (values) => {
-  console.log('values', values);
-};
-
 const PASSWORD_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\\$%\\^&\\*])(?=.{8,})/;
 
 const validationSchema = Yup.object().shape({
@@ -43,14 +39,13 @@ const StyledInputContainer = styled(InputContainer)`
   height: 12.5rem;
 `;
 
-
-
-
 const ResetPasswordPage = () => {
 
+  const timeToRedirect = 5000;
   const { resetToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
-
+  const history = useHistory();
+  
   const onSubmit = (values) => {
 
     const resetPasswordModel = {
@@ -59,52 +54,53 @@ const ResetPasswordPage = () => {
     }
 
     accountService
-        .resetPassword(resetPasswordModel)
-        .then(() => {
-            notificationDispatch({
-              type: ADD,
-              payload: {
-                content: { success: 'OK', message: 'Password sucessfully changed!' },
-                type: 'positive'
-              }
-            })
+      .resetPassword(resetPasswordModel)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('PasswordChanged')},
+            type: 'positive'
+          }
         })
-        .catch((error) => {
-          notificationDispatch({
-            type: ADD,
-            payload: {
-              content: { success: 'OK', message: 'Error' },
-              type: 'error'
-            }
-          })
-        });
+        setTimeout(function () {history.push('/login');}, timeToRedirect);
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
+        })
+      });
   };
 
-  return(
-  <AuthTemplate>
-    <BackTopNav text={translate('PasswordRecovery')} />
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-      {({ errors, touched }) => (
-        <Center place="authForm">
-          <Form>
-            <StyledInputContainer>
-              <Label type="top" text={translate('EnterNewPassword')}>
-                <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
-              </Label>
-              <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
-            </StyledInputContainer>
-            <InputContainer>
-              <Label type="top" text={translate('RepeatNewPassword')}>
-                <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
-              </Label>
-              <ErrorMessageForm name="confirmPassword" />
-            </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
-          </Form>
-        </Center>
-      )}
-    </Formik>
-  </AuthTemplate>
+  return (
+    <AuthTemplate>
+      <BackTopNav text={translate('PasswordRecovery')} />
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+        {({ errors, touched }) => (
+          <Center place="authForm">
+            <Form>
+              <StyledInputContainer>
+                <Label type="top" text={translate('EnterNewPassword')}>
+                  <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
+                </Label>
+                <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
+              </StyledInputContainer>
+              <InputContainer>
+                <Label type="top" text={translate('RepeatNewPassword')}>
+                  <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
+                </Label>
+                <ErrorMessageForm name="confirmPassword" />
+              </InputContainer>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
+            </Form>
+          </Center>
+        )}
+      </Formik>
+    </AuthTemplate>
   )
 };
 

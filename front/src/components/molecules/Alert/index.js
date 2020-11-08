@@ -66,7 +66,7 @@ const Alert = ({ notification }) => {
 
   // todo - take context from global
   const theme = mainTheme;
-  const timeToRemove = 2000;
+  const timeToRemove = 4000;
 
   useEffect(() => {
     if(notification.length > 0){
@@ -81,7 +81,9 @@ const Alert = ({ notification }) => {
           <Wrapper type={n.type} theme = {theme} key={n.id}>
             <LeftContainer>
               <IconWrapper>
-                <Icon name="check-circle" fill={handleIconColor(notification.type, theme)} />
+                {/* todo
+                proper icon based on n.type */}
+                <Icon name="check-circle" fill={handleIconColor(n.type, theme)} />
               </IconWrapper>
               <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
             </LeftContainer>

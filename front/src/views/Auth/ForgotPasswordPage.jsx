@@ -1,6 +1,7 @@
 import React from 'react';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
+import { useHistory } from "react-router-dom";
 import Button from 'components/atoms/Button';
 import AuthTemplate from 'templates/AuthTemplate';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
@@ -23,6 +24,7 @@ const validationSchema = Yup.object({
 
 const ForgotPasswordPage = () => {
   const { notificationDispatch } = useNotificationContext();
+  const history = useHistory();
 
   const onSubmit = (values) => {
 
@@ -32,16 +34,17 @@ const ForgotPasswordPage = () => {
             notificationDispatch({
               type: ADD,
               payload: {
-                content: { success: 'OK', message: 'Email sended to your e-mail!' },
+                content: { success: 'OK', message: translate('EmailSent')},
                 type: 'positive'
               }
             })
+            setTimeout(function () {history.push('/login');}, 3000);
         })
         .catch((error) => {
           notificationDispatch({
             type: ADD,
             payload: {
-              content: { success: 'OK', message: 'Couldnt find user' },
+              content: { error: error, message: translate('ErrorAlert') },
               type: 'error'
             }
           })
