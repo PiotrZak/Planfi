@@ -48,6 +48,8 @@ const validationSchema = Yup.object().shape({
     .oneOf([true], translate('MustAcceptPrivacy')),
 });
 
+// todo - all those components need to be available globally
+
 const StyledInputContainer = styled(InputContainer)`
   height: 13rem;
 `;
@@ -56,7 +58,7 @@ const StyledInputPhoneContainer = styled(InputContainer)`
   margin-top: 2rem;
 `;
 
-const Heading = styled.h3`
+export const Heading = styled.h3`
   margin: 2.5rem 0 0 0;
 `;
 

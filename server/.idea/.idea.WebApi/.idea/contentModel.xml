@@ -13,6 +13,7 @@
         <e p="PlansController.cs" t="Include" />
         <e p="UsersController.cs" t="Include" />
         <e p="ViewModels" t="Include">
+          <e p="ActivateAccount.cs" t="Include" />
           <e p="AssignExerciseToCategory.cs" t="Include" />
           <e p="AssignExerciseToPlan.cs" t="Include" />
           <e p="AssignUsersToOrganization.cs" t="Include" />
@@ -38,6 +39,7 @@
           <e p="Admin.cs" t="Include" />
           <e p="Client.cs" t="Include" />
           <e p="Owner.cs" t="Include" />
+          <e p="RefreshToken.cs" t="Include" />
           <e p="Role.cs" t="Include" />
           <e p="Trainer.cs" t="Include" />
           <e p="User.cs" t="Include" />

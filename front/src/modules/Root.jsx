@@ -53,17 +53,19 @@ import { createBrowserHistory } from 'history';
 
 import MainTemplate from 'templates/MainTemplate';
 import { routes } from 'utils/routes';
-import LoginPage from 'views/Auth/LoginPage';
-import ForgotPasswordPage from 'views/Auth/ForgotPasswordPage';
-import ResetPasswordPage from 'views/Auth/ResetPasswordPage';
-import ActivateAccountPage from 'views/Auth/ActivateAccountPage';
+import LoginPage from 'modules/Auth/LoginPage';
+import ForgotPasswordPage from 'modules/Auth/ForgotPasswordPage';
+import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
+import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 
-import OrganizationUsers from 'views/Users/OrganizationUsers';
+import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { PrivateRoute, Role } from '../utils/PrivateRoute';
 import Alert from 'components/molecules/Alert';
 import { ThemeContext } from '../support/context/ThemeContext';
 import { LanguageContext } from '../support/context/LanguageContext';
 import { userContext } from '../support/context/UserContext';
+import { Categories } from '../modules/Exercises/Categories';
+import { Category } from './Exercises/Category';
 
 export const history = createBrowserHistory();
 
@@ -91,6 +93,9 @@ const Root = () => {
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
           <Route path={routes.activate} component={ActivateAccountPage} />
           <PrivateRoute roles={[Role.Owner]} path="/organizationusers" component={OrganizationUsers} />
+
+          <PrivateRoute path={routes.categories} component={Categories} />
+          <PrivateRoute path={routes.category} component={Category} />
         </Switch>
       </MainTemplate>
       </BrowserRouter>

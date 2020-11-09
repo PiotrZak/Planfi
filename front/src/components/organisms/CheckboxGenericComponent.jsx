@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import FormInput from "components/atoms/FormInput";
 import { Link } from 'react-router-dom';
 import GenericElement from "components/molecules/GenericElement/GenericElement"
-import {isMobile} from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import { Holdable } from "hooks/useLongPress";
 
 
@@ -12,13 +12,12 @@ export const CheckboxGenericComponent = ({
   selectAll,
   image,
   dataType,
-  dataList, // list of objects
-  displayedValue, // value to be displayed on chekbox list
+  dataList,
+  displayedValue,
   onSelect,
-  initialSelected, // list of IDs - which elements should be selected initially
+  initialSelected,
 }) => {
   const [list, setList] = useState();
-  // eslint-disable-next-line
   const [initialSelect, setInitialSelect] = useState();
   const [type, setType] = useState();
 
@@ -96,103 +95,89 @@ export const CheckboxGenericComponent = ({
     }
   }
 
-  function renderRows() {
-    const row = [];
-    if (Array.isArray(list)) {
-      dataList.map((element, i) => {
-        row.push(
-          <div key={i} className="checkbox-generic-list__element">
-            {isMobile ?
-              <Holdable
-                onHold={handleChange}
-                onClick={(e) => e.preventDefault()}
-                id={id}
-                key={id}
-                for={`${element[displayedValue]}-checkbox-${id}`}
-              >
-                {type === "users" &&
-                  <Link to={{
-                    pathname: `/user/${element.userId}`,
-                    state: { id: element.userId }
-                  }}>
-                    <GenericElement className={className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
-                  </Link>
-                }
-                {type === "plans" &&
-                  <Link to={{
-                    pathname: `/plan/${element.planId}`,
-                    state: { id: element.planId }
-                  }}>
-                    <GenericElement className={className} key={i} headline={element.title} plan={element} />
-                  </Link>
-                }
-                {type === "exercises" &&
-                  <Link to={{
-                    pathname: `/exercise/${element.exerciseId}`,
-                    state: { id: element.exerciseId }
-                  }}>
-                    <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
-                  </Link>
-                }
-              </Holdable>
-              :
-              <>
-                {type === "users" &&
-                  <Link to={{
-                    pathname: `/user/${element.userId}`,
-                    state: { id: element.userId }
-                  }}>
-                    <GenericElement className={className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
-                  </Link>
-                }
-                {type === "plans" &&
-                  <Link to={{
-                    pathname: `/plan/${element.planId}`,
-                    state: { id: element.planId }
-                  }}>
-                    <GenericElement className={className} key={i} headline={element.title} subline={element.creatorName} plan={element} />
-                  </Link>
-                }
-                {type === "exercises" &&
-                  <Link to={{
-                    pathname: `/exercise/${element.exerciseId}`,
-                    state: { id: element.exerciseId }
-                  }}>
-                    <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
-                  </Link>
-                }
-                {type === "categories" &&
-                  <Link to={{
-                    pathname: `/category/${element.categoryId}`,
-                    state: { id: element.categoryId }
-                  }}>
-                    <GenericElement className={className} key={i} headline={element.title} subline={`${element.series} / ${element.times}`} category={element.category} />
-                  </Link>
-                }
-              </>
-            }
-            <input
-              className="checkbox-generic-list__checkbox"
-              id={`${element[displayedValue]}-checkbox-${id}`}
-              key={`${element[displayedValue]}-checkbox-${id}`}
-              name={element[displayedValue]}
-              type="checkbox"
-              checked={!!element.value}
-              onChange={handleChange}
-            />
-          </div>
-        );
-        return element;
-      });
+  const renderType = (type, element, i) => {
+    if (type === "users") {
+      return (
+        <Link to={{
+          pathname: `/user/${element.userId}`,
+          state: { id: element.userId }
+        }}>
+          <GenericElement className={className} circle={true} image={element.avatar} key={i} headline={`${element.firstName}  ${element.lastName}`} user={element} subline={element.role} />
+        </Link>
+      )
     }
-    return row;
+    if (type === "plans") {
+      return (
+        <Link to={{
+          pathname: `/plan/${element.planId}`,
+          state: { id: element.planId }
+        }}>
+          <GenericElement className={className} key={i} headline={element.title} plan={element} />
+        </Link>
+      )
+    }
+    if (type === "exercises") {
+      return (<Link to={{
+        pathname: `/exercise/${element.exerciseId}`,
+        state: { id: element.exerciseId }
+      }}>
+        <GenericElement className={className} key={i} headline={element.name} image={element.files && element.files[0]} subline={`${element.series} / ${element.times}`} exercise={element} />
+      </Link>
+      )}
+      if (type === "categories") {
+        return (<Link to={{
+          pathname: `/category/${element.categoryId}`,
+          state: { id: element.categoryId }
+        }}>
+          <GenericElement className={className} key={i} headline={element.title} subline={`${element.series} / ${element.times}`} category={element.category} />
+        </Link>
+        )
+      }
+}
+
+function renderRows() {
+  const row = [];
+  if (Array.isArray(list)) {
+    dataList.map((element, i) => {
+      row.push(
+        <div key={i} className="checkbox-generic-list__element">
+          {isMobile ?
+            <Holdable
+              onHold={handleChange}
+              onClick={(e) => e.preventDefault()}
+              id={id}
+              key={id}
+              for={`${element[displayedValue]}-checkbox-${id}`}
+            >
+              {renderType(type, element, i)}
+            </Holdable>
+            :
+            <>
+              {renderType(type, element, i)}
+            </>
+          }
+          <input
+            className="checkbox-generic-list__checkbox"
+            id={`${element[displayedValue]}-checkbox-${id}`}
+            key={`${element[displayedValue]}-checkbox-${id}`}
+            name={element[displayedValue]}
+            type="checkbox"
+            checked={!!element.value}
+            onChange={handleChange}
+          />
+        </div>
+      );
+      return element;
+    });
   }
-  return (
-    <>
-      {renderSelectAll()}
-      {renderRows()}
-    </>
-  );
+  return row;
+}
+return (
+  <>
+    {renderSelectAll()}
+    {renderRows()}
+  </>
+);
 };
 
 

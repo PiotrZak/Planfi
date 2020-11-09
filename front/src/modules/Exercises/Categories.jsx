@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
-import { Loader } from 'components/atoms/Loader';
-import Return from 'components/atoms/Return';
+import  Loader  from 'components/atoms/Loader';
 import { alertActions } from 'redux/actions/alert.actions'
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
 import AddCategoryModal from './AddCategoryModal';
@@ -10,11 +9,19 @@ import { commonUtil } from "utils/common.util"
 import { isMobile } from "react-device-detect";
 import { useDispatch } from 'react-redux';
 import { useQuery, gql } from '@apollo/client';
+import BackTopNav from 'components/molecules/BackTopNav';
+import { translate } from 'utils/Translation';
+
+import Heading from "../Auth/ActivateAccountPage"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
 const noCategories = 'No Categories';
+
+
 const categoriesTitle = 'Categories';
+
+
 const categoriesDeleted = 'Categories finally deleted!'
 const addExerciseToCategory = 'To be able to add exercises you need to add a category first';
 const deleteCategory = "Delete category"
@@ -59,42 +66,33 @@ export const Categories = () => {
     <div>
       <div className="container">
         <div className="container__title">
-          <Return />
-          <h2>{categoriesTitle}</h2>
+        <BackTopNav text={translate('ForgotPassword')} />
+        {/* <Heading>{translate('categoriesTitle')}</Heading> */}
           <div onClick={openAddCategoryModal}>
             <Icon name="plus" fill="#5E4AE3" />
           </div>
         </div>
-        <AddCategoryModal openModal={openModal} onClose={() => setOpenModal(false)} />
+        {/* todo! - modal */}
+        {/* <AddCategoryModal openModal={openModal} onClose={() => setOpenModal(false)} /> */}
         <div>
             {data.categories ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <h1>{noCategories}</h1>}
         </div>
       </div>
-      <CategoriesPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} />
+      {/* <CategoriesPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} /> */}
     </div>
   );
 };
 
 
-
-
-
-
-
-
-
 const CategoriesPanel = ({ bottomSheet, setBottomSheet, selectedCategories }) => {
-
-  const dispatch = useDispatch()
 
   const deleteCategories = () => {
     categoryService
       .deleteCategories(selectedCategories)
       .then(() => {
-        dispatch(alertActions.success(categoriesDeleted));
+
       })
       .catch((error) => {
-        dispatch(alertActions.error(error.title));
       });
   };
   
@@ -108,7 +106,6 @@ const CategoriesPanel = ({ bottomSheet, setBottomSheet, selectedCategories }) =>
       {isMobile ?
         <>
           <button onClick={() => deleteCategories()} className="bottom-sheet-item">{selectedCategories.length == 1 ? deleteCategory : deleteCategoriesText}</button>
-
         </>
         :
         <>

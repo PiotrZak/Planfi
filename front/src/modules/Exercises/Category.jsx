@@ -3,17 +3,17 @@ import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
 import { Link, useHistory } from 'react-router-dom';
 import { alertActions } from 'redux/actions/alert.actions'
-import { useDispatch } from 'react-redux';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import Icon from 'components/atoms/Icon';
-import Return from 'components/atoms/Return';
 import { commonUtil } from "utils/common.util"
-import { Loader } from 'components/atoms/Loader';
+import  Loader  from 'components/atoms/Loader';
 import "react-multi-carousel/lib/styles.css";
-import { PlanPanelExercises } from "../Plans/microModules/PlanPanelExercises"
-import Search  from "components/atoms/Search"
-import Spacer from "components/atoms/Spacer"
-
+// import { PlanPanelExercises } from "../Plans/microModules/PlanPanelExercises"
+import Search  from "components/molecules/Search"
+// import Spacer from "components/atoms/Spacer"
+import { translate } from 'utils/Translation';
+import BackTopNav from 'components/molecules/BackTopNav';
+import { CANCELLED } from 'dns';
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -24,7 +24,7 @@ export const Category = (props) => {
     const [category, setCategory] = useState();
     const [exercises, setExercises] = useState();
     const [searchTerm, setSearchTerm] = React.useState("");
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
@@ -34,8 +34,6 @@ export const Category = (props) => {
     const history = useHistory();
     const { match } = props;
     let id = match.params;
-
-    const dispatch = useDispatch()
 
     useEffect(() => {
         getCategory(id.id)
@@ -57,6 +55,7 @@ export const Category = (props) => {
         exerciseService
             .getExercisesByCategory(id)
             .then((data) => {
+                console.log(data)
                 setExercises(data);
                 setIsLoading(false)
             })
@@ -68,7 +67,6 @@ export const Category = (props) => {
         categoryService
             .deleteCategoryById(id.id)
             .then(() => {
-                dispatch(alertActions.success("Category succesfully deleted!"))
                 history.push('/categories');
             })
             .catch(() => {
@@ -102,7 +100,7 @@ export const Category = (props) => {
         <div>
             <div className="container">
                 <div className="container__title">
-                    <Return />
+                <BackTopNav text={translate('ForgotPassword')} />
 
                     {category && <h2>{category.title}</h2>}
 
@@ -115,7 +113,10 @@ export const Category = (props) => {
                             }}
                         >
                        <Icon name={"plus"} fill={"#5E4AE3"} />
-                       {/* select from all exercises */}
+                       
+                       {/* 
+                    todo! design
+                        select from all exercises */}
                             {/* <ul id="mainmenu">
                                 <li>
                                     <Icon name={"plus"} fill={"#5E4AE3"} />
@@ -130,18 +131,20 @@ export const Category = (props) => {
                 </div>
 
                 <Search callBack={filterExercises} />
-                <Spacer h={90} />
-                <Loader isLoading={isLoading}>
-                    {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{noExerciseInPlan}</h1>}
-                </Loader>
+                {/* <Spacer h={90} /> */}
+                <CheckboxGenericComponent dataType={"exercises"} dataList={exercises} displayedValue={"name"} onSelect={submissionHandleElement} /> 
+                {/* : <h1>{noExerciseInPlan}</h1> */}
+                {/* <Loader isLoading={isLoading}>
+                    {results ? }
+                </Loader> */}
 
-                <ReactBottomsheet
+                {/* <ReactBottomsheet
                     visible={bottomSheet}
                     onClose={() => setBottomSheet(false)}>
                     <button onClick={() => deleteCategory()} className='bottom-sheet-item'>Delete</button>
-                </ReactBottomsheet>
+                </ReactBottomsheet> */}
             </div>
-            <PlanPanelExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
+            {/* <PlanPanelExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} /> */}
         </div>
     );
 }
