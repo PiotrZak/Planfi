@@ -20,6 +20,15 @@ const handleAlertType = (type, theme) => {
   }
 };
 
+const handleIconType = (type) => {
+  switch (type) {
+    case 'positive':
+    return "check-circle"
+    case 'error':
+      return "exclamation-triangle"
+  }
+};
+
 const handleIconColor = (type, theme) => {
   switch (type) {
     case 'positive':
@@ -81,9 +90,7 @@ const Alert = ({ notification }) => {
           <Wrapper type={n.type} theme = {theme} key={n.id}>
             <LeftContainer>
               <IconWrapper>
-                {/* todo
-                proper icon based on n.type */}
-                <Icon name="check-circle" fill={handleIconColor(n.type, theme)} />
+                <Icon name={handleIconType(n.type)} fill={handleIconColor(n.type, theme)} />
               </IconWrapper>
               <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
             </LeftContainer>
