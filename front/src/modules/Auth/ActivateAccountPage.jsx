@@ -1,4 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -7,9 +8,7 @@ import AuthTemplate from 'templates/AuthTemplate';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
-import {
-  Formik, Field, Form,
-} from 'formik';
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import Center from 'components/atoms/Center';
 import Paragraph from 'components/atoms/Paragraph';
@@ -86,95 +85,108 @@ const CheckboxContainer = styled.div`
 
 const ActivateAccountPage = () => {
 
+  const { verificationToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
+  const history = useHistory();
+
   const onSubmit = (values) => {
-  const arrayOfSplitted = values.name.split(/[ ,]+/);
-  const firstName = arrayOfSplitted[0];
-  const lastName = arrayOfSplitted[1];
+    const arrayOfSplitted = values.name.split(/[ ,]+/);
+    const firstName = arrayOfSplitted[0];
+    const lastName = arrayOfSplitted[1];
 
-  const activateUserModel = {
-    firstName: firstName,
-    lastName: lastName,
-    phoneNumber: values.phoneNumber,
-    password: values.confirmPassword,
-    verificationToken: "B3A40A8E0E206572BE6357E0FD72BCEF4585B8210FBE99AF688834AB2C02049A5EBC459EF352F3F3"
+    const activateUserModel = {
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: values.phoneNumber,
+      password: values.confirmPassword,
+      verificationToken: verificationToken.substring(1),
+    }
+    activateUser(activateUserModel)
   }
-  activateUser(activateUserModel)
-}
 
-const activateUser = (activateUserModel) => {
+  const timeToRedirect = 5000;
   
-  userService
+  const activateUser = (activateUserModel) => {
+
+    userService
       .activate(activateUserModel)
       .then((data) => {
-          localStorage.setItem('user', JSON.stringify(data));
-          notificationDispatch({
-            type: ADD,
-            payload: {
-              content: { success: 'OK', message: 'Hello World' },
-              type: 'warning'
-            }
-          })
+        localStorage.setItem('user', JSON.stringify(data));
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('ActivateAccountSuccess') },
+            type: 'positive'
+          }
+        })
+        setTimeout(function () {history.push('/login');}, timeToRedirect);
       })
       .catch((error) => {
-        console.error(error)
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
+        })
       });
-}
+  }
 
-return(
-  <AuthTemplate>
-    <Heading>{translate('ActivateAccount')}</Heading>
-    <Paragraph type="body-2-regular">{translate('EmailLoginInfo')}</Paragraph>
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-      {({ errors, touched, values }) => (
-        <Center place="auth">
-          <Form>
-            <InputContainer>
-              <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
-                <Field type="text" name="name" as={Input} error={errors.name && touched.name} />
-              </Label>
-              <ValidateInvalidData errors={errors} touched={touched} text={translate('FirstNameAndLastNameMustSpace')} inputName="name" />
-            </InputContainer>
-            <StyledInputPhoneContainer>
-              <Label type="top" text={translate('EnterPhoneNumber')}>
-                <Field type="text" name="phone" as={Input} error={errors.phone && touched.phone} />
-              </Label>
-            </StyledInputPhoneContainer>
-            <StyledInputContainer>
-              <Label type="top" text={translate('EnterNewPassword')} required>
-                <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
-              </Label>
-              <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
-            </StyledInputContainer>
-            <InputContainer  >
-              <Label type="top" text={translate('RepeatNewPassword')} required>
-                <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
-              </Label>
-              <ErrorMessageForm name="confirmPassword" />
-            </InputContainer>
-            <Container>
-              <CheckboxContainer>
-                <Checkbox
-                  checkboxType="formik"
-                  type="checkbox"
-                  name="privacy"
-                  checked={values.privacy}
+  return (
+    <AuthTemplate>
+      <Heading>{translate('ActivateAccount')}</Heading>
+      <Paragraph type="body-2-regular">{translate('EmailLoginInfo')}</Paragraph>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+        {({ errors, touched, values }) => (
+          <Center place="auth">
+            <Form>
+              <InputContainer>
+                <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
+                  <Field type="text" name="name" as={Input} error={errors.name && touched.name} />
+                </Label>
+                <ValidateInvalidData errors={errors} touched={touched} text={translate('FirstNameAndLastNameMustSpace')} inputName="name" />
+              </InputContainer>
+              <StyledInputPhoneContainer>
+                <Label type="top" text={translate('EnterPhoneNumber')}>
+                  <Field type="text" name="phone" as={Input} error={errors.phone && touched.phone} />
+                </Label>
+              </StyledInputPhoneContainer>
+              <StyledInputContainer>
+                <Label type="top" text={translate('EnterNewPassword')} required>
+                  <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
+                </Label>
+                <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
+              </StyledInputContainer>
+              <InputContainer  >
+                <Label type="top" text={translate('RepeatNewPassword')} required>
+                  <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
+                </Label>
+                <ErrorMessageForm name="confirmPassword" />
+              </InputContainer>
+              <Container>
+                <CheckboxContainer>
+                  <Checkbox
+                    checkboxType="formik"
+                    type="checkbox"
+                    name="privacy"
+                    checked={values.privacy}
+                  />
+                </CheckboxContainer>
+                <ValidateInvalidData
+                  errors={errors}
+                  touched={touched}
+                  text={translate('PolicyPrivacy')}
+                  inputName="privacy"
                 />
-              </CheckboxContainer>
-              <ValidateInvalidData
-                errors={errors}
-                touched={touched}
-                text={translate('PolicyPrivacy')}
-                inputName="privacy"
-              />
-              <Link href={routes.privacy}>{translate('Here')}</Link>
-            </Container>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
-          </Form>
-        </Center>
-      )}
-    </Formik>
-  </AuthTemplate>
-)};
+                <Link href={routes.privacy}>{translate('Here')}</Link>
+              </Container>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
+            </Form>
+          </Center>
+        )}
+      </Formik>
+    </AuthTemplate>
+  )
+};
 
 export default ActivateAccountPage;

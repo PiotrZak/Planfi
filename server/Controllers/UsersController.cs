@@ -82,45 +82,11 @@ namespace WebApi.Controllers
         [HttpPost("activate")]
         public IActionResult ActivateAccount(ActivateAccount model)
         {
-            // map model to entity
-            var user = _mapper.Map<Client>(model);
+            var user = _userService.Activate(model);
 
-            _userService.Activate(user);
-            
-            
             return Ok(user);
         }
-
-        /*[AllowAnonymous]
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterModel model)
-        {
-            // map model to entity
-            var user = _mapper.Map<Client>(model);
-
-            try
-            {
-                // create user
-                _userService.Register(user, model.Password);
-                return Ok(new
-                {
-                    user.UserId,
-                    user.OrganizationId,
-                    user.Email,
-                    user.FirstName,
-                    user.LastName,
-                    user.Avatar,
-                    user.Role,
-                    user.Token
-                });
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
-            }
-        }*/
-
+        
         [AllowAnonymous]
         [HttpGet("users")]
         public IActionResult GetAllUsers()

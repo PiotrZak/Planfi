@@ -10,6 +10,11 @@ export const en = {
   Password: 'Password',
   ForgotPassword: 'I forget password',
 
+  ActivateAccountSuccess: "Your account succesfully activated",
+  ErrorAlert: "Something gone wrong",
+  EmailSent: "The message has been sent to your e-mail",
+  PasswordChanged: "Password sucessfully changed!",
+
   RepeatPassword: 'Repeat password',
   EnterNewPassword: 'Enter new password',
   RepeatNewPassword: 'Repeat new password',

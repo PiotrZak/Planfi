@@ -27,7 +27,6 @@ const OrganizationUsers = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log(user)
@@ -43,7 +42,7 @@ const OrganizationUsers = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        dispatch(alertActions.error(error.title));
+        console.log(error)
       });
   };
 

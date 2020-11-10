@@ -79,6 +79,7 @@ const Root = () => {
 
   console.log(theme)
   
+
   return(
   <LanguageContext.Provider value={{lang: selectedLanguage}}>
   {/* is need to use theme context? */}

@@ -43,6 +43,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from 'modules/Root';
 import { Provider } from 'react-redux';
+import Root from 'views/Root';
 import { NotificationProvider } from './support/context/NotificationContext';
 
 import { ApolloProvider } from '@apollo/client';

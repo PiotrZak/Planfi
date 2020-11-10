@@ -7,9 +7,7 @@ import Button from 'components/atoms/Button';
 import AuthTemplate from 'templates/AuthTemplate';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
-import { useDispatch } from 'react-redux'
 import { userService } from 'services/userServices';
-import { alertActions } from 'redux/actions/alert.actions'
 import { useHistory } from "react-router-dom";
 import { translate } from 'support/Translation';
 import {
@@ -17,6 +15,7 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import Logo from 'components/atoms/Logo';
+import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -39,33 +38,32 @@ const validationSchema = Yup.object({
   password: Yup.string().required(translate('Thisfieldisrequired')),
 });
 
-const onSubmit = (values) => {
-  console.log('Form values', values);
-};
-
 const LoginPage = () => {
 
-const [userData, setUserData] = useState({})
-const dispatch = useDispatch()
+const { notificationDispatch } = useNotificationContext();
 const history = useHistory();
 
-  const handleInput = (e) => {
-    let name = e.target.name
-    userData[name] = e.target.value;
-    setUserData(userData);
+const onSubmit = (values) => {
+
+  console.log(values)
+  const loginModelData = {
+    email: values.email,
+    password: values.password,
+  }
+  authenticateUser(loginModelData)
 }
 
-const submitForm = () => {
-  authenticateUser(userData)
-}
-
-const authenticateUser = (userData) => {
+const authenticateUser = (loginModelData) => {
   userService
-      .login(userData)
+      .login(loginModelData)
       .then((data) => {
-
-        //todo - alerts
-          // dispatch(alertActions.success(translate('CongratulationsLogin')))
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('CongratulationsLogin') },
+            type: 'positive'
+          }
+        })
           localStorage.setItem('user', JSON.stringify(data));
           // if (data.role === "Trainer") {
           //     history.push('/users');
@@ -78,7 +76,13 @@ const authenticateUser = (userData) => {
           // }
       })
       .catch((error) => {
-          dispatch(alertActions.error(error))
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
+        })
       });
 }
 
@@ -88,20 +92,20 @@ return(
     <Logo src="logo.png" />
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
       <Form>
-        <InputContainer onChange={handleInput} >
+        <InputContainer >
           <Label type="top" text={translate('YourMail')}>
             <Field type="email" name="email" placeholder={translate('AdresEmail')} as={Input} />
           </Label>
           <ValidationHint name="email" />
         </InputContainer>
 
-        <InputContainer onChange={handleInput}>
+        <InputContainer>
           <Label type="top" text={translate('Password')}>
             <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} />
           </Label>
           <ValidationHint name="password" />
         </InputContainer>
-        <Button onClick={submitForm} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
+        <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
       </Form>
     </Formik>
     <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
