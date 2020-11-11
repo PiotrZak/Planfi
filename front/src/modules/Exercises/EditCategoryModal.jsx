@@ -24,20 +24,20 @@ const initialValues = {
 
 const validationSchema = Yup.object().shape({
     title: Yup.string()
-        .required(translate('CategoryTitle')),
+        .required(translate('EnterFirstNameAndLastName')),
 });
 
-const AddCategoryModal = ({ openModal, onClose, theme }) => {
+const EditCategoryModal = ({ selectedCategories, openModal, onClose, theme }) => {
 
     const { notificationDispatch } = useNotificationContext();
 
     const onSubmit = (values) => {
-        createCategory(values)
+        editCategory(values)
     }
 
-    const createCategory = (addCategoryData) => {
+    const editCategory = (addCategoryData) => {
         categoryService
-            .addCategory(addCategoryData)
+            .editCategory(addCategoryData)
         notificationDispatch({
             type: ADD,
             payload: {
@@ -63,13 +63,13 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
         <StyledModal isOpen={openModal}
             onBackgroundClick={onClose}
             onEscapeKeydown={onClose}>
-            <Heading>{translate('AddCategoryTitle')}</Heading>
+            <Heading>{translate('EditCategoryTitle')}</Heading>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched, values }) => (
                     <Form>
                         <InputContainer>
-                            <Label type="top" text={translate('CategoryTitle')} required>
-                                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+                            <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
+                                <Field placeholder = {'test'} type="text" name="title" as={Input} error={errors.name && touched.name} />
                             </Label>
                         </InputContainer>
                         <Button type="submit" buttonType="primary" size="lg">{translate('Save')}</Button>
@@ -80,4 +80,4 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
     );
 }
 
-export default AddCategoryModal;
+export default EditCategoryModal;

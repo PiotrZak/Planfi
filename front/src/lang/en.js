@@ -37,8 +37,9 @@ export const en = {
   PolicyPrivacy: 'By creating an account, you accept our privacy policy - you will learn about it',
   Here: 'here.',
 
-  NoCategories: 'No Categories',
+  NoCategories: 'No Categories currently - just add category',
   CategoriesTitle: 'Categories',
+  CategoryAdded: 'Category added sucessfully!',
   CategoriesDeleted: 'Categories finally deleted!',
   AddExerciseToCategory: 'To be able to add exercises you need to add a category first',
   DeleteCategory: 'Delete category',

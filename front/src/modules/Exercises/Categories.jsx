@@ -15,10 +15,6 @@ import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
 import { useThemeContext } from '../../support/context/ThemeContext';
 import CategoriesPanel from './CategoriesPanel'
 
-const CategoriesDeleted = 'Categories finally deleted!'
-const AddExerciseToCategory = 'To be able to add exercises you need to add a category first';
-const DeleteCategoriesText = "Delete categories"
-
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
@@ -30,15 +26,22 @@ const CATEGORY = gql`{
    }
   }
 `;
-export const Categories = () => {
+
+const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none')
+
   const { theme } = useThemeContext();
-  const { loading, error, data } = useQuery(CATEGORY);
+  const { loading, error, data, refetch } = useQuery(CATEGORY);
+
+  const closeModal = () => {
+    setOpenModal(false)
+  }
 
   useEffect(() => {
-  }, [openModal]);
+    setTimeout(function () { refetch() }, 1);
+  }, [bottomSheet, setBottomSheet, openModal, setOpenModal, data]);
 
   if (loading) return <Loader isLoading={loading}></Loader>;
   if (error) return <p>Error :(</p>;
@@ -59,8 +62,8 @@ export const Categories = () => {
             <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
           </IconWrapper>
         </Nav>
-        <AddCategoryModal theme={theme} openModal={openModal} onClose={() => setOpenModal(false)} />
-        {data.categories ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <h1>{translate('NoCategories')}</h1>}
+        <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
+        {data.categories.length > 0 ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel theme={theme} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} />
     </>

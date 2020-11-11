@@ -29,7 +29,7 @@ position: fixed;
   position:relative;
   z-index:1;
   opacity:1.0;
-  width: 42rem;
+  width: 62rem;
   height: 34rem;
   color:white;
   align-items: center;

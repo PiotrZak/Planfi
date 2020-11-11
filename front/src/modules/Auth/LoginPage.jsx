@@ -9,7 +9,7 @@ import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import { userService } from 'services/userServices';
 import { useHistory } from "react-router-dom";
-import { translate } from 'support/Translation';
+import { translate } from 'utils/Translation';
 import {
   Formik, Field, Form,
 } from 'formik';

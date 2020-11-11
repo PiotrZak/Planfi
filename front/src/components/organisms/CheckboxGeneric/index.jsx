@@ -26,7 +26,7 @@ export const CheckboxGenericComponent = ({
 
   useEffect(() => {
     setType(dataType);
-    if (dataList) setList(dataList);
+    setList(dataList);
   }, [dataList]);
 
   function handleChange(e) {

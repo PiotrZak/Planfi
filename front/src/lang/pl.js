@@ -40,6 +40,7 @@ export const pl = {
 
   NoCategories: 'Brak kategorii',
   CategoriesTitle: 'Kategorie',
+  CategoryAdded: 'Kategoria dodana pomyślnie!',
   CategoriesDeleted: 'Kategorie usunięte!',
   AddExerciseToCategory: 'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
   DeleteCategory: 'Usuń kategorię',

@@ -3,8 +3,6 @@ import styled, { css, withTheme } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, REMOVE } from '../../../support/context/NotificationContext'
-import { useThemeContext } from '../../../support/context/ThemeContext';
-import { useUserContext } from '../../../support/context/UserContext';
 import { mainTheme } from '../../../theme/mainTheme';
 
 const handleAlertType = (type, theme) => {
@@ -32,7 +30,7 @@ const handleIconType = (type) => {
 const handleIconColor = (type, theme) => {
   switch (type) {
     case 'positive':
-    return css`${theme.colorSuccessLight}`;
+    return theme.colorSuccessDefault;
     case 'neutral':
       return theme.colorSuccessDefault;
     case 'error':
@@ -75,7 +73,7 @@ const Alert = ({ notification }) => {
 
   // todo - take context from global
   const theme = mainTheme;
-  const timeToRemove = 4000;
+  const timeToRemove = 40000;
 
   useEffect(() => {
     if(notification.length > 0){

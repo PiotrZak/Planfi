@@ -2,19 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
-import Loader from 'components/atoms/Loader';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import AddCategoryModal from './AddCategoryModal';
-import { commonUtil } from "utils/common.util"
-import { isMobile } from "react-device-detect";
-import { useQuery, gql } from '@apollo/client';
-import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
-import Heading from 'components/atoms/Heading';
-import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
-import { useThemeContext } from '../../support/context/ThemeContext';
 import StyledReactBottomSheet, {PanelContainer, PanelItem} from 'components/organisms/BottomSheet'
-
+import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import EditCategoryModal from './EditCategoryModal';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -22,17 +13,37 @@ const IconWrapper = styled.div`
 
 const CategoriesPanel = ({ theme, bottomSheet, setBottomSheet, selectedCategories }) => {
 
+  const [openModal, setOpenModal] = useState(false);
+  const { notificationDispatch } = useNotificationContext();
+
+console.log(selectedCategories)
+
     const deleteCategories = () => {
       categoryService
         .deleteCategories(selectedCategories)
         .then(() => {
+          setBottomSheet('none')
+          notificationDispatch({
+            type: ADD,
+            payload: {
+              content: { success: 'OK', message: translate('CategoriesDeleted')},
+              type: 'positive'
+            }
+          })
         })
         .catch((error) => {
+          notificationDispatch({
+            type: ADD,
+            payload: {
+              content: { error: error, message: translate('ErrorAlert') },
+              type: 'error'
+            }
+          })
         });
     };
   
-    const setOpenEditModal = () => {
-      console.log('test')
+    const closeModal = () => {
+      setOpenModal(false)
     }
   
     return (
@@ -58,8 +69,9 @@ const CategoriesPanel = ({ theme, bottomSheet, setBottomSheet, selectedCategorie
             <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteCategory')}
           </PanelItem>
           {selectedCategories.length < 2 &&
-            <PanelItem onClick={() => setOpenEditModal(true())}>
+            <PanelItem onClick={() => setOpenModal(true)}>
               <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
+              <EditCategoryModal selectedCategories ={selectedCategories[0]}theme={theme} openModal={openModal} onClose={closeModal} />
             </PanelItem>
           }
         </PanelContainer>
