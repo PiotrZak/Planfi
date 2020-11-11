@@ -28,16 +28,13 @@ const Button = styled.button`
   
   color: ${({ theme }) => theme.colorWhite};
 
-  //button size
   height: ${({ size }) => handleButtonSize(size)};
   ${({ buttonPlace }) => handleButtonPlace(buttonPlace)};
   
-  //disabled button 
   :disabled{
     color: ${({ theme }) => theme.colorDisabled};
     background: ${({ theme }) => theme.colorGray30};
-
-    //overwrite hover effect for disabled button
+    cursor: default;
     &:hover {
       background: ${({ theme }) => theme.colorGray30} !important;
     }

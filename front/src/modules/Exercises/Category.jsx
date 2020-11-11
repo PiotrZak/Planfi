@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
 import { Link, useHistory } from 'react-router-dom';
-import { alertActions } from 'redux/actions/alert.actions'
-import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import Icon from 'components/atoms/Icon';
 import { commonUtil } from "utils/common.util"
-import  Loader  from 'components/atoms/Loader';
+import Loader from 'components/atoms/Loader';
 import "react-multi-carousel/lib/styles.css";
 // import { PlanPanelExercises } from "../Plans/microModules/PlanPanelExercises"
-import Search  from "components/molecules/Search"
+import Search from "components/molecules/Search"
 // import Spacer from "components/atoms/Spacer"
 import { translate } from 'utils/Translation';
 import BackTopNav from 'components/molecules/BackTopNav';
-import { CANCELLED } from 'dns';
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
+import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
 
 var ReactBottomsheet = require('react-bottomsheet');
 
@@ -98,12 +97,10 @@ export const Category = (props) => {
 
     return (
         <div>
-            <div className="container">
-                <div className="container__title">
-                <BackTopNav text={translate('ForgotPassword')} />
-
+            <GlobalTemplate>
+                <Nav>
+                    <BackTopNav/>
                     {category && <h2>{category.title}</h2>}
-
                     <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} /></div>
                     {category &&
                         <Link
@@ -112,9 +109,8 @@ export const Category = (props) => {
                                 state: { id: category.categoryId }
                             }}
                         >
-                       <Icon name={"plus"} fill={"#5E4AE3"} />
-                       
-                       {/* 
+                            <Icon name={"plus"} fill={"#5E4AE3"} />
+                            {/* 
                     todo! design
                         select from all exercises */}
                             {/* <ul id="mainmenu">
@@ -128,22 +124,22 @@ export const Category = (props) => {
                             </ul> */}
                         </Link>
                     }
-                </div>
+                </Nav>
 
                 <Search callBack={filterExercises} />
                 {/* <Spacer h={90} /> */}
-                <CheckboxGenericComponent dataType={"exercises"} dataList={exercises} displayedValue={"name"} onSelect={submissionHandleElement} /> 
+                <CheckboxGenericComponent dataType={"exercises"} dataList={exercises} displayedValue={"name"} onSelect={submissionHandleElement} />
                 {/* : <h1>{noExerciseInPlan}</h1> */}
                 {/* <Loader isLoading={isLoading}>
                     {results ? }
                 </Loader> */}
 
-                {/* <ReactBottomsheet
+                <ReactBottomsheet
                     visible={bottomSheet}
                     onClose={() => setBottomSheet(false)}>
                     <button onClick={() => deleteCategory()} className='bottom-sheet-item'>Delete</button>
-                </ReactBottomsheet> */}
-            </div>
+                </ReactBottomsheet>
+            </GlobalTemplate>
             {/* <PlanPanelExercises activeSelectedExercise={activeSelectedExercise} id={id} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} /> */}
         </div>
     );

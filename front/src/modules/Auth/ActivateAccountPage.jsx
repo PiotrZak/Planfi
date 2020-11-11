@@ -17,6 +17,7 @@ import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
 import { userService } from 'services/userServices';
 import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import Heading from 'components/atoms/Heading';
 
 const initialValues = {
   name: '',
@@ -57,9 +58,7 @@ const StyledInputPhoneContainer = styled(InputContainer)`
   margin-top: 2rem;
 `;
 
-export const Heading = styled.h3`
-  margin: 2.5rem 0 0 0;
-`;
+
 
 const Container = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import Return from 'components/molecules/Return';
 import { commonUtil } from 'utils/common.util';
 import Loader  from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
-import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import {useUserContext} from "../../support/context/UserContext"
 
 import InviteUserModal from './InviteUsersModal';

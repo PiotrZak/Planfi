@@ -1,52 +1,82 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-import Icon from 'components/atoms/Icon';
-import { planService } from "services/planService";
+import styled from 'styled-components';
+
+
+//todo - test if image appear after adding exercises & add circle elements
+
+const GenericElementContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: ${({ theme }) => theme.colorGray80};
+  padding: 1.8rem 4.2rem;
+  height: 7.2rem;
+  border-radius: 4px;
+  color:white;
+`;
+
+const GenericElementInfo = styled.div`
+color: ${({ theme }) => theme.colorPrimary};
+font-size: 1.4rem;
+line-height: 2.1rem;
+text-decoration:none;
+text-align:left;
+`;
+
+const Headline = styled.h4`
+  margin: 0 0 0 0;
+  font-size:1.4rem;
+`;
+
+const Subline = styled.p`
+  margin: 0 0 0 0;
+  font-size:1.1rem;
+`;
+
+const GenericElementCircle = styled.div`
+  border-radius: 50%;
+`;
+
+const GenericElementSquare = styled.div`
+
+`;
+
+const GenericElementImage = styled.div`
+    border-radius: 3px;
+    margin-right: 8px;
+    width: 4.8rem;
+    height: 4.8rem;
+`;
+
+const GenericElementImageEmpty = styled.div`
+      background-color: $color-gray-60;
+      width: 4.8rem;
+      height: 4.8rem;
+`;
+
+const Image = (image) => {
+    return (
+        <img src={`data:image/jpeg;base64,${image}`} />
+    )
+}
 
 const GenericElement = ({
-    handleElement,
-    id,
-    className,
     headline,
     subline,
     image,
-    checkbox,
-    secondaryMenu,
-    exercise,
-    category,
-    plan,
-    user,
     circle,
 }) => {
-
-    const types = [exercise, category, plan, user]
-
     return (
-        <div className={className  ? className : "rectangleButton"}>
-            <div className="rectangleButton__wrapper">
-                {image
-                    ? <div
-                        className={`menuButton__image ${
-                            circle &&
-                            ' circle'
-                            }`}
-                    ><img src={`data:image/jpeg;base64,${image}`} /></div>
-                    : <div
-                        className={`menuButton__image-empty ${
-                            circle &&
-                            ' circle'
-                            }`}
-
-                    />}
-
-                <div className="rectangleButton-info">
-                    <h3 className="rectangleButton-info__headline">{headline}</h3>
-                    <p className="rectangleButton-info__subline">{subline}</p>
-                </div>
-            </div>
-            <div className="rectangleButton__menu">
-            </div>
-        </div>
+        <GenericElementContainer>
+            {image
+                ? <GenericElementImage><Image url={image} /></GenericElementImage>
+                : <GenericElementImageEmpty></GenericElementImageEmpty>
+            }
+            <GenericElementInfo>
+                <Headline>{headline}</Headline>
+                <Subline>{subline}</Subline>
+            </GenericElementInfo>
+        </GenericElementContainer>
     )
 }
 

@@ -10,10 +10,10 @@ export const en = {
   Password: 'Password',
   ForgotPassword: 'I forget password',
 
-  ActivateAccountSuccess: "Your account succesfully activated",
-  ErrorAlert: "Something gone wrong",
-  EmailSent: "The message has been sent to your e-mail",
-  PasswordChanged: "Password sucessfully changed!",
+  ActivateAccountSuccess: 'Your account succesfully activated',
+  ErrorAlert: 'Something gone wrong',
+  EmailSent: 'The message has been sent to your e-mail',
+  PasswordChanged: 'Password sucessfully changed!',
 
   RepeatPassword: 'Repeat password',
   EnterNewPassword: 'Enter new password',
@@ -36,4 +36,13 @@ export const en = {
   EnterPhoneNumber: 'Enter your phone number',
   PolicyPrivacy: 'By creating an account, you accept our privacy policy - you will learn about it',
   Here: 'here.',
+
+  NoCategories: 'No Categories',
+  CategoriesTitle: 'Categories',
+  CategoriesDeleted: 'Categories finally deleted!',
+  AddExerciseToCategory: 'To be able to add exercises you need to add a category first',
+  DeleteCategory: 'Delete category',
+  DeleteCategoriesText: 'Delete categories',
+  EditCategory: 'Edit Category',
+  Selected: 'selected',
 };

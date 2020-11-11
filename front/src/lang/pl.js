@@ -37,4 +37,13 @@ export const pl = {
   EnterPhoneNumber: 'Podaj numer telefonu',
   PolicyPrivacy: 'Zakładając konto akceptujesz naszą politykę prywatności - poznasz ją',
   Here: 'tutaj.',
+
+  NoCategories: 'Brak kategorii',
+  CategoriesTitle: 'Kategorie',
+  CategoriesDeleted: 'Kategorie usunięte!',
+  AddExerciseToCategory: 'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
+  DeleteCategory: 'Usuń kategorię',
+  DeleteCategoriesText: 'Usuń kategorię',
+  EditCategory: 'Edytuj kategorię',
+  Selected: 'wybrane',
 };

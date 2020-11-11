@@ -49,7 +49,7 @@ const StyledNavLink = styled(NavLink).attrs({
   }
 `;
 
-// eslint-disable-next-line react/prop-types
+
 const Menu = ({ theme }) => {
   const [currentUrl, setCurrentUrl] = useState();
 

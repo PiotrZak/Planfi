@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
-import  Loader  from 'components/atoms/Loader';
-import { alertActions } from 'redux/actions/alert.actions'
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
+import styled from 'styled-components';
+import Loader from 'components/atoms/Loader';
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import AddCategoryModal from './AddCategoryModal';
 import { commonUtil } from "utils/common.util"
 import { isMobile } from "react-device-detect";
-import { useDispatch } from 'react-redux';
 import { useQuery, gql } from '@apollo/client';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
+import Heading from 'components/atoms/Heading';
+import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
+import { useThemeContext } from '../../support/context/ThemeContext';
+import CategoriesPanel from './CategoriesPanel'
 
-import Heading from "../Auth/ActivateAccountPage"
+const CategoriesDeleted = 'Categories finally deleted!'
+const AddExerciseToCategory = 'To be able to add exercises you need to add a category first';
+const DeleteCategoriesText = "Delete categories"
 
-var ReactBottomsheet = require('react-bottomsheet');
-
-const noCategories = 'No Categories';
-
-
-const categoriesTitle = 'Categories';
-
-
-const categoriesDeleted = 'Categories finally deleted!'
-const addExerciseToCategory = 'To be able to add exercises you need to add a category first';
-const deleteCategory = "Delete category"
-const deleteCategoriesText = "Delete categories"
-const editCategory = "Edit Category"
-const selected = "selected"
+const IconWrapper = styled.div`
+    margin-top: .4rem;
+`;
 
 const CATEGORY = gql`{
   categories{
@@ -36,91 +30,41 @@ const CATEGORY = gql`{
    }
   }
 `;
-
 export const Categories = () => {
-
   const [selectedCategories, setSelectedCategories] = useState([]);
-
   const [openModal, setOpenModal] = useState(false);
-  const [bottomSheet, setBottomSheet] = useState(false)
+  const [bottomSheet, setBottomSheet] = useState('none')
+  const { theme } = useThemeContext();
   const { loading, error, data } = useQuery(CATEGORY);
 
-   if (loading) return <Loader isLoading={loading}></Loader>;
-   if (error) return <p>Error :(</p>;
-  
-  const openAddCategoryModal = () => {
-    setOpenModal(!openModal);
-  };
+  useEffect(() => {
+  }, [openModal]);
+
+  if (loading) return <Loader isLoading={loading}></Loader>;
+  if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
     const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
     setSelectedCategories(selectedCategories)
-    if (selectedCategories.length > 0) {
-      setBottomSheet(true);
-    } else {
-      setBottomSheet(false);
-    }
+    selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   }
 
   return (
-    <div>
-      <div className="container">
-        <div className="container__title">
-        <BackTopNav text={translate('ForgotPassword')} />
-        {/* <Heading>{translate('categoriesTitle')}</Heading> */}
-          <div onClick={openAddCategoryModal}>
-            <Icon name="plus" fill="#5E4AE3" />
-          </div>
-        </div>
-        {/* todo! - modal */}
-        {/* <AddCategoryModal openModal={openModal} onClose={() => setOpenModal(false)} /> */}
-        <div>
-            {data.categories ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <h1>{noCategories}</h1>}
-        </div>
-      </div>
-      {/* <CategoriesPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} /> */}
-    </div>
+    <>
+      <GlobalTemplate>
+        <Nav>
+          <BackTopNav />
+          <Heading>{translate('CategoriesTitle')}</Heading>
+          <IconWrapper>
+            <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
+          </IconWrapper>
+        </Nav>
+        <AddCategoryModal theme={theme} openModal={openModal} onClose={() => setOpenModal(false)} />
+        {data.categories ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <h1>{translate('NoCategories')}</h1>}
+      </GlobalTemplate>
+      <CategoriesPanel theme={theme} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} />
+    </>
   );
 };
-
-
-const CategoriesPanel = ({ bottomSheet, setBottomSheet, selectedCategories }) => {
-
-  const deleteCategories = () => {
-    categoryService
-      .deleteCategories(selectedCategories)
-      .then(() => {
-
-      })
-      .catch((error) => {
-      });
-  };
-  
-  return (
-    <ReactBottomsheet
-      showBlockLayer={false}
-      className="bottomsheet-without-background"
-      visible={bottomSheet}
-      onClose={() => setBottomSheet(false)}
-      appendCancelBtn={false}>
-      {isMobile ?
-        <>
-          <button onClick={() => deleteCategories()} className="bottom-sheet-item">{selectedCategories.length == 1 ? deleteCategory : deleteCategoriesText}</button>
-        </>
-        :
-        <>
-          <div className="bottom-sheet-item__oneline">
-            <Icon name="check" fill="#2E6D2C" />
-            <p>{selectedCategories.length} {selected}</p>
-            <div onClick={() => deleteCategories()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{deleteCategory}</div>
-            {selectedCategories.length < 2 && <div 
-            // onClick={() => setOpenEditModal(true)} 
-            className='bottom-sheet-item__content'><Icon height={"18px"} name="edit" fill="#C3C3CF" />{editCategory}</div>}
-          </div>
-        </>
-      }
-    </ReactBottomsheet>
-  )
-}
 
 export default Categories;

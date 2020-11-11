@@ -1,59 +1,66 @@
 import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { useDispatch } from 'react-redux'
-import { validationUtil } from "utils/validation.util"
-import { alertActions } from 'redux/actions/alert.actions'
-import { categoryService } from 'services/categoryService';
-import Button from "components/atoms/Button"
+import InputContainer from 'components/atoms/InputContainerForm';
+import Label from 'components/atoms/Label';
+import styled from 'styled-components';
+import Input from 'components/molecules/Input';
+import { translate } from 'utils/Translation';
+import { Formik, Field, Form } from 'formik';
+import * as Yup from 'yup';
+import { categoryService } from '../../services/categoryService';
+import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
+import Button from 'components/atoms/Button';
+import Heading from 'components/atoms/Heading';
+import Center from 'components/atoms/Center';
+import { StyledModal } from 'components/molecules/Modal'
 
-const addCategoryTitle = "Add a category";
+const AddCategoryTitle = "Add a category";
 const addCategoryTip = "When naming a category, it is worth using names related to specific parts of the body, for example 'Back'";
 const addCategoryButton = "Create Category";
 
-const AddCategoryModal = ({ openModal, onClose }) => {
+const initialValues = {
+    title: '',
+};
 
-    // const [addCategoryData, setAddCategory] = useState({});
-    // const [errors, setErrors] = useState({})
+const validationSchema = Yup.object().shape({
+    title: Yup.string()
+        .required(translate('EnterFirstNameAndLastName')),
+});
 
-    // const requiredFields = ["title"];
-    // const dispatch = useDispatch()
+const AddCategoryModal = ({ openModal, onClose, theme }) => {
 
-    // const handleInput = (e) => {
-    //     let name = e.target.name
-    //     addCategoryData[name] = e.target.value;
-    //     setAddCategory(addCategoryData);
-    //     validationUtil.runSetErrors(name, setErrors, errors, requiredFields, addCategoryData)
-    // }
+    const onSubmit = (values) => {
+        createCategory(values)
+    }
 
-    // const submitForm = () => {
-    //     const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, addCategoryData)
-    //     confirm && createCategory(addCategoryData)
-    // }
-
-    // const createCategory = (addCategoryData) => {
-    //     categoryService
-    //         .addCategory(addCategoryData)
-    //         .then(() => {
-    //             dispatch(alertActions.success("Category succesfully added!"))
-    //             onClose()
-    //         })
-    //         .catch((error) => {
-    //             dispatch(alertActions.error(error.title))
-    //         });
-    // }
+    const createCategory = (addCategoryData) => {
+        console.log(addCategoryData)
+        categoryService
+            .addCategory(addCategoryData)
+            onClose()
+            .then(() => {
+            })
+            .catch((error) => {
+            });
+    }
 
     return (
-        <div>
-            <Modal isOpen={openModal} toggle={onClose}>
-                {/* <ModalHeader toggle={onClose}><h2>{addCategoryTitle}</h2></ModalHeader>
-                <ModalBody>
-                    <FormInput type = "textarea" id="title" name="title" onChange={handleInput} label="Title" hasError={errors.title} placeholder= {addCategoryTip}/>
-                </ModalBody>
-                <ModalFooter>
-                    <Button name = {addCategoryButton} className="btn btn--primary btn--lg" onClick={submitForm}></Button>
-                </ModalFooter> */}
-            </Modal>
-        </div>
+        <StyledModal isOpen={openModal}
+            onBackgroundClick={onClose}
+            onEscapeKeydown={onClose}>
+            <Heading>{translate('AddCategoryTitle')}</Heading>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+                {({ errors, touched, values }) => (
+                    <Form>
+                        <InputContainer>
+                            <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
+                                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+                            </Label>
+                        </InputContainer>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('Save')}</Button>
+                    </Form>
+                )}
+            </Formik>
+        </StyledModal>
     );
 }
 
