@@ -12,7 +12,7 @@ import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
 import Heading from 'components/atoms/Heading';
 import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
-import { useThemeContext } from '../../support/context/ThemeContext';
+import { useThemeContext } from 'support/context/ThemeContext';
 import CategoriesPanel from './CategoriesPanel'
 
 const IconWrapper = styled.div`

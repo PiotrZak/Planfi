@@ -1,42 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { mainTheme } from 'theme/mainTheme';
 
-export function Holdable({id, onClick, onHold, children, forx}) {
+export const GenericMobile = styled.div`
+      width:100%;
+      height:80px;
+      position:initial;
+      ${({ active, }) => active && `
+        &:after{
+        content:'';
+        position:absolute;
+        border:2px solid ${mainTheme.colorInputActive};
+        border-radius:4px;
+        opacity:0.7;
+        height:7.2rem;
+        width:calc(100% - 3.2rem);
+        margin-top:-7.2rem;
+    }
+  `}
+`
 
-    const [timer, setTimer] = React.useState(null)
-    const [className, setClassName] = useState(false)
-    
-    function onPointerDown(evt) {
-      const event = { ...evt }
-      const timeoutId = window.setTimeout(timesup.bind(null, event), 500)
-      setTimer(timeoutId)
-    }
-    
-    function onPointerUp(evt) {
-      if (timer) {
-        window.clearTimeout(timer)
-        setTimer(null)
-        onClick(evt)
-      }
-    }
-    
-    function timesup(evt) {
-      setTimer(null)
-      onHold(evt)
-      setClassName(!className)
-    }
-    
-    return (
-      <label
-        for = {forx}
-        className={`checkbox-label ${
-            className &&
-            ' active'
-            }`}
-        onPointerDown={onPointerDown}
-        onPointerUp={onPointerUp}
-        id={id}
-      >
-        {children}
-      </label>
-    )
+export function Holdable({id, onClick, onHold, children, forx }) {
+
+  const [timer, setTimer] = React.useState(null)
+  const [active, setActive] = useState(false)
+  
+
+  function onPointerDown(evt) {
+    const event = { ...evt }
+    const timeoutId = window.setTimeout(timesup.bind(null, event), 200)
+    setTimer(timeoutId)
   }
+
+  function onPointerUp(evt) {
+    if (timer) {
+      window.clearTimeout(timer)
+      setTimer(null)
+      onClick(evt)
+    }
+  }
+
+  function timesup(evt) {
+    setTimer(null)
+    onHold(evt)
+    setActive(!active)
+  }
+
+  return (
+    <GenericMobile
+      for={forx}
+      active ={active}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      id={id}>
+      {children}
+    </GenericMobile>
+  )
+}

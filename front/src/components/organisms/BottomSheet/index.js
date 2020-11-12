@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-var ReactBottomsheet = require('react-bottomsheet');
+import ReactBottomsheet from 'react-bottomsheet';
 
 export const PanelContainer = styled.div`
 color: ${({ theme }) => theme.colorPrimary};
@@ -11,6 +11,27 @@ export const PanelItem = styled.div`
     color: ${({ theme }) => theme.colorPrimary};
     display:flex;
     padding:0 3.6rem;
+`;
+
+export const MobilePanelItem = styled.div`
+    width:100%;
+    height:7.2rem;
+    color: ${({ theme }) => theme.colorGray80};
+    z-index:1;
+    
+    }
+`;
+
+export const StyledMobileReactBottomSheet = styled.div`
+    display: block;
+    width: 100%;
+    background-color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    border: none;
+    border-top: 1px solid #ededed;
+    font-size: 16px;
+        }
 `;
 
 const StyledReactBottomSheet = styled(ReactBottomsheet)`

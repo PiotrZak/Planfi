@@ -4,13 +4,6 @@ import { Holdable } from "hooks/useLongPress";
 import { renderType } from "./DataTypes"
 import styled from 'styled-components';
 
-// todo- styled
-const Wrapper = styled.div`
-display: flex;
-background: ${({ theme }) => theme.colorGray80};
-padding: .7rem 0;
-border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
-`;
 
 export const CheckboxGenericComponent = ({
   id,
@@ -84,14 +77,12 @@ export const CheckboxGenericComponent = ({
     }
   }
 
-
-
   function renderRows() {
     const row = [];
     if (Array.isArray(list)) {
       dataList.map((element, i) => {
         row.push(
-          <div key={i} className="checkbox-generic-list__element">
+          <>
             {isMobile ?
               <Holdable
                 onHold={handleChange}
@@ -115,7 +106,7 @@ export const CheckboxGenericComponent = ({
               checked={!!element.value}
               onChange={handleChange}
             />
-          </div>
+            </>
         );
         return element;
       });

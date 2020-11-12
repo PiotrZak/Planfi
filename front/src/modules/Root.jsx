@@ -15,7 +15,7 @@ import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 import Categories  from 'modules/Exercises/Categories';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
-import { PrivateRoute, Role } from 'utils/PrivateRoute';
+import { PrivateRoute, Role } from '../utils/PrivateRoute';
 import { ThemeContext } from 'support/context/ThemeContext';
 import { LanguageContext } from '../support/context/LanguageContext';
 import { userContext } from '../support/context/UserContext';

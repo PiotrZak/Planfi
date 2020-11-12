@@ -22,9 +22,9 @@ export const SpecialModalBackground = styled.div`
 `
 
 export const StyledModal = Modal.styled`
-position: fixed;
-    top:0;
-    padding: 3.6rem 3.6rem;
+  position: fixed;
+  top:0;
+  padding: 3.6rem 3.6rem;
   margin: 10.2rem 0 0 0;
   position:relative;
   z-index:1;

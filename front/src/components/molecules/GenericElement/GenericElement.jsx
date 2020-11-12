@@ -13,6 +13,7 @@ const GenericElementContainer = styled.div`
   height: 7.2rem;
   border-radius: 4px;
   color:white;
+  z-index:2;
 `;
 
 const GenericElementInfo = styled.div`
