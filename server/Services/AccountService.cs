@@ -65,7 +65,7 @@ namespace WebApi.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var resetUrl = $"{origin}/account/forgot:{account.ResetToken}";
+                var resetUrl = $"{origin}/account/reset:{account.ResetToken}";
                 message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
             }
@@ -138,7 +138,7 @@ namespace WebApi.Services
             foreach(var email in model.Emails)
             {
                 if (_context.Clients.Any(x => x.Email == email))
-                    throw new AppException("Email \"" + model + "\" is already taken"); 
+                    throw new AppException("Email \"" + email + "\" is already taken"); 
             
                 var user = _mapper.Map<Client>(model);
                 user.VerificationToken = RandomTokenString();
