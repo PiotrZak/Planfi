@@ -9,7 +9,7 @@ import { categoryService } from '../../services/categoryService';
 import Button from 'components/atoms/Button';
 import Heading from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
-import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const CategoriesDeleted = 'Categories finally deleted!'
 const AddExerciseToCategory = 'To be able to add exercises you need to add a category first';

@@ -12,7 +12,7 @@ export const SpecialModalBackground = styled.div`
   z-index: 0;
   &:after{
     content:'';
-    background-color: grey;
+    background: ${({ theme }) => theme.colorGray110};
     width:100vw;
     height:100vh;
     position:absolute;
@@ -31,7 +31,7 @@ position: fixed;
   opacity:1.0;
   width: 62rem;
   height: 34rem;
-  color:white;
+  color: ${({ theme }) => theme.colorWhite};
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.colorGray90};

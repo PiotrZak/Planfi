@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { translate } from 'utils/Translation';
 import StyledReactBottomSheet, {PanelContainer, PanelItem} from 'components/organisms/BottomSheet'
-import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import EditCategoryModal from './EditCategoryModal';
 
 const IconWrapper = styled.div`
