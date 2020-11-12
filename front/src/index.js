@@ -1,17 +1,14 @@
-/*
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as serviceWorker from 'serviceWorker';
-import { Provider } from 'react-redux';
-import { store } from 'redux/store';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import Root from 'modules/Root';
+import { NotificationProvider } from './support/context/NotificationContext';
+
 import { ApolloProvider } from '@apollo/client';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import App from './App';
-import 'designsystem/main.scss';
-
+import { ModalProvider } from 'styled-react-modal'
+import {SpecialModalBackground} from 'components/molecules/Modal'
 const apiURL = 'http://localhost:5005/graphql';
 
 const httpLink = createHttpLink({
@@ -27,30 +24,13 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ApolloProvider client={client}>
-        <App />
-      </ApolloProvider>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
-
-serviceWorker.unregister();
-*/
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Root from 'views/Root';
-import { Provider } from 'react-redux';
-import { NotificationProvider } from './support/context/NotificationContext';
-
-// eslint-disable-next-line no-undef
-ReactDOM.render(
-  <React.StrictMode>
-      <NotificationProvider>
+    <NotificationProvider>
+      <ModalProvider backgroundComponent={SpecialModalBackground}>
+        <ApolloProvider client={client}>
           <Root />
-      </NotificationProvider>
+        </ApolloProvider>
+      </ModalProvider>
+    </NotificationProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

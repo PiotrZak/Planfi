@@ -23,3 +23,5 @@ export const categoryService = {
   function deleteCategories(ids) {
     return http.post(`${CATEGORIES_URL}delete`, ids);
   }
+
+  //todo - edit category endpoint on backend

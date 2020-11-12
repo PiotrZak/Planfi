@@ -3,6 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Button from "components/atoms/Button"
 import { ReactMultiEmail, isEmail } from "react-multi-email";
 import "react-multi-email/style.css";
+import { accountService } from '../../services/accountServices';
 
 const saveChanges = "Send Emails";
 const inviteUsers = "Invite Users";
@@ -13,12 +14,19 @@ const InviteUserModal = ({ openModal, onClose }) => {
     const [emails, setEmails] = useState([])
 
     const submitForm = () => {
-        
+        const email = {emails}
+        accountService
+        .sendInvitation(email)
+        .then((data) => {
+            console.log(data)
+        })
+        .catch((error) => {
+          console.log(error)
+        });
     }
 
     return (
         <div>
-
             <Modal isOpen={openModal} toggle={onClose}>
                 <ModalHeader toggle={onClose}><h2>{inviteUsers}</h2></ModalHeader>
                 <ModalBody>

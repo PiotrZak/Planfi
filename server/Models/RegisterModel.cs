@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Models
@@ -5,7 +6,6 @@ namespace WebApi.Models
     public class RegisterModel
     {
         [Required]
-        public string Email { get; set; }
-        
+        public List<string> Emails { get; set; }
     }
 }

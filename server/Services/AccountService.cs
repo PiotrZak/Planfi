@@ -45,6 +45,9 @@ namespace WebApi.Services
             user.ResetTokenExpires = DateTime.UtcNow.AddDays(1);
             
             SendPasswordResetEmail(user, origin);
+            
+            _context.Users.Update(user);
+            _context.SaveChanges();
             return true;
         }
 
@@ -62,13 +65,13 @@ namespace WebApi.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var resetUrl = $"{origin}/account/reset-password?token={account.ResetToken}";
+                var resetUrl = $"{origin}/account/forgot:{account.ResetToken}";
                 message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
             }
             else
             {
-                message = $@"<p>Please use the below token to reset your password with the <code>/accounts/reset-password</code> api route:</p>
+                message = $@"<p>Please use the below token to reset your password with the <code>/account/forgot</code> api route:</p>
                              <p><code>{account.ResetToken}</code></p>";
             }
 
@@ -132,54 +135,56 @@ namespace WebApi.Services
         
         public void SendVerificationEmail(RegisterModel model, string origin)
         {
-
-            if (_context.Clients.Any(x => x.Email == model.Email))
-                throw new AppException("Email \"" + model + "\" is already taken"); 
-            
-            var user = _mapper.Map<Client>(model);
-            user.VerificationToken = RandomTokenString();
-            
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            
-            string message;
-            if (!string.IsNullOrEmpty(origin))
+            foreach(var email in model.Emails)
             {
-                var verifyUrl = $"{origin}/account/verify-email?token={user.VerificationToken}";
-                message = $@"<p>Please click the below link to verify your email address:</p>
-                             <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
-            }
-            else
-            {
-                message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
-                             <p><code>{user.VerificationToken}</code></p>";
-            }
-
-            var messageData = new EmailMessage
-            {
-                ToAddresses = new List<EmailMessage.EmailAddress>()
+                if (_context.Clients.Any(x => x.Email == email))
+                    throw new AppException("Email \"" + model + "\" is already taken"); 
+            
+                var user = _mapper.Map<Client>(model);
+                user.VerificationToken = RandomTokenString();
+                user.Email = email;
+                
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                
+                string message;
+                if (!string.IsNullOrEmpty(origin))
                 {
-                    new EmailMessage.EmailAddress()
-                    {
-                        Name = model.Email,
-                        Address = model.Email,
-                    }
-                },
-                FromAddresses = new List<EmailMessage.EmailAddress>()
+                    var verifyUrl = $"{origin}/account/activate:{user.VerificationToken}";
+                    message = $@"<p>Please click the below link to verify your email address:</p>
+                                 <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
+                }
+                else
                 {
-                    new EmailMessage.EmailAddress()
+                    message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
+                                 <p><code>{user.VerificationToken}</code></p>";
+                }
+
+                var messageData = new EmailMessage
+                {
+                    ToAddresses = new List<EmailMessage.EmailAddress>()
                     {
-                        Name = "Planfi",
-                        Address = "planfi.contact@gmail.com",
-                    }
-                },
-                Subject = "Activate Your Account",
-                Content = $@"<h4>Activation</h4>
-                         <p>Thanks for registering!</p>
-                         {message}",
-            };
-            
-            _emailService.Send(messageData);
+                        new EmailMessage.EmailAddress()
+                        {
+                            Name = email,
+                            Address = email,
+                        }
+                    },
+                    FromAddresses = new List<EmailMessage.EmailAddress>()
+                    {
+                        new EmailMessage.EmailAddress()
+                        {
+                            Name = "Planfi",
+                            Address = "planfi.contact@gmail.com",
+                        }
+                    },
+                    Subject = "Activate Your Account",
+                    Content = $@"<h4>Activation</h4>
+                             <p>Thanks for registering!</p>
+                             {message}",
+                };
+                _emailService.Send(messageData);
+            }
         }
     }
 }

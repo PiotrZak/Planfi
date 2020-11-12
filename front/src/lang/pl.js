@@ -11,6 +11,11 @@ export const pl = {
   Password: 'Hasło',
   ForgotPassword: 'Zapomniałem Hasła',
 
+  ActivateAccountSuccess: "Twoje konto zostało aktywowane!",
+  ErrorAlert: "Coś poszło nie tak",
+  EmailSent: "Wiadomość została wysłana na Twojego maila",
+  PasswordChanged: "Hasło zostało zmienione!",
+
   RepeatPassword: 'Powtórz hasło',
   EnterNewPassword: 'Podaj nowe hasło',
   RepeatNewPassword: 'Powtórz nowe hasło',
@@ -32,4 +37,14 @@ export const pl = {
   EnterPhoneNumber: 'Podaj numer telefonu',
   PolicyPrivacy: 'Zakładając konto akceptujesz naszą politykę prywatności - poznasz ją',
   Here: 'tutaj.',
+
+  NoCategories: 'Brak kategorii',
+  CategoriesTitle: 'Kategorie',
+  CategoryAdded: 'Kategoria dodana pomyślnie!',
+  CategoriesDeleted: 'Kategorie usunięte!',
+  AddExerciseToCategory: 'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
+  DeleteCategory: 'Usuń kategorię',
+  DeleteCategoriesText: 'Usuń kategorię',
+  EditCategory: 'Edytuj kategorię',
+  Selected: 'wybrane',
 };

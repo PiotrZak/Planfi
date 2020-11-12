@@ -3,8 +3,6 @@ import styled, { css, withTheme } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, REMOVE } from '../../../support/context/NotificationContext'
-import { useThemeContext } from '../../../support/context/ThemeContext';
-import { useUserContext } from '../../../support/context/UserContext';
 import { mainTheme } from '../../../theme/mainTheme';
 
 const handleAlertType = (type, theme) => {
@@ -20,10 +18,19 @@ const handleAlertType = (type, theme) => {
   }
 };
 
+const handleIconType = (type) => {
+  switch (type) {
+    case 'positive':
+    return "check-circle"
+    case 'error':
+      return "exclamation-triangle"
+  }
+};
+
 const handleIconColor = (type, theme) => {
   switch (type) {
     case 'positive':
-    return css`${theme.colorSuccessLight}`;
+    return theme.colorSuccessDefault;
     case 'neutral':
       return theme.colorSuccessDefault;
     case 'error':
@@ -66,7 +73,7 @@ const Alert = ({ notification }) => {
 
   // todo - take context from global
   const theme = mainTheme;
-  const timeToRemove = 2000;
+  const timeToRemove = 40000;
 
   useEffect(() => {
     if(notification.length > 0){
@@ -81,7 +88,7 @@ const Alert = ({ notification }) => {
           <Wrapper type={n.type} theme = {theme} key={n.id}>
             <LeftContainer>
               <IconWrapper>
-                <Icon name="check-circle" fill={handleIconColor(notification.type, theme)} />
+                <Icon name={handleIconType(n.type)} fill={handleIconColor(n.type, theme)} />
               </IconWrapper>
               <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
             </LeftContainer>
