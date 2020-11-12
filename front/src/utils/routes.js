@@ -3,7 +3,7 @@ export const routes = {
   register: '/register',
   forgotPassword: '/forgot',
   activate: '/account/activate:verificationToken',
-  resetPassword: '/account/forgot:resetToken',
+  resetPassword: '/account/reset:resetToken',
   login: '/login',
   linkExpired: '/expired',
   privacy: '/privacy',
