@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -16,7 +16,7 @@ import Checkbox from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
 import { userService } from 'services/userServices';
-import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Heading from 'components/atoms/Heading';
 
 const initialValues = {
@@ -58,8 +58,6 @@ const StyledInputPhoneContainer = styled(InputContainer)`
   margin-top: 2rem;
 `;
 
-
-
 const Container = styled.div`
   display: flex;
 `;
@@ -83,7 +81,6 @@ const CheckboxContainer = styled.div`
 `;
 
 const ActivateAccountPage = () => {
-
   const { verificationToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
   const history = useHistory();
@@ -94,19 +91,18 @@ const ActivateAccountPage = () => {
     const lastName = arrayOfSplitted[1];
 
     const activateUserModel = {
-      firstName: firstName,
-      lastName: lastName,
+      firstName,
+      lastName,
       phoneNumber: values.phoneNumber,
       password: values.confirmPassword,
       verificationToken: verificationToken.substring(1),
-    }
-    activateUser(activateUserModel)
-  }
+    };
+    activateUser(activateUserModel);
+  };
 
   const timeToRedirect = 5000;
-  
-  const activateUser = (activateUserModel) => {
 
+  const activateUser = (activateUserModel) => {
     userService
       .activate(activateUserModel)
       .then((data) => {
@@ -115,21 +111,21 @@ const ActivateAccountPage = () => {
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('ActivateAccountSuccess') },
-            type: 'positive'
-          }
-        })
-        setTimeout(function () {history.push('/login');}, timeToRedirect);
+            type: 'positive',
+          },
+        });
+        setTimeout(() => { history.push(routes.login); }, timeToRedirect);
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
-        })
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
       });
-  }
+  };
 
   return (
     <AuthTemplate>
@@ -156,7 +152,7 @@ const ActivateAccountPage = () => {
                 </Label>
                 <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
               </StyledInputContainer>
-              <InputContainer  >
+              <InputContainer>
                 <Label type="top" text={translate('RepeatNewPassword')} required>
                   <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
                 </Label>
@@ -185,7 +181,7 @@ const ActivateAccountPage = () => {
         )}
       </Formik>
     </AuthTemplate>
-  )
+  );
 };
 
 export default ActivateAccountPage;

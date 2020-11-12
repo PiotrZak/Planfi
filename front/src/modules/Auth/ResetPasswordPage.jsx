@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from 'react-router-dom';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
@@ -15,8 +15,9 @@ import BackTopNav from 'components/molecules/BackTopNav';
 import Center from 'components/atoms/Center';
 import { translate } from 'utils/Translation';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
-import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
-import { accountService } from '../../services/accountServices';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { accountService } from 'services/accountServices';
+import { routes } from 'utils/routes';
 
 const initialValues = {
   password: '',
@@ -40,18 +41,16 @@ const StyledInputContainer = styled(InputContainer)`
 `;
 
 const ResetPasswordPage = () => {
-
   const timeToRedirect = 5000;
   const { resetToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
   const history = useHistory();
-  
-  const onSubmit = (values) => {
 
+  const onSubmit = (values) => {
     const resetPasswordModel = {
       token: resetToken.substring(1),
       password: values.password,
-    }
+    };
 
     accountService
       .resetPassword(resetPasswordModel)
@@ -59,20 +58,20 @@ const ResetPasswordPage = () => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: 'OK', message: translate('PasswordChanged')},
-            type: 'positive'
-          }
-        })
-        setTimeout(function () {history.push('/login');}, timeToRedirect);
+            content: { success: 'OK', message: translate('PasswordChanged') },
+            type: 'positive',
+          },
+        });
+        setTimeout(() => { history.push(routes.login); }, timeToRedirect);
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
-        })
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
       });
   };
 
@@ -101,7 +100,7 @@ const ResetPasswordPage = () => {
         )}
       </Formik>
     </AuthTemplate>
-  )
+  );
 };
 
 export default ResetPasswordPage;
