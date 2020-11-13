@@ -8304,6 +8304,7 @@
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 8.0.1",
       "HotChocolate >= 10.5.3",
       "HotChocolate.AspNetCore >= 10.5.3",
+      "HotChocolate.AspNetCore.Authorization >= 10.5.3",
       "HotChocolate.AspNetCore.Playground >= 10.5.3",
       "MailKit >= 2.8.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 3.1.0",
@@ -8369,6 +8370,10 @@
             "version": "[10.5.3, )"
           },
           "HotChocolate.AspNetCore": {
+            "target": "Package",
+            "version": "[10.5.3, )"
+          },
+          "HotChocolate.AspNetCore.Authorization": {
             "target": "Package",
             "version": "[10.5.3, )"
           },

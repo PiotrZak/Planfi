@@ -1,3 +1,7 @@
+const ReturnToLogin = "Return To Login!";
+const AccountActivated = "Account succesfully activated"
+const PasswordResetted = "Your password succesfully refreshed!"
+
 export const en = {
   Send: 'Send',
   EnterValidMail: 'Enter valid e-mail address',

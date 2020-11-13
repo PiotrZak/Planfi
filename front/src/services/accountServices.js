@@ -3,6 +3,7 @@ import { ACCOUNT_URL } from "./utils"
 
 export const accountService = {
     uploadAvatar,
+    activate,
     sendInvitation,
     forgotPassword,
     resetPassword,
@@ -12,8 +13,12 @@ export const accountService = {
     return http.post(`${ACCOUNT_URL}uploadAvatar`, body);
   }
 
-  function sendInvitation(body) {
+  function activate(body){
     return http.post(`${ACCOUNT_URL}activate`, body);
+  }
+
+  function sendInvitation(body) {
+    return http.post(`${ACCOUNT_URL}invite`, body);
   }
 
   function forgotPassword(body) {

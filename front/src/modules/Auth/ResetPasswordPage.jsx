@@ -63,7 +63,13 @@ const ResetPasswordPage = () => {
             type: 'positive'
           }
         })
-        setTimeout(function () {history.push('/login');}, timeToRedirect);
+        setTimeout(function () {
+          history.push({
+            pathname: '/confirmation',
+            state: { message: "ResetPassword" },
+          }
+          );
+        }, timeToRedirect);
       })
       .catch((error) => {
         notificationDispatch({

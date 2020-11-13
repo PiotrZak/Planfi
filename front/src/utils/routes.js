@@ -1,18 +1,37 @@
 // eslint-disable-next-line import/prefer-default-export
-export const routes = {
+
+const accountRoutes = {
   register: '/register',
   forgotPassword: '/forgot',
   activate: '/account/activate:verificationToken',
   resetPassword: '/account/reset:resetToken',
   login: '/login',
+  confirmation: '/confirmation'
+}
+
+export const routes = {
+
+
+  register: accountRoutes.register,
+  forgotPassword: accountRoutes.forgotPassword,
+  activate: accountRoutes.activate,
+  resetPassword: accountRoutes.resetPassword,
+  login: accountRoutes.login,
+  confirmation: accountRoutes.confirmation,
+
+
+  //todo expired
   linkExpired: '/expired',
-  privacy: '/privacy',
-  passwordChanged: '/passwordChanged',
+  //currently
   categories: '/categories',
   category: '/category/:id',
   addExcersise: '/add-exercise',
   editExcersise: '/edit-exercise',
   exercise: '/exercise',
+
+
+  privacy: '/privacy',
+
   plans: '/plans',
   plan: '/plan',
   users: '/users',

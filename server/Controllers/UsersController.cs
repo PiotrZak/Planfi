@@ -77,16 +77,6 @@ namespace WebApi.Controllers
             });
         }
         
-        
-        [AllowAnonymous]
-        [HttpPost("activate")]
-        public IActionResult ActivateAccount(ActivateAccount model)
-        {
-            var user = _userService.Activate(model);
-
-            return Ok(user);
-        }
-        
         [AllowAnonymous]
         [HttpGet("users")]
         public IActionResult GetAllUsers()

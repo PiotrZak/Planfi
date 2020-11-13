@@ -12,6 +12,7 @@ import LoginPage from 'modules/Auth/LoginPage';
 import ForgotPasswordPage from 'modules/Auth/ForgotPasswordPage';
 import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
+import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 import Categories  from 'modules/Exercises/Categories';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
@@ -41,10 +42,13 @@ const Root = () => {
           <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
           <Route path={routes.resetPassword} component={ResetPasswordPage} />
           <Route path={routes.activate} component={ActivateAccountPage} />
+          <Route path={routes.confirmation} component={ConfirmationPage} />
+
           <PrivateRoute path={routes.categories} component={Categories} />
           <PrivateRoute path={routes.category} component={Category} />
 
-          <PrivateRoute roles={[Role.Owner]} path={routes.organizationUsers} component={OrganizationUsers} />
+          {/* <PrivateRoute roles={[Role.Owner]} path={routes.organizationUsers} component={OrganizationUsers} /> */}
+          <PrivateRoute path={routes.organizationUsers} component={OrganizationUsers} />
         </Switch>
       </MainTemplate>
       </BrowserRouter>
