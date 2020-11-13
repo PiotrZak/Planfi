@@ -15,7 +15,6 @@ import Paragraph from 'components/atoms/Paragraph';
 import Checkbox from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
-import { userService } from 'services/userServices';
 import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
 import Heading from 'components/atoms/Heading';
 import { accountService } from '../../services/accountServices';
@@ -84,7 +83,7 @@ const ActivateAccountPage = () => {
   useEffect(() => {
     setTimeout(function () {
       history.push({
-        pathname: '/confirmation',
+        pathname: routes.confirmation,
         state: { message: "Activation" },
       }
       );

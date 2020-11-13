@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
+import { routes } from 'utils/routes';
 import AuthTemplate from 'templates/AuthTemplate';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
@@ -53,6 +54,7 @@ const ResetPasswordPage = () => {
       password: values.password,
     }
 
+    //todo - repair
     accountService
       .resetPassword(resetPasswordModel)
       .then(() => {
@@ -65,7 +67,7 @@ const ResetPasswordPage = () => {
         })
         setTimeout(function () {
           history.push({
-            pathname: '/confirmation',
+            pathname: routes.confirmation,
             state: { message: "ResetPassword" },
           }
           );
