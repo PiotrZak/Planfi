@@ -11,10 +11,10 @@ export const pl = {
   Password: 'Hasło',
   ForgotPassword: 'Zapomniałem Hasła',
 
-  ActivateAccountSuccess: "Twoje konto zostało aktywowane!",
-  ErrorAlert: "Coś poszło nie tak",
-  EmailSent: "Wiadomość została wysłana na Twojego maila",
-  PasswordChanged: "Hasło zostało zmienione!",
+  ActivateAccountSuccess: 'Twoje konto zostało aktywowane!',
+  ErrorAlert: 'Coś poszło nie tak',
+  EmailSent: 'Wiadomość została wysłana na Twojego maila',
+  PasswordChanged: 'Hasło zostało zmienione!',
 
   RepeatPassword: 'Powtórz hasło',
   EnterNewPassword: 'Podaj nowe hasło',
@@ -47,4 +47,10 @@ export const pl = {
   DeleteCategoriesText: 'Usuń kategorię',
   EditCategory: 'Edytuj kategorię',
   Selected: 'wybrane',
+
+  AddExercise: 'Dodaj ćwiczenie',
+  AddExerciseInfo: 'Tutaj możesz dodać wszelkie materiały i informację, które mogą być pomocne odnośnie tego ćwiczenia.',
+  ExerciseName: 'Nazwa ćwiczenia',
+  AddAttachments: 'Dodaj załączniki',
+  AddExerciseDescription: 'Opis ćwiczenia',
 };

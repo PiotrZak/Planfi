@@ -46,4 +46,10 @@ export const en = {
   DeleteCategoriesText: 'Delete categories',
   EditCategory: 'Edit Category',
   Selected: 'selected',
+
+  AddExercise: 'Add exercise',
+  AddExerciseInfo: 'Here you can add any material and information that may be helpful for this exercise.',
+  ExerciseName: 'Exercise name',
+  AddAttachments: 'Add attachments',
+  AddExerciseDescription: 'Exercise description',
 };

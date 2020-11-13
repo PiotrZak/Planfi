@@ -25,7 +25,7 @@ const getUsersRoute = (currentUser) => {
 };
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100vh;
 
   display: flex;

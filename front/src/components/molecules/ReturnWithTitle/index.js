@@ -12,6 +12,7 @@ const Container = styled.div`
 
 const StyledParagraph = styled(Paragraph)`
   margin-left: .4rem;
+  line-height: 0;
 `;
 
 const ReturnWithTitle = ({ text, theme }) => (

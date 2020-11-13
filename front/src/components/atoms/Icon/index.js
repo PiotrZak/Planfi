@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledSVG = styled(ReactSVG)`
-  cursor: pointer;
+  cursor: ${({ cursorType }) => cursorType};
 `;
 
 const Icon = ({
-  name, fill, width, height, onClick,
+  name, fill, width, height, onClick, cursorType,
 }) => {
   const selectedIcon = `../icons/library/${name}.svg`;
   return (
@@ -32,12 +32,14 @@ Icon.propTypes = {
   height: PropTypes.string,
   // eslint-disable-next-line react/require-default-props
   onClick: PropTypes.func,
+  cursorType: PropTypes.string,
 };
 
 Icon.defaultProps = {
   width: '1.5rem',
   height: '1.5rem',
   fill: '#222',
+  cursorType: 'pointer',
 };
 
 export default Icon;
