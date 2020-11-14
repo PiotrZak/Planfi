@@ -90,7 +90,7 @@ const LoginPage = () => {
         <Form>
           <InputContainer>
             <Label type="top" text={translate('YourMail')}>
-              <Field type="email" name="email" placeholder={translate('AdresEmail')} as={Input} />
+              <Field type="email" name="email" placeholder={translate('EmailAddress')} as={Input} />
             </Label>
             <ValidationHint name="email" />
           </InputContainer>

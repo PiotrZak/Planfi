@@ -55,16 +55,16 @@ const ForgotPasswordPage = () => {
     <AuthTemplate>
       <BackTopNav text={translate('ForgotPassword')} />
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-        {({ errors, touched }) => (
+        {({ errors, touched, isValid }) => (
           <Center place="authForm">
             <Form>
               <InputContainer>
                 <Label type="top" text={translate('EmailAddress')}>
-                  <Field type="email" name="email" placeholder={translate('YourMail')} as={Input} error={errors.email && touched.email && true} />
+                  <Field type="email" name="email" placeholder={translate('YourMail')} as={Input} error={errors.email && touched.email} />
                 </Label>
                 <ErrorMessageForm name="email" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth" disabled={!isValid}>{translate('Send')}</Button>
             </Form>
           </Center>
         )}

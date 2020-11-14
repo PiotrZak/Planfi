@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import Random from 'utils/Random';
 import PropTypes from 'prop-types';
-import Loader from 'components/atoms/Loader';
 
 const Container = styled.div`
   height: 4.8rem;

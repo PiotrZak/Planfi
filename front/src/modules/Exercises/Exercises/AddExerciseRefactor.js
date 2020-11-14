@@ -13,6 +13,7 @@ import * as Yup from 'yup';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import TextArea from 'components/molecules/TextArea';
 import ImagePreview from 'components/molecules/ImagePreview';
+import Random from 'utils/Random';
 
 const ContainerTopBeam = styled.div`
   display: flex;
@@ -72,13 +73,24 @@ const AddExerciseRefactor = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleImageChange = (e) => {
-    if (e.target.files) {
+    /* if (e.target.files) {
       const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
 
       setSelectedFiles((prevImages) => prevImages.concat(filesArray));
       Array.from(e.target.files).map(
         (file) => URL.revokeObjectURL(file), // avoid memory leak
       );
+    } */
+
+    if (e.target.files) {
+      Array.from(e.target.files).map((File) => {
+        const ID = Random(1, 10000);
+        const fileData = {
+          ID,
+          File: URL.createObjectURL(File),
+        };
+        setSelectedFiles(((prevState) => prevState.concat(fileData)));
+      });
     }
   };
 
@@ -86,10 +98,14 @@ const AddExerciseRefactor = () => {
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          { source.map((photo) => <ImagePreview imageSrc={photo} alt="" key={photo} complete />)}
+          { source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} complete />)}
         </ImagePreviewContainer>
       );
     }
+  };
+
+  const removeFile = (e) => {
+
   };
 
   return (
