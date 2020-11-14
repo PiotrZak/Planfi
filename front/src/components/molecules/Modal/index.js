@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Modal from 'styled-react-modal'
+import Modal from 'styled-react-modal';
 
 export const SpecialModalBackground = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ export const SpecialModalBackground = styled.div`
     opacity:0.7;
 }
   }
-`
+`;
 
 export const StyledModal = Modal.styled`
   position: fixed;
@@ -35,4 +35,4 @@ export const StyledModal = Modal.styled`
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.colorGray90};
-`
+`;

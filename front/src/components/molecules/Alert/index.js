@@ -2,8 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled, { css, withTheme } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
-import { useNotificationContext, REMOVE } from '../../../support/context/NotificationContext'
-import { mainTheme } from '../../../theme/mainTheme';
+import { useNotificationContext, REMOVE } from 'support/context/NotificationContext';
+import { mainTheme } from 'theme/mainTheme';
 
 const handleAlertType = (type, theme) => {
   switch (type) {
@@ -15,28 +15,34 @@ const handleAlertType = (type, theme) => {
       return css` ${theme.colorErrorLight}`;
     case 'warning':
       return css`${theme.colorWarningLight}`;
+    default:
+      return css` ${theme.colorSuccessLight}`;
   }
 };
 
 const handleIconType = (type) => {
   switch (type) {
     case 'positive':
-    return "check-circle"
+      return 'check-circle';
     case 'error':
-      return "exclamation-triangle"
+      return 'exclamation-triangle';
+    default:
+      return 'check-circle';
   }
 };
 
 const handleIconColor = (type, theme) => {
   switch (type) {
     case 'positive':
-    return theme.colorSuccessDefault;
+      return theme.colorSuccessDefault;
     case 'neutral':
       return theme.colorSuccessDefault;
     case 'error':
       return theme.colorErrorDefault;
     case 'warning':
       return theme.colorWarningDark;
+    default:
+      return theme.colorSuccessDefault;
   }
 };
 
@@ -76,28 +82,26 @@ const Alert = ({ notification }) => {
   const timeToRemove = 40000;
 
   useEffect(() => {
-    if(notification.length > 0){
-    setTimeout(function () { notificationDispatch({ type: REMOVE, payload: { id: notification[0].id } }) }, timeToRemove);
+    if (notification.length > 0) {
+      setTimeout(() => { notificationDispatch({ type: REMOVE, payload: { id: notification[0].id } }); }, timeToRemove);
     }
-  })
+  });
 
   return (
     <>
-      {notification && notification.map(n => {
-        return (
-          <Wrapper type={n.type} theme = {theme} key={n.id}>
-            <LeftContainer>
-              <IconWrapper>
-                <Icon name={handleIconType(n.type)} fill={handleIconColor(n.type, theme)} />
-              </IconWrapper>
-              <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
-            </LeftContainer>
-            <RightContainer>
-              <Icon name="Union" width="1.2rem" height="1.2rem" onClick={() => notificationDispatch({ type: REMOVE, payload: { id: n.id } })} />
-            </RightContainer>
-          </Wrapper>
-        );
-      })}
+      {notification && notification.map((n) => (
+        <Wrapper type={n.type} theme={theme} key={n.id}>
+          <LeftContainer>
+            <IconWrapper>
+              <Icon name={handleIconType(n.type)} fill={handleIconColor(n.type, theme)} />
+            </IconWrapper>
+            <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
+          </LeftContainer>
+          <RightContainer>
+            <Icon name="Union" width="1.2rem" height="1.2rem" onClick={() => notificationDispatch({ type: REMOVE, payload: { id: n.id } })} />
+          </RightContainer>
+        </Wrapper>
+      ))}
     </>
   );
 };

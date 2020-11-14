@@ -2,9 +2,8 @@ import styled from 'styled-components';
 import ReactBottomsheet from 'react-bottomsheet';
 
 export const PanelContainer = styled.div`
-color: ${({ theme }) => theme.colorPrimary};
-display:flex;
-
+  color: ${({ theme }) => theme.colorPrimary};
+  display:flex;
 `;
 
 export const PanelItem = styled.div`

@@ -100,14 +100,14 @@ const ActivateAccountPage = () => {
     const lastName = arrayOfSplitted[1];
 
     const activateUserModel = {
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: values.phone,
+      firstName,
+      lastName,
+      phoneNumber: values.phoneNumber,
       password: values.confirmPassword,
       verificationToken: verificationToken.substring(1),
-    }
-    activateUser(activateUserModel)
-  }
+    };
+    activateUser(activateUserModel);
+  };
 
   const timeToRedirect = 5000;
 
@@ -136,12 +136,12 @@ const ActivateAccountPage = () => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
-        })
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
       });
-  }
+  };
 
   return (
     <AuthTemplate>
@@ -168,7 +168,7 @@ const ActivateAccountPage = () => {
                 </Label>
                 <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
               </StyledInputContainer>
-              <InputContainer  >
+              <InputContainer>
                 <Label type="top" text={translate('RepeatNewPassword')} required>
                   <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
                 </Label>
@@ -197,7 +197,7 @@ const ActivateAccountPage = () => {
         )}
       </Formik>
     </AuthTemplate>
-  )
+  );
 };
 
 export default ActivateAccountPage;

@@ -4,9 +4,11 @@ import { withRouter, NavLink } from 'react-router-dom';
 import styled, { withTheme } from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import { Role } from 'utils/role';
+import breakPointSize from 'utils/rwd';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));
 
+// eslint-disable-next-line no-shadow
 const getUsersRoute = (currentUser) => {
   switch (currentUser.role) {
     case Role.Admin:
@@ -23,10 +25,42 @@ const getUsersRoute = (currentUser) => {
 };
 
 const Wrapper = styled.div`
+  position: fixed;
+  height: 100vh;
+
   display: flex;
+  flex-direction: column;
+
+  justify-content: center;
   background: ${({ theme }) => theme.colorGray80};
   padding: .7rem 0;
-  border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
+
+  @media only screen and ${breakPointSize.xs} {
+   width: 100%;
+   flex-direction: row;
+   align-items: center;
+   left: 0;
+   bottom: 0;
+   height: 5.2rem;
+  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  background: ${({ theme }) => theme.colorGray80};
+  padding: .7rem 0;
+
+  @media only screen and ${breakPointSize.xs} {
+   width: 100%;
+   flex-direction: row;
+   justify-content: space-around;
+   left: 0;
+   bottom: 0;
+   border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
+
 `;
 
 const Square = styled.div`
@@ -49,7 +83,7 @@ const StyledNavLink = styled(NavLink).attrs({
   }
 `;
 
-
+// eslint-disable-next-line react/prop-types
 const Menu = ({ theme }) => {
   const [currentUrl, setCurrentUrl] = useState();
 
@@ -62,29 +96,31 @@ const Menu = ({ theme }) => {
 
   return (
     <Wrapper>
-      <StyledNavLink exact to={routes.categories}>
-        <Square>
-          <Icon name="dumbbell" fill={changeIconColor(currentUrl, routes.categories)} width="2rem" height="2rem" />
-        </Square>
-      </StyledNavLink>
+      <Container>
+        <StyledNavLink exact to={routes.categories}>
+          <Square>
+            <Icon name="dumbbell" fill={changeIconColor(currentUrl, routes.categories)} width="2rem" height="2rem" />
+          </Square>
+        </StyledNavLink>
 
-      <StyledNavLink to={getUsersRoute(currentUser)}>
-        <Square>
-          <Icon name="list-ul" fill={changeIconColor(currentUrl, routes.organizationUsers)} width="2rem" height="2rem" />
-        </Square>
-      </StyledNavLink>
+        <StyledNavLink to={getUsersRoute(currentUser)}>
+          <Square>
+            <Icon name="list-ul" fill={changeIconColor(currentUrl, routes.organizationUsers)} width="2rem" height="2rem" />
+          </Square>
+        </StyledNavLink>
 
-      <StyledNavLink to={routes.plans}>
-        <Square>
-          <Icon name="clipboard-notes" fill={changeIconColor(currentUrl, routes.plans)} width="2rem" height="2rem" />
-        </Square>
-      </StyledNavLink>
+        <StyledNavLink to={routes.plans}>
+          <Square>
+            <Icon name="clipboard-notes" fill={changeIconColor(currentUrl, routes.plans)} width="2rem" height="2rem" />
+          </Square>
+        </StyledNavLink>
 
-      <StyledNavLink to={`${routes.myProfile}`}>
-        <Square>
-          <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} width="2rem" height="2rem" />
-        </Square>
-      </StyledNavLink>
+        <StyledNavLink to={`${routes.myProfile}`}>
+          <Square>
+            <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} width="2rem" height="2rem" />
+          </Square>
+        </StyledNavLink>
+      </Container>
     </Wrapper>
   );
 };

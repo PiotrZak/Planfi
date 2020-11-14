@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Col, Row, Input } from 'reactstrap';
 import Icon from 'components/atoms/Icon';
+import styled from 'styled-components';
 
 const Counter = ({ defaultValue, handleData }) => {
   const [value, setValue] = useState(defaultValue || 0);
@@ -16,12 +16,18 @@ const Counter = ({ defaultValue, handleData }) => {
     }
   };
 
+  const Container = styled.div`
+    display: flex;
+    justify-content: space-around;
+
+  `;
+
   return (
-    <div className="counter">
-      <div onClick={increment}><Icon name="plus-circle" /></div>
+    <Container>
+      <Icon onClick={increment} name="plus-circle" />
       <h2>{value}</h2>
-      <div onClick={decrement}><Icon name="minus-circle" /></div>
-    </div>
+      <Icon onClick={decrement} name="minus-circle" />
+    </Container>
   );
 };
 
