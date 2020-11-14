@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
+using WebApi.Interfaces;
 
 namespace WebApi.Controllers
 {
@@ -102,7 +103,6 @@ namespace WebApi.Controllers
         [HttpPost("invite")]
         public IActionResult RegisterAccount(RegisterModel model)
         {
-            /*return Ok(new { message = "Activation mail sent!" });*/
             try
             {
                 var sendVerificationResponse = _accountService.SendVerificationEmail(model, Request.Headers["origin"]);

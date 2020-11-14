@@ -18,6 +18,7 @@ using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
 using HotChocolate.AspNetCore;
 using HotChocolate;
+using WebApi.Interfaces;
 
 namespace WebApi
 {
@@ -110,10 +111,13 @@ namespace WebApi
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPlanService, PlanService>();
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
+            
+            //interfaces
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAccountService, AccountService>();
+
 
             services.AddGraphQL(SchemaBuilder.New()
                 .AddQueryType<Query>()

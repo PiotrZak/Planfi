@@ -7,7 +7,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { categoryService } from '../../services/categoryService';
 import Button from 'components/atoms/Button';
-import Heading from 'components/atoms/Heading';
+import {ModalHeading} from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
@@ -16,7 +16,10 @@ const AddExerciseToCategory = 'To be able to add exercises you need to add a cat
 const DeleteCategoriesText = "Delete categories"
 const AddCategoryTitle = "Add a category";
 const addCategoryTip = "When naming a category, it is worth using names related to specific parts of the body, for example 'Back'";
-const addCategoryButton = "Create Category";
+
+const EditCategory = "Create Category";
+const CreateCategory = "Create Category";
+const CategoryEdited = 'Category succesfull edited';
 
 const initialValues = {
     title: '',
@@ -27,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .required(translate('EnterFirstNameAndLastName')),
 });
 
-const EditCategoryModal = ({ selectedCategories, openModal, onClose, theme }) => {
+const EditCategoryModal = ({ selectedCategories, openEditModal, onClose, theme }) => {
 
     const { notificationDispatch } = useNotificationContext();
 
@@ -37,11 +40,11 @@ const EditCategoryModal = ({ selectedCategories, openModal, onClose, theme }) =>
 
     const editCategory = (addCategoryData) => {
         categoryService
-            .editCategory(addCategoryData)
+            .editCategory(selectedCategories, addCategoryData)
         notificationDispatch({
             type: ADD,
             payload: {
-                content: { success: 'OK', message: translate('CategoryAdded') },
+                content: { success: 'OK', message: translate('CategoryEdited') },
                 type: 'positive'
             }
         })
@@ -60,10 +63,10 @@ const EditCategoryModal = ({ selectedCategories, openModal, onClose, theme }) =>
     }
 
     return (
-        <StyledModal isOpen={openModal}
+        <StyledModal isOpen={openEditModal}
             onBackgroundClick={onClose}
             onEscapeKeydown={onClose}>
-            <Heading>{translate('EditCategoryTitle')}</Heading>
+            <ModalHeading>{translate('EditCategoryTitle')}</ModalHeading>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched, values }) => (
                     <Form>
@@ -72,7 +75,7 @@ const EditCategoryModal = ({ selectedCategories, openModal, onClose, theme }) =>
                                 <Field placeholder = {'test'} type="text" name="title" as={Input} error={errors.name && touched.name} />
                             </Label>
                         </InputContainer>
-                        <Button type="submit" buttonType="primary" size="lg">{translate('Save')}</Button>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('EditCategory')}</Button>
                     </Form>
                 )}
             </Formik>

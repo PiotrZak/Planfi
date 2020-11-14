@@ -30,6 +30,7 @@ const CATEGORY = gql`{
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none')
 
   const { theme } = useThemeContext();
@@ -40,8 +41,8 @@ const Categories = () => {
   }
 
   useEffect(() => {
-    setTimeout(function () { refetch() }, 1);
-  }, [bottomSheet, setBottomSheet, openModal, setOpenModal, data]);
+    setTimeout(function () { refetch() }, 500);
+  }, [bottomSheet, setBottomSheet, openModal, setOpenModal, data, openEditModal, setOpenEditModal]);
 
   if (loading) return <Loader isLoading={loading}></Loader>;
   if (error) return <p>Error :(</p>;
@@ -62,10 +63,22 @@ const Categories = () => {
             <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
           </IconWrapper>
         </Nav>
-        <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
-        {data.categories.length > 0 ? <CheckboxGenericComponent dataType="categories" displayedValue="title" dataList={data.categories} onSelect={submissionHandleElement} /> : <p>{translate('NoCategories')}</p>}
+        {data.categories.length > 0 ?
+          <CheckboxGenericComponent
+            dataType="categories"
+            displayedValue="title"
+            dataList={data.categories}
+            onSelect={submissionHandleElement} />
+          : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
-      <CategoriesPanel theme={theme} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} selectedCategories={selectedCategories} />
+      <CategoriesPanel
+        theme={theme}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+        selectedCategories={selectedCategories}
+        setOpenEditModal={setOpenEditModal}
+        openEditModal={openEditModal} />
+        <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
     </>
   );
 };

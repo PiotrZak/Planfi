@@ -1,22 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.GraphQl;
 using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
 
 namespace WebApi.Services
 {
-    public interface ICategoryService
-    {
-        Category GetById(string id);
-        Category Create(Category Category);
-        IEnumerable<Category> GetAll();
-        void Delete(string[] id);
-        void AssignExercise(string id, Exercise Exercise);
-        void AssignExercisesToCategory(string categoryId, string[] id);
-    }
-
     public class CategoryService : ICategoryService
     {
         private DataContext _context;
@@ -26,20 +20,20 @@ namespace WebApi.Services
             _context = context;
         }
 
-        public Category Create(Category Category)
+        public Category Create(Category category)
         {
            
-            _context.Categories.Add(Category);
+            _context.Categories.Add(category);
             _context.SaveChanges();
 
-            return Category;
+            return category;
         }
 
         public Category GetById(string id)
         {
 
-            var Category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
-            return Category;
+            var category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
+            return category;
         }
         public IEnumerable<Category> GetAll()
         {
@@ -67,17 +61,17 @@ namespace WebApi.Services
             }
         }
 
-        public void AssignExercise(string id, Exercise Exercise)
+        public void AssignExercise(string id, Exercise exercise)
         {
-            var Category = _context.Categories.Find(id);
+            var category = _context.Categories.Find(id);
 
-            Category.Exercises.Add(Exercise);
+            category.Exercises.Add(exercise);
 
-            _context.Categories.Update(Category);
+            _context.Categories.Update(category);
             _context.SaveChanges();
         }
 
-        public void AssignExercisesToCategory(string categoryId, string[] exerciseId)
+        public void AssignExercisesToCategory(string categoryId, IEnumerable<string> exerciseId)
         {
             var category = GetById(categoryId);
 
@@ -88,6 +82,28 @@ namespace WebApi.Services
             }
             _context.Categories.Update(category);
             _context.SaveChanges();
+        }
+
+        public async Task<int> Update(UpdateCategoryModel model, string id)
+        {
+            try
+            {
+                var category = await _context.Categories.FindAsync(id);
+
+                if (category == null)
+                    throw new AppException("Category not found!");
+
+                if (!string.IsNullOrWhiteSpace(model.Title))
+                {
+                    category.Title = model.Title;
+                }
+                _context.Categories.Update(category);
+                return await _context.SaveChangesAsync();
+            }
+            catch (ValidationException ex)
+            {
+                return 0;
+            }
         }
     }
 }

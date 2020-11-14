@@ -8,19 +8,11 @@ using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace WebApi.Services
 {
-    public interface IAccountService
-    {
-        void UploadAvatar(string userId, byte[] avatar);
-        Boolean ForgotPassword(ForgotPassword model, string origin);
-        Task<int> ResetPassword(ResetPasswordRequest model);
-        Task<int> SendVerificationEmail(RegisterModel register, string origin);
-        User Activate(ActivateAccount user);
-    }
-
     public class AccountService : IAccountService
     {
         private readonly IEmailService _emailService;
@@ -153,7 +145,7 @@ namespace WebApi.Services
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
                 
-                user.PasswordReset = DateTime.Now;
+                user.PasswordReset = DateTime.UtcNow;
                 user.ResetToken = null;
                 user.ResetTokenExpires = null;
 

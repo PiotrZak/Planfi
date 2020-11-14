@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import styled from 'styled-components';
 import { translate } from 'utils/Translation';
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem,  StyledMobileReactBottomSheet,  } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import EditCategoryModal from './EditCategoryModal';
 
@@ -12,12 +12,16 @@ const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-const CategoriesPanel = ({ theme, bottomSheet, setBottomSheet, selectedCategories }) => {
+const CategoriesPanel = ({
+  openEditModal,
+  setOpenEditModal,
+  theme,
+  bottomSheet,
+  setBottomSheet,
+  selectedCategories
+}) => {
 
-  const [openModal, setOpenModal] = useState(false);
   const { notificationDispatch } = useNotificationContext();
-
-  console.log(selectedCategories)
 
   const deleteCategories = () => {
     categoryService
@@ -44,26 +48,32 @@ const CategoriesPanel = ({ theme, bottomSheet, setBottomSheet, selectedCategorie
   };
 
   const closeModal = () => {
-    setOpenModal(false)
+    setOpenEditModal(false)
+    setBottomSheet('none')
   }
 
   return (
     <StyledReactBottomSheet
       showBlockLayer={false}
       visible={bottomSheet}
-      className ={""}
+      className={""}
       onClose={() => setBottomSheet(false)}
       appendCancelBtn={false}>
       {isMobile ?
         <>
-            <StyledMobileReactBottomSheet>
-              <MobilePanelItem onClick={() => deleteCategories()}>
-                {selectedCategories.length == 1
-                  ? <p>{translate('DeleteCategory')}</p>
-                  : <p>{translate('DeleteCategory')}</p>
-                }
-                </MobilePanelItem>
-            </StyledMobileReactBottomSheet>
+          <StyledMobileReactBottomSheet>
+            <MobilePanelItem onClick={() => deleteCategories()}>
+              {selectedCategories.length == 1
+                ? <p>{translate('DeleteCategory')}</p>
+                : <p>{translate('DeleteCategory')}</p>
+              }
+            </MobilePanelItem>
+            <MobilePanelItem onClick={() => setOpenEditModal(true)}>
+              {selectedCategories.length == 1 &&
+                <p>{translate('EditCategory')}</p>
+              }
+            </MobilePanelItem>
+          </StyledMobileReactBottomSheet>
         </>
         :
         <>
@@ -78,9 +88,13 @@ const CategoriesPanel = ({ theme, bottomSheet, setBottomSheet, selectedCategorie
               <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteCategory')}
             </PanelItem>
             {selectedCategories.length < 2 &&
-              <PanelItem onClick={() => setOpenModal(true)}>
+              <PanelItem onClick={() => setOpenEditModal(true)}>
                 <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
-                <EditCategoryModal selectedCategories={selectedCategories[0]} theme={theme} openModal={openModal} onClose={closeModal} />
+                <EditCategoryModal
+                  selectedCategories={selectedCategories[0]}
+                  theme={theme}
+                  openEditModal={openEditModal}
+                  onClose={closeModal} />
               </PanelItem>
             }
           </PanelContainer>

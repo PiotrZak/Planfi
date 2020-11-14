@@ -4,6 +4,12 @@ import { Holdable } from "hooks/useLongPress";
 import { renderType } from "./DataTypes"
 import styled from 'styled-components';
 
+const CheckboxContainer = styled.div`
+input{
+  margin:-5rem 0 0 1.4rem;
+  position: absolute;
+}
+`;
 
 export const CheckboxGenericComponent = ({
   id,
@@ -98,14 +104,15 @@ export const CheckboxGenericComponent = ({
                 {renderType(className, type, element, i)}
               </>
             }
+            <CheckboxContainer>
             <input
-              className="checkbox-generic-list__checkbox"
               id={`${element[displayedValue]}-checkbox-${id}`}
               name={element[displayedValue]}
               type="checkbox"
               checked={!!element.value}
               onChange={handleChange}
             />
+            </CheckboxContainer>
             </>
         );
         return element;

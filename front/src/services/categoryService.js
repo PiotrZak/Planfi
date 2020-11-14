@@ -5,7 +5,8 @@ export const categoryService = {
   getAllCategories,
   addCategory,
   getCategoryById,
-  deleteCategories
+  deleteCategories,
+  editCategory
   };
 
   function getAllCategories(body) {
@@ -20,8 +21,12 @@ export const categoryService = {
     return http.get(`${CATEGORIES_URL}${id}`);
   }
 
+  function editCategory(id, body) {
+    return http.put(`${CATEGORIES_URL}${id}`, body);
+  }
+
   function deleteCategories(ids) {
     return http.post(`${CATEGORIES_URL}delete`, ids);
   }
 
-  //todo - edit category endpoint on backend
+  

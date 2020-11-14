@@ -7,7 +7,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { categoryService } from '../../services/categoryService';
 import Button from 'components/atoms/Button';
-import Heading from 'components/atoms/Heading';
+import {ModalHeading} from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
@@ -63,7 +63,7 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
         <StyledModal isOpen={openModal}
             onBackgroundClick={onClose}
             onEscapeKeydown={onClose}>
-            <Heading>{translate('AddCategoryTitle')}</Heading>
+            <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched, values }) => (
                     <Form>
@@ -72,7 +72,7 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
                                 <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
                             </Label>
                         </InputContainer>
-                        <Button type="submit" buttonType="primary" size="lg">{translate('Save')}</Button>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('CreateCategory')}</Button>
                     </Form>
                 )}
             </Formik>

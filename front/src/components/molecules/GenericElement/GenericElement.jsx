@@ -10,6 +10,7 @@ const GenericElementContainer = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.colorGray80};
   padding: 1.8rem 4.2rem;
+  margin: 0.8rem 0;
   height: 7.2rem;
   border-radius: 4px;
   color:white;
