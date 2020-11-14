@@ -8,6 +8,7 @@ const CheckboxContainer = styled.div`
 input{
   margin:-5rem 0 0 1.4rem;
   position: absolute;
+
 }
 `;
 

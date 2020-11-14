@@ -13,13 +13,14 @@ import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 import Categories from 'modules/Exercises/Categories';
+import Category from 'modules/Exercises/Category/Category';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { PrivateRoute, Role } from '../utils/PrivateRoute';
 import { ThemeContext } from 'support/context/ThemeContext';
 import { LanguageContext } from 'support/context/LanguageContext';
 import { userContext } from 'support/context/UserContext';
-import { Category } from 'modules/Exercises/Category';
+
 import MenuTemplate from 'templates/MenuTemplate';
 import AddExerciseRefactor from 'modules/Exercises/Exercises/AddExerciseRefactor';
 

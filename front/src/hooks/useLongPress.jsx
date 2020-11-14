@@ -15,7 +15,7 @@ export const GenericMobile = styled.div`
         opacity:0.7;
         height:7.2rem;
         width:calc(100% - 3.2rem);
-        margin-top:-7.2rem;
+        margin-top:-8.2rem;
     }
   `}
 `
@@ -25,7 +25,6 @@ export function Holdable({id, onClick, onHold, children, forx }) {
   const [timer, setTimer] = React.useState(null)
   const [active, setActive] = useState(false)
   
-
   function onPointerDown(evt) {
     const event = { ...evt }
     const timeoutId = window.setTimeout(timesup.bind(null, event), 200)

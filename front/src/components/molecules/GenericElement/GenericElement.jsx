@@ -1,7 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
 
-
 //todo - test if image appear after adding exercises & add circle elements
 
 const GenericElementContainer = styled.div`

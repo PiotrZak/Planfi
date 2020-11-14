@@ -18,7 +18,7 @@ import messages from 'lang/eng'
 
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
-import { PlanPanelExercises } from "./microModules/PlanPanelExercises"
+import { PlanPanelExercises } from "../../modules/Exercises/Category/PlanPanelExercises"
 
 export const Plan = (props) => {
 
