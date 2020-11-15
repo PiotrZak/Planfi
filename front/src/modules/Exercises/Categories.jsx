@@ -48,6 +48,7 @@ const Categories = () => {
   if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
+    console.log(selectedData)
     const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
     setSelectedCategories(selectedCategories)
     selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');

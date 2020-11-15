@@ -20,11 +20,12 @@ export const GenericMobile = styled.div`
   `}
 `
 
-export function Holdable({id, onClick, onHold, children, forx }) {
+export function Holdable({onClick, onHold, children, forx }) {
 
   const [timer, setTimer] = React.useState(null)
   const [active, setActive] = useState(false)
-  
+
+
   function onPointerDown(evt) {
     const event = { ...evt }
     const timeoutId = window.setTimeout(timesup.bind(null, event), 200)
@@ -47,11 +48,10 @@ export function Holdable({id, onClick, onHold, children, forx }) {
 
   return (
     <GenericMobile
-      for={forx}
+      name ={forx}
       active ={active}
       onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}
-      id={id}>
+      onPointerUp={onPointerUp}>
       {children}
     </GenericMobile>
   )

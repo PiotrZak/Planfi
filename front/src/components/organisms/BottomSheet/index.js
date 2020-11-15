@@ -10,6 +10,9 @@ export const PanelItem = styled.div`
     color: ${({ theme }) => theme.colorPrimary};
     display:flex;
     padding:0 3.6rem;
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
 export const MobilePanelItem = styled.div`

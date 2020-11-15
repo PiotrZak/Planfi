@@ -1,5 +1,5 @@
 import React from 'react';
-import { planService } from "services/planService";
+import { useParams, useHistory } from "react-router-dom";
 import { exerciseService } from "services/exerciseService";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -26,9 +26,16 @@ export const PlanPanelExercises = ({
     theme,
 }) => {
     const { notificationDispatch } = useNotificationContext();
+    const history = useHistory();
 
     const editExercise = () => {
+        history.push({
+            pathname: `/edit-exercise/${selectedExercise}`,
+            state: { selectedExercise: selectedExercise },
+          })
     }
+
+
 
     const deleteExercise = () => {
         exerciseService
@@ -61,7 +68,6 @@ export const PlanPanelExercises = ({
             onClose={() => setSelectedElementsBottomSheet(false)}
             appendCancelBtn={false}>
             {isMobile ?
-                <>
                     <>
                         <StyledMobileReactBottomSheet>
                             <MobilePanelItem>
@@ -77,17 +83,6 @@ export const PlanPanelExercises = ({
                             </MobilePanelItem>
                         </StyledMobileReactBottomSheet>
                     </>
-
-                    <button onClick={() => deleteExercise} className="bottom-sheet-item">
-                        {/* {messages.plans.unAssignFromPlan} */}
-                    </button>
-                    {selectedExercise.length < 2 &&
-                        <button className='bottom-sheet-item'><Link to={{
-                            pathname: `/edit-exercise/${selectedExercise}`,
-                            state: { selectedExercise: selectedExercise }
-                        }}>{editExercise}</Link></button>
-                    }
-                </>
                 :
                 <>
                     <PanelContainer>
@@ -101,13 +96,8 @@ export const PlanPanelExercises = ({
                             <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteExercise')}
                         </PanelItem>
                         {selectedExercise.length < 2 &&
-                            <PanelItem>
-                                <Link to={{
-                                    pathname: `/edit-exercise/${selectedExercise}`,
-                                    state: { selectedExercise: selectedExercise }
-                                }}>{editExercise}
+                            <PanelItem onClick = {() => editExercise()}>
                                 <Icon name="edit" fill={theme.colorInputActive} />{translate('EditExercise')}
-                                </Link>
                             </PanelItem>
                         }
                     </PanelContainer>
