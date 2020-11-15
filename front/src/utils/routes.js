@@ -9,6 +9,11 @@ const accountRoutes = {
   confirmation: '/confirmation'
 }
 
+const categoriesRoutes = {
+  categories: '/categories',
+  category: '/category/:id',
+}
+
 export const routes = {
 
 
@@ -23,8 +28,8 @@ export const routes = {
   //todo expired
   linkExpired: '/expired',
   //currently
-  categories: '/categories',
-  category: '/category/:id',
+  categories: categoriesRoutes.categories,
+  category: categoriesRoutes.category,
   addExcersise: '/add-exercise',
   editExcersise: '/edit-exercise',
   exercise: '/exercise',

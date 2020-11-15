@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { mainTheme } from 'theme/mainTheme';
 
@@ -24,6 +24,10 @@ export function Holdable({onClick, onHold, children, forx }) {
 
   const [timer, setTimer] = React.useState(null)
   const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    setActive(false)
+  }, []);
 
 
   function onPointerDown(evt) {

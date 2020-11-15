@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { categoryService } from 'services/categoryService';
+import React, { useState, useEffect, useCallback } from 'react';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import Loader from 'components/atoms/Loader';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import AddCategoryModal from './AddCategoryModal';
 import { commonUtil } from "utils/common.util"
-import { isMobile } from "react-device-detect";
 import { useQuery, gql } from '@apollo/client';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
@@ -34,21 +32,22 @@ const Categories = () => {
   const [bottomSheet, setBottomSheet] = useState('none')
 
   const { theme } = useThemeContext();
-  const { loading, error, data, refetch } = useQuery(CATEGORY);
+  const { loading, error, data, refetch: _refetch} = useQuery(CATEGORY);
 
   const closeModal = () => {
     setOpenModal(false)
   }
 
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200) }, [_refetch])
+
   useEffect(() => {
-    setTimeout(function () { refetch() }, 500);
-  }, [bottomSheet, setBottomSheet, openModal, setOpenModal, data, openEditModal, setOpenEditModal]);
+    refreshData()
+  }, [openModal, openEditModal, _refetch]);
 
   if (loading) return <Loader isLoading={loading}></Loader>;
   if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
-    console.log(selectedData)
     const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
     setSelectedCategories(selectedCategories)
     selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
@@ -79,7 +78,7 @@ const Categories = () => {
         selectedCategories={selectedCategories}
         setOpenEditModal={setOpenEditModal}
         openEditModal={openEditModal} />
-        <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
+      <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
     </>
   );
 };

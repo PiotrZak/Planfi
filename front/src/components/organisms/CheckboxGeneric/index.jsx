@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import { Holdable } from "hooks/useLongPress";
-import { renderType } from "./DataTypes"
+import { RenderType } from "./DataTypes"
 import styled from 'styled-components';
 import breakPointSize from 'utils/rwd';
 
@@ -17,7 +17,6 @@ input{
 
 export const CheckboxGenericComponent = ({
   id,
-  className,
   selectAll,
   dataType,
   dataList,
@@ -94,17 +93,17 @@ export const CheckboxGenericComponent = ({
                 key={id}
                 forx={element[displayedValue]}
               >
-                {renderType(className, type, element, i)}
+              <RenderType type = {type} element = {element} i = {i}/>
               </Holdable>
               :
               <>
-                {renderType(className, type, element, i)}
+              <RenderType type = {type} element = {element} i = {i}/>
                 <CheckboxContainer>
                   <input
                     id={`${element[displayedValue]}-checkbox-${id}`}
                     name={element[displayedValue]}
                     type="checkbox"
-                    checked={!!element.value}
+                    checked={element.value}
                     onChange={handleChange}
                   />
                 </CheckboxContainer>

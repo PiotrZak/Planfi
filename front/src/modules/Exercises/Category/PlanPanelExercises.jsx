@@ -35,8 +35,6 @@ export const PlanPanelExercises = ({
           })
     }
 
-
-
     const deleteExercise = () => {
         exerciseService
             .deleteExerciseById(selectedExercise)
@@ -70,17 +68,17 @@ export const PlanPanelExercises = ({
             {isMobile ?
                     <>
                         <StyledMobileReactBottomSheet>
-                            <MobilePanelItem>
+                            <PanelItem>
                                 {selectedExercise.length == 1
                                     ? <p>{translate('DeleteCategory')}</p>
                                     : <p>{translate('DeleteCategory')}</p>
                                 }
-                            </MobilePanelItem>
-                            <MobilePanelItem>
+                            </PanelItem>
+                            <PanelItem>
                                 {selectedExercise.length == 1 &&
                                     <p>{translate('EditCategory')}</p>
                                 }
-                            </MobilePanelItem>
+                            </PanelItem>
                         </StyledMobileReactBottomSheet>
                     </>
                 :

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
@@ -52,6 +52,11 @@ const CategoriesPanel = ({
     setBottomSheet('none')
   }
 
+  const openModal = () => {
+    setOpenEditModal(true)
+    setBottomSheet('none')
+  }
+
   return (
     <StyledReactBottomSheet
       showBlockLayer={false}
@@ -62,17 +67,17 @@ const CategoriesPanel = ({
       {isMobile ?
         <>
           <StyledMobileReactBottomSheet>
-            <MobilePanelItem onClick={() => deleteCategories()}>
+            <PanelItem onClick={() => deleteCategories()}>
               {selectedCategories.length == 1
                 ? <p>{translate('DeleteCategory')}</p>
                 : <p>{translate('DeleteCategory')}</p>
               }
-            </MobilePanelItem>
-            <MobilePanelItem onClick={() => setOpenEditModal(true)}>
-              {selectedCategories.length == 1 &&
+            </PanelItem>
+            {selectedCategories.length < 2 &&
+            <PanelItem onClick={openModal}>
                 <p>{translate('EditCategory')}</p>
-              }
-            </MobilePanelItem>
+            </PanelItem>
+            }
           </StyledMobileReactBottomSheet>
         </>
         :
@@ -88,17 +93,17 @@ const CategoriesPanel = ({
               <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteCategory')}
             </PanelItem>
             {selectedCategories.length < 2 &&
-              <PanelItem onClick={() => setOpenEditModal(true)}>
+              <PanelItem onClick={openModal}>
                 <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
-                <EditCategoryModal
-                  selectedCategories={selectedCategories[0]}
-                  theme={theme}
-                  openEditModal={openEditModal}
-                  onClose={closeModal} />
               </PanelItem>
             }
           </PanelContainer>
         </>}
+        <EditCategoryModal
+                  selectedCategories={selectedCategories[0]}
+                  theme={theme}
+                  openEditModal={openEditModal}
+                  onClose={closeModal} />
     </StyledReactBottomSheet>
   )
 }

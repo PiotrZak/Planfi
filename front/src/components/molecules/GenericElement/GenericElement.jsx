@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
-
 //todo - test if image appear after adding exercises & add circle elements
+import Image from 'components/atoms/Image';
 
 const GenericElementContainer = styled.div`
   display: flex;
@@ -54,12 +54,6 @@ const GenericElementImageEmpty = styled.div`
       width: 4.8rem;
       height: 4.8rem;
 `;
-
-const Image = (image) => {
-    return (
-        <img src={`data:image/jpeg;base64,${image}`} />
-    )
-}
 
 const GenericElement = ({
     headline,
