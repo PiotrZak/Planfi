@@ -8,6 +8,7 @@ import breakPointSize from 'utils/rwd';
 const CheckboxContainer = styled.div`
 input{
   margin:-5rem 0 0 1.4rem;
+  z-index:2;
   position: absolute;
   @media only screen and ${breakPointSize.xs} {
     display:none;
@@ -31,14 +32,11 @@ export const CheckboxGenericComponent = ({
       {el.value = null;}
       return el;
     });
-    
     setType(dataType);
     setList(dataList);
-  }, [dataList,]);
+  }, [dataList]);
 
   function handleChange(e) {
-
-    var checkedItemsCount = 0;
     dataList.map((el) => {
       if (isMobile) {
         if (el[displayedValue] === e.currentTarget.getAttribute('name')) {el.value = !e.currentTarget.checked;}
@@ -46,11 +44,10 @@ export const CheckboxGenericComponent = ({
       else {
         if (el[displayedValue] === e.target.name) {el.value = e.target.checked;}
       }
-      if (el.value) checkedItemsCount++;
       return el;
     });
     setList([...dataList]);
-    onSelect([...dataList], checkedItemsCount);
+    onSelect([...dataList]);
   }
 
   function handleSelectAll(e) {
@@ -100,7 +97,6 @@ export const CheckboxGenericComponent = ({
               <RenderType type = {type} element = {element} i = {i}/>
                 <CheckboxContainer>
                   <input
-                    id={`${element[displayedValue]}-checkbox-${id}`}
                     name={element[displayedValue]}
                     type="checkbox"
                     checked={element.value}

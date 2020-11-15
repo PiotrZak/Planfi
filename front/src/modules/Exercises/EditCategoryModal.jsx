@@ -11,16 +11,6 @@ import {ModalHeading} from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
-const CategoriesDeleted = 'Categories finally deleted!'
-const AddExerciseToCategory = 'To be able to add exercises you need to add a category first';
-const DeleteCategoriesText = "Delete categories"
-const AddCategoryTitle = "Add a category";
-const addCategoryTip = "When naming a category, it is worth using names related to specific parts of the body, for example 'Back'";
-
-const EditCategory = "Create Category";
-const CreateCategory = "Create Category";
-const CategoryEdited = 'Category succesfull edited';
-
 const initialValues = {
     title: '',
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
 import { Link, useHistory } from 'react-router-dom';
@@ -19,31 +19,26 @@ const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-const noExerciseInPlan = "There are no added exercises in this Plan";
-const noExerciseInCategory = "There are no added exercises in this category"
-const ExerciseSearch = "Which exercises You searching?"
-
 const Category = (props) => {
 
+    const { theme } = useThemeContext();
+    
     const [category, setCategory] = useState();
     const [exercises, setExercises] = useState();
     const [searchTerm, setSearchTerm] = React.useState("");
     const [isLoading, setIsLoading] = useState(false)
-    const { theme } = useThemeContext();
 
     const [selectedExercise, setselectedExercise] = useState([])
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
-
     const [bottomSheet, setBottomSheet] = useState('none')
 
-    const history = useHistory();
     const { match } = props;
     let id = match.params.id;
 
     useEffect(() => {
         getCategory(id)
         getCategoryExercise(id)
-    }, [id, bottomSheet, setBottomSheet]);
+    }, [id]);
 
 
     const getCategory = (id) => {
@@ -56,19 +51,20 @@ const Category = (props) => {
             });
     }
 
-    const getCategoryExercise = (id) => {
+    const getCategoryExercise = useCallback((id) => {         
         exerciseService
-            .getExercisesByCategory(id)
-            .then((data) => {
-                console.log(data)
-                setExercises(data);
-                setIsLoading(false)
-            })
-            .catch((error) => {
-            });
-    }
+        .getExercisesByCategory(id)
+        .then((data) => {
+            setExercises(data);
+            setIsLoading(false)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
+    },[])
 
     const submissionHandleElement = (selectedData) => {
+        console.log(selectedData)
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setselectedExercise(selectedExercises)
         selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
@@ -108,12 +104,12 @@ const Category = (props) => {
                 <Search callBack={filterExercises} placeholder = {translate('ExerciseSearch')} />
                 {results ?
                 <CheckboxGenericComponent
-                    dataType={"exercises"}
-                    dataList={results}
+                    dataType="exercises"
                     displayedValue={"name"}
+                    dataList={results}
                     onSelect={submissionHandleElement} />
                     :
-                    <p>nothing</p>}
+                    <p>{translate('NoExercises')}</p>}
             </GlobalTemplate>
             <PlanPanelExercises
                 selectedExercise={selectedExercise}

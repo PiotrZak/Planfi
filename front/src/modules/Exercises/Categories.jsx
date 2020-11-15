@@ -38,11 +38,11 @@ const Categories = () => {
     setOpenModal(false)
   }
 
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200) }, [_refetch])
-
   useEffect(() => {
     refreshData()
   }, [openModal, openEditModal, _refetch]);
+
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200) }, [_refetch])
 
   if (loading) return <Loader isLoading={loading}></Loader>;
   if (error) return <p>Error :(</p>;

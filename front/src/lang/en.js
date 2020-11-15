@@ -1,8 +1,6 @@
-const ReturnToLogin = "Return To Login!";
-const AccountActivated = "Account succesfully activated"
-const PasswordResetted = "Your password succesfully refreshed!"
 
-export const en = {
+
+export  const en = {
   Send: 'Send',
   EnterValidMail: 'Enter valid e-mail address',
   ThisFieldIsRequired: 'This field is required',
@@ -40,6 +38,9 @@ export const en = {
   EnterPhoneNumber: 'Enter your phone number',
   PolicyPrivacy: 'By creating an account, you accept our privacy policy - you will learn about it',
   Here: 'here.',
+  ReturnToLogin: "Return To Login!",
+  AccountActivated: "Account succesfully activated",
+  PasswordResetted: "Your password succesfully refreshed!",
 
   NoCategories: 'No Categories currently - just add category',
   CategoriesTitle: 'Categories',
@@ -56,4 +57,21 @@ export const en = {
   ExerciseName: 'Exercise name',
   AddAttachments: 'Add attachments',
   AddExerciseDescription: 'Exercise description',
+
+   CategoriesDeleted: 'Categories finally deleted!',
+   AddExerciseToCategory: 'To be able to add exercises you need to add a category first',
+   DeleteCategoriesText: "Delete categories",
+   AddCategoryTitle: "Add a category",
+   AddCategoryTip: "When naming a category, it is worth using names related to specific parts of the body, for example 'Back'",
+   AddCategoryButton: "Create Category",
+
+   ExerciseSearch: "Which exercises You searching?",
+   NoExercises: "There are no added exercises in this category",
+   EditCategory: "Edit Category",
+   EditCategoryTitle: "Edit a category",
+   CreateCategory: "Create Category",
+   CategoryEdited: 'Category succesfull edited',
+
+
+   NoExerciseInPlan: "There are no added exercises in this Plan",
 };
