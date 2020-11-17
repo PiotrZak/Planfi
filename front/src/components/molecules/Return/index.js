@@ -2,9 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { history as historyPropTypes } from 'history-prop-types';
-import Icon from 'components/atoms/Icon';
+import SvgArrowLeft from 'assets/iconComponents/ArrowLeft';
 
-const Return = ({ history, fill }) => <Icon name="arrow-left" fill={fill} onClick={() => history.goBack()} />;
+const Return = ({ history, fill }) => <SvgArrowLeft fill={fill} onClick={() => history.goBack()} />;
 
 Return.propTypes = {
   history: PropTypes.shape(historyPropTypes).isRequired,

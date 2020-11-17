@@ -1,14 +1,15 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import handleTextType from 'support/TextType';
-import Icon from 'components/atoms/Icon';
+import SvgQuestionCircle from 'assets/iconComponents/QuestionCircle';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 const StyledLabel = styled.label`
   display: flex;
   ${({ type }) => type === 'top' && 'flex-direction: column;'};
 
-  cursor: pointer;  
+  cursor: pointer;
 `;
 
 const Asterisk = styled.p`
@@ -33,21 +34,25 @@ const InnerContainer = styled.div`
 `;
 
 const Label = ({
-  children, text, theme, type, required, questionMark,
-}) => (
-  <StyledLabel type={type}>
-    <Container type={type}>
-      <Paragraph>{text}</Paragraph>
-      {required && <Asterisk>*</Asterisk>}
-      {questionMark && (
-      <InnerContainer>
-        <Icon name="question-circle" height="1.2rem" width="1.2rem" fill={theme.colorPrimary} />
-      </InnerContainer>
-      )}
-    </Container>
-    {children}
-  </StyledLabel>
-);
+  children, text, type, required, questionMark,
+}) => {
+  const { theme } = useThemeContext();
+
+  return (
+    <StyledLabel type={type}>
+      <Container type={type}>
+        <Paragraph>{text}</Paragraph>
+        {required && <Asterisk>*</Asterisk>}
+        {questionMark && (
+          <InnerContainer>
+            <SvgQuestionCircle height="1.2rem" width="1.2rem" fill={theme.colorPrimary} />
+          </InnerContainer>
+        )}
+      </Container>
+      {children}
+    </StyledLabel>
+  );
+};
 
 Label.propTypes = {
   children: PropTypes.node.isRequired,
@@ -63,4 +68,4 @@ Label.defaultProps = {
   questionMark: false,
 };
 
-export default withTheme(Label);
+export default Label;

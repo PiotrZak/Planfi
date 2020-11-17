@@ -1,8 +1,7 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
 
-
-//todo - test if image appear after adding exercises & add circle elements
+// todo - test if image appear after adding exercises & add circle elements
 
 const GenericElementContainer = styled.div`
   display: flex;
@@ -16,11 +15,11 @@ const GenericElementContainer = styled.div`
 `;
 
 const GenericElementInfo = styled.div`
-color: ${({ theme }) => theme.colorPrimary};
-font-size: 1.4rem;
-line-height: 2.1rem;
-text-decoration:none;
-text-align:left;
+  color: ${({ theme }) => theme.colorPrimary};
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  text-decoration:none;
+  text-align:left;
 `;
 
 const Headline = styled.h4`
@@ -54,30 +53,25 @@ const GenericElementImageEmpty = styled.div`
       height: 4.8rem;
 `;
 
-const Image = (image) => {
-    return (
-        <img src={`data:image/jpeg;base64,${image}`} />
-    )
-}
+const Image = (image) => (
+  <img src={`data:image/jpeg;base64,${image}`} />
+);
 
 const GenericElement = ({
-    headline,
-    subline,
-    image,
-    circle,
-}) => {
-    return (
-        <GenericElementContainer>
-            {image
-                ? <GenericElementImage><Image url={image} /></GenericElementImage>
-                : <GenericElementImageEmpty></GenericElementImageEmpty>
-            }
-            <GenericElementInfo>
-                <Headline>{headline}</Headline>
-                <Subline>{subline}</Subline>
-            </GenericElementInfo>
-        </GenericElementContainer>
-    )
-}
+  headline,
+  subline,
+  image,
+  circle,
+}) => (
+  <GenericElementContainer>
+    {image
+      ? <GenericElementImage><Image url={image} /></GenericElementImage>
+      : <GenericElementImageEmpty />}
+    <GenericElementInfo>
+      <Headline>{headline}</Headline>
+      <Subline>{subline}</Subline>
+    </GenericElementInfo>
+  </GenericElementContainer>
+);
 
 export default GenericElement;

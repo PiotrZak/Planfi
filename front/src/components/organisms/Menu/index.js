@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { routes } from 'utils/routes';
 import { withRouter, NavLink } from 'react-router-dom';
-import styled, { withTheme } from 'styled-components';
-import Icon from 'components/atoms/Icon';
+import styled from 'styled-components';
 import { Role } from 'utils/role';
 import breakPointSize from 'utils/rwd';
+import { useThemeContext } from 'support/context/ThemeContext';
+import SvgDumbbell from 'assets/iconComponents/Dumbbell';
+import SvgListUl from 'assets/iconComponents/ListUl';
+import SvgClipboardNotes from 'assets/iconComponents/ClipboardNotes';
+import SvgUserCircle from 'assets/iconComponents/UserCircle';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));
 
@@ -84,8 +88,9 @@ const StyledNavLink = styled(NavLink).attrs({
 `;
 
 // eslint-disable-next-line react/prop-types
-const Menu = ({ theme }) => {
+const Menu = () => {
   const [currentUrl, setCurrentUrl] = useState();
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     const currentUrl = window.location.href.split('/');
@@ -99,25 +104,25 @@ const Menu = ({ theme }) => {
       <Container>
         <StyledNavLink exact to={routes.categories}>
           <Square>
-            <Icon name="dumbbell" fill={changeIconColor(currentUrl, routes.categories)} width="2rem" height="2rem" />
+            <SvgDumbbell fill={changeIconColor(currentUrl, routes.categories)} width="2rem" height="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={getUsersRoute(currentUser)}>
           <Square>
-            <Icon name="list-ul" fill={changeIconColor(currentUrl, routes.organizationUsers)} width="2rem" height="2rem" />
+            <SvgListUl fill={changeIconColor(currentUrl, routes.organizationUsers)} width="2rem" height="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={routes.plans}>
           <Square>
-            <Icon name="clipboard-notes" fill={changeIconColor(currentUrl, routes.plans)} width="2rem" height="2rem" />
+            <SvgClipboardNotes fill={changeIconColor(currentUrl, routes.plans)} width="2rem" height="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={`${routes.myProfile}`}>
           <Square>
-            <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} width="2rem" height="2rem" />
+            <SvgUserCircle fill={changeIconColor(currentUrl, routes.myProfile)} width="2rem" height="2rem" />
           </Square>
         </StyledNavLink>
       </Container>
@@ -125,4 +130,4 @@ const Menu = ({ theme }) => {
   );
 };
 
-export default withTheme(withRouter(Menu));
+export default withRouter(Menu);

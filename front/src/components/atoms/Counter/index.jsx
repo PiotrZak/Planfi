@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
+import SvgPlusCircle from 'assets/iconComponents/PlusCircle';
+import SvgMinusCircle from 'assets/iconComponents/MinusCircle';
 
 const Counter = ({ defaultValue, handleData }) => {
   const [value, setValue] = useState(defaultValue || 0);
@@ -24,9 +25,9 @@ const Counter = ({ defaultValue, handleData }) => {
 
   return (
     <Container>
-      <Icon onClick={increment} name="plus-circle" />
+      <SvgPlusCircle onClick={increment} name="plus-circle" width="1rem" height="1rem" />
       <h2>{value}</h2>
-      <Icon onClick={decrement} name="minus-circle" />
+      <SvgMinusCircle onClick={decrement} name="minus-circle" width="1rem" height="1rem" />
     </Container>
   );
 };

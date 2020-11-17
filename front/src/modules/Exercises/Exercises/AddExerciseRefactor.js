@@ -71,6 +71,7 @@ const onSubmit = (values) => {
 
 const AddExerciseRefactor = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imagePreviewID, setImagePreviewID] = useState(0);
 
   const handleImageChange = (e) => {
     /* if (e.target.files) {
@@ -94,18 +95,31 @@ const AddExerciseRefactor = () => {
     }
   };
 
+  const removeFile = (e, type) => {
+    if (type === 'icon') {
+      const imagePreviewID = e.target.parentNode.parentNode.parentNode.id;
+      console.log('icon clicked', imagePreviewID);
+    } else if (type === 'circle') {
+      const circle = e.target.parentNode;
+      console.log('circle clicked', circle);
+    }
+
+    /* const imagePreviewID = e.target.parentNode.parentNode.parentNode.parentNode;
+    if (imagePreviewID.id === 'image-preview-container') {
+      e.stopPropagation(true);
+    } else {
+      console.log(imagePreviewID.parentElement);
+    } */
+  };
+
   const renderPhotos = (source) => {
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          { source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} complete />)}
+          { source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} setID={photo.ID} remove={(e, type) => removeFile(e, type)} complete />)}
         </ImagePreviewContainer>
       );
     }
-  };
-
-  const removeFile = (e) => {
-
   };
 
   return (

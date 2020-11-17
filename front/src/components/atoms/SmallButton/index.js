@@ -8,13 +8,13 @@ import Icon from '../Icon';
 const SmallButtonStyled = styled.div`
   width: 3.2rem;
   height: 3.2rem;
- 
+
   cursor: pointer;
   font-weight: bold;
 
   outline: none;
   border: none;
-  
+
   color: ${({ theme }) => theme.colorWhite};
 
   //center icon
@@ -22,14 +22,14 @@ const SmallButtonStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   //correct 2.3px from top of icon
   ::before{
     content: '';
     margin-top: 0.3rem;
   }
-  
-  ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};  
+
+  ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};
 `;
 
 const SmallButtonSquareStyled = styled(SmallButtonStyled)`

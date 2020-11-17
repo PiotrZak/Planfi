@@ -1,0 +1,18 @@
+import * as React from "react";
+
+function SvgSliderH(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      data-name="Layer 1"
+      viewBox="0 0 24 24"
+      width="1em"
+      height="1em"
+      {...props}
+    >
+      <path d="M21 11h-3.184a2.982 2.982 0 00-5.632 0H3a1 1 0 000 2h9.184a2.982 2.982 0 005.632 0H21a1 1 0 000-2zm-6 2a1 1 0 111-1 1.001 1.001 0 01-1 1z" />
+    </svg>
+  );
+}
+
+export default SvgSliderH;
