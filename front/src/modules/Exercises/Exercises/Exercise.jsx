@@ -1,105 +1,116 @@
 import React, { useState, useEffect } from 'react';
-import { exerciseService } from "services/exerciseService";
+import { exerciseService } from 'services/exerciseService';
 import Icon from 'components/atoms/Icon';
 import Return from 'components/atoms/Return';
 import { useDispatch } from 'react-redux';
-import { alertActions } from 'redux/actions/alert.actions'
-import { useHistory, Link } from "react-router-dom";
+import { alertActions } from 'redux/actions/alert.actions';
+import { useHistory, Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
-import "react-multi-carousel/lib/styles.css";
-var ReactBottomsheet = require('react-bottomsheet');
+import 'react-multi-carousel/lib/styles.css';
+
+const ReactBottomsheet = require('react-bottomsheet');
 
 export const Exercise = (props) => {
+  const [exercise, setExercise] = useState();
+  const [bottomSheet, setBottomSheet] = useState(false);
+  const history = useHistory();
 
-    const [exercise, setExercise] = useState();
-    const [bottomSheet, setBottomSheet] = useState(false)
-    const history = useHistory();
+  const { match } = props;
+  const id = match.params;
+  const dispatch = useDispatch();
 
-    const { match } = props;
-    let id = match.params;
-    const dispatch = useDispatch()
+  useEffect(() => {
+    exerciseService
+      .getExerciseById(id.id)
+      .then((data) => {
+        setExercise(data);
+      })
+      .catch((error) => {
+      });
+  }, [id.id]);
 
-    useEffect(() => {
-        exerciseService
-            .getExerciseById(id.id)
-            .then((data) => {
-                setExercise(data);
-            })
-            .catch((error) => {
-            });
-    }, [id.id]);
+  const deleteExercise = () => {
+    exerciseService
+      .deleteExerciseById(id.id)
+      .then(() => {
+        dispatch(alertActions.success('Exercise succesfully deleted!'));
+        history.push('/categories');
+      })
+      .catch(() => {
+      });
+  };
 
-    const deleteExercise = () => {
-        exerciseService
-            .deleteExerciseById(id.id)
-            .then(() => {
-                dispatch(alertActions.success("Exercise succesfully deleted!"))
-                history.push('/categories');
-            })
-            .catch(() => {
-            });
-    }
+  const Breakpoints = {
+    desktop: {
+      breakpoint: { max: 5000, min: 768 },
+      items: 1,
+    },
+    laptop: {
+      breakpoint: { max: 1024, min: 0 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 768, min: 0 },
+      items: 1,
+    },
+  };
 
-    const Breakpoints = {
-        desktop: {
-            breakpoint: { max: 5000, min: 768 },
-            items: 1,
-        },
-        laptop: {
-            breakpoint: { max: 1024, min: 0 },
-            items: 1,
-        },
-        mobile: {
-            breakpoint: { max: 768, min: 0 },
-            items: 1,
-        },
-    };
-
-
-    return (
-        <div className="container">
-            <div className="container__title">
-                <Return />
-                <div onClick={() => setBottomSheet(true)}><Icon name={"plus"} fill={"#5E4AE3"} /></div>
-            </div>
-            {exercise &&
+  return (
+    <div className="container">
+      <div className="container__title">
+        <Return />
+        <div onClick={() => setBottomSheet(true)}><Icon name="plus" color="#5E4AE3" /></div>
+      </div>
+      {exercise
+                && (
                 <div className="exercise">
-                    {exercise.files &&
+                  {exercise.files
+                        && (
                         <Carousel
-                            swipeable={true}
-                            responsive={Breakpoints}
+                          swipeable
+                          responsive={Breakpoints}
                         >
-                            {exercise.files.map((file, i) =>
-                                <Slide key={i} img={file} />)}
+                          {exercise.files.map((file, i) => <Slide key={i} img={file} />)}
                         </Carousel>
-                    }
-                    <h1>{exercise.name}</h1>
-                    Series: <p>{exercise.series}</p>
-                    Times: <p>{exercise.times}</p>
-                    Weight: <p>{exercise.weight}</p>
-                    Description: <p>{exercise.description}</p>
+                        )}
+                  <h1>{exercise.name}</h1>
+                  Series:
+                  {' '}
+                  <p>{exercise.series}</p>
+                  Times:
+                  {' '}
+                  <p>{exercise.times}</p>
+                  Weight:
+                  {' '}
+                  <p>{exercise.weight}</p>
+                  Description:
+                  {' '}
+                  <p>{exercise.description}</p>
                 </div>
-            }
-            <ReactBottomsheet
-                visible={bottomSheet}
-                onClose={() => setBottomSheet(false)}>
-                <button className='bottom-sheet-item'><Link to={{
-                    pathname: `/edit-exercise/${props.location.state.id}`,
-                    state: { exercise: exercise }
-                }}>Edit</Link></button>
-                <button onClick={() => deleteExercise()} className='bottom-sheet-item'>Delete</button>
-            </ReactBottomsheet>
-        </div>
-    );
-}
-
-const Slide = ({ key, img }) => {
-    return (
-        <div>
-            <img key={key} alt = {key} src={`data:image/jpeg;base64,${img}`} />
-        </div>
-    );
+                )}
+      <ReactBottomsheet
+        visible={bottomSheet}
+        onClose={() => setBottomSheet(false)}
+      >
+        <button className="bottom-sheet-item">
+          <Link to={{
+            pathname: `/edit-exercise/${props.location.state.id}`,
+            state: { exercise },
+          }}
+          >
+            Edit
+          </Link>
+        </button>
+        <button onClick={() => deleteExercise()} className="bottom-sheet-item">Delete</button>
+      </ReactBottomsheet>
+    </div>
+  );
 };
 
+const Slide = ({ key, img }) => (
+  <div>
+    <img key={key} alt={key} src={`data:image/jpeg;base64,${img}`} />
+  </div>
+);
 
 export default Exercise;

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import handleTextType from 'support/TextType';
-import SvgQuestionCircle from 'assets/iconComponents/QuestionCircle';
 import { useThemeContext } from 'support/context/ThemeContext';
+import Icon from 'components/atoms/Icon';
 
 const StyledLabel = styled.label`
   display: flex;
@@ -45,7 +45,7 @@ const Label = ({
         {required && <Asterisk>*</Asterisk>}
         {questionMark && (
           <InnerContainer>
-            <SvgQuestionCircle height="1.2rem" width="1.2rem" fill={theme.colorPrimary} />
+            <Icon name="question-circle" size="1.2rem" color={theme.colorPrimary} />
           </InnerContainer>
         )}
       </Container>

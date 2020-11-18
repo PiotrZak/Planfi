@@ -21,7 +21,7 @@ const ReturnWithTitle = ({ text }) => {
 
   return (
     <Container>
-      <Return fill={theme.colorPrimary} />
+      <Return color={theme.colorPrimary} />
       <StyledParagraph type="Label-Button">{text}</StyledParagraph>
     </Container>
   );

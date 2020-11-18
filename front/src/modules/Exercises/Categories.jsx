@@ -4,16 +4,16 @@ import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import Loader from 'components/atoms/Loader';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import AddCategoryModal from './AddCategoryModal';
-import { commonUtil } from "utils/common.util"
-import { isMobile } from "react-device-detect";
+import { commonUtil } from 'utils/common.util';
+import { isMobile } from 'react-device-detect';
 import { useQuery, gql } from '@apollo/client';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
 import Heading from 'components/atoms/Heading';
-import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
-import { useThemeContext } from '../../support/context/ThemeContext';
-import CategoriesPanel from './CategoriesPanel'
+import GlobalTemplate, { Nav } from 'templates/GlobalTemplate';
+import { useThemeContext } from 'support/context/ThemeContext';
+import AddCategoryModal from './AddCategoryModal';
+import CategoriesPanel from './CategoriesPanel';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -30,27 +30,29 @@ const CATEGORY = gql`{
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [bottomSheet, setBottomSheet] = useState('none')
+  const [bottomSheet, setBottomSheet] = useState('none');
 
   const { theme } = useThemeContext();
-  const { loading, error, data, refetch } = useQuery(CATEGORY);
+  const {
+    loading, error, data, refetch,
+  } = useQuery(CATEGORY);
 
   const closeModal = () => {
-    setOpenModal(false)
-  }
+    setOpenModal(false);
+  };
 
   useEffect(() => {
-    setTimeout(function () { refetch() }, 1);
+    setTimeout(() => { refetch(); }, 1);
   }, [bottomSheet, setBottomSheet, openModal, setOpenModal, data]);
 
-  if (loading) return <Loader isLoading={loading}></Loader>;
+  if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
-    const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
-    setSelectedCategories(selectedCategories)
+    const selectedCategories = commonUtil.getCheckedData(selectedData, 'categoryId');
+    setSelectedCategories(selectedCategories);
     selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
-  }
+  };
 
   return (
     <>
@@ -59,7 +61,7 @@ const Categories = () => {
           <BackTopNav />
           <Heading>{translate('CategoriesTitle')}</Heading>
           <IconWrapper>
-            <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
+            <Icon onClick={() => setOpenModal(true)} name="plus" color={theme.colorInputActive} />
           </IconWrapper>
         </Nav>
         <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />

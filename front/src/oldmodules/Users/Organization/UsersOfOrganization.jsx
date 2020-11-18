@@ -6,17 +6,16 @@ import Return from 'components/atoms/Return';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
-import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
 import { userContext } from 'App';
+import messages from 'lang/eng';
 import InviteUserModal from '../InviteUsersModal';
-import messages from 'lang/eng'
 
-import { UsersPanel } from "../Common/UsersPanel"
-import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
-import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
+import { UsersPanel } from '../Common/UsersPanel';
+import { AssignUsersToPlans } from '../Common/AssignUsersToPlans';
+import { AssignUsersToTrainers } from '../Common/AssignUsersToTrainers';
 
 export const UsersOfOrganization = () => {
-
   const { user } = useContext(userContext);
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState(users);
@@ -37,7 +36,7 @@ export const UsersOfOrganization = () => {
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
         setUsers(data);
-        setFilteredUsers(data)
+        setFilteredUsers(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -57,37 +56,46 @@ export const UsersOfOrganization = () => {
   };
 
   const filterUsers = (role) => {
-    if (role == "All") {
-      setFilteredUsers(users)
+    if (role == 'All') {
+      setFilteredUsers(users);
+    } else {
+      const filteredUsers = users.filter((x) => x.role == role);
+      setFilteredUsers(filteredUsers);
     }
-    else {
-      const filteredUsers = users.filter(x => x.role == role)
-      setFilteredUsers(filteredUsers)
-    }
-  }
+  };
 
   return (
     <div>
       <div className="container">
         <div className="container__title">
           <Return />
-          <h2>{messages.users.usersText} of - {user.organizationId}</h2>
+          <h2>
+            {messages.users.usersText}
+            {' '}
+            of -
+            {' '}
+            {user.organizationId}
+          </h2>
           <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
         </div>
         <div className="users">
-          <h3> You are {user.role}</h3>
-        <div className ="users__filters">
-          <p onClick={() => filterUsers("User")}>Clients</p>
-          <p onClick={() => filterUsers("Trainer")}>Trainers</p>
-          <p onClick={() => filterUsers("All")}> All </p>
-        </div>
+          <h3>
+            {' '}
+            You are
+            {user.role}
+          </h3>
+          <div className="users__filters">
+            <p onClick={() => filterUsers('User')}>Clients</p>
+            <p onClick={() => filterUsers('Trainer')}>Trainers</p>
+            <p onClick={() => filterUsers('All')}> All </p>
+          </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           <Loader isLoading={isLoading}>
             {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : <h1>{messages.users.noUsers}</h1>}
           </Loader>
         </div>
       </div>
-      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer}/>
+      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer} />
       <AssignUsersToPlans organizationId={user.organizationId} assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers organizationId={user.organizationId} assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
     </div>

@@ -169,7 +169,7 @@ const Input = ({
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
         </ContainerLeft>
       );
@@ -182,7 +182,7 @@ const Input = ({
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
         </ContainerRight>
       );
@@ -190,7 +190,7 @@ const Input = ({
       return (
         <ContainerBoth disabled={disabled} error={error} id="Container">
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
           <StyledInputContainer
             {...rest}
@@ -198,7 +198,7 @@ const Input = ({
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
         </ContainerBoth>
       );

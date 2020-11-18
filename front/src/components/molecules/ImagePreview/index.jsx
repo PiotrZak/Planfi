@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import SvgUnion from 'assets/iconComponents/Union';
+import Icon from 'components/atoms/Icon';
 
 const Container = styled.div`
   height: 4.8rem;
@@ -49,7 +49,7 @@ const ImagePreview = ({
   return (
     <Container id={setID}>
       <Circle onClick={(e) => remove(e, 'circle')}>
-        <SvgUnion width="1rem" height="1rem" onClick={(e) => remove(e, 'icon')} />
+        <Icon name="union" size="1rem" onClick={(e) => remove(e, 'icon')} />
       </Circle>
       <Image src={image} />
     </Container>

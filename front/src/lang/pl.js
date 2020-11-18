@@ -10,6 +10,7 @@ export const pl = {
   SignIn: 'Zaloguj się',
   Password: 'Hasło',
   ForgotPassword: 'Zapomniałem Hasła',
+  BackToLogin: 'Wróć do ekranu logowania',
 
   ActivateAccountSuccess: 'Twoje konto zostało aktywowane!',
   ErrorAlert: 'Coś poszło nie tak',

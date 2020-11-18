@@ -4,11 +4,8 @@ import { withRouter, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Role } from 'utils/role';
 import breakPointSize from 'utils/rwd';
+import Icon from 'components/atoms/Icon';
 import { useThemeContext } from 'support/context/ThemeContext';
-import SvgDumbbell from 'assets/iconComponents/Dumbbell';
-import SvgListUl from 'assets/iconComponents/ListUl';
-import SvgClipboardNotes from 'assets/iconComponents/ClipboardNotes';
-import SvgUserCircle from 'assets/iconComponents/UserCircle';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));
 
@@ -81,6 +78,8 @@ const activeClassName = 'active';
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
 })`
+  text-decoration: none;
+
   &.${activeClassName} > ${Square}{
     border-radius: .8rem;
     background: ${({ theme }) => theme.colorPrimaryDefault};
@@ -104,25 +103,25 @@ const Menu = () => {
       <Container>
         <StyledNavLink exact to={routes.categories}>
           <Square>
-            <SvgDumbbell fill={changeIconColor(currentUrl, routes.categories)} width="2rem" height="2rem" />
+            <Icon name="dumbbell" color={changeIconColor(currentUrl, routes.categories)} size="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={getUsersRoute(currentUser)}>
           <Square>
-            <SvgListUl fill={changeIconColor(currentUrl, routes.organizationUsers)} width="2rem" height="2rem" />
+            <Icon name="list-ul" color={changeIconColor(currentUrl, routes.organizationUsers)} size="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={routes.plans}>
           <Square>
-            <SvgClipboardNotes fill={changeIconColor(currentUrl, routes.plans)} width="2rem" height="2rem" />
+            <Icon name="clipboard-notes" color={changeIconColor(currentUrl, routes.plans)} size="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={`${routes.myProfile}`}>
           <Square>
-            <SvgUserCircle fill={changeIconColor(currentUrl, routes.myProfile)} width="2rem" height="2rem" />
+            <Icon name="user-circle" color={changeIconColor(currentUrl, routes.myProfile)} size="2rem" />
           </Square>
         </StyledNavLink>
       </Container>

@@ -56,9 +56,9 @@ export const PlanPanelExercises = ({ activeSelectedExercise, id, setSelectedElem
                 :
                 <>
                     <div className="bottom-sheet-item__oneline">
-                        <Icon name="check" fill="#2E6D2C" />
+                        <Icon name="check" color="#2E6D2C" />
                         <p>{activeSelectedExercise.length} {messages.plans.selected}</p>
-                        <div onClick={() => unAssignExerciseToPlan()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" fill="#C3C3CF" />{messages.plans.unAssignFromPlan}</div>
+                        <div onClick={() => unAssignExerciseToPlan()} className="bottom-sheet-item__content"><Icon height={"18px"} name="trash" color="#C3C3CF" />{messages.plans.unAssignFromPlan}</div>
                         {/* {activeSelectedExercise.length < 2 &&
                             <button className='bottom-sheet-item'><Link to={{
                                 pathname: `/edit-exercise/${props.location.state.id}`,
