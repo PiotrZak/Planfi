@@ -2,62 +2,37 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const returnIconCode = (iconCode) => css`
-   :before{
-       content: "\\${iconCode}";
-    }
-`;
-
-const handleIconName = (name) => {
-  switch (name) {
-    case 'ellipsis-h':
-      return returnIconCode('e900');
-    case 'angle-down':
-      return returnIconCode('e90d');
-    case 'angle-up':
-      return returnIconCode('e90e');
-    case 'arrow-circle-right':
-      return returnIconCode('e90f');
-    case 'arrow-left':
-      return returnIconCode('e910');
-    case 'arrow-right':
-      return returnIconCode('e911');
-    case 'check':
-      return returnIconCode('e912');
-    case 'check-circle':
-      return returnIconCode('e913');
-    case 'clipboard-notes':
-      return returnIconCode('e914');
-    case 'draggabledots':
-      return returnIconCode('e915');
-    case 'dumbbell':
-      return returnIconCode('e916');
-    case 'exclamation-triangle':
-      return returnIconCode('e901');
-    case 'heart':
-      return returnIconCode('e902');
-    case 'image-plus':
-      return returnIconCode('e903');
-    case 'list-ul':
-      return returnIconCode('e904');
-    case 'minus-circle':
-      return returnIconCode('e905');
-    case 'paperclip':
-      return returnIconCode('e906');
-    case 'plus':
-      return returnIconCode('e907');
-    case 'plus-circle':
-      return returnIconCode('e908');
-    case 'question-circle':
-      return returnIconCode('e909');
-    case 'search':
-      return returnIconCode('e90a');
-    case 'union':
-      return returnIconCode('e90b');
-    case 'user-circle':
-      return returnIconCode('e90c');
-  }
+const IconsCode = {
+  'ellipsis-h': 'e900',
+  'angle-down': 'e90d',
+  'angle-up': 'e90e',
+  'arrow-circle-right': 'e90f',
+  'arrow-left': 'e910',
+  'arrow-right': 'e911',
+  check: 'e912',
+  'check-circle': 'e913',
+  'clipboard-notes': 'e914',
+  draggabledots: 'e915',
+  dumbbell: 'e916',
+  'exclamation-triangle': 'e901',
+  heart: 'e902',
+  'image-plus': 'e903',
+  'list-ul': 'e904',
+  'minus-circle': 'e905',
+  paperclip: 'e906',
+  plus: 'e907',
+  'plus-circle': 'e908',
+  'question-circle': 'e909',
+  search: 'e90a',
+  union: 'e90b',
+  'user-circle': 'e90c',
 };
+
+const handleIconName = (name) => css`
+    :before{
+       content: "\\${IconsCode[name]}";
+    }
+  `;
 
 const FontIcon = styled.span`
   font-family: 'icomoon', sans-serif;
