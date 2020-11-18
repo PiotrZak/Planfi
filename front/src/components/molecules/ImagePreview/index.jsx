@@ -48,8 +48,8 @@ const ImagePreview = ({
 
   return (
     <Container id={setID}>
-      <Circle onClick={(e) => remove(e, 'circle')}>
-        <Icon name="union" size="1rem" onClick={(e) => remove(e, 'icon')} />
+      <Circle onClick={remove} id={`img-prev-${setID}`}>
+        <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
       </Circle>
       <Image src={image} />
     </Container>
