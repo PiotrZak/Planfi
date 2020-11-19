@@ -16,9 +16,9 @@ import Search from 'components/atoms/Search';
 
 import messages from 'lang/eng';
 
-import { PlansPanel } from './microModules/PlansPanel';
-import { AssignExercisesToPlan } from './microModules/AssignExercisesToPlan';
-import { PlanPanelExercises } from './microModules/PlanPanelExercises';
+import { PlansPanel } from "./microModules/PlansPanel"
+import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
+import { PlanPanelExercises } from "../../modules/Exercises/Category/PlanPanelExercises"
 
 export const Plan = (props) => {
   const [plan, setPlan] = useState();

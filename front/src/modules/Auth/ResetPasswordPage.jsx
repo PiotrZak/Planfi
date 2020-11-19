@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import Button from 'components/atoms/Button';
+import { routes } from 'utils/routes';
 import AuthTemplate from 'templates/AuthTemplate';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
@@ -17,7 +18,6 @@ import { translate } from 'utils/Translation';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { accountService } from 'services/accountServices';
-import { routes } from 'utils/routes';
 
 const initialValues = {
   password: '',
@@ -52,17 +52,24 @@ const ResetPasswordPage = () => {
       password: values.password,
     };
 
+    //todo - repair
     accountService
       .resetPassword(resetPasswordModel)
       .then(() => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: 'OK', message: translate('PasswordChanged') },
-            type: 'positive',
-          },
-        });
-        setTimeout(() => { history.push(routes.login); }, timeToRedirect);
+            content: { success: 'OK', message: translate('PasswordChanged')},
+            type: 'positive'
+          }
+        })
+        setTimeout(function () {
+          history.push({
+            pathname: routes.confirmation,
+            state: { message: "ResetPassword" },
+          }
+          );
+        }, timeToRedirect);
       })
       .catch((error) => {
         notificationDispatch({

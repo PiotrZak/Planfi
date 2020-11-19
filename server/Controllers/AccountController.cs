@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Services;
 using WebApi.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using WebApi.Models;
 using System.IO;
-using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
+using WebApi.Common;
 using WebApi.Controllers.ViewModels;
-using RegisterModel = WebApi.Models.RegisterModel;
+using WebApi.Interfaces;
 
 namespace WebApi.Controllers
 {
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : ApiControllerBase
     {
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
@@ -74,16 +75,63 @@ namespace WebApi.Controllers
         [HttpPost("reset-password")]
         public IActionResult ResetPassword(ResetPasswordRequest model)
         {
-            _accountService.ResetPassword(model);
-            return Ok(new { message = "Password reset successful, you can now login" });
+            try
+            {
+                var resetPasswordResponse = _accountService.ResetPassword(model);
+                
+                var success = ApiCommonResponse.Create()
+                    .WithSuccess()
+                    .WithData(resetPasswordResponse)
+                    .Build();
+                
+                return Ok(new { message = "ok" });
+                /*return CommonResponse(success);*/
+            }
+
+            catch(Exception e)
+            {
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure()
+                    .Build();
+                
+                return CommonResponse(failure);
+            }
+        }
+        
+
+        [AllowAnonymous]
+        [HttpPost("invite")]
+        public IActionResult RegisterAccount(RegisterModel model)
+        {
+            try
+            {
+                var sendVerificationResponse = _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
+                
+                var success = ApiCommonResponse.Create()
+                    .WithSuccess()
+                    .WithData(sendVerificationResponse)
+                    .Build();
+                
+                return CommonResponse(success);
+            }
+
+            catch(Exception e)
+            {
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure()
+                    .Build();
+                
+                return CommonResponse(failure);
+            }
         }
         
         [AllowAnonymous]
         [HttpPost("activate")]
-        public IActionResult RegisterAccount(RegisterModel model)
+        public IActionResult ActivateAccount(ActivateAccount model)
         {
-            _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
-            return Ok(new { message = "Activation mail sent!" });
+            var user = _accountService.Activate(model);
+
+            return Ok(user);
         }
 
     }

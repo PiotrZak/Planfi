@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { isMobile } from "react-device-detect";
 import { Holdable } from "hooks/useLongPress";
-import { renderType } from "./DataTypes"
+import { RenderType } from "./DataTypes"
 import styled from 'styled-components';
+import breakPointSize from 'utils/rwd';
 
-// todo- styled
-const Wrapper = styled.div`
-display: flex;
-background: ${({ theme }) => theme.colorGray80};
-padding: .7rem 0;
-border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
+const CheckboxContainer = styled.div`
+input{
+  margin:-5rem 0 0 1.4rem;
+  z-index:2;
+  position: absolute;
+  @media only screen and ${breakPointSize.xs} {
+    display:none;
+  }
+}
 `;
 
 export const CheckboxGenericComponent = ({
   id,
-  className,
   selectAll,
   dataType,
   dataList,
@@ -25,36 +28,26 @@ export const CheckboxGenericComponent = ({
   const [type, setType] = useState();
 
   useEffect(() => {
+    dataList.map((el) => {
+      {el.value = null;}
+      return el;
+    });
     setType(dataType);
     setList(dataList);
   }, [dataList]);
 
   function handleChange(e) {
-
-    if (isMobile) {
-      e.currentTarget.nextElementSibling.checked = !e.currentTarget.nextElementSibling.checked;
-    }
-
-    var checkedItemsCount = 0;
-
     dataList.map((el) => {
-
       if (isMobile) {
-        if (el[displayedValue] === e.currentTarget.nextElementSibling.name) {
-          el.value = e.currentTarget.nextElementSibling.checked;
-        }
+        if (el[displayedValue] === e.currentTarget.getAttribute('name')) {el.value = !e.currentTarget.checked;}
       }
       else {
-        if (el[displayedValue] === e.target.name) {
-          el.value = e.target.checked;
-        }
+        if (el[displayedValue] === e.target.name) {el.value = e.target.checked;}
       }
-
-      if (el.value) checkedItemsCount++;
       return el;
     });
     setList([...dataList]);
-    onSelect([...dataList], checkedItemsCount);
+    onSelect([...dataList]);
   }
 
   function handleSelectAll(e) {
@@ -64,7 +57,6 @@ export const CheckboxGenericComponent = ({
       if (el.value) checkedItemsCount++;
       return el;
     });
-    setList([...dataList]);
     onSelect([...dataList], checkedItemsCount);
   }
 
@@ -84,38 +76,36 @@ export const CheckboxGenericComponent = ({
     }
   }
 
-
-
   function renderRows() {
     const row = [];
     if (Array.isArray(list)) {
       dataList.map((element, i) => {
         row.push(
-          <div key={i} className="checkbox-generic-list__element">
+          <>
             {isMobile ?
               <Holdable
+                name={element[displayedValue]}  
                 onHold={handleChange}
                 onClick={(e) => e.preventDefault()}
-                id={id}
                 key={id}
-                for={`${element[displayedValue]}-checkbox-${id}`}
+                forx={element[displayedValue]}
               >
-                {renderType(className, type, element, i)}
+              <RenderType type = {type} element = {element} i = {i}/>
               </Holdable>
               :
               <>
-                {renderType(className, type, element, i)}
+              <RenderType type = {type} element = {element} i = {i}/>
+                <CheckboxContainer>
+                  <input
+                    name={element[displayedValue]}
+                    type="checkbox"
+                    checked={element.value}
+                    onChange={handleChange}
+                  />
+                </CheckboxContainer>
               </>
             }
-            <input
-              className="checkbox-generic-list__checkbox"
-              id={`${element[displayedValue]}-checkbox-${id}`}
-              name={element[displayedValue]}
-              type="checkbox"
-              checked={!!element.value}
-              onChange={handleChange}
-            />
-          </div>
+          </>
         );
         return element;
       });

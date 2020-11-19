@@ -7,16 +7,10 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import { categoryService } from 'services/categoryService';
 import Button from 'components/atoms/Button';
-import Heading from 'components/atoms/Heading';
-import { StyledModal } from 'components/molecules/Modal';
+import {ModalHeading} from 'components/atoms/Heading';
+import { StyledModal } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
-const CategoriesDeleted = 'Categories finally deleted!';
-const AddExerciseToCategory = 'To be able to add exercises you need to add a category first';
-const DeleteCategoriesText = 'Delete categories';
-const AddCategoryTitle = 'Add a category';
-const addCategoryTip = "When naming a category, it is worth using names related to specific parts of the body, for example 'Back'";
-const addCategoryButton = 'Create Category';
 
 const initialValues = {
   title: '',
@@ -58,27 +52,25 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
       });
   };
 
-  return (
-    <StyledModal
-      isOpen={openModal}
-      onBackgroundClick={onClose}
-      onEscapeKeydown={onClose}
-    >
-      <Heading>{translate('AddCategoryTitle')}</Heading>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-        {({ errors, touched, values }) => (
-          <Form>
-            <InputContainer>
-              <Label type="top" text={translate('CategoryTitle')} required>
-                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
-              </Label>
-            </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg">{translate('Save')}</Button>
-          </Form>
-        )}
-      </Formik>
-    </StyledModal>
-  );
-};
+    return (
+        <StyledModal isOpen={openModal}
+            onBackgroundClick={onClose}
+            onEscapeKeydown={onClose}>
+            <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+                {({ errors, touched, values }) => (
+                    <Form>
+                        <InputContainer>
+                            <Label type="top" text={translate('CategoryTitle')} required>
+                                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+                            </Label>
+                        </InputContainer>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('AddCategoryButton')}</Button>
+                    </Form>
+                )}
+            </Formik>
+        </StyledModal>
+    );
+}
 
 export default AddCategoryModal;

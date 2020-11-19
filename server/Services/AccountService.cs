@@ -1,24 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace WebApi.Services
 {
-    public interface IAccountService
-    {
-        void UploadAvatar(string userId, byte[] avatar);
-        Boolean ForgotPassword(ForgotPassword model, string origin);
-        void ResetPassword(ResetPasswordRequest model);
-        void SendVerificationEmail(RegisterModel register, string origin);
-        string RandomTokenString();
-    }
-
     public class AccountService : IAccountService
     {
         private readonly IEmailService _emailService;
@@ -32,6 +26,30 @@ namespace WebApi.Services
             _context = context;
             _userService = userService;
             _mapper = mapper;
+        }
+        
+        public User Activate(ActivateAccount user)
+        {
+            var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
+
+            selectedUser.Email = selectedUser.Email;
+            selectedUser.Role = "User";
+            selectedUser.PhoneNumber = user.PhoneNumber;
+            selectedUser.FirstName = user.FirstName;
+            selectedUser.LastName = user.LastName;
+            selectedUser.PhoneNumber = user.PhoneNumber;
+            
+            byte[] passwordHash, passwordSalt;
+            _userService.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+            
+            selectedUser.Password = user.Password;
+            selectedUser.PasswordHash = passwordHash;
+            selectedUser.PasswordSalt = passwordSalt;
+            selectedUser.IsActivated = true;
+
+            _context.Users.Update(selectedUser);
+            _context.SaveChanges();
+            return selectedUser;
         }
         
         public Boolean ForgotPassword(ForgotPassword model, string origin)
@@ -65,7 +83,7 @@ namespace WebApi.Services
             string message;
             if (!string.IsNullOrEmpty(origin))
             {
-                var resetUrl = $"{origin}/account/forgot:{account.ResetToken}";
+                var resetUrl = $"{origin}/account/reset:{account.ResetToken}";
                 message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                              <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
             }
@@ -109,36 +127,43 @@ namespace WebApi.Services
             return BitConverter.ToString(randomBytes).Replace("-", "");
         }
         
-        public void ResetPassword(ResetPasswordRequest model)
+        public async Task<int> ResetPassword(ResetPasswordRequest model)
         {
-            var user = _context.Users.SingleOrDefault(x =>
-                x.ResetToken == model.Token &&
-                x.ResetTokenExpires > DateTime.UtcNow);
+            try
+            {
+                var user = _context.Users.SingleOrDefault(x =>
+                    x.ResetToken == model.Token &&
+                    x.ResetTokenExpires > DateTime.UtcNow);
 
-            if (user == null)
-                throw new AppException("Invalid token");
+                if (user == null)
+                    throw new AppException("Invalid token");
 
-            // update password and remove reset token
-            byte[] passwordHash, passwordSalt;
-            _userService.CreatePasswordHash(model.Password, out passwordHash, out passwordSalt);
-            
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
-            
-            user.PasswordReset = DateTime.UtcNow;
-            user.ResetToken = null;
-            user.ResetTokenExpires = null;
+                // update password and remove reset token
+                byte[] passwordHash, passwordSalt;
+                _userService.CreatePasswordHash(model.Password, out passwordHash, out passwordSalt);
+                
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+                
+                user.PasswordReset = DateTime.UtcNow;
+                user.ResetToken = null;
+                user.ResetTokenExpires = null;
 
-            _context.Users.Update(user);
-            _context.SaveChanges();
+                _context.Users.Update(user);
+                return await _context.SaveChangesAsync();
+            }
+            catch (ValidationException ex)
+            {
+                return 0;
+            }
         }
         
-        public void SendVerificationEmail(RegisterModel model, string origin)
+        public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
         {
             foreach(var email in model.Emails)
             {
                 if (_context.Clients.Any(x => x.Email == email))
-                    throw new AppException("Email \"" + model + "\" is already taken"); 
+                    throw new AppException("Email \"" + email + "\" is already taken"); 
             
                 var user = _mapper.Map<Client>(model);
                 user.VerificationToken = RandomTokenString();
@@ -184,7 +209,9 @@ namespace WebApi.Services
                              {message}",
                 };
                 _emailService.Send(messageData);
+                return 1;
             }
+            return 0;
         }
     }
 }

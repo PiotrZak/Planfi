@@ -2,8 +2,8 @@ import React from 'react';
 import Input from 'components/molecules/Input';
 import PropTypes from 'prop-types';
 
-const Search = ({ callback, placeholder }) => (
-  <Input type="left" icon="search" onChange={callback} placeholder={placeholder} />
+const Search = ({ callBack, placeholder }) => (
+  <Input type="left" icon="search" onChange={callBack} placeholder={placeholder} />
 );
 
 Search.propTypes = {

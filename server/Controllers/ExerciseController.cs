@@ -8,6 +8,8 @@ using AutoMapper;
 using WebApi.Models;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
+using WebApi.Interfaces;
 
 namespace WebApi.Controllers
 {
@@ -37,38 +39,33 @@ namespace WebApi.Controllers
         [HttpPost("create")]
         public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
         {
-
-            // todo - exclude this function to outer service
+            
             //transform IFormFile List to byte[]
-            var FilesList = new List<byte[]>();
-            foreach (var formFile in model.Files)
+            var filesList = new List<byte[]>();
+            foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
             {
-                if (formFile.Length > 0)
-                {
-                    using var memoryStream = new MemoryStream();
-                    formFile.CopyTo(memoryStream);
-                    FilesList.Add(memoryStream.ToArray());
-                }
+                using var memoryStream = new MemoryStream();
+                formFile.CopyTo(memoryStream);
+                filesList.Add(memoryStream.ToArray());
             }
 
             var transformModel = new ExerciseModel
             {
                 Name = model.Name,
                 Description = model.Description,
-                Times = model.Times,
-                Series = model.Series,
-                Weight = model.Weight,
-                Files = FilesList,
+                Files = filesList,
                 CategoryId = model.CategoryId
+                /*Times = model.Times,
+                Series = model.Series,
+                Weight = model.Weight,*/
             };
 
 
-            var Exercise = _mapper.Map<Exercise>(transformModel);
+            var exercise = _mapper.Map<Exercise>(transformModel);
 
             try
             {
-                _CategoryService.AssignExercise(model.CategoryId, Exercise);
-                //_ExerciseService.Create(Exercise);
+                _CategoryService.AssignExercise(model.CategoryId, exercise);
                 return Ok();
             }
             catch (AppException ex)
@@ -126,23 +123,18 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromForm] UpdateExerciseModel model)
         {
-
-
-            var FilesList = new List<byte[]>();
+            
+            var filesList = new List<byte[]>();
             if (model.Files != null)
             {
-                foreach (var formFile in model.Files)
+                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
-                    if (formFile.Length > 0)
-                    {
-                        using var memoryStream = new MemoryStream();
-                        formFile.CopyTo(memoryStream);
-                        FilesList.Add(memoryStream.ToArray());
-                    }
+                    using var memoryStream = new MemoryStream();
+                    formFile.CopyTo(memoryStream);
+                    filesList.Add(memoryStream.ToArray());
                 }
             }
             
-
             var transformModel = new ExerciseModel
             {
                 Name = model.Name,
@@ -150,7 +142,7 @@ namespace WebApi.Controllers
                 Times = model.Times,
                 Series = model.Series,
                 Weight = model.Weight,
-                Files = FilesList,
+                Files = filesList,
             };
 
             var exercise = _mapper.Map<Exercise>(transformModel);

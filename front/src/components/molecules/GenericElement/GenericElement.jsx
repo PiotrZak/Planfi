@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-
-// todo - test if image appear after adding exercises & add circle elements
+//todo - test if image appear after adding exercises & add circle elements
+import Image from 'components/atoms/Image';
 
 const GenericElementContainer = styled.div`
   display: flex;
@@ -9,9 +9,11 @@ const GenericElementContainer = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.colorGray80};
   padding: 1.8rem 4.2rem;
+  margin: 0.8rem 0;
   height: 7.2rem;
   border-radius: 4px;
   color:white;
+  z-index:2;
 `;
 
 const GenericElementInfo = styled.div`
@@ -52,10 +54,6 @@ const GenericElementImageEmpty = styled.div`
       width: 4.8rem;
       height: 4.8rem;
 `;
-
-const Image = (image) => (
-  <img src={`data:image/jpeg;base64,${image}`} />
-);
 
 const GenericElement = ({
   headline,

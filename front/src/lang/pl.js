@@ -54,4 +54,21 @@ export const pl = {
   ExerciseName: 'Nazwa ćwiczenia',
   AddAttachments: 'Dodaj załączniki',
   AddExerciseDescription: 'Opis ćwiczenia',
+
+  CategoriesDeleted: 'Kategorie pomyślnie usunięte!',
+  AddExerciseToCategory: 'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
+  DeleteCategoriesText: 'Usuń kategorie',
+  AddCategoryTitle: 'Dodaj kategorie',
+  AddCategoryTip: 'Nazywając kategorię warto posługiwać się nazwami związanymi z określonymi częściami ciała, np. Plecys',
+  AddCategoryButton: 'Utwórz kategorie',
+
+  ExerciseSearch: 'Jakich ćwiczeń szukasz?',
+  NoExercises: 'W tej kategorii nie ma dodanych ćwiczeń',
+  EditCategory: 'Edytuj kategorię',
+  CategoryTitle: "Nazwa kategorii",
+  EditCategoryTitle: 'Edytuj kategorie',
+  CategoryEdited: 'Kategorie pomyślnie zmienione',
+
+
+  NoExerciseInPlan: 'There are no added exercises in this Plan',
 };

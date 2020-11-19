@@ -11,31 +11,21 @@ namespace WebApi.Services
     public interface IUserService
     {
         User Authenticate(string Email, string Password);
-        /*Client Register(Client user, string password);*/
-
         User Register(string email);
-
         IEnumerable<User> GetAllUsers();
-
         IEnumerable<Client> GetAllClients();
         IEnumerable<Trainer> GetAllTrainers();
-
         User GetById(string id);
         void Update(User user, string password);
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
-
         void AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
         void AssignPlanToClients(string[] userIds, string[] planIds);
-
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
-
         IEnumerable<Client> GetClientsByTrainer(string TrainerId);
         IEnumerable<Trainer> GetTrainersByClient(string ClientId);
-
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
-        User Activate(ActivateAccount user);
     }
 
     public class UserService : IUserService
@@ -60,31 +50,7 @@ namespace WebApi.Services
 
             return user;
         }
-
-        public User Activate(ActivateAccount user)
-        {
-            var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
-
-            selectedUser.Email = selectedUser.Email;
-            selectedUser.Role = "User";
-            selectedUser.PhoneNumber = user.PhoneNumber;
-            selectedUser.FirstName = user.FirstName;
-            selectedUser.LastName = user.LastName;
-            selectedUser.PhoneNumber = user.PhoneNumber;
-            
-            byte[] passwordHash, passwordSalt;
-            CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
-            
-            selectedUser.Password = user.Password;
-            selectedUser.PasswordHash = passwordHash;
-            selectedUser.PasswordSalt = passwordSalt;
-            selectedUser.IsActivated = true;
-
-            _context.Users.Update(selectedUser);
-            _context.SaveChanges();
-            return selectedUser;
-        }
-
+        
         public User Authenticate(string Email, string Password)
         {
             var user = _context.Users.SingleOrDefault(x => x.Email == Email);
