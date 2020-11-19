@@ -64,6 +64,7 @@ export const pl = {
   ExerciseSearch: 'Jakich ćwiczeń szukasz?',
   NoExercises: 'W tej kategorii nie ma dodanych ćwiczeń',
   EditCategory: 'Edytuj kategorię',
+  CategoryTitle: "Nazwa kategorii",
   EditCategoryTitle: 'Edytuj kategorie',
   CategoryEdited: 'Kategorie pomyślnie zmienione',
 

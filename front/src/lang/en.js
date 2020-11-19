@@ -69,6 +69,7 @@ export  const en = {
    NoExercises: "There are no added exercises in this category",
    EditCategory: "Edit Category",
    EditCategoryTitle: "Edit a category",
+   CategoryTitle: "Name of category",
    CreateCategory: "Create Category",
    CategoryEdited: 'Category succesfull edited',
 
