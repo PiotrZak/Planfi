@@ -91,7 +91,7 @@ const AddExerciseRefactor = () => {
         };
         setSelectedFiles(((prevState) => prevState.concat(fileData)));
       });
-      console.log(selectedFiles)
+      console.log(selectedFiles);
     }
   };
 
@@ -109,8 +109,8 @@ const AddExerciseRefactor = () => {
       if (id == selectedFiles[i].ID) {
         selectedFiles.splice(i, 1);
         if (selectedFiles.length === 0) {
-          document.getElementById('image-preview-container').remove();
-          document.getElementById('choose-file-button').value = '';
+          // document.getElementById('image-preview-container').remove();
+          // document.getElementById('choose-file-button').value = '';
         }
         break;
       }
@@ -121,49 +121,57 @@ const AddExerciseRefactor = () => {
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          {source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} setID={photo.ID}
-                                               remove={removeFile} complete/>)}
+          {source.map((photo) => (
+            <ImagePreview
+              imageSrc={photo.File}
+              alt=""
+              key={photo.ID}
+              setID={photo.ID}
+              remove={removeFile}
+              complete
+            />
+          ))}
         </ImagePreviewContainer>
       );
     }
   };
 
-    try{
-      return(
-  <ExerciseTemplate>
-    {/* eslint-disable-next-line max-len */}
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}
-            validateOnChange={false}>
-      {({errors, touched, isValid}) => (
-        <Form>
-          <ContainerTopBeam>
-            <ReturnWithTitle text={translate('AddExercise')}/>
-            <Button size="sm" buttonType="primary" type="submit" disabled={!isValid}>{translate('Save')}</Button>
-          </ContainerTopBeam>
-          <Paragraph type="body-3-regular">{translate('AddExerciseInfo')}</Paragraph>
-          <Label text={translate('ExerciseName')}>
-            <Field type="text" name="exerciseName" as={Input} error={errors.exerciseName && touched.exerciseName}/>
-          </Label>
-          <ErrorMessageForm name="exerciseName"/>
-          <WrapperAttachments onClick={triggerFileUploadButton}>
-            <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem"/>
-            <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
-            <FileUploadButton id="choose-file-button" onChange={(e) => handleImageChange(e)} multiple/>
-          </WrapperAttachments>
-          {renderPhotos(selectedFiles)}
-          <ContainerDescription>
-            <Label text={translate('AddExerciseDescription')}>
-              <Field type="text" name="exerciseDescription" as={StyledTextArea}/>
+  return (
+    <ExerciseTemplate>
+      {/* eslint-disable-next-line max-len */}
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        validateOnChange={false}
+      >
+        {({ errors, touched, isValid }) => (
+          <Form>
+            <ContainerTopBeam>
+              <ReturnWithTitle text={translate('AddExercise')} />
+              <Button size="sm" buttonType="primary" type="submit" disabled={!isValid}>{translate('Save')}</Button>
+            </ContainerTopBeam>
+            <Paragraph type="body-3-regular">{translate('AddExerciseInfo')}</Paragraph>
+            <Label text={translate('ExerciseName')}>
+              <Field type="text" name="exerciseName" as={Input} error={errors.exerciseName && touched.exerciseName} />
             </Label>
-          </ContainerDescription>
-        </Form>
-      )}
-    </Formik>
-  </ExerciseTemplate>
-)
-} catch {
-      console.log("render error")
-  }
-}
+            <ErrorMessageForm name="exerciseName" />
+            <WrapperAttachments onClick={triggerFileUploadButton}>
+              <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" />
+              <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
+              <FileUploadButton id="choose-file-button" onChange={(e) => handleImageChange(e)} multiple />
+            </WrapperAttachments>
+            {renderPhotos(selectedFiles)}
+            <ContainerDescription>
+              <Label text={translate('AddExerciseDescription')}>
+                <Field type="text" name="exerciseDescription" as={StyledTextArea} />
+              </Label>
+            </ContainerDescription>
+          </Form>
+        )}
+      </Formik>
+    </ExerciseTemplate>
+  );
+};
 
 export default AddExerciseRefactor;
