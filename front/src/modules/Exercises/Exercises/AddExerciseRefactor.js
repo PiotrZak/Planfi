@@ -82,58 +82,59 @@ const AddExerciseRefactor = () => {
       );
     } */
     if (e.target.files) {
-      console.log(e.target.files);
       Array.from(e.target.files).map((File) => {
         const ID = Random(1, 10000);
         const fileData = {
           ID,
           File: URL.createObjectURL(File),
         };
+
         setSelectedFiles(((prevState) => prevState.concat(fileData)));
       });
-      console.log(selectedFiles);
     }
   };
 
-  const removeFile = (e) => {
+  function removeFile(e) {
     e.stopPropagation();
 
     // get id of attachment preview
     const id = e.target.id.split('img-prev-')[1];
 
-    // remove attachment preview
-    document.getElementById(id).remove();
-
     // remove attachment
     for (let i = 0; i <= selectedFiles.length; ++i) {
       if (id == selectedFiles[i].ID) {
-        selectedFiles.splice(i, 1);
+        const list = [...selectedFiles];
+        const updatedList = list.filter((item) => item.ID !== selectedFiles[i].ID);
+        setSelectedFiles(updatedList);
+        document.getElementById('choose-file-button').value = '';
+        console.log(selectedFiles);
+
         if (selectedFiles.length === 0) {
+          console.log('list is empty');
           // document.getElementById('image-preview-container').remove();
-          // document.getElementById('choose-file-button').value = '';
         }
         break;
       }
     }
-  };
+  }
 
-  const renderPhotos = (source) => {
-    if (source.length > 0) {
+  const renderAttachmentsPreview = (selectedFiles) => {
+    if (selectedFiles.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          {source.map((photo) => (
-            <ImagePreview
-              imageSrc={photo.File}
-              alt=""
-              key={photo.ID}
-              setID={photo.ID}
-              remove={removeFile}
-              complete
-            />
-          ))}
-        </ImagePreviewContainer>
-      );
-    }
+          {
+            selectedFiles.map((photo) => (
+              <ImagePreview
+                imageSrc={photo.File}
+                alt=""
+                key={photo.ID}
+                setID={photo.ID}
+                remove={removeFile}
+                complete
+              />
+            ))
+          }
+      )
   };
 
   return (
@@ -161,7 +162,7 @@ const AddExerciseRefactor = () => {
               <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
               <FileUploadButton id="choose-file-button" onChange={(e) => handleImageChange(e)} multiple />
             </WrapperAttachments>
-            {renderPhotos(selectedFiles)}
+            {renderAttachmentsPreview(selectedFiles)}
             <ContainerDescription>
               <Label text={translate('AddExerciseDescription')}>
                 <Field type="text" name="exerciseDescription" as={StyledTextArea} />
