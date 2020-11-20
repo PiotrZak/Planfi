@@ -1,7 +1,6 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import { createPortal } from 'react-dom';
-import Alert from '../../components/molecules/Alert/index'
-import { useThemeContext } from '../../support/context/ThemeContext';
+import Alert from 'components/molecules/Alert';
 
 export const NotificationContext = createContext();
 
@@ -19,11 +18,11 @@ export const NotificationReducer = (state, action) => {
         {
           id: +new Date(),
           content: action.payload.content,
-          type: action.payload.type
-        }
+          type: action.payload.type,
+        },
       ];
     case REMOVE:
-      return state.filter(t => t.id !== action.payload.id);
+      return state.filter((t) => t.id !== action.payload.id);
     case REMOVE_ALL:
       return initialState;
     default:
@@ -31,7 +30,7 @@ export const NotificationReducer = (state, action) => {
   }
 };
 
-export const NotificationProvider = props => {
+export const NotificationProvider = (props) => {
   const [notification, notificationDispatch] = useReducer(NotificationReducer, initialState);
   const notificationData = { notification, notificationDispatch };
 
@@ -43,6 +42,4 @@ export const NotificationProvider = props => {
   );
 };
 
-export const useNotificationContext = () => {
-  return useContext(NotificationContext);
-};
+export const useNotificationContext = () => useContext(NotificationContext);

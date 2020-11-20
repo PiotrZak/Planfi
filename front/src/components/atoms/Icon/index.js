@@ -26,6 +26,7 @@ const IconsCode = {
   search: 'e90a',
   union: 'e90b',
   'user-circle': 'e90c',
+  circle: 'e917',
 };
 
 const FontIcon = styled.span`
@@ -51,6 +52,7 @@ Icon.propTypes = {
     'dumbbell', 'exclamation-triangle', 'heart', 'image-plus',
     'list-ul', 'minus-circle', 'paperclip', 'plus', 'plus-circle',
     'question-circle', 'search', 'union', 'user-circle',
+    'circle',
   ]).isRequired,
   size: PropTypes.string,
   color: PropTypes.string,
