@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Icon from 'components/atoms/Icon';
-import Random from 'utils/Random';
 import PropTypes from 'prop-types';
+import Icon from 'components/atoms/Icon';
 
 const Container = styled.div`
   height: 4.8rem;
@@ -38,22 +37,19 @@ const Image = styled.img`
   border-radius: 2px;
 `;
 
-const ImagePreview = ({ imageSrc, complete }) => {
+const ImagePreview = ({
+  imageSrc, complete, setID, remove,
+}) => {
   const [image, setImage] = useState('img/blankImage.png');
-  const ID = Random(1, 10000);
 
   if (complete && image !== imageSrc) {
     setImage(imageSrc);
   }
 
-  const removeImage = () => {
-    document.getElementById(ID).remove();
-  };
-
   return (
-    <Container id={ID}>
-      <Circle onClick={removeImage}>
-        <Icon name="union" width="1rem" height="1rem" />
+    <Container id={setID}>
+      <Circle onClick={remove} id={`img-prev-${setID}`}>
+        <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
       </Circle>
       <Image src={image} />
     </Container>
@@ -63,6 +59,7 @@ const ImagePreview = ({ imageSrc, complete }) => {
 ImagePreview.propTypes = {
   imageSrc: PropTypes.string.isRequired,
   complete: PropTypes.bool.isRequired,
+  // setID: PropTypes.string.isRequired,
 };
 
 export default ImagePreview;

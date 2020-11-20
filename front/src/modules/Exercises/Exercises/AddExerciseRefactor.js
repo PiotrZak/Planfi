@@ -82,7 +82,10 @@ const AddExerciseRefactor = () => {
       );
     } */
 
+    console.log('added files');
+
     if (e.target.files) {
+      console.log('working');
       Array.from(e.target.files).map((File) => {
         const ID = Random(1, 10000);
         const fileData = {
@@ -90,7 +93,29 @@ const AddExerciseRefactor = () => {
           File: URL.createObjectURL(File),
         };
         setSelectedFiles(((prevState) => prevState.concat(fileData)));
+        console.log('added');
       });
+    }
+  };
+
+  const removeFile = (e) => {
+    e.stopPropagation();
+
+    // get id of attachment preview
+    const id = e.target.id.split('img-prev-')[1];
+
+    // remove attachment preview
+    document.getElementById(id).remove();
+
+    // remove attachment
+    for (let i = 0; i <= selectedFiles.length; ++i) {
+      if (id == selectedFiles[i].ID) {
+        selectedFiles.splice(i, 1);
+        if (selectedFiles.length === 0) {
+          document.getElementById('image-preview-container').remove();
+        }
+        break;
+      }
     }
   };
 
@@ -98,14 +123,10 @@ const AddExerciseRefactor = () => {
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          { source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} complete />)}
+          { source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} setID={photo.ID} remove={removeFile} complete />)}
         </ImagePreviewContainer>
       );
     }
-  };
-
-  const removeFile = (e) => {
-
   };
 
   return (
@@ -126,7 +147,7 @@ const AddExerciseRefactor = () => {
             <WrapperAttachments onClick={triggerFileUploadButton}>
               <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" />
               <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
-              <FileUploadButton id="choose-file-button" onChange={handleImageChange} multiple />
+              <FileUploadButton id="choose-file-button" onChange={(e) => handleImageChange(e)} multiple />
             </WrapperAttachments>
             {renderPhotos(selectedFiles)}
             <ContainerDescription>

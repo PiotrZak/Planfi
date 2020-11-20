@@ -85,7 +85,7 @@ export const Avatar = ({ avatar, id }) => {
               className={`avatar ${
                 hover
                 && ' avatar__imghover'
-                }`}
+              }`}
               src={`data:image/jpeg;base64,${avatar}`}
             />
             <input
@@ -107,7 +107,7 @@ export const Avatar = ({ avatar, id }) => {
             className={`avatar ${
               hover
               && ' avatar__hover'
-              }`}
+            }`}
           >
             <input
               ref={fileInputRef}
@@ -120,7 +120,7 @@ export const Avatar = ({ avatar, id }) => {
               <p>
                 <Icon name="plus" fill="white" />
                 Add Avatar
-            </p>
+              </p>
             )}
           </div>
         )}

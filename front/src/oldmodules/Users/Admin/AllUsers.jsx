@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
@@ -8,18 +7,17 @@ import { commonUtil } from 'utils/common.util';
 import { Loader } from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
 import { NavLink } from 'react-router-dom';
-import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
+import messages from 'lang/eng';
 import InviteUserModal from '../InviteUsersModal';
 
-//todo - care about lang
-import messages from 'lang/eng'
+// todo - care about lang
 
-import { UsersPanel } from "../Common/UsersPanel"
-import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
-import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
+import { UsersPanel } from '../Common/UsersPanel';
+import { AssignUsersToPlans } from '../Common/AssignUsersToPlans';
+import { AssignUsersToTrainers } from '../Common/AssignUsersToTrainers';
 
 export const AllUsers = () => {
-
   const [users, setUsers] = useState();
   const [activeUsers, setActiveUsers] = useState([]);
 
@@ -47,7 +45,6 @@ export const AllUsers = () => {
       .catch((error) => {
         dispatch(alertActions.error(error.title));
       });
-
   };
 
   const submissionHandleElement = (selectedData) => {
@@ -73,11 +70,17 @@ export const AllUsers = () => {
         <div className="users">
           <div className="users__filters">
             <NavLink to={{
-              pathname: `/trainers`,
-            }}><p>Trainers page</p></NavLink>
+              pathname: '/trainers',
+            }}
+            >
+              <p>Trainers page</p>
+            </NavLink>
             <NavLink to={{
-              pathname: `/clients`,
-            }}><p>Clients page</p></NavLink>
+              pathname: '/clients',
+            }}
+            >
+              <p>Clients page</p>
+            </NavLink>
             <hr />
           </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
@@ -86,7 +89,7 @@ export const AllUsers = () => {
           </Loader>
         </div>
       </div>
-      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers = {activeUsers} setAssignPlan ={setAssignPlan} setAssignTrainer ={setAssignTrainer} />
+      <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer} />
       <AssignUsersToPlans assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
     </div>

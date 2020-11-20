@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 import { history as historyPropTypes } from 'history-prop-types';
 import Icon from 'components/atoms/Icon';
 
-const Return = ({ history, fill }) => <Icon name="arrow-left" fill={fill} onClick={() => history.goBack()} />;
+const Return = ({ history, color }) => <Icon name="arrow-left" color={color} onClick={() => history.goBack()} />;
 
 Return.propTypes = {
   history: PropTypes.shape(historyPropTypes).isRequired,
-  fill: PropTypes.string,
+  color: PropTypes.string,
 };
 
 Return.defaultProps = {
-  fill: ({ theme }) => theme.colorInputActive,
+  color: ({ theme }) => theme.colorInputActive,
 };
 
 export default withRouter(Return);

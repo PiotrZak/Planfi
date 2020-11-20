@@ -43,7 +43,8 @@ const Root = () => {
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
-                  <Route path={routes.confirmation} component={ConfirmationPage} />
+                  <Route path={routes.exercise} component={AddExerciseRefactor} />
+
                   <MenuTemplate>
                     <Route path={routes.categories} component={Categories} />
                     <PrivateRoute path={routes.category} component={Category} />

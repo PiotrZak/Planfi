@@ -5,7 +5,7 @@ import Input from 'components/molecules/Input';
 import { translate } from 'utils/Translation';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { categoryService } from '../../services/categoryService';
+import { categoryService } from 'services/categoryService';
 import Button from 'components/atoms/Button';
 import {ModalHeading} from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
@@ -13,45 +13,44 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 
 
 const initialValues = {
-    title: '',
+  title: '',
 };
 
 const validationSchema = Yup.object().shape({
-    title: Yup.string()
-        .required(translate('CategoryTitle')),
+  title: Yup.string()
+    .required(translate('CategoryTitle')),
 });
 
 const AddCategoryModal = ({ openModal, onClose, theme }) => {
+  const { notificationDispatch } = useNotificationContext();
 
-    const { notificationDispatch } = useNotificationContext();
+  const onSubmit = (values) => {
+    createCategory(values);
+  };
 
-    const onSubmit = (values) => {
-        createCategory(values)
-    }
-
-    const createCategory = (addCategoryData) => {
-        categoryService
-            .addCategory(addCategoryData)
+  const createCategory = (addCategoryData) => {
+    categoryService
+      .addCategory(addCategoryData);
+    notificationDispatch({
+      type: ADD,
+      payload: {
+        content: { success: 'OK', message: translate('CategoryAdded') },
+        type: 'positive',
+      },
+    });
+    onClose()
+      .then(() => {
+      })
+      .catch((error) => {
         notificationDispatch({
-            type: ADD,
-            payload: {
-                content: { success: 'OK', message: translate('CategoryAdded') },
-                type: 'positive'
-            }
-        })
-        onClose()
-            .then(() => {
-            })
-            .catch((error) => {
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { error: error, message: translate('ErrorAlert') },
-                        type: 'error'
-                    }
-                })
-            });
-    }
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
+      });
+  };
 
     return (
         <StyledModal isOpen={openModal}

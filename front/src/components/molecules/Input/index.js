@@ -1,8 +1,9 @@
 import React from 'react';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import handleTextType from 'support/TextType';
 import Icon from 'components/atoms/Icon';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 // Detect input status
 const handleBorderColor = (theme, disabled, error) => {
@@ -19,14 +20,14 @@ const handleBorderColor = (theme, disabled, error) => {
 const StyledInput = styled.input`
   outline: none;
   padding: .6rem 1.6rem;
-  border-radius: 3px;  
-  
+  border-radius: 3px;
+
   ${() => handleTextType('body-3-regular')};
 
   color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
   border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
-  
+
   :focus{
     border: 1px solid ${({ theme }) => theme.colorNeutralDark};
     background: ${({ theme }) => theme.colorGray70};
@@ -37,11 +38,11 @@ const StyledInput = styled.input`
 const StyledInputContainer = styled.input`
   outline: none;
   border: none;
-  
+
   border-radius: ${({ disabled }) => ((disabled) ? 'none' : '3px')};
-        
+
   ${() => handleTextType('body-3-regular')};
-        
+
   padding: .6rem 1.6rem;
 
   color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
@@ -50,7 +51,7 @@ const StyledInputContainer = styled.input`
 
 const CenterIcon = styled.div`
   padding: .85rem;
-  
+
   color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
 `;
@@ -61,7 +62,7 @@ const Container = styled.div`
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
   border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
   border-radius: 3px;
-  
+
   ${StyledInputContainer}:focus{
     background: ${({ theme }) => theme.colorGray70};
   }
@@ -69,17 +70,17 @@ const Container = styled.div`
 
 const ContainerLeft = styled(Container)`
   flex-direction: row-reverse;
-  
+
   ${StyledInputContainer} + ${CenterIcon}{
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
   }
-  
+
   ${StyledInputContainer}{
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
   }
-  
+
   ${StyledInputContainer}{
     padding: .6rem 1.6rem .6rem 0;
   }
@@ -91,12 +92,12 @@ const ContainerRight = styled(Container)`
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
   }
-  
+
   ${StyledInputContainer}{
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
   }
-  
+
   ${StyledInputContainer}{
     padding: .6rem 0 .6rem 1.6rem;
   }
@@ -106,27 +107,29 @@ const ContainerBoth = styled(Container)`
 
   ${CenterIcon}:first-child{
     border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;    
+    border-top-left-radius: 3px;
   }
-  
+
   ${CenterIcon}:last-child{
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
   }
-  
+
   ${StyledInputContainer}{
     border-radius: 0;
     padding: 0;
   }
 `;
 
-const Input = (props) => {
+const Input = ({
+  typeInput, disabled, error, icon,
+}, ...rest) => {
+  const { theme } = useThemeContext();
+
   const TYPE_BORDER = {
     ADD: 'add',
     REMOVE: 'remove',
   };
-
-  const { theme } = props;
 
   const changeBorder = (e, toChange) => {
     // check id of Container
@@ -154,23 +157,19 @@ const Input = (props) => {
     }
   };
 
-  const {
-    typeInput, disabled, error, icon,
-  } = props;
-
   switch (typeInput) {
     case 'basic':
-      return <StyledInput {...props} />;
+      return <StyledInput {...rest} />;
     case 'left':
       return (
         <ContainerLeft disabled={disabled} error={error} id="Container">
           <StyledInputContainer
-            {...props}
+            {...rest}
             onFocus={(e) => changeBorder(e, TYPE_BORDER.ADD)}
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
         </ContainerLeft>
       );
@@ -178,12 +177,12 @@ const Input = (props) => {
       return (
         <ContainerRight disabled={disabled} error={error} id="Container">
           <StyledInputContainer
-            {...props}
+            {...rest}
             onFocus={(e) => changeBorder(e, TYPE_BORDER.ADD)}
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
         </ContainerRight>
       );
@@ -191,20 +190,20 @@ const Input = (props) => {
       return (
         <ContainerBoth disabled={disabled} error={error} id="Container">
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
           <StyledInputContainer
-            {...props}
+            {...rest}
             onFocus={(e) => changeBorder(e, TYPE_BORDER.ADD)}
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon name={icon || 'circle'} fill={theme.colorPrimary} />
+            <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
         </ContainerBoth>
       );
     default:
-      return <StyledInput {...props} />;
+      return <StyledInput {...rest} />;
   }
 };
 
@@ -222,4 +221,4 @@ Input.defaultProps = {
   icon: 'circle',
 };
 
-export default withTheme(Input);
+export default Input;

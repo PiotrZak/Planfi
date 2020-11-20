@@ -29,14 +29,14 @@ export const AssignExercisesToPlan = ({ setAssignExercises, assignExerciseToPlan
                 <div>
                     <div className="bottom-nav">
                         <div className="bottom-nav__item">
-                            <Icon name="check" fill="#2E6D2C" />
+                            <Icon name="check" color="#2E6D2C" />
                             <p>
                                 {activeExercise.length}
                                 {messages.plans.selected}
                             </p>
                         </div>
                         <div onClick={() => closeAssignExercises()} className="bottom-nav__item">
-                            <Icon name="arrow-left" fill="#5E4AE3" />
+                            <Icon name="arrow-left" color="#5E4AE3" />
                             <p>
                                 {messages.plans.returnToSubMenu}
                             </p>
