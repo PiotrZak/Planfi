@@ -74,6 +74,16 @@ const AddExerciseRefactor = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
 
+  const fileNotification = (message) => {
+    notificationDispatch({
+      type: ADD,
+      payload: {
+        content: { success: 'OK', message },
+        type: 'error',
+      },
+    });
+  };
+
   const resetFileInput = () => {
     document.getElementById('choose-file-button').value = '';
   };
@@ -88,43 +98,58 @@ const AddExerciseRefactor = () => {
       );
     } */
 
-    const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'];
-    const acceptedVideoFileType = ['video/mp4', 'video/mov', 'video/wmv', 'video/fly'];
+    // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
+    const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    const acceptedVideoFileType = ['video/mp4'];
 
-    // 32 mb
-    const maxPhotoSize = 32000000;
-    // 250 mb
-    const maxVideoSize = 250000000;
+    // 10 mb
+    const maxPhotoSize = 10000000;
+    // 30 mb
+    const maxVideoSize = 30000000;
 
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
         const fileType = File.type;
-        const fileSize = File.size;
 
         // checking if the photo file type is correct
         if (acceptedImageFileType.includes(fileType)) {
-          console.log('File size ', fileSize);
-          // creating file object with unique ID
-          const ID = Random(1, 10000);
-          const fileData = {
-            ID,
-            File: URL.createObjectURL(File),
-          };
-          // append file object to state
-          setSelectedFiles(((prevState) => prevState.concat(fileData)));
-
+          // checking photo file size
+          const fileSize = File.size;
+          if (fileSize <= maxPhotoSize) {
+            // creating file object with unique ID
+            const ID = Random(1, 10000);
+            const fileData = {
+              ID,
+              File: URL.createObjectURL(File),
+            };
+            // append file object to state
+            setSelectedFiles(((prevState) => prevState.concat(fileData)));
+          } else {
+            // file size if too big alert
+            fileNotification(`File size is too big ${File.name}. Photo size limit is 10 MB`);
+            resetFileInput();
+          }
           // checking if the video file type is correct
         } else if (acceptedVideoFileType.includes(fileType)) {
-
+          // checking video file size
+          const fileSize = File.size;
+          if (fileSize <= maxVideoSize) {
+            // creating file object with unique ID
+            const ID = Random(1, 10000);
+            const fileData = {
+              ID,
+              File: URL.createObjectURL(File),
+            };
+            // append file object to state
+            setSelectedFiles(((prevState) => prevState.concat(fileData)));
+          } else {
+            // file size if too big alert
+            fileNotification(`File size is too big ${File.name}. Video size limit is 30 MB`);
+            resetFileInput();
+          }
         } else {
-          // show alert
-          notificationDispatch({
-            type: ADD,
-            payload: {
-              content: { success: 'OK', message: 'Invalid file type' },
-              type: 'error',
-            },
-          });
+          // invalid file type alert
+          fileNotification('Invalid file type. allowed files mp4, jpeg, jpg, png, gif');
           resetFileInput();
         }
       });
