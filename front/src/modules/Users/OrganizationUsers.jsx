@@ -4,15 +4,9 @@ import Return from 'components/molecules/Return';
 import { commonUtil } from 'utils/common.util';
 import Loader  from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
-<<<<<<< HEAD
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import { useUserContext } from '../../support/context/UserContext';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-=======
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import {useUserContext} from "../../support/context/UserContext"
 
->>>>>>> parent of de79f06... Merge pull request #28 from PiotrZak/Menu
 import InviteUserModal from './InviteUsersModal';
 // import messages from 'lang/eng'
 
@@ -21,11 +15,6 @@ import InviteUserModal from './InviteUsersModal';
 // import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
 
 const OrganizationUsers = () => {
-<<<<<<< HEAD
-  const { notificationDispatch } = useNotificationContext();
-=======
-
->>>>>>> parent of de79f06... Merge pull request #28 from PiotrZak/Menu
   const { user } = useUserContext();
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState(users);
