@@ -11,7 +11,6 @@ export  const en = {
   SignIn: 'Sign in',
   Password: 'Password',
   ForgotPassword: 'I forget password',
-  BackToLogin: 'Back to login',
 
   ActivateAccountSuccess: 'Your account succesfully activated',
   ErrorAlert: 'Something gone wrong',

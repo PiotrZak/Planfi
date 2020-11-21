@@ -1,15 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import PropTypes from 'prop-types';
 import handleTextType from 'support/TextType';
-import { useThemeContext } from 'support/context/ThemeContext';
 import Icon from 'components/atoms/Icon';
 
 const StyledLabel = styled.label`
   display: flex;
   ${({ type }) => type === 'top' && 'flex-direction: column;'};
 
-  cursor: pointer;
+  cursor: pointer;  
 `;
 
 const Asterisk = styled.p`
@@ -34,25 +33,21 @@ const InnerContainer = styled.div`
 `;
 
 const Label = ({
-  children, text, type, required, questionMark,
-}) => {
-  const { theme } = useThemeContext();
-
-  return (
-    <StyledLabel type={type}>
-      <Container type={type}>
-        <Paragraph>{text}</Paragraph>
-        {required && <Asterisk>*</Asterisk>}
-        {questionMark && (
-          <InnerContainer>
-            <Icon name="question-circle" size="1.2rem" color={theme.colorPrimary} />
-          </InnerContainer>
-        )}
-      </Container>
-      {children}
-    </StyledLabel>
-  );
-};
+  children, text, theme, type, required, questionMark,
+}) => (
+  <StyledLabel type={type}>
+    <Container type={type}>
+      <Paragraph>{text}</Paragraph>
+      {required && <Asterisk>*</Asterisk>}
+      {questionMark && (
+      <InnerContainer>
+        <Icon name="question-circle" height="1.2rem" width="1.2rem" fill={theme.colorPrimary} />
+      </InnerContainer>
+      )}
+    </Container>
+    {children}
+  </StyledLabel>
+);
 
 Label.propTypes = {
   children: PropTypes.node.isRequired,
@@ -68,4 +63,4 @@ Label.defaultProps = {
   questionMark: false,
 };
 
-export default Label;
+export default withTheme(Label);

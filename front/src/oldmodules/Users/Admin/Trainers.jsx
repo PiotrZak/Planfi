@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
@@ -6,14 +7,14 @@ import Return from 'components/atoms/Return';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import { userContext } from 'App';
-import { isMobile } from 'react-device-detect';
 import InviteUserModal from '../InviteUsersModal';
+import { isMobile} from "react-device-detect";
 
-const assignTrainerToUserNotification = 'Trainer sucesfully assigned to users!';
-const noUsers = 'There are no Users';
-const userDeleted = 'Users sucessfully deleted!';
+const assignTrainerToUserNotification = "Trainer sucesfully assigned to users!"
+const noUsers = "There are no Users";
+const userDeleted = "Users sucessfully deleted!"
 
 export const Trainers = () => {
   const { user } = useContext(userContext);

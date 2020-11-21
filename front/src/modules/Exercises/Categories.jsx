@@ -35,8 +35,8 @@ const Categories = () => {
   const { loading, error, data, refetch: _refetch} = useQuery(CATEGORY);
 
   const closeModal = () => {
-    setOpenModal(false);
-  };
+    setOpenModal(false)
+  }
 
   useEffect(() => {
     refreshData()
@@ -44,14 +44,14 @@ const Categories = () => {
 
   const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200) }, [_refetch])
 
-  if (loading) return <Loader isLoading={loading} />;
+  if (loading) return <Loader isLoading={loading}></Loader>;
   if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
-    const selectedCategories = commonUtil.getCheckedData(selectedData, 'categoryId');
-    setSelectedCategories(selectedCategories);
+    const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
+    setSelectedCategories(selectedCategories)
     selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
-  };
+  }
 
   return (
     <>
@@ -60,7 +60,7 @@ const Categories = () => {
           <BackTopNav />
           <Heading>{translate('CategoriesTitle')}</Heading>
           <IconWrapper>
-            <Icon onClick={() => setOpenModal(true)} name="plus" color={theme.colorInputActive} />
+            <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
           </IconWrapper>
         </Nav>
         {data.categories.length > 0 ?

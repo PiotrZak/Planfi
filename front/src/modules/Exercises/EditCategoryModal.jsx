@@ -5,24 +5,30 @@ import Input from 'components/molecules/Input';
 import { translate } from 'utils/Translation';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-import { categoryService } from 'services/categoryService';
+import { categoryService } from '../../services/categoryService';
 import Button from 'components/atoms/Button';
 import {ModalHeading} from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const initialValues = {
-  title: '',
+    title: '',
 };
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string()
-    .required(translate('EnterFirstNameAndLastName')),
+    title: Yup.string()
+        .required(translate('EnterFirstNameAndLastName')),
 });
 
 const EditCategoryModal = ({ selectedCategories, openEditModal, onClose, theme }) => {
+<<<<<<< HEAD
     const { notificationDispatch } = useNotificationContext();
     
+=======
+
+    const { notificationDispatch } = useNotificationContext();
+
+>>>>>>> parent of de79f06... Merge pull request #28 from PiotrZak/Menu
     const onSubmit = (values) => {
         editCategory(values)
     }
