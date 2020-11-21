@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { organizationService } from 'services/organizationServices';
-import { alertActions } from 'redux/actions/alert.actions';
 import Return from 'components/molecules/Return';
 import { commonUtil } from 'utils/common.util';
 import Loader from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import { useUserContext } from '../../support/context/UserContext';
-
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import InviteUserModal from './InviteUsersModal';
 // import messages from 'lang/eng'
 
@@ -17,6 +15,7 @@ import InviteUserModal from './InviteUsersModal';
 // import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
 
 const OrganizationUsers = () => {
+  const { notificationDispatch } = useNotificationContext();
   const { user } = useUserContext();
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState(users);

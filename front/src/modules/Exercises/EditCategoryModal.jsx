@@ -21,11 +21,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditCategoryModal = ({ selectedCategories, openEditModal, onClose, theme }) => {
-
-  const onSubmit = (values) => {
-    editCategory(values);
-  };
-
+    const { notificationDispatch } = useNotificationContext();
+    
     const onSubmit = (values) => {
         editCategory(values)
     }
