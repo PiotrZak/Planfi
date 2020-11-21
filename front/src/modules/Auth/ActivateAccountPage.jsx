@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -15,9 +15,9 @@ import Paragraph from 'components/atoms/Paragraph';
 import Checkbox from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
-import { userService } from 'services/userServices';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
 import Heading from 'components/atoms/Heading';
+import { accountService } from '../../services/accountServices';
 
 const initialValues = {
   name: '',
@@ -49,7 +49,6 @@ const validationSchema = Yup.object().shape({
 });
 
 // todo - all those components need to be available globally
-
 const StyledInputContainer = styled(InputContainer)`
   height: 13rem;
 `;
@@ -57,7 +56,6 @@ const StyledInputContainer = styled(InputContainer)`
 const StyledInputPhoneContainer = styled(InputContainer)`
   margin-top: 2rem;
 `;
-
 const Container = styled.div`
   display: flex;
 `;
@@ -81,6 +79,17 @@ const CheckboxContainer = styled.div`
 `;
 
 const ActivateAccountPage = () => {
+
+  useEffect(() => {
+    setTimeout(function () {
+      history.push({
+        pathname: routes.confirmation,
+        state: { message: "Activation" },
+      }
+      );
+    }, timeToRedirect);
+  }, []);
+
   const { verificationToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
   const history = useHistory();
@@ -103,7 +112,8 @@ const ActivateAccountPage = () => {
   const timeToRedirect = 5000;
 
   const activateUser = (activateUserModel) => {
-    userService
+
+    accountService
       .activate(activateUserModel)
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data));
@@ -111,10 +121,16 @@ const ActivateAccountPage = () => {
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('ActivateAccountSuccess') },
-            type: 'positive',
-          },
-        });
-        setTimeout(() => { history.push(routes.login); }, timeToRedirect);
+            type: 'positive'
+          }
+        })
+        setTimeout(function () {
+          history.push({
+            pathname: '/confirmation',
+            state: { message: "Activation" },
+          }
+          );
+        }, timeToRedirect);
       })
       .catch((error) => {
         notificationDispatch({

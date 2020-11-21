@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import styled from 'styled-components';
-
-// todo - test if image appear after adding exercises & add circle elements
+//todo - test if image appear after adding exercises & add circle elements
+import Image from 'components/atoms/Image';
 
 const GenericElementContainer = styled.div`
   display: flex;
@@ -9,17 +9,19 @@ const GenericElementContainer = styled.div`
   align-items: center;
   background: ${({ theme }) => theme.colorGray80};
   padding: 1.8rem 4.2rem;
+  margin: 0.8rem 0;
   height: 7.2rem;
   border-radius: 4px;
   color:white;
+  z-index:2;
 `;
 
 const GenericElementInfo = styled.div`
-  color: ${({ theme }) => theme.colorPrimary};
-  font-size: 1.4rem;
-  line-height: 2.1rem;
-  text-decoration:none;
-  text-align:left;
+color: ${({ theme }) => theme.colorPrimary};
+font-size: 1.4rem;
+line-height: 2.1rem;
+text-decoration:none;
+text-align:left;
 `;
 
 const Headline = styled.h4`
@@ -53,25 +55,24 @@ const GenericElementImageEmpty = styled.div`
       height: 4.8rem;
 `;
 
-const Image = (image) => (
-  <img src={`data:image/jpeg;base64,${image}`} />
-);
-
 const GenericElement = ({
-  headline,
-  subline,
-  image,
-  circle,
-}) => (
-  <GenericElementContainer>
-    {image
-      ? <GenericElementImage><Image url={image} /></GenericElementImage>
-      : <GenericElementImageEmpty />}
-    <GenericElementInfo>
-      <Headline>{headline}</Headline>
-      <Subline>{subline}</Subline>
-    </GenericElementInfo>
-  </GenericElementContainer>
-);
+    headline,
+    subline,
+    image,
+    circle,
+}) => {
+    return (
+        <GenericElementContainer>
+            {image
+                ? <GenericElementImage><Image url={image} /></GenericElementImage>
+                : <GenericElementImageEmpty></GenericElementImageEmpty>
+            }
+            <GenericElementInfo>
+                <Headline>{headline}</Headline>
+                <Subline>{subline}</Subline>
+            </GenericElementInfo>
+        </GenericElementContainer>
+    )
+}
 
 export default GenericElement;

@@ -55,6 +55,10 @@
               "target": "Package",
               "version": "[10.5.3, )"
             },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[10.5.3, )"
+            },
             "HotChocolate.AspNetCore.Playground": {
               "target": "Package",
               "version": "[10.5.3, )"

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
+import styled from 'styled-components';
 
 const Counter = ({ defaultValue, handleData }) => {
   const [value, setValue] = useState(defaultValue || 0);
@@ -24,9 +24,9 @@ const Counter = ({ defaultValue, handleData }) => {
 
   return (
     <Container>
-      <Icon onClick={increment} name="plus-circle" size="1rem" />
+      <Icon onClick={increment} name="plus-circle" />
       <h2>{value}</h2>
-      <Icon onClick={increment} name="minus-circle" size="1rem" />
+      <Icon onClick={decrement} name="minus-circle" />
     </Container>
   );
 };

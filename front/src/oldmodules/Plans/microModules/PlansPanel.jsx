@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import { Loader } from 'components/atoms/Loader';
 import GenericElement from "components/molecules/GenericElement/GenericElement"

@@ -5,6 +5,11 @@
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
+      <e p="Common" t="Include">
+        <e p="ApiCommonResponse.cs" t="Include" />
+        <e p="ApiCommonResponseBuilder.cs" t="Include" />
+        <e p="CommonResponse.cs" t="Include" />
+      </e>
       <e p="Controllers" t="Include">
         <e p="AccountController.cs" t="Include" />
         <e p="CategoryController.cs" t="Include" />
@@ -25,6 +30,7 @@
           <e p="CreateOrganization.cs" t="Include" />
           <e p="CreatePlan.cs" t="Include" />
           <e p="ForgotPassword.cs" t="Include" />
+          <e p="ModifyExercise.cs" t="Include" />
           <e p="ResetPasswordRequest.cs" t="Include" />
         </e>
       </e>
@@ -58,6 +64,10 @@
         <e p="RDSContext.cs" t="Include" />
       </e>
       <e p="hostsettings.json" t="Include" />
+      <e p="Interfaces" t="Include">
+        <e p="IAccountService.cs" t="Include" />
+        <e p="ICategoryService.cs" t="Include" />
+      </e>
       <e p="Migrations" t="Include">
         <e p="20201102155200_InitialCreate.cs" t="Include" />
         <e p="20201102155200_InitialCreate.Designer.cs" t="Include" />
@@ -72,6 +82,7 @@
         <e p="ResetPasswordModel.cs" t="Include" />
         <e p="ResultPlan.cs" t="Include" />
         <e p="TrainerClient.cs" t="Include" />
+        <e p="UpdateCategoryModel.cs" t="Include" />
         <e p="UpdateExerciseModel.cs" t="Include" />
         <e p="UpdateUserModel.cs" t="Include" />
       </e>

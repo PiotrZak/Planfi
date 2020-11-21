@@ -6,15 +6,16 @@ import { alertActions } from 'redux/actions/alert.actions';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGenericComponent';
-import Button from 'components/atoms/Button';
-import messages from 'lang/eng';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
+import Button from "components/atoms/Button"
+import messages from 'lang/eng'
 
-const ReactBottomsheet = require('react-bottomsheet');
+var ReactBottomsheet = require('react-bottomsheet');
 
 export const AssignUsersToTrainers = ({
   organizationId, assignTrainer, setAssignTrainer, activeUsers, setBottomSheet,
 }) => {
+
   const [trainers, setTrainers] = useState();
   const [activeTrainers, setActiveTrainers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +25,7 @@ export const AssignUsersToTrainers = ({
   useEffect(() => {
     getAllTrainers();
     if (activeUsers == 0) {
-      setAssignTrainer(false);
+      setAssignTrainer(false)
     }
   }, [activeUsers]);
 
@@ -55,7 +56,7 @@ export const AssignUsersToTrainers = ({
       .assignUsersToTrainer(data)
       .then(() => {
         dispatch(alertActions.success(messages.users.assignPlanToUserNotification));
-        setAssignTrainer(false);
+        setAssignTrainer(false)
         setBottomSheet(false);
       })
       .catch((error) => {
@@ -75,10 +76,7 @@ export const AssignUsersToTrainers = ({
       <div className="bottom-nav">
         <div className="bottom-nav__item">
           <Icon name="check" fill="#2E6D2C" />
-          <p>
-            {activeUsers.length}
-            selected
-          </p>
+          <p>{activeUsers.length}selected</p>
         </div>
 
         <div className="bottom-nav__item">
@@ -94,7 +92,7 @@ export const AssignUsersToTrainers = ({
         <Loader isLoading={isLoading}>
           {trainers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={trainers} onSelect={getSelectedTrainerIds} /> : <h1>{messages.users.noUsers}</h1>}
         </Loader>
-        <Button disabled={activeTrainers.length === 0} className="btn btn--primary btn--lg" onClick={assignUserToPlan} name={activeTrainers.length === 0 ? 'Select Plan' : 'Assign Trainers to Users'} />
+        <Button disabled={activeTrainers.length === 0} className="btn btn--primary btn--lg" onClick={assignUserToPlan} name={activeTrainers.length === 0 ? "Select Plan" : "Assign Trainers to Users"} />
       </div>
 
     </ReactBottomsheet>

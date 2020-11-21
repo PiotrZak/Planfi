@@ -169,6 +169,10 @@ const AddExerciseRefactor = () => {
     }
   };
 
+  const removeFile = (e) => {
+
+  };
+
   return (
     <ExerciseTemplate>
       {/* eslint-disable-next-line max-len */}
@@ -192,7 +196,7 @@ const AddExerciseRefactor = () => {
             <WrapperAttachments onClick={triggerFileUploadButton}>
               <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" />
               <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
-              <FileUploadButton id="choose-file-button" onChange={(e) => handleImageChange(e)} multiple />
+              <FileUploadButton id="choose-file-button" onChange={handleImageChange} multiple />
             </WrapperAttachments>
             {renderAttachmentsPreview(selectedFiles)}
             <ContainerDescription>

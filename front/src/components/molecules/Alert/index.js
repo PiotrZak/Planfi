@@ -51,7 +51,7 @@ const handleIconColor = (type, theme) => {
 const Wrapper = styled.div`
   position: absolute;
   top: 0;
-  width: 100%;
+  width:100%;
   padding-left: 1.8rem;
   padding-right: 2.6rem;
   display: flex;
@@ -95,7 +95,7 @@ const Alert = ({ notification }) => {
         <Wrapper type={n.type} theme={theme} key={n.id}>
           <LeftContainer>
             <IconWrapper>
-              <Icon name={handleIconType(n.type)} color={handleIconColor(n.type, theme)} />
+              <Icon name={handleIconType(n.type)} fill={handleIconColor(n.type, theme)} />
             </IconWrapper>
             <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
           </LeftContainer>

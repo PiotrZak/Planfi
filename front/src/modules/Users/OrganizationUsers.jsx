@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useDispatch } from 'react-redux';
 import { organizationService } from 'services/organizationServices';
-import { alertActions } from 'redux/actions/alert.actions';
 import Return from 'components/molecules/Return';
 import { commonUtil } from 'utils/common.util';
-import Loader from 'components/atoms/Loader';
+import Loader  from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import { useUserContext } from '../../support/context/UserContext';
+import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
+import {useUserContext} from "../../support/context/UserContext"
 
 import InviteUserModal from './InviteUsersModal';
 // import messages from 'lang/eng'
@@ -28,7 +26,7 @@ const OrganizationUsers = () => {
   const [bottomSheet, setBottomSheet] = useState(false);
 
   useEffect(() => {
-    console.log(user);
+    console.log(user)
     getAllUsers();
   }, []);
 
@@ -37,11 +35,11 @@ const OrganizationUsers = () => {
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
         setUsers(data);
-        setFilteredUsers(data);
+        setFilteredUsers(data)
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
       });
   };
 
@@ -57,13 +55,14 @@ const OrganizationUsers = () => {
   };
 
   const filterUsers = (role) => {
-    if (role == 'All') {
-      setFilteredUsers(users);
-    } else {
-      const filteredUsers = users.filter((x) => x.role == role);
-      setFilteredUsers(filteredUsers);
+    if (role == "All") {
+      setFilteredUsers(users)
     }
-  };
+    else {
+      const filteredUsers = users.filter(x => x.role == role)
+      setFilteredUsers(filteredUsers)
+    }
+  }
 
   return (
     <div>
@@ -71,32 +70,24 @@ const OrganizationUsers = () => {
         <div className="container__title">
           <Return />
           <h2>
-            {/* {messages.users.usersText}  */}
-            of -
-            {' '}
-            {user.organizationId}
-          </h2>
-          <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" color="#5e4ae3" /></div>
+          {/* {messages.users.usersText}  */}
+          of - {user.organizationId}</h2>
+          <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
         </div>
         <div className="users">
-          <h3>
-            {' '}
-            You are
-            {user.role}
-          </h3>
-          <div className="users__filters">
-            <p onClick={() => filterUsers('User')}>Clients</p>
-            <p onClick={() => filterUsers('Trainer')}>Trainers</p>
-            <p onClick={() => filterUsers('All')}> All </p>
-          </div>
+          <h3> You are {user.role}</h3>
+        <div className ="users__filters">
+          <p onClick={() => filterUsers("User")}>Clients</p>
+          <p onClick={() => filterUsers("Trainer")}>Trainers</p>
+          <p onClick={() => filterUsers("All")}> All </p>
+        </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           {/* <Loader isLoading={isLoading}> */}
-          {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} />
-            : (
-              <h1>
-                {/* {messages.users.noUsers} */}
-              </h1>
-            )}
+            {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : 
+            <h1>
+            {/* {messages.users.noUsers} */}
+            </h1>
+            }
           {/* </Loader> */}
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import { ReactSVG } from 'react-svg';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const IconsCode = {
   'ellipsis-h': 'e900',
@@ -35,15 +36,25 @@ const FontIcon = styled.span`
   font-size: ${({ size }) => size};
   color: ${({ color }) => color};
   cursor: ${({ cursorType }) => cursorType};
-
-  :before{
-    content: "\\${({ name }) => IconsCode[name]}";
-  }
 `;
 
 const Icon = ({
-  size, color, name, cursorType, ...rest
-}) => <FontIcon name={name} size={size} color={color} cursorType={cursorType} {...rest} />;
+  name, fill, width, height, onClick, cursorType,
+}) => {
+  const selectedIcon = `../icons/library/${name}.svg`;
+  return (
+    <StyledSVG
+      src={selectedIcon}
+      fill={fill}
+      onClick={onClick}
+      beforeInjection={(svg) => {
+        svg.setAttribute('fill', fill);
+        svg.setAttribute('width', width);
+        svg.setAttribute('height', height);
+      }}
+    />
+  );
+};
 
 Icon.propTypes = {
   name: PropTypes.oneOf([
@@ -60,9 +71,10 @@ Icon.propTypes = {
 };
 
 Icon.defaultProps = {
-  size: '1.5rem',
-  color: ({ theme }) => theme.colorPrimary,
-  cursorType: 'default',
+  width: '1.5rem',
+  height: '1.5rem',
+  fill: '#222',
+  cursorType: 'pointer',
 };
 
 export default Icon;
