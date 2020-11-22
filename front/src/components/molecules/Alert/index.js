@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styled, { css, withTheme } from 'styled-components';
+import styled, { css } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, REMOVE } from 'support/context/NotificationContext';

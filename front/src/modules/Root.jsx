@@ -21,6 +21,7 @@ import { userContext } from 'support/context/UserContext';
 import { Category } from 'modules/Exercises/Category';
 import MenuTemplate from 'templates/MenuTemplate';
 import AddExerciseRefactor from 'modules/Exercises/Exercises/AddExerciseRefactor';
+import TestPage from './Auth/Test';
 
 export const history = createBrowserHistory();
 
@@ -42,6 +43,7 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.exercise} component={AddExerciseRefactor} />
+                  <Route path="/test" component={TestPage} />
 
                   <MenuTemplate>
                     <Route path={routes.categories} component={Categories} />

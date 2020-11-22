@@ -12,7 +12,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import TextArea from 'components/molecules/TextArea';
-import ImagePreview from 'components/molecules/ImagePreview';
+import AttachmentPreview, { TYPE } from 'components/molecules/AttachmentPreview';
 import Random from 'utils/Random';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
@@ -110,17 +110,19 @@ const AddExerciseRefactor = () => {
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
         const fileType = File.type;
+        const fileSize = File.size;
 
         // checking if the photo file type is correct
         if (acceptedImageFileType.includes(fileType)) {
           // checking photo file size
-          const fileSize = File.size;
           if (fileSize <= maxPhotoSize) {
             // creating file object with unique ID
             const ID = Random(1, 10000);
             const fileData = {
               ID,
               File: URL.createObjectURL(File),
+              Type: TYPE.IMAGE,
+              VideoType: null,
             };
             // append file object to state
             setSelectedFiles(((prevState) => prevState.concat(fileData)));
@@ -132,13 +134,14 @@ const AddExerciseRefactor = () => {
           // checking if the video file type is correct
         } else if (acceptedVideoFileType.includes(fileType)) {
           // checking video file size
-          const fileSize = File.size;
           if (fileSize <= maxVideoSize) {
             // creating file object with unique ID
             const ID = Random(1, 10000);
             const fileData = {
               ID,
               File: URL.createObjectURL(File),
+              Type: TYPE.VIDEO,
+              VideoType: fileType,
             };
             // append file object to state
             setSelectedFiles(((prevState) => prevState.concat(fileData)));
@@ -180,8 +183,10 @@ const AddExerciseRefactor = () => {
       return (
         <ImagePreviewContainer id="image-preview-container">
           {source.map((photo) => (
-            <ImagePreview
-              imageSrc={photo.File}
+            <AttachmentPreview
+              attachmentSrc={photo.File}
+              type={photo.Type}
+              videoType={photo.videoType}
               alt=""
               key={photo.ID}
               setID={photo.ID}
