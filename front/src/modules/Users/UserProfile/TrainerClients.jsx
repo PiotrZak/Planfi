@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { userService } from "services/userServices";
-import { useDispatch } from "react-redux";
-import { alertActions } from "redux/actions/alert.actions";
 import GenericElement from "components/molecules/GenericElement/GenericElement"
 
-
-export const ClientsOfTrainer = ({ id }) => {
+export const TrainerClients = ({ id }) => {
 
     const [clients, setClients] = useState([])
-    const dispatch = useDispatch()
 
     useEffect(() => {
         userService
@@ -18,7 +14,6 @@ export const ClientsOfTrainer = ({ id }) => {
                 setClients(data)
             })
             .catch((error) => {
-                dispatch(alertActions.error(error))
             });
     }, [id]);
 
@@ -35,7 +30,7 @@ export const ClientsOfTrainer = ({ id }) => {
                 </div>
             ))
                 :
-                <h2>{messages.plans.notClients}</h2>
+                <h2>Not Clients</h2>
             }
         </div>
     )

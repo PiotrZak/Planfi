@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import Icon from 'components/atoms/Icon';
-import { useDispatch } from "react-redux";
 import styled from 'styled-components';
-import Return from 'components/atoms/Return';
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
 import classnames from 'classnames';
 import Heading from 'components/atoms/Heading';
@@ -12,23 +10,34 @@ import GlobalTemplate, { Nav as NavI } from "../../templates/GlobalTemplate"
 import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
 import { useThemeContext } from 'support/context/ThemeContext';
+import { useUserContext } from "../../support/context/UserContext"
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 
-import EditUserPasswordModal from "./Edit/EditUserPassword"
-import EditUserEmailModal from "./Edit/EditUserEmail";
-import EditUserDataModal from "./Edit/EditUserData";
+// import EditUserPasswordModal from "./Edit/old parts/EditUserPassword"
+// import EditUserEmailModal from "./Edit/old parts/EditUserEmail";
+// import EditUserDataModal from "./Edit/old parts/EditUserData";
 
-import { userContext } from 'App';
-
-import { ClientsOfTrainer } from "./UserProfile/ClientOfTrainer"
-import { PlansOfTrainer } from "./UserProfile/PlansOfTrainer"
-import { PlansOfUser } from "./UserProfile/PlansOfUser"
-import { TrainersOfClient } from "./UserProfile/TrainersOfClient"
+import { TrainerClients } from "./UserProfile/TrainerClients"
+import { TrainerPlans } from "./UserProfile/TrainerPlans"
+import { UserPlans } from "./UserProfile/UserPlans"
+import { ClientTrainers } from "./UserProfile/ClientTrainers"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
+const TabsContainer = styled.div`
+    display:flex;
+    text-align:center;
+`;
+
+const Tab = styled.div`
+    font-size:24px;
+    display:flex;
+    width:100%;
+`;
+
+const myPlans = "Plans";
 const UserEdit = "Edit Your Data";
 const ChangeMail = "Change Email";
 const ChangePassword = "Change Paassword";
@@ -36,21 +45,22 @@ const Logout = "Logout";
 
 export const MyProfile = (props) => {
 
-    const { user } = useContext(userContext);
+    const { user } = useUserContext();
     const { theme } = useThemeContext();
 
     const closeModal = () => {
         setOpenModal(false)
-      }
+    }
+
+    let sections = ['TrainerClients', 'TrainerPlans', 'UserPlans', 'ClientTrainers']
+
+    const [activeItem, setActiveItem] = useState('TrainerClients');
+
+    console.log(activeItem)
 
     const [bottomSheet, setBottomSheet] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const dispatch = useDispatch();
-
     const [openModal, setOpenModal] = useState(false);
-    const [openEditUserData, setOpenEditUserData] = useState(false)
-    const [openEditMailModal, setOpenEditMailModal] = useState(false);
-    const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
     return (
         <>
@@ -63,35 +73,64 @@ export const MyProfile = (props) => {
                     </IconWrapper>
                 </NavI>
                 {user && <UserInfo user={user} />}
-                <Navs user={user} />
-                <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
+
+                {sections.map((title, i) => (
+                    <Navs
+                        title={title}
+                        setActiveItem={setActiveItem}
+                        activeItem={activeItem}
+                    />
+                ))}
+                {user.role === "Trainer"}
+                {activeItem == 'TrainerClients' && <TrainerClients id={user.userId} />}
+                {activeItem == 'TrainerPlans' && <TrainerPlans id={user.userId} />}
+                {activeItem == 'UserPlans' && <UserPlans id={user.userId} />}
+                {activeItem == 'ClientTrainers' && <ClientTrainers id={user.userId} />}
+
+                {/* <Navs user={user} /> */}
+                {/* Modals */}
+                {/* <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
                 <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
-                <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} />
+                <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} /> */}
             </GlobalTemplate>
             <MyProfilePanel theme={theme} openModal={openModal} onClose={closeModal} />
         </>
     );
 }
 
+const Navs = ({ setActiveItem, activeItem, title }) => {
+    const changeTab = (title) => {
+        setActiveItem(title);
+    };
+    return (
+        <TabsContainer onClick={() => changeTab(title)}>
+        <Tab>
+            {title}
+        </Tab>
+        </TabsContainer>
+    );
+};
+
 export const MyProfilePanel = (props) => {
 
-    const { user } = useContext(userContext);
+    const { user } = useUserContext();
 
     const [bottomSheet, setBottomSheet] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
-    const dispatch = useDispatch();
 
     const [openEditUserData, setOpenEditUserData] = useState(false)
     const [openEditMailModal, setOpenEditMailModal] = useState(false);
     const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
-    const logout = () =>{
-        
-    }
+    const logout = () => {
 
+    }
     return (
         <StyledReactBottomSheet
+            showBlockLayer={false}
             visible={bottomSheet}
+            className={""}
+            appendCancelBtn={false}
             onClose={() => setBottomSheet(false)}>
             <PanelItem onClick={() => setOpenEditUserData(true)}>
                 {translate('UserEdit')}
@@ -109,54 +148,5 @@ export const MyProfilePanel = (props) => {
     );
 }
 
-const Navs = ({ user }) => {
-
-    const [activeTab, setActiveTab] = useState('1');
-    const myPlans = "Plans";
-    const toggle = tab => {
-        if (activeTab !== tab) setActiveTab(tab);
-    }
-
-    return (
-        <div className="user-container__tabs">
-            <Nav tabs>
-                <NavItem>
-                    <NavLink
-                        className={classnames({ active: activeTab === '1' })}
-                        onClick={() => { toggle('1'); }}
-                    >
-                        <h2>{myPlans}</h2>
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink
-                        className={classnames({ active: activeTab === '2' })}
-                        onClick={() => { toggle('2'); }}
-                    >
-                        {user.role === "Trainer"
-                            ? <h2>My Clients</h2>
-                            : <h2>My Trainers</h2>
-                        }
-                    </NavLink>
-                </NavItem>
-            </Nav>
-
-            <TabContent activeTab={activeTab}>
-                <TabPane tabId="1">
-                    {user.role === "Trainer"
-                        ? <h1><PlansOfTrainer id={user.userId} /></h1>
-                        : <h1><PlansOfUser id={user.userId} /></h1>
-                    }
-                </TabPane>
-                <TabPane tabId="2">
-                    {user.role === "Trainer"
-                        ? <h1><ClientsOfTrainer id={user.userId} /></h1>
-                        : <h1><TrainersOfClient id={user.userId} /></h1>
-                    }
-                </TabPane>
-            </TabContent>
-        </div>
-    )
-}
 
 export default MyProfile;
