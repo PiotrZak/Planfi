@@ -49,11 +49,25 @@ const AttachmentPreview = ({
   const [attachment, setAttachment] = useState('img/blankImage.png');
 
   const setPlayerFullSize = (e) => {
-    const id = e.target.id.split('img-prev-player-')[1];
+    let currentNode = e.target;
+    let id = null;
 
-    const doubleClickEvent = document.createEvent('MouseEvents');
+    while (currentNode.parentNode) {
+      // do stuff with node
+      id = parseInt(currentNode.id, 0);
+      if (!Number.isNaN(id)) {
+        const container = document.getElementById(id);
+        container.style.setProperty('width', '100%', '!important');
+        container.style.setProperty('height', '100vh', '!important');
+        console.log(container);
+        console.log(e.target);
+      }
+      currentNode = currentNode.parentNode;
+    }
+
+    /* const doubleClickEvent = document.createEvent('MouseEvents');
     doubleClickEvent.initEvent('dblclick', true, true);
-    document.getElementById(id).dispatchEvent(doubleClickEvent);
+    document.getElementById(id).dispatchEvent(doubleClickEvent); */
   };
 
   if (complete && attachment !== attachmentSrc) {
@@ -78,13 +92,12 @@ const AttachmentPreview = ({
         <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
       </Circle>
       <ReactPlayer
-        id={`img-prev-player-${setID}`}
         url={attachmentSrc}
         controls
         light
         width="100%"
         height="100vh"
-        onStart={(e) => setPlayerFullSize(e)}
+        onClick={(e) => setPlayerFullSize(e)}
       />
     </Container>
   );
