@@ -71,6 +71,8 @@
       <e p="Migrations" t="Include">
         <e p="20201102155200_InitialCreate.cs" t="Include" />
         <e p="20201102155200_InitialCreate.Designer.cs" t="Include" />
+        <e p="20201114174311_InitialCreate.cs" t="Include" />
+        <e p="20201114174311_InitialCreate.Designer.cs" t="Include" />
         <e p="DataContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="Models" t="Include">

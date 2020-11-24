@@ -13,6 +13,19 @@ const AvatarContainer = styled.div`
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    .file-input{
+      display:none;
+    }
+    &:hover {
+      background-color: ${({ theme }) => theme.colorGray70} !important;
+      transition:0.5s;
+      cursor:pointer;
+    }
+    p{
+      display: flex;
+      align-items: center;
+      text-align:center;
+    }
 `;
 
 export const Avatar = ({ avatar, id }) => {

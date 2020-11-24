@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
@@ -26,17 +26,6 @@ const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-const TabsContainer = styled.div`
-    display:flex;
-    text-align:center;
-`;
-
-const Tab = styled.div`
-    font-size:24px;
-    display:flex;
-    width:100%;
-`;
-
 const myPlans = "Plans";
 const UserEdit = "Edit Your Data";
 const ChangeMail = "Change Email";
@@ -48,17 +37,24 @@ export const MyProfile = (props) => {
     const { user } = useUserContext();
     const { theme } = useThemeContext();
 
+    let sections = [];
+
     const closeModal = () => {
         setOpenModal(false)
     }
 
-    let sections = ['TrainerClients', 'TrainerPlans', 'UserPlans', 'ClientTrainers']
+    if (user.role === "Trainer") {
+        sections = ['TrainerClients', 'TrainerPlans']
+    }
+    else {
+        sections = ['UserPlans', 'ClientTrainers']
+    }
 
     const [activeItem, setActiveItem] = useState('TrainerClients');
 
     console.log(activeItem)
 
-    const [bottomSheet, setBottomSheet] = useState(false)
+    const [bottomSheet, setBottomSheet] = useState('none')
     const [isLoading, setIsLoading] = useState(true)
     const [openModal, setOpenModal] = useState(false);
 
@@ -69,53 +65,85 @@ export const MyProfile = (props) => {
                     <BackTopNav />
                     <Heading>{translate('CategoriesTitle')}</Heading>
                     <IconWrapper>
-                        <Icon onClick={() => setBottomSheet(true)} name="plus" fill={theme.colorInputActive} />
+                        <Icon onClick={() => setBottomSheet('flex')} name="plus" fill={theme.colorInputActive} />
                     </IconWrapper>
                 </NavI>
                 {user && <UserInfo user={user} />}
 
-                {sections.map((title, i) => (
-                    <Navs
-                        title={title}
-                        setActiveItem={setActiveItem}
-                        activeItem={activeItem}
-                    />
-                ))}
-                {user.role === "Trainer"}
-                {activeItem == 'TrainerClients' && <TrainerClients id={user.userId} />}
-                {activeItem == 'TrainerPlans' && <TrainerPlans id={user.userId} />}
-                {activeItem == 'UserPlans' && <UserPlans id={user.userId} />}
-                {activeItem == 'ClientTrainers' && <ClientTrainers id={user.userId} />}
-
-                {/* <Navs user={user} /> */}
+                <TabsContainer>
+                    {sections.map((title, i) => (
+                        <Navs
+                            title={title}
+                            setActiveItem={setActiveItem}
+                            activeItem={activeItem}
+                        />
+                    ))}
+                </TabsContainer>
+                {user.role === "Trainer"
+                    ?
+                    <>
+                        {activeItem == 'Trainer Clients' && <TrainerClients id={user.userId} />}
+                        {activeItem == 'Trainer Plans' && <TrainerPlans id={user.userId} />}
+                    </>
+                    :
+                    <>
+                        {activeItem == 'UserPlans' && <UserPlans id={user.userId} />}
+                        {activeItem == 'ClientTrainers' && <ClientTrainers id={user.userId} />}
+                    </>
+                }
                 {/* Modals */}
                 {/* <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
                 <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
                 <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} /> */}
             </GlobalTemplate>
-            <MyProfilePanel theme={theme} openModal={openModal} onClose={closeModal} />
+            <MyProfilePanel 
+                theme={theme}
+                bottomSheet={bottomSheet}
+                setBottomSheet={setBottomSheet} 
+                />
         </>
     );
 }
+
+const TabsContainer = styled.div`
+    display:flex;
+    width:100%;
+    margin:3.2rem 0 0 0;
+    text-align:center;
+`;
+
+const Tab = styled.div`
+    font-size:24px;
+    display:flex;
+    width:100%;
+    text-align:center;
+    justify-content: center;
+    margin-bottom:0.2rem;
+    border-bottom: .2rem solid ${({ theme }) => theme.colorGray70} !important;
+    &:hover {
+      color: ${({ theme }) => theme.colorInputActive} !important;
+      cursor:pointer;
+      transition:0.6s;
+      border-bottom: .2rem solid ${({ theme }) => theme.colorInputActive} !important;
+    }
+`;
 
 const Navs = ({ setActiveItem, activeItem, title }) => {
     const changeTab = (title) => {
         setActiveItem(title);
     };
     return (
-        <TabsContainer onClick={() => changeTab(title)}>
-        <Tab>
-            {title}
-        </Tab>
-        </TabsContainer>
+        <Tab onClick={() => changeTab(title)}>{title}</Tab>
     );
 };
 
-export const MyProfilePanel = (props) => {
+export const MyProfilePanel = ({
+    bottomSheet,
+    setBottomSheet,
+}) => {
 
     const { user } = useUserContext();
 
-    const [bottomSheet, setBottomSheet] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
     const [openEditUserData, setOpenEditUserData] = useState(false)
@@ -130,20 +158,22 @@ export const MyProfilePanel = (props) => {
             showBlockLayer={false}
             visible={bottomSheet}
             className={""}
-            appendCancelBtn={false}
-            onClose={() => setBottomSheet(false)}>
-            <PanelItem onClick={() => setOpenEditUserData(true)}>
-                {translate('UserEdit')}
-            </PanelItem>
-            <PanelItem onClick={() => setOpenEditMailModal(true)}>
-                {translate('ChangeMail')}
-            </PanelItem>
-            <PanelItem onClick={() => setOpenEditUserPasswordModal(true)}>
-                {translate('ChangePassword')}
-            </PanelItem>
-            <PanelItem onClick={() => logout()}>
-                {translate('Logout')}
-            </PanelItem>
+            onClose={() => setBottomSheet(false)}
+            appendCancelBtn={false}>
+            <PanelContainer>
+                <PanelItem onClick={() => setOpenEditUserData(true)}>
+                    {translate('UserEdit')}
+                </PanelItem>
+                <PanelItem onClick={() => setOpenEditMailModal(true)}>
+                    {translate('ChangeMail')}
+                </PanelItem>
+                <PanelItem onClick={() => setOpenEditUserPasswordModal(true)}>
+                    {translate('ChangePassword')}
+                </PanelItem>
+                <PanelItem onClick={() => logout()}>
+                    {translate('Logout')}
+                </PanelItem>
+            </PanelContainer>
         </StyledReactBottomSheet>
     );
 }
