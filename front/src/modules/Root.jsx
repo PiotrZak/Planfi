@@ -15,6 +15,8 @@ import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 import Categories from 'modules/Exercises/Categories';
 import Category from 'modules/Exercises/Category/Category';
 
+import MyProfile from 'modules/Users/MyProfile';
+
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { PrivateRoute, Role } from '../utils/PrivateRoute';
 import { ThemeContext } from 'support/context/ThemeContext';
@@ -44,6 +46,7 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
+                  <Route path={routes.myProfile} component={MyProfile} />
                   <MenuTemplate>
                     <Route path={routes.categories} component={Categories} />
                     <PrivateRoute path={routes.category} component={Category} />
