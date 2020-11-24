@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Icon from 'components/atoms/Icon';
@@ -38,6 +39,35 @@ const Image = styled.img`
   border-radius: 2px;
 `;
 
+const StyledOverlay = styled.div`
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: ${({ theme }) => theme.colorGray70};
+`;
+
+const CloseIconContainer = styled.div`
+
+`;
+
+const VideoPlayer = (attachmentSrc) => (
+  <StyledOverlay>
+    <CloseIconContainer>
+      <Icon name="union" size="2rem" cursorType="pointer" />
+    </CloseIconContainer>
+    <ReactPlayer
+      url={attachmentSrc}
+      controls
+      light
+      width="100%"
+      height="80vh"
+    />
+  </StyledOverlay>
+);
+
 export const TYPE = {
   IMAGE: 'image',
   VIDEO: 'video',
@@ -48,27 +78,7 @@ const AttachmentPreview = ({
 }) => {
   const [attachment, setAttachment] = useState('img/blankImage.png');
 
-  const setPlayerFullSize = (e) => {
-    let currentNode = e.target;
-    let id = null;
-
-    while (currentNode.parentNode) {
-      // do stuff with node
-      id = parseInt(currentNode.id, 0);
-      if (!Number.isNaN(id)) {
-        const container = document.getElementById(id);
-        container.style.setProperty('width', '100%', '!important');
-        container.style.setProperty('height', '100vh', '!important');
-        console.log(container);
-        console.log(e.target);
-      }
-      currentNode = currentNode.parentNode;
-    }
-
-    /* const doubleClickEvent = document.createEvent('MouseEvents');
-    doubleClickEvent.initEvent('dblclick', true, true);
-    document.getElementById(id).dispatchEvent(doubleClickEvent); */
-  };
+  const setFullScreen = (attachmentSrc) => createPortal(<VideoPlayer attachmentSrc={attachmentSrc} />, document.body);
 
   if (complete && attachment !== attachmentSrc) {
     setAttachment(attachmentSrc);
@@ -95,9 +105,10 @@ const AttachmentPreview = ({
         url={attachmentSrc}
         controls
         light
-        width="100%"
-        height="100vh"
-        onClick={(e) => setPlayerFullSize(e)}
+        onClick={() => setFullScreen(attachmentSrc)}
+        playing={false}
+        width="4.8rem"
+        height="4.8rem"
       />
     </Container>
   );
