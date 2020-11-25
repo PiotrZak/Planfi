@@ -161,17 +161,14 @@ const AddExerciseRefactor = () => {
 
   function removeFile(e) {
     e.stopPropagation();
-
     // get id of attachment preview
     const id = e.target.id.split('img-prev-')[1];
-
     // remove attachment
     for (let i = 0; i <= selectedFiles.length; ++i) {
       if (id == selectedFiles[i].ID) {
         const list = [...selectedFiles];
         const updatedList = list.filter((item) => item.ID !== selectedFiles[i].ID);
         setSelectedFiles(updatedList);
-
         resetFileInput();
         break;
       }
@@ -197,10 +194,6 @@ const AddExerciseRefactor = () => {
         </ImagePreviewContainer>
       );
     }
-  };
-
-  const removeFile = (e) => {
-
   };
 
   return (
