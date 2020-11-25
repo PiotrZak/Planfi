@@ -1,9 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
-import { TabContent, TabPane, Nav, NavItem, NavLink, } from 'reactstrap';
-import classnames from 'classnames';
-import Heading from 'components/atoms/Heading';
 import "react-multi-carousel/lib/styles.css";
 import { UserInfo } from "components/molecules/UserInfo"
 import GlobalTemplate, { Nav as NavI } from "../../templates/GlobalTemplate"
@@ -44,10 +41,10 @@ export const MyProfile = (props) => {
     }
 
     if (user.role === "Trainer") {
-        sections = ['TrainerClients', 'TrainerPlans']
+        sections = ['Trainer Clients', 'Trainer Plans']
     }
     else {
-        sections = ['UserPlans', 'ClientTrainers']
+        sections = ['User Plans', 'Client Trainers']
     }
 
     const [activeItem, setActiveItem] = useState('TrainerClients');
@@ -63,7 +60,6 @@ export const MyProfile = (props) => {
             <GlobalTemplate>
                 <NavI>
                     <BackTopNav />
-                    <Heading>{translate('CategoriesTitle')}</Heading>
                     <IconWrapper>
                         <Icon onClick={() => setBottomSheet('flex')} name="plus" fill={theme.colorInputActive} />
                     </IconWrapper>
@@ -87,8 +83,8 @@ export const MyProfile = (props) => {
                     </>
                     :
                     <>
-                        {activeItem == 'UserPlans' && <UserPlans id={user.userId} />}
-                        {activeItem == 'ClientTrainers' && <ClientTrainers id={user.userId} />}
+                        {activeItem == 'User Plans' && <UserPlans id={user.userId} />}
+                        {activeItem == 'Client Trainers' && <ClientTrainers id={user.userId} />}
                     </>
                 }
                 {/* Modals */}
@@ -132,6 +128,7 @@ const Navs = ({ setActiveItem, activeItem, title }) => {
     const changeTab = (title) => {
         setActiveItem(title);
     };
+    console.log(activeItem)
     return (
         <Tab onClick={() => changeTab(title)}>{title}</Tab>
     );

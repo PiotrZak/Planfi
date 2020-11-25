@@ -7,6 +7,9 @@ import { routes } from 'utils/routes';
 const possibleTypes = {
     categories: 'categories',
     category: 'category',
+
+    exercises: 'exercises',
+    exercise: 'exercise',
 }
 
 
@@ -56,12 +59,14 @@ export const RenderType = ({ type, element, i }) => {
             }
             case 'exercises': {
                 return (
+                    <span onClick={() => redirectToItem(possibleTypes.exercises, element.exercise)}>
                     <GenericElement
                         key={i}
                         headline={element.name}
                         image={element.files && element.files[0]}
                         subline={`${element.series} / ${element.times}`}
                         exercise={element} />
+                    </span>
                 )
             }
         }

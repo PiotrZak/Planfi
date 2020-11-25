@@ -71,9 +71,7 @@ const Category = (props) => {
     }
 
     const filterExercises = event => {
-        console.log('test')
         setSearchTerm(event.target.value);
-        console.log(searchTerm)
     };
 
     const results = !searchTerm

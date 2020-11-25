@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import styled, { css, withTheme } from 'styled-components';
+import React, { useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, REMOVE } from 'support/context/NotificationContext';
@@ -24,6 +24,8 @@ const handleIconType = (type) => {
   switch (type) {
     case 'positive':
       return 'check-circle';
+    case 'warning':
+      return 'circle';
     case 'error':
       return 'exclamation-triangle';
     default:
@@ -79,7 +81,7 @@ const Alert = ({ notification }) => {
 
   // todo - take context from global
   const theme = mainTheme;
-  const timeToRemove = 40000;
+  const timeToRemove = 15000;
 
   useEffect(() => {
     if (notification.length > 0) {
@@ -98,7 +100,7 @@ const Alert = ({ notification }) => {
             <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
           </LeftContainer>
           <RightContainer>
-            <Icon name="Union" width="1.2rem" height="1.2rem" onClick={() => notificationDispatch({ type: REMOVE, payload: { id: n.id } })} />
+            <Icon name="union" size="1.2rem" onClick={() => notificationDispatch({ type: REMOVE, payload: { id: n.id } })} cursorType="pointer" />
           </RightContainer>
         </Wrapper>
       ))}
@@ -106,4 +108,4 @@ const Alert = ({ notification }) => {
   );
 };
 
-export default withTheme(Alert);
+export default Alert;
