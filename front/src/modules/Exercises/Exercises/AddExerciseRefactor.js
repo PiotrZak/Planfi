@@ -14,6 +14,7 @@ import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import TextArea from 'components/molecules/TextArea';
 import ImagePreview from 'components/molecules/ImagePreview';
 import Random from 'utils/Random';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const ContainerTopBeam = styled.div`
   display: flex;
@@ -44,7 +45,7 @@ const FileUploadButton = styled.input.attrs({ type: 'file' })`
 `;
 
 const ImagePreviewContainer = styled.div`
-   margin-top: .8rem;
+   margin-top: 2rem;
    display: grid;
    grid-template-columns: repeat(4, 5rem);
    grid-template-rows: 5rem;
@@ -71,6 +72,11 @@ const onSubmit = (values) => {
 
 const AddExerciseRefactor = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const { notificationDispatch } = useNotificationContext();
+
+  const resetFileInput = () => {
+    document.getElementById('choose-file-button').value = '';
+  };
 
   const handleImageChange = (e) => {
     /* if (e.target.files) {
@@ -82,23 +88,82 @@ const AddExerciseRefactor = () => {
       );
     } */
 
+    const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'];
+    const acceptedVideoFileType = ['video/mp4', 'video/mov', 'video/wmv', 'video/fly'];
+
+    // 32 mb
+    const maxPhotoSize = 32000000;
+    // 250 mb
+    const maxVideoSize = 250000000;
+
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
-        const ID = Random(1, 10000);
-        const fileData = {
-          ID,
-          File: URL.createObjectURL(File),
-        };
-        setSelectedFiles(((prevState) => prevState.concat(fileData)));
+        const fileType = File.type;
+        const fileSize = File.size;
+
+        // checking if the photo file type is correct
+        if (acceptedImageFileType.includes(fileType)) {
+          console.log('File size ', fileSize);
+          // creating file object with unique ID
+          const ID = Random(1, 10000);
+          const fileData = {
+            ID,
+            File: URL.createObjectURL(File),
+          };
+          // append file object to state
+          setSelectedFiles(((prevState) => prevState.concat(fileData)));
+
+          // checking if the video file type is correct
+        } else if (acceptedVideoFileType.includes(fileType)) {
+
+        } else {
+          // show alert
+          notificationDispatch({
+            type: ADD,
+            payload: {
+              content: { success: 'OK', message: 'Invalid file type' },
+              type: 'error',
+            },
+          });
+          resetFileInput();
+        }
       });
     }
   };
 
-  const renderPhotos = (source) => {
+  function removeFile(e) {
+    e.stopPropagation();
+
+    // get id of attachment preview
+    const id = e.target.id.split('img-prev-')[1];
+
+    // remove attachment
+    for (let i = 0; i <= selectedFiles.length; ++i) {
+      if (id == selectedFiles[i].ID) {
+        const list = [...selectedFiles];
+        const updatedList = list.filter((item) => item.ID !== selectedFiles[i].ID);
+        setSelectedFiles(updatedList);
+
+        resetFileInput();
+        break;
+      }
+    }
+  }
+
+  const renderAttachmentsPreview = (source) => {
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          { source.map((photo) => <ImagePreview imageSrc={photo.File} alt="" key={photo.ID} complete />)}
+          {source.map((photo) => (
+            <ImagePreview
+              imageSrc={photo.File}
+              alt=""
+              key={photo.ID}
+              setID={photo.ID}
+              remove={removeFile}
+              complete
+            />
+          ))}
         </ImagePreviewContainer>
       );
     }
@@ -111,7 +176,12 @@ const AddExerciseRefactor = () => {
   return (
     <ExerciseTemplate>
       {/* eslint-disable-next-line max-len */}
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        validateOnChange={false}
+      >
         {({ errors, touched, isValid }) => (
           <Form>
             <ContainerTopBeam>
@@ -128,7 +198,7 @@ const AddExerciseRefactor = () => {
               <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
               <FileUploadButton id="choose-file-button" onChange={handleImageChange} multiple />
             </WrapperAttachments>
-            {renderPhotos(selectedFiles)}
+            {renderAttachmentsPreview(selectedFiles)}
             <ContainerDescription>
               <Label text={translate('AddExerciseDescription')}>
                 <Field type="text" name="exerciseDescription" as={StyledTextArea} />
