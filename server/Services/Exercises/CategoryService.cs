@@ -100,7 +100,7 @@ namespace WebApi.Services
                 _context.Categories.Update(category);
                 return await _context.SaveChangesAsync();
             }
-            catch (ValidationException ex)
+            catch (ValidationException)
             {
                 return 0;
             }
