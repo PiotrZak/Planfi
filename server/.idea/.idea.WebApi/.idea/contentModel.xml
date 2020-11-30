@@ -11,12 +11,43 @@
         <e p="CommonResponse.cs" t="Include" />
       </e>
       <e p="Controllers" t="Include">
-        <e p="AccountController.cs" t="Include" />
-        <e p="CategoryController.cs" t="Include" />
-        <e p="ExerciseController.cs" t="Include" />
-        <e p="OrganizationController.cs" t="Include" />
-        <e p="PlansController.cs" t="Include" />
-        <e p="UsersController.cs" t="Include" />
+        <e p="Account" t="Include">
+          <e p="AccountController.cs" t="Include" />
+        </e>
+        <e p="Exercises" t="Include">
+          <e p="CategoryController.cs" t="Include" />
+          <e p="ExerciseController.cs" t="Include" />
+          <e p="ExercisesTests.cs" t="Include" />
+        </e>
+        <e p="Organizations" t="Include">
+          <e p="OrganizationController.cs" t="Include" />
+        </e>
+        <e p="Plans" t="Include">
+          <e p="PlansController.cs" t="Include" />
+        </e>
+        <e p="Users" t="Include">
+          <e p="UsersController.cs" t="Include" />
+        </e>
+      </e>
+      <e p="CrossCutting" t="Include" />
+      <e p="Data" t="Include">
+        <e p="Entities" t="Include">
+          <e p="Category.cs" t="Include" />
+          <e p="Exercises.cs" t="Include" />
+          <e p="Organization.cs" t="Include" />
+          <e p="Plans.cs" t="Include" />
+          <e p="Users" t="Include">
+            <e p="Admin.cs" t="Include" />
+            <e p="Client.cs" t="Include" />
+            <e p="Owner.cs" t="Include" />
+            <e p="RefreshToken.cs" t="Include" />
+            <e p="Role.cs" t="Include" />
+            <e p="Trainer.cs" t="Include" />
+            <e p="User.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Infrastructure" t="Include" />
+        <e p="SQLScripts" t="Include" />
         <e p="ViewModels" t="Include">
           <e p="ActivateAccount.cs" t="Include" />
           <e p="AssignExerciseToCategory.cs" t="Include" />
@@ -36,21 +67,6 @@
       </e>
       <e p="Dockerfile" t="Include" />
       <e p="Dockerrun.aws.json" t="Include" />
-      <e p="Entities" t="Include">
-        <e p="Category.cs" t="Include" />
-        <e p="Exercises.cs" t="Include" />
-        <e p="Organization.cs" t="Include" />
-        <e p="Plans.cs" t="Include" />
-        <e p="Users" t="Include">
-          <e p="Admin.cs" t="Include" />
-          <e p="Client.cs" t="Include" />
-          <e p="Owner.cs" t="Include" />
-          <e p="RefreshToken.cs" t="Include" />
-          <e p="Role.cs" t="Include" />
-          <e p="Trainer.cs" t="Include" />
-          <e p="User.cs" t="Include" />
-        </e>
-      </e>
       <e p="GraphQl" t="Include">
         <e p="Data.cs" t="Include" />
       </e>
@@ -60,21 +76,13 @@
         <e p="AutoMapper.cs" t="Include" />
         <e p="DataContext.cs" t="Include" />
         <e p="ExtensionMethods.cs" t="Include" />
-        <e p="RDSAmazon.cs" t="Include" />
-        <e p="RDSContext.cs" t="Include" />
       </e>
       <e p="hostsettings.json" t="Include" />
       <e p="Interfaces" t="Include">
         <e p="IAccountService.cs" t="Include" />
         <e p="ICategoryService.cs" t="Include" />
       </e>
-      <e p="Migrations" t="Include">
-        <e p="20201102155200_InitialCreate.cs" t="Include" />
-        <e p="20201102155200_InitialCreate.Designer.cs" t="Include" />
-        <e p="20201114174311_InitialCreate.cs" t="Include" />
-        <e p="20201114174311_InitialCreate.Designer.cs" t="Include" />
-        <e p="DataContextModelSnapshot.cs" t="Include" />
-      </e>
+      <e p="Migrations" t="Include" />
       <e p="Models" t="Include">
         <e p="AuthenticateModel.cs" t="Include" />
         <e p="EmailConfiguration.cs" t="Include" />
@@ -103,13 +111,23 @@
       <e p="README" t="Include" />
       <e p="README.md" t="Include" />
       <e p="Services" t="Include">
-        <e p="AccountService.cs" t="Include" />
-        <e p="CategoryService.cs" t="Include" />
-        <e p="EmailService.cs" t="Include" />
-        <e p="ExerciseService.cs" t="Include" />
-        <e p="OrganizationService.cs" t="Include" />
-        <e p="PlanService.cs" t="Include" />
-        <e p="UserService.cs" t="Include" />
+        <e p="Account" t="Include">
+          <e p="AccountService.cs" t="Include" />
+          <e p="EmailService.cs" t="Include" />
+        </e>
+        <e p="Exercises" t="Include">
+          <e p="CategoryService.cs" t="Include" />
+          <e p="ExerciseService.cs" t="Include" />
+        </e>
+        <e p="Organizations" t="Include">
+          <e p="OrganizationService.cs" t="Include" />
+        </e>
+        <e p="Plans" t="Include">
+          <e p="PlanService.cs" t="Include" />
+        </e>
+        <e p="Users" t="Include">
+          <e p="UserService.cs" t="Include" />
+        </e>
       </e>
       <e p="Startup.cs" t="Include" />
       <e p="WebApi.csproj" t="IncludeRecursive" />

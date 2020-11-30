@@ -10,13 +10,13 @@ import { ModalProvider } from 'styled-react-modal';
 import { SpecialModalBackground } from 'components/molecules/Modal';
 import { NotificationProvider } from './support/context/NotificationContext';
 
+import { isDevelopment } from 'environment'
 
-const isDevelopment = true;
-// const apiURL = 'http://188.165.16.160:5005/graphql';
-const apiURL = 'http://localhost:5005/graphql';
+const developmentApiUrl = 'http://188.165.16.160:5005/graphql';
+const localHostApiUrl = 'http://localhost:5005/graphql';
 
 const httpLink = createHttpLink({
-  uri: apiURL,
+  uri: isDevelopment ? developmentApiUrl : localHostApiUrl,
 });
 
 const client = new ApolloClient({

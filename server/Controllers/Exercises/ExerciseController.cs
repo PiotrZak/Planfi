@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Services;
 using WebApi.Entities;
@@ -8,6 +9,7 @@ using AutoMapper;
 using WebApi.Models;
 using System.IO;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using WebApi.Interfaces;
 
@@ -34,7 +36,7 @@ namespace WebApi.Controllers
             _mapper = mapper;
             _appSettings = appSettings.Value;
         }
-
+        
         [AllowAnonymous]
         [HttpPost("create")]
         public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
@@ -44,20 +46,18 @@ namespace WebApi.Controllers
             var filesList = new List<byte[]>();
             foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
             {
+                Compress(formFile);
                 using var memoryStream = new MemoryStream();
                 formFile.CopyTo(memoryStream);
                 filesList.Add(memoryStream.ToArray());
             }
-
+            
             var transformModel = new ExerciseModel
             {
                 Name = model.Name,
                 Description = model.Description,
                 Files = filesList,
                 CategoryId = model.CategoryId
-                /*Times = model.Times,
-                Series = model.Series,
-                Weight = model.Weight,*/
             };
 
 

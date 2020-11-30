@@ -11,7 +11,6 @@ import {ModalHeading} from 'components/atoms/Heading';
 import { StyledModal } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
-
 const initialValues = {
     title: '',
 };

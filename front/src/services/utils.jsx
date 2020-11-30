@@ -1,11 +1,13 @@
-const devEnvironmentURL = 'http://fitapptest-env.eba-wpmv3mgp.us-east-2.elasticbeanstalk.com/';
-// const localapiURL = "http://fitapp-env.eba-waxg3ip9.us-east-2.elasticbeanstalk.com"
-// const localapiURL = "http://92.222.134.51:5005"
-const localapiURL = 'http://188.165.16.160:5005/';
+import { isDevelopment } from 'environment'
 
-export const ORGANIZATION_URL = `${localapiURL}/Organization/`;
-export const ACCOUNT_URL = `${localapiURL}/Account/`;
-export const CATEGORIES_URL = `${localapiURL}/Category/`;
-export const EXERCISES_URL = `${localapiURL}/Exercises`;
-export const PLANS_URL = `${localapiURL}/Plans`;
-export const USER_URL = `${localapiURL}/Users/`;
+const localHostApiUrl = 'http://localhost:5005';
+const developmentApiUrl = 'http://188.165.16.160:5005';
+
+const apiUrl = isDevelopment ? developmentApiUrl : localHostApiUrl;
+
+export const ORGANIZATION_URL = `${apiUrl}/Organization/`;
+export const ACCOUNT_URL = `${apiUrl}/Account/`;
+export const CATEGORIES_URL = `${apiUrl}/Category/`;
+export const EXERCISES_URL = `${apiUrl}/Exercises`;
+export const PLANS_URL = `${apiUrl}/Plans`;
+export const USER_URL = `${apiUrl}/Users/`;

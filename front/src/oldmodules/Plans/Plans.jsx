@@ -3,7 +3,7 @@ import { planService } from "services/planService";
 import Icon from 'components/atoms/Icon';
 import Return from 'components/atoms/Return';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
-import AddPlanModal from "./AddPlanModal";
+import AddPlanModal from "../../modules/Plans/AddPlanModal";
 import EditPlanModal from "./EditPlanModal";
 import { Loader } from 'components/atoms/Loader';
 import {commonUtil} from "utils/common.util"

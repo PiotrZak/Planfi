@@ -64,7 +64,6 @@ const Category = (props) => {
     },[])
 
     const submissionHandleElement = (selectedData) => {
-        console.log(selectedData)
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setselectedExercise(selectedExercises)
         selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
