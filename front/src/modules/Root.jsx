@@ -4,10 +4,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { mainTheme } from 'theme/mainTheme';
 import { ThemeProvider } from 'styled-components';
 import { createBrowserHistory } from 'history';
-
 import MainTemplate from 'templates/MainTemplate';
 import { routes } from 'utils/routes';
-
 
 //registration
 import LoginPage from 'modules/Auth/LoginPage';
@@ -19,7 +17,7 @@ import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 //exercises
 import Categories from 'modules/Exercises/Categories';
 import Category from 'modules/Exercises/Category/Category';
-import AddExerciseRefactor from 'modules/Exercises/Exercises/AddExerciseRefactor';
+import AddExercise from 'modules/Exercises/Exercises/AddExercise';
 
 //plans
 import Plans from 'modules/Plans/Plans';
@@ -56,15 +54,12 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-                  <Route path={routes.myProfile} component={MyProfile} />
-                  
-                  <Route path={routes.exercise} component={AddExerciseRefactor} />
+                  <Route path={routes.myProfile} component={MyProfile} />                  
+
                   <Route path="/test" component={TestPage} />
 
-
-
-
                   <MenuTemplate>
+                  <Route path={routes.exercise} component={AddExercise} />
                     <Route path={routes.categories} component={Categories} />
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />

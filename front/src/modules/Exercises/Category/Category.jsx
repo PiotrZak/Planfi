@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { routes } from 'utils/routes';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { commonUtil } from "utils/common.util"
@@ -88,7 +89,7 @@ const Category = (props) => {
                     {category &&
                         <Link
                             to={{
-                                pathname: "/add-exercise",
+                                pathname: routes.exercise,
                                 state: { id: category.categoryId }
                             }}
                         >
