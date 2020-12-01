@@ -6,7 +6,7 @@ import Loader  from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import {useUserContext} from "../../support/context/UserContext"
-
+import BackTopNav from 'components/molecules/BackTopNav';
 import InviteUserModal from './InviteUsersModal';
 // import messages from 'lang/eng'
 
@@ -68,7 +68,7 @@ const OrganizationUsers = () => {
     <div>
       <div className="container">
         <div className="container__title">
-          <Return />
+        <BackTopNav />
           <h2>
           {/* {messages.users.usersText}  */}
           of - {user.organizationId}</h2>

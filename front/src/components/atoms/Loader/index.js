@@ -26,12 +26,12 @@ const handleColor = (theme, color) => {
 
 const Spinner = styled.div`
   border: .5rem solid transparent;
-  border-top: .5rem solid ${({ theme, color }) => handleColor(theme, color)}; 
+  border-top: .5rem solid ${({ theme, color }) => handleColor(theme, color)};
   border-radius: 50%;
   width: 2rem;
   height: 2rem;
   animation: spin 2s linear infinite;
-  
+
   //animation
   @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -56,7 +56,7 @@ const Dots = styled.div`
     display: inline-block;
     position: absolute;
   }
-  
+
   ::before {
     left: -.866rem;
     top: 1.5rem;
@@ -66,7 +66,7 @@ const Dots = styled.div`
     background-color: ${({ theme, color }) => handleColor(theme, color)};
     color: ${({ theme, color }) => handleColor(theme, color)};
   }
-  
+
   ::after {
     left: .866rem;
     top: 1.5rem;
@@ -76,7 +76,7 @@ const Dots = styled.div`
     background-color: ${({ theme, color }) => handleColor(theme, color)};
     color: ${({ theme, color }) => handleColor(theme, color)};
   }
-  
+
   @-webkit-keyframes dot-windmill {
     0% {
       transform: rotateZ(0deg) translate3d(0, 0, 0);
@@ -85,7 +85,7 @@ const Dots = styled.div`
       transform: rotateZ(720deg) translate3d(0, 0, 0);
     }
   }
-  
+
   @keyframes dot-windmill {
     0% {
       transform: rotateZ(0deg) translate3d(0, 0, 0);

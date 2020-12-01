@@ -7,6 +7,12 @@ import { routes } from 'utils/routes';
 const possibleTypes = {
     categories: 'categories',
     category: 'category',
+
+    exercises: 'exercises',
+    exercise: 'exercise',
+
+    plans: 'plans',
+    plan: ' plan',
 }
 
 
@@ -34,7 +40,6 @@ export const RenderType = ({ type, element, i }) => {
                     </span>
                 )
             }
-
             case 'users': {
                 return (
                     <GenericElement
@@ -48,20 +53,24 @@ export const RenderType = ({ type, element, i }) => {
             }
             case 'plans': {
                 return (
-                    <GenericElement
-                        key={i}
-                        headline={element.title}
-                        plan={element} />
+                    <span onClick={() => redirectToItem(possibleTypes.plans, element.plan)}>
+                        <GenericElement
+                            key={i}
+                            headline={element.title}
+                            plan={element} />
+                    </span>
                 )
             }
             case 'exercises': {
                 return (
-                    <GenericElement
-                        key={i}
-                        headline={element.name}
-                        image={element.files && element.files[0]}
-                        subline={`${element.series} / ${element.times}`}
-                        exercise={element} />
+                    <span onClick={() => redirectToItem(possibleTypes.exercises, element.exercise)}>
+                        <GenericElement
+                            key={i}
+                            headline={element.name}
+                            image={element.files && element.files[0]}
+                            subline={`${element.series} / ${element.times}`}
+                            exercise={element} />
+                    </span>
                 )
             }
         }

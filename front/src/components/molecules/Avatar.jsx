@@ -1,20 +1,40 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 import Icon from 'components/atoms/Icon';
 import 'react-multi-carousel/lib/styles.css';
-import { alertActions } from 'redux/actions/alert.actions';
 import { accountService } from 'services/accountServices';
+import styled from 'styled-components';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 const addedAvatar = 'Avatar succesfully added!';
 
+const AvatarContainer = styled.div`
+    display:inline-flex;
+    background: ${({ theme }) => theme.colorGray80};
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    .file-input{
+      display:none;
+    }
+    &:hover {
+      background-color: ${({ theme }) => theme.colorGray70} !important;
+      transition:0.5s;
+      cursor:pointer;
+    }
+    p{
+      display: flex;
+      align-items: center;
+      text-align:center;
+    }
+`;
+
 export const Avatar = ({ avatar, id }) => {
-  const dispatch = useDispatch();
 
   const [hover, setHover] = useState(false);
-
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [unsupportedFiles, setUnsupportedFiles] = useState([]);
+  const { theme } = useThemeContext();
 
   const fileInputRef = useRef();
 
@@ -30,7 +50,7 @@ export const Avatar = ({ avatar, id }) => {
     accountService
       .uploadAvatar(formData)
       .then((data) => {
-        dispatch(alertActions.success(addedAvatar));
+        
       })
       .catch((error) => {
       });
@@ -76,7 +96,8 @@ export const Avatar = ({ avatar, id }) => {
     <>
       {avatar
         ? (
-          <div
+          <AvatarContainer
+            theme = {theme}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onClick={fileInputClicked}
@@ -96,10 +117,10 @@ export const Avatar = ({ avatar, id }) => {
               onChange={filesSelected}
             />
             {hover && <p>Change Avatar</p>}
-          </div>
+          </AvatarContainer>
         )
         : (
-          <div
+          <AvatarContainer
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onDrop={fileDrop}
@@ -122,7 +143,7 @@ export const Avatar = ({ avatar, id }) => {
                 Add Avatar
             </p>
             )}
-          </div>
+          </AvatarContainer>
         )}
     </>
   );

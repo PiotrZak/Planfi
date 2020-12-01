@@ -20,12 +20,15 @@
       <change afterPath="$PROJECT_DIR$/Common/ApiCommonResponse.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Common/ApiCommonResponseBuilder.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Common/CommonResponse.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controllers/ViewModels/ActivateAccount.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Controllers/ViewModels/ModifyExercise.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Entities/Users/RefreshToken.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controllers/Exercises/ExercisesTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Entities/Users/RefreshToken.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/ViewModels/ActivateAccount.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/ViewModels/CreateExercise.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IAccountService.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/ICategoryService.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Models/UpdateCategoryModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Account/AccountService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/encodings.xml" beforeDir="false" />
@@ -33,33 +36,56 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/WebApi/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/WebApi/xs/UserPrefs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.vs/WebApi/xs/project-cache/WebApi-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/WebApi/xs/project-cache/WebApi-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AccountController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/CategoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ExerciseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ExerciseController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/UsersController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ClientPlans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ViewModels/ClientPlans.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ViewModels/CreateCategory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateExercise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ViewModels/CreateExercise.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ForgotPassword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/ViewModels/ForgotPassword.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Plans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Plans.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Users/Client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/Trainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Users/Trainer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Entities/Users/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AccountController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/CategoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Exercises/CategoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ExerciseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/OrganizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/PlansController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/AssignExerciseToCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/AssignExerciseToCategory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/AssignExerciseToPlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/AssignExerciseToPlan.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/AssignUsersToOrganization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/AssignUsersToOrganization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ChangeRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ChangeRole.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ClientPlans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ClientPlans.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ClientTrainers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/CreateCategory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateExercise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ModifyExercise.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateOrganization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/CreateOrganization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreatePlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/CreatePlan.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ForgotPassword.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ForgotPassword.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Category.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Exercises.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Exercises.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Organization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Organization.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Plans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Plans.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Admin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Admin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Client.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Owner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Owner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Role.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Trainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Trainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphQl/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphQl/Data.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/DataContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/RDSAmazon.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/RDSContext.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/AuthenticateModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/AuthenticateModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/ExerciseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ExerciseModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/RegisterModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/RegisterModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/AccountService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/CategoryService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/EmailService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/UserService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/AccountService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Exercises/CategoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Account/EmailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/ExerciseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/OrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/PlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Plans/PlanService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Users/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/Properties/launchSettings.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.deps.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.runtimeconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/WebApi.runtimeconfig.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/netcoreapp3.1/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dotnet" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.assets.cache" afterDir="false" />
@@ -67,6 +93,7 @@
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.genruntimeconfig.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/WebApi.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/netcoreapp3.1/project.razor.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.dgspec.json" afterDir="false" />
@@ -85,6 +112,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/593B42DD-0B05-4EF3-A52E-4B51D992D63D/0a/3c263b84/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/446F0B27-F438-492E-A9B0-D11E08CE42DA/3/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
@@ -111,10 +139,17 @@
         <option value="$PROJECT_DIR$/Controllers/AccountController.cs" />
         <option value="$PROJECT_DIR$/Startup.cs" />
         <option value="$PROJECT_DIR$/Models/UpdateCategoryModel.cs" />
-        <option value="$PROJECT_DIR$/Controllers/ExerciseController.cs" />
         <option value="$PROJECT_DIR$/Controllers/CategoryController.cs" />
         <option value="$PROJECT_DIR$/Interfaces/ICategoryService.cs" />
         <option value="$PROJECT_DIR$/Services/CategoryService.cs" />
+        <option value="$PROJECT_DIR$/Controllers/ViewModels/CreateExercise.cs" />
+        <option value="$PROJECT_DIR$/CrossCutting/Compress.cs" />
+        <option value="$PROJECT_DIR$/Controllers/ExerciseController.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Exercises.cs" />
+        <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Exercises.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Exercises/ExercisesTests.cs" />
       </list>
     </option>
   </component>
@@ -198,29 +233,29 @@
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="646" y="-878" key="#com.intellij.execution.impl.EditConfigurationsDialog/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1604142055353" />
-    <state width="2518" height="29" key="GridCell.Tab.0.bottom" timestamp="1605372104445">
+    <state width="2518" height="426" key="GridCell.Tab.0.bottom" timestamp="1606839832183">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state width="2518" height="305" key="GridCell.Tab.0.bottom/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1604331123509" />
-    <state width="2518" height="29" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1605372104445" />
+    <state width="2518" height="426" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1606839832183" />
     <state width="2518" height="402" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1605371867395" />
-    <state width="2518" height="29" key="GridCell.Tab.0.center" timestamp="1605372104444">
+    <state width="2518" height="426" key="GridCell.Tab.0.center" timestamp="1606839832182">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state width="2518" height="305" key="GridCell.Tab.0.center/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1604331123508" />
-    <state width="2518" height="29" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1605372104444" />
+    <state width="2518" height="426" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1606839832182" />
     <state width="2518" height="402" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1605371867393" />
-    <state width="2518" height="29" key="GridCell.Tab.0.left" timestamp="1605372104443">
+    <state width="2518" height="426" key="GridCell.Tab.0.left" timestamp="1606839832181">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state width="2518" height="305" key="GridCell.Tab.0.left/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1604331123508" />
-    <state width="2518" height="29" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1605372104443" />
+    <state width="2518" height="426" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1606839832181" />
     <state width="2518" height="402" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1605371867392" />
-    <state width="2518" height="29" key="GridCell.Tab.0.right" timestamp="1605372104445">
+    <state width="2518" height="426" key="GridCell.Tab.0.right" timestamp="1606839832183">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state width="2518" height="305" key="GridCell.Tab.0.right/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1604331123509" />
-    <state width="2518" height="29" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1605372104445" />
+    <state width="2518" height="426" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1606839832183" />
     <state width="2518" height="402" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1605371867394" />
     <state width="2518" height="29" key="GridCell.Tab.1.bottom" timestamp="1605372104284">
       <screen x="-98" y="-1080" width="2560" height="1080" />
@@ -319,7 +354,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/AccountController.cs</url>
+          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
           <line>76</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/AccountController.cs" initialLine="75">
             <startOffsets>
@@ -332,7 +367,7 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/AccountService.cs</url>
+          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
           <line>31</line>
           <properties documentPath="$PROJECT_DIR$/Services/AccountService.cs" initialLine="39">
             <startOffsets>
@@ -345,7 +380,7 @@
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/CategoryService.cs</url>
+          <url>file://$PROJECT_DIR$/Services/Exercises/CategoryService.cs</url>
           <line>87</line>
           <properties documentPath="$PROJECT_DIR$/Services/CategoryService.cs" initialLine="85">
             <startOffsets>
@@ -356,6 +391,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Exercises/ExercisesTests.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Exercises/ExercisesTests.cs" initialLine="33">
+            <startOffsets>
+              <option value="1303" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1358" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

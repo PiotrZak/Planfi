@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from "services/categoryService";
 import { exerciseService } from "services/exerciseService";
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { routes } from 'utils/routes';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { commonUtil } from "utils/common.util"
@@ -64,16 +65,13 @@ const Category = (props) => {
     },[])
 
     const submissionHandleElement = (selectedData) => {
-        console.log(selectedData)
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setselectedExercise(selectedExercises)
         selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
     }
 
     const filterExercises = event => {
-        console.log('test')
         setSearchTerm(event.target.value);
-        console.log(searchTerm)
     };
 
     const results = !searchTerm
@@ -91,7 +89,7 @@ const Category = (props) => {
                     {category &&
                         <Link
                             to={{
-                                pathname: "/add-exercise",
+                                pathname: routes.exercise,
                                 state: { id: category.categoryId }
                             }}
                         >

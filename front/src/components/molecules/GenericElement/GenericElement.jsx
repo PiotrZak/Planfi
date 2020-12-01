@@ -14,6 +14,9 @@ const GenericElementContainer = styled.div`
   border-radius: 4px;
   color:white;
   z-index:2;
+  &:hover {
+      cursor:pointer;
+    }
 `;
 
 const GenericElementInfo = styled.div`

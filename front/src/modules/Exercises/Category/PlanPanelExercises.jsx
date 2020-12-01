@@ -74,11 +74,11 @@ export const PlanPanelExercises = ({
                                     : <p>{translate('DeleteCategory')}</p>
                                 }
                             </PanelItem>
+                            {selectedExercise.length < 2 &&
                             <PanelItem>
-                                {selectedExercise.length == 1 &&
                                     <p>{translate('EditCategory')}</p>
-                                }
                             </PanelItem>
+                           }
                         </StyledMobileReactBottomSheet>
                     </>
                 :

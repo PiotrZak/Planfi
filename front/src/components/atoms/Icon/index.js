@@ -32,7 +32,6 @@ const IconsCode = {
 
 const FontIcon = styled.span`
   font-family: 'icomoon', sans-serif;
-
   font-size: ${({ size }) => size};
   color: ${({ color }) => color};
   cursor: ${({ cursorType }) => cursorType};
@@ -43,7 +42,7 @@ const Icon = ({
 }) => {
   const selectedIcon = `../icons/library/${name}.svg`;
   return (
-    <StyledSVG
+    <ReactSVG
       src={selectedIcon}
       fill={fill}
       onClick={onClick}
