@@ -30,8 +30,6 @@ const validationSchema = Yup.object().shape({
 const AddPlanModal = ({ openModal, onClose }) => {
 
     const { user } = useUserContext(userContext);
-    const [addPlanData, setAddPlan] = useState({});
-    const [errors, setErrors] = useState({})
 
     const requiredFields = ["title"];
 

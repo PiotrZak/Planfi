@@ -46,7 +46,7 @@ namespace WebApi.Controllers
             var filesList = new List<byte[]>();
             foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
             {
-                Compress(formFile);
+                /*Compress(formFile);*/
                 using var memoryStream = new MemoryStream();
                 formFile.CopyTo(memoryStream);
                 filesList.Add(memoryStream.ToArray());

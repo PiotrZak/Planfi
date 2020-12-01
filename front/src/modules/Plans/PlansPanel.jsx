@@ -10,12 +10,12 @@ var ReactBottomsheet = require('react-bottomsheet');
 
 export const PlansPanel = ({ bottomSheet, setBottomSheet, categories, openAssignExercises, isLoading }) => {
     return (
-        <ReactBottomsheet
-            showBlockLayer={false}
-            className={!isMobile && "bottomsheet-without-background"}
-            visible={bottomSheet}
-            onClose={() => setBottomSheet(false)}
-            appendCancelBtn={false}>
+        <StyledReactBottomSheet
+        showBlockLayer={false}
+        visible={bottomSheet}
+        className={""}
+        onClose={() => setBottomSheet(false)}
+        appendCancelBtn={false}>
             <Loader isLoading={isLoading}>
                 {categories ?
                     categories.map((element, i) =>
@@ -25,7 +25,6 @@ export const PlansPanel = ({ bottomSheet, setBottomSheet, categories, openAssign
                     : <p>{messages.plans.noCategories}</p>
                 }
             </Loader>
-            }
-    </ReactBottomsheet>
+        </StyledReactBottomSheet>
     )
 }

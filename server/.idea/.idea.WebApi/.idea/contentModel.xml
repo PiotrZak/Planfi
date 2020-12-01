@@ -82,7 +82,6 @@
         <e p="IAccountService.cs" t="Include" />
         <e p="ICategoryService.cs" t="Include" />
       </e>
-      <e p="Migrations" t="Include" />
       <e p="Models" t="Include">
         <e p="AuthenticateModel.cs" t="Include" />
         <e p="EmailConfiguration.cs" t="Include" />
