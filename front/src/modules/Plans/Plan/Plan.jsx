@@ -27,7 +27,7 @@ const Plan = (props) => {
     const { theme } = useThemeContext();
     const [plan, setPlan] = useState();
 
-    const [assignExercise, setAssignExercises] = useState('none')
+    const [assignExercise, setAssignExercises] = useState('flex')
     const [exercises, setExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
