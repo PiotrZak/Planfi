@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { planService } from "services/planService";
-import { isMobile } from "react-device-detect";
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { commonUtil } from "utils/common.util"
@@ -8,13 +7,11 @@ import "react-multi-carousel/lib/styles.css";
 import Search from "components/molecules/Search"
 import { translate } from 'utils/Translation';
 import BackTopNav from 'components/molecules/BackTopNav';
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { useThemeContext } from 'support/context/ThemeContext';
 import AddPlanModal from './AddPlanModal';
-import EditPlanModal from "./EditPlanModal";
+import PlansPanel from './PlansPanel';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -60,6 +57,7 @@ const Plan = (props) => {
         planService
             .getAllPlans(id)
             .then((data) => {
+                console.log(data)
                 setPlans(data);
             })
             .catch((error) => {
@@ -87,8 +85,8 @@ const Plan = (props) => {
             <GlobalTemplate>
                 <Nav>
                     <BackTopNav />
-                    {Plan && <h2>{Plan.title}</h2>}
-                    {Plan &&
+                    {plans && <h2>{plans.title}</h2>}
+                    {plans &&
                         <IconWrapper>
                             <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
                         </IconWrapper>
@@ -114,98 +112,6 @@ const Plan = (props) => {
                 openEditModal={openEditModal} />
         </>
     );
-}
-
-const PlansPanel = ({
-    openEditModal,
-    setOpenEditModal,
-    theme,
-    bottomSheet,
-    setBottomSheet,
-    selectedPlans
-}) => {
-
-    const { notificationDispatch } = useNotificationContext();
-
-    const deletePlans = () => {
-        planService
-            .deletePlans(selectedPlans)
-            .then(() => {
-                setBottomSheet('none')
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { success: 'OK', message: translate('PlansDeleted') },
-                        type: 'positive'
-                    }
-                })
-            })
-            .catch((error) => {
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { error: error, message: translate('ErrorAlert') },
-                        type: 'error'
-                    }
-                })
-            });
-    };
-
-    const closeModal = () => {
-        setOpenEditModal(false)
-        setBottomSheet('none')
-    }
-
-    return (
-        <StyledReactBottomSheet
-            showBlockLayer={false}
-            visible={bottomSheet}
-            className={""}
-            onClose={() => setBottomSheet(false)}
-            appendCancelBtn={false}>
-            {isMobile ?
-                <>
-                    <StyledMobileReactBottomSheet>
-                        <PanelItem onClick={() => deletePlans()}>
-                            {selectedPlans.length == 1
-                                ? <p>{translate('DeletePlan')}</p>
-                                : <p>{translate('DeletePlans')}</p>
-                            }
-                        </PanelItem>
-                        {selectedPlans.length < 2 &&
-                            <PanelItem onClick={setOpenEditModal}>
-                                <p>{translate('EditPlan')}</p>
-                            </PanelItem>
-                        }
-                    </StyledMobileReactBottomSheet>
-                </>
-                :
-                <>
-                    <PanelContainer>
-                        <PanelItem>
-                            <IconWrapper>
-                                <Icon name="check" fill={theme.colorInputActive} />
-                            </IconWrapper>
-                            {selectedPlans.length} {translate('selected')}
-                        </PanelItem>
-                        <PanelItem onClick={() => deletePlans()}>
-                            <Icon name="trash" fill={theme.colorInputActive} />{translate('DeletePlan')}
-                        </PanelItem>
-                        {selectedPlans.length < 2 &&
-                            <PanelItem onClick={setOpenEditModal}>
-                                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
-                            </PanelItem>
-                        }
-                    </PanelContainer>
-                </>
-            }
-            <EditPlanModal
-                selectedPlans={selectedPlans[0]}
-                theme={theme}
-                openEditModal={openEditModal}
-                onClose={closeModal} />
-        </StyledReactBottomSheet>
-    )
 }
 
 export default Plan;

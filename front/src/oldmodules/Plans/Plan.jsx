@@ -2,19 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { planService } from "services/planService";
 import { exerciseService } from "services/exerciseService";
 import { categoryService } from "services/categoryService";
-import { useHistory } from 'react-router-dom';
 import { alertActions } from 'redux/actions/alert.actions'
 import { useDispatch } from 'react-redux';
 import Icon from 'components/atoms/Icon';
-import Return from 'components/atoms/Return';
 import "react-multi-carousel/lib/styles.css";
 import { Loader } from 'components/atoms/Loader';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericComponent"
 import Spacer from "components/atoms/Spacer"
 import { commonUtil } from "utils/common.util"
-import Search  from "components/atoms/Search"
-
-import messages from 'lang/eng'
+import Search from "components/atoms/Search"
 
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
@@ -24,7 +20,7 @@ export const Plan = (props) => {
 
     const [plan, setPlan] = useState();
 
-    const [assignExercise, setAssignExercises] = useState(false)
+    const [assignExercise, setAssignExercises] = useState('flex')
     const [exercises, setExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
@@ -33,10 +29,9 @@ export const Plan = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState([])
-    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
-    const [bottomSheet, setBottomSheet] = useState(false)
+    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
+    const [bottomSheet, setBottomSheet] = useState('none')
 
-    const history = useHistory();
     const { match } = props;
     let id = match.params;
 
@@ -86,8 +81,8 @@ export const Plan = (props) => {
             .assignExercises(data)
             .then(() => {
                 dispatch(alertActions.success(messages.plans.allocateExercises))
-                setBottomSheet(false)
-                setAssignExercises(false)
+                setBottomSheet('none')
+                setAssignExercises('noone')
             })
             .catch((error) => {
                 dispatch(alertActions.error(error))
@@ -122,43 +117,43 @@ export const Plan = (props) => {
     }
 
     const openBottomSheet = () => {
-        setBottomSheet(true)
-        setSelectedElementsBottomSheet(false)
+        setBottomSheet('flex')
+        setSelectedElementsBottomSheet('none')
     }
 
     const openAssignExercises = (id) => {
         loadExercises(id)
-        if(categoryExercises.length > 0){
-            setAssignExercises(true);
-            setBottomSheet(false);
+        if (categoryExercises.length > 0) {
+            setAssignExercises('flex');
+            setBottomSheet('none');
         }
     }
 
     const closeAssignExercises = () => {
-        setBottomSheet(true);
-        setAssignExercises(false);
+        setBottomSheet('flex');
+        setAssignExercises('none');
     };
 
     return (
-        <div>
-            <div className="container">
-                <div className="container__title">
-                    <Return />
-                    {plan && <h2>{plan.title}</h2>}
-                    <div onClick={() => openBottomSheet()}><Icon name={"plus"} fill={"#5E4AE3"} text={messages.plans.addExerciseToPlan} /></div>
-                </div>
-                <Search callBack={filterExercises} />
-                <Spacer h={90} />
-
-                <Loader isLoading={isLoading}>
-                    {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{messages.plans.noExerciseInPlan}</h1>}
-                </Loader>
-            </div>
-
+        <GlobalTemplate>
+            <Nav>
+                <BackTopNav />
+                {Plan && <h2>{Plan.title}</h2>}
+                {Plan &&
+                    <IconWrapper>
+                        <Icon onClick={() => openBottomSheet()} name="plus" fill={theme.colorInputActive} text={messages.plans.addExerciseToPlan} />
+                    </IconWrapper>
+                }
+            </Nav>
+            <Search callBack={filterExercises} />
+            <Spacer h={90} />
+            <Loader isLoading={isLoading}>
+                {results ? <CheckboxGenericComponent dataType={"exercises"} dataList={results} displayedValue={"name"} onSelect={submissionHandleElement} /> : <h1>{messages.plans.noExerciseInPlan}</h1>}
+            </Loader>
             <PlansPanel categories={categories} bottomSheet={bottomSheet} openAssignExercises={openAssignExercises} setBottomSheet={setBottomSheet} isLoading={isLoading} />
-            <AssignExercisesToPlan setAssignExercises={setAssignExercises} assignExerciseToPlan={assignExerciseToPlan} closeAssignExercises={closeAssignExercises} assignExercise ={assignExercise} activeExercise ={activeExercise} categoryExercises ={categoryExercises} setActiveExercise ={setActiveExercise}/>
-            <PlanPanelExercises id = {id.id} categories={categories} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} activeSelectedExercise={activeSelectedExercise} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
-        </div>
+            <AssignExercisesToPlan setAssignExercises={setAssignExercises} assignExerciseToPlan={assignExerciseToPlan} closeAssignExercises={closeAssignExercises} assignExercise={assignExercise} activeExercise={activeExercise} categoryExercises={categoryExercises} setActiveExercise={setActiveExercise} />
+            <PlanPanelExercises id={id.id} categories={categories} setSelectedElementsBottomSheet={setSelectedElementsBottomSheet} activeSelectedExercise={activeSelectedExercise} selectedElementsBottomSheet={selectedElementsBottomSheet} props={props} />
+        </GlobalTemplate>
     );
 }
 

@@ -8,7 +8,6 @@ import "react-multi-carousel/lib/styles.css";
 import { translate } from 'utils/Translation';
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import EditPlanModal from "./EditPlanModal";
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -84,24 +83,17 @@ const PlansPanel = ({
                             <IconWrapper>
                                 <Icon name="check" fill={theme.colorInputActive} />
                             </IconWrapper>
-                            {selectedPlans.length} {translate('selected')}
+                             {translate('selected')}
                         </PanelItem>
                         <PanelItem onClick={() => deletePlans()}>
                             <Icon name="trash" fill={theme.colorInputActive} />{translate('DeletePlan')}
                         </PanelItem>
-                        {selectedPlans.length < 2 &&
                             <PanelItem onClick={setOpenEditModal}>
                                 <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
                             </PanelItem>
-                        }
                     </PanelContainer>
                 </>
             }
-            <EditPlanModal
-                selectedPlans={selectedPlans[0]}
-                theme={theme}
-                openEditModal={openEditModal}
-                onClose={closeModal} />
         </StyledReactBottomSheet>
     )
 }

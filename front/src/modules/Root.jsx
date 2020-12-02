@@ -21,6 +21,7 @@ import AddExercise from 'modules/Exercises/Exercises/AddExercise';
 
 //plans
 import Plans from 'modules/Plans/Plans';
+import Plan from 'modules/Plans/Plan/Plan';
 
 
 import MyProfile from 'modules/Users/MyProfile';
@@ -63,6 +64,7 @@ const Root = () => {
                     <Route path={routes.categories} component={Categories} />
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
+                    <PrivateRoute path={routes.plan} component={Plan} />
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationUsers} component={OrganizationUsers} />
                   </MenuTemplate>
                 </Switch>

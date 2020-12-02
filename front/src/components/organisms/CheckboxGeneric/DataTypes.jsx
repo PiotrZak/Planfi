@@ -12,7 +12,7 @@ const possibleTypes = {
     exercise: 'exercise',
 
     plans: 'plans',
-    plan: ' plan',
+    plan: 'plan',
 }
 
 
@@ -53,7 +53,7 @@ export const RenderType = ({ type, element, i }) => {
             }
             case 'plans': {
                 return (
-                    <span onClick={() => redirectToItem(possibleTypes.plans, element.plan)}>
+                    <span onClick={() => redirectToItem(possibleTypes.plan, element.planId)}>
                         <GenericElement
                             key={i}
                             headline={element.title}

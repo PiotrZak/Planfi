@@ -14,6 +14,11 @@ const categoriesRoutes = {
   category: '/category/:id',
 }
 
+const plansRoutes = {
+  plans: '/plans',
+  plan: '/plan/:id',
+}
+
 export const routes = {
 
 
@@ -24,9 +29,9 @@ export const routes = {
   login: accountRoutes.login,
   confirmation: accountRoutes.confirmation,
 
-
   //todo expired
   linkExpired: '/expired',
+
   //currently
   categories: categoriesRoutes.categories,
   category: categoriesRoutes.category,
@@ -35,10 +40,11 @@ export const routes = {
   exercise: '/exercise',
 
 
-  privacy: '/privacy',
+  //plans
+  plans: plansRoutes.plans,
+  plan: plansRoutes.plan,
 
-  plans: '/plans',
-  plan: '/plan',
+  //users
   users: '/users',
   user: '/user',
   organizations: '/organizations',
@@ -48,4 +54,5 @@ export const routes = {
   trainers: '/trainers',
   clients: '/clients',
   myProfile: '/myprofile',
+  privacy: '/privacy',
 };
