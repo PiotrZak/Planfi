@@ -147,9 +147,9 @@
         <option value="$PROJECT_DIR$/Controllers/ExerciseController.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises.cs" />
         <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Exercises.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExercisesTests.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Exercises.cs" />
       </list>
     </option>
   </component>

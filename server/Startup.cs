@@ -135,7 +135,7 @@ namespace WebApi
 
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fit App");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Planfi");
                 });
 
                 // global cors policy
