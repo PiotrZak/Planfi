@@ -21,7 +21,7 @@ namespace WebApi.Helpers
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Database=postgres;Password=pass123!;");
         }
 
 
