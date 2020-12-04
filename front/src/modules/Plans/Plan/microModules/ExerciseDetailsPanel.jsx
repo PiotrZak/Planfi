@@ -28,6 +28,18 @@ const BottomNavItem = styled.div`
         align-items:center;
         margin:0 0 0 3.6rem;
 `
+
+const repeat = "Repeats:"
+const exerciseTime = "Exercise time:"
+const series = "Series:"
+const load = "Weight:"
+
+const Subline = styled.p`
+margin: 0 0 0 0;
+font-size:1.1rem;
+`;
+
+
 export const ExerciseDetailsPanel = ({
     exercise,
     openExerciseDetailsPlan,
@@ -63,12 +75,19 @@ export const ExerciseDetailsPanel = ({
                     {returnToSubMenu}
                 </BottomNavItem>
             </BottomNav>
+            
+            <Subline>{repeat}</Subline>
             <Counter handleData={handleSeries} />
+
+            <Subline>{exerciseTime}</Subline>
             <Counter handleData={handleSeries} />
+
+            <Subline>{series}</Subline>
             <Counter handleData={handleSeries} />
+            
+            <Subline>{load}</Subline>
             <Counter handleData={handleSeries} />
             {/* <Button disabled={activeExercise.length === 0} className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={assignToPlan}></Button> */}
-            }}
         </StyledReactBottomSheetExtended>
     )
 }
