@@ -13,10 +13,9 @@ import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
 import { categoryService } from "services/categoryService";
 
-//panels
-import { AssignExercisesToPlan } from './AssignExercisesToPlan';
-import { PlanPanelExercises } from '../../../modules/Exercises/Category/PlanPanelExercises';
-import PlansPanel from "./PlansPanel"
+import { PlansPanel } from "./microModules/PlansPanel"
+import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
+import { PlanPanelExercises } from "./microModules/PlanPanelExercises"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -27,7 +26,12 @@ const Plan = (props) => {
     const { theme } = useThemeContext();
     const [plan, setPlan] = useState();
 
-    const [assignExercise, setAssignExercises] = useState('flex')
+
+    const [bottomSheet, setBottomSheet] = useState('none')
+    const [assignExercise, setAssignExercises] = useState('none')
+    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
+
+
     const [exercises, setExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
@@ -36,20 +40,20 @@ const Plan = (props) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState([])
-    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
-    const [bottomSheet, setBottomSheet] = useState('none')
+
 
     const { match } = props;
     let id = match.params.id;
+    console.log(id)
 
     useEffect(() => {
-        getPlan(id.id)
+        getPlan(id)
         getAllCategories()
         getPlanExercise(id.id)
     }, [id]);
 
 
-    const getPlan = (id) => {
+    const getPlan = useCallback((id) => {
         planService
             .getPlanById(id)
             .then((data) => {
@@ -57,22 +61,24 @@ const Plan = (props) => {
             })
             .catch((error) => {
             });
-    }
+        },[])
 
-    const getAllCategories = () => {
+    const getAllCategories = useCallback(() => {
         categoryService
             .getAllCategories()
             .then((data) => {
                 setCategories(data);
+                setIsLoading(false);
             })
             .catch(() => {
             });
-    }
+    },[])
 
     const getPlanExercise = useCallback((id) => {
         exerciseService
             .getExercisesByPlan(id)
             .then((data) => {
+                console.log(data)
                 setExercises(data);
                 setIsLoading(false)
             })
@@ -85,8 +91,9 @@ const Plan = (props) => {
         exerciseService
             .getExercisesByCategory(id)
             .then((data) => {
-                // data.length == 0 && dispatch(alertActions.warn('This category do not have exercises!'));
+                console.log(data)
                 setCategoryExercises(data);
+                setIsLoading(false)
             })
             .catch((error) => {
             });
@@ -102,7 +109,7 @@ const Plan = (props) => {
 
 
     const assignExerciseToPlan = () => {
-        const data = { planId: id.id, exerciseId: activeExercise }
+        const data = { planId: id, exerciseId: activeExercise }
         planService
             .assignExercises(data)
             .then(() => {
@@ -145,10 +152,10 @@ const Plan = (props) => {
             <GlobalTemplate>
                 <Nav>
                     <BackTopNav />
-                    {Plan && <h2>{Plan.title}</h2>}
-                    {Plan &&
+                    {plan && <h2>{plan.title}</h2>}
+                    {plan &&
                         <IconWrapper>
-                            <Icon onClick={() => openBottomSheet()} name="plus" fill={theme.colorInputActive} />
+                            <Icon onClick={() => setBottomSheet('flex')} name="plus" fill={theme.colorInputActive} />
                         </IconWrapper>
                     }
                 </Nav>
@@ -163,7 +170,6 @@ const Plan = (props) => {
                     <p>{translate('NoExercises')}</p>}
             </GlobalTemplate>
             <PlansPanel
-                theme = {theme}
                 categories={categories}
                 bottomSheet={bottomSheet}
                 openAssignExercises={openAssignExercises}
@@ -177,15 +183,13 @@ const Plan = (props) => {
                 activeExercise={activeExercise}
                 categoryExercises={categoryExercises}
                 setActiveExercise={setActiveExercise} />
-            {/* <PlanPanelExercises
-                theme={theme}
-                d={id.id}
+            <PlanPanelExercises
+                id={id.id}
                 categories={categories}
-                // selectedExercise={selectedExercise}
                 setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}
                 activeSelectedExercise={activeSelectedExercise}
                 selectedElementsBottomSheet={selectedElementsBottomSheet}
-                props={props} /> */}
+                props={props} />
         </>
     );
 }

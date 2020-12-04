@@ -137,7 +137,7 @@ export const Plan = (props) => {
     return (
         <GlobalTemplate>
             <Nav>
-                <BackTopNav />
+                <BackTopNav title = {plan.title}/>
                 {Plan && <h2>{Plan.title}</h2>}
                 {Plan &&
                     <IconWrapper>

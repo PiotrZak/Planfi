@@ -96,10 +96,11 @@ const Dots = styled.div`
   }
 `;
 
-const Loader = ({ type, color }) => {
+const Loader = ({ children, type, color, isLoading }) => {
   const returnLoader = handleLoaderType(type, color);
-
-  return <>{returnLoader}</>;
+    return <>
+      {isLoading ? returnLoader  : <>{children}</>}
+    </>;
 };
 
 Loader.propTypes = {

@@ -38,6 +38,21 @@ export const StyledMobileReactBottomSheet = styled.div`
     font-size: 16px;
 `;
 
+export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
+        align-items: center;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        padding: 0 0 0 0;
+        position: fixed;
+        bottom: 0;
+        height: 50.2rem;
+        overflow-y:visible;
+        width: 100%;
+        background: ${({ theme }) => theme.colorGray80};
+        z-index: 4;
+        display: ${({ visible }) => visible};
+`;
+
 const StyledReactBottomSheet = styled(ReactBottomsheet)`
         align-items: center;
         justify-content: flex-start;

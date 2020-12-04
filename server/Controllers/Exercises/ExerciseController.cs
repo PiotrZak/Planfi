@@ -41,7 +41,7 @@ namespace WebApi.Controllers
         [HttpPost("create")]
         public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
         {
-            
+            //repair todo 
             //transform IFormFile List to byte[]
             var filesList = new List<byte[]>();
             foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))

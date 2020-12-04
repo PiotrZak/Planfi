@@ -7,9 +7,6 @@ import { isMobile } from "react-device-detect";
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 
-//todo - care about langs
-
-var ReactBottomsheet = require('react-bottomsheet');
 
 const plansSelected = '';
 const returnToSubMenu = '';
@@ -38,9 +35,7 @@ export const AssignExercisesToPlan = ({
             appendCancelBtn={false}>
             <div>
                 <div>
-
                     {/* todo - bottom-nav */}
-
                     <div className="bottom-nav">
                         <div className="bottom-nav__item">
                             <Icon name="check" fill="#2E6D2C" />
@@ -55,9 +50,6 @@ export const AssignExercisesToPlan = ({
                             </p>
                         </div>
                     </div>
-
-
-
                     <CheckboxGenericComponent
                         dataType="exercises"
                         displayedValue={"name"}
