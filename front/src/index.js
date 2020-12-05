@@ -10,7 +10,6 @@ import { ModalProvider } from 'styled-react-modal';
 import { SpecialModalBackground } from 'components/molecules/Modal';
 import { NotificationProvider } from './support/context/NotificationContext';
 
-import 'styles.scss';
 import { isDevelopment } from 'environment'
 
 const developmentApiUrl = 'http://188.165.16.160:5005/graphql';
