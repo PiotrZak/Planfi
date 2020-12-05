@@ -19,7 +19,6 @@
     "graphql": "^15.4.0",
     "history": "^5.0.0",
     "history-prop-types": "^2.5.2",
-    "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-bottomsheet": "^1.1.0",
