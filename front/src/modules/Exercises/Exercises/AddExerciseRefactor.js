@@ -88,8 +88,9 @@ const AddExerciseRefactor = () => {
       );
     } */
 
-    const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'];
-    const acceptedVideoFileType = ['video/mp4', 'video/mov', 'video/wmv', 'video/fly'];
+    // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
+    const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    const acceptedVideoFileType = ['video/mp4'];
 
     // 32 mb
     const maxPhotoSize = 32000000;
