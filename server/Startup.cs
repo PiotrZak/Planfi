@@ -42,7 +42,6 @@ namespace WebApi
 
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("VPS");
-            //var sqlConnectionString = Configuration.GetConnectionString("AmazonRDS");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
@@ -59,7 +58,7 @@ namespace WebApi
             // Swagger
             services.AddSwaggerGen(c =>
             {
-               c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fit App", Version = "v1" });
+               c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlanFi", Version = "v1" });
             });
 
             // configure strongly typed settings objects

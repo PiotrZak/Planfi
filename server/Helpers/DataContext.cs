@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Protocols;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.GraphQl;
@@ -21,7 +22,8 @@ namespace WebApi.Helpers
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=admin;Database=postgres;");
+            var sqlConnectionString = Configuration.GetConnectionString("VPS");
+            optionsBuilder.UseNpgsql(sqlConnectionString);
         }
 
 
