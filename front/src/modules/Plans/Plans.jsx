@@ -12,6 +12,7 @@ import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
+import {useUserContext} from "../../support/context/UserContext"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -29,6 +30,7 @@ const IconWrapper = styled.div`
 const Plan = (props) => {
 
     const { theme } = useThemeContext();
+    const { user } = useUserContext();
 
     const [plans, setPlans] = useState();
     const [searchTerm, setSearchTerm] = React.useState("");
@@ -46,7 +48,7 @@ const Plan = (props) => {
     let id = match.params.id;
 
     useEffect(() => {
-        getPlans(id)
+        getPlans(user.organizationId)
     }, [id, openModal, openEditModal, setOpenEditModal]);
 
     const closeModal = () => {
@@ -54,8 +56,9 @@ const Plan = (props) => {
     }
 
     const getPlans = (id) => {
+        //organizationId
         planService
-            .getAllPlans(id)
+            .getOrganizationPlans(id)
             .then((data) => {
                 console.log(data)
                 setPlans(data);

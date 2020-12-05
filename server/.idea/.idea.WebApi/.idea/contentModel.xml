@@ -81,6 +81,9 @@
       <e p="Interfaces" t="Include">
         <e p="IAccountService.cs" t="Include" />
         <e p="ICategoryService.cs" t="Include" />
+        <e p="IOrganizationService.cs" t="Include" />
+        <e p="IPlanService.cs" t="Include" />
+        <e p="IUserInterface.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">
         <e p="20201204180943_InitialCreate.cs" t="Include" />

@@ -103,6 +103,7 @@ namespace WebApi.Controllers
         [HttpPost("invite")]
         public IActionResult RegisterAccount(RegisterModel model)
         {
+
             try
             {
                 var sendVerificationResponse = _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
@@ -116,10 +117,10 @@ namespace WebApi.Controllers
             }
 
             catch(Exception e)
-                
             {
                 var failure = ApiCommonResponse.Create()
                     .WithFailure()
+                    .WithData(e)
                     .Build();
                 
                 return CommonResponse(failure);

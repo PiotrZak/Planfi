@@ -19,6 +19,8 @@ const getUsersRoute = (currentUser) => {
       return routes.organizationClients;
     case Role.User:
       return routes.organizationClients;
+    case null:
+    return routes.users;
     default:
       return routes.organizationClients;
   }
@@ -55,12 +57,10 @@ const Container = styled.div`
 
   @media only screen and ${breakPointSize.xs} {
    width: 100%;
+   height: 9.2rem;
    flex-direction: row;
    justify-content: space-around;
-   left: 0;
-   bottom: 0;
    border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
-
 `;
 
 const Square = styled.div`

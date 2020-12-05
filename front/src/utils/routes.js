@@ -20,8 +20,6 @@ const plansRoutes = {
 }
 
 export const routes = {
-
-
   register: accountRoutes.register,
   forgotPassword: accountRoutes.forgotPassword,
   activate: accountRoutes.activate,
@@ -44,15 +42,19 @@ export const routes = {
   plans: plansRoutes.plans,
   plan: plansRoutes.plan,
 
-  //users
-  users: '/users',
-  user: '/user',
+  // organizations
   organizations: '/organizations',
   organizationUsers: '/organizationusers',
   organizationTrainer: '/organizationclients',
   organizationClients: '/organizationclients',
+
+  //users
+  myProfile: '/myprofile',
+  users: '/users',
+  user: '/user',
+
   trainers: '/trainers',
   clients: '/clients',
-  myProfile: '/myprofile',
+
   privacy: '/privacy',
 };

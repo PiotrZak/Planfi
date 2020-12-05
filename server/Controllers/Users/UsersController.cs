@@ -14,6 +14,7 @@ using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using WebApi.Interfaces;
 
 namespace WebApi.Controllers
 {
@@ -62,8 +63,7 @@ namespace WebApi.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
-
+            
             return Ok(new
             {
                 user.UserId,

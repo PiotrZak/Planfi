@@ -81,13 +81,6 @@ const CheckboxContainer = styled.div`
 const ActivateAccountPage = () => {
 
   useEffect(() => {
-    setTimeout(function () {
-      history.push({
-        pathname: routes.confirmation,
-        state: { message: "Activation" },
-      }
-      );
-    }, timeToRedirect);
   }, []);
 
   const { verificationToken } = useParams();
@@ -124,7 +117,7 @@ const ActivateAccountPage = () => {
             type: 'positive'
           }
         })
-        setTimeout(function () {
+        setTimeout(() => {
           history.push({
             pathname: '/confirmation',
             state: { message: "Activation" },

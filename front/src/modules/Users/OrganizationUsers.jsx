@@ -8,11 +8,14 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import {useUserContext} from "../../support/context/UserContext"
 import BackTopNav from 'components/molecules/BackTopNav';
 import InviteUserModal from './InviteUsersModal';
+import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
 // import messages from 'lang/eng'
 
 // import { UsersPanel } from "../Common/UsersPanel"
 // import { AssignUsersToPlans } from "../Common/AssignUsersToPlans"
 // import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
+
+const noUsers = "No Users";
 
 const OrganizationUsers = () => {
   const { user } = useUserContext();
@@ -65,15 +68,11 @@ const OrganizationUsers = () => {
   }
 
   return (
-    <div>
-      <div className="container">
-        <div className="container__title">
+        <GlobalTemplate>
         <BackTopNav />
           <h2>
-          {/* {messages.users.usersText}  */}
-          of - {user.organizationId}</h2>
+          {user.firstName} of - {user.organizationId}</h2>
           <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
-        </div>
         <div className="users">
           <h3> You are {user.role}</h3>
         <div className ="users__filters">
@@ -81,21 +80,18 @@ const OrganizationUsers = () => {
           <p onClick={() => filterUsers("Trainer")}>Trainers</p>
           <p onClick={() => filterUsers("All")}> All </p>
         </div>
+        </div>
           <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
           {/* <Loader isLoading={isLoading}> */}
             {filteredUsers ? <CheckboxGenericComponent dataType="users" displayedValue="firstName" dataList={filteredUsers} onSelect={submissionHandleElement} /> : 
-            <h1>
-            {/* {messages.users.noUsers} */}
-            </h1>
+            <h1>{noUsers}</h1>
             }
-          {/* </Loader> */}
-        </div>
-      </div>
+      </GlobalTemplate>
+  );
+};
+
       {/* <UsersPanel bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} setAssignPlan={setAssignPlan} setAssignTrainer={setAssignTrainer}/>
       <AssignUsersToPlans organizationId={user.organizationId} assignPlan={assignPlan} setAssignPlan={setAssignPlan} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} />
       <AssignUsersToTrainers organizationId={user.organizationId} assignTrainer={assignTrainer} setAssignTrainer={setAssignTrainer} bottomSheet={bottomSheet} setBottomSheet={setBottomSheet} activeUsers={activeUsers} /> */}
-    </div>
-  );
-};
 
 export default OrganizationUsers;

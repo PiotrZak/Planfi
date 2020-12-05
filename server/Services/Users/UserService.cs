@@ -5,28 +5,10 @@ using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces;
 
-namespace WebApi.Services
-{
-    public interface IUserService
-    {
-        User Authenticate(string Email, string Password);
-        User Register(string email);
-        IEnumerable<User> GetAllUsers();
-        IEnumerable<Client> GetAllClients();
-        IEnumerable<Trainer> GetAllTrainers();
-        User GetById(string id);
-        void Update(User user, string password);
-        void Delete(string[] id);
-        IEnumerable<User> GetByRole(string role);
-        void AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
-        void AssignPlanToClients(string[] userIds, string[] planIds);
-        //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
-        //void UnAssignPlanToClients(string[] userIds, string[] planIds);
-        IEnumerable<Client> GetClientsByTrainer(string TrainerId);
-        IEnumerable<Trainer> GetTrainersByClient(string ClientId);
-        void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
-    }
+namespace WebApi.Services{
+
 
     public class UserService : IUserService
     {
@@ -56,13 +38,17 @@ namespace WebApi.Services
             var user = _context.Users.SingleOrDefault(x => x.Email == Email);
 
             // check if email exists
-            if (user == null)
+            if (user.Email == null)
                 return null;
-            
-            //check if password is correct
-            if (!VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt))
-                    return null;
 
+            //todo - security issue - cannot hold password in db 
+            bool isCorrect = VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt);
+            if (isCorrect == false)
+                return null;
+
+            // if (Password != user.Password)
+            //     return null;
+            
             // authentication successful
             return user.WithoutPassword(); ;
         }

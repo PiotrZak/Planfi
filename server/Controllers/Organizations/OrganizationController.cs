@@ -7,6 +7,7 @@ using AutoMapper;
 using WebApi.Models;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
+using WebApi.Interfaces;
 
 namespace WebApi.Controllers
 {

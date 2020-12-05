@@ -16,6 +16,7 @@ import {
 import * as Yup from 'yup';
 import Logo from 'components/atoms/Logo';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { Role } from '../../utils/PrivateRoute';
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -32,6 +33,8 @@ const initialValues = {
   email: '',
   password: '',
 };
+
+const timeToRedirectLogin = 3000;
 
 const validationSchema = Yup.object({
   email: Yup.string().email(translate('EnterValidMail')).required(translate('ThisFieldIsRequired')),
@@ -50,6 +53,24 @@ const LoginPage = () => {
     authenticateUser(loginModelData);
   };
 
+  const redirectToPage = (data) => {
+    if (data.role === Role.User) {
+      setTimeout(() => {
+        history.push(`/user/${data.userId}`);
+      }, timeToRedirectLogin);
+    }
+    if (data.role === Role.Trainer || data.role === Role.Owner) {
+      setTimeout(() => {
+        history.push('/users');
+      }, timeToRedirectLogin);
+    }
+    if (data.role === Role.Owner) {
+      setTimeout(() => {
+        history.push(routes.organizationUsers);
+      }, timeToRedirectLogin);
+    }
+  }
+
   const authenticateUser = (loginModelData) => {
     userService
       .login(loginModelData)
@@ -61,16 +82,8 @@ const LoginPage = () => {
             type: 'positive',
           },
         });
+        redirectToPage(data)
         localStorage.setItem('user', JSON.stringify(data));
-        // if (data.role === "Trainer") {
-        //     history.push('/users');
-        // }
-        // else if(data.role === "Organization") {
-        //     history.push('/users');
-        // }
-        // else if(data.role === "User"){
-        //     history.push(`/user/${data.userId}`);
-        // }
       })
       .catch((error) => {
         notificationDispatch({

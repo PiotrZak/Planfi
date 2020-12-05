@@ -42,21 +42,25 @@ namespace WebApi.Controllers
         public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
         {
             //repair todo 
-            //transform IFormFile List to byte[]
             var filesList = new List<byte[]>();
-            foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
-            {
-                /*Compress(formFile);*/
-                using var memoryStream = new MemoryStream();
-                formFile.CopyTo(memoryStream);
-                filesList.Add(memoryStream.ToArray());
-            }
             
+            //transform IFormFile List to byte[]
+            if (model.Files != null)
+            {
+                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
+                {
+                    /*Compress(formFile);*/
+                    using var memoryStream = new MemoryStream();
+                    formFile.CopyTo(memoryStream);
+                    filesList.Add(memoryStream.ToArray());
+                }
+            }
+
             var transformModel = new ExerciseModel
             {
                 Name = model.Name,
                 Description = model.Description,
-                Files = filesList,
+                Files = filesList ,
                 CategoryId = model.CategoryId
             };
 

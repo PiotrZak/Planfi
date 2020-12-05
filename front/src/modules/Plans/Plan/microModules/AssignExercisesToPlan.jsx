@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import styled from 'styled-components';
-import Button from "components/atoms/Button"
-import { commonUtil } from "utils/common.util"
-import { isMobile } from "react-device-detect";
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import { StyledReactBottomSheetExtended, PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
-
 
 const noExercises = "No exercises"
 const plansSelected = '';
@@ -37,7 +32,7 @@ const BottomNavItem = styled.div`
     align-items:center;
     margin:0 0 0 3.6rem;
 `
-export const AssignExercisesToPlan = ({
+ export const AssignExercisesToPlan = ({
     setAssignExercises,
     assignExerciseToPlan,
     closeAssignExercises,
@@ -108,3 +103,5 @@ export const AssignExercisesToPlan = ({
         </>
     )
 }
+
+// export default AssignExercisesToPlan;

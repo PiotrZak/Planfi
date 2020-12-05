@@ -1,25 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces;
 
 namespace WebApi.Services
 {
-    public interface IOrganizationService
-    {
-        Organization GetById(string id);
-        Organization Create(Organization Organization);
-        IEnumerable<Organization> GetAll();
-        IEnumerable<User> GetOrganizationUsers(string organizationId);
-        IEnumerable<User> GetOrganizationTrainers(string organizationId);
-        IEnumerable<User> GetOrganizationClients(string organizationId);
-        User GetUserById(string organizationId, string userId);
-        void Delete(string[] id);
-        void AssignUsersToOrganization(string organizationId, string[] userIds);
-        void ChangeRole(string userId, string role);
-    }
-
     public class OrganizationService : IOrganizationService
     {
         private DataContext _context;
