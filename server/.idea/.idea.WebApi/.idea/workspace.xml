@@ -159,8 +159,6 @@
         <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
         <option value="$PROJECT_DIR$/Models/ExerciseModel.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
-        <option value="$PROJECT_DIR$/appsettings.json" />
-        <option value="$PROJECT_DIR$/appsettings.Development.json" />
         <option value="$PROJECT_DIR$/Services/Account/EmailService.cs" />
         <option value="$PROJECT_DIR$/Controllers/Account/AccountController.cs" />
         <option value="$PROJECT_DIR$/Common/CommonResponse.cs" />
@@ -174,6 +172,8 @@
         <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
         <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
         <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
+        <option value="$PROJECT_DIR$/appsettings.Development.json" />
+        <option value="$PROJECT_DIR$/appsettings.json" />
       </list>
     </option>
   </component>
@@ -231,7 +231,7 @@
       <workItem from="1606063496636" duration="539000" />
       <workItem from="1607102977089" duration="9630000" />
       <workItem from="1607176337184" duration="495000" />
-      <workItem from="1607176864289" duration="9291000" />
+      <workItem from="1607176864289" duration="9616000" />
     </task>
     <servers />
   </component>
