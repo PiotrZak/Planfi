@@ -54,4 +54,11 @@ export const pl = {
   ExerciseName: 'Nazwa ćwiczenia',
   AddAttachments: 'Dodaj załączniki',
   AddExerciseDescription: 'Opis ćwiczenia',
+  MaxLengthExerciseName: 'Maksymalna długość nazwy ćwiczenia to 16 znaków',
+  AttachmentLimit: 'Maksymalna liczba załączników to ',
+  InvalidFileType: 'Nieprawidłowy typ pliku. Dozwolone typy plików: mp4, jpeg, jpg, png, gif',
+  CannotAddExercise: 'Nie udało się dodać ćwiczenia',
+  FileSizeIsTooBig: 'Rozmiar pliku jest za duży ',
+  AttachmentPhotoIsTooBig: '. Limit dla zdjęcia wynosi 30 MB',
+  AttachmentVideoIsTooBig: '. Limit dla video wynosi 300 MB',
 };

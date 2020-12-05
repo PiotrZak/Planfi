@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Icon from 'components/atoms/Icon';
 import ReactPlayer from 'react-player';
+import { StyledModal } from 'components/molecules/Modal';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   height: 4.8rem;
   width: 4.8rem;
   border-radius: 2px;
@@ -31,6 +36,8 @@ const Circle = styled.div`
   position: absolute;
   top: -.5rem;
   right: -.5rem;
+
+  z-index: 500;
 `;
 
 const Image = styled.img`
@@ -38,35 +45,6 @@ const Image = styled.img`
   width: 4.8rem;
   border-radius: 2px;
 `;
-
-const StyledOverlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  background: ${({ theme }) => theme.colorGray70};
-`;
-
-const CloseIconContainer = styled.div`
-
-`;
-
-const VideoPlayer = (attachmentSrc) => (
-  <StyledOverlay>
-    <CloseIconContainer>
-      <Icon name="union" size="2rem" cursorType="pointer" />
-    </CloseIconContainer>
-    <ReactPlayer
-      url={attachmentSrc}
-      controls
-      light
-      width="100%"
-      height="80vh"
-    />
-  </StyledOverlay>
-);
 
 export const TYPE = {
   IMAGE: 'image',
@@ -77,8 +55,7 @@ const AttachmentPreview = ({
   attachmentSrc, complete, setID, remove, type, videoType,
 }) => {
   const [attachment, setAttachment] = useState('img/blankImage.png');
-
-  const setFullScreen = (attachmentSrc) => createPortal(<VideoPlayer attachmentSrc={attachmentSrc} />, document.body);
+  const playingStatus = false;
 
   if (complete && attachment !== attachmentSrc) {
     setAttachment(attachmentSrc);
@@ -89,7 +66,7 @@ const AttachmentPreview = ({
     return (
       <Container id={setID}>
         <Circle onClick={remove} id={`img-prev-${setID}`}>
-          <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
+          <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} cursorType="pointer" />
         </Circle>
         <Image src={attachment} />
       </Container>
@@ -99,16 +76,13 @@ const AttachmentPreview = ({
   return (
     <Container id={setID}>
       <Circle onClick={remove} id={`img-prev-${setID}`}>
-        <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
+        <Icon name="union" size=".8rem" onClick={remove} id={`img-prev-${setID}`} cursorType="pointer" />
       </Circle>
       <ReactPlayer
-        url={attachmentSrc}
-        controls
-        light
-        onClick={() => setFullScreen(attachmentSrc)}
-        playing={false}
-        width="4.8rem"
-        height="4.8rem"
+        url={attachment}
+        playing={playingStatus}
+        width="4.7rem"
+        height="4.7rem"
       />
     </Container>
   );

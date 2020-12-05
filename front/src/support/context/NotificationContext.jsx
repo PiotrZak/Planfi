@@ -30,13 +30,13 @@ export const NotificationReducer = (state, action) => {
   }
 };
 
-export const NotificationProvider = (props) => {
+export const NotificationProvider = ({ children }) => {
   const [notification, notificationDispatch] = useReducer(NotificationReducer, initialState);
   const notificationData = { notification, notificationDispatch };
 
   return (
     <NotificationContext.Provider value={notificationData}>
-      {props.children}
+      {children}
       {createPortal(<Alert notification={notification} />, document.body)}
     </NotificationContext.Provider>
   );

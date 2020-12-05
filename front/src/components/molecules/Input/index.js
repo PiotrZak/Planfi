@@ -121,10 +121,11 @@ const ContainerBoth = styled(Container)`
   }
 `;
 
-const Input = ({
-  typeInput, disabled, error, icon,
-}, ...rest) => {
+const Input = (props) => {
   const { theme } = useThemeContext();
+  const {
+    typeInput, disabled, error, icon,
+  } = props;
 
   const TYPE_BORDER = {
     ADD: 'add',
@@ -159,12 +160,12 @@ const Input = ({
 
   switch (typeInput) {
     case 'basic':
-      return <StyledInput {...rest} />;
+      return <StyledInput {...props} />;
     case 'left':
       return (
         <ContainerLeft disabled={disabled} error={error} id="Container">
           <StyledInputContainer
-            {...rest}
+            {...props}
             onFocus={(e) => changeBorder(e, TYPE_BORDER.ADD)}
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
@@ -177,7 +178,7 @@ const Input = ({
       return (
         <ContainerRight disabled={disabled} error={error} id="Container">
           <StyledInputContainer
-            {...rest}
+            {...props}
             onFocus={(e) => changeBorder(e, TYPE_BORDER.ADD)}
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
@@ -193,7 +194,7 @@ const Input = ({
             <Icon name={icon || 'circle'} color={theme.colorPrimary} />
           </CenterIcon>
           <StyledInputContainer
-            {...rest}
+            {...props}
             onFocus={(e) => changeBorder(e, TYPE_BORDER.ADD)}
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
@@ -203,7 +204,7 @@ const Input = ({
         </ContainerBoth>
       );
     default:
-      return <StyledInput {...rest} />;
+      return <StyledInput {...props} />;
   }
 };
 

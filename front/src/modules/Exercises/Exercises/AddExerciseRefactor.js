@@ -15,6 +15,7 @@ import TextArea from 'components/molecules/TextArea';
 import AttachmentPreview, { TYPE } from 'components/molecules/AttachmentPreview';
 import Random from 'utils/Random';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { exerciseService } from 'services/exerciseService';
 
 const ContainerTopBeam = styled.div`
   display: flex;
@@ -25,11 +26,13 @@ const ContainerTopBeam = styled.div`
 const WrapperAttachments = styled.div`
   display: flex;
   margin-top: 2.2rem;
+  max-width: 17rem;
 `;
 
 const StyledParagraph = styled(Paragraph)`
   line-height: 0;
   margin: .8rem 0 0 .5rem;
+  cursor: pointer;
 `;
 
 const StyledTextArea = styled(TextArea)`
@@ -62,19 +65,15 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  exerciseName: Yup.string().required(translate('ThisFieldIsRequired')),
-  exerciseDescription: Yup.string(),
+  exerciseName: Yup.string().max(16, translate('MaxLengthExerciseName')).required(translate('ThisFieldIsRequired')),
+  exerciseDescription: Yup.string().notRequired(),
 });
-
-const onSubmit = (values) => {
-  console.log(values);
-};
 
 const AddExerciseRefactor = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
 
-  const fileNotification = (message) => {
+  const fileUploadNotification = (message) => {
     notificationDispatch({
       type: ADD,
       payload: {
@@ -82,6 +81,22 @@ const AddExerciseRefactor = () => {
         type: 'error',
       },
     });
+  };
+
+  const onSubmit = (values) => {
+    const formData = new FormData();
+    formData.append('Name', values.exerciseName);
+    formData.append('Description', values.exerciseDescription);
+    selectedFiles.map((el) => {
+      formData.append('Files', el.File);
+    });
+    exerciseService.addExercise(formData)
+      .then(() => {
+        console.log('success upload');
+      })
+      .catch(() => {
+        fileUploadNotification(translate('CannotAddExercise'));
+      });
   };
 
   const resetFileInput = () => {
@@ -102,13 +117,21 @@ const AddExerciseRefactor = () => {
     const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
     const acceptedVideoFileType = ['video/mp4'];
 
-    // 10 mb
-    const maxPhotoSize = 10000000;
     // 30 mb
-    const maxVideoSize = 30000000;
+    const maxPhotoSize = 30000000;
+    // 300 mb
+    const maxVideoSize = 300000000;
+    const maxAttachmentNumber = 5;
 
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
+        // checking max number of attachment
+        if (selectedFiles.length + e.target.files.length > maxAttachmentNumber) {
+          fileUploadNotification(translate('AttachmentLimit') + maxAttachmentNumber);
+          resetFileInput();
+          return true;
+        }
+
         const fileType = File.type;
         const fileSize = File.size;
 
@@ -128,7 +151,7 @@ const AddExerciseRefactor = () => {
             setSelectedFiles(((prevState) => prevState.concat(fileData)));
           } else {
             // file size if too big alert
-            fileNotification(`File size is too big ${File.name}. Photo size limit is 10 MB`);
+            fileUploadNotification(translate('FileSizeIsTooBig') + File.name + translate('AttachmentPhotoIsTooBig'));
             resetFileInput();
           }
           // checking if the video file type is correct
@@ -147,12 +170,12 @@ const AddExerciseRefactor = () => {
             setSelectedFiles(((prevState) => prevState.concat(fileData)));
           } else {
             // file size if too big alert
-            fileNotification(`File size is too big ${File.name}. Video size limit is 30 MB`);
+            fileUploadNotification(translate('FileSizeIsTooBig') + File.name + translate('AttachmentVideoIsTooBig'));
             resetFileInput();
           }
         } else {
           // invalid file type alert
-          fileNotification('Invalid file type. allowed files mp4, jpeg, jpg, png, gif');
+          fileUploadNotification(translate('InvalidFileType'));
           resetFileInput();
         }
       });
@@ -182,14 +205,14 @@ const AddExerciseRefactor = () => {
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          {source.map((photo) => (
+          {source.map((attachment) => (
             <AttachmentPreview
-              attachmentSrc={photo.File}
-              type={photo.Type}
-              videoType={photo.videoType}
+              attachmentSrc={attachment.File}
+              type={attachment.Type}
+              videoType={attachment.videoType}
               alt=""
-              key={photo.ID}
-              setID={photo.ID}
+              key={attachment.ID}
+              setID={attachment.ID}
               remove={removeFile}
               complete
             />
@@ -220,7 +243,7 @@ const AddExerciseRefactor = () => {
             </Label>
             <ErrorMessageForm name="exerciseName" />
             <WrapperAttachments onClick={triggerFileUploadButton}>
-              <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" />
+              <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" cursorType="pointer" />
               <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
               <FileUploadButton id="choose-file-button" onChange={(e) => handleImageChange(e)} multiple />
             </WrapperAttachments>

@@ -53,4 +53,12 @@ export const en = {
   ExerciseName: 'Exercise name',
   AddAttachments: 'Add attachments',
   AddExerciseDescription: 'Exercise description',
+  MaxLengthExerciseName: 'Max length of exercise name is 16 characters',
+  AttachmentLimit: 'Max number of attachment is ',
+  InvalidFileType: 'Invalid file type. allowed files: mp4, jpeg, jpg, png, gif',
+  CannotAddExercise: 'Exercise cannot be added',
+  FileSizeIsTooBig: 'File size is too big ',
+  AttachmentPhotoIsTooBig: '. Photo size limit is 30 MB',
+  AttachmentVideoIsTooBig: '. Video size limit is 300 MB',
+
 };

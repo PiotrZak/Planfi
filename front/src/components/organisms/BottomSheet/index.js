@@ -26,5 +26,4 @@ const StyledReactBottomSheet = styled(ReactBottomsheet)`
         z-index: 4;
         display: ${({ visible }) => visible};
 `;
-
 export default StyledReactBottomSheet;

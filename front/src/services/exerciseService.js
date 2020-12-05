@@ -1,5 +1,5 @@
-import { http } from "./http.service";
-import { EXERCISES_URL } from "./utils"
+import { http } from './http.service';
+import { EXERCISES_URL } from './utils';
 
 export const exerciseService = {
   getExercisesByCategory,
@@ -8,7 +8,7 @@ export const exerciseService = {
   addExercise,
   editExercise,
   getExerciseById,
-  deleteExerciseById
+  deleteExerciseById,
 };
 
 function getAllExercises(body) {
