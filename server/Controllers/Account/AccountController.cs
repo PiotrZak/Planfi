@@ -116,6 +116,7 @@ namespace WebApi.Controllers
             }
 
             catch(Exception e)
+                
             {
                 var failure = ApiCommonResponse.Create()
                     .WithFailure()

@@ -149,8 +149,9 @@
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
         <option value="$PROJECT_DIR$/Startup.cs" />
         <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
-        <option value="$PROJECT_DIR$/appsettings.json" />
+        <option value="$PROJECT_DIR$/Controllers/Account/AccountController.cs" />
         <option value="$PROJECT_DIR$/appsettings.Development.json" />
+        <option value="$PROJECT_DIR$/appsettings.json" />
       </list>
     </option>
   </component>
@@ -206,7 +207,7 @@
       <workItem from="1605197854085" duration="567000" />
       <workItem from="1605369153666" duration="2437000" />
       <workItem from="1606063496636" duration="539000" />
-      <workItem from="1607102977089" duration="5835000" />
+      <workItem from="1607102977089" duration="6967000" />
     </task>
     <servers />
   </component>
@@ -347,11 +348,11 @@
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="2" y="-980" width="2360" height="880" key="VCS.FileHistoryDialog/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1607168443500" />
-    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup" timestamp="1607168354103">
+    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup" timestamp="1607171281140">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1607163651762" />
-    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1607168354103" />
+    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1607171281140" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
