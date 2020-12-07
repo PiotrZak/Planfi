@@ -167,6 +167,8 @@ namespace WebApi.Services
                         throw new AppException("Email \"" + email + "\" is already taken");
 
                     var user = _mapper.Map<Client>(model);
+
+                    user.OrganizationId = model.OrganizationId;
                     user.VerificationToken = RandomTokenString();
                     user.Email = email;
 

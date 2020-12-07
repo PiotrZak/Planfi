@@ -2,29 +2,20 @@ import React, { useState } from 'react';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import styled from 'styled-components';
-import { StyledReactBottomSheetExtended, PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import { StyledReactBottomSheetExtended, PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, BottomItem} from 'components/organisms/BottomSheet'
 import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
+import { Headline, Subline } from '../../../../components/typography';
+
 
 const noExercises = "No exercises"
 const plansSelected = '';
 const returnToSubMenu = '';
 const assignToPlan = '';
 
-const BottomItem = styled.div`
-    border:1px solid ${({ theme }) => theme.colorGray90};
-    padding:1.6rem;
-    color:white;
-    margin:1.8rem 1.8rem;
-    background: ${({ theme }) => theme.colorGray90};
-    border-radius:8px;
-    &:hover{
-      cursor:pointer;
-    }
-`
 
 const BottomNav = styled.div`
     display:flex;
-    background: ${({ theme }) => theme.colorGray90};
+    background: ${({ theme }) => theme.white};
 `;
 
 const BottomNavItem = styled.div`
@@ -50,20 +41,7 @@ const BottomNavItem = styled.div`
         setOpenExerciseDetailsPlan('flex')
     }
 
-    const MainHeadline = styled.h2`
-        margin: 0 0 0 0;
-        font-size:2.8rem;
-    `;
 
-    const Headline = styled.h4`
-        margin: 0 0 0 0;
-        font-size:1.4rem;
-    `;
-
-    const Subline = styled.p`
-        margin: 0 0 0 0;
-        font-size:1.1rem;
-    `;
 
     return (
         <>
@@ -87,8 +65,6 @@ const BottomNavItem = styled.div`
                 categoryExercises.map((element, i) =>
                     <BottomItem onClick={() => openExerciseDetailsPanel(element)}>
                         <Headline>{element.name}</Headline>
-                        <Subline>{element.exerciseId}</Subline>
-                        <Subline>{`${element.series} / ${element.times}`}</Subline>
                     </BottomItem>
                 )
                 : <p>{noExercises}</p>

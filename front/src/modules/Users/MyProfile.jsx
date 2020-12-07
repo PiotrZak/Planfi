@@ -49,8 +49,6 @@ export const MyProfile = (props) => {
 
     const [activeItem, setActiveItem] = useState('TrainerClients');
 
-    console.log(activeItem)
-
     const [bottomSheet, setBottomSheet] = useState('none')
     const [isLoading, setIsLoading] = useState(true)
     const [openModal, setOpenModal] = useState(false);

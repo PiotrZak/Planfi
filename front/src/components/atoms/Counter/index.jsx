@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
+import { Headline } from 'components/typography';
 
-const Counter = ({ defaultValue, handleData }) => {
+const CounterContainer = styled.div`
+  align-items:baseline;
+  display:flex;
+`;
+
+const Counter = ({ valueToChange, defaultValue, handleData, unit }) => {
   const [value, setValue] = useState(defaultValue || 0);
+
   const increment = () => {
-    setValue(value + 1);
+    setValue(value + valueToChange);
     handleData(value);
   };
 
   const decrement = () => {
     if (value > 0) {
-      setValue(value - 1);
+      setValue(value - valueToChange);
       handleData(value);
     }
   };
@@ -23,11 +30,11 @@ const Counter = ({ defaultValue, handleData }) => {
   `;
 
   return (
-    <Container>
+    <CounterContainer>
       <Icon onClick={increment} name="plus-circle" />
-      <h2>{value}</h2>
+      <Headline>{value} {unit}</Headline>
       <Icon onClick={decrement} name="minus-circle" />
-    </Container>
+    </CounterContainer>
   );
 };
 

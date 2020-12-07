@@ -8,6 +8,7 @@ import { StyledModal } from 'components/molecules/Modal'
 import {ModalHeading} from 'components/atoms/Heading';
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import {useUserContext} from "../../support/context/UserContext"
 
 const saveChanges = "Send Emails";
 const InviteUsers = "Invite Users";
@@ -19,13 +20,22 @@ const EmailNotSent = "Emails not sent to clients! - probably there is duplicate"
 
 const InviteUserModal = ({ openModal, onClose }) => {
 
+    const { user } = useUserContext();
     const { notificationDispatch } = useNotificationContext();
     const [emails, setEmails] = useState([])
 
     const submitForm = () => {
-        const email = {emails}
+        
+
+        console.log(emails)
+
+        const inviteModel = {
+            organizationId: user.organizationId,
+            emails: emails
+        }
+
         accountService
-        .sendInvitation(email)
+        .sendInvitation(inviteModel)
         .then((data) => {
             notificationDispatch({
                 type: ADD,

@@ -7,6 +7,17 @@ export const PanelContainer = styled.div`
   display:flex;
 `;
 
+export const BottomItem = styled.div`
+    border:1px solid ${({ theme }) => theme.colorDarkBorder};
+    padding:1.6rem;
+    margin:1.8rem 1.8rem;
+    background: ${({ theme }) => theme.colorWhite};
+    border-radius:8px;
+    &:hover{
+      cursor:pointer;
+    }
+`
+
 export const PanelItem = styled.div`
     color: ${({ theme }) => theme.colorPrimary};
     display:flex;
@@ -39,16 +50,19 @@ export const StyledMobileReactBottomSheet = styled.div`
 `;
 
 export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
+        border-top-left-radius: 2.4rem;
+        border-top-right-radius: 2.4rem;
+        border-top-width: 2rem;
         align-items: center;
         justify-content: flex-start;
         box-sizing: border-box;
         padding: 0 0 0 0;
         position: fixed;
         bottom: 0;
-        height: 50.2rem;
-        overflow-y:visible;
-        width: 100%;
-        background: ${({ theme }) => theme.colorGray80};
+        height: 37.2rem;
+        overflow-y: scroll;
+        width: 150%;
+        background: ${({ theme }) => theme.colorWhite};
         z-index: 4;
         display: ${({ visible }) => visible};
 `;
@@ -62,7 +76,7 @@ const StyledReactBottomSheet = styled(ReactBottomsheet)`
         bottom: 0;
         height: 7.2rem;
         width: 100%;
-        background: ${({ theme }) => theme.colorGray80};
+        background: ${({ theme }) => theme.colorWhite};
         z-index: 4;
         display: ${({ visible }) => visible};
 `;

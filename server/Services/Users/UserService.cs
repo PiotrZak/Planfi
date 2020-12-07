@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -41,13 +42,14 @@ namespace WebApi.Services{
             if (user.Email == null)
                 return null;
 
-            //todo - security issue - cannot hold password in db 
-            bool isCorrect = VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt);
-            if (isCorrect == false)
-                return null;
 
-            // if (Password != user.Password)
-            //     return null;
+            // for seeded data - for testing
+            if (user.PasswordHash != null && user.PasswordSalt != null)
+            {
+                bool isCorrect = VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt);
+                if (isCorrect == false)
+                    return null;
+            }
             
             // authentication successful
             return user.WithoutPassword(); ;

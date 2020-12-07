@@ -8,19 +8,26 @@ import { commonUtil } from "utils/common.util"
 import { isMobile } from "react-device-detect";
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import { StyledReactBottomSheetExtended, PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import { Headline, Subline, MainHeadline } from 'components/typography';
 
 const plansSelected = '';
 const returnToSubMenu = '';
 const assignToPlan = '';
+const repeat = "Repeats:"
+const exerciseTime = "Exercise time:"
+const series = "Series:"
+const weight = "Weight:"
 
-const Headline = styled.h4`
-  margin: 0 0 0 0;
-  font-size:1.4rem;
+
+const ExerciseAddItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 `;
 
 const BottomNav = styled.div`
     display:flex;
-    background: ${({ theme }) => theme.colorGray90};
+    background: ${({ theme }) => theme.white};
 `;
 
 const BottomNavItem = styled.div`
@@ -28,16 +35,6 @@ const BottomNavItem = styled.div`
         align-items:center;
         margin:0 0 0 3.6rem;
 `
-
-const repeat = "Repeats:"
-const exerciseTime = "Exercise time:"
-const series = "Series:"
-const load = "Weight:"
-
-const Subline = styled.p`
-margin: 0 0 0 0;
-font-size:1.1rem;
-`;
 
 
 export const ExerciseDetailsPanel = ({
@@ -49,8 +46,27 @@ export const ExerciseDetailsPanel = ({
 
     const [exerciseData, setExerciseData] = useState([])
 
+
+    const updateExercise = () =>{
+
+        const exerciseModel = {}
+        console.log(exerciseData)
+
+    }
+
+    const handleRepeat = (data) => {
+        setExerciseData({ ...exerciseData, repeat: data + 1 })
+    }
     const handleSeries = (data) => {
         setExerciseData({ ...exerciseData, series: data + 1 })
+    }
+
+    const handleTime = (data) => {
+        setExerciseData({ ...exerciseData, times: data + 1 })
+    }
+
+    const handleWeight = (data) => {
+        setExerciseData({ ...exerciseData, weight: data + 1 })
     }
 
     const openTest = () => {
@@ -66,28 +82,36 @@ export const ExerciseDetailsPanel = ({
             onClose={() => setOpenExerciseDetailsPlan('none')}
             appendCancelBtn={false}>
             <BottomNav>
-                <BottomNavItem>
-                    <Icon name="check" fill="#2E6D2C" />
-                    <Headline>{exercise.name}</Headline>
-                </BottomNavItem>
-                <BottomNavItem onClick={() => openTest()}>
+            <BottomNavItem onClick={() => openTest()}>
                     <Icon name="arrow-left" fill="#5E4AE3" />
                     {returnToSubMenu}
                 </BottomNavItem>
+                <BottomNavItem>
+                    <MainHeadline>{exercise.name}</MainHeadline>
+                </BottomNavItem>
             </BottomNav>
-            
-            <Subline>{repeat}</Subline>
-            <Counter handleData={handleSeries} />
 
-            <Subline>{exerciseTime}</Subline>
-            <Counter handleData={handleSeries} />
+            <ExerciseAddItem>
+                <Headline>{repeat}</Headline>
+                <Counter valueToChange = {1} handleData={handleRepeat} unit ={''}/>
+            </ExerciseAddItem>
 
-            <Subline>{series}</Subline>
-            <Counter handleData={handleSeries} />
-            
-            <Subline>{load}</Subline>
-            <Counter handleData={handleSeries} />
-            {/* <Button disabled={activeExercise.length === 0} className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={assignToPlan}></Button> */}
+            <ExerciseAddItem>
+                <Headline>{exerciseTime}</Headline>
+                <Counter valueToChange = {30} handleData={handleTime} unit = {'s'}/>
+            </ExerciseAddItem>
+
+            <ExerciseAddItem>
+                <Headline>{series}</Headline>
+                <Counter valueToChange = {1} handleData={handleSeries}  unit ={''}/>
+            </ExerciseAddItem>
+
+            <ExerciseAddItem>
+                <Headline>{weight}</Headline>
+                <Counter valueToChange = {5} handleData={handleWeight} unit = {'kg'} />
+            </ExerciseAddItem>
+
+            <Button className="btn btn--primary btn--lg" onClick={updateExercise} name={assignToPlan}></Button>
         </StyledReactBottomSheetExtended>
     )
 }
