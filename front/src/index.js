@@ -12,6 +12,8 @@ import { NotificationProvider } from './support/context/NotificationContext';
 
 import { isDevelopment } from 'environment'
 
+import 'style.css';
+
 const developmentApiUrl = 'http://188.165.16.160:5005/graphql';
 const localHostApiUrl = 'http://localhost:5005/graphql';
 

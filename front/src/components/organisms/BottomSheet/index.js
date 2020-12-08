@@ -7,6 +7,18 @@ export const PanelContainer = styled.div`
   display:flex;
 `;
 
+export const BottomNav = styled.div`
+    display:flex;
+    background: ${({ theme }) => theme.white};
+`;
+
+export const BottomNavItem = styled.div`
+    display:flex;
+    align-items:center;
+    margin:3.6rem 0 0 1.6rem;
+`
+
+
 export const BottomItem = styled.div`
     border:1px solid ${({ theme }) => theme.colorDarkBorder};
     padding:1.6rem;
@@ -61,7 +73,7 @@ export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
         bottom: 0;
         height: 37.2rem;
         overflow-y: scroll;
-        width: 150%;
+        width: 100%;
         background: ${({ theme }) => theme.colorWhite};
         z-index: 4;
         display: ${({ visible }) => visible};

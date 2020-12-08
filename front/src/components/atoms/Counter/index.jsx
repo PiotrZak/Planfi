@@ -6,6 +6,10 @@ import { Headline } from 'components/typography';
 const CounterContainer = styled.div`
   align-items:baseline;
   display:flex;
+  img{
+    width:48px;
+    height:48px;
+  }
 `;
 
 const Counter = ({ valueToChange, defaultValue, handleData, unit }) => {

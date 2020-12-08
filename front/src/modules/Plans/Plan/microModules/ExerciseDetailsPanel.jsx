@@ -4,15 +4,12 @@ import "react-multi-carousel/lib/styles.css";
 import styled from 'styled-components';
 import Button from "components/atoms/Button"
 import Counter from "components/atoms/Counter"
-import { commonUtil } from "utils/common.util"
-import { isMobile } from "react-device-detect";
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import { StyledReactBottomSheetExtended, PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
 import { Headline, Subline, MainHeadline } from 'components/typography';
 
 const plansSelected = '';
 const returnToSubMenu = '';
-const assignToPlan = '';
+const assignToPlan = 'Assign exercise to plan';
 const repeat = "Repeats:"
 const exerciseTime = "Exercise time:"
 const series = "Series:"
@@ -23,19 +20,8 @@ const ExerciseAddItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin:1.8rem 1.8rem;
 `;
-
-const BottomNav = styled.div`
-    display:flex;
-    background: ${({ theme }) => theme.white};
-`;
-
-const BottomNavItem = styled.div`
-        display:flex;
-        align-items:center;
-        margin:0 0 0 3.6rem;
-`
-
 
 export const ExerciseDetailsPanel = ({
     exercise,
@@ -111,7 +97,7 @@ export const ExerciseDetailsPanel = ({
                 <Counter valueToChange = {5} handleData={handleWeight} unit = {'kg'} />
             </ExerciseAddItem>
 
-            <Button className="btn btn--primary btn--lg" onClick={updateExercise} name={assignToPlan}></Button>
+            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{assignToPlan}</Button>
         </StyledReactBottomSheetExtended>
     )
 }

@@ -2,27 +2,16 @@ import React, { useState } from 'react';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import styled from 'styled-components';
-import { StyledReactBottomSheetExtended, PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, BottomItem} from 'components/organisms/BottomSheet'
+import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
 import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
 import { Headline, Subline } from '../../../../components/typography';
 
 
 const noExercises = "No exercises"
 const plansSelected = '';
-const returnToSubMenu = '';
+const returnToSubMenu = 'Return to categories';
 const assignToPlan = '';
 
-
-const BottomNav = styled.div`
-    display:flex;
-    background: ${({ theme }) => theme.white};
-`;
-
-const BottomNavItem = styled.div`
-    display:flex;
-    align-items:center;
-    margin:0 0 0 3.6rem;
-`
  export const AssignExercisesToPlan = ({
     setAssignExercises,
     assignExerciseToPlan,
@@ -52,13 +41,9 @@ const BottomNavItem = styled.div`
             onClose={() => setAssignExercises('none')}
             appendCancelBtn={false}>
             <BottomNav>
-                <BottomNavItem>
-                    <Icon name="check" fill="#2E6D2C" />
-                    {activeExercise.length} {plansSelected}
-                </BottomNavItem>
                 <BottomNavItem onClick={() => closeAssignExercises()}>
                     <Icon name="arrow-left" fill="#5E4AE3" />
-                    {returnToSubMenu}
+                    <Headline>{returnToSubMenu}</Headline>
                 </BottomNavItem>
             </BottomNav>
             {categoryExercises ?
@@ -69,7 +54,6 @@ const BottomNavItem = styled.div`
                 )
                 : <p>{noExercises}</p>
             }
-            }}
         </StyledReactBottomSheetExtended>
         <ExerciseDetailsPanel
                 setOpenExerciseDetailsPlan={setOpenExerciseDetailsPlan}

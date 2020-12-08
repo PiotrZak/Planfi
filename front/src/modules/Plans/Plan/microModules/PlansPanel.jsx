@@ -11,6 +11,16 @@ import { MainHeadline, Headline, Subline } from '../../../../components/typograp
 const noCategories = "No categories"
 const selectCategory = "Select category:"
 
+const BottomNav = styled.div`
+    display:flex;
+    background: ${({ theme }) => theme.white};
+`;
+
+const BottomNavItem = styled.div`
+    display:flex;
+    align-items:center;
+    margin:3.6rem 0 0 3.6rem;
+`
 
 export const PlansPanel = ({ bottomSheet, setBottomSheet, categories, openAssignExercises, isLoading }) => {
     return (
@@ -21,7 +31,11 @@ export const PlansPanel = ({ bottomSheet, setBottomSheet, categories, openAssign
             onClose={() => setBottomSheet('none')}
             appendCancelBtn={false}>
             <Loader isLoading={isLoading}>
-                <MainHeadline>{selectCategory}</MainHeadline>
+            <BottomNav>
+                <BottomNavItem>
+                    <Headline>{selectCategory}</Headline>
+                </BottomNavItem>
+            </BottomNav>
                 {categories ?
                     categories.map((element, i) =>
                         <BottomItem onClick={() => openAssignExercises(element.categoryId)}>
