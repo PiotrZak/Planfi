@@ -36,28 +36,9 @@ export const ExerciseDetailsPanel = ({
 }) => {
 
     const { notificationDispatch } = useNotificationContext();
-
     const [exerciseData, setExerciseData] = useState([])
-    const [plan, setPlan] = useState();
-
-    console.log(planId)
-
-    // {
-    //     "exerciseModel": {
-    //       "repeats": 0,
-    //       "times": 0,
-    //       "series": 0,
-    //       "weight": 0
-    //     },
-    //     "planId": "string",
-    //     "exerciseId": [
-    //       "string"
-    //     ]
-    //   }
 
     const updateExercise = () =>{
-
-        console.log(planId)
 
         const exerciseModel = {
             exerciseModel: {
@@ -71,7 +52,7 @@ export const ExerciseDetailsPanel = ({
         }
         planService
             .assignExercises(exerciseModel)
-            .then((data) => {
+            .then(() => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
