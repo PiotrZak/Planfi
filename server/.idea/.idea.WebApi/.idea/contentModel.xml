@@ -81,19 +81,21 @@
       <e p="Interfaces" t="Include">
         <e p="IAccountService.cs" t="Include" />
         <e p="ICategoryService.cs" t="Include" />
+        <e p="IExerciseService.cs" t="Include" />
         <e p="IOrganizationService.cs" t="Include" />
         <e p="IPlanService.cs" t="Include" />
         <e p="IUserInterface.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">
-        <e p="20201204180943_InitialCreate.cs" t="Include" />
-        <e p="20201204180943_InitialCreate.Designer.cs" t="Include" />
+        <e p="20201210160131_InitialCreate.cs" t="Include" />
+        <e p="20201210160131_InitialCreate.Designer.cs" t="Include" />
         <e p="DataContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="Models" t="Include">
         <e p="AuthenticateModel.cs" t="Include" />
         <e p="EmailConfiguration.cs" t="Include" />
         <e p="ExerciseModel.cs" t="Include" />
+        <e p="ExerciseUpdateModel.cs" t="Include" />
         <e p="Message.cs" t="Include" />
         <e p="RegisterModel.cs" t="Include" />
         <e p="ResetPasswordModel.cs" t="Include" />

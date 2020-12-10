@@ -9,7 +9,6 @@ using AutoMapper;
 using WebApi.Models;
 using System.IO;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.Linq;
 using WebApi.Interfaces;
 

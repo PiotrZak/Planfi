@@ -1,18 +1,22 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 
 namespace WebApi.Services
 {
     public class PlanService : IPlanService
     {
-        private DataContext _context;
-
-        public PlanService(DataContext context)
+        private readonly DataContext _context;
+        private readonly IExerciseService _exerciseService;
+        
+        public PlanService(DataContext context, IExerciseService exerciseService)
         {
             _context = context;
+            _exerciseService = exerciseService;
         }
 
         public Plan Create(Plan plan)
@@ -75,13 +79,24 @@ namespace WebApi.Services
             }
         }
 
-        public void AssignExercisesToPlan(string planId, string[] exerciseId)
+        public void AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)
         {
             var plan = GetById(planId);
 
             foreach (var id in exerciseId)
             {
                 var element = _context.Exercises.Find(id);
+                
+                element.ExerciseId = Guid.NewGuid().ToString();
+                element.Times = exerciseModel.Times;
+                element.Weight = exerciseModel.Weight;
+                element.Series = exerciseModel.Series;
+                element.Repeats = exerciseModel.Repeats;
+                
+                //creating exercise instance
+                _exerciseService.Create(element);
+                
+                //assigning exercise to plan
                 plan.Exercises.Add(element);
             }
             _context.Plans.Update(plan);

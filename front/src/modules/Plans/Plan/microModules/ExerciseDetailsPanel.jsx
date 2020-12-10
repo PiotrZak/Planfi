@@ -4,8 +4,11 @@ import "react-multi-carousel/lib/styles.css";
 import styled from 'styled-components';
 import Button from "components/atoms/Button"
 import Counter from "components/atoms/Counter"
+import { planService } from "services/planService";
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
-import { Headline, Subline, MainHeadline } from 'components/typography';
+import { Headline, MainHeadline } from 'components/typography';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { translate } from 'utils/Translation';
 
 const plansSelected = '';
 const returnToSubMenu = '';
@@ -14,6 +17,7 @@ const repeat = "Repeats:"
 const exerciseTime = "Exercise time:"
 const series = "Series:"
 const weight = "Weight:"
+const ExerciseAssignedToPlan = "Exercise Assigned to Plan"
 
 
 const ExerciseAddItem = styled.div`
@@ -24,19 +28,68 @@ const ExerciseAddItem = styled.div`
 `;
 
 export const ExerciseDetailsPanel = ({
+    planId,
     exercise,
     openExerciseDetailsPlan,
     setOpenExerciseDetailsPlan,
     setAssignExercises
 }) => {
 
-    const [exerciseData, setExerciseData] = useState([])
+    const { notificationDispatch } = useNotificationContext();
 
+    const [exerciseData, setExerciseData] = useState([])
+    const [plan, setPlan] = useState();
+
+    console.log(planId)
+
+    // {
+    //     "exerciseModel": {
+    //       "repeats": 0,
+    //       "times": 0,
+    //       "series": 0,
+    //       "weight": 0
+    //     },
+    //     "planId": "string",
+    //     "exerciseId": [
+    //       "string"
+    //     ]
+    //   }
 
     const updateExercise = () =>{
 
-        const exerciseModel = {}
-        console.log(exerciseData)
+        console.log(planId)
+
+        const exerciseModel = {
+            exerciseModel: {
+                repeats: exerciseData.repeat,
+                times: exerciseData.times,
+                series: exerciseData.series,
+                weight: exerciseData.weight,
+            },
+            planId: planId,
+            exerciseId: [exercise.exerciseId],
+        }
+        planService
+            .assignExercises(exerciseModel)
+            .then((data) => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                      content: { success: 'OK', message: translate('ExerciseAssignedToPlan') },
+                      type: 'positive',
+                    },
+                  });
+                  returnToExercises()
+            })
+            .catch((error) => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                      content: { error, message: translate('ErrorAlert') },
+                      type: 'error',
+                    },
+                  });
+            });
 
     }
 
@@ -55,7 +108,7 @@ export const ExerciseDetailsPanel = ({
         setExerciseData({ ...exerciseData, weight: data + 1 })
     }
 
-    const openTest = () => {
+    const returnToExercises = () => {
         setOpenExerciseDetailsPlan('none')
         setAssignExercises('flex')
     }
@@ -68,7 +121,7 @@ export const ExerciseDetailsPanel = ({
             onClose={() => setOpenExerciseDetailsPlan('none')}
             appendCancelBtn={false}>
             <BottomNav>
-            <BottomNavItem onClick={() => openTest()}>
+            <BottomNavItem onClick={() => returnToExercises()}>
                     <Icon name="arrow-left" fill="#5E4AE3" />
                     {returnToSubMenu}
                 </BottomNavItem>
@@ -97,7 +150,7 @@ export const ExerciseDetailsPanel = ({
                 <Counter valueToChange = {5} handleData={handleWeight} unit = {'kg'} />
             </ExerciseAddItem>
 
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{assignToPlan}</Button>
+            <Button onClick = {updateExercise} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{assignToPlan}</Button>
         </StyledReactBottomSheetExtended>
     )
 }

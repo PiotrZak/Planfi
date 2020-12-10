@@ -85,7 +85,7 @@ namespace WebApi.Controllers
         [HttpPost("assignExercises")]
         public IActionResult AssignToPlan([FromBody]AssignExerciseToPlan model)
         {
-            _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId);
+            _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId, model.ExerciseModel);
             return Ok();
         }
 

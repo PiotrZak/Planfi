@@ -15,7 +15,6 @@ import { categoryService } from "services/categoryService";
 
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
-import { PlanPanelExercises } from "./microModules/PlanPanelExercises"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -25,12 +24,11 @@ const Plan = (props) => {
 
     const { theme } = useThemeContext();
     const [plan, setPlan] = useState();
-
+    const [refresh, setRefresh] = useState()
 
     const [bottomSheet, setBottomSheet] = useState('none')
     const [assignExercise, setAssignExercises] = useState('none')
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
-
 
     const [exercises, setExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
@@ -44,14 +42,12 @@ const Plan = (props) => {
 
     const { match } = props;
     let id = match.params.id;
-    console.log(id)
 
     useEffect(() => {
         getPlan(id)
         getAllCategories()
-        getPlanExercise(id.id)
+        getPlanExercise(id)
     }, [id]);
-
 
     const getPlan = useCallback((id) => {
         planService
@@ -74,12 +70,25 @@ const Plan = (props) => {
             });
     },[])
 
+    // what with duplicate exercises?
+    function getUnique(arr, index) {
+        const unique = arr
+             .map(e => e[index])
+             // store the keys of the unique objects
+             .map((e, i, final) => final.indexOf(e) === i && i)
+             // eliminate the dead keys & store unique objects
+            .filter(e => arr[e]).map(e => arr[e]);      
+
+         return unique;
+      }
+
+
     const getPlanExercise = useCallback((id) => {
         exerciseService
             .getExercisesByPlan(id)
             .then((data) => {
-                console.log(data)
-                setExercises(data);
+                const uniqueExercises = getUnique(data, 'name');
+                setExercises(uniqueExercises);
                 setIsLoading(false)
             })
             .catch((error) => {
@@ -101,9 +110,10 @@ const Plan = (props) => {
 
     const openAssignExercises = (id) => {
         loadExercises(id)
+        setAssignExercises('flex');
+        setBottomSheet('none');
         if (categoryExercises.length > 0) {
-            setAssignExercises('flex');
-            setBottomSheet('none');
+
         }
     }
 
@@ -118,12 +128,6 @@ const Plan = (props) => {
             })
             .catch((error) => {
             });
-    }
-
-
-    const openBottomSheet = () => {
-        setBottomSheet('flex')
-        setSelectedElementsBottomSheet('none')
     }
 
     const closeAssignExercises = () => {
@@ -170,12 +174,14 @@ const Plan = (props) => {
                     <p>{translate('NoExercises')}</p>}
             </GlobalTemplate>
             <PlansPanel
+                planId = {id}
                 categories={categories}
                 bottomSheet={bottomSheet}
                 openAssignExercises={openAssignExercises}
                 setBottomSheet={setBottomSheet}
                 isLoading={isLoading} />
             <AssignExercisesToPlan
+                planId = {id}
                 setAssignExercises={setAssignExercises}
                 assignExerciseToPlan={assignExerciseToPlan}
                 closeAssignExercises={closeAssignExercises}
@@ -183,13 +189,6 @@ const Plan = (props) => {
                 activeExercise={activeExercise}
                 categoryExercises={categoryExercises}
                 setActiveExercise={setActiveExercise} />
-            <PlanPanelExercises
-                id={id.id}
-                categories={categories}
-                setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}
-                activeSelectedExercise={activeSelectedExercise}
-                selectedElementsBottomSheet={selectedElementsBottomSheet}
-                props={props} />
         </>
     );
 }

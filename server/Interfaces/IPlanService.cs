@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using WebApi.Entities;
+using WebApi.Models;
 
 namespace WebApi.Interfaces
 {
@@ -12,7 +13,7 @@ namespace WebApi.Interfaces
         IEnumerable<Plan> GetUserPlans(string id);
         IEnumerable<Plan> GetCreatorPlans(string id);
         void Delete(string[] id);
-        void AssignExercisesToPlan(string planId, string[] exerciseId);
+        void AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel ExerciseModel);
         void UnassignExercisesToPlan(string planId, string[] exerciseId);
         void Update(string id, string title);
     }

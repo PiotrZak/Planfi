@@ -13,13 +13,12 @@ const returnToSubMenu = 'Return to categories';
 const assignToPlan = '';
 
  export const AssignExercisesToPlan = ({
+    planId,
     setAssignExercises,
-    assignExerciseToPlan,
     closeAssignExercises,
     assignExercise,
-    activeExercise,
     categoryExercises,
-    setActiveExercise }) => {
+}) => {
 
     const [selectedExercise, setSelectedExercise] = useState([])
     const [openExerciseDetailsPlan, setOpenExerciseDetailsPlan] = useState('none')
@@ -29,8 +28,6 @@ const assignToPlan = '';
         setAssignExercises('none')
         setOpenExerciseDetailsPlan('flex')
     }
-
-
 
     return (
         <>
@@ -56,6 +53,7 @@ const assignToPlan = '';
             }
         </StyledReactBottomSheetExtended>
         <ExerciseDetailsPanel
+                planId = {planId}
                 setOpenExerciseDetailsPlan={setOpenExerciseDetailsPlan}
                 openExerciseDetailsPlan={openExerciseDetailsPlan}
                 exercise={selectedExercise} 

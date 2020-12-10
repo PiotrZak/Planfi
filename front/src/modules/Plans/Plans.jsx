@@ -42,7 +42,6 @@ const Plan = (props) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const [selectedPlans, setSelectedPlans] = useState([])
-    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false)
 
     const { match } = props;
     let id = match.params.id;

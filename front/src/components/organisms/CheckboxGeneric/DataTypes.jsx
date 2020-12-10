@@ -43,9 +43,9 @@ export const RenderType = ({ type, element, i }) => {
             case 'users': {
                 return (
                     <GenericElement
+                        key={i}
                         circle={true}
                         image={element.avatar}
-                        key={i}
                         headline={`${element.firstName}  ${element.lastName}`}
                         user={element}
                         subline={element.role} />
@@ -57,6 +57,7 @@ export const RenderType = ({ type, element, i }) => {
                         <GenericElement
                             key={i}
                             headline={element.title}
+                            subline={element.creatorName}
                             plan={element} />
                     </span>
                 )

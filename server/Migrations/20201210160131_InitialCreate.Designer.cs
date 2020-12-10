@@ -11,7 +11,7 @@ using WebApi.Helpers;
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201204180943_InitialCreate")]
+    [Migration("20201210160131_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace WebApi.Migrations
                     b.Property<string>("PlanId")
                         .HasColumnType("text");
 
+                    b.Property<int>("Repeats")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Series")
                         .HasColumnType("integer");
 
@@ -128,6 +131,7 @@ namespace WebApi.Migrations
                             CategoryId = "1",
                             Description = "W podciąganiu na drążku podchwytem, sam chwyt nie różni się od tego w innych ćwiczeniach wielostawowych z obciążeniem. Podchwyt to oczywiście ustawienie rąk w supinacji, czyli wewnętrzną częścią dłoni w naszą stronę. Drążek chwytamy jak najmocniej i oplatając go kciukiem.",
                             Name = "Podciąganie nad chwyt",
+                            Repeats = 0,
                             Series = 7,
                             Times = 4,
                             Weight = 0
@@ -138,6 +142,7 @@ namespace WebApi.Migrations
                             CategoryId = "1",
                             Description = "Nasze mięśnie czworogłowe dają z siebie wszystko już na samym dole przysiadu, jako że przy siadach high bar ciężar jest mniejszy, kolana mogą wysunąć się trochę bardziej do przodu, bo moment siły potrzebny do wyprostowania kolana jest taki sam, jak przy siadzie low bar z cięższą sztangą.",
                             Name = "Przysiady ze sztangą (high bar)",
+                            Repeats = 0,
                             Series = 7,
                             Times = 4,
                             Weight = 45
@@ -148,6 +153,7 @@ namespace WebApi.Migrations
                             CategoryId = "1",
                             Description = "Hip thrust, czyli wypychanie bioder w podporze grzbietem o ławeczkę oraz glute bridge, czyli unoszenie bioder w pozycji leżącej to aktualnie jedne z najskuteczniejszych ćwiczeń na mięśnie pośladkowe!",
                             Name = "Glut bridge jednorożec",
+                            Repeats = 0,
                             Series = 9,
                             Times = 3,
                             Weight = 15
@@ -158,6 +164,7 @@ namespace WebApi.Migrations
                             CategoryId = "1",
                             Description = "Utrzymuj prawidłową pozycję wyjściową, napinaj mocno mięśnie nóg, pośladki oraz brzuch, utrzymaj pozycję przez wyznaczony czas, wykonaj izometryczny skurcz mięśni oraz oddychaj głęboko.",
                             Name = "Deska bokiem",
+                            Repeats = 0,
                             Series = 27,
                             Times = 2,
                             Weight = 0
@@ -168,6 +175,7 @@ namespace WebApi.Migrations
                             CategoryId = "1",
                             Description = "Dziękuję bardzo za odpowiedź! czy mogę wykonywać wznosy bokiem hantlami bo chce zacząć chodzić na siłownie,mialem przerwę i chce znowu zacząć chodzić. Czy jakoś te wznosy mogą przyhamowac wzrost czy coś i czy mogę je wykonywać?",
                             Name = "Spiętki",
+                            Repeats = 0,
                             Series = 7,
                             Times = 4,
                             Weight = 0
@@ -178,6 +186,7 @@ namespace WebApi.Migrations
                             CategoryId = "2",
                             Description = "Spacer farmera (ang. Farmer's Walk) – konkurencja zawodów siłaczy. Zadaniem zawodnika jest podniesienie z podłoża dwóch ciężarów (tzw. „walizek”) – po jednym w każdej z dłoni – i pokonaniu z obydwoma dystansu.",
                             Name = "Spacer farmera",
+                            Repeats = 0,
                             Series = 0,
                             Times = 0,
                             Weight = 25
@@ -188,6 +197,7 @@ namespace WebApi.Migrations
                             CategoryId = "2",
                             Description = "",
                             Name = "Martwy ciąg sumo",
+                            Repeats = 0,
                             Series = 0,
                             Times = 0,
                             Weight = 35
@@ -198,6 +208,7 @@ namespace WebApi.Migrations
                             CategoryId = "2",
                             Description = "Najprościej można powiedzieć, że martwy ciąg klasyczny wykonujemy rozstawiając nogi na szerokość bioder, a martwy ciąg sumo robimy na nogach rozstawionych szeroko, pilnując, aby ręce znajdowały się wewnątrz ich nawisu.",
                             Name = "Martwy Ciąg",
+                            Repeats = 0,
                             Series = 0,
                             Times = 0,
                             Weight = 43
@@ -208,6 +219,7 @@ namespace WebApi.Migrations
                             CategoryId = "2",
                             Description = "W pozycji górnej ćwiczenia napnij łydki.Powoli opuść się z powrotem do pozycji wyjściowej, abyś czuł pełne rozciąganie w łydkach.Nie uginaj kolan, by wytworzyć pęd podczas unoszenia się na palcach stóp.",
                             Name = "Uginanie na łydki stojąc",
+                            Repeats = 0,
                             Series = 27,
                             Times = 2,
                             Weight = 35
@@ -218,6 +230,7 @@ namespace WebApi.Migrations
                             CategoryId = "3",
                             Description = "1) Połóż się na ławce płaskiej. 2) Stopy ustaw w lekkim rozkroku i mocno zaprzyj o podłoże. 3) Chwyć sztangę nachwytem (palce wskazują przód, kciuki skierowane do środka) na taką szerokość, aby w połowie wykonywania ruchu kąt między ramieniem a przedramieniem wynosił 90 stopni.",
                             Name = "Wyciskanie na płaskiej",
+                            Repeats = 0,
                             Series = 2,
                             Times = 5,
                             Weight = 60
@@ -228,6 +241,7 @@ namespace WebApi.Migrations
                             CategoryId = "3",
                             Description = "Wznosy bokiem, wznosy sztangielek bokiem, lub odwodzenie ramion w bok ze sztangielkami (ang. Shoulder Fly, dumbbell deltoid raise) - ćwiczenie fizyczne polegające na podnoszeniu ramionami ciężaru (najczęściej hantli) stosowane podczas treningu kulturystycznego.",
                             Name = "Wznosy bokiem",
+                            Repeats = 0,
                             Series = 3,
                             Times = 5,
                             Weight = 25
@@ -238,6 +252,7 @@ namespace WebApi.Migrations
                             CategoryId = "3",
                             Description = "Najprościej można powiedzieć, że martwy ciąg klasyczny wykonujemy rozstawiając nogi na szerokość bioder, a martwy ciąg sumo robimy na nogach rozstawionych szeroko, pilnując, aby ręce znajdowały się wewnątrz ich nawisu.",
                             Name = "Martwy ciąg sumo",
+                            Repeats = 0,
                             Series = 0,
                             Times = 0,
                             Weight = 35
@@ -248,6 +263,7 @@ namespace WebApi.Migrations
                             CategoryId = "3",
                             Description = "1) Zajmij miejsce na maszynie, dostosowując ją do swojego wzrostu.Kończyny dolne wyprostowane, wałek maszyny znajduje się kilka centymetrów poniżej łydek.Chwyć za uchwyty znajdujące się po bokach siedziska.",
                             Name = "Uginanie na dwójki na maszynie",
+                            Repeats = 0,
                             Series = 0,
                             Times = 0,
                             Weight = 43
@@ -258,6 +274,7 @@ namespace WebApi.Migrations
                             CategoryId = "3",
                             Description = " Z pozycji, w której stopa jest mocno zadarta do góry, pięta skrajnie obniżona, palce wskazują sufit, a łydka jest mocno rozciągnięta, odpychaj się od podwyższenia poprzez mocne wspięcie na palce i napięcie łydek.",
                             Name = "Uginanie na łydki stojąc",
+                            Repeats = 0,
                             Series = 27,
                             Times = 2,
                             Weight = 35
@@ -268,6 +285,7 @@ namespace WebApi.Migrations
                             CategoryId = "3",
                             Description = "musculus triceps brachii) - mięsień zajmujący całą powierzchnię tylną ramienia i należący do tylnej grupy mięśni ramienia, rozpięty między łopatką i kością",
                             Name = "Triceps",
+                            Repeats = 0,
                             Series = 5,
                             Times = 1,
                             Weight = 7
@@ -426,7 +444,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Admin",
-                            AdminId = "24902e7e-304d-42cf-a514-886b855d47ef"
+                            AdminId = "5c2ea201-08a3-4988-9d12-868048a715d6"
                         });
                 });
 
@@ -734,7 +752,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "24c0d73a-89a6-494d-9a20-32f54654d042"
+                            OwnerId = "c29a4837-07ab-4819-8f3d-1b310e34ffc5"
                         },
                         new
                         {
@@ -748,7 +766,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "25c4dd2d-ba79-491e-8b91-40b84e76aabe"
+                            OwnerId = "c1d8d277-89d8-4c61-9dbb-c80629df3ae9"
                         },
                         new
                         {
@@ -762,7 +780,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = 555555555,
                             Role = "Owner",
-                            OwnerId = "927789e8-32fb-4bba-9d56-5663c905648c"
+                            OwnerId = "229c3880-e26d-440f-9f2b-d85f777132c9"
                         });
                 });
 

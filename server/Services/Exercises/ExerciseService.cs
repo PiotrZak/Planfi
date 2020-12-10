@@ -3,20 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces;
 
 namespace WebApi.Services
 {
-    public interface IExerciseService
-    {
-        Exercise GetById(string id);
-        Exercise Create(Exercise Exercise);
-        IEnumerable<Exercise> GetAll();
-        IEnumerable<Exercise> GetAllOfCategory(string categoryId);
-        IEnumerable<Exercise> GetAllOfPlan(string planId);
-        void Update(Exercise exercise, string id);
-        void Delete(string id);
-    }
-
     public class ExerciseService : IExerciseService
     {
         private DataContext _context;
@@ -34,8 +24,7 @@ namespace WebApi.Services
 
             return exercise;
         }
-
-
+        
         public Exercise GetById(string id)
         {
 

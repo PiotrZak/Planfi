@@ -23,6 +23,8 @@ namespace WebApi.Entities
         public int Times { get; set; }
         public int Series { get; set; }
         public int Weight { get; set; }
+        
+        public int Repeats { get; set; }
         [GraphQLIgnore]
         public List<byte[]> Files { get; set; }
         public string CategoryId { get; set; }
