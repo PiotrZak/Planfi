@@ -10,12 +10,16 @@ import Input from 'components/molecules/Input';
 import Icon from 'components/atoms/Icon';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import { exerciseService } from 'services/exerciseService';
 import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 import TextArea from 'components/molecules/TextArea';
 import AttachmentPreview, { TYPE } from 'components/molecules/AttachmentPreview';
 import Random from 'utils/Random';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
+import { useHistory } from "react-router-dom";
+
+const ExerciseAdded = "Exercise Added!"
 
 const WrapperAttachments = styled.div`
   display: flex;
@@ -61,9 +65,11 @@ const validationSchema = Yup.object({
   exerciseDescription: Yup.string(),
 });
 
-const AddExerciseRefactor = () => {
+const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
+
+
 
   const fileNotification = (message) => {
     notificationDispatch({
@@ -75,26 +81,51 @@ const AddExerciseRefactor = () => {
     });
   };
 
+  const history = useHistory();
+
   const resetFileInput = () => {
     document.getElementById('choose-file-button').value = '';
   };
 
   const onSubmit = (values) => {
     console.log(values);
-
-    console.log(selectedFiles)
-    let blobSelectedFiles;
-
-    for (let i = 0; i <= selectedFiles.length; ++i) {
-      console.log(selectedFiles[i].File)
-      blobSelectedFiles.add(selectedFiles[i].File)
+    console.log(props.history.location.state.id)
+    const formData = new FormData();
+    formData.append("Name", values.exerciseName)
+    formData.append("Description", values.exerciseDescription)
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append(`Files`, selectedFiles[i].File)
     }
+    formData.append("CategoryId", props.history.location.state.id)
 
-    console.log(blobSelectedFiles)
+    console.log(formData.get("Name"))
+    console.log(formData.get("Description"))
+    console.log(formData.get("Files"))
+    console.log(formData.get("CategoryId"))
+    console.log(props.history.location.state.id)
 
+    exerciseService
+      .addExercise(formData)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('ExerciseAdded') },
+            type: 'positive'
+          }
+        })
+        history.push(`/category/${props.history.location.state.id}`);
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
+        })
+      });
 
-  
-  
   };
 
 

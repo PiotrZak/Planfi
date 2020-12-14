@@ -90,7 +90,7 @@ const Category = (props) => {
                         <Link
                             to={{
                                 pathname: routes.exercise,
-                                state: { id: category.categoryId }
+                                state: { id: id }
                             }}
                         >
                             <IconWrapper>
