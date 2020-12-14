@@ -78,9 +78,10 @@ export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
         overflow-y: scroll;
         width: 100%;
         z-index: 4;
+        background: ${({ theme }) => theme.colorWhite};
         display: ${({ visible }) => visible};
         @media only screen and ${breakPointSize.xs} {
-            background: transparent;
+
         }
 `;
 
