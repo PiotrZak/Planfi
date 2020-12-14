@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import Loader from 'components/atoms/Loader';
+import { categoryService } from 'services/categoryService';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import AddCategoryModal from './AddCategoryModal';
 import { commonUtil } from "utils/common.util"
@@ -12,6 +13,7 @@ import Heading from 'components/atoms/Heading';
 import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
 import CategoriesPanel from './CategoriesPanel'
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -31,6 +33,7 @@ const Categories = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none')
 
+  const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
   const { loading, error, data, refetch: _refetch} = useQuery(CATEGORY);
 
@@ -38,20 +41,44 @@ const Categories = () => {
     setOpenModal(false)
   }
 
-  useEffect(() => {
-    refreshData()
-  }, [openModal, openEditModal, _refetch]);
-
   const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200) }, [_refetch])
-
-  if (loading) return <Loader isLoading={loading}></Loader>;
-  if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
     const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
     setSelectedCategories(selectedCategories)
     selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   }
+
+  const deleteCategories = () => {
+    categoryService
+      .deleteCategories(selectedCategories)
+      .then(() => {
+        setBottomSheet('none')
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('CategoriesDeleted') },
+            type: 'positive'
+          }
+        })
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
+        })
+      });
+  };
+
+  useEffect(() => {
+    refreshData()
+  }, [openModal, openEditModal, _refetch, deleteCategories]);
+
+  if (loading) return <Loader isLoading={loading}></Loader>;
+  if (error) return <p>Error :(</p>;
 
   return (
     <>
@@ -72,6 +99,7 @@ const Categories = () => {
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel
+        deleteCategories= {deleteCategories}
         theme={theme}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}

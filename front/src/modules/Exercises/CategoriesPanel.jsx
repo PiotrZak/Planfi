@@ -1,11 +1,9 @@
 import React from 'react';
-import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import styled from 'styled-components';
 import { translate } from 'utils/Translation';
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import EditCategoryModal from './EditCategoryModal';
 
 const IconWrapper = styled.div`
@@ -13,6 +11,7 @@ const IconWrapper = styled.div`
 `;
 
 const CategoriesPanel = ({
+  deleteCategories,
   openEditModal,
   setOpenEditModal,
   theme,
@@ -20,32 +19,6 @@ const CategoriesPanel = ({
   setBottomSheet,
   selectedCategories
 }) => {
-
-  const { notificationDispatch } = useNotificationContext();
-
-  const deleteCategories = () => {
-    categoryService
-      .deleteCategories(selectedCategories)
-      .then(() => {
-        setBottomSheet('none')
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('CategoriesDeleted') },
-            type: 'positive'
-          }
-        })
-      })
-      .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
-        })
-      });
-  };
 
   const closeModal = () => {
     setOpenEditModal(false)

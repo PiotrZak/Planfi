@@ -88,6 +88,7 @@ const Plan = (props) => {
             .getExercisesByPlan(id)
             .then((data) => {
                 const uniqueExercises = getUnique(data, 'name');
+                console.log(uniqueExercises)
                 setExercises(uniqueExercises);
                 setIsLoading(false)
             })

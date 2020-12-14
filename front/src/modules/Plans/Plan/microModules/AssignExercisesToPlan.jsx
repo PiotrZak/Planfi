@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
-import styled from 'styled-components';
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
 import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
 import { Headline, Subline } from '../../../../components/typography';
-
 
 const noExercises = "No exercises"
 const plansSelected = '';
@@ -61,5 +59,3 @@ const assignToPlan = '';
         </>
     )
 }
-
-// export default AssignExercisesToPlan;

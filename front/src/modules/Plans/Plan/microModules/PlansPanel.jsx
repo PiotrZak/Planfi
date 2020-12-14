@@ -21,7 +21,6 @@ const BottomNavItem = styled.div`
 `
 
 export const PlansPanel = ({
-    planId,
     bottomSheet,
     setBottomSheet,
     categories,

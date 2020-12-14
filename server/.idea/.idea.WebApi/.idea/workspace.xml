@@ -245,6 +245,7 @@
       <workItem from="1607176864289" duration="12231000" />
       <workItem from="1607209939984" duration="322000" />
       <workItem from="1607359342724" duration="6916000" />
+      <workItem from="1607961239846" duration="578000" />
     </task>
     <servers />
   </component>
@@ -537,19 +538,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Plans/PlanService.cs</url>
-          <line>82</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Plans/PlanService.cs" initialLine="81">
-            <startOffsets>
-              <option value="2293" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2294" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Exercises/ExerciseService.cs</url>

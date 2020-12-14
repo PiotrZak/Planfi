@@ -5,6 +5,8 @@ import breakPointSize from 'utils/rwd';
 export const PanelContainer = styled.div`
   color: ${({ theme }) => theme.colorPrimary};
   display:flex;
+  justify-content: center;
+  transform: translateY(100%);
 `;
 
 export const BottomNav = styled.div`
@@ -17,7 +19,6 @@ export const BottomNavItem = styled.div`
     align-items:center;
     margin:3.6rem 0 0 1.6rem;
 `
-
 
 export const BottomItem = styled.div`
     border:1px solid ${({ theme }) => theme.colorDarkBorder};
@@ -34,6 +35,7 @@ export const PanelItem = styled.div`
     color: ${({ theme }) => theme.colorPrimary};
     display:flex;
     padding:0 3.6rem;
+    color: ${({ theme }) => theme.colorGray100};
     &:hover {
         cursor: pointer;
     }
@@ -43,7 +45,7 @@ export const PanelItem = styled.div`
         width:calc(100% - 2.4rem);
         height:7.2rem;
         background: ${({ theme }) => theme.colorGray100};
-        color: ${({ theme }) => theme.white};
+        color: ${({ theme }) => theme.colorWhite};
         justify-content: center;
         align-items: center;
         z-index:1;
@@ -63,6 +65,7 @@ export const StyledMobileReactBottomSheet = styled.div`
 
 export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
         border-top-left-radius: 2.4rem;
+        justify-content: center;
         border-top-right-radius: 2.4rem;
         border-top-width: 2rem;
         align-items: center;
@@ -74,14 +77,16 @@ export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
         height: 37.2rem;
         overflow-y: scroll;
         width: 100%;
-        background: ${({ theme }) => theme.colorWhite};
         z-index: 4;
         display: ${({ visible }) => visible};
+        @media only screen and ${breakPointSize.xs} {
+            background: transparent;
+        }
 `;
 
 const StyledReactBottomSheet = styled(ReactBottomsheet)`
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         box-sizing: border-box;
         padding: 0 0 0 0;
         position: fixed;
@@ -91,6 +96,9 @@ const StyledReactBottomSheet = styled(ReactBottomsheet)`
         background: ${({ theme }) => theme.colorWhite};
         z-index: 4;
         display: ${({ visible }) => visible};
+        @media only screen and ${breakPointSize.xs} {
+            background: transparent;
+        }
 `;
 
 export default StyledReactBottomSheet;

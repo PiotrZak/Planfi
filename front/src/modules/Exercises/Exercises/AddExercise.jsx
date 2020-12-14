@@ -61,10 +61,6 @@ const validationSchema = Yup.object({
   exerciseDescription: Yup.string(),
 });
 
-const onSubmit = (values) => {
-  console.log(values);
-};
-
 const AddExerciseRefactor = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
@@ -83,16 +79,26 @@ const AddExerciseRefactor = () => {
     document.getElementById('choose-file-button').value = '';
   };
 
+  const onSubmit = (values) => {
+    console.log(values);
+
+    console.log(selectedFiles)
+    let blobSelectedFiles;
+
+    for (let i = 0; i <= selectedFiles.length; ++i) {
+      console.log(selectedFiles[i].File)
+      blobSelectedFiles.add(selectedFiles[i].File)
+    }
+
+    console.log(blobSelectedFiles)
+
+
+  
+  
+  };
+
+
   const handleImageChange = (e) => {
-    /* if (e.target.files) {
-      const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-
-      setSelectedFiles((prevImages) => prevImages.concat(filesArray));
-      Array.from(e.target.files).map(
-        (file) => URL.revokeObjectURL(file), // avoid memory leak
-      );
-    } */
-
     // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
     const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
     const acceptedVideoFileType = ['video/mp4'];
@@ -190,7 +196,6 @@ const AddExerciseRefactor = () => {
   return (
     <GlobalTemplate>
       <ExerciseTemplate>
-        {/* eslint-disable-next-line max-len */}
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
