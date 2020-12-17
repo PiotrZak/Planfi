@@ -119,6 +119,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/402/List.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1BA52DC0-B103-422E-BA91-AD87A1AA9FE3/9/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/1AB/InternalDbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
@@ -169,7 +170,6 @@
         <option value="$PROJECT_DIR$/Interfaces/IUserInterface.cs" />
         <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
         <option value="$PROJECT_DIR$/appsettings.json" />
-        <option value="$PROJECT_DIR$/appsettings.Development.json" />
         <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
         <option value="$PROJECT_DIR$/Models/RegisterModel.cs" />
         <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
@@ -183,6 +183,7 @@
         <option value="$PROJECT_DIR$/Interfaces/IPlanService.cs" />
         <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
         <option value="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" />
+        <option value="$PROJECT_DIR$/appsettings.Development.json" />
       </list>
     </option>
   </component>
@@ -246,6 +247,9 @@
       <workItem from="1607209939984" duration="322000" />
       <workItem from="1607359342724" duration="6916000" />
       <workItem from="1607961239846" duration="578000" />
+      <workItem from="1608219179114" duration="129000" />
+      <workItem from="1608219332913" duration="98000" />
+      <workItem from="1608219459729" duration="990000" />
     </task>
     <servers />
   </component>
@@ -270,10 +274,10 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="646" y="-878" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604142055353">
+    <state x="646" y="-878" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1608219301004">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
-    <state x="646" y="-878" key="#com.intellij.execution.impl.EditConfigurationsDialog/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1604142055353" />
+    <state x="646" y="-878" key="#com.intellij.execution.impl.EditConfigurationsDialog/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1608219301004" />
     <state width="2518" height="402" key="GridCell.Tab.0.bottom" timestamp="1607617761133">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
@@ -423,20 +427,20 @@
     </state>
     <state x="782" y="-801" key="Rider.ProjectTemplateDialog.Size/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1605284648440" />
     <state x="782" y="-801" key="Rider.ProjectTemplateDialog.Size/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1607180031202" />
-    <state x="2" y="-980" width="2360" height="880" key="VCS.FileHistoryDialog" timestamp="1607168443500">
+    <state x="2" y="-980" width="2360" height="880" key="VCS.FileHistoryDialog" timestamp="1608219308992">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
-    <state x="2" y="-980" width="2360" height="880" key="VCS.FileHistoryDialog/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1607168443500" />
+    <state x="2" y="-980" width="2360" height="880" key="VCS.FileHistoryDialog/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1608219308992" />
     <state width="1280" height="540" key="XDebugger.FullValuePopup" timestamp="1607617865961">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state width="1280" height="540" key="XDebugger.FullValuePopup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1607617865961" />
     <state width="960" height="600" key="XDebugger.FullValuePopup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1607187430278" />
-    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup" timestamp="1607617262307">
+    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup" timestamp="1608222426266">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1607163651762" />
-    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1607617262307" />
+    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1608222426266" />
     <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1607173961103" />
   </component>
   <component name="XDebuggerManager">

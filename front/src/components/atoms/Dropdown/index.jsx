@@ -1,7 +1,5 @@
 import React from "react";
 import { Input } from "reactstrap";
-import { ValidationHint } from "components/atoms/ValidationHint";
-import { Label } from "components/atoms/Label";
 import { Row, Col } from "reactstrap";
 import { Spinner } from "reactstrap";
 
@@ -21,7 +19,7 @@ export const DropdownInput = ({
 }) => (
   <Row>
     <Col sm="6">
-      <Label label={label} required={required} hasError={hasError} />
+      {label}
     </Col>
     <Col sm="6">
       <DropdownWithSpinner
@@ -94,7 +92,7 @@ const Dropdown = ({
           </option>
         ))}
       </Input>
-      <ValidationHint hasError={hasError} />
+      {/* <ValidationHint hasError={hasError} /> */}
     </>
   );
 };

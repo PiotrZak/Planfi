@@ -7,10 +7,8 @@ import { routes } from 'utils/routes';
 const possibleTypes = {
     categories: 'categories',
     category: 'category',
-
     exercises: 'exercises',
     exercise: 'exercise',
-
     plans: 'plans',
     plan: 'plan',
 }
