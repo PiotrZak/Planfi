@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
@@ -150,7 +152,7 @@ namespace WebApi.Services{
             var Users = _context.Clients.Where(x => x.Role == role);
             return Users;
         }
-
+        
         public void AssignClientsToTrainers(string[] TrainersId, string[] UserIds)
         {         
             // [t1]
@@ -174,7 +176,16 @@ namespace WebApi.Services{
             }
         }
 
+        public class HttpStatusException : Exception
+        {
+            public HttpStatusCode Status { get; private set; }
 
+            public HttpStatusException(HttpStatusCode status, string msg) : base(msg)
+            {
+                Status = status;
+            }
+        }
+        
         public void AssignPlanToClients(string[] ClientIds, string[] PlanIds)
         {
 
@@ -190,17 +201,17 @@ namespace WebApi.Services{
                 foreach (var planId in PlanIds)
                 {
                     //finding a plan
-                    var plan = _context.Plans.Find(planId);
-
-                    var usersPlans = new ClientsPlans { Client = client, Plan = plan };
-
-                    // todo - create exercises instances 
-                    // todo here handle duplication
-                    //if()
-                    //    throw new ArgumentException("");
-
-                    _context.ClientsPlans.Add(usersPlans);
-                    _context.SaveChanges();
+                        var plan = _context.Plans.Find(planId);
+                        var usersPlans = new ClientsPlans {Client = client, Plan = plan};
+                        _context.ClientsPlans.Add(usersPlans);
+                        try
+                        { 
+                            _context.SaveChanges();
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            if (ex.InnerException != null) throw new Exception(ex.InnerException.Message);
+                        }
                 }
             }
         }
@@ -209,8 +220,6 @@ namespace WebApi.Services{
 
         // [t1]
         // ["u1","u2","u3"]
-        // full list of clients
-
         {
             var clientsTrainers = _context.ClientsTrainers.Where(x => x.TrainerId == id);
 

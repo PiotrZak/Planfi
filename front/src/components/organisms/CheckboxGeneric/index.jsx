@@ -19,6 +19,7 @@ input{
 export const CheckboxGenericComponent = ({
   id,
   selectAll,
+  theme,
   dataType,
   dataList,
   displayedValue,
@@ -90,11 +91,11 @@ export const CheckboxGenericComponent = ({
                 key={id}
                 forx={element[displayedValue]}
               >
-              <RenderType type = {type} element = {element} i = {i}/>
+              <RenderType theme = {theme} type = {type} element = {element} i = {i}/>
               </Holdable>
               :
               <>
-              <RenderType type = {type} element = {element} i = {i}/>
+              <RenderType theme = {theme} type = {type} element = {element} i = {i}/>
                 <CheckboxContainer>
                   <input
                     name={element[displayedValue]}

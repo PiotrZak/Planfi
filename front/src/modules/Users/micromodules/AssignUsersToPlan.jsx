@@ -6,13 +6,15 @@ import { commonUtil } from 'utils/common.util';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
+import { translate } from 'utils/Translation';
 import { Headline, MainHeadline } from 'components/typography';
 import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
-
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const assignPlanToUserNotification = "assignPlanToUserNotification";
 const returnToSubMenu = "returnToSubMenu";
 const selectFromPlans = "selectFromPlans";
+const PlansAssignedToUser = ""
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -31,6 +33,8 @@ export const AssignUsersToPlans = ({
     const [plans, setPlans] = useState();
     const [activePlans, setActivePlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    const { notificationDispatch } = useNotificationContext();
 
     useEffect(() => {
         getAllPlans();
@@ -68,18 +72,31 @@ export const AssignUsersToPlans = ({
         setActivePlans(selectedPlans);
     };
 
-
-
     const assignUserToPlan = () => {
         const data = { clientIds: activeUsers, planIds: activePlans };
 
         userService
             .assignPlanToUser(data)
             .then(() => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                        content: { success: 'OK', message: translate('PlansAssignedToUser') },
+                        type: 'positive'
+                    }
+                })
                 setAssignPlan('none');
                 setBottomSheet(false);
             })
             .catch((error) => {
+                console.log(error)
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                        content: { error: error, message: translate('ErrorAlert') },
+                        type: 'error'
+                    }
+                })
             });
     };
 
@@ -112,17 +129,11 @@ export const AssignUsersToPlans = ({
             <div>
                 <h4>{selectFromPlans}</h4>
                 {/* <Loader isLoading={isLoading}> */}
-                {plans ?
-                plans.map((element, i) =>
-                    <BottomItem onClick={() => assignUserToPlan(element)}>
-                        <Headline>{element.name}</Headline>
-                    </BottomItem>
-                )
-                : <p>{noPlans}</p>
             }
-                {/* {plansResults ?
+                {plansResults ?
                     <CheckboxGenericComponent
                         dataType="plans"
+                        theme = "light"
                         displayedValue="title"
                         dataList={plansResults}
                         onSelect={getSelectedPlanIds} />

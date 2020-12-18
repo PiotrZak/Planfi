@@ -14,7 +14,7 @@ const possibleTypes = {
 }
 
 
-export const RenderType = ({ type, element, i }) => {
+export const RenderType = ({ theme, type, element, i }) => {
 
     const history = useHistory();
 
@@ -53,6 +53,7 @@ export const RenderType = ({ type, element, i }) => {
                 return (
                     <span onClick={() => redirectToItem(possibleTypes.plan, element.planId)}>
                         <GenericElement
+                            theme = {theme}
                             key={i}
                             headline={element.title}
                             subline={element.creatorName}

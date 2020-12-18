@@ -14,6 +14,8 @@ using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using WebApi.Common;
 using WebApi.Interfaces;
 
 namespace WebApi.Controllers
@@ -21,7 +23,7 @@ namespace WebApi.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : ApiControllerBase
     {
         private IUserService _userService;
         private IMapper _mapper;
@@ -144,12 +146,24 @@ namespace WebApi.Controllers
         [HttpPost("assignPlans")]
         public IActionResult AssignPlanToUser([FromBody] AssignPlansToClient model)
         {
-
-            _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
-            return Ok();
+            try
+            {
+                _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
+            }
+            catch (Exception ex)
+            {
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure(ex.Message)
+                    .Build();
+                
+                return CommonResponse(failure);
+            }
+            var success = ApiCommonResponse.Create()
+                .WithSuccess()
+                .Build();
+            return CommonResponse(success);
         }
-
-
+        
         // todo - repair edition 
         [AllowAnonymous]
         [HttpPut("{id}")]
