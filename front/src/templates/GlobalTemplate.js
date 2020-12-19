@@ -11,9 +11,7 @@ export const Nav = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
   text-align: left;
-
   background-color: ${({ theme }) => theme.colorGray90};
   width: calc(100% - 3.2rem);
   height: 100%;

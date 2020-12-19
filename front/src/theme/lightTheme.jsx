@@ -1,4 +1,4 @@
-export const whiteTheme = {
+export const lightTheme = {
 
     // edit theme for colors
     colorPrimary: '#FFFFFF',
@@ -40,9 +40,9 @@ export const whiteTheme = {
     colorGray110: '#09090B',
     colorGray100: '#101013',
     colorGray90: 'white',
-    colorGray80: '#31313D',
+    colorGray80: '#FFFFFF',
     colorGray70: '#51515F',
-    colorGray60: '#666674',
+    colorGray60: '#FFFFFF',
     colorGray50: '#9898A5',
     colorGray40: '#C3C3CF',
     colorGray30: '#DDDDE6',

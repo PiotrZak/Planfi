@@ -18,6 +18,7 @@ const possibleTypes = {
 
 export const RenderType = ({ theme, type, element, i }) => {
 
+  const history = useHistory();
   const redirectToItem = (itemCase, id) => {
     history.push({
       pathname: `/${itemCase}/${id}`,
@@ -41,6 +42,7 @@ export const RenderType = ({ theme, type, element, i }) => {
       }
       case 'users': {
         return (
+          <span onClick={() => redirectToItem(possibleTypes.user, element.userId)}>
           <GenericElement
             key={i}
             circle
@@ -49,12 +51,14 @@ export const RenderType = ({ theme, type, element, i }) => {
             user={element}
             subline={element.role}
           />
+                    </span>
         );
       }
       case 'plans': {
         return (
           <span onClick={() => redirectToItem(possibleTypes.plan, element.planId)}>
             <GenericElement
+              theme = {theme}
               key={i}
               headline={element.title}
               subline={element.creatorName}
@@ -78,60 +82,6 @@ export const RenderType = ({ theme, type, element, i }) => {
       }
     }
   };
-
-    const renderType = () => {
-        switch (type) {
-            case possibleTypes.categories: {
-                return (
-                    <span onClick={() => redirectToItem(possibleTypes.category, element.categoryId)}>
-                        <GenericElement
-                            key={i}
-                            headline={element.title}
-                            subline={`${element.series} / ${element.times}`}
-                            category={element.category} />
-                    </span>
-                )
-            }
-            case 'users': {
-                return (
-                    <span onClick={() => redirectToItem(possibleTypes.user, element.userId)}>
-                    <GenericElement
-                        key={i}
-                        circle={true}
-                        image={element.avatar}
-                        headline={`${element.firstName}  ${element.lastName}`}
-                        user={element}
-                        subline={element.role} />
-                   </span>
-                )
-            }
-            case 'plans': {
-                return (
-                    <span onClick={() => redirectToItem(possibleTypes.plan, element.planId)}>
-                        <GenericElement
-                            theme = {theme}
-                            key={i}
-                            headline={element.title}
-                            subline={element.creatorName}
-                            plan={element} />
-                    </span>
-                )
-            }
-            case 'exercises': {
-                return (
-                    <span onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}>
-                        <GenericElement
-                            key={i}
-                            headline={element.name}
-                            image={element.files && element.files[0]}
-                            subline={`${element.series} / ${element.times}`}
-                            exercise={element} />
-                    </span>
-                )
-            }
-        }
-    }
-
 
     return (
         <>

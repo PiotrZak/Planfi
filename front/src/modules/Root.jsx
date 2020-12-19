@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { mainTheme } from 'theme/mainTheme';
+
+
+import { darkTheme } from 'theme/darkTheme';
+import { lightTheme } from 'theme/lightTheme';
+
+
 import { ThemeProvider } from 'styled-components';
 import { createBrowserHistory } from 'history';
 import MainTemplate from 'templates/MainTemplate';
@@ -23,7 +28,7 @@ import AddExercise from 'modules/Exercises/Exercises/AddExercise';
 import Plans from 'modules/Plans/Plans';
 import Plan from 'modules/Plans/Plan/Plan';
 
-import MyProfile from 'modules/Users/MyProfile';
+import MyProfile from 'modules/MyProfile/MyProfile';
 import { User } from './Users/User';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
@@ -40,9 +45,19 @@ import TestPage from './Auth/Test';
 export const history = createBrowserHistory();
 
 const Root = () => {
-  const [theme] = useState(mainTheme);
+
   const [user] = useState(JSON.parse((localStorage.getItem('user'))));
-  const [selectedLanguage] = useState('en');
+
+  const [selectedLanguage, setSelectedLanguage] = useState('en');
+  const [theme, setTheme] = useState(darkTheme)
+
+  const toggleTheme = () => {
+    setTheme(theme == darkTheme ? lightTheme : darkTheme)
+  }
+
+  const toggleLanguage = () => {
+    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'en-GB' : 'pl-PL')
+  }
 
   return (
     <LanguageContext.Provider value={{ lang: selectedLanguage }}>
@@ -57,7 +72,7 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-                  <Route path={routes.myProfile} component={MyProfile} />
+                  <Route path={routes.myProfile} component={() => <MyProfile toggleTheme ={toggleTheme}/>} />
 
                   <Route path="/test" component={TestPage} />
 

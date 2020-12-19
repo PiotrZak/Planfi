@@ -50,6 +50,11 @@ const GlobalStyle = createGlobalStyle`
   p{
     font-size:1.4rem;
   }
+
+   @media screen and (max-width: 80rem) {
+   overflow-y:scroll;
+   
+   }
 `;
 
 export default GlobalStyle;

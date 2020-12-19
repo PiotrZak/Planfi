@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, REMOVE } from 'support/context/NotificationContext';
-import { mainTheme } from 'theme/mainTheme';
+import { darkTheme } from 'theme/darkTheme';
 
 const handleAlertType = (type, theme) => {
   switch (type) {
@@ -80,7 +80,7 @@ const Alert = ({ notification }) => {
   const { notificationDispatch } = useNotificationContext();
 
   // todo - take context from global
-  const theme = mainTheme;
+  const theme = darkTheme;
   const timeToRemove = 15000;
 
   useEffect(() => {

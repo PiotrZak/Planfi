@@ -8,7 +8,7 @@ import { UserInfo } from "components/molecules/UserInfo"
 import { isMobile } from "react-device-detect";
 import GlobalTemplate, { Nav as NavI } from "../../templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
-import { Navs } from './MyProfile';
+import { Navs } from '../MyProfile/MyProfile';
 
 import { TrainerClients } from "./UserProfile/TrainerClients"
 import { TrainerPlans } from "./UserProfile/TrainerPlans"

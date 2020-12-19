@@ -20,7 +20,10 @@ const UserInfoContainer = styled.div`
     }
 `;
 
-export const UserInfo = ({user}) => (
+export const UserInfo = ({user}) => {
+
+  console.log(user)
+  return(
   <UserInfoContainer>
     {user &&
     <div>
@@ -32,4 +35,5 @@ export const UserInfo = ({user}) => (
     </div>
     }
   </UserInfoContainer>
-)
+  )
+}

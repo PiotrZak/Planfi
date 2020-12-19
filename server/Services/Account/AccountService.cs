@@ -71,10 +71,10 @@ namespace WebApi.Services
 
         public void UploadAvatar(string userId, byte[] avatar)
         {
-            var user = _context.Clients.Find(userId);
+            var user = _context.Users.Find(userId);
 
             user.Avatar = avatar;
-            _context.Clients.Update(user);
+            _context.Users.Update(user);
             _context.SaveChanges();
         }
         

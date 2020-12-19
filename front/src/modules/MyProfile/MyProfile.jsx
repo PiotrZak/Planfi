@@ -9,11 +9,14 @@ import { translate } from 'utils/Translation';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { useUserContext } from "../../support/context/UserContext"
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-import { TrainerClients } from "./UserProfile/TrainerClients"
-import { TrainerPlans } from "./UserProfile/TrainerPlans"
-import { UserPlans } from "./UserProfile/UserPlans"
-import { ClientTrainers } from "./UserProfile/ClientTrainers"
+import { TrainerClients } from "../Users/UserProfile/TrainerClients"
+import { TrainerPlans } from "../Users/UserProfile/TrainerPlans"
+import { UserPlans } from "../Users/UserProfile/UserPlans"
+import { ClientTrainers } from "../Users/UserProfile/ClientTrainers"
 import { useHistory } from 'react-router-dom';
+import { userService } from 'services/userServices'
+import SmallButton from 'components/atoms/SmallButton';
+import { MyProfilePanel } from './MyProfilePanel';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -25,22 +28,41 @@ const ChangeMail = "Change Email";
 const ChangePassword = "Change Paassword";
 const Logout = "Logout";
 
-export const MyProfile = (props) => {
+export const MyProfile = ({toggleTheme}) => {
+
+    console.log(toggleTheme)
 
     const { user } = useUserContext();
     const { theme } = useThemeContext();
-
+    const [updatedUser, setUpdatedUser] = useState(user);
     let sections = [];
 
     const closeModal = () => {
         setOpenModal(false)
     }
 
-    if (user.role === "Trainer") {
-        sections = ['Trainer Clients', 'Trainer Plans']
+    useEffect(() => {
+        setUpdatedUser(user)
+        getUserById()
+    }, []);
+
+    const getUserById = () => {
+        userService
+            .getUserById(user.userId)
+            .then((data) => {
+                setUpdatedUser(data)
+            })
+            .catch((error) => {
+            });
     }
-    else {
-        sections = ['User Plans', 'Client Trainers']
+
+    if (user) {
+        if (user.role === "Trainer") {
+            sections = ['Trainer Clients', 'Trainer Plans']
+        }
+        else {
+            sections = ['User Plans', 'Client Trainers']
+        }
     }
 
     const [activeItem, setActiveItem] = useState('TrainerClients');
@@ -54,12 +76,10 @@ export const MyProfile = (props) => {
             <GlobalTemplate>
                 <NavI>
                     <BackTopNav />
-                    <IconWrapper>
-                        <Icon onClick={() => setBottomSheet('flex')} name="plus" fill={theme.colorInputActive} />
-                    </IconWrapper>
+                    <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />
                 </NavI>
-                {user && <UserInfo user={user} />}
-
+                {user && <UserInfo user={updatedUser} />}
+                <ThemeSelector toggleTheme = {toggleTheme}/>
                 <TabsContainer>
                     {sections.map((title, i) => (
                         <Navs
@@ -69,7 +89,7 @@ export const MyProfile = (props) => {
                         />
                     ))}
                 </TabsContainer>
-                {user.role === "Trainer"
+                {user && user.role === "Trainer"
                     ?
                     <>
                         {activeItem == 'Trainer Clients' && <TrainerClients id={user.userId} />}
@@ -86,11 +106,11 @@ export const MyProfile = (props) => {
                 <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
                 <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} /> */}
             </GlobalTemplate>
-            <MyProfilePanel 
+            <MyProfilePanel
                 theme={theme}
                 bottomSheet={bottomSheet}
-                setBottomSheet={setBottomSheet} 
-                />
+                setBottomSheet={setBottomSheet}
+            />
         </>
     );
 }
@@ -122,61 +142,30 @@ export const Navs = ({ setActiveItem, activeItem, title }) => {
     const changeTab = (title) => {
         setActiveItem(title);
     };
-    console.log(activeItem)
     return (
         <Tab onClick={() => changeTab(title)}>{title}</Tab>
     );
 };
 
-const timeToRedirectLogin = 3000;
-
-export const MyProfilePanel = ({
-    bottomSheet,
-    setBottomSheet,
-}) => {
-
-    const { user } = useUserContext();
-    const history = useHistory();
-
-    const [isLoading, setIsLoading] = useState(true)
-
-    const [openEditUserData, setOpenEditUserData] = useState(false)
-    const [openEditMailModal, setOpenEditMailModal] = useState(false);
-    const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
-
-    const logout = () => {
-        localStorage.removeItem('user');
-        setTimeout(() => {
-            history.push(`/login/`);
-          }, timeToRedirectLogin);
-    }
 
 
+
+const LanguageSelector = () => {
 
     return (
-        <StyledReactBottomSheet
-            showBlockLayer={false}
-            visible={bottomSheet}
-            className={""}
-            onClose={() => setBottomSheet(false)}
-            appendCancelBtn={false}>
-            <PanelContainer>
-                <PanelItem onClick={() => setOpenEditUserData(true)}>
-                    {translate('UserEdit')}
-                </PanelItem>
-                <PanelItem onClick={() => setOpenEditMailModal(true)}>
-                    {translate('ChangeMail')}
-                </PanelItem>
-                <PanelItem onClick={() => setOpenEditUserPasswordModal(true)}>
-                    {translate('ChangePassword')}
-                </PanelItem>
-                <PanelItem onClick={() => logout()}>
-                    {translate('Logout')}
-                </PanelItem>
-            </PanelContainer>
-        </StyledReactBottomSheet>
-    );
-}
+      <div className="lang-switcher">set language</div>
+    )
+  }
+  
+  const ThemeSelector = ({ toggleTheme }) => {
+  
+    return (
+      <div>
+        <div className="theme-switcher" onClick={() => toggleTheme()}>
+          set theme</div>
+      </div>
+    )
+  }
 
 
 export default MyProfile;

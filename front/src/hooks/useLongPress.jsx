@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { mainTheme } from 'theme/mainTheme';
+import { darkTheme } from 'theme/darkTheme';
 
 export const GenericMobile = styled.div`
       width:100%;
@@ -10,7 +10,7 @@ export const GenericMobile = styled.div`
         &:after{
         content:'';
         position:absolute;
-        border:2px solid ${mainTheme.colorInputActive};
+        border:2px solid ${darkTheme.colorInputActive};
         border-radius:4px;
         opacity:0.7;
         height:7.2rem;

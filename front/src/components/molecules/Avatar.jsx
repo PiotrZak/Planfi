@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { accountService } from 'services/accountServices';
 import styled from 'styled-components';
 import { useThemeContext } from 'support/context/ThemeContext';
+import Image from 'components/atoms/Image';
 
 const addedAvatar = 'Avatar succesfully added!';
 
@@ -102,13 +103,7 @@ export const Avatar = ({ avatar, id }) => {
             onMouseLeave={() => setHover(false)}
             onClick={fileInputClicked}
           >
-            <img
-              className={`avatar ${
-                hover
-                && ' avatar__imghover'
-                }`}
-              src={`data:image/jpeg;base64,${avatar}`}
-            />
+          <Image url={avatar} />
             <input
               ref={fileInputRef}
               className="file-input"
