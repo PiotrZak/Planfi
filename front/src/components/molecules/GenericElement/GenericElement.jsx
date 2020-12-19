@@ -44,17 +44,17 @@ const GenericElementSquare = styled.div`
 
 `;
 
+const GenericElementImageEmpty = styled.div`
+      background-color: ${({ theme }) => theme.colorGray60};
+      width: 4.8rem;
+      height: 4.8rem;
+`;
+
 const GenericElementImage = styled.div`
     border-radius: 3px;
     margin-right: 8px;
     width: 4.8rem;
     height: 4.8rem;
-`;
-
-const GenericElementImageEmpty = styled.div`
-      background-color: $color-gray-60;
-      width: 4.8rem;
-      height: 4.8rem;
 `;
 
 const GenericElement = ({

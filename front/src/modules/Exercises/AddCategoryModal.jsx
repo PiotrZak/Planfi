@@ -1,5 +1,4 @@
 import React from 'react';
-import InputContainer from 'components/atoms/InputContainerForm';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import { translate } from 'utils/Translation';
@@ -12,6 +11,8 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
+import Paragraph from 'components/atoms/Paragraph';
+import ValidationHint from 'components/atoms/ErrorMessageForm';
 
 const initialValues = {
   title: '',
@@ -19,13 +20,19 @@ const initialValues = {
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
-    .required(translate('CategoryTitle')),
+    .required(translate('ThisFieldIsRequired')),
 });
 
 const IconContainer = styled.div`
   position: absolute;
   top: 1rem;
   right: 1rem;
+`;
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
 `;
 
 const AddCategoryModal = ({ openModal, onClose, theme }) => {
@@ -65,19 +72,23 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
       onBackgroundClick={onClose}
       onEscapeKeydown={onClose}
     >
-      <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
       <IconContainer>
-        <Icon name="Union" size="1.2" />
+        <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
       </IconContainer>
+
+      <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
+
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-        {({ errors, touched }) => (
+        {({ errors, touched, isValid }) => (
           <Form>
-            <InputContainer>
-              <Label type="top" text={translate('CategoryTitle')} required>
-                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
-              </Label>
-            </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg">{translate('AddCategoryButton')}</Button>
+            <Label type="top" text={translate('CategoryTitle')} required>
+              <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+            </Label>
+            <ValidationHint name="title" />
+            <Paragraph type="body-3-regular">{translate('AddCategoryModalDescription')}</Paragraph>
+            <ButtonContainer>
+              <Button type="submit" buttonType="primary" size="md" disabled={!isValid}>{translate('Add')}</Button>
+            </ButtonContainer>
           </Form>
         )}
       </Formik>

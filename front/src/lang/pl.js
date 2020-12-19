@@ -66,5 +66,6 @@ export const pl = {
 
   NoExerciseInPlan: 'There are no added exercises in this Plan',
   Exercises: 'Ćwiczenia',
-
+  AddCategoryModalDescription: 'Nazywając kategorię warto używać nazw zwiazanych z konkretnymi partiami ciała na przykład “Plecy”.',
+  Add: 'Dodaj',
 };

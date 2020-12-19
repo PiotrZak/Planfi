@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { useParams, useHistory } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
@@ -12,12 +12,12 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import Center from 'components/atoms/Center';
 import Paragraph from 'components/atoms/Paragraph';
-import Checkbox from 'components/atoms/Checkbox';
+import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
 import { routes } from 'utils/routes';
 import { translate } from 'utils/Translation';
-import { useNotificationContext, ADD } from '../../support/context/NotificationContext';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Heading from 'components/atoms/Heading';
-import { accountService } from '../../services/accountServices';
+import { accountService } from 'services/accountServices';
 
 const initialValues = {
   name: '',
@@ -79,7 +79,6 @@ const CheckboxContainer = styled.div`
 `;
 
 const ActivateAccountPage = () => {
-
   useEffect(() => {
   }, []);
 
@@ -105,7 +104,6 @@ const ActivateAccountPage = () => {
   const timeToRedirect = 5000;
 
   const activateUser = (activateUserModel) => {
-
     accountService
       .activate(activateUserModel)
       .then((data) => {
@@ -114,15 +112,14 @@ const ActivateAccountPage = () => {
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('ActivateAccountSuccess') },
-            type: 'positive'
-          }
-        })
+            type: 'positive',
+          },
+        });
         setTimeout(() => {
           history.push({
             pathname: '/confirmation',
-            state: { message: "Activation" },
-          }
-          );
+            state: { message: 'Activation' },
+          });
         }, timeToRedirect);
       })
       .catch((error) => {
@@ -170,7 +167,7 @@ const ActivateAccountPage = () => {
               <Container>
                 <CheckboxContainer>
                   <Checkbox
-                    checkboxType="formik"
+                    checkboxType={CHECKBOX_TYPE.FORMIK}
                     type="checkbox"
                     name="privacy"
                     checked={values.privacy}

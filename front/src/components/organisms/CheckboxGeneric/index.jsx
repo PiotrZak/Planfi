@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { isMobile } from "react-device-detect";
-import { Holdable } from "hooks/useLongPress";
-import { RenderType } from "./DataTypes"
+import React, { useState, useEffect } from 'react';
+import { isMobile } from 'react-device-detect';
+import { Holdable } from 'hooks/useLongPress';
 import styled from 'styled-components';
 import breakPointSize from 'utils/rwd';
+import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
+import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
 
 const CheckboxContainer = styled.div`
-input{
-  margin:-5rem 0 0 1.4rem;
-  z-index:2;
-  position: absolute;
-  @media only screen and ${breakPointSize.xs} {
-    display:none;
+  input{
+    margin:-5rem 0 0 1.4rem;
+    z-index:2;
+    position: absolute;
+    @media only screen and ${breakPointSize.xs} {
+      display:none;
+    }
   }
-}
 `;
 
 export const CheckboxGenericComponent = ({
@@ -29,7 +30,7 @@ export const CheckboxGenericComponent = ({
 
   useEffect(() => {
     dataList.map((el) => {
-      {el.value = null;}
+      { el.value = null; }
       return el;
     });
     setType(dataType);
@@ -39,11 +40,8 @@ export const CheckboxGenericComponent = ({
   function handleChange(e) {
     dataList.map((el) => {
       if (isMobile) {
-        if (el[displayedValue] === e.currentTarget.getAttribute('name')) {el.value = !e.currentTarget.checked;}
-      }
-      else {
-        if (el[displayedValue] === e.target.name) {el.value = e.target.checked;}
-      }
+        if (el[displayedValue] === e.currentTarget.getAttribute('name')) { el.value = !e.currentTarget.checked; }
+      } else if (el[displayedValue] === e.target.name) { el.value = e.target.checked; }
       return el;
     });
     setList([...dataList]);
@@ -82,30 +80,32 @@ export const CheckboxGenericComponent = ({
       dataList.map((element, i) => {
         row.push(
           <>
-            {isMobile ?
-              <Holdable
-                name={element[displayedValue]}  
-                onHold={handleChange}
-                onClick={(e) => e.preventDefault()}
-                key={id}
-                forx={element[displayedValue]}
-              >
-              <RenderType type = {type} element = {element} i = {i}/>
-              </Holdable>
-              :
-              <>
-              <RenderType type = {type} element = {element} i = {i}/>
-                <CheckboxContainer>
-                  <input
-                    name={element[displayedValue]}
-                    type="checkbox"
-                    checked={element.value}
-                    onChange={handleChange}
-                  />
-                </CheckboxContainer>
-              </>
-            }
-          </>
+            {isMobile
+              ? (
+                <Holdable
+                  name={element[displayedValue]}
+                  onHold={handleChange}
+                  onClick={(e) => e.preventDefault()}
+                  key={id}
+                  forx={element[displayedValue]}
+                >
+                  <RenderType type={type} element={element} i={i} />
+                </Holdable>
+              )
+              : (
+                <>
+                  <RenderType type={type} element={element} i={i} />
+                  <CheckboxContainer>
+                    <Checkbox
+                      checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
+                      name={element[displayedValue]}
+                      checked={element.value}
+                      onChange={handleChange}
+                    />
+                  </CheckboxContainer>
+                </>
+              )}
+          </>,
         );
         return element;
       });
@@ -119,7 +119,3 @@ export const CheckboxGenericComponent = ({
     </>
   );
 };
-
-
-
-
