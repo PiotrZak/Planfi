@@ -31,16 +31,13 @@ const Plan = (props) => {
 
     const { theme } = useThemeContext();
     const { user } = useUserContext();
-
+    
     const [plans, setPlans] = useState();
     const [searchTerm, setSearchTerm] = React.useState("");
-
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
-
     const [bottomSheet, setBottomSheet] = useState('none')
     const [isLoading, setIsLoading] = useState(false)
-
     const [selectedPlans, setSelectedPlans] = useState([])
 
     const { match } = props;

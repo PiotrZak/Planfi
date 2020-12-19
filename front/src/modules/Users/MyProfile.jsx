@@ -122,7 +122,7 @@ const Tab = styled.div`
     }
 `;
 
-const Navs = ({ setActiveItem, activeItem, title }) => {
+export const Navs = ({ setActiveItem, activeItem, title }) => {
     const changeTab = (title) => {
         setActiveItem(title);
     };

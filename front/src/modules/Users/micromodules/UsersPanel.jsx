@@ -6,7 +6,7 @@ import { isMobile } from "react-device-detect";
 import EditRoleModal from "./EditRoleModal";
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 
-const deleteUser = "Delete User"
+const deleteUserText = "Delete User"
 const assignPlanText = "Assign Plan"
 const assignToTrainerText = "Assign To Trainer"
 const editUserRole = "Edit User Role"
@@ -18,6 +18,7 @@ const IconWrapper = styled.div`
 `;
 
 export const UsersPanel = ({
+    theme,
     bottomSheet,
     setBottomSheet,
     activeUsers,
@@ -69,7 +70,7 @@ export const UsersPanel = ({
                 <>
                     <StyledMobileReactBottomSheet>
                         <PanelItem onClick={() => deleteUser()}>
-                            {deleteUser}
+                            {deleteUserText}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>
                             {assignPlanText}
@@ -82,33 +83,35 @@ export const UsersPanel = ({
                 :
                 <>
                     <PanelContainer>
+                    <PanelItem>
                         <IconWrapper>
-                            <Icon name="check" fill="#2E6D2C" />
+                            <Icon name="check" fill={theme.colorInputActive}/>
                         </IconWrapper>
-                        <p>{activeUsers.length} {usersSelected}</p>
+                        {activeUsers.length} {usersSelected}
+                        </PanelItem>
                         <PanelItem onClick={() => deleteUser()} >
-                        <Icon height={"18px"} name="trash" fill="#C3C3CF" />
-                        {deleteUser}
+                        <Icon name="trash" fill={theme.colorInputActive} />
+                        {deleteUserText}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>
                             <IconWrapper>
-                                <Icon height={"18px"} name="clipboard-notes" fill="#C3C3CF" />
+                                <Icon name="clipboard-notes" fill={theme.colorInputActive} />
                             </IconWrapper>
                             {assignPlanText}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignTrainersToUsers()}>
                             <IconWrapper>
-                                <Icon height={"18px"} name="user-circle" fill="#C3C3CF" />
+                                <Icon name="user-circle" fill={theme.colorInputActive} />
                             </IconWrapper>
                             {assignToTrainerText}
                         </PanelItem>
                         {activeUsers.length < 2 &&
-                            <div onClick={() => openEditModal()} className='bottom-sheet-item__content'>
+                            <PanelItem>
                                 <IconWrapper>
-                                    <Icon height={"18px"} name="edit" fill="#C3C3CF" />
+                                    <Icon name="edit" fill={theme.colorInputActive} />
                                 </IconWrapper>
                                 {editUserRole}
-                            </div>
+                            </PanelItem>
                         }
                         <EditRoleModal
                             id={activeUsers}

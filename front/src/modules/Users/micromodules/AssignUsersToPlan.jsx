@@ -14,6 +14,7 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 const assignPlanToUserNotification = "assignPlanToUserNotification";
 const returnToSubMenu = "returnToSubMenu";
 const selectFromPlans = "selectFromPlans";
+const selectFromTrainers = "Select from trainers:"
 const PlansAssignedToUser = ""
 
 const IconWrapper = styled.div`
@@ -45,7 +46,7 @@ export const AssignUsersToPlans = ({
 
     const closeAssignPlansToUser = () => {
         setBottomSheet('flex');
-        setAssignPlan(false);
+        setAssignPlan('none');
     };
 
     const filterPlans = (event) => {
@@ -108,7 +109,6 @@ export const AssignUsersToPlans = ({
             onClose={() => setBottomSheet(false)}
             appendCancelBtn={false}
         >
-
             <BottomNav>
                 <BottomNavItem>
                     <Headline>{activeUsers.length}</Headline>
@@ -127,7 +127,7 @@ export const AssignUsersToPlans = ({
             </BottomNav>
 
             <div>
-                <h4>{selectFromPlans}</h4>
+                <h4>{selectFromTrainers}</h4>
                 {/* <Loader isLoading={isLoading}> */}
             }
                 {plansResults ?

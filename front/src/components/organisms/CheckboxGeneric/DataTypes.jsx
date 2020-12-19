@@ -11,6 +11,8 @@ const possibleTypes = {
     exercise: 'exercise',
     plans: 'plans',
     plan: 'plan',
+    users: 'users',
+    user: 'user',
 }
 
 
@@ -40,6 +42,7 @@ export const RenderType = ({ theme, type, element, i }) => {
             }
             case 'users': {
                 return (
+                    <span onClick={() => redirectToItem(possibleTypes.user, element.userId)}>
                     <GenericElement
                         key={i}
                         circle={true}
@@ -47,6 +50,7 @@ export const RenderType = ({ theme, type, element, i }) => {
                         headline={`${element.firstName}  ${element.lastName}`}
                         user={element}
                         subline={element.role} />
+                   </span>
                 )
             }
             case 'plans': {

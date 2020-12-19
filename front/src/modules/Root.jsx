@@ -23,8 +23,8 @@ import AddExercise from 'modules/Exercises/Exercises/AddExercise';
 import Plans from 'modules/Plans/Plans';
 import Plan from 'modules/Plans/Plan/Plan';
 
-
 import MyProfile from 'modules/Users/MyProfile';
+import { User } from './Users/User';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { PrivateRoute, Role } from '../utils/PrivateRoute';
@@ -34,6 +34,7 @@ import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
 
 import TestPage from './Auth/Test';
+
 
 export const history = createBrowserHistory();
 
@@ -58,6 +59,8 @@ const Root = () => {
                   <Route path={routes.myProfile} component={MyProfile} />                  
 
                   <Route path="/test" component={TestPage} />
+
+                  <PrivateRoute path="/user/:id" component={User} />
 
                   <MenuTemplate>
                   <Route path={routes.exercise} component={AddExercise} />

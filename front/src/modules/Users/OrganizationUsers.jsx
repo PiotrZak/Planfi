@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { organizationService } from 'services/organizationServices';
 import { commonUtil } from 'utils/common.util';
-import Loader from 'components/atoms/Loader';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import { useUserContext } from "../../support/context/UserContext"
 import BackTopNav from 'components/molecules/BackTopNav';
 import InviteUserModal from './InviteUsersModal';
 import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
-
+import { useThemeContext } from 'support/context/ThemeContext';
 import { UsersPanel } from "./micromodules/UsersPanel"
 import { AssignUsersToPlans } from "./micromodules/AssignUsersToPlan"
-// import { AssignUsersToTrainers } from "../Common/AssignUsersToTrainers"
+import { AssignUsersToTrainers } from "./micromodules/AssignUsersToTrainers"
 
 const noUsers = "No Users";
 
 const OrganizationUsers = () => {
+  const { theme } = useThemeContext();
   const { user } = useUserContext();
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState(users);
@@ -92,11 +92,12 @@ const OrganizationUsers = () => {
             displayedValue="firstName"
             dataList={filteredUsers}
             onSelect={submissionHandleElement}
-            /> :
+          /> :
           <h1>{noUsers}</h1>
         }
       </GlobalTemplate>
       <UsersPanel
+        theme={theme}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
         activeUsers={activeUsers}
@@ -109,17 +110,19 @@ const OrganizationUsers = () => {
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
         activeUsers={activeUsers} />
+      <AssignUsersToTrainers
+        theme={theme}
+        organizationId={user.organizationId}
+        assignTrainer={assignTrainer}
+        setAssignTrainer={setAssignTrainer}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+        activeUsers={activeUsers} />
     </>
   );
 };
 
 
-// <AssignUsersToTrainers 
-// organizationId={user.organizationId}
-//  assignTrainer={assignTrainer}
-//   setAssignTrainer={setAssignTrainer} 
-//   bottomSheet={bottomSheet} 
-//   setBottomSheet={setBottomSheet}
-//    activeUsers={activeUsers} /> 
+
 
 export default OrganizationUsers;
