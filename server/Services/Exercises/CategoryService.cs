@@ -22,6 +22,9 @@ namespace WebApi.Services
 
         public Category Create(Category category)
         {
+            // throw error if the new plan is already taken
+            if (_context.Categories.Any(x => x.Title == category.Title))
+                throw new AppException("Category " + category.Title + " is already exist");
            
             _context.Categories.Add(category);
             _context.SaveChanges();

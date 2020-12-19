@@ -18,6 +18,9 @@ namespace WebApi.Services
 
         public Exercise Create(Exercise exercise)
         {
+            // throw error if the new plan is already taken
+            if (_context.Categories.Any(x => x.Title == exercise.Name))
+                throw new AppException("Exercise " + exercise.Name + " is already exist");
 
             _context.Exercises.Add(exercise);
             _context.SaveChanges();
