@@ -13,6 +13,7 @@ import { useThemeContext } from 'support/context/ThemeContext';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
 import {useUserContext} from "../../support/context/UserContext"
+import SmallButton from 'components/atoms/SmallButton';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -86,9 +87,7 @@ const Plan = (props) => {
                     <BackTopNav />
                     {plans && <h2>{plans.title}</h2>}
                     {plans &&
-                        <IconWrapper>
-                            <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
-                        </IconWrapper>
+                    <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
                     }
                 </Nav>
                 <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />

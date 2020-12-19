@@ -12,7 +12,7 @@ import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
 import { categoryService } from "services/categoryService";
-
+import SmallButton from 'components/atoms/SmallButton';
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
 
@@ -158,11 +158,7 @@ const Plan = (props) => {
                 <Nav>
                     <BackTopNav />
                     {plan && <h2>{plan.title}</h2>}
-                    {plan &&
-                        <IconWrapper>
-                            <Icon onClick={() => setBottomSheet('flex')} name="plus" fill={theme.colorInputActive} />
-                        </IconWrapper>
-                    }
+                    {plan && <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />}
                 </Nav>
                 <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
                 {results ?

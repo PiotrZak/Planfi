@@ -11,6 +11,7 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGenericCo
 import Spacer from "components/atoms/Spacer"
 import { commonUtil } from "utils/common.util"
 import Search from "components/atoms/Search"
+import SmallButton from 'components/atoms/SmallButton';
 
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
@@ -139,11 +140,7 @@ export const Plan = (props) => {
             <Nav>
                 <BackTopNav title = {plan.title}/>
                 {Plan && <h2>{Plan.title}</h2>}
-                {Plan &&
-                    <IconWrapper>
-                        <Icon onClick={() => openBottomSheet()} name="plus" fill={theme.colorInputActive} text={messages.plans.addExerciseToPlan} />
-                    </IconWrapper>
-                }
+                {Plan && <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />}
             </Nav>
             <Search callBack={filterExercises} />
             <Spacer h={90} />

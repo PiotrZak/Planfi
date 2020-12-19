@@ -80,7 +80,7 @@ const Category = (props) => {
           && (
             <Link
               to={{
-                pathname: routes.exercise,
+                pathname: routes.addExcersise,
                 state: { id },
               }}
             >
