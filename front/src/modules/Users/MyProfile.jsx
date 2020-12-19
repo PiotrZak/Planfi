@@ -13,6 +13,7 @@ import { TrainerClients } from "./UserProfile/TrainerClients"
 import { TrainerPlans } from "./UserProfile/TrainerPlans"
 import { UserPlans } from "./UserProfile/UserPlans"
 import { ClientTrainers } from "./UserProfile/ClientTrainers"
+import { useHistory } from 'react-router-dom';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -127,12 +128,15 @@ export const Navs = ({ setActiveItem, activeItem, title }) => {
     );
 };
 
+const timeToRedirectLogin = 3000;
+
 export const MyProfilePanel = ({
     bottomSheet,
     setBottomSheet,
 }) => {
 
     const { user } = useUserContext();
+    const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(true)
 
@@ -141,8 +145,14 @@ export const MyProfilePanel = ({
     const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
     const logout = () => {
-
+        localStorage.removeItem('user');
+        setTimeout(() => {
+            history.push(`/login/`);
+          }, timeToRedirectLogin);
     }
+
+
+
     return (
         <StyledReactBottomSheet
             showBlockLayer={false}

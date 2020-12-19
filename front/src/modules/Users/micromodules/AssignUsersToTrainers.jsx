@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { userService } from 'services/userServices';
 import styled from 'styled-components';
 import { organizationService } from 'services/organizationServices';
