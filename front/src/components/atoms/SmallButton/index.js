@@ -2,19 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import handleButtonType from 'support/ButtonType';
 import PropTypes from 'prop-types';
-import Icon from '../Icon';
+import Icon from 'components/atoms/Icon';
 
 // set button type
 const SmallButtonStyled = styled.div`
   width: 3.2rem;
   height: 3.2rem;
- 
+
   cursor: pointer;
   font-weight: bold;
 
   outline: none;
   border: none;
-  
+
   color: ${({ theme }) => theme.colorWhite};
 
   //center icon
@@ -22,14 +22,14 @@ const SmallButtonStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
   //correct 2.3px from top of icon
   ::before{
     content: '';
     margin-top: 0.3rem;
   }
-  
-  ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};  
+
+  ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};
 `;
 
 const SmallButtonSquareStyled = styled(SmallButtonStyled)`
@@ -47,14 +47,15 @@ const SmallButton = ({
   iconHeight,
   buttonType,
   buttonShape,
+  onClick,
 
 }) => (
   buttonShape === 'circle' ? (
-    <SmallButtonCircleStyled buttonType={buttonType}>
+    <SmallButtonCircleStyled buttonType={buttonType} onClick={onClick}>
       <Icon name={iconName} fill={fill} width={iconWidth} height={iconHeight} />
     </SmallButtonCircleStyled>
   ) : (
-    <SmallButtonSquareStyled buttonType={buttonType}>
+    <SmallButtonSquareStyled buttonType={buttonType} onClick={onClick}>
       <Icon name={iconName} fill={fill} width={iconWidth} height={iconHeight} />
     </SmallButtonSquareStyled>
   )

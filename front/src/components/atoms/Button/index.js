@@ -22,15 +22,13 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: bold;
   border-radius: 2px;
-
   outline: none;
   border: none;
-  
-  color: ${({ theme }) => theme.colorWhite};
 
+  color: ${({ theme }) => theme.colorWhite};
   height: ${({ size }) => handleButtonSize(size)};
   ${({ buttonPlace }) => handleButtonPlace(buttonPlace)};
-  
+
   :disabled{
     color: ${({ theme }) => theme.colorDisabled};
     background: ${({ theme }) => theme.colorGray30};
@@ -39,8 +37,8 @@ const Button = styled.button`
       background: ${({ theme }) => theme.colorGray30} !important;
     }
   }
-  
-  ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};  
+
+  ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};
 `;
 
 export default Button;

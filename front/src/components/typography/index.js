@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const MainHeadline = styled.h2`
 margin: 0 0 0 0;
 font-size:2.8rem;

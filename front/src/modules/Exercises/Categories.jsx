@@ -1,23 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Icon from 'components/atoms/Icon';
-import styled from 'styled-components';
 import Loader from 'components/atoms/Loader';
 import { categoryService } from 'services/categoryService';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import AddCategoryModal from './AddCategoryModal';
-import { commonUtil } from "utils/common.util"
+import { commonUtil } from 'utils/common.util';
 import { useQuery, gql } from '@apollo/client';
-import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
 import Heading from 'components/atoms/Heading';
-import GlobalTemplate, { Nav } from "../../templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
-import CategoriesPanel from './CategoriesPanel'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-
-const IconWrapper = styled.div`
-    margin-top: .4rem;
-`;
+import SmallButton from 'components/atoms/SmallButton';
+import GlobalTemplate from 'templates/GlobalTemplate';
+import CategoriesPanel from 'modules/Exercises/CategoriesPanel';
+import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
+import Nav from 'components/atoms/Nav';
+import styled from 'styled-components';
 
 const CATEGORY = gql`{
   categories{
@@ -27,85 +23,92 @@ const CATEGORY = gql`{
   }
 `;
 
+const NavContainer = styled.div`
+  display: flex;
+`;
+
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [bottomSheet, setBottomSheet] = useState('none')
+  const [bottomSheet, setBottomSheet] = useState('none');
 
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-  const { loading, error, data, refetch: _refetch} = useQuery(CATEGORY);
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(CATEGORY);
 
   const closeModal = () => {
-    setOpenModal(false)
-  }
+    setOpenModal(false);
+  };
 
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200) }, [_refetch])
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   const submissionHandleElement = (selectedData) => {
-    const selectedCategories = commonUtil.getCheckedData(selectedData, "categoryId")
-    setSelectedCategories(selectedCategories)
+    const selectedCategories = commonUtil.getCheckedData(selectedData, 'categoryId');
+    setSelectedCategories(selectedCategories);
     selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
-  }
+  };
 
   const deleteCategories = () => {
     categoryService
       .deleteCategories(selectedCategories)
       .then(() => {
-        setBottomSheet('none')
+        setBottomSheet('none');
         notificationDispatch({
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('CategoriesDeleted') },
-            type: 'positive'
-          }
-        })
+            type: 'positive',
+          },
+        });
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
-        })
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
       });
   };
 
   useEffect(() => {
-    refreshData()
+    refreshData();
   }, [openModal, openEditModal, _refetch, deleteCategories]);
 
-  if (loading) return <Loader isLoading={loading}></Loader>;
+  if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
 
   return (
     <>
       <GlobalTemplate>
         <Nav>
-          <BackTopNav />
-          <Heading>{translate('CategoriesTitle')}</Heading>
-          <IconWrapper>
-            <Icon onClick={() => setOpenModal(true)} name="plus" fill={theme.colorInputActive} />
-          </IconWrapper>
+          <Heading>{translate('Exercises')}</Heading>
+          <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
-        {data.categories.length > 0 ?
-          <CheckboxGenericComponent
-            dataType="categories"
-            displayedValue="title"
-            dataList={data.categories}
-            onSelect={submissionHandleElement} />
+        {data.categories.length > 0
+          ? (
+            <CheckboxGenericComponent
+              dataType="categories"
+              displayedValue="title"
+              dataList={data.categories}
+              onSelect={submissionHandleElement}
+            />
+          )
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel
-        deleteCategories= {deleteCategories}
+        deleteCategories={deleteCategories}
         theme={theme}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
         selectedCategories={selectedCategories}
         setOpenEditModal={setOpenEditModal}
-        openEditModal={openEditModal} />
+        openEditModal={openEditModal}
+      />
       <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
     </>
   );

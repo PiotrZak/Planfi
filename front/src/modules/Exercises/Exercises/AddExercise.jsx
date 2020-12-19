@@ -16,10 +16,8 @@ import TextArea from 'components/molecules/TextArea';
 import AttachmentPreview, { TYPE } from 'components/molecules/AttachmentPreview';
 import Random from 'utils/Random';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
-import { useHistory } from "react-router-dom";
-
-const ExerciseAdded = "Exercise Added!"
+import GlobalTemplate, { Nav } from 'templates/GlobalTemplate';
+import { useHistory } from 'react-router-dom';
 
 const WrapperAttachments = styled.div`
   display: flex;
@@ -69,8 +67,6 @@ const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
 
-
-
   const fileNotification = (message) => {
     notificationDispatch({
       type: ADD,
@@ -88,21 +84,14 @@ const AddExerciseRefactor = (props) => {
   };
 
   const onSubmit = (values) => {
-    console.log(values);
-    console.log(props.history.location.state.id)
     const formData = new FormData();
-    formData.append("Name", values.exerciseName)
-    formData.append("Description", values.exerciseDescription)
+    formData.append('Name', values.exerciseName);
+    formData.append('Description', values.exerciseDescription);
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append(`Files`, selectedFiles[i].File)
+      formData.append('Files', selectedFiles[i].File);
     }
-    formData.append("CategoryId", props.history.location.state.id)
-
-    console.log(formData.get("Name"))
-    console.log(formData.get("Description"))
-    console.log(formData.get("Files"))
-    console.log(formData.get("CategoryId"))
-    console.log(props.history.location.state.id)
+    const { id } = props.history.location.state;
+    formData.append('CategoryId', id);
 
     exerciseService
       .addExercise(formData)
@@ -111,23 +100,21 @@ const AddExerciseRefactor = (props) => {
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('ExerciseAdded') },
-            type: 'positive'
-          }
-        })
-        history.push(`/category/${props.history.location.state.id}`);
+            type: 'positive',
+          },
+        });
+        history.push(`/category/${id}`);
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
-        })
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
       });
-
   };
-
 
   const handleImageChange = (e) => {
     // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'

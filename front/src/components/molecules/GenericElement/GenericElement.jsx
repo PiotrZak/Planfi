@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
-//todo - test if image appear after adding exercises & add circle elements
+// todo - test if image appear after adding exercises & add circle elements
 import Image from 'components/atoms/Image';
 import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
 
@@ -21,13 +21,12 @@ const GenericElementContainer = styled.div`
 `;
 
 const GenericElementInfo = styled.div`
-color: ${({ theme }) => theme.colorPrimary};
-font-size: 1.4rem;
-line-height: 2.1rem;
-text-decoration:none;
-text-align:left;
+  color: ${({ theme }) => theme.colorPrimary};
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  text-decoration:none;
+  text-align:left;
 `;
-
 const Headline = styled.h4`
   margin: 0 0 0 0;
   font-size:1.4rem;
@@ -46,17 +45,17 @@ const GenericElementSquare = styled.div`
 
 `;
 
+const GenericElementImageEmpty = styled.div`
+      background-color: ${({ theme }) => theme.colorGray60};
+      width: 4.8rem;
+      height: 4.8rem;
+`;
+
 const GenericElementImage = styled.div`
     border-radius: 3px;
     margin-right: 8px;
     width: 4.8rem;
     height: 4.8rem;
-`;
-
-const GenericElementImageEmpty = styled.div`
-      background-color: $color-gray-60;
-      width: 4.8rem;
-      height: 4.8rem;
 `;
 
 const GenericElement = ({
