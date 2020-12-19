@@ -96,16 +96,21 @@ const Dots = styled.div`
   }
 `;
 
-const Loader = ({ children, type, color, isLoading }) => {
+const Loader = ({
+  children, type, color, isLoading,
+}) => {
   const returnLoader = handleLoaderType(type, color);
-    return <>
-      {isLoading ? returnLoader  : <>{children}</>}
-    </>;
+  return (
+    <>
+      {isLoading ? returnLoader : <>{children}</>}
+    </>
+  );
 };
 
 Loader.propTypes = {
   type: PropTypes.oneOf(['spinner', 'dots']).isRequired,
   color: PropTypes.oneOf(['primary', 'gray110']).isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default Loader;

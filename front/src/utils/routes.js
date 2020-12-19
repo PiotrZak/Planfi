@@ -6,18 +6,18 @@ const accountRoutes = {
   activate: '/account/activate:verificationToken',
   resetPassword: '/account/reset:resetToken',
   login: '/login',
-  confirmation: '/confirmation'
-}
+  confirmation: '/confirmation',
+};
 
 const categoriesRoutes = {
   categories: '/categories',
   category: '/category/:id',
-}
+};
 
 const plansRoutes = {
   plans: '/plans',
   plan: '/plan/:id',
-}
+};
 
 export const routes = {
   register: accountRoutes.register,
@@ -27,18 +27,17 @@ export const routes = {
   login: accountRoutes.login,
   confirmation: accountRoutes.confirmation,
 
-  //todo expired
+  // todo expired
   linkExpired: '/expired',
 
-  //currently
+  // currently
   categories: categoriesRoutes.categories,
   category: categoriesRoutes.category,
   addExcersise: '/add-exercise',
   editExcersise: '/edit-exercise',
   exercise: '/exercise',
 
-
-  //plans
+  // plans
   plans: plansRoutes.plans,
   plan: plansRoutes.plan,
 
@@ -48,7 +47,7 @@ export const routes = {
   organizationTrainer: '/organizationclients',
   organizationClients: '/organizationclients',
 
-  //users
+  // users
   myProfile: '/myprofile',
   users: '/users',
   user: '/user',

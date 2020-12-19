@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
-//todo - test if image appear after adding exercises & add circle elements
+// todo - test if image appear after adding exercises & add circle elements
 import Image from 'components/atoms/Image';
 
 const GenericElementContainer = styled.div`
@@ -20,13 +20,12 @@ const GenericElementContainer = styled.div`
 `;
 
 const GenericElementInfo = styled.div`
-color: ${({ theme }) => theme.colorPrimary};
-font-size: 1.4rem;
-line-height: 2.1rem;
-text-decoration:none;
-text-align:left;
+  color: ${({ theme }) => theme.colorPrimary};
+  font-size: 1.4rem;
+  line-height: 2.1rem;
+  text-decoration:none;
+  text-align:left;
 `;
-
 const Headline = styled.h4`
   margin: 0 0 0 0;
   font-size:1.4rem;
@@ -59,23 +58,20 @@ const GenericElementImageEmpty = styled.div`
 `;
 
 const GenericElement = ({
-    headline,
-    subline,
-    image,
-    circle,
-}) => {
-    return (
-        <GenericElementContainer>
-            {image
-                ? <GenericElementImage><Image url={image} /></GenericElementImage>
-                : <GenericElementImageEmpty></GenericElementImageEmpty>
-            }
-            <GenericElementInfo>
-                <Headline>{headline}</Headline>
-                <Subline>{subline}</Subline>
-            </GenericElementInfo>
-        </GenericElementContainer>
-    )
-}
+  headline,
+  subline,
+  image,
+  circle,
+}) => (
+  <GenericElementContainer>
+    {image
+      ? <GenericElementImage><Image url={image} /></GenericElementImage>
+      : <GenericElementImageEmpty />}
+    <GenericElementInfo>
+      <Headline>{headline}</Headline>
+      <Subline>{subline}</Subline>
+    </GenericElementInfo>
+  </GenericElementContainer>
+);
 
 export default GenericElement;

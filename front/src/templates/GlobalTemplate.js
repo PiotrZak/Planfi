@@ -3,11 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const Nav = styled.div`
-  display:flex;
-  width:100%;
+  display: flex;
+  width: 100%;
   justify-content: space-between;
-  margin:1.2rem 0 2.4rem 0;
-  align-items: baseline;
 `;
 
 const Container = styled.div`

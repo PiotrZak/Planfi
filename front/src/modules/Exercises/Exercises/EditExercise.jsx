@@ -136,7 +136,7 @@ export const EditExercise = (props) => {
 
             {initialExerciseData.files && initialExerciseData.files.map((file, i) =>
                 <img className ="exercise-image" key={i} alt = {i} src={`data:image/jpeg;base64,${file}`} />)}
-                
+
 
 
             <FormInput defaultValue={initialExerciseData.description} type="textarea" id="description" name="description" onChange={handleInput} label="Description" hasError={errors.description} />

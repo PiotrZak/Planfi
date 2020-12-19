@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 
 // set button type
-const handleButtonPlace = (buttonPlace, theme) => {
+const handleButtonPlace = (buttonPlace) => {
   switch (buttonPlace) {
     case 'auth':
       return css`

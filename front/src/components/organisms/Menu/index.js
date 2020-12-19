@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { routes } from 'utils/routes';
 import { withRouter, NavLink } from 'react-router-dom';
 import styled, { withTheme } from 'styled-components';
@@ -20,7 +20,7 @@ const getUsersRoute = (currentUser) => {
     case Role.User:
       return routes.organizationClients;
     case null:
-    return routes.users;
+      return routes.users;
     default:
       return routes.organizationClients;
   }

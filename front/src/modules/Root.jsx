@@ -7,31 +7,31 @@ import { createBrowserHistory } from 'history';
 import MainTemplate from 'templates/MainTemplate';
 import { routes } from 'utils/routes';
 
-//registration
+// registration
 import LoginPage from 'modules/Auth/LoginPage';
 import ForgotPasswordPage from 'modules/Auth/ForgotPasswordPage';
 import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 
-//exercises
+// exercises
 import Categories from 'modules/Exercises/Categories';
 import Category from 'modules/Exercises/Category/Category';
 import AddExercise from 'modules/Exercises/Exercises/AddExercise';
 
-//plans
+// plans
 import Plans from 'modules/Plans/Plans';
 import Plan from 'modules/Plans/Plan/Plan';
-
 
 import MyProfile from 'modules/Users/MyProfile';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
-import { PrivateRoute, Role } from '../utils/PrivateRoute';
 import { ThemeContext } from 'support/context/ThemeContext';
 import { LanguageContext } from 'support/context/LanguageContext';
 import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
+import Exercise from 'modules/Exercises/Exercises/Exercise';
+import { PrivateRoute, Role } from 'utils/PrivateRoute';
 
 import TestPage from './Auth/Test';
 
@@ -55,12 +55,13 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-                  <Route path={routes.myProfile} component={MyProfile} />                  
+                  <Route path={routes.myProfile} component={MyProfile} />
 
                   <Route path="/test" component={TestPage} />
 
                   <MenuTemplate>
-                  <Route path={routes.exercise} component={AddExercise} />
+                    <Route path={routes.addExcersise} component={AddExercise} />
+                    <Route path={routes.exercise} component={Exercise} />
                     <Route path={routes.categories} component={Categories} />
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
