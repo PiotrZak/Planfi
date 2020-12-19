@@ -64,7 +64,8 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles = Role.Owner)]
+        /*[Authorize(Roles = Role.Owner)]*/
+        [AllowAnonymous]
         [HttpGet("trainers/{id}")]
         public IActionResult GetOrganizationTrainers(string id)
         {

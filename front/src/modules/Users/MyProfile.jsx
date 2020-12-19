@@ -9,11 +9,6 @@ import { translate } from 'utils/Translation';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { useUserContext } from "../../support/context/UserContext"
 import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-
-// import EditUserPasswordModal from "./Edit/old parts/EditUserPassword"
-// import EditUserEmailModal from "./Edit/old parts/EditUserEmail";
-// import EditUserDataModal from "./Edit/old parts/EditUserData";
-
 import { TrainerClients } from "./UserProfile/TrainerClients"
 import { TrainerPlans } from "./UserProfile/TrainerPlans"
 import { UserPlans } from "./UserProfile/UserPlans"
