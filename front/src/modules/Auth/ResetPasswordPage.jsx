@@ -52,23 +52,22 @@ const ResetPasswordPage = () => {
       password: values.password,
     };
 
-    //todo - repair
+    // todo - repair
     accountService
       .resetPassword(resetPasswordModel)
       .then(() => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: 'OK', message: translate('PasswordChanged')},
-            type: 'positive'
-          }
-        })
-        setTimeout(function () {
+            content: { success: 'OK', message: translate('PasswordChanged') },
+            type: 'positive',
+          },
+        });
+        setTimeout(() => {
           history.push({
             pathname: routes.confirmation,
-            state: { message: "ResetPassword" },
-          }
-          );
+            state: { message: 'ResetPassword' },
+          });
         }, timeToRedirect);
       })
       .catch((error) => {
@@ -86,7 +85,7 @@ const ResetPasswordPage = () => {
     <AuthTemplate>
       <BackTopNav text={translate('PasswordRecovery')} />
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-        {({ errors, touched }) => (
+        {({ errors, touched, isValid }) => (
           <Center place="authForm">
             <Form>
               <StyledInputContainer>
@@ -101,7 +100,7 @@ const ResetPasswordPage = () => {
                 </Label>
                 <ErrorMessageForm name="confirmPassword" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth" disabled={!isValid}>{translate('Send')}</Button>
             </Form>
           </Center>
         )}

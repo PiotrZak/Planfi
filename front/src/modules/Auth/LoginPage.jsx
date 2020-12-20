@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { routes } from 'routes';
 import Label from 'components/atoms/Label';
@@ -16,7 +16,7 @@ import {
 import * as Yup from 'yup';
 import Logo from 'components/atoms/Logo';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import { Role } from '../../utils/PrivateRoute';
+import { Role } from 'utils/PrivateRoute';
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -69,7 +69,7 @@ const LoginPage = () => {
         history.push(routes.organizationUsers);
       }, timeToRedirectLogin);
     }
-  }
+  };
 
   const authenticateUser = (loginModelData) => {
     userService
@@ -82,7 +82,7 @@ const LoginPage = () => {
             type: 'positive',
           },
         });
-        redirectToPage(data)
+        redirectToPage(data);
         localStorage.setItem('user', JSON.stringify(data));
       })
       .catch((error) => {
@@ -100,44 +100,44 @@ const LoginPage = () => {
     <AuthTemplate>
       <Logo src="logo.png" />
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-        <Form>
-          <InputContainer>
-            <Label type="top" text={translate('YourMail')}>
-              <Field type="email" name="email" placeholder={translate('EmailAddress')} as={Input} />
-            </Label>
-            <ValidationHint name="email" />
-          </InputContainer>
+        {({ errors, touched, isValid }) => (
+          <Form>
+            <InputContainer>
+              <Label type="top" text={translate('YourMail')}>
+                <Field type="email" name="email" placeholder={translate('EmailAddress')} as={Input} error={errors.email && touched.email} />
+              </Label>
+              <ValidationHint name="email" />
+            </InputContainer>
 
-          <InputContainer>
-            <Label type="top" text={translate('Password')}>
-              <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} />
-            </Label>
-            <ValidationHint name="password" />
-          </InputContainer>
-          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
-        </Form>
+            <InputContainer>
+              <Label type="top" text={translate('Password')}>
+                <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} error={errors.password && touched.password} />
+              </Label>
+              <ValidationHint name="password" />
+            </InputContainer>
+            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth" disabled={!isValid}>{translate('SignIn')}</Button>
+          </Form>
+        )}
       </Formik>
       <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   );
 };
 
-
 const detectBrowser = () => {
-
 // const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
-// const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+  // const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
-const isFirefox = typeof InstallTrigger !== 'undefined';
-const isIE = /*@cc_on!@*/false || !!document.documentMode;
-const isEdge = !isIE && !!window.StyleMedia;
-const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+  const isFirefox = typeof InstallTrigger !== 'undefined';
+  const isIE = /* @cc_on!@ */false || !!document.documentMode;
+  const isEdge = !isIE && !!window.StyleMedia;
+  const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 
-  return(
+  return (
     <>
 
     </>
-  )
-}
+  );
+};
 
 export default LoginPage;

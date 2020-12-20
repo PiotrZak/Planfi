@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import GenericElement from 'components/molecules/GenericElement/GenericElement';
 
-import { routes } from 'utils/routes';
-
 const possibleTypes = {
-    categories: 'categories',
-    category: 'category',
-    exercises: 'exercises',
-    exercise: 'exercise',
-    plans: 'plans',
-    plan: 'plan',
-    users: 'users',
-    user: 'user',
-}
+  categories: 'categories',
+  category: 'category',
+  exercises: 'exercises',
+  exercise: 'exercise',
+  plans: 'plans',
+  plan: 'plan',
+  users: 'users',
+  user: 'user',
+};
 
-
-export const RenderType = ({ theme, type, element, i }) => {
-
+export const RenderType = ({
+  theme, type, element, i,
+}) => {
   const history = useHistory();
   const redirectToItem = (itemCase, id) => {
     history.push({
@@ -43,23 +41,23 @@ export const RenderType = ({ theme, type, element, i }) => {
       case 'users': {
         return (
           <span onClick={() => redirectToItem(possibleTypes.user, element.userId)}>
-          <GenericElement
-            key={i}
-            theme = {theme}
-            circle
-            image={element.avatar}
-            headline={`${element.firstName}  ${element.lastName}`}
-            user={element}
-            subline={element.role}
-          />
-                    </span>
+            <GenericElement
+              key={i}
+              theme={theme}
+              circle
+              image={element.avatar}
+              headline={`${element.firstName}  ${element.lastName}`}
+              user={element}
+              subline={element.role}
+            />
+          </span>
         );
       }
       case 'plans': {
         return (
           <span onClick={() => redirectToItem(possibleTypes.plan, element.planId)}>
             <GenericElement
-              theme = {theme}
+              theme={theme}
               key={i}
               headline={element.title}
               subline={element.creatorName}
@@ -84,9 +82,9 @@ export const RenderType = ({ theme, type, element, i }) => {
     }
   };
 
-    return (
-        <>
-            {renderType(type, element, i)}
-        </>
-    );
-}
+  return (
+    <>
+      {renderType(type, element, i)}
+    </>
+  );
+};
