@@ -55,12 +55,6 @@ const Container = styled.div`
   background: ${({ theme }) => theme.colorGray80};
   padding: .7rem 0;
 
-  @media only screen and ${breakPointSize.lg}{
-     html{
-      font-size: 2rem;
-     }
-  }
-
   @media only screen and ${breakPointSize.xs} {
      width: 100%;
      padding-bottom: 1rem;
@@ -104,27 +98,27 @@ const Menu = ({ theme }) => {
   return (
     <Wrapper>
       <Container>
-        <StyledNavLink exact to={routes.categories}>
+        <StyledNavLink to={routes.categories}>
           <Square>
-            <Icon name="dumbbell" fill={changeIconColor(currentUrl, routes.categories)} width="2rem" height="2rem" />
+            <Icon name="dumbbell" fill={changeIconColor(currentUrl, routes.categories)} size="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={getUsersRoute(currentUser)}>
           <Square>
-            <Icon name="list-ul" fill={changeIconColor(currentUrl, routes.organizationUsers)} width="2rem" height="2rem" />
+            <Icon name="list-ul" fill={changeIconColor(currentUrl, routes.organizationUsers)} size="2rem" />
           </Square>
         </StyledNavLink>
 
         <StyledNavLink to={routes.plans}>
           <Square>
-            <Icon name="clipboard-notes" fill={changeIconColor(currentUrl, routes.plans)} width="2rem" height="2rem" />
+            <Icon name="clipboard-notes" fill={changeIconColor(currentUrl, routes.plans)} size="2rem" />
           </Square>
         </StyledNavLink>
 
-        <StyledNavLink to={`${routes.myProfile}`}>
+        <StyledNavLink to={routes.myProfile}>
           <Square>
-            <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} width="2rem" height="2rem" />
+            <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} size="2rem" />
           </Square>
         </StyledNavLink>
       </Container>

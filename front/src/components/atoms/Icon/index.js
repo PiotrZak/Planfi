@@ -1,7 +1,6 @@
 import React from 'react';
-import { ReactSVG } from 'react-svg';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const IconsCode = {
   'ellipsis-h': 'e900',
@@ -27,7 +26,6 @@ const IconsCode = {
   search: 'e90a',
   union: 'e90b',
   'user-circle': 'e90c',
-  circle: 'e917',
 };
 
 const FontIcon = styled.span`
@@ -35,25 +33,16 @@ const FontIcon = styled.span`
   font-size: ${({ size }) => size};
   color: ${({ color }) => color};
   cursor: ${({ cursorType }) => cursorType};
+
+  :before{
+    content: "\\${({ name }) => IconsCode[name]}";
+  }
 `;
 
 const Icon = ({
-  name, fill, width, height, onClick, cursorType,
-}) => {
-  const selectedIcon = `../icons/library/${name}.svg`;
-  return (
-    <ReactSVG
-      src={selectedIcon}
-      fill={fill}
-      onClick={onClick}
-      beforeInjection={(svg) => {
-        svg.setAttribute('fill', fill);
-        svg.setAttribute('width', width);
-        svg.setAttribute('height', height);
-      }}
-    />
-  );
-};
+  size, color, name, cursorType, ...rest
+// eslint-disable-next-line react/jsx-props-no-spreading
+}) => <FontIcon name={name} size={size} color={color} cursorType={cursorType} {...rest} />;
 
 Icon.propTypes = {
   name: PropTypes.oneOf([
@@ -62,7 +51,6 @@ Icon.propTypes = {
     'dumbbell', 'exclamation-triangle', 'heart', 'image-plus',
     'list-ul', 'minus-circle', 'paperclip', 'plus', 'plus-circle',
     'question-circle', 'search', 'union', 'user-circle',
-    'circle',
   ]).isRequired,
   size: PropTypes.string,
   color: PropTypes.string,
@@ -70,10 +58,9 @@ Icon.propTypes = {
 };
 
 Icon.defaultProps = {
-  width: '1.5rem',
-  height: '1.5rem',
-  fill: '#222',
-  cursorType: 'pointer',
+  size: '1.5rem',
+  color: ({ theme }) => theme.colorPrimary,
+  cursorType: 'default',
 };
 
 export default Icon;
