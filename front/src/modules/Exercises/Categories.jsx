@@ -26,6 +26,7 @@ const CATEGORY = gql`{
 const NavContainer = styled.div`
   display: flex;
 `;
+const categoriesTitle = "Categories";
 
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -86,7 +87,7 @@ const Categories = () => {
     <>
       <GlobalTemplate>
         <Nav>
-          <Heading>{translate('Exercises')}</Heading>
+          <Heading>{translate('categoriesTitle')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
         {data.categories.length > 0

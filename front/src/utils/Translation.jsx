@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { pl as polish } from 'lang/pl';
 import { en as english } from 'lang/en';
 import { useLangContext } from '../support/context/LanguageContext';
+
 
 const Locales = {
   English: 'en-GB',
@@ -11,15 +12,16 @@ const Locales = {
 
 const FALLBACK_TRANSLATION_LANGUAGE = 'en-GB';
 
-export const translate = (translationKey, lang) => {
-  // const { lang } = useContext(useLangContext)
+export const translate = (translationKey) => {
+
+  const currentLocale = localStorage.getItem('language');
 
   const supportedLocales = {
     [Locales.Polish]: polish,
     [Locales.English]: english,
   };
 
-  let translations = Object(supportedLocales)[lang];
+  let translations = Object(supportedLocales)[currentLocale];
 
   if (!translations) {
     translations = Object(supportedLocales)[FALLBACK_TRANSLATION_LANGUAGE];

@@ -20,12 +20,12 @@ const IconWrapper = styled.div`
 `;
 
 export const PlanPanelExercises = ({
+    deleteExercise,
     selectedExercise,
     setSelectedElementsBottomSheet,
     bottomSheet,
     theme,
 }) => {
-    const { notificationDispatch } = useNotificationContext();
     const history = useHistory();
 
     const editExercise = () => {
@@ -33,29 +33,6 @@ export const PlanPanelExercises = ({
             pathname: `/edit-exercise/${selectedExercise}`,
             state: { selectedExercise: selectedExercise },
           })
-    }
-
-    const deleteExercise = () => {
-        exerciseService
-            .deleteExerciseById(selectedExercise)
-            .then((data) => {
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                      content: { success: 'OK', message: translate('ExercisesDeleted') },
-                      type: 'positive'
-                    }
-                  })
-            })
-            .catch((error) => {
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                      content: { error: error, message: translate('ErrorAlert') },
-                      type: 'error'
-                    }
-                  })
-            });
     }
 
     return (

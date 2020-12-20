@@ -28,7 +28,7 @@ const ChangeMail = "Change Email";
 const ChangePassword = "Change Paassword";
 const Logout = "Logout";
 
-export const MyProfile = ({toggleTheme}) => {
+export const MyProfile = ({toggleTheme, toggleLanguage}) => {
 
     console.log(toggleTheme)
 
@@ -80,6 +80,7 @@ export const MyProfile = ({toggleTheme}) => {
                 </NavI>
                 {user && <UserInfo user={updatedUser} />}
                 <ThemeSelector toggleTheme = {toggleTheme}/>
+                <LanguageSelector toggleLanguage = {toggleLanguage}/>
                 <TabsContainer>
                     {sections.map((title, i) => (
                         <Navs
@@ -150,10 +151,23 @@ export const Navs = ({ setActiveItem, activeItem, title }) => {
 
 
 
-const LanguageSelector = () => {
+const LanguageSelector = ({toggleLanguage}) => {
+
+// add selected lang to local storage
+
+const setPL = () => {
+    localStorage.setItem('language', 'pl-PL');
+}
+
+const setEN = () => {
+    localStorage.setItem('language', 'en-GB');
+}
 
     return (
-      <div className="lang-switcher">set language</div>
+        <>
+      <div onClick = {()=>setPL()} className="lang-switcher">set PL</div>
+      <div onClick = {()=>setEN()} className="lang-switcher">set ENG</div>
+      </>
     )
   }
   

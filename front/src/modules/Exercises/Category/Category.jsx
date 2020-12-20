@@ -14,6 +14,7 @@ import SmallButton from 'components/atoms/SmallButton';
 import ReturnWithTitle from 'components/molecules/ReturnWithTitle';
 import Nav from 'components/atoms/Nav';
 import { PlanPanelExercises } from './PlanPanelExercises';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const Category = (props) => {
   const { theme } = useThemeContext();
@@ -27,13 +28,11 @@ const Category = (props) => {
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
 
+  const { notificationDispatch } = useNotificationContext();
   const { match } = props;
   const { id } = match.params;
 
-  useEffect(() => {
-    getCategory(id);
-    getCategoryExercise(id);
-  }, [id]);
+
 
   const getCategory = (id) => {
     categoryService
@@ -44,6 +43,35 @@ const Category = (props) => {
       .catch((error) => {
       });
   };
+
+  const deleteExercise = () => {
+    exerciseService
+        .deleteExerciseById(selectedExercise)
+        .then((data) => {
+            notificationDispatch({
+                type: ADD,
+                payload: {
+                  content: { success: 'OK', message: translate('ExercisesDeleted') },
+                  type: 'positive'
+                }
+              })
+              setBottomSheet('none');
+        })
+        .catch((error) => {
+            notificationDispatch({
+                type: ADD,
+                payload: {
+                  content: { error: error, message: translate('ErrorAlert') },
+                  type: 'error'
+                }
+              })
+        });
+}
+
+useEffect(() => {
+  getCategory(id);
+  getCategoryExercise(id);
+}, [id, deleteExercise]);
 
   const getCategoryExercise = useCallback((id) => {
     exerciseService
@@ -101,6 +129,7 @@ const Category = (props) => {
           : <p>{translate('NoExercises')}</p>}
       </GlobalTemplate>
       <PlanPanelExercises
+      deleteExercise= {deleteExercise}
         selectedExercise={selectedExercise}
         bottomSheet={bottomSheet}
         setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}

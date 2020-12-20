@@ -60,7 +60,8 @@ const Container = styled.div`
    height: 9.2rem;
    flex-direction: row;
    justify-content: space-around;
-   border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
+   border-top: 1px solid ${({ theme }) => theme.colorInputBorder}
+  };
 `;
 
 const Square = styled.div`

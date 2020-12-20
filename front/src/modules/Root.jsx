@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -51,6 +51,18 @@ const Root = () => {
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [theme, setTheme] = useState(darkTheme)
 
+  useEffect(() => {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          console.log("Latitude is :", position.coords.latitude);
+          console.log("Longitude is :", position.coords.longitude);
+        });
+
+        const currentLanguage = localStorage.getItem('language')
+        if(currentLanguage == null){
+        localStorage.setItem('language', 'en-GB');
+        }
+  }, []);
+
   const toggleTheme = () => {
     setTheme(theme == darkTheme ? lightTheme : darkTheme)
   }
@@ -72,7 +84,7 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-                  <Route path={routes.myProfile} component={() => <MyProfile toggleTheme ={toggleTheme}/>} />
+                  <Route path={routes.myProfile} component={() => <MyProfile toggleTheme ={toggleTheme} toggleLanguage ={toggleLanguage}/>} />
 
                   <Route path="/test" component={TestPage} />
 
