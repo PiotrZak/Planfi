@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 // todo - test if image appear after adding exercises & add circle elements
 import Image from 'components/atoms/Image';
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {
+  StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem,
+} from 'components/organisms/BottomSheet';
 import { Headline, Subline } from 'components/typography';
 
 const GenericElementContainer = styled.div`
@@ -43,32 +45,28 @@ const GenericElementImage = styled.div`
 `;
 
 const GenericElement = ({
-    headline,
-    subline,
-    image,
-    theme,
-    circle,
-}) => {
-
-    console.log(theme)
-
-    return (
-        theme == "light" ?
-        <BottomItem>
-            <Headline>{headline}</Headline>
-        </BottomItem>
-                :
-        <GenericElementContainer>
-            {image
-                ? <GenericElementImage><Image url={image} /></GenericElementImage>
-                : <GenericElementImageEmpty></GenericElementImageEmpty>
-            }
-            <GenericElementInfo>
-                <Headline>{headline}</Headline>
-                <Subline>{subline}</Subline>
-            </GenericElementInfo>
-        </GenericElementContainer>
+  headline,
+  subline,
+  image,
+  theme,
+  circle,
+}) => (
+  theme == 'light' ? (
+    <BottomItem>
+      <Headline>{headline}</Headline>
+    </BottomItem>
+  )
+    : (
+      <GenericElementContainer>
+        {image
+          ? <GenericElementImage><Image url={image} /></GenericElementImage>
+          : <GenericElementImageEmpty />}
+        <GenericElementInfo>
+          <Headline>{headline}</Headline>
+          <Subline>{subline}</Subline>
+        </GenericElementInfo>
+      </GenericElementContainer>
     )
-}
+);
 
 export default GenericElement;

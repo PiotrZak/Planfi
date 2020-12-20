@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { routes } from 'utils/routes';
 import { withRouter, NavLink } from 'react-router-dom';
 import styled, { withTheme } from 'styled-components';
@@ -55,12 +55,18 @@ const Container = styled.div`
   background: ${({ theme }) => theme.colorGray80};
   padding: .7rem 0;
 
+  @media only screen and ${breakPointSize.lg}{
+     html{
+      font-size: 2rem;
+     }
+  }
+
   @media only screen and ${breakPointSize.xs} {
-   width: 100%;
-   height: 9.2rem;
-   flex-direction: row;
-   justify-content: space-around;
-   border-top: 1px solid ${({ theme }) => theme.colorInputBorder}
+     width: 100%;
+     padding-bottom: 1rem;
+     flex-direction: row;
+     justify-content: space-around;
+     border-top: 1px solid ${({ theme }) => theme.colorInputBorder};
   };
 `;
 
