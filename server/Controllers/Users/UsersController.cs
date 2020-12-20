@@ -169,12 +169,10 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody] UpdateUserModel model)
         {
-            var user = _mapper.Map<User>(model);
-            user.UserId = id;
-
+            
             try
             {
-                _userService.Update(user, model.Password);
+                _userService.Update(id, model);
                 return Ok();
             }
             catch (AppException ex)

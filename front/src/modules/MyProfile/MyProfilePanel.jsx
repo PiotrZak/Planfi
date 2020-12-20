@@ -8,6 +8,9 @@ import { useHistory } from 'react-router-dom';
 const timeToRedirectLogin = 3000;
 
 export const MyProfilePanel = ({
+    setOpenEditUserData,
+    setOpenEditMailModal,
+    setOpenEditUserPasswordModal,
     bottomSheet,
     setBottomSheet,
 }) => {
@@ -16,10 +19,6 @@ export const MyProfilePanel = ({
     const history = useHistory();
 
     const [isLoading, setIsLoading] = useState(true)
-
-    const [openEditUserData, setOpenEditUserData] = useState(false)
-    const [openEditMailModal, setOpenEditMailModal] = useState(false);
-    const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
     const logout = () => {
         localStorage.removeItem('user');

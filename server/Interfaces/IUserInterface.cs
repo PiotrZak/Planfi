@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using WebApi.Entities;
+using WebApi.Models;
 
 namespace WebApi.Interfaces
 {
@@ -11,7 +12,7 @@ namespace WebApi.Interfaces
         IEnumerable<Client> GetAllClients();
         IEnumerable<Trainer> GetAllTrainers();
         User GetById(string id);
-        void Update(User user, string password);
+        void Update(string id, UpdateUserModel model);
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
         void AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);

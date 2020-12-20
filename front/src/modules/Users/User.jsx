@@ -27,8 +27,6 @@ const TabsContainer = styled.div`
     text-align:center;
 `;
 
-var ReactBottomsheet = require('react-bottomsheet');
-
 const assignTrainerToUserNotification = "";
 const assignPlanText = "";
 const assignToTrainerText = "";

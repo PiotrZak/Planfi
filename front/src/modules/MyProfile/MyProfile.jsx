@@ -18,6 +18,10 @@ import { userService } from 'services/userServices'
 import SmallButton from 'components/atoms/SmallButton';
 import { MyProfilePanel } from './MyProfilePanel';
 
+import EditUserDataModal from "./EditProfile/EditUserData"
+// import { EditUserMail } from "./EditProfile/EditUserData"
+// import { EditUserPassword } from "./EditProfile/EditUserData"
+
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
@@ -28,18 +32,13 @@ const ChangeMail = "Change Email";
 const ChangePassword = "Change Paassword";
 const Logout = "Logout";
 
-export const MyProfile = ({toggleTheme, toggleLanguage}) => {
-
-    console.log(toggleTheme)
+export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
 
     const { user } = useUserContext();
     const { theme } = useThemeContext();
     const [updatedUser, setUpdatedUser] = useState(user);
-    let sections = [];
 
-    const closeModal = () => {
-        setOpenModal(false)
-    }
+    let sections = [];
 
     useEffect(() => {
         setUpdatedUser(user)
@@ -69,7 +68,10 @@ export const MyProfile = ({toggleTheme, toggleLanguage}) => {
 
     const [bottomSheet, setBottomSheet] = useState('none')
     const [isLoading, setIsLoading] = useState(true)
-    const [openModal, setOpenModal] = useState(false);
+
+    const [openEditUserData, setOpenEditUserData] = useState(false)
+    const [openEditMailModal, setOpenEditMailModal] = useState(false);
+    const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
     return (
         <>
@@ -79,8 +81,8 @@ export const MyProfile = ({toggleTheme, toggleLanguage}) => {
                     <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />
                 </NavI>
                 {user && <UserInfo user={updatedUser} />}
-                <ThemeSelector toggleTheme = {toggleTheme}/>
-                <LanguageSelector toggleLanguage = {toggleLanguage}/>
+                <ThemeSelector toggleTheme={toggleTheme} />
+                <LanguageSelector toggleLanguage={toggleLanguage} />
                 <TabsContainer>
                     {sections.map((title, i) => (
                         <Navs
@@ -102,12 +104,20 @@ export const MyProfile = ({toggleTheme, toggleLanguage}) => {
                         {activeItem == 'Client Trainers' && <ClientTrainers id={user.userId} />}
                     </>
                 }
-                {/* Modals */}
-                {/* <EditUserDataModal id={user.id} openModal={openEditUserData} onClose={() => setOpenEditUserData(false)} />
-                <EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
+
+                <EditUserDataModal
+                    id={user.userId}
+                    openModal={openEditUserData}
+                    onClose={() => setOpenEditUserData(false)} />
+
+
+                {/*<EditUserEmailModal id={user.id} openModal={openEditMailModal} onClose={() => setOpenEditMailModal(false)} />
                 <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} /> */}
             </GlobalTemplate>
             <MyProfilePanel
+                setOpenEditUserData={setOpenEditUserData}
+                setOpenEditMailModal={setOpenEditMailModal}
+                setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}
                 theme={theme}
                 bottomSheet={bottomSheet}
                 setBottomSheet={setBottomSheet}
@@ -151,35 +161,35 @@ export const Navs = ({ setActiveItem, activeItem, title }) => {
 
 
 
-const LanguageSelector = ({toggleLanguage}) => {
+const LanguageSelector = ({ toggleLanguage }) => {
 
-// add selected lang to local storage
+    // add selected lang to local storage
 
-const setPL = () => {
-    localStorage.setItem('language', 'pl-PL');
-}
+    const setPL = () => {
+        localStorage.setItem('language', 'pl-PL');
+    }
 
-const setEN = () => {
-    localStorage.setItem('language', 'en-GB');
-}
+    const setEN = () => {
+        localStorage.setItem('language', 'en-GB');
+    }
 
     return (
         <>
-      <div onClick = {()=>setPL()} className="lang-switcher">set PL</div>
-      <div onClick = {()=>setEN()} className="lang-switcher">set ENG</div>
-      </>
+            <div onClick={() => setPL()} className="lang-switcher">set PL</div>
+            <div onClick={() => setEN()} className="lang-switcher">set ENG</div>
+        </>
     )
-  }
-  
-  const ThemeSelector = ({ toggleTheme }) => {
-  
+}
+
+const ThemeSelector = ({ toggleTheme }) => {
+
     return (
-      <div>
-        <div className="theme-switcher" onClick={() => toggleTheme()}>
-          set theme</div>
-      </div>
+        <div>
+            <div className="theme-switcher" onClick={() => toggleTheme()}>
+                set theme</div>
+        </div>
     )
-  }
+}
 
 
 export default MyProfile;

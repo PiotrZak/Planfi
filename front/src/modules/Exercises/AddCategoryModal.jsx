@@ -78,7 +78,7 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
 
       <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
 
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+      <Formik initialVsalues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
         {({ errors, touched, isValid }) => (
           <Form>
             <Label type="top" text={translate('CategoryTitle')} required>
