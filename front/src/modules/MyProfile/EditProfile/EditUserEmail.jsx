@@ -89,9 +89,12 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
             <IconContainer>
                 <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
-                <ModalHeading toggle={onClose}><h2>{editUserDetails}</h2></ModalHeading>
+                <ModalHeading toggle={onClose}>
+                {/* todo - personalize texts */}
+                <h2>{editUserDetails}</h2>
+                </ModalHeading>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-                {({ errors, touched, values }) => (
+                {({ errors, touched }) => (
                     <Form>
                         <InputContainer>
                             <Label type="top" text={translate('newMail')} required>
