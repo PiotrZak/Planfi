@@ -8,11 +8,11 @@ import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
 
 const CheckboxContainer = styled.div`
   input{
-    margin:-5rem 0 0 1.4rem;
+    margin: -5.5rem 0 0 1.4rem;
     z-index:2;
     position: absolute;
     @media only screen and ${breakPointSize.xs} {
-      display:none;
+      display: none;
     }
   }
 `;
@@ -81,30 +81,32 @@ export const CheckboxGenericComponent = ({
       dataList.map((element, i) => {
         row.push(
           <>
-            {isMobile ?
-              <Holdable
-                name={element[displayedValue]}  
-                onHold={handleChange}
-                onClick={(e) => e.preventDefault()}
-                key={id}
-                forx={element[displayedValue]}
-              >
-              <RenderType theme = {theme} type = {type} element = {element} i = {i}/>
-              </Holdable>
-              :
-              <>
-              <RenderType theme = {theme} type = {type} element = {element} i = {i}/>
-                <CheckboxContainer>
-                  <input
-                    name={element[displayedValue]}
-                    type="checkbox"
-                    checked={element.value}
-                    onChange={handleChange}
-                  />
-                </CheckboxContainer>
-              </>
-            }
-          </>
+            {isMobile
+              ? (
+                <Holdable
+                  name={element[displayedValue]}
+                  onHold={handleChange}
+                  onClick={(e) => e.preventDefault()}
+                  key={id}
+                  forx={element[displayedValue]}
+                >
+                  <RenderType theme={theme} type={type} element={element} i={i} />
+                </Holdable>
+              )
+              : (
+                <>
+                  <RenderType theme={theme} type={type} element={element} i={i} />
+                  <CheckboxContainer>
+                    <Checkbox
+                      checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
+                      name={element[displayedValue]}
+                      checked={element.value}
+                      onChange={handleChange}
+                    />
+                  </CheckboxContainer>
+                </>
+              )}
+          </>,
         );
         return element;
       });
