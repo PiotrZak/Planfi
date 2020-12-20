@@ -18,6 +18,7 @@ import { userService } from 'services/userServices'
 import SmallButton from 'components/atoms/SmallButton';
 import { MyProfilePanel } from './MyProfilePanel';
 
+import EditUserPasswordModal from "./EditProfile/EditUserPassword";
 import EditUserEmailModal from "./EditProfile/EditUserEmail";
 import EditUserDataModal from "./EditProfile/EditUserData";
 
@@ -114,8 +115,10 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
                     id={user.userId}
                     openModal={openEditMailModal}
                     onClose={() => setOpenEditMailModal(false)} />
-
-                {/* <EditUserPasswordModal id={user.id} openModal={openEditUserPasswordModal} onClose={() => setOpenEditUserPasswordModal(false)} /> */} */}
+                <EditUserPasswordModal
+                    id={user.userId}
+                    openModal={openEditUserPasswordModal}
+                    onClose={() => setOpenEditUserPasswordModal(false)} />
             </GlobalTemplate>
             <MyProfilePanel
                 setOpenEditUserData={setOpenEditUserData}
