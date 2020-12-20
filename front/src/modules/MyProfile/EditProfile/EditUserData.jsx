@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Label from 'components/atoms/Label';
 import styled from 'styled-components';
 import Input from 'components/molecules/Input';
-import { validationUtil } from "utils/validation.util"
+import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import { userService } from 'services/userServices'
 import Button from "components/atoms/Button"
@@ -13,6 +12,7 @@ import { ModalHeading } from 'components/atoms/Heading';
 import { Formik, Field, Form } from 'formik';
 import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const initialValues = {
     firstName: '',
@@ -20,20 +20,12 @@ const initialValues = {
     phone: '',
 };
 
-const validatePhone = (phone) => {
-    let errorField = {};
-    const phoneValidationMessage = "Telephone number should be correct";
-    var RE = /^\d{9}$/;
-    if (!RE.test(phone)) {
-        errorField['phone'] = phoneValidationMessage;
-        return errorField['phone']
-    }
-}
-
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required(translate('EnterFirstNameAndLastName')),
     lastName: Yup.string().required(translate('lastName')),
-    phone: Yup.string().required(translate('phone')),
+    phone: Yup.string()
+    .required(translate('phone'))
+    .matches(/^\d{9}$/, translate('phoneValidation')),
 });
 
 const IconContainer = styled.div`
@@ -46,32 +38,38 @@ const editUserDetails = "Edit Your data";
 const saveChanges = "Save Changes";
 const firstName = "First Name";
 const lastName = "Last Name";
-
+const phoneValidation = "Telephone number should be correct"
 
 const firstNamePlaceholder = "What is your first name ?";
 const lastNamePlaceholder = "What is your last name ?";
 const phonePlaceholder = "What is your phone number ?"
-
+const userDataEdited = "Congratulations! Data sucessfully edited!"
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
-
-
-    console.log(id)
-    const [userData] = useState({});
-    const [errors, setErrors] = useState({})
-
-    const requiredFields = ["firstName", "lastName", "phone"];
-
+    const { notificationDispatch } = useNotificationContext();
 
     const onSubmit = (values) => {
-        console.log(values)
         const transformedUserData = { firstName: values.firstName, lastName: values.lastName, phoneNumber: values.phone }
         userService
             .editUser(id, transformedUserData)
             .then(() => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                      content: { success: 'OK', message: translate('userDataEdited') },
+                      type: 'positive',
+                    },
+                  });
                 onClose()
             })
             .catch((error) => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                      content: { success: error, message: translate('ErrorAlert') },
+                      type: 'error',
+                    },
+                  });
             });
     };
 
@@ -113,6 +111,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                                     as={Input}
                                     error={errors.name && touched.name} />
                             </Label>
+                            <ValidationHint name="phone" />
                         </InputContainer>
                         <Button type="submit" buttonType="primary" size="lg">{translate('saveChanges')}</Button>
                     </Form>

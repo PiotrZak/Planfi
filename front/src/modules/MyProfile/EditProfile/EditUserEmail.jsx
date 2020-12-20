@@ -1,74 +1,124 @@
 import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { useDispatch } from 'react-redux'
-import { FormInput } from "components/atoms/FormInput"
-import { validationUtil } from "utils/validation.util"
-import { alertActions } from 'redux/actions/alert.actions'
+import Label from 'components/atoms/Label';
+import styled from 'styled-components';
+import Input from 'components/molecules/Input';
+import ValidationHint from 'components/atoms/ErrorMessageForm';
+import InputContainer from 'components/atoms/InputContainerForm';
 import { userService } from 'services/userServices'
 import Button from "components/atoms/Button"
+import * as Yup from 'yup';
+import { StyledModal } from 'components/molecules/Modal';
+import { ModalHeading } from 'components/atoms/Heading';
+import { Formik, Field, Form } from 'formik';
+import { translate } from 'utils/Translation';
+import Icon from 'components/atoms/Icon';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+
+const identicalEmails = "The emails aren't identical";
+const editEmail = "Change Email";
+const saveChanges = "Save Changes";
+const newMailPlaceholder = "";
+const repeatNewMailPlaceholder = "";
+const editUserDetails = "Edit Your data";
+const newMail = "";
+const repeatNewMail = "";
+const MailsAreNotTheSame = "";
+const EnterMail = "";
+
+const IconContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+`;
+
+const initialValues = {
+    newMail: '',
+    repeatNewMail: '',
+};
+
+const ATOM = "[a-z0-9!#$%&'*+/=?^_`{|}~-]";
+const DOMAIN = `(${ATOM}+(\\.${ATOM}+)*`;
+const IP_DOMAIN = '\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\]';
+const REGEX = `^${ATOM}+(\\.${ATOM}+)*@${DOMAIN}|${IP_DOMAIN})$`;
+
+
+const validationSchema = Yup.object().shape({
+    newMail: Yup.string()
+    .required(translate('EnterMail'))
+    .matches(REGEX, translate('phoneValidation')),
+    repeatNewMail: Yup.string()
+    .required(translate('EnterMail'))
+    .oneOf([Yup.ref('newMail')], translate('identicalEmails')),
+});
 
 const EditUserEmailModal = ({ id, openModal, onClose }) => {
 
-    const [userData] = useState({});
-    const [errors, setErrors] = useState({})
+    const { notificationDispatch } = useNotificationContext();
 
-    const requiredFields = ["password", "newMail", "repeatNewMail"];
-    const dispatch = useDispatch()
-
-    const handleInput = (e) => {
-
-        let name = e.target.name
-        userData[name] = e.target.value;
-
-        const mailValidation = validationUtil.validateEmail(userData['newMail'])
-        validationUtil.runSetErrors(name, setErrors, errors, requiredFields, userData)
-
-        mailValidation && setErrors({ ...errors, newMail: mailValidation })
-    }
-
-    const submitForm = () => {
-        const confirm = validationUtil.runValidateOnSubmit(setErrors, errors, requiredFields, userData)
-
-        if (userData.newMail === userData.repeatNewMail) {
-            confirm && changeEmail(userData)
-        }
-        else {
-            dispatch(alertActions.error(identicalEmails))
-        }
-    }
-
-    const changeEmail = (userData) => {
-        const transformedUserData = { password: userData.password, email: userData.newMail }
+    const onSubmit = (values) => {
+        const transformedUserData = { email: values.newMail }
         userService
             .editUser(id, transformedUserData)
             .then(() => {
-                dispatch(alertActions.success("User email edited!"))
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                      content: { success: 'OK', message: translate('userDataEdited') },
+                      type: 'positive',
+                    },
+                  });
                 onClose()
             })
             .catch((error) => {
-                dispatch(alertActions.error(error.message))
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                      content: { success: error, message: translate('ErrorAlert') },
+                      type: 'error',
+                    },
+                  });
             });
-    }
+    };
 
-    const identicalEmails = "The emails aren't identical";
-    const editEmail = "Change Email";
-    const saveChanges = "Save Changes";
 
     return (
-        <div>
-
-            <Modal isOpen={openModal} toggle={onClose}>
-                <ModalHeader toggle={onClose}><h2>{editEmail}</h2></ModalHeader>
-                <ModalBody>
-                    <FormInput id="password" name="password" onChange={handleInput} label="Password" hasError={errors.password} />
-                    <FormInput id="newMail" name="newMail" onChange={handleInput} label="New Mail" hasError={errors.newMail} />
-                    <FormInput id="repeatNewMail" name="repeatNewMail" onChange={handleInput} label="Repeat New Mail" hasError={errors.repeatNewMail} />
-                </ModalBody>
-                <ModalFooter>
-                    <Button className="btn btn--primary btn--lg" onClick={submitForm}>{saveChanges}</Button>{' '}
-                </ModalFooter>
-            </Modal>
-        </div>
+        <StyledModal
+            isOpen={openModal}
+            onBackgroundClick={onClose}
+            onEscapeKeydown={onClose}
+        >
+            <IconContainer>
+                <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
+            </IconContainer>
+                <ModalHeading toggle={onClose}><h2>{editUserDetails}</h2></ModalHeading>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+                {({ errors, touched, values }) => (
+                    <Form>
+                        <InputContainer>
+                            <Label type="top" text={translate('newMail')} required>
+                                <Field placeholder={translate('newMailPlaceholder')}
+                                    type="text" 
+                                    name="newMail"
+                                    as={Input}
+                                    error={errors.name && touched.name} />
+                            </Label>
+                            <ValidationHint name="newMail" />
+                        </InputContainer>
+                        <InputContainer>
+                            <Label type="top" text={translate('repeatNewMail')} required>
+                                <Field placeholder={translate('repeatNewMailPlaceholder')}
+                                    type="string"
+                                    name="repeatNewMail"
+                                    as={Input}
+                                    error={errors.name && touched.name} />
+                            </Label>
+                            <ValidationHint name="repeatNewMail" />
+                        </InputContainer>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('saveChanges')}</Button>
+                    </Form>
+                )}
+            </Formik>
+            </StyledModal>
     );
 }
 
