@@ -60,7 +60,7 @@ export const AssignUsersToTrainers = ({
     setActiveTrainers(selectedTrainers);
   };
 
-  const assignUserToPlan = () => {
+  const assignUserToTrainer = () => {
     const data = { userIds: activeUsers, trainerIds: activeTrainers };
     userService
       .assignUsersToTrainer(data)
@@ -102,12 +102,15 @@ export const AssignUsersToTrainers = ({
         {trainers ?
           <CheckboxGenericComponent
             dataType="users"
+            theme = "light"
             displayedValue="firstName"
             dataList={trainers}
             onSelect={getSelectedTrainerIds} />
           : <h1>{noUsers}</h1>}
         {/* </Loader> */}
-        <Button disabled={activeTrainers.length === 0} className="btn btn--primary btn--lg" onClick={assignUserToPlan} name={activeTrainers.length === 0 ? "Select Plan" : "Assign Trainers to Users"} />
+        <Button disabled={activeTrainers.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToTrainer}>
+          {activeTrainers.length === 0 ? "Select Trainer" : "Assign Trainers to Users"}
+        </Button>
       </div>
 
     </StyledReactBottomSheetExtended>

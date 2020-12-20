@@ -129,7 +129,6 @@ export const AssignUsersToPlans = ({
             <div>
                 <h4>{selectFromTrainers}</h4>
                 {/* <Loader isLoading={isLoading}> */}
-            }
                 {plansResults ?
                     <CheckboxGenericComponent
                         dataType="plans"
@@ -137,9 +136,11 @@ export const AssignUsersToPlans = ({
                         displayedValue="title"
                         dataList={plansResults}
                         onSelect={getSelectedPlanIds} />
-                    : <p>No Plans</p>} */}
+                    : <p>No Plans</p>}
                 {/* </Loader> */}
-                <Button disabled={activePlans.length === 0} className="btn btn--primary btn--lg" onClick={assignUserToPlan} name={activePlans.length === 0 ? "Select Plan" : "Assign Plans to Users"} />
+                <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
+                {activePlans.length === 0 ? "Select Plan" : "Assign Plans to Users"}
+                </Button>
             </div>
 
         </StyledReactBottomSheetExtended>

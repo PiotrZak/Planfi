@@ -45,6 +45,7 @@ export const RenderType = ({ theme, type, element, i }) => {
           <span onClick={() => redirectToItem(possibleTypes.user, element.userId)}>
           <GenericElement
             key={i}
+            theme = {theme}
             circle
             image={element.avatar}
             headline={`${element.firstName}  ${element.lastName}`}

@@ -70,24 +70,11 @@ const Plan = (props) => {
             });
     },[])
 
-    // what with duplicate exercises?
-    function getUnique(arr, index) {
-        const unique = arr
-             .map(e => e[index])
-             // store the keys of the unique objects
-             .map((e, i, final) => final.indexOf(e) === i && i)
-             // eliminate the dead keys & store unique objects
-            .filter(e => arr[e]).map(e => arr[e]);      
-
-         return unique;
-      }
-
-
     const getPlanExercise = useCallback((id) => {
         exerciseService
             .getExercisesByPlan(id)
             .then((data) => {
-                const uniqueExercises = getUnique(data, 'name');
+                const uniqueExercises = commonUtil.getUnique(data, 'name');
                 console.log(uniqueExercises)
                 setExercises(uniqueExercises);
                 setIsLoading(false)
@@ -101,8 +88,8 @@ const Plan = (props) => {
         exerciseService
             .getExercisesByCategory(id)
             .then((data) => {
-                console.log(data)
-                setCategoryExercises(data);
+                const uniqueExercises = commonUtil.getUnique(data, 'name');
+                setCategoryExercises(uniqueExercises);
                 setIsLoading(false)
             })
             .catch((error) => {
