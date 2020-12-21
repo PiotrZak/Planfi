@@ -10,7 +10,6 @@ const SmallButtonStyled = styled.div`
   height: 3.2rem;
 
   cursor: pointer;
-  font-weight: bold;
 
   outline: none;
   border: none;
@@ -23,13 +22,9 @@ const SmallButtonStyled = styled.div`
   justify-content: center;
   align-items: center;
 
-  //correct 2.3px from top of icon
-  ::before{
-    content: '';
-    margin-top: 0.3rem;
-  }
-
   ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};
+
+  ${({ color }) => color && `background: ${color} !important;`};
 `;
 
 const SmallButtonSquareStyled = styled(SmallButtonStyled)`
@@ -43,37 +38,40 @@ const SmallButtonCircleStyled = styled(SmallButtonStyled)`
 const SmallButton = ({
   iconName,
   fill,
-  iconWidth,
-  iconHeight,
+  size,
   buttonType,
   buttonShape,
   onClick,
+  color,
 
-}) => (
-  buttonShape === 'circle' ? (
-    <SmallButtonCircleStyled buttonType={buttonType} onClick={onClick}>
-      <Icon name={iconName} fill={fill} width={iconWidth} height={iconHeight} />
-    </SmallButtonCircleStyled>
-  ) : (
-    <SmallButtonSquareStyled buttonType={buttonType} onClick={onClick}>
-      <Icon name={iconName} fill={fill} width={iconWidth} height={iconHeight} />
-    </SmallButtonSquareStyled>
-  )
-);
+}) => {
+  const iconJSX = <Icon name={iconName} fill={fill} size={size} />;
+
+  return (
+    buttonShape === 'circle' ? (
+      <SmallButtonCircleStyled buttonType={buttonType} onClick={onClick} color={color}>
+        {iconJSX}
+      </SmallButtonCircleStyled>
+    ) : (
+      <SmallButtonSquareStyled buttonType={buttonType} onClick={onClick} color={color}>
+        {iconJSX}
+      </SmallButtonSquareStyled>
+    )
+  );
+};
 
 SmallButton.propTypes = {
   iconName: PropTypes.string.isRequired,
   fill: PropTypes.string,
-  iconWidth: PropTypes.string,
-  iconHeight: PropTypes.string,
+  size: PropTypes.string,
   buttonType: PropTypes.oneOf(['primary', 'secondary', 'dangerous', 'regular']),
   buttonShape: PropTypes.oneOf(['square', 'circle']),
+  color: PropTypes.string,
 };
 
 SmallButton.defaultProps = {
-  fill: 'white',
-  iconWidth: '1.5rem',
-  iconHeight: '1.5rem',
+  fill: ({ theme }) => theme.colorPrimary,
+  size: '1.5rem',
   buttonType: 'primary',
   buttonShape: 'circle',
 };

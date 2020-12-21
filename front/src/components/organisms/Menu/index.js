@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { routes } from 'utils/routes';
 import { withRouter, NavLink } from 'react-router-dom';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import { Role } from 'utils/role';
 import breakPointSize from 'utils/rwd';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 const currentUser = JSON.parse((localStorage.getItem('user')));
 
@@ -78,6 +79,8 @@ const activeClassName = 'active';
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
 })`
+  text-decoration: none;
+
   &.${activeClassName} > ${Square}{
     border-radius: .8rem;
     background: ${({ theme }) => theme.colorPrimaryDefault};
@@ -85,8 +88,9 @@ const StyledNavLink = styled(NavLink).attrs({
 `;
 
 // eslint-disable-next-line react/prop-types
-const Menu = ({ theme }) => {
+const Menu = () => {
   const [currentUrl, setCurrentUrl] = useState();
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     const currentUrl = window.location.href.split('/');
@@ -126,4 +130,4 @@ const Menu = ({ theme }) => {
   );
 };
 
-export default withTheme(withRouter(Menu));
+export default withRouter(Menu);

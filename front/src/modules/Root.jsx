@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-
 import { darkTheme } from 'theme/darkTheme';
 import { lightTheme } from 'theme/lightTheme';
-
 
 import { ThemeProvider } from 'styled-components';
 import { createBrowserHistory } from 'history';
@@ -29,7 +27,6 @@ import Plans from 'modules/Plans/Plans';
 import Plan from 'modules/Plans/Plan/Plan';
 
 import MyProfile from 'modules/MyProfile/MyProfile';
-import { User } from './Users/User';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { ThemeContext } from 'support/context/ThemeContext';
@@ -38,38 +35,37 @@ import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
 import Exercise from 'modules/Exercises/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
+import { User } from './Users/User';
 
 import TestPage from './Auth/Test';
-
 
 export const history = createBrowserHistory();
 
 const Root = () => {
-
   const [user] = useState(JSON.parse((localStorage.getItem('user'))));
 
   const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [theme, setTheme] = useState(darkTheme)
+  const [theme, setTheme] = useState(darkTheme);
 
   useEffect(() => {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          console.log("Latitude is :", position.coords.latitude);
-          console.log("Longitude is :", position.coords.longitude);
-        });
+    navigator.geolocation.getCurrentPosition((position) => {
+      console.log('Latitude is :', position.coords.latitude);
+      console.log('Longitude is :', position.coords.longitude);
+    });
 
-        const currentLanguage = localStorage.getItem('language')
-        if(currentLanguage == null){
-        localStorage.setItem('language', 'en-GB');
-        }
+    const currentLanguage = localStorage.getItem('language');
+    if (currentLanguage == null) {
+      localStorage.setItem('language', 'en-GB');
+    }
   }, []);
 
   const toggleTheme = () => {
-    setTheme(theme == darkTheme ? lightTheme : darkTheme)
-  }
+    setTheme(theme == darkTheme ? lightTheme : darkTheme);
+  };
 
   const toggleLanguage = () => {
-    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'en-GB' : 'pl-PL')
-  }
+    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'en-GB' : 'pl-PL');
+  };
 
   return (
     <LanguageContext.Provider value={{ lang: selectedLanguage }}>
@@ -84,7 +80,7 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-                  <Route path={routes.myProfile} component={() => <MyProfile toggleTheme ={toggleTheme} toggleLanguage ={toggleLanguage}/>} />
+                  <Route path={routes.myProfile} component={() => <MyProfile toggleTheme={toggleTheme} toggleLanguage={toggleLanguage} />} />
 
                   <Route path="/test" component={TestPage} />
 

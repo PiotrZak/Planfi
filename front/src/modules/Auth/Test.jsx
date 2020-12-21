@@ -1,12 +1,15 @@
 import React from 'react';
 import GlobalTemplate from 'templates/GlobalTemplate';
-import Icon from 'components/atoms/Icon';
+import GenericElement from 'components/molecules/GenericElement';
 
 const TestPage = () => (
   <GlobalTemplate>
-    {/*  <GenericElementRefactor Headline="HeadLine" Subline="Subline" /> */}
-    <h2>Hello World</h2>
-    <Icon name="dumbbell" color="white" size="5rem" />
+    <GenericElement
+      HeadLine="lorem ipsum"
+      SubLine="lorem ipsum der sit"
+      onMenuClick={() => console.log('menu clicked')}
+      onSecondaryMenuClick={() => console.log('Secondary menu clicked')}
+    />
   </GlobalTemplate>
 );
 

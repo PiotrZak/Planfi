@@ -13,7 +13,6 @@ import GlobalTemplate from 'templates/GlobalTemplate';
 import CategoriesPanel from 'modules/Exercises/CategoriesPanel';
 import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
 import Nav from 'components/atoms/Nav';
-import styled from 'styled-components';
 
 const CATEGORY = gql`{
   categories{
@@ -23,10 +22,7 @@ const CATEGORY = gql`{
   }
 `;
 
-const NavContainer = styled.div`
-  display: flex;
-`;
-const categoriesTitle = "Categories";
+const categoriesTitle = 'Categories';
 
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);

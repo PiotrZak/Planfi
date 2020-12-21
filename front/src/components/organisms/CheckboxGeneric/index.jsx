@@ -7,10 +7,13 @@ import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
 
 const CheckboxContainer = styled.div`
+  position: relative;
+
   input{
-    margin: -5.5rem 0 0 1.4rem;
-    z-index:2;
+    z-index: 2;
     position: absolute;
+    top: 0;
+    left: 0;
     @media only screen and ${breakPointSize.xs} {
       display: none;
     }

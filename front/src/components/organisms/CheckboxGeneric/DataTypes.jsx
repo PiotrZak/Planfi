@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import GenericElement from 'components/molecules/GenericElement/GenericElement';
+import GenericElement from 'components/molecules/GenericElement';
+import styled from 'styled-components';
 
 const possibleTypes = {
   categories: 'categories',
@@ -12,6 +13,10 @@ const possibleTypes = {
   users: 'users',
   user: 'user',
 };
+
+const StyledGenericElement = styled(GenericElement)`
+  margin-bottom: .8rem;
+`;
 
 export const RenderType = ({
   theme, type, element, i,
@@ -26,59 +31,53 @@ export const RenderType = ({
 
   const renderType = () => {
     switch (type) {
-      case possibleTypes.categories: {
+      case possibleTypes.categories:
         return (
-          <span onClick={() => redirectToItem(possibleTypes.category, element.categoryId)}>
-            <GenericElement
-              key={i}
-              headline={element.title}
-              subline={`${element.series} / ${element.times}`}
-              category={element.category}
-            />
-          </span>
+          <StyledGenericElement
+            key={i}
+            onClick={() => redirectToItem(possibleTypes.category, element.categoryId)}
+            HeadLine={element.title}
+            SubLine="TO DO - Get number of exercise in category"
+            category={element.category}
+          />
         );
-      }
-      case 'users': {
+
+      case 'users':
         return (
-          <span onClick={() => redirectToItem(possibleTypes.user, element.userId)}>
-            <GenericElement
-              key={i}
-              theme={theme}
-              circle
-              image={element.avatar}
-              headline={`${element.firstName}  ${element.lastName}`}
-              user={element}
-              subline={element.role}
-            />
-          </span>
+          <StyledGenericElement
+            key={i}
+            onClick={() => redirectToItem(possibleTypes.user, element.userId)}
+            theme={theme}
+            AvatarType="circle"
+            image={element.avatar}
+            HeadLine={`${element.firstName}  ${element.lastName}`}
+            user={element}
+            SubLine={element.role}
+          />
         );
-      }
-      case 'plans': {
+      case 'plans':
         return (
-          <span onClick={() => redirectToItem(possibleTypes.plan, element.planId)}>
-            <GenericElement
-              theme={theme}
-              key={i}
-              headline={element.title}
-              subline={element.creatorName}
-              plan={element}
-            />
-          </span>
+          <StyledGenericElement
+            onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
+            theme={theme}
+            key={i}
+            headline={element.title}
+            subline={element.creatorName}
+            plan={element}
+          />
         );
-      }
-      case 'exercises': {
+
+      case 'exercises':
         return (
-          <span onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}>
-            <GenericElement
-              key={i}
-              headline={element.name}
-              image={element.files && element.files[0]}
-              subline={`${element.series} / ${element.times}`}
-              exercise={element}
-            />
-          </span>
+          <StyledGenericElement
+            key={i}
+            onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
+            headline={element.name}
+            image={element.files && element.files[0]}
+            subline={`${element.series} / ${element.times}`}
+            exercise={element}
+          />
         );
-      }
     }
   };
 

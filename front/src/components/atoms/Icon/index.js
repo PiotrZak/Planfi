@@ -28,21 +28,26 @@ const IconsCode = {
   'user-circle': 'e90c',
 };
 
-const FontIcon = styled.span`
-  font-family: 'icomoon', sans-serif;
-  font-size: ${({ size }) => size};
-  color: ${({ color }) => color};
-  cursor: ${({ cursorType }) => cursorType};
-
-  :before{
-    content: "\\${({ name }) => IconsCode[name]}";
-  }
-`;
-
 const Icon = ({
-  size, color, name, cursorType, ...rest
+  size, fill, name, cursorType, ...rest
 // eslint-disable-next-line react/jsx-props-no-spreading
-}) => <FontIcon name={name} size={size} color={color} cursorType={cursorType} {...rest} />;
+}) => {
+  const FontIcon = styled.span`
+    font-family: 'icomoon', sans-serif;
+    font-size: ${size};
+    color: ${fill};
+    cursor: ${cursorType};
+    speak: none;
+
+    :before{
+      content: "\\${IconsCode[name]}";
+    }
+  `;
+
+  return (
+    <FontIcon {...rest} />
+  );
+};
 
 Icon.propTypes = {
   name: PropTypes.oneOf([
@@ -53,14 +58,14 @@ Icon.propTypes = {
     'question-circle', 'search', 'union', 'user-circle',
   ]).isRequired,
   size: PropTypes.string,
-  color: PropTypes.string,
+  fill: PropTypes.string,
   cursorType: PropTypes.string,
 };
 
 Icon.defaultProps = {
   size: '1.5rem',
-  color: ({ theme }) => theme.colorPrimary,
-  cursorType: 'default',
+  fill: ({ theme }) => theme.colorPrimary,
+  cursorType: 'pointer',
 };
 
 export default Icon;

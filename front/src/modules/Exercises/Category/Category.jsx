@@ -13,8 +13,15 @@ import { useThemeContext } from 'support/context/ThemeContext';
 import SmallButton from 'components/atoms/SmallButton';
 import ReturnWithTitle from 'components/molecules/ReturnWithTitle';
 import Nav from 'components/atoms/Nav';
-import { PlanPanelExercises } from './PlanPanelExercises';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import styled from 'styled-components';
+import { PlanPanelExercises } from './PlanPanelExercises';
+
+const Container = styled.div`
+  display: flex;
+  width: 7rem;
+  justify-content: space-between;
+`;
 
 const Category = (props) => {
   const { theme } = useThemeContext();
@@ -32,8 +39,6 @@ const Category = (props) => {
   const { match } = props;
   const { id } = match.params;
 
-
-
   const getCategory = (id) => {
     categoryService
       .getCategoryById(id)
@@ -46,32 +51,32 @@ const Category = (props) => {
 
   const deleteExercise = () => {
     exerciseService
-        .deleteExerciseById(selectedExercise)
-        .then((data) => {
-            notificationDispatch({
-                type: ADD,
-                payload: {
-                  content: { success: 'OK', message: translate('ExercisesDeleted') },
-                  type: 'positive'
-                }
-              })
-              setBottomSheet('none');
-        })
-        .catch((error) => {
-            notificationDispatch({
-                type: ADD,
-                payload: {
-                  content: { error: error, message: translate('ErrorAlert') },
-                  type: 'error'
-                }
-              })
+      .deleteExerciseById(selectedExercise)
+      .then((data) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('ExercisesDeleted') },
+            type: 'positive',
+          },
         });
-}
+        setBottomSheet('none');
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
+      });
+  };
 
-useEffect(() => {
-  getCategory(id);
-  getCategoryExercise(id);
-}, [id, deleteExercise]);
+  useEffect(() => {
+    getCategory(id);
+    getCategoryExercise(id);
+  }, [id, deleteExercise]);
 
   const getCategoryExercise = useCallback((id) => {
     exerciseService
@@ -112,7 +117,10 @@ useEffect(() => {
                 state: { id },
               }}
             >
-              <SmallButton iconName="plus" />
+              <Container>
+                <SmallButton iconName="ellipsis-h" onClick={() => alert('Add functionality')} color={theme.colorGray90} />
+                <SmallButton iconName="plus" onClick={() => alert('Add functionality')} />
+              </Container>
             </Link>
           )}
         </Nav>
@@ -129,7 +137,7 @@ useEffect(() => {
           : <p>{translate('NoExercises')}</p>}
       </GlobalTemplate>
       <PlanPanelExercises
-      deleteExercise= {deleteExercise}
+        deleteExercise={deleteExercise}
         selectedExercise={selectedExercise}
         bottomSheet={bottomSheet}
         setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}
