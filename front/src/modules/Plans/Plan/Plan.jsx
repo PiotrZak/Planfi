@@ -39,7 +39,6 @@ const Plan = (props) => {
     const [categories, setCategories] = useState()
     const [categoryExercises, setCategoryExercises] = useState([])
 
-
     const { match } = props;
     let id = match.params.id;
 

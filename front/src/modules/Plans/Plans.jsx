@@ -14,10 +14,15 @@ import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
 import {useUserContext} from "../../support/context/UserContext"
 import SmallButton from 'components/atoms/SmallButton';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
+
+const NoPlans = "No plans"
+const plansTitle = "Plans"
+
 
 //todo
 //PlansDeleted
@@ -30,10 +35,11 @@ const IconWrapper = styled.div`
 
 const Plan = (props) => {
 
+    const { notificationDispatch } = useNotificationContext();
     const { theme } = useThemeContext();
     const { user } = useUserContext();
     
-    const [plans, setPlans] = useState();
+    const [plans, setPlans] = useState([]);
     const [searchTerm, setSearchTerm] = React.useState("");
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
@@ -44,24 +50,47 @@ const Plan = (props) => {
     const { match } = props;
     let id = match.params.id;
 
+    const deletePlans = () => {
+        planService
+            .deletePlans(selectedPlans)
+            .then(() => {
+                setBottomSheet('none')
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                        content: { success: 'OK', message: translate('PlansDeleted') },
+                        type: 'positive'
+                    }
+                })
+            })
+            .catch((error) => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                        content: { error: error, message: translate('ErrorAlert') },
+                        type: 'error'
+                    }
+                })
+            });
+    };
+
+    const getPlans = (id) => {
+        planService
+            .getOrganizationPlans(id)
+            .then((data) => {
+                setPlans(data);
+            })
+            .catch((error) => {
+                console.error(error)
+            });
+    }
+
     useEffect(() => {
         getPlans(user.organizationId)
     }, [id, openModal, openEditModal, setOpenEditModal]);
 
     const closeModal = () => {
         setOpenModal(false)
-    }
-
-    const getPlans = (id) => {
-        //organizationId
-        planService
-            .getOrganizationPlans(id)
-            .then((data) => {
-                console.log(data)
-                setPlans(data);
-            })
-            .catch((error) => {
-            });
     }
 
     const submissionHandleElement = (selectedData) => {
@@ -84,24 +113,23 @@ const Plan = (props) => {
         <>
             <GlobalTemplate>
                 <Nav>
-                    <BackTopNav />
-                    {plans && <h2>{plans.title}</h2>}
+                    {plans && <h2>{plansTitle}</h2>}
                     {plans &&
                     <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
                     }
                 </Nav>
                 <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
-                {results ?
+                {plans.length >= 1 ?
                     <CheckboxGenericComponent
                         dataType="plans"
                         displayedValue={"title"}
                         dataList={results}
                         onSelect={submissionHandleElement} />
-                    :
-                    <p>{translate('NoExercises')}</p>}
+                    : <p>{translate('NoPlans')}</p>}
             </GlobalTemplate>
             <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
             <PlansPanel
+                deletePlans = {deletePlans}
                 theme={theme}
                 bottomSheet={bottomSheet}
                 setBottomSheet={setBottomSheet}

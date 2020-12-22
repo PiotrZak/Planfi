@@ -7,8 +7,13 @@ const CounterContainer = styled.div`
   align-items:baseline;
   display:flex;
   img{
-    width:48px;
-    height:48px;
+    width:72px;
+    height:72px;
+  }
+  h4{
+    text-align:center;
+    width:200px;
+    font-size:1.6rem;
   }
 `;
 
@@ -26,12 +31,6 @@ const Counter = ({ valueToChange, defaultValue, handleData, unit }) => {
       handleData(value);
     }
   };
-
-  const Container = styled.div`
-    display: flex;
-    justify-content: space-around;
-
-  `;
 
   return (
     <CounterContainer>

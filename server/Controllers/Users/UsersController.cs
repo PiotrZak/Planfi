@@ -169,7 +169,6 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody] UpdateUserModel model)
         {
-            
             try
             {
                 _userService.Update(id, model);

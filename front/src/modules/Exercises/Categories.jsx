@@ -78,7 +78,7 @@ const Categories = () => {
 
   useEffect(() => {
     refreshData();
-  }, [openModal, openEditModal, _refetch, deleteCategories]);
+  }, [openModal, openEditModal, _refetch]);
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
