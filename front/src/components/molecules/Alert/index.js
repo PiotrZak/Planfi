@@ -58,6 +58,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   background: ${({ type, theme }) => handleAlertType(type, theme)};
+
 `;
 
 const LeftContainer = styled.div`
