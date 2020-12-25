@@ -7,6 +7,7 @@ import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
+import BackTopNav from 'components/molecules/BackTopNav';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
@@ -103,7 +104,7 @@ useEffect(() => {
     <>
       <GlobalTemplate>
         <Nav>
-          {category && <ReturnWithTitle text={category.title} /> }
+        {category && <BackTopNav text={category.title} />}
           {category
           && (
             <Link
