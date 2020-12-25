@@ -79,7 +79,6 @@ const StyledParagraph = styled(Paragraph)`
 const Alert = ({ notification }) => {
   const { notificationDispatch } = useNotificationContext();
 
-  // todo - take context from global
   const theme = darkTheme;
   const timeToRemove = 15000;
 
@@ -97,7 +96,7 @@ const Alert = ({ notification }) => {
             <IconWrapper>
               <Icon name={handleIconType(n.type)} fill={handleIconColor(n.type, theme)} />
             </IconWrapper>
-            <StyledParagraph type="body-3-medium">{JSON.stringify(n.content.message)}</StyledParagraph>
+            <StyledParagraph type="body-3-medium">{n.content.message}</StyledParagraph>
           </LeftContainer>
           <RightContainer>
             <Icon name="union" size="1.2rem" onClick={() => notificationDispatch({ type: REMOVE, payload: { id: n.id } })} cursorType="pointer" />

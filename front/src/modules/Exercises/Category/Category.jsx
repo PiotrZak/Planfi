@@ -73,11 +73,6 @@ const Category = (props) => {
       });
   };
 
-  useEffect(() => {
-    getCategory(id);
-    getCategoryExercise(id);
-  }, [id, deleteExercise]);
-
   const getCategoryExercise = useCallback((id) => {
     exerciseService
       .getExercisesByCategory(id)
@@ -89,6 +84,11 @@ const Category = (props) => {
         console.error(error);
       });
   }, []);
+
+  useEffect(() => {
+    getCategory(id);
+    getCategoryExercise(id);
+  }, [id, deleteExercise]);
 
   const submissionHandleElement = (selectedData) => {
     const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');

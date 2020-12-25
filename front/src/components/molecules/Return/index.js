@@ -1,13 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { history as historyPropTypes } from 'history-prop-types';
 import Icon from 'components/atoms/Icon';
 
-const Return = ({ history, fill }) => <Icon name="arrow-left" fill={fill} onClick={() => history.goBack()} />;
+const Return = ({ fill }) => <Icon name="arrow-left" fill={fill} />;
 
 Return.propTypes = {
-  history: PropTypes.shape(historyPropTypes).isRequired,
   fill: PropTypes.string,
 };
 

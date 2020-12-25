@@ -6,6 +6,7 @@ export const Nav = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Container = styled.div`
@@ -16,9 +17,7 @@ const Container = styled.div`
   width: calc(100% - 3.2rem);
   height: 100%;
   color: ${({ theme }) => theme.colorGray10};
-
   margin: 0 1.6rem;
-
   @media screen and (min-width: 80rem) {
     max-width: 100rem;
     margin: auto;
