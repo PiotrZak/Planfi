@@ -7,21 +7,13 @@ import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
-import { Headline, MainHeadline } from 'components/typography';
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
+import { Headline } from 'components/typography';
+import {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-
-const assignPlanToUserNotification = "assignPlanToUserNotification";
-const returnToSubMenu = "returnToSubMenu";
-const selectFromPlans = "selectFromPlans";
-const selectFromTrainers = "Select from trainers:"
-const PlansAssignedToUser = ""
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
-
-const noPlans = "No plans";
 
 export const AssignUsersToPlans = ({
     bottomSheet,
@@ -121,13 +113,14 @@ export const AssignUsersToPlans = ({
                         <Icon name="arrow-left" fill="#5E4AE3" />
                     </IconWrapper>
                     <p onClick={() => closeAssignPlansToUser()}>
-                        {returnToSubMenu}
+                        {translate('ReturnToSubMenu')}
                     </p>
                 </BottomNavItem>
             </BottomNav>
-
             <div>
-                <h4>{selectFromTrainers}</h4>
+                <h4>
+                {translate('SelectFromTrainers')}
+                </h4>
                 {/* <Loader isLoading={isLoading}> */}
                 {plansResults ?
                     <CheckboxGenericComponent
@@ -136,10 +129,10 @@ export const AssignUsersToPlans = ({
                         displayedValue="title"
                         dataList={plansResults}
                         onSelect={getSelectedPlanIds} />
-                    : <p>No Plans</p>}
+                    : <p>{translate('NoPlans')}</p>}
                 {/* </Loader> */}
                 <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
-                {activePlans.length === 0 ? "Select Plan" : "Assign Plans to Users"}
+                {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
             </div>
 

@@ -24,7 +24,6 @@ const Plan = (props) => {
 
     const { theme } = useThemeContext();
     const [plan, setPlan] = useState();
-    const [refresh, setRefresh] = useState()
 
     const [bottomSheet, setBottomSheet] = useState('none')
     const [assignExercise, setAssignExercises] = useState('none')
@@ -74,7 +73,6 @@ const Plan = (props) => {
             .getExercisesByPlan(id)
             .then((data) => {
                 const uniqueExercises = commonUtil.getUnique(data, 'name');
-                console.log(uniqueExercises)
                 setExercises(uniqueExercises);
                 setIsLoading(false)
             })
@@ -99,9 +97,6 @@ const Plan = (props) => {
         loadExercises(id)
         setAssignExercises('flex');
         setBottomSheet('none');
-        if (categoryExercises.length > 0) {
-
-        }
     }
 
 

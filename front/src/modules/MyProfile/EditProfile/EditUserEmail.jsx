@@ -14,17 +14,6 @@ import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
-const identicalEmails = "The emails aren't identical";
-const editEmail = "Change Email";
-const saveChanges = "Save Changes";
-const newMailPlaceholder = "";
-const repeatNewMailPlaceholder = "";
-const editUserDetails = "Edit Your data";
-const newMail = "";
-const repeatNewMail = "";
-const MailsAreNotTheSame = "";
-const EnterMail = "";
-
 const IconContainer = styled.div`
   position: absolute;
   top: 1rem;
@@ -41,14 +30,13 @@ const DOMAIN = `(${ATOM}+(\\.${ATOM}+)*`;
 const IP_DOMAIN = '\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\]';
 const REGEX = `^${ATOM}+(\\.${ATOM}+)*@${DOMAIN}|${IP_DOMAIN})$`;
 
-
 const validationSchema = Yup.object().shape({
     newMail: Yup.string()
     .required(translate('EnterMail'))
-    .matches(REGEX, translate('phoneValidation')),
+    .matches(REGEX, translate('PhoneValidation')),
     repeatNewMail: Yup.string()
     .required(translate('EnterMail'))
-    .oneOf([Yup.ref('newMail')], translate('identicalEmails')),
+    .oneOf([Yup.ref('newMail')], translate('IdenticalEmails')),
 });
 
 const EditUserEmailModal = ({ id, openModal, onClose }) => {
@@ -63,7 +51,7 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: 'OK', message: translate('userDataEdited') },
+                      content: { success: 'OK', message: translate('UserDataEdited') },
                       type: 'positive',
                     },
                   });
@@ -90,15 +78,14 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                 <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
                 <ModalHeading toggle={onClose}>
-                {/* todo - personalize texts */}
-                <h2>{editUserDetails}</h2>
+                <h2>{translate("EditUserDetails")}</h2>
                 </ModalHeading>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched }) => (
                     <Form>
                         <InputContainer>
-                            <Label type="top" text={translate('newMail')} required>
-                                <Field placeholder={translate('newMailPlaceholder')}
+                            <Label type="top" text={translate('NewMail')} required>
+                                <Field placeholder={translate('NewMailPlaceholder')}
                                     type="text" 
                                     name="newMail"
                                     as={Input}
@@ -107,16 +94,16 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                             <ValidationHint name="newMail" />
                         </InputContainer>
                         <InputContainer>
-                            <Label type="top" text={translate('repeatNewMail')} required>
-                                <Field placeholder={translate('repeatNewMailPlaceholder')}
+                            <Label type="top" text={translate('RepeatNewMail')} required>
+                                <Field placeholder={translate('RepeatNewMailPlaceholder')}
                                     type="string"
                                     name="repeatNewMail"
                                     as={Input}
                                     error={errors.name && touched.name} />
                             </Label>
-                            <ValidationHint name="repeatNewMail" />
+                            <ValidationHint name="RepeatNewMail" />
                         </InputContainer>
-                        <Button type="submit" buttonType="primary" size="lg">{translate('saveChanges')}</Button>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
                     </Form>
                 )}
             </Formik>

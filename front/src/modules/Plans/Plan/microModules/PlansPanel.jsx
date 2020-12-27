@@ -5,9 +5,7 @@ import "react-multi-carousel/lib/styles.css";
 import Loader from 'components/atoms/Loader';
 import { StyledReactBottomSheetExtended, BottomItem } from 'components/organisms/BottomSheet'
 import { MainHeadline, Headline, Subline } from '../../../../components/typography';
-
-const noCategories = "No categories"
-const selectCategory = "Select category:"
+import { translate } from 'utils/Translation';
 
 const BottomNav = styled.div`
     display:flex;
@@ -38,7 +36,7 @@ export const PlansPanel = ({
                 <BottomNav>
                     <BottomNavItem onClick={() => setBottomSheet('none')}>
                     <Icon name="arrow-left" fill="#5E4AE3" />
-                        <Headline>{selectCategory}</Headline>
+                        <Headline>{translate('SelectCategory')}</Headline>
                     </BottomNavItem>
                 </BottomNav>
                 {categories ?
@@ -48,7 +46,7 @@ export const PlansPanel = ({
                             <Subline>{`${element.series} / ${element.times}`}</Subline>
                         </BottomItem>
                     )
-                    : <p>{noCategories}</p>
+                    : <p>{translate('NoCategories')}</p>
                 }
             </Loader>
         </StyledReactBottomSheetExtended>

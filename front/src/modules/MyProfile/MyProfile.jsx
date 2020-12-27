@@ -8,12 +8,10 @@ import BackTopNav from 'components/molecules/BackTopNav';
 import { translate } from 'utils/Translation';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { useUserContext } from "../../support/context/UserContext"
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { TrainerClients } from "../Users/UserProfile/TrainerClients"
 import { TrainerPlans } from "../Users/UserProfile/TrainerPlans"
 import { UserPlans } from "../Users/UserProfile/UserPlans"
 import { ClientTrainers } from "../Users/UserProfile/ClientTrainers"
-import { useHistory } from 'react-router-dom';
 import { userService } from 'services/userServices'
 import SmallButton from 'components/atoms/SmallButton';
 import { MyProfilePanel } from './MyProfilePanel';
@@ -21,8 +19,6 @@ import { MyProfilePanel } from './MyProfilePanel';
 import EditUserPasswordModal from "./EditProfile/EditUserPassword";
 import EditUserEmailModal from "./EditProfile/EditUserEmail";
 import EditUserDataModal from "./EditProfile/EditUserData";
-
-// import { EditUserPassword } from "./EditProfile/EditUserData"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;

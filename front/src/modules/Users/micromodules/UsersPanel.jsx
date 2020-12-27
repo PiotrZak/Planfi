@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { userService } from 'services/userServices';
 import styled from 'styled-components';
+import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import EditRoleModal from "./EditRoleModal";
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-
-const deleteUserText = "Delete User"
-const assignPlanText = "Assign Plan"
-const assignToTrainerText = "Assign To Trainer"
-const editUserRole = "Edit User Role"
-const usersSelected = "Selected users"
-const userDeleted = "User deleted"
+import StyledReactBottomSheet, { PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -61,13 +54,13 @@ export const UsersPanel = ({
                 <>
                     <StyledMobileReactBottomSheet>
                         <PanelItem onClick={() => deleteUser()}>
-                            {deleteUserText}
+                        {translate('DeleteUserText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>
-                            {assignPlanText}
+                        {translate('AssignPlanText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignTrainersToUsers()}>
-                            {assignToTrainerText}
+                        {translate('AssignToTrainerText')}
                         </PanelItem>
                     </StyledMobileReactBottomSheet>
                 </>
@@ -78,30 +71,31 @@ export const UsersPanel = ({
                         <IconWrapper>
                             <Icon name="check" fill={theme.colorInputActive}/>
                         </IconWrapper>
-                        {activeUsers.length} {usersSelected}
+                        {activeUsers.length}
+                        {translate('UsersSelected')}
                         </PanelItem>
                         <PanelItem onClick={() => deleteUser()} >
                         <Icon name="trash" fill={theme.colorInputActive} />
-                        {deleteUserText}
+                        {translate('DeleteUserText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>
                             <IconWrapper>
                                 <Icon name="clipboard-notes" fill={theme.colorInputActive} />
                             </IconWrapper>
-                            {assignPlanText}
+                            {translate('AssignPlanText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignTrainersToUsers()}>
                             <IconWrapper>
                                 <Icon name="user-circle" fill={theme.colorInputActive} />
                             </IconWrapper>
-                            {assignToTrainerText}
+                            {translate('AssignPlanText')}
                         </PanelItem>
                         {activeUsers.length < 2 &&
                             <PanelItem>
                                 <IconWrapper>
                                     <Icon name="edit" fill={theme.colorInputActive} />
                                 </IconWrapper>
-                                {editUserRole}
+                                {translate('EditUserRole')}
                             </PanelItem>
                         }
                         <EditRoleModal

@@ -17,11 +17,6 @@ import ValidationHint from 'components/atoms/ErrorMessageForm';
 import Icon from 'components/atoms/Icon';
 import Paragraph from 'components/atoms/Paragraph';
 
-const PlanTitle = "Add a Plan";
-const PlanAdded = "Plan succesfully added!";
-const AddPlanButton = "Create Plan";
-const AddPlanModalDescription = "When naming a Plan, it is worth using names related to specific parts of the body, for example 'Back'";
-
 const ButtonContainer = styled.div`
   position: absolute;
   bottom: 2rem;

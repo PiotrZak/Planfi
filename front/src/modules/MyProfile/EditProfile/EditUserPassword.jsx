@@ -15,15 +15,6 @@ import Icon from 'components/atoms/Icon';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
-const identicalPassword = "The passwords aren't identical";
-const editPassword = "Edit Your Password";
-const saveChanges = "Save Changes";
-const firstName = "First Name";
-const lastName = "Last Name";
-const editUserDetails = "Edit Your data";
-const newPasswordPlaceholder = "";
-const repeatNewPasswordPlaceholder = "";
-
 const IconContainer = styled.div`
   position: absolute;
   top: 1rem;
@@ -44,7 +35,7 @@ const validationSchema = Yup.object().shape({
     .required(),
     repeatNewPassword: Yup.string()
     .required(translate('EnterMail'))
-    .oneOf([Yup.ref('newPassword')], translate('identicalPassword')),
+    .oneOf([Yup.ref('newPassword')], translate('IdenticalPassword')),
 });
 
 const EditUserPasswordModal = ({ id, openModal, onClose }) => {
@@ -59,7 +50,7 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: 'OK', message: translate('userDataEdited') },
+                      content: { success: 'OK', message: translate('UserDataEdited') },
                       type: 'positive',
                     },
                   });
@@ -86,14 +77,14 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
                 <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
                 <ModalHeading toggle={onClose}>
-                <h2>{editUserDetails}</h2>
+                <h2>            {translate("EditUserDetails")}</h2>
                 </ModalHeading>
                 <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched, values }) => (
                     <Form>
                         <InputContainer>
-                            <Label type="top" text={translate('newPassword')} required>
-                                <Field placeholder={translate('newPasswordPlaceholder')}
+                            <Label type="top" text={translate('NewPassword')} required>
+                                <Field placeholder={translate('NewPasswordPlaceholder')}
                                     type="text" 
                                     name="newPassword"
                                     as={Input}
@@ -103,8 +94,8 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
                             <ValidationHint name="newPassword" />
                         </InputContainer>
                         <InputContainer>
-                            <Label type="top" text={translate('repeatNewPassword')} required>
-                                <Field placeholder={translate('repeatNewPasswordPlaceholder')}
+                            <Label type="top" text={translate('RepeatNewPassword')} required>
+                                <Field placeholder={translate('RepeatNewPasswordPlaceholder')}
                                     type="string"
                                     name="repeatNewPassword"
                                     as={Input}
@@ -112,7 +103,7 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
                             </Label>
                             <ValidationHint name="repeatNewPassword" />
                         </InputContainer>
-                        <Button type="submit" buttonType="primary" size="lg">{translate('saveChanges')}</Button>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
                     </Form>
                 )}
             </Formik>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { userService } from "services/userServices";
 import Icon from 'components/atoms/Icon';
 import BackTopNav from 'components/molecules/BackTopNav';
@@ -7,7 +7,6 @@ import "react-multi-carousel/lib/styles.css";
 import { UserInfo } from "components/molecules/UserInfo"
 import { isMobile } from "react-device-detect";
 import GlobalTemplate, { Nav as NavI } from "../../templates/GlobalTemplate"
-import { useThemeContext } from 'support/context/ThemeContext';
 import { Navs } from '../MyProfile/MyProfile';
 
 import { TrainerClients } from "./UserProfile/TrainerClients"
@@ -19,7 +18,6 @@ const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-
 const TabsContainer = styled.div`
     display:flex;
     width:100%;
@@ -27,15 +25,8 @@ const TabsContainer = styled.div`
     text-align:center;
 `;
 
-const assignTrainerToUserNotification = "";
-const assignPlanText = "";
-const assignToTrainerText = "";
-const assignToMe = "";
-
 export const User = (props) => {
 
-    const { theme } = useThemeContext();
-    const currentUser = JSON.parse((localStorage.getItem('user')));
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [activeItem, setActiveItem] = useState('TrainerClients');

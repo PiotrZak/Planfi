@@ -34,16 +34,6 @@ const IconContainer = styled.div`
   right: 1rem;
 `;
 
-const editUserDetails = "Edit Your data";
-const saveChanges = "Save Changes";
-const firstName = "First Name";
-const lastName = "Last Name";
-const phoneValidation = "Telephone number should be correct"
-
-const firstNamePlaceholder = "What is your first name ?";
-const lastNamePlaceholder = "What is your last name ?";
-const phonePlaceholder = "What is your phone number ?"
-const userDataEdited = "Congratulations! Data sucessfully edited!"
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
     const { notificationDispatch } = useNotificationContext();
@@ -56,7 +46,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: 'OK', message: translate('userDataEdited') },
+                      content: { success: 'OK', message: translate('UserDataEdited') },
                       type: 'positive',
                     },
                   });
@@ -84,16 +74,15 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
             </IconContainer>
             <ModalHeading toggle={onClose}>
             <h2>
-                {/* todo - personalize texts */}
-            {editUserDetails}
+            {translate("EditUserDetails")}
             </h2>
             </ModalHeading>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched, values }) => (
                     <Form>
                         <InputContainer>
-                            <Label type="top" text={translate('firstName')} required>
-                                <Field placeholder={translate('firstNamePlaceholder')}
+                            <Label type="top" text={translate('FirstName')} required>
+                                <Field placeholder={translate('FirstNamePlaceholder')}
                                     type="text"
                                     name="firstName"
                                     as={Input}
@@ -101,16 +90,16 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                             </Label>
                         </InputContainer>
                         <InputContainer>
-                            <Label type="top" text={translate('lastName')} required>
-                                <Field placeholder={translate('lastNamePlaceholder')}
+                            <Label type="top" text={translate('LastName')} required>
+                                <Field placeholder={translate('LastNamePlaceholder')}
                                     type="text" name="lastName"
                                     as={Input}
                                     error={errors.name && touched.name} />
                             </Label>
                         </InputContainer>
                         <InputContainer>
-                            <Label type="top" text={translate('phone')} required>
-                                <Field placeholder={translate('phoneNamePlaceholder')}
+                            <Label type="top" text={translate('Phone')} required>
+                                <Field placeholder={translate('PhoneNamePlaceholder')}
                                     type="number"
                                     name="phone"
                                     as={Input}
@@ -118,7 +107,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                             </Label>
                             <ValidationHint name="phone" />
                         </InputContainer>
-                        <Button type="submit" buttonType="primary" size="lg">{translate('saveChanges')}</Button>
+                        <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
                     </Form>
                 )}
             </Formik>

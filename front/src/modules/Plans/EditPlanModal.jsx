@@ -17,7 +17,7 @@ const initialValues = {
 
 const validationSchema = Yup.object().shape({
     title: Yup.string()
-        .required(translate('EnterFirstNameAndLastName')),
+        .required(translate('EnterPlanTitle')),
 });
 
 const EditPlanModal = ({ selectedPlans, openEditModal, onClose, theme }) => {
@@ -59,10 +59,10 @@ const EditPlanModal = ({ selectedPlans, openEditModal, onClose, theme }) => {
             onEscapeKeydown={onClose}>
             <ModalHeading>{translate('EditPlanTitle')}</ModalHeading>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-                {({ errors, touched, values }) => (
+                {({ errors, touched }) => (
                     <Form>
                         <InputContainer>
-                            <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
+                            <Label type="top" text={translate('EnterPlanTitle')} required>
                                 <Field placeholder = {'test'} type="text" name="title" as={Input} error={errors.name && touched.name} />
                             </Label>
                         </InputContainer>

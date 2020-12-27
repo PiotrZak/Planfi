@@ -17,11 +17,6 @@ import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Loader from 'components/atoms/Loader';
 
-const noUsers = "No Users";
-const Clients = "Clients"
-const Trainers = "Trainers"
-const All = "All"
-
 const UsersFilters = styled.div`
    display:flex;
 `;
@@ -55,7 +50,7 @@ const OrganizationUsers = () => {
             notificationDispatch({
                 type: ADD,
                 payload: {
-                  content: { success: 'OK', message: translate('userDeleted') },
+                  content: { success: 'OK', message: translate('UserDeleted') },
                   type: 'positive',
                 },
               });
@@ -119,9 +114,9 @@ const OrganizationUsers = () => {
         <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
         <UsersFilters>
-        <Paragraph onClick={() => filterUsers("User")}>{Clients}</Paragraph>
-        <Paragraph onClick={() => filterUsers("Trainer")}>{Trainers}</Paragraph>
-        <Paragraph onClick={() => filterUsers("All")}>{All}</Paragraph>
+        <Paragraph onClick={() => filterUsers("User")}>{translate('Clients')}</Paragraph>
+        <Paragraph onClick={() => filterUsers("Trainer")}>{translate('Trainers')}</Paragraph>
+        <Paragraph onClick={() => filterUsers("All")}>{translate('All')}</Paragraph>
           </UsersFilters>
         <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Loader isLoading={isLoading}>
@@ -132,7 +127,7 @@ const OrganizationUsers = () => {
             dataList={filteredUsers}
             onSelect={submissionHandleElement}
           /> :
-          <h1>{noUsers}</h1>
+          <h1>{translate('NoUsers')}</h1>
         }
         </Loader>
       </GlobalTemplate>

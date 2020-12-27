@@ -4,16 +4,12 @@ import styled from 'styled-components';
 import { organizationService } from 'services/organizationServices';
 import { commonUtil } from 'utils/common.util';
 import { Loader } from 'components/atoms/Loader';
+import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
-import { Headline, MainHeadline } from 'components/typography';
-import StyledReactBottomSheet, { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem } from 'components/organisms/BottomSheet'
-
-const assignPlanToUserNotification = "Users assigned to Trainer!"
-const selectFromPlans = "Select From Plans"
-const noUsers = "No Users"
-const returnToSubMenu = "return to sub menu"
+import { Headline } from 'components/typography';
+import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -82,7 +78,7 @@ export const AssignUsersToTrainers = ({
     >
       <BottomNav>
         <BottomNavItem>
-          <Headline>{activeUsers.length}selected</Headline>
+          <Headline>{activeUsers.length}{translate('Selected')}</Headline>
         </BottomNavItem>
         <IconWrapper>
           <Icon name="check" fill={theme.colorInputActive} />
@@ -92,12 +88,14 @@ export const AssignUsersToTrainers = ({
             <Icon name="arrow-left" fill={theme.colorInputActive} />
           </IconWrapper>
           <p onClick={() => closeAssignPlansToUser()}>
-            {returnToSubMenu}
+          {translate('ReturnToSubMenuPlansClients')}
           </p>
         </BottomNavItem>
       </BottomNav>
       <div>
-        <h4>{selectFromPlans}</h4>
+        <h4>
+        {translate('SelectFromPlans')}
+        </h4>
         {/* <Loader isLoading={isLoading}> */}
         {trainers ?
           <CheckboxGenericComponent
@@ -106,10 +104,10 @@ export const AssignUsersToTrainers = ({
             displayedValue="firstName"
             dataList={trainers}
             onSelect={getSelectedTrainerIds} />
-          : <h1>{noUsers}</h1>}
+          : <h1>{translate('NoUsers')}</h1>}
         {/* </Loader> */}
         <Button disabled={activeTrainers.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToTrainer}>
-          {activeTrainers.length === 0 ? "Select Trainer" : "Assign Trainers to Users"}
+          {activeTrainers.length === 0 ? translate('SelectTrainers') : translate('AssignTrainersToClients')}
         </Button>
       </div>
 

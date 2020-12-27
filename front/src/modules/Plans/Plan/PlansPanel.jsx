@@ -48,11 +48,6 @@ const PlansPanel = ({
             });
     };
 
-    const closeModal = () => {
-        setOpenEditModal(false)
-        setBottomSheet('none')
-    }
-
     return (
         <StyledReactBottomSheet
             showBlockLayer={false}

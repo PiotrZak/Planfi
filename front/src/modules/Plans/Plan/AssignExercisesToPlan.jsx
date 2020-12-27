@@ -3,14 +3,9 @@ import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import Button from "components/atoms/Button"
 import { commonUtil } from "utils/common.util"
-import { isMobile } from "react-device-detect";
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-
-
-const plansSelected = '';
-const returnToSubMenu = '';
-const assignToPlan = '';
+import StyledReactBottomSheet from 'components/organisms/BottomSheet'
+import { translate } from 'utils/Translation';
 
 export const AssignExercisesToPlan = ({
     setAssignExercises,
@@ -36,26 +31,27 @@ export const AssignExercisesToPlan = ({
             <div>
                 <div>
                     {/* todo - bottom-nav */}
-                    <div className="bottom-nav">
+                    <BottomNav>
                         <div className="bottom-nav__item">
                             <Icon name="check" fill="#2E6D2C" />
                             <p>
-                                {activeExercise.length} {plansSelected}
+                                {activeExercise.length} 
+                                {translate('PlansSelected')}
                             </p>
                         </div>
                         <div onClick={() => closeAssignExercises()} className="bottom-nav__item">
                             <Icon name="arrow-left" fill="#5E4AE3" />
                             <p>
-                                {returnToSubMenu}
+                            {translate('ReturnToSubMenuCategories')}
                             </p>
                         </div>
-                    </div>
+                    </BottomNav>
                     <CheckboxGenericComponent
                         dataType="exercises"
                         displayedValue={"name"}
                         dataList={categoryExercises}
                         onSelect={selectActiveId} />
-                    <Button disabled={activeExercise.length === 0} className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={assignToPlan}></Button>
+                    <Button disabled={activeExercise.length === 0} className="btn btn--primary btn--lg" onClick={assignExerciseToPlan} name={translate('AssignToPlans')}></Button>
                 </div>
                 }}
         </div>

@@ -1,19 +1,11 @@
 import React from 'react';
-import { useParams, useHistory } from "react-router-dom";
-import { exerciseService } from "services/exerciseService";
-import { Link } from 'react-router-dom';
+import {useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import { isMobile } from "react-device-detect";
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, { PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { translate } from 'utils/Translation';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-
-const EditExercise = "Edit Exercise";
-const DeleteExercise = "Delete Exercise";
-const ExercisesDeleted = "The exercises succesfully deleted!"
-
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -65,7 +57,7 @@ export const PlanPanelExercises = ({
                             <IconWrapper>
                                 <Icon name="check" fill={theme.colorInputActive} />
                             </IconWrapper>
-                            {selectedExercise.length} {translate('selected')}
+                            {selectedExercise.length} {translate('Selected')}
                         </PanelItem>
                         <PanelItem onClick={() => deleteExercise()}>
                             <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteExercise')}

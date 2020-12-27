@@ -10,16 +10,6 @@ import { Headline, MainHeadline } from 'components/typography';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { translate } from 'utils/Translation';
 
-const plansSelected = '';
-const returnToSubMenu = '';
-const assignToPlan = 'Assign exercise to plan';
-const repeat = "Repeats:"
-const exerciseTime = "Exercise time:"
-const series = "Series:"
-const weight = "Weight:"
-const ExerciseAssignedToPlan = "Exercise Assigned to Plan"
-
-
 const ExerciseAddItem = styled.div`
     display: flex;
     align-items: center;
@@ -103,7 +93,7 @@ export const ExerciseDetailsPanel = ({
             <BottomNav>
             <BottomNavItem onClick={() => returnToExercises()}>
                     <Icon name="arrow-left" fill="#5E4AE3" />
-                    {returnToSubMenu}
+                    {translate('ReturnToSubMenuExercises')}
                 </BottomNavItem>
                 <BottomNavItem>
                     <MainHeadline>{exercise.name}</MainHeadline>
@@ -111,26 +101,26 @@ export const ExerciseDetailsPanel = ({
             </BottomNav>
 
             <ExerciseAddItem>
-                <Headline>{repeat}</Headline>
+                <Headline>{translate('Repeat')}</Headline>
                 <Counter valueToChange = {1} handleData={handleRepeat} unit ={''}/>
             </ExerciseAddItem>
 
             <ExerciseAddItem>
-                <Headline>{exerciseTime}</Headline>
+                <Headline>{translate('ExerciseTime')}</Headline>
                 <Counter valueToChange = {30} handleData={handleTime} unit = {'s'}/>
             </ExerciseAddItem>
 
             <ExerciseAddItem>
-                <Headline>{series}</Headline>
+                <Headline>{translate('Series')}</Headline>
                 <Counter valueToChange = {1} handleData={handleSeries}  unit ={''}/>
             </ExerciseAddItem>
 
             <ExerciseAddItem>
-                <Headline>{weight}</Headline>
+                <Headline>{translate('Weight')}</Headline>
                 <Counter valueToChange = {5} handleData={handleWeight} unit = {'kg'} />
             </ExerciseAddItem>
 
-            <Button onClick = {updateExercise} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{assignToPlan}</Button>
+            <Button onClick = {updateExercise} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('AssignToPlan')}</Button>
         </StyledReactBottomSheetExtended>
     )
 }

@@ -6,7 +6,6 @@ import { commonUtil } from "utils/common.util"
 import "react-multi-carousel/lib/styles.css";
 import Search from "components/molecules/Search"
 import { translate } from 'utils/Translation';
-import BackTopNav from 'components/molecules/BackTopNav';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
@@ -16,22 +15,11 @@ import {useUserContext} from "../../support/context/UserContext"
 import SmallButton from 'components/atoms/SmallButton';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
+//todo - add loader
+
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
-
-const NoPlans = "No plans"
-const plansTitle = "Plans"
-
-
-//todo
-//PlansDeleted
-// Delete Plan
-// const PlanSearch = "Which plan You need to search?";
-// DeletePlan
-// EditCategory
-// DeletePlans
-// EditPlan
 
 const Plan = (props) => {
 
@@ -113,7 +101,7 @@ const Plan = (props) => {
         <>
             <GlobalTemplate>
                 <Nav>
-                    {plans && <h2>{plansTitle}</h2>}
+                    {plans && <h2>{translate('PlansTitle')}</h2>}
                     {plans &&
                     <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
                     }

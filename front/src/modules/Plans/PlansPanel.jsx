@@ -1,13 +1,10 @@
 import React from 'react';
-import { planService } from "services/planService";
 import Icon from 'components/atoms/Icon';
-import "react-multi-carousel/lib/styles.css";
+import { translate } from 'utils/Translation';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import "react-multi-carousel/lib/styles.css";
-import { translate } from 'utils/Translation';
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import StyledReactBottomSheet, { PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import EditPlanModal from "./EditPlanModal";
 
 const IconWrapper = styled.div`

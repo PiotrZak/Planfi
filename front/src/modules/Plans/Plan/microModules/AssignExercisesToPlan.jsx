@@ -3,12 +3,8 @@ import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
 import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
-import { Headline, Subline } from '../../../../components/typography';
-
-const noExercises = "No exercises"
-const plansSelected = '';
-const returnToSubMenu = 'Return to categories';
-const assignToPlan = '';
+import { Headline } from '../../../../components/typography';
+import { translate } from 'utils/Translation';
 
  export const AssignExercisesToPlan = ({
     planId,
@@ -38,7 +34,7 @@ const assignToPlan = '';
             <BottomNav>
                 <BottomNavItem onClick={() => closeAssignExercises()}>
                     <Icon name="arrow-left" fill="#5E4AE3" />
-                    <Headline>{returnToSubMenu}</Headline>
+                    <Headline>{translate('ReturnToSubMenuCategories')}</Headline>
                 </BottomNavItem>
             </BottomNav>
             {categoryExercises ?
@@ -47,7 +43,7 @@ const assignToPlan = '';
                         <Headline>{element.name}</Headline>
                     </BottomItem>
                 )
-                : <p>{noExercises}</p>
+                : <p>{translate('NoExercises')}</p>
             }
         </StyledReactBottomSheetExtended>
         <ExerciseDetailsPanel
