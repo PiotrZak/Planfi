@@ -32,11 +32,11 @@ const REGEX = `^${ATOM}+(\\.${ATOM}+)*@${DOMAIN}|${IP_DOMAIN})$`;
 
 const validationSchema = Yup.object().shape({
     newMail: Yup.string()
-    .required(translate('EnterMail'))
-    .matches(REGEX, translate('PhoneValidation')),
+        .required(translate('EnterMail'))
+        .matches(REGEX, translate('PhoneValidation')),
     repeatNewMail: Yup.string()
-    .required(translate('EnterMail'))
-    .oneOf([Yup.ref('newMail')], translate('IdenticalEmails')),
+        .required(translate('EnterMail'))
+        .oneOf([Yup.ref('newMail')], translate('IdenticalEmails')),
 });
 
 const EditUserEmailModal = ({ id, openModal, onClose }) => {
@@ -51,20 +51,20 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: 'OK', message: translate('UserDataEdited') },
-                      type: 'positive',
+                        content: { success: 'OK', message: translate('UserDataEdited') },
+                        type: 'positive',
                     },
-                  });
+                });
                 onClose()
             })
             .catch((error) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: error, message: translate('ErrorAlert') },
-                      type: 'error',
+                        content: { success: error, message: translate('ErrorAlert') },
+                        type: 'error',
                     },
-                  });
+                });
             });
     };
 
@@ -77,16 +77,16 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
             <IconContainer>
                 <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
-                <ModalHeading toggle={onClose}>
+            <ModalHeading toggle={onClose}>
                 <h2>{translate("EditUserDetails")}</h2>
-                </ModalHeading>
-                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+            </ModalHeading>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched }) => (
                     <Form>
                         <InputContainer>
                             <Label type="top" text={translate('NewMail')} required>
                                 <Field placeholder={translate('NewMailPlaceholder')}
-                                    type="text" 
+                                    type="text"
                                     name="newMail"
                                     as={Input}
                                     error={errors.name && touched.name} />
@@ -107,7 +107,7 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                     </Form>
                 )}
             </Formik>
-            </StyledModal>
+        </StyledModal>
     );
 }
 

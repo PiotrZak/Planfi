@@ -119,7 +119,7 @@ export const AssignUsersToPlans = ({
             </BottomNav>
             <div>
                 <h4>
-                {translate('SelectFromTrainers')}
+                {translate('SelectFromPlans')}
                 </h4>
                 {/* <Loader isLoading={isLoading}> */}
                 {plansResults ?

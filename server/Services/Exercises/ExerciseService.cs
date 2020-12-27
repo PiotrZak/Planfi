@@ -27,6 +27,13 @@ namespace WebApi.Services
 
             return exercise;
         }
+        public Exercise CreateInstance(Exercise exercise)
+        {
+            _context.Exercises.Add(exercise);
+            _context.SaveChanges();
+
+            return exercise;
+        }
         
         public Exercise GetById(string id)
         {

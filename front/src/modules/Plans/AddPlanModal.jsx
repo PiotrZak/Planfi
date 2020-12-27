@@ -86,7 +86,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
                         <ValidationHint name="title" />
                         <Paragraph type="body-3-regular">{translate('AddCategoryModalDescription')}</Paragraph>
                         <ButtonContainer>
-                            <Button type="submit" buttonType="primary" size="md" disabled={!isValid}>{translate('AddCategoryButton')}</Button>
+                            <Button type="submit" buttonType="primary" size="md" disabled={!isValid}>{translate('AddPlanButton')}</Button>
                         </ButtonContainer>
                     </Form>
                 )}

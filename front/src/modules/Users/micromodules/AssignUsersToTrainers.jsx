@@ -94,7 +94,7 @@ export const AssignUsersToTrainers = ({
       </BottomNav>
       <div>
         <h4>
-        {translate('SelectFromPlans')}
+        {translate('SelectFromTrainers')}
         </h4>
         {/* <Loader isLoading={isLoading}> */}
         {trainers ?

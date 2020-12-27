@@ -88,7 +88,7 @@ export const UsersPanel = ({
                             <IconWrapper>
                                 <Icon name="user-circle" fill={theme.colorInputActive} />
                             </IconWrapper>
-                            {translate('AssignPlanText')}
+                            {translate('AssignToTrainerText')}
                         </PanelItem>
                         {activeUsers.length < 2 &&
                             <PanelItem>

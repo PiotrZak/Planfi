@@ -56,6 +56,7 @@ export const pl = {
   AddCategoryTitle: 'Dodaj kategorie',
   AddCategoryTip: 'Nazywając kategorię warto posługiwać się nazwami związanymi z określonymi częściami ciała, np. Plecys',
   AddCategoryButton: 'Utwórz kategorie',
+  AddPlanButton: "Utwórz plan",
 
   ExerciseSearch: 'Jakich ćwiczeń szukasz?',
   NoExercises: 'W tej kategorii nie ma dodanych ćwiczeń',
@@ -136,6 +137,8 @@ export const pl = {
   EmailSent: "Gratulacje! Zaproszenia wysłane na adresy email",
   EmailNotSent: "E-maile nie wysyłane do klientów! - prawdopodobnie jest duplikat",
   Clients: "Klienci",
+  AddPlanTitle: "Dodaj plan",
+  PlansTitle: "Plany",
   Trainers: "Trenerzy",
   All: "Wszyscy",
   NoExerciseInPlan: 'W tym planie nie ma ćwiczeń',
