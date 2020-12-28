@@ -171,7 +171,6 @@
         <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
         <option value="$PROJECT_DIR$/appsettings.json" />
         <option value="$PROJECT_DIR$/Models/RegisterModel.cs" />
-        <option value="$PROJECT_DIR$/Interfaces/IExerciseService.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
         <option value="$PROJECT_DIR$/Models/ExerciseModel.cs" />
         <option value="$PROJECT_DIR$/Models/ExerciseUpdateModel.cs" />
@@ -179,7 +178,6 @@
         <option value="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Exercises.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IPlanService.cs" />
-        <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
         <option value="$PROJECT_DIR$/appsettings.Development.json" />
         <option value="$PROJECT_DIR$/Controllers/Account/AccountController.cs" />
         <option value="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" />
@@ -190,6 +188,8 @@
         <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
         <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
         <option value="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" />
+        <option value="$PROJECT_DIR$/Interfaces/IExerciseService.cs" />
+        <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
       </list>
     </option>
   </component>
@@ -263,6 +263,7 @@
       <workItem from="1608658499560" duration="1233000" />
       <workItem from="1608898965190" duration="872000" />
       <workItem from="1609067662728" duration="679000" />
+      <workItem from="1609082538393" duration="832000" />
     </task>
     <servers />
   </component>
@@ -560,19 +561,6 @@
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Exercises/ExerciseService.cs</url>
-          <line>19</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" initialLine="19">
-            <startOffsets>
-              <option value="426" />
-            </startOffsets>
-            <endOffsets>
-              <option value="427" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
           <line>72</line>
           <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="72">
@@ -584,6 +572,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Exercises/ExerciseService.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" initialLine="38">
+            <startOffsets>
+              <option value="1022" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1023" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

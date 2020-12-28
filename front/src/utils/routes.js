@@ -35,7 +35,7 @@ export const routes = {
   category: categoriesRoutes.category,
   addExcersise: '/add-exercise',
   editExcersise: '/edit-exercise',
-  exercise: '/exercise',
+  exercise: '/exercises/:id',
 
   // plans
   plans: plansRoutes.plans,

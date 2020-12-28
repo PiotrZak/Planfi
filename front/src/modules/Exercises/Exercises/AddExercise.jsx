@@ -65,6 +65,7 @@ const validationSchema = Yup.object({
 
 const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [previewFiles, setPreviewFiles] = useState([])
   const { notificationDispatch } = useNotificationContext();
 
   const fileNotification = (message) => {
@@ -82,8 +83,12 @@ const AddExerciseRefactor = (props) => {
   const resetFileInput = () => {
     document.getElementById('choose-file-button').value = '';
   };
+  
 
   const onSubmit = (values) => {
+
+    console.log(selectedFiles)
+
     const formData = new FormData();
     formData.append('Name', values.exerciseName);
     formData.append('Description', values.exerciseDescription);
@@ -139,12 +144,20 @@ const AddExerciseRefactor = (props) => {
             const ID = Random(1, 10000);
             const fileData = {
               ID,
-              File: URL.createObjectURL(File),
+              File: File,
               Type: TYPE.IMAGE,
               VideoType: null,
             };
+
+            const previewFileData = {
+              ID,
+              File: URL.createObjectURL(File),
+              Type: TYPE.IMAGE,
+              VideoType: null,
+            }
             // append file object to state
             setSelectedFiles(((prevState) => prevState.concat(fileData)));
+            setPreviewFiles(((prevState) => prevState.concat(previewFileData)));
           } else {
             // file size if too big alert
             fileNotification(`File size is too big ${File.name}. Photo size limit is 10 MB`);
@@ -158,12 +171,20 @@ const AddExerciseRefactor = (props) => {
             const ID = Random(1, 10000);
             const fileData = {
               ID,
-              File: URL.createObjectURL(File),
+              File: File,
               Type: TYPE.VIDEO,
               VideoType: fileType,
             };
+
+            const previewFileData = {
+              ID,
+              File: URL.createObjectURL(File),
+              Type: TYPE.IMAGE,
+              VideoType: null,
+            }
             // append file object to state
             setSelectedFiles(((prevState) => prevState.concat(fileData)));
+            setPreviewFiles(((prevState) => prevState.concat(previewFileData)));
           } else {
             // file size if too big alert
             fileNotification(`File size is too big ${File.name}. Video size limit is 30 MB`);
@@ -236,7 +257,7 @@ const AddExerciseRefactor = (props) => {
                 <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
                 <FileUploadButton id="choose-file-button" onChange={handleImageChange} multiple />
               </WrapperAttachments>
-              {renderAttachmentsPreview(selectedFiles)}
+              {renderAttachmentsPreview(previewFiles)}
               <ContainerDescription>
                 <Label text={translate('AddExerciseDescription')}>
                   <Field type="text" name="exerciseDescription" as={StyledTextArea} />

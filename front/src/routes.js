@@ -11,7 +11,7 @@ export const routes = {
   category: '/category',
   addExcersise: '/add-exercise',
   editExcersise: '/edit-exercise',
-  excersise: '/exercise',
+  excersise: '/exercises:id',
   plans: '/plans',
   plan: '/plan',
   users: '/users',

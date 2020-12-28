@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from 'services/categoryService';
 import { exerciseService } from 'services/exerciseService';
 import { Link } from 'react-router-dom';
+import Loader from 'components/atoms/Loader';
 import { routes } from 'utils/routes';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
@@ -12,7 +13,6 @@ import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
 import SmallButton from 'components/atoms/SmallButton';
-import ReturnWithTitle from 'components/molecules/ReturnWithTitle';
 import Nav from 'components/atoms/Nav';
 import { PlanPanelExercises } from './PlanPanelExercises';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
@@ -23,7 +23,7 @@ const Category = (props) => {
   const [category, setCategory] = useState();
   const [exercises, setExercises] = useState();
   const [searchTerm, setSearchTerm] = React.useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedExercise, setselectedExercise] = useState([]);
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
@@ -72,7 +72,7 @@ const Category = (props) => {
 useEffect(() => {
   getCategory(id);
   getCategoryExercise(id);
-}, [id, deleteExercise]);
+}, [id]);
 
   const getCategoryExercise = useCallback((id) => {
     exerciseService
@@ -118,6 +118,7 @@ useEffect(() => {
           )}
         </Nav>
         <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+        <Loader isLoading={isLoading} >
         {results
           ? (
             <CheckboxGenericComponent
@@ -128,6 +129,7 @@ useEffect(() => {
             />
           )
           : <p>{translate('NoExercises')}</p>}
+          </Loader>
       </GlobalTemplate>
       <PlanPanelExercises
       deleteExercise= {deleteExercise}
