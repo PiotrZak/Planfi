@@ -71,7 +71,6 @@ export const ExerciseDetailsPanel = ({
                     },
                   });
             });
-
     }
 
     const handleRepeat = (data) => {

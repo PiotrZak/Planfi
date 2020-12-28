@@ -80,7 +80,6 @@ const Root = () => {
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-                  <Route path={routes.myProfile} component={() => <MyProfile toggleTheme={toggleTheme} toggleLanguage={toggleLanguage} />} />
 
                   <Route path="/test" component={TestPage} />
 
@@ -90,6 +89,7 @@ const Root = () => {
                     <Route path={routes.addExcersise} component={AddExercise} />
                     <Route path={routes.exercise} component={Exercise} />
                     <Route path={routes.categories} component={Categories} />
+                    <Route path={routes.myProfile} component={MyProfile} />
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />

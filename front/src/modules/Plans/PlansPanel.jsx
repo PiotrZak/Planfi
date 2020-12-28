@@ -15,6 +15,7 @@ const IconWrapper = styled.div`
 `;
 
 const PlansPanel = ({
+    deletePlans,
     openEditModal,
     setOpenEditModal,
     theme,
@@ -22,32 +23,6 @@ const PlansPanel = ({
     setBottomSheet,
     selectedPlans
 }) => {
-
-    const { notificationDispatch } = useNotificationContext();
-
-    const deletePlans = () => {
-        planService
-            .deletePlans(selectedPlans)
-            .then(() => {
-                setBottomSheet('none')
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { success: 'OK', message: translate('PlansDeleted') },
-                        type: 'positive'
-                    }
-                })
-            })
-            .catch((error) => {
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { error: error, message: translate('ErrorAlert') },
-                        type: 'error'
-                    }
-                })
-            });
-    };
 
     const closeModal = () => {
         setOpenEditModal(false)

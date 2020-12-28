@@ -9,6 +9,7 @@ using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 
 namespace WebApi.Services{
 
@@ -82,47 +83,47 @@ namespace WebApi.Services{
             return user.WithoutPassword();
         }
 
-        public void Update(User userParam, string newPassword)
+        public void Update(string id, UpdateUserModel model)
         {
-            var user = _context.Users.Find(userParam.UserId);
+            var user = _context.Users.Find(id);
 
             if (user == null)
                 throw new AppException("User not found");
 
             // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.Email))
+            if (!string.IsNullOrWhiteSpace(model.Email))
             {
                 // throw error if the new username is already taken
-                if (_context.Clients.Any(x => x.Email == userParam.Email))
-                    throw new AppException("Username " + userParam.Email + " is already taken");
+                if (_context.Clients.Any(x => x.Email == model.Email))
+                    throw new AppException("Username " + model.Email + " is already taken");
 
                 // throw error if the password is incorrect
-                if (user.Password != userParam.Password)
+                if (user.Password != model.Password)
                     throw new AppException("Incorrect password");
 
-                user.Email = userParam.Email;
+                user.Email = model.Email;
             }
 
             // update user properties if provided
-            if (!string.IsNullOrWhiteSpace(userParam.FirstName))
-                user.FirstName = userParam.FirstName;
+            if (!string.IsNullOrWhiteSpace(model.FirstName))
+                user.FirstName = model.FirstName;
 
-            if (!string.IsNullOrWhiteSpace(userParam.LastName))
-                user.LastName = userParam.LastName;
+            if (!string.IsNullOrWhiteSpace(model.LastName))
+                user.LastName = model.LastName;
 
-            if (userParam.PhoneNumber != user.PhoneNumber)
-                user.PhoneNumber = userParam.PhoneNumber;
+            if (model.PhoneNumber != user.PhoneNumber)
+                user.PhoneNumber = model.PhoneNumber;
 
             // update password if provided
-            if (!string.IsNullOrWhiteSpace(newPassword))
+            if (!string.IsNullOrWhiteSpace(model.NewPassword))
             {
                 // throw error if the password is incorrect
-                if (user.Password != userParam.Password)
+                if (user.Password != model.Password)
                     throw new AppException("Incorrect password");
 
-                user.Password = newPassword;
+                user.Password = model.NewPassword;
                 byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(newPassword, out passwordHash, out passwordSalt);
+                CreatePasswordHash(model.NewPassword, out passwordHash, out passwordSalt);
 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;

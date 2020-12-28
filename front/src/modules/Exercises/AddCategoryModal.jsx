@@ -13,6 +13,7 @@ import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
+import InputContainer from 'components/atoms/InputContainerForm';
 
 const initialValues = {
   title: '',
@@ -39,12 +40,8 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
   const { notificationDispatch } = useNotificationContext();
 
   const onSubmit = (values) => {
-    createCategory(values);
-  };
-
-  const createCategory = (addCategoryData) => {
     categoryService
-      .addCategory(addCategoryData);
+      .addCategory(values);
     notificationDispatch({
       type: ADD,
       payload: {
@@ -75,15 +72,15 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
       <IconContainer>
         <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
       </IconContainer>
-
       <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
-
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
         {({ errors, touched, isValid }) => (
           <Form>
-            <Label type="top" text={translate('CategoryTitle')} required>
-              <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
-            </Label>
+            <InputContainer>
+              <Label type="top" text={translate('CategoryTitle')} required>
+                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+              </Label>
+            </InputContainer>
             <ValidationHint name="title" />
             <Paragraph type="body-3-regular">{translate('AddCategoryModalDescription')}</Paragraph>
             <ButtonContainer>

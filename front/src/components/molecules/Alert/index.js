@@ -88,6 +88,7 @@ const Alert = ({ notification }) => {
     }
   });
 
+  
   return (
     <>
       {notification && notification.map((n) => (

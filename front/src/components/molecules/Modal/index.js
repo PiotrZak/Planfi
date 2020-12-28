@@ -29,8 +29,8 @@ export const StyledModal = Modal.styled`
   padding: 0 1.6rem;
   z-index: 1;
   opacity: 1.0;
-  width: 33rem;
-  height: 30rem;
+  width: 40rem;
+  height: 50%;
   color: ${({ theme }) => theme.colorWhite};
   align-items: center;
   justify-content: center;

@@ -18,6 +18,7 @@ const IconWrapper = styled.div`
 `;
 
 export const UsersPanel = ({
+    deleteUser,
     theme,
     bottomSheet,
     setBottomSheet,
@@ -33,16 +34,6 @@ export const UsersPanel = ({
             setBottomSheet('none')
         }
     }, [activeUsers]);
-
-    const deleteUser = () => {
-        userService
-            .deleteUsers(activeUsers)
-            .then((data) => {
-
-            })
-            .catch((error) => {
-            });
-    };
 
     const openAssignPlansToUsers = () => {
         setAssignPlan("flex");

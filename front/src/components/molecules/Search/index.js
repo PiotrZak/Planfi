@@ -1,13 +1,18 @@
 import React from 'react';
 import Input from 'components/molecules/Input';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+const StyledInput = styled(Input)`
+  width: 100%;
+`;
+
 const Search = ({ callBack, placeholder }) => (
-  <Input type="left" icon="search" onChange={callBack} placeholder={placeholder} />
+  <StyledInput typeInput="left" icon="search" onChange={callBack} placeholder={placeholder} />
 );
 
 Search.propTypes = {
-  callback: PropTypes.func,
+  callback: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 

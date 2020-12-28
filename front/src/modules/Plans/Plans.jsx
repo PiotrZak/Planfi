@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { planService } from "services/planService";
+import { planService } from 'services/planService';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
-import { commonUtil } from "utils/common.util"
-import "react-multi-carousel/lib/styles.css";
-import Search from "components/molecules/Search"
+import { commonUtil } from 'utils/common.util';
+import 'react-multi-carousel/lib/styles.css';
+import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
+import GlobalTemplate, { Nav } from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
+import SmallButton from 'components/atoms/SmallButton';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
-import {useUserContext} from "../../support/context/UserContext"
-import SmallButton from 'components/atoms/SmallButton';
+import { useUserContext } from '../../support/context/UserContext';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-//todo
-//PlansDeleted
+const NoPlans = 'No plans';
+const plansTitle = 'Plans';
+
+// todo
+// PlansDeleted
 // Delete Plan
 // const PlanSearch = "Which plan You need to search?";
 // DeletePlan
@@ -29,87 +33,110 @@ const IconWrapper = styled.div`
 // EditPlan
 
 const Plan = (props) => {
+  const { notificationDispatch } = useNotificationContext();
+  const { theme } = useThemeContext();
+  const { user } = useUserContext();
 
-    const { theme } = useThemeContext();
-    const { user } = useUserContext();
-    
-    const [plans, setPlans] = useState();
-    const [searchTerm, setSearchTerm] = React.useState("");
-    const [openModal, setOpenModal] = useState(false);
-    const [openEditModal, setOpenEditModal] = useState(false);
-    const [bottomSheet, setBottomSheet] = useState('none')
-    const [isLoading, setIsLoading] = useState(false)
-    const [selectedPlans, setSelectedPlans] = useState([])
+  const [plans, setPlans] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [bottomSheet, setBottomSheet] = useState('none');
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedPlans, setSelectedPlans] = useState([]);
 
-    const { match } = props;
-    let id = match.params.id;
+  const { match } = props;
+  const { id } = match.params;
 
-    useEffect(() => {
-        getPlans(user.organizationId)
-    }, [id, openModal, openEditModal, setOpenEditModal]);
+  const deletePlans = () => {
+    planService
+      .deletePlans(selectedPlans)
+      .then(() => {
+        setBottomSheet('none');
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('PlansDeleted') },
+            type: 'positive',
+          },
+        });
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
+      });
+  };
 
-    const closeModal = () => {
-        setOpenModal(false)
-    }
+  const getPlans = (id) => {
+    planService
+      .getOrganizationPlans(id)
+      .then((data) => {
+        setPlans(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-    const getPlans = (id) => {
-        //organizationId
-        planService
-            .getOrganizationPlans(id)
-            .then((data) => {
-                console.log(data)
-                setPlans(data);
-            })
-            .catch((error) => {
-            });
-    }
+  useEffect(() => {
+    getPlans(user.organizationId);
+  }, [id, openModal, openEditModal, setOpenEditModal]);
 
-    const submissionHandleElement = (selectedData) => {
-        const selectedPlans = commonUtil.getCheckedData(selectedData, "planId")
-        setSelectedPlans(selectedPlans)
-        selectedPlans.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
-    }
+  const closeModal = () => {
+    setOpenModal(false);
+  };
 
-    const filterPlans = event => {
-        setSearchTerm(event.target.value);
-    };
+  const submissionHandleElement = (selectedData) => {
+    const selectedPlans = commonUtil.getCheckedData(selectedData, 'planId');
+    setSelectedPlans(selectedPlans);
+    selectedPlans.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+  };
 
-    const results = !searchTerm
-        ? plans
-        : plans.filter(plan =>
-            plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-        );
+  const filterPlans = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    return (
-        <>
-            <GlobalTemplate>
-                <Nav>
-                    <BackTopNav />
-                    {plans && <h2>{plans.title}</h2>}
-                    {plans &&
-                    <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
-                    }
-                </Nav>
-                <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
-                {results ?
-                    <CheckboxGenericComponent
-                        dataType="plans"
-                        displayedValue={"title"}
-                        dataList={results}
-                        onSelect={submissionHandleElement} />
-                    :
-                    <p>{translate('NoExercises')}</p>}
-            </GlobalTemplate>
-            <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
-            <PlansPanel
-                theme={theme}
-                bottomSheet={bottomSheet}
-                setBottomSheet={setBottomSheet}
-                selectedPlans={selectedPlans}
-                setOpenEditModal={setOpenEditModal}
-                openEditModal={openEditModal} />
-        </>
-    );
-}
+  const results = !searchTerm
+    ? plans
+    : plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+
+  return (
+    <>
+      <GlobalTemplate>
+        <Nav>
+          {plans && <h2>{plansTitle}</h2>}
+          {plans
+                    && <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />}
+        </Nav>
+        <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
+        {plans.length >= 1
+          ? (
+            <CheckboxGenericComponent
+              dataType="plans"
+              displayedValue="title"
+              dataList={results}
+              onSelect={submissionHandleElement}
+            />
+          )
+          : <p>{translate('NoPlans')}</p>}
+      </GlobalTemplate>
+      <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
+      <PlansPanel
+        deletePlans={deletePlans}
+        theme={theme}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+        selectedPlans={selectedPlans}
+        setOpenEditModal={setOpenEditModal}
+        openEditModal={openEditModal}
+      />
+    </>
+  );
+};
 
 export default Plan;

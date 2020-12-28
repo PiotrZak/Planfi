@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { Formik, Field, Form } from 'formik';
-import { validationUtil } from "utils/validation.util"
 import Label from 'components/atoms/Label';
 import Input from 'components/molecules/Input';
 import { planService } from "services/planService";
@@ -9,13 +8,31 @@ import Button from "components/atoms/Button"
 import { userContext } from 'App';
 import * as Yup from 'yup';
 import { translate } from 'utils/Translation';
-import {ModalHeading} from 'components/atoms/Heading';
+import styled from 'styled-components';
+import { ModalHeading } from 'components/atoms/Heading';
 import InputContainer from 'components/atoms/InputContainerForm';
 import { useUserContext } from '../../support/context/UserContext';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import ValidationHint from 'components/atoms/ErrorMessageForm';
+import Icon from 'components/atoms/Icon';
+import Paragraph from 'components/atoms/Paragraph';
 
-const AddPlanTitle = "Add a Plan";
-const AddPlanTip = "When naming a Plan, it is worth using names related to specific parts of the body, for example 'Back'";
+const PlanTitle = "Add a Plan";
+const PlanAdded = "Plan succesfully added!";
 const AddPlanButton = "Create Plan";
+const AddPlanModalDescription = "When naming a Plan, it is worth using names related to specific parts of the body, for example 'Back'";
+
+const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+`;
+
+const IconContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+`;
 
 const initialValues = {
     title: '',
@@ -28,43 +45,58 @@ const validationSchema = Yup.object().shape({
 
 const AddPlanModal = ({ openModal, onClose }) => {
 
+    const { notificationDispatch } = useNotificationContext();
     const { user } = useUserContext(userContext);
 
-    const requiredFields = ["title"];
-
     const onSubmit = (values) => {
-        createPlan(values)
-    }
-    
-    const createPlan = (addPlanData) => {        
-        const transformedData = {title: addPlanData.title, organizationId: user.organizationId, creatorId: user.userId, creatorName: user.firstName}
+        const transformedData = { title: values.title, organizationId: user.organizationId, creatorId: user.userId, creatorName: user.firstName }
         planService
             .addPlan(transformedData)
             .then(() => {
-                onClose()
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                        content: { success: 'OK', message: translate('PlanAdded') },
+                        type: 'positive'
+                    }
+                })
             })
             .catch((error) => {
+                notificationDispatch({
+                    type: ADD,
+                    payload: {
+                        content: { error: error, message: translate('ErrorAlert') },
+                        type: 'error'
+                    }
+                })
             });
     }
 
     return (
         <StyledModal isOpen={openModal}
-        onBackgroundClick={onClose}
-        onEscapeKeydown={onClose}>
-        <ModalHeading>{translate('AddPlanTitle')}</ModalHeading>
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-            {({ errors, touched, values }) => (
-                <Form>
-                    <InputContainer>
-                        <Label type="top" text={translate('CategoryTitle')} required>
-                            <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
-                        </Label>
-                    </InputContainer>
-                    <Button type="submit" buttonType="primary" size="lg">{translate('AddCategoryButton')}</Button>
-                </Form>
-            )}
-        </Formik>
-    </StyledModal>
+            onBackgroundClick={onClose}
+            onEscapeKeydown={onClose}>
+            <IconContainer>
+                <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
+            </IconContainer>
+            <ModalHeading>{translate('AddPlanTitle')}</ModalHeading>
+            <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+                {({ errors, touched, isValid }) => (
+                    <Form>
+                        <InputContainer>
+                            <Label type="top" text={translate('PlanTitle')} required>
+                                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+                            </Label>
+                        </InputContainer>
+                        <ValidationHint name="title" />
+                        <Paragraph type="body-3-regular">{translate('AddCategoryModalDescription')}</Paragraph>
+                        <ButtonContainer>
+                            <Button type="submit" buttonType="primary" size="md" disabled={!isValid}>{translate('AddCategoryButton')}</Button>
+                        </ButtonContainer>
+                    </Form>
+                )}
+            </Formik>
+        </StyledModal>
     );
 }
 

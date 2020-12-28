@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Icon from 'components/atoms/Icon';
 import 'react-multi-carousel/lib/styles.css';
 import { accountService } from 'services/accountServices';
@@ -9,19 +9,24 @@ import Image from 'components/atoms/Image';
 const addedAvatar = 'Avatar succesfully added!';
 
 const AvatarContainer = styled.div`
-    display:inline-flex;
-    background: ${({ theme }) => theme.colorGray80};
-    width: 150px;
-    height: 150px;
+    display: inline-flex;
+    width: 7.2rem;
+    height: 7.2rem;
+
     border-radius: 50%;
+    background: ${({ theme }) => theme.colorGray80};
+
+
     .file-input{
       display:none;
     }
+
     &:hover {
       background-color: ${({ theme }) => theme.colorGray70} !important;
-      transition:0.5s;
-      cursor:pointer;
+      transition: 0.5s;
+      cursor: pointer;
     }
+
     p{
       display: flex;
       align-items: center;
@@ -30,7 +35,6 @@ const AvatarContainer = styled.div`
 `;
 
 export const Avatar = ({ avatar, id }) => {
-
   const [hover, setHover] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
@@ -51,7 +55,7 @@ export const Avatar = ({ avatar, id }) => {
     accountService
       .uploadAvatar(formData)
       .then((data) => {
-        
+
       })
       .catch((error) => {
       });
@@ -98,12 +102,12 @@ export const Avatar = ({ avatar, id }) => {
       {avatar
         ? (
           <AvatarContainer
-            theme = {theme}
+            theme={theme}
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onClick={fileInputClicked}
           >
-          <Image url={avatar} />
+            <Image url={avatar} />
             <input
               ref={fileInputRef}
               className="file-input"
@@ -123,7 +127,7 @@ export const Avatar = ({ avatar, id }) => {
             className={`avatar ${
               hover
               && ' avatar__hover'
-              }`}
+            }`}
           >
             <input
               ref={fileInputRef}
@@ -136,7 +140,7 @@ export const Avatar = ({ avatar, id }) => {
               <p>
                 <Icon name="plus" fill="white" />
                 Add Avatar
-            </p>
+              </p>
             )}
           </AvatarContainer>
         )}

@@ -1,22 +1,42 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { organizationService } from 'services/organizationServices';
 import { commonUtil } from 'utils/common.util';
-import Icon from 'components/atoms/Icon';
+import styled from 'styled-components';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import { useUserContext } from "../../support/context/UserContext"
-import BackTopNav from 'components/molecules/BackTopNav';
 import InviteUserModal from './InviteUsersModal';
+import { userService } from 'services/userServices';
 import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
 import { useThemeContext } from 'support/context/ThemeContext';
 import { UsersPanel } from "./micromodules/UsersPanel"
 import { AssignUsersToPlans } from "./micromodules/AssignUsersToPlan"
 import { AssignUsersToTrainers } from "./micromodules/AssignUsersToTrainers"
+import SmallButton from 'components/atoms/SmallButton';
+import handleTextType from 'support/TextType';
+import { translate } from 'utils/Translation';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import Loader from 'components/atoms/Loader';
 
 const noUsers = "No Users";
+const Clients = "Clients"
+const Trainers = "Trainers"
+const All = "All"
+
+const UsersFilters = styled.div`
+   display:flex;
+`;
+
+const Paragraph = styled.p`
+  ${() => handleTextType('Label-Button')};
+  margin: 0 1.8rem 0 0;
+`;
 
 const OrganizationUsers = () => {
+
   const { theme } = useThemeContext();
   const { user } = useUserContext();
+  const { notificationDispatch } = useNotificationContext();
+
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState(users);
   const [activeUsers, setActiveUsers] = useState([]);
@@ -25,16 +45,38 @@ const OrganizationUsers = () => {
   const [assignPlan, setAssignPlan] = useState('none');
   const [assignTrainer, setAssignTrainer] = useState('none');
 
-
   const [isLoading, setIsLoading] = useState(false);
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 
+  const deleteUser = () => {
+    userService
+        .deleteUsers(activeUsers)
+        .then((data) => {
+            notificationDispatch({
+                type: ADD,
+                payload: {
+                  content: { success: 'OK', message: translate('userDeleted') },
+                  type: 'positive',
+                },
+              });
+        })
+        .catch((error) => {
+            notificationDispatch({
+                type: ADD,
+                payload: {
+                  content: { error, message: translate('ErrorAlert') },
+                  type: 'error',
+                },
+              });
+        });
+};
 
   useEffect(() => {
     getAllUsers();
   }, []);
 
   const getAllUsers = () => {
+    setIsLoading(true)
     organizationService
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
@@ -72,20 +114,17 @@ const OrganizationUsers = () => {
   return (
     <>
       <GlobalTemplate>
-        <BackTopNav />
-        <h2>
-          {user.firstName} of - {user.organizationId}</h2>
-        <div onClick={() => setOpenInviteUserModal(true)}><Icon name="plus" fill="#5e4ae3" /></div>
-        <div className="users">
-          <h3> You are {user.role}</h3>
-          <div className="users__filters">
-            <p onClick={() => filterUsers("User")}>Clients</p>
-            <p onClick={() => filterUsers("Trainer")}>Trainers</p>
-            <p onClick={() => filterUsers("All")}> All </p>
-          </div>
-        </div>
+      <Nav>
+        <h2>{user.firstName} of - {user.organizationId}</h2>
+        <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
+        </Nav>
+        <UsersFilters>
+        <Paragraph onClick={() => filterUsers("User")}>{Clients}</Paragraph>
+        <Paragraph onClick={() => filterUsers("Trainer")}>{Trainers}</Paragraph>
+        <Paragraph onClick={() => filterUsers("All")}>{All}</Paragraph>
+          </UsersFilters>
         <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
-        {/* <Loader isLoading={isLoading}> */}
+        <Loader isLoading={isLoading}>
         {filteredUsers ?
           <CheckboxGenericComponent
             dataType="users"
@@ -95,8 +134,10 @@ const OrganizationUsers = () => {
           /> :
           <h1>{noUsers}</h1>
         }
+        </Loader>
       </GlobalTemplate>
       <UsersPanel
+        deleteUser={deleteUser}
         theme={theme}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}

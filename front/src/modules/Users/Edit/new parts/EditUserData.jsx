@@ -59,9 +59,11 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
     const lastName = "Last Name";
 
     return (
-        <div>
-
-            <Modal isOpen={openModal} toggle={onClose}>
+        <StyledModal
+        isOpen={openEditModal}
+        onBackgroundClick={onClose}
+        onEscapeKeydown={onClose}
+      >
                 <ModalHeader toggle={onClose}><h2>{editUserDetails}</h2></ModalHeader>
                 <ModalBody>
                     <FormInput id="firstName" name="firstName" onChange={handleInput} label={firstName} hasError={errors.firstName} />
@@ -71,8 +73,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                 <ModalFooter>
                     <Button className="btn btn--primary btn--lg" onClick={submitForm} name ={saveChanges}/>
                 </ModalFooter>
-            </Modal>
-        </div>
+            </StyledModal>
     );
 }
 

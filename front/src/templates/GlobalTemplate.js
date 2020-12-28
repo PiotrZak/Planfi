@@ -18,6 +18,7 @@ const Container = styled.div`
   height: 100%;
   color: ${({ theme }) => theme.colorGray10};
   margin: 0 1.6rem;
+
   @media screen and (min-width: 80rem) {
     max-width: 100rem;
     margin: auto;
