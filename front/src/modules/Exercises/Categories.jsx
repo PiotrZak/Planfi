@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Loader from 'components/atoms/Loader';
 import { categoryService } from 'services/categoryService';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import { commonUtil } from 'utils/common.util';
 import { useQuery, gql } from '@apollo/client';
 import { translate } from 'utils/Translation';
@@ -12,8 +11,10 @@ import SmallButton from 'components/atoms/SmallButton';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import CategoriesPanel from 'modules/Exercises/CategoriesPanel';
 import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
-import Nav from 'components/atoms/Nav';
-import styled from 'styled-components';
+import { withLazyComponent } from '../../utils/lazyComponent';
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
+const Nav = withLazyComponent(React.lazy(() => import('components/atoms/Nav')));
+// const CheckboxGenericComponent = withLazyComponent(React.lazy(() => import('components/organisms/CheckboxGeneric')));
 
 const CATEGORY = gql`{
   categories{

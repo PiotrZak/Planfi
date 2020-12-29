@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
@@ -24,7 +24,7 @@ export const PlanPanelExercises = ({
         history.push({
             pathname: `/edit-exercise/${selectedExercise}`,
             state: { selectedExercise: selectedExercise },
-          })
+        })
     }
 
     return (
@@ -35,21 +35,30 @@ export const PlanPanelExercises = ({
             onClose={() => setSelectedElementsBottomSheet(false)}
             appendCancelBtn={false}>
             {isMobile ?
-                    <>
-                        <StyledMobileReactBottomSheet>
-                            <PanelItem>
-                                {selectedExercise.length == 1
+                <>
+                    <StyledMobileReactBottomSheet>
+                        {selectedExercise.length > 1 ?
+                            < PanelItem onClick={() => deleteExercise()}>
+                                {selectedExercise.length > 1
                                     ? <p>{translate('DeleteCategory')}</p>
-                                    : <p>{translate('DeleteCategory')}</p>
+                                    : <p>{translate('DeleteCategories')}</p>
                                 }
                             </PanelItem>
-                            {selectedExercise.length < 2 &&
-                            <PanelItem>
+                            :
+                            <>
+                                < PanelItem onClick={() => deleteExercise()}>
+                                    {selectedExercise.length > 1
+                                        ? <p>{translate('DeleteCategory')}</p>
+                                        : <p>{translate('DeleteCategories')}</p>
+                                    }
+                                </PanelItem>
+                                <PanelItem onClick={() => editExercise()}>
                                     <p>{translate('EditCategory')}</p>
-                            </PanelItem>
-                           }
-                        </StyledMobileReactBottomSheet>
-                    </>
+                                </PanelItem>
+                            </>
+                        }
+                    </StyledMobileReactBottomSheet>
+                </>
                 :
                 <>
                     <PanelContainer>
@@ -63,7 +72,7 @@ export const PlanPanelExercises = ({
                             <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteExercise')}
                         </PanelItem>
                         {selectedExercise.length < 2 &&
-                            <PanelItem onClick = {() => editExercise()}>
+                            <PanelItem onClick={() => editExercise()}>
                                 <Icon name="edit" fill={theme.colorInputActive} />{translate('EditExercise')}
                             </PanelItem>
                         }

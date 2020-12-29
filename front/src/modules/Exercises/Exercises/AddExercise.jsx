@@ -86,9 +86,6 @@ const AddExerciseRefactor = (props) => {
   
 
   const onSubmit = (values) => {
-
-    console.log(selectedFiles)
-
     const formData = new FormData();
     formData.append('Name', values.exerciseName);
     formData.append('Description', values.exerciseDescription);

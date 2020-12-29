@@ -17,7 +17,7 @@ const CounterContainer = styled.div`
   }
 `;
 
-const Counter = ({ valueToChange, defaultValue, handleData, unit }) => {
+const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
   const [value, setValue] = useState(defaultValue || 0);
 
   const increment = () => {
@@ -34,9 +34,9 @@ const Counter = ({ valueToChange, defaultValue, handleData, unit }) => {
 
   return (
     <CounterContainer>
-      <Icon onClick={increment} name="plus-circle" />
+      <Icon fill ={fill ? fill : null} onClick={increment} name="plus-circle" />
       <Headline>{value} {unit}</Headline>
-      <Icon onClick={decrement} name="minus-circle" />
+      <Icon fill ={fill ? fill : null}  onClick={decrement} name="minus-circle" />
     </CounterContainer>
   );
 };

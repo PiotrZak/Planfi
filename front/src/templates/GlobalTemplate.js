@@ -22,6 +22,7 @@ const Container = styled.div`
   margin: 0 1.6rem;
 
   @media screen and (min-width: 80rem) {
+    overflow-y:auto;
     max-width: 100rem;
     margin: auto;
   }
