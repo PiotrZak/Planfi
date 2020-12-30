@@ -21,8 +21,8 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 const Category = (props) => {
   const { theme } = useThemeContext();
 
-  const [category, setCategory] = useState();
-  const [exercises, setExercises] = useState();
+  const [category, setCategory] = useState([]);
+  const [exercises, setExercises] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isLoading, setIsLoading] = useState(true);
 
@@ -115,17 +115,18 @@ const Category = (props) => {
           {category && <BackTopNav text={category.title} />}
           {category && <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />}
         </Nav>
-        <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
         <Loader isLoading={isLoading} >
-          {results
-            ? (
+          {exercises.length > 0
+            ? 
+            <>
+            <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
               <CheckboxGenericComponent
                 dataType="exercises"
                 displayedValue="name"
                 dataList={results}
                 onSelect={submissionHandleElement}
               />
-            )
+            </>
             : <p>{translate('NoExercises')}</p>}
         </Loader>
       </GlobalTemplate>

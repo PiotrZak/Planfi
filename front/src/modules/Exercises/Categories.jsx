@@ -45,7 +45,6 @@ const Categories = () => {
     const selectedCategoriesId = commonUtil.getCheckedData(selectedData, 'categoryId');
     const selectedCategoriesName = commonUtil.getCheckedData(selectedData, 'title');
     setSelectedCategories(selectedCategoriesId);
-    console.log(selectedCategoriesId)
     setSelectedCategoryName(selectedCategoriesName)
     selectedCategoriesId.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   };
@@ -77,7 +76,7 @@ const Categories = () => {
   useEffect(() => {
     refreshData();
     setSelectedCategoryName([])
-  }, [openModal, openEditModal, _refetch]);
+  }, [openModal, openEditModal]);
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
