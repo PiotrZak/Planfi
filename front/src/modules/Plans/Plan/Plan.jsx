@@ -95,8 +95,11 @@ const Plan = (props) => {
 
     const openAssignExercises = (id) => {
         loadExercises(id)
-        setAssignExercises('flex');
-        setBottomSheet('none');
+        if(categoryExercises.length > 1){
+            setAssignExercises('flex');
+            setBottomSheet('none');
+        }
+
     }
 
 

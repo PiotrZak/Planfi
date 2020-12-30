@@ -3,11 +3,11 @@ import Button from "components/atoms/Button"
 import { ReactMultiEmail, isEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 import { accountService } from '../../services/accountServices';
-import { StyledModal } from 'components/molecules/Modal'
 import { ModalHeading } from 'components/atoms/Heading';
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { useUserContext } from "../../support/context/UserContext"
+import { StyledModal, ButtonContainer } from 'components/molecules/Modal'
 
 const InviteUserModal = ({ openModal, onClose }) => {
 
@@ -50,7 +50,9 @@ const InviteUserModal = ({ openModal, onClose }) => {
             onEscapeKeydown={onClose}>
             <ModalHeading>{translate('InviteUsers')}</ModalHeading>
             <MultiInviteForm emails={emails} setEmails={setEmails} />
+            <ButtonContainer>
             <Button onClick={submitForm} type="submit" buttonType="primary" size="lg">{translate('InviteUsersButton')}</Button>
+            </ButtonContainer>
         </StyledModal>
     );
 }

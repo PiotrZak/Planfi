@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import { categoryService } from 'services/categoryService';
 import Button from 'components/atoms/Button';
 import { ModalHeading } from 'components/atoms/Heading';
-import { StyledModal } from 'components/molecules/Modal';
+import { StyledModal, ButtonContainer } from 'components/molecules/Modal';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const initialValues = {
@@ -21,7 +21,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditCategoryModal = ({
-  selectedCategories, openEditModal, onClose, theme,
+  selectedCategoryName,
+  selectedCategories,
+  openEditModal,
+  onClose,
+  theme,
 }) => {
   const { notificationDispatch } = useNotificationContext();
 
@@ -64,11 +68,13 @@ const EditCategoryModal = ({
         {({ errors, touched, values }) => (
           <Form>
             <InputContainer>
-              <Label type="top" text={translate('EnterYourFirstNameAndLastName')} required>
-                <Field placeholder="test" type="text" name="title" as={Input} error={errors.name && touched.name} />
+              <Label type="top" text={translate('Title')} required>
+                <Field typeInput="light" placeholder={selectedCategoryName} type="text" name="title" as={Input} error={errors.name && touched.name} />
               </Label>
             </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg">{translate('EditCategory')}</Button>
+            <ButtonContainer>
+              <Button type="submit" buttonType="primary" size="lg">{translate('EditCategory')}</Button>
+            </ButtonContainer>
           </Form>
         )}
       </Formik>

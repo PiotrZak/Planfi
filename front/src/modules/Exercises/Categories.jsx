@@ -26,15 +26,14 @@ const CATEGORY = gql`{
 
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategoryName, setSelectedCategoryName] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
 
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-  const {
-    loading, error, data, refetch: _refetch,
-  } = useQuery(CATEGORY);
+  const { loading, error, data, refetch: _refetch} = useQuery(CATEGORY);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -43,9 +42,11 @@ const Categories = () => {
   const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   const submissionHandleElement = (selectedData) => {
-    const selectedCategories = commonUtil.getCheckedData(selectedData, 'categoryId');
-    setSelectedCategories(selectedCategories);
-    selectedCategories.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+    const selectedCategoriesId = commonUtil.getCheckedData(selectedData, 'categoryId');
+    const selectedCategoriesName = commonUtil.getCheckedData(selectedData, 'title');
+    setSelectedCategories(selectedCategoriesId);
+    setSelectedCategoryName(selectedCategoriesName)
+    selectedCategoriesId.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   };
 
   const deleteCategories = () => {
@@ -98,6 +99,7 @@ const Categories = () => {
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel
+        selectedCategoryName={selectedCategoryName}
         deleteCategories={deleteCategories}
         theme={theme}
         bottomSheet={bottomSheet}

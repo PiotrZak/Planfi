@@ -11,6 +11,7 @@ export const pl = {
   Password: 'Hasło',
   ForgotPassword: 'Zapomniałem Hasła',
 
+  Title: 'Tytuł:',
   ActivateAccountSuccess: 'Twoje konto zostało aktywowane!',
   ErrorAlert: 'Coś poszło nie tak',
   EmailSent: 'Wiadomość została wysłana na Twojego maila',

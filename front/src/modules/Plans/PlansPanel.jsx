@@ -63,7 +63,7 @@ const PlansPanel = ({
                         </PanelItem>
                         {selectedPlans.length < 2 &&
                             <PanelItem onClick={setOpenEditModal}>
-                                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
+                                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditPlan')}
                             </PanelItem>
                         }
                     </PanelContainer>

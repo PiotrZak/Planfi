@@ -111,7 +111,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                         </ButtonContainer>
                     </Form>
                 )}
-            </Formik>
+        </Formik>
         </StyledModal>
     );
 }

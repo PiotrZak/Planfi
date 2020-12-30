@@ -8,7 +8,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/atoms/Button';
 import {ModalHeading} from 'components/atoms/Heading';
-import { StyledModal } from 'components/molecules/Modal'
+import { StyledModal, ButtonContainer } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const initialValues = {
@@ -62,11 +62,13 @@ const EditPlanModal = ({ selectedPlans, openEditModal, onClose, theme }) => {
                 {({ errors, touched }) => (
                     <Form>
                         <InputContainer>
-                            <Label type="top" text={translate('EnterPlanTitle')} required>
-                                <Field placeholder = {'test'} type="text" name="title" as={Input} error={errors.name && touched.name} />
+                            <Label type="top" text={translate('PlanTitle')} required>
+                                <Field typeInput="light" placeholder = {'test'} type="text" name="title" as={Input} error={errors.name && touched.name} />
                             </Label>
                         </InputContainer>
+                        <ButtonContainer>
                         <Button type="submit" buttonType="primary" size="lg">{translate('EditPlan')}</Button>
+                        </ButtonContainer>
                     </Form>
                 )}
             </Formik>

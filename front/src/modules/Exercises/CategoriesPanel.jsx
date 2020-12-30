@@ -11,6 +11,7 @@ const IconWrapper = styled.div`
 `;
 
 const CategoriesPanel = ({
+  selectedCategoryName,
   deleteCategories,
   openEditModal,
   setOpenEditModal,
@@ -73,6 +74,7 @@ const CategoriesPanel = ({
           </PanelContainer>
         </>}
         <EditCategoryModal
+                  selectedCategoryName={selectedCategoryName[0]}
                   selectedCategories={selectedCategories[0]}
                   theme={theme}
                   openEditModal={openEditModal}

@@ -10,6 +10,7 @@ export const en = {
   Password: 'Password',
   ForgotPassword: 'I forget password',
 
+  Title: 'Title:',
   ActivateAccountSuccess: 'Your account succesfully activated',
   ErrorAlert: 'Something gone wrong',
   EmailSent: 'The message has been sent to your e-mail',
@@ -64,7 +65,7 @@ export const en = {
   NoExercises: 'There are no added exercises in this category',
   EditCategory: 'Edit Category',
   EditCategoryTitle: 'Edit a category',
-  CategoryTitle: 'Name of category',
+  CategoryTitle: 'Title',
   CreateCategory: 'Create Category',
   CategoryEdited: 'Category succesfull edited',
 
