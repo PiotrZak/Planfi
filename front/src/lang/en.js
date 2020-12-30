@@ -114,7 +114,7 @@ export const en = {
   DeletePlans: "Delete plans",
   EditPlan: "Edit plan",
   PlansDeleted: "PlansDeleted",
-  PlanTitle: "Add a Plan",
+  PlanTitle: "Title",
   PlanAdded: "Plan succesfully added!",
   AddPlanButton: "Create Plan",
   AddPlanTitle: "Add Plan",

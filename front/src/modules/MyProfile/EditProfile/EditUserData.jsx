@@ -7,7 +7,7 @@ import InputContainer from 'components/atoms/InputContainerForm';
 import { userService } from 'services/userServices'
 import Button from "components/atoms/Button"
 import * as Yup from 'yup';
-import { StyledModal } from 'components/molecules/Modal';
+import { StyledModal, ButtonContainer, IconContainer } from 'components/molecules/Modal'
 import { ModalHeading } from 'components/atoms/Heading';
 import { Formik, Field, Form } from 'formik';
 import { translate } from 'utils/Translation';
@@ -24,16 +24,9 @@ const validationSchema = Yup.object().shape({
     firstName: Yup.string().required(translate('EnterFirstNameAndLastName')),
     lastName: Yup.string().required(translate('lastName')),
     phone: Yup.string()
-    .required(translate('phone'))
-    .matches(/^\d{9}$/, translate('phoneValidation')),
+        .required(translate('phone'))
+        .matches(/^\d{9}$/, translate('phoneValidation')),
 });
-
-const IconContainer = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-`;
-
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
     const { notificationDispatch } = useNotificationContext();
@@ -46,20 +39,20 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: 'OK', message: translate('UserDataEdited') },
-                      type: 'positive',
+                        content: { success: 'OK', message: translate('UserDataEdited') },
+                        type: 'positive',
                     },
-                  });
+                });
                 onClose()
             })
             .catch((error) => {
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                      content: { success: error, message: translate('ErrorAlert') },
-                      type: 'error',
+                        content: { success: error, message: translate('ErrorAlert') },
+                        type: 'error',
                     },
-                  });
+                });
             });
     };
 
@@ -73,16 +66,18 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                 <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
             <ModalHeading toggle={onClose}>
-            <h2>
-            {translate("EditUserDetails")}
-            </h2>
+                <h2>
+                    {translate("EditUserDetails")}
+                </h2>
             </ModalHeading>
             <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
                 {({ errors, touched, values }) => (
                     <Form>
                         <InputContainer>
                             <Label type="top" text={translate('FirstName')} required>
-                                <Field placeholder={translate('FirstNamePlaceholder')}
+                                <Field
+                                    typeInput="light"
+                                    placeholder={translate('FirstNamePlaceholder')}
                                     type="text"
                                     name="firstName"
                                     as={Input}
@@ -91,7 +86,9 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                         </InputContainer>
                         <InputContainer>
                             <Label type="top" text={translate('LastName')} required>
-                                <Field placeholder={translate('LastNamePlaceholder')}
+                                <Field
+                                    typeInput="light"
+                                    placeholder={translate('LastNamePlaceholder')}
                                     type="text" name="lastName"
                                     as={Input}
                                     error={errors.name && touched.name} />
@@ -99,7 +96,9 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                         </InputContainer>
                         <InputContainer>
                             <Label type="top" text={translate('Phone')} required>
-                                <Field placeholder={translate('PhoneNamePlaceholder')}
+                                <Field
+                                    typeInput="light"
+                                    placeholder={translate('PhoneNamePlaceholder')}
                                     type="number"
                                     name="phone"
                                     as={Input}
@@ -107,7 +106,9 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                             </Label>
                             <ValidationHint name="phone" />
                         </InputContainer>
+                        <ButtonContainer>
                         <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
+                        </ButtonContainer>
                     </Form>
                 )}
             </Formik>

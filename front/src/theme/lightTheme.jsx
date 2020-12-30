@@ -1,5 +1,7 @@
+
 export const lightTheme = {
 
+    
     // edit theme for colors
     colorPrimary: '#FFFFFF',
     colorSecondary: '#C3C3CF',

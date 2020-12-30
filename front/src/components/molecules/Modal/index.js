@@ -21,16 +21,27 @@ export const SpecialModalBackground = styled.div`
   }
 `;
 
+export const IconContainer = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+`;
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+  right: 2rem;
+  margin:0 0 2rem 0;
+`;
+
 export const StyledModal = Modal.styled`
-  position: fixed;
   top: 0 ;
   position: relative;
-  margin: 0 2.4rem;
   padding: 0 1.6rem;
   z-index: 1;
   opacity: 1.0;
   width: 40rem;
-  height: 50%;
+  height: auto;
   color: ${({ theme }) => theme.colorWhite};
   align-items: center;
   justify-content: center;

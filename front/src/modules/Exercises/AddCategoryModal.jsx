@@ -6,7 +6,7 @@ import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 import Button from 'components/atoms/Button';
 import { ModalHeading } from 'components/atoms/Heading';
-import { StyledModal } from 'components/molecules/Modal';
+import { StyledModal, ButtonContainer, IconContainer } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
@@ -24,40 +24,28 @@ const validationSchema = Yup.object().shape({
     .required(translate('ThisFieldIsRequired')),
 });
 
-const IconContainer = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-`;
-
-const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 2rem;
-  right: 2rem;
-`;
-
 const AddCategoryModal = ({ openModal, onClose, theme }) => {
   const { notificationDispatch } = useNotificationContext();
 
   const onSubmit = (values) => {
     categoryService
-      .addCategory(values);
-    notificationDispatch({
-      type: ADD,
-      payload: {
-        content: { success: 'OK', message: translate('CategoryAdded') },
-        type: 'positive',
-      },
-    });
-    onClose()
+      .addCategory(values)
       .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('CategoryAdded') },
+            type: 'positive',
+          },
+        });
+        onClose()
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
             content: { error, message: translate('ErrorAlert') },
-            type: 'error',
+            type: 'warning',
           },
         });
       });
@@ -78,7 +66,7 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
           <Form>
             <InputContainer>
               <Label type="top" text={translate('CategoryTitle')} required>
-                <Field type="text" name="title" as={Input} error={errors.name && touched.name} />
+                <Field typeInput ="light" type="text" name="title" as={Input} error={errors.name && touched.name} />
               </Label>
             </InputContainer>
             <ValidationHint name="title" />

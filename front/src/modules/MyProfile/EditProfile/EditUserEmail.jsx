@@ -7,18 +7,12 @@ import InputContainer from 'components/atoms/InputContainerForm';
 import { userService } from 'services/userServices'
 import Button from "components/atoms/Button"
 import * as Yup from 'yup';
-import { StyledModal } from 'components/molecules/Modal';
+import { StyledModal, ButtonContainer, IconContainer } from 'components/molecules/Modal'
 import { ModalHeading } from 'components/atoms/Heading';
 import { Formik, Field, Form } from 'formik';
 import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-
-const IconContainer = styled.div`
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-`;
 
 const initialValues = {
     newMail: '',
@@ -85,7 +79,9 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                     <Form>
                         <InputContainer>
                             <Label type="top" text={translate('NewMail')} required>
-                                <Field placeholder={translate('NewMailPlaceholder')}
+                                <Field 
+                                                                     typeInput ="light"
+                                    placeholder={translate('NewMailPlaceholder')}
                                     type="text"
                                     name="newMail"
                                     as={Input}
@@ -95,7 +91,9 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                         </InputContainer>
                         <InputContainer>
                             <Label type="top" text={translate('RepeatNewMail')} required>
-                                <Field placeholder={translate('RepeatNewMailPlaceholder')}
+                                <Field 
+                                                                     typeInput ="light"
+                                    placeholder={translate('RepeatNewMailPlaceholder')}
                                     type="string"
                                     name="repeatNewMail"
                                     as={Input}
@@ -103,7 +101,9 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                             </Label>
                             <ValidationHint name="RepeatNewMail" />
                         </InputContainer>
+                        <ButtonContainer>
                         <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
+                        </ButtonContainer>
                     </Form>
                 )}
             </Formik>

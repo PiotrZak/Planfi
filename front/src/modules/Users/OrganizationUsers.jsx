@@ -95,7 +95,7 @@ const OrganizationUsers = () => {
     }
   };
 
-
+// todo - refactor this logic
   const filterUsers = (role) => {
     if (role == "All") {
       setFilteredUsers(users)

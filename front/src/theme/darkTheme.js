@@ -1,6 +1,11 @@
+const mainColors = {
+  white: '#FFFFFF'
+}
+
+
 export const darkTheme = {
 
-  colorPrimary: '#FFFFFF',
+  colorPrimary: mainColors.white,
   colorSecondary: '#C3C3CF',
   colorDisabled: '#666674',
 
