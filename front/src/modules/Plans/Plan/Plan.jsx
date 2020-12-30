@@ -15,6 +15,9 @@ import { categoryService } from "services/categoryService";
 import SmallButton from 'components/atoms/SmallButton';
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+
+const NotExerciseInCategory = "This category have not any exercises!"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -22,12 +25,14 @@ const IconWrapper = styled.div`
 
 const Plan = (props) => {
 
+    const { notificationDispatch } = useNotificationContext();
     const { theme } = useThemeContext();
     const [plan, setPlan] = useState();
 
     const [bottomSheet, setBottomSheet] = useState('none')
     const [assignExercise, setAssignExercises] = useState('none')
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
+    
 
     const [exercises, setExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
@@ -87,19 +92,28 @@ const Plan = (props) => {
             .then((data) => {
                 const uniqueExercises = commonUtil.getUnique(data, 'name');
                 setCategoryExercises(uniqueExercises);
+                if(uniqueExercises.length > 0){
+                setAssignExercises('flex');
+                setBottomSheet('none');
+                }
+                else{
+                    notificationDispatch({
+                        type: ADD,
+                        payload: {
+                          content: { message: translate('NotExerciseInCategory') },
+                          type: 'neutral'
+                        }
+                      })
+                }
                 setIsLoading(false)
             })
             .catch((error) => {
+
             });
     }
 
     const openAssignExercises = (id) => {
         loadExercises(id)
-        if(categoryExercises.length > 1){
-            setAssignExercises('flex');
-            setBottomSheet('none');
-        }
-
     }
 
 

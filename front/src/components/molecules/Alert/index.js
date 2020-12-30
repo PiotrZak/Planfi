@@ -10,7 +10,7 @@ const handleAlertType = (type, theme) => {
     case 'positive':
       return css`${theme.colorSuccessLight}`;
     case 'neutral':
-      return css` ${theme.colorSuccessLight}`;
+      return css` ${theme.colorNeutralLight}`;
     case 'error':
       return css` ${theme.colorErrorLight}`;
     case 'warning':
@@ -28,6 +28,8 @@ const handleIconType = (type) => {
       return 'circle';
     case 'error':
       return 'exclamation-triangle';
+    case 'neutral':
+      return 'exclamation-octagon'
     default:
       return 'check-circle';
   }
@@ -38,7 +40,7 @@ const handleIconColor = (type, theme) => {
     case 'positive':
       return theme.colorSuccessDefault;
     case 'neutral':
-      return theme.colorSuccessDefault;
+      return theme.colorNeutralDarkest;
     case 'error':
       return theme.colorErrorDefault;
     case 'warning':

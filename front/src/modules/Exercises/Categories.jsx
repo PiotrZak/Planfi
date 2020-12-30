@@ -33,7 +33,7 @@ const Categories = () => {
 
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-  const { loading, error, data, refetch: _refetch} = useQuery(CATEGORY);
+  const { loading, error, data, refetch: _refetch } = useQuery(CATEGORY);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -45,6 +45,7 @@ const Categories = () => {
     const selectedCategoriesId = commonUtil.getCheckedData(selectedData, 'categoryId');
     const selectedCategoriesName = commonUtil.getCheckedData(selectedData, 'title');
     setSelectedCategories(selectedCategoriesId);
+    console.log(selectedCategoriesId)
     setSelectedCategoryName(selectedCategoriesName)
     selectedCategoriesId.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   };
@@ -75,6 +76,7 @@ const Categories = () => {
 
   useEffect(() => {
     refreshData();
+    setSelectedCategoryName([])
   }, [openModal, openEditModal, _refetch]);
 
   if (loading) return <Loader isLoading={loading} />;
@@ -88,14 +90,13 @@ const Categories = () => {
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
         {data.categories.length > 0
-          ? (
-            <CheckboxGenericComponent
-              dataType="categories"
-              displayedValue="title"
-              dataList={data.categories}
-              onSelect={submissionHandleElement}
-            />
-          )
+          ?
+          <CheckboxGenericComponent
+            dataType="categories"
+            displayedValue="title"
+            dataList={data.categories}
+            onSelect={submissionHandleElement}
+          />
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel

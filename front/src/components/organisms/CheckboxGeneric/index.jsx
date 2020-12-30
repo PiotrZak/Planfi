@@ -48,7 +48,7 @@ export const CheckboxGenericComponent = ({
 
   useEffect(() => {
     dataList.map((el) => {
-      { el.value = null; }
+      { el.value = false; }
       return el;
     });
     setType(dataType);
@@ -58,10 +58,17 @@ export const CheckboxGenericComponent = ({
   function handleChange(e) {
     dataList.map((el) => {
       if (isMobile) {
-        if (el[displayedValue] === e.currentTarget.getAttribute('name')) { el.value = !e.currentTarget.checked; }
+        if (el[displayedValue] === e.currentTarget.getAttribute('name'))
+        {
+          el.value = !el.value;
+        }
       } else if (el[displayedValue] === e.target.name) { el.value = e.target.checked; }
       return el;
     });
+
+
+
+
     setList([...dataList]);
     onSelect([...dataList]);
   }
@@ -101,7 +108,7 @@ export const CheckboxGenericComponent = ({
             {isMobile
               ? (
                 <Holdable
-                  theme ={theme}
+                  theme={theme}
                   name={element[displayedValue]}
                   onHold={handleChange}
                   onClick={(e) => e.preventDefault()}
@@ -115,24 +122,24 @@ export const CheckboxGenericComponent = ({
                 <>
                   <RenderType theme={theme} type={type} element={element} i={i} />
                   {theme == 'light' ?
-                  <CheckboxLightContainer>
-                    <Checkbox
-                      checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
-                      name={element[displayedValue]}
-                      checked={element.value}
-                      onChange={handleChange}
-                    />
-                  </CheckboxLightContainer>
-                  :
-                  <CheckboxContainer>
-                    <Checkbox
-                      checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
-                      name={element[displayedValue]}
-                      checked={element.value}
-                      onChange={handleChange}
-                    />
-                  </CheckboxContainer>
-              }
+                    <CheckboxLightContainer>
+                      <Checkbox
+                        checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
+                        name={element[displayedValue]}
+                        checked={element.value}
+                        onChange={handleChange}
+                      />
+                    </CheckboxLightContainer>
+                    :
+                    <CheckboxContainer>
+                      <Checkbox
+                        checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
+                        name={element[displayedValue]}
+                        checked={element.value}
+                        onChange={handleChange}
+                      />
+                    </CheckboxContainer>
+                  }
                 </>
               )}
           </>,

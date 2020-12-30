@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from 'services/categoryService';
 import { exerciseService } from 'services/exerciseService';
-import { Link } from 'react-router-dom';
 import Loader from 'components/atoms/Loader';
 import { routes } from 'utils/routes';
-import { useParams, useHistory, withRouter } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
 import Search from 'components/molecules/Search';
