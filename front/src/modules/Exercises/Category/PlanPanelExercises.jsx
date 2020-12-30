@@ -36,6 +36,7 @@ export const PlanPanelExercises = ({
             appendCancelBtn={false}>
             {isMobile ?
                 <>
+                {/* todo - make it works */}
                     <StyledMobileReactBottomSheet>
                         {selectedExercise.length > 1 ?
                             < PanelItem onClick={() => deleteExercise()}>

@@ -3,7 +3,7 @@ import { userService } from 'services/userServices';
 import styled from 'styled-components';
 import { organizationService } from 'services/organizationServices';
 import { commonUtil } from 'utils/common.util';
-import { Loader } from 'components/atoms/Loader';
+import Loader from 'components/atoms/Loader';
 import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
@@ -14,6 +14,12 @@ import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'compon
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
+
+export const BottomNavTitle = styled.div`
+    display:flex;
+    align-items:center;
+    margin:0.2rem 0 0 1.6rem;
+`
 
 export const AssignUsersToTrainers = ({
   theme,
@@ -77,26 +83,20 @@ export const AssignUsersToTrainers = ({
       appendCancelBtn={false}
     >
       <BottomNav>
-        <BottomNavItem>
-          <Headline>{activeUsers.length}{translate('Selected')}</Headline>
+      <BottomNavItem>
+          <IconWrapper>
+            <Icon name="arrow-left" fill={theme.colorInputActive} />
+          </IconWrapper><p onClick={() => closeAssignPlansToUser()}>{translate('CloseMenu')}</p>
         </BottomNavItem>
+        <BottomNavItem>
         <IconWrapper>
           <Icon name="check" fill={theme.colorInputActive} />
         </IconWrapper>
-        <BottomNavItem>
-          <IconWrapper>
-            <Icon name="arrow-left" fill={theme.colorInputActive} />
-          </IconWrapper>
-          <p onClick={() => closeAssignPlansToUser()}>
-          {translate('ReturnToSubMenuPlansClients')}
-          </p>
+          <p>{activeUsers.length} {translate('SelectedUsers')}</p>
         </BottomNavItem>
       </BottomNav>
-      <div>
-        <h4>
-        {translate('SelectFromTrainers')}
-        </h4>
-        {/* <Loader isLoading={isLoading}> */}
+      <BottomNavTitle><h4>{translate('SelectFromTrainers')}</h4></BottomNavTitle>
+        <Loader isLoading={isLoading}>
         {trainers ?
           <CheckboxGenericComponent
             dataType="users"
@@ -105,11 +105,10 @@ export const AssignUsersToTrainers = ({
             dataList={trainers}
             onSelect={getSelectedTrainerIds} />
           : <h1>{translate('NoUsers')}</h1>}
-        {/* </Loader> */}
+        </Loader>
         <Button disabled={activeTrainers.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToTrainer}>
           {activeTrainers.length === 0 ? translate('SelectTrainers') : translate('AssignTrainersToClients')}
         </Button>
-      </div>
 
     </StyledReactBottomSheetExtended>
   );

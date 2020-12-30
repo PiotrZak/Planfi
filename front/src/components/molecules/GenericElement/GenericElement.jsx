@@ -2,9 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 // todo - test if image appear after adding exercises & add circle elements
 import Image from 'components/atoms/Image';
-import StyledReactBottomSheet, {
-  StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem,
-} from 'components/organisms/BottomSheet';
 import { Headline, Subline } from 'components/typography';
 
 const GenericElementContainer = styled.div`
@@ -22,6 +19,17 @@ const GenericElementContainer = styled.div`
       cursor:pointer;
     }
 `;
+
+const LightBottomItem = styled.div`
+    border:1px solid ${({ theme }) => theme.colorDarkBorder};
+    padding:1.6rem 4.6rem;
+    margin:1.8rem 1.8rem;
+    background: ${({ theme }) => theme.colorWhite};
+    border-radius:8px;
+    &:hover{
+      cursor:pointer;
+    }
+`
 
 const GenericElementInfo = styled.div`
   color: ${({ theme }) => theme.colorPrimary};
@@ -52,9 +60,9 @@ const GenericElement = ({
   circle,
 }) => (
   theme == 'light' ? (
-    <BottomItem>
+    <LightBottomItem>
       <Headline>{headline}</Headline>
-    </BottomItem>
+    </LightBottomItem>
   )
     : (
       <GenericElementContainer>

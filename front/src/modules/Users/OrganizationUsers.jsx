@@ -140,6 +140,7 @@ const OrganizationUsers = () => {
         setAssignPlan={setAssignPlan}
         setAssignTrainer={setAssignTrainer} />
       <AssignUsersToPlans
+        theme={theme}
         organizationId={user.organizationId}
         assignPlan={assignPlan}
         setAssignPlan={setAssignPlan}

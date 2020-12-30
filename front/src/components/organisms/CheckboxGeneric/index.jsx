@@ -11,6 +11,23 @@ const CheckboxContainer = styled.div`
     margin: -5.5rem 0 0 1.4rem;
     z-index:2;
     position: absolute;
+    &:hover {
+      cursor:pointer;
+    }
+    @media only screen and ${breakPointSize.xs} {
+      display: none;
+    }
+  }
+`;
+
+const CheckboxLightContainer = styled.div`
+  input{
+    margin: -6rem 0 0 3.4rem;
+    z-index:2;
+    position: absolute;
+    &:hover {
+      cursor:pointer;
+    }
     @media only screen and ${breakPointSize.xs} {
       display: none;
     }
@@ -84,6 +101,7 @@ export const CheckboxGenericComponent = ({
             {isMobile
               ? (
                 <Holdable
+                  theme ={theme}
                   name={element[displayedValue]}
                   onHold={handleChange}
                   onClick={(e) => e.preventDefault()}
@@ -96,6 +114,16 @@ export const CheckboxGenericComponent = ({
               : (
                 <>
                   <RenderType theme={theme} type={type} element={element} i={i} />
+                  {theme == 'light' ?
+                  <CheckboxLightContainer>
+                    <Checkbox
+                      checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
+                      name={element[displayedValue]}
+                      checked={element.value}
+                      onChange={handleChange}
+                    />
+                  </CheckboxLightContainer>
+                  :
                   <CheckboxContainer>
                     <Checkbox
                       checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
@@ -104,6 +132,7 @@ export const CheckboxGenericComponent = ({
                       onChange={handleChange}
                     />
                   </CheckboxContainer>
+              }
                 </>
               )}
           </>,

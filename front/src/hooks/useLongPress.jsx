@@ -20,7 +20,26 @@ export const GenericMobile = styled.div`
   `}
 `
 
-export function Holdable({onClick, onHold, children, forx }) {
+export const GenericLightMobile = styled.div`
+      width:100%;
+      height:80px;
+      position:initial;
+      ${({ active, }) => active && `
+        &:after{
+        content:'';
+        position:absolute;
+        border:2px solid ${darkTheme.colorInputActive};
+        border-radius:12px;
+        opacity:0.7;
+        height:6.5rem;
+        width:calc(100% - 3.2rem);
+        margin-top:-8.2rem;
+        margin-left:1.6rem;
+    }
+  `}
+`
+
+export function Holdable({theme, onClick, onHold, children, forx }) {
 
   const [timer, setTimer] = React.useState(null)
   const [active, setActive] = useState(false)
@@ -51,12 +70,21 @@ export function Holdable({onClick, onHold, children, forx }) {
   }
 
   return (
-    <GenericMobile
+    theme   ==  'light' ?
+    <GenericLightMobile
       name ={forx}
       active ={active}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}>
       {children}
-    </GenericMobile>
+    </GenericLightMobile>
+    :
+    <GenericMobile
+    name ={forx}
+    active ={active}
+    onPointerDown={onPointerDown}
+    onPointerUp={onPointerUp}>
+    {children}
+  </GenericMobile>
   )
 }

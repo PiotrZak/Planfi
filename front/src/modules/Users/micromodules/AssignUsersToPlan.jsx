@@ -7,7 +7,7 @@ import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
-import { Headline } from 'components/typography';
+import Loader from 'components/atoms/Loader';
 import {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
@@ -15,8 +15,17 @@ const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
+const SelectedUsers = ""
+const CloseMenu = ""
+
+export const BottomNavTitle = styled.div`
+    display:flex;
+    align-items:center;
+    margin:0.2rem 0 0 1.6rem;
+`
+
 export const AssignUsersToPlans = ({
-    bottomSheet,
+    theme,
     assignPlan,
     setAssignPlan,
     activeUsers,
@@ -103,25 +112,20 @@ export const AssignUsersToPlans = ({
         >
             <BottomNav>
                 <BottomNavItem>
-                    <Headline>{activeUsers.length}</Headline>
-                </BottomNavItem>
-                <IconWrapper>
-                    <Icon name="check" fill="#2E6D2C" />
-                </IconWrapper>
-                <BottomNavItem>
                     <IconWrapper>
-                        <Icon name="arrow-left" fill="#5E4AE3" />
+                        <Icon name="arrow-left" fill={theme.colorInputActive} />
                     </IconWrapper>
-                    <p onClick={() => closeAssignPlansToUser()}>
-                        {translate('ReturnToSubMenu')}
-                    </p>
+                    <p onClick={() => closeAssignPlansToUser()}>{translate('CloseMenu')}</p>
+                </BottomNavItem>
+                <BottomNavItem>
+                <IconWrapper>
+                    <Icon name="check" fill={theme.colorInputActive} />
+                </IconWrapper>
+                    <p>{activeUsers.length} {translate('SelectedUsers')}</p>
                 </BottomNavItem>
             </BottomNav>
-            <div>
-                <h4>
-                {translate('SelectFromPlans')}
-                </h4>
-                {/* <Loader isLoading={isLoading}> */}
+            <BottomNavTitle><h4>{translate('SelectFromPlans')}</h4></BottomNavTitle>
+                <Loader isLoading={isLoading}>
                 {plansResults ?
                     <CheckboxGenericComponent
                         dataType="plans"
@@ -130,12 +134,10 @@ export const AssignUsersToPlans = ({
                         dataList={plansResults}
                         onSelect={getSelectedPlanIds} />
                     : <p>{translate('NoPlans')}</p>}
-                {/* </Loader> */}
+                </Loader>
                 <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
                 {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
-            </div>
-
         </StyledReactBottomSheetExtended>
     );
 };
