@@ -22,9 +22,17 @@ import { Role } from 'utils/role';
 import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
 import Search from 'components/molecules/Search';
+import breakPointSize from 'utils/rwd';
 
 const Container = styled.div`
-  margin: 0 1.6rem;
+  ${({ type }) => type === 'bottom' && 'margin: 0 1.6rem;'};
+
+  margin: auto;
+  width: 74%;
+
+  @media screen and ${breakPointSize.xs} {
+    width: 100%;
+  }
 `;
 
 const ContainerCentred = styled.div`
@@ -107,34 +115,36 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
     <>
       <MyProfileTemplate>
         <UserInfoBackground place="MyProfile">
-          <IconContainer>
-            <Icon name="cog" size="2rem" onClick={() => alert('Add functionality')} />
-          </IconContainer>
-          <ContainerCentred>
-            {user && <UserInfo user={updatedUser} />}
-          </ContainerCentred>
-          {renderSwitchedButton()}
+          <Container>
+            <IconContainer>
+              <Icon name="cog" size="2rem" onClick={() => alert('Add functionality')} />
+            </IconContainer>
+            <ContainerCentred>
+              {user && <UserInfo user={updatedUser} />}
+            </ContainerCentred>
+            {renderSwitchedButton()}
+          </Container>
         </UserInfoBackground>
-        <Container>
-          <Search placeholder={translate('Find')} callback={alert('add search')} />
+        <Container type="bottom">
+          <Search placeholder={translate('Find')} callback={console.log('add search')} />
           {toRender}
         </Container>
-        <EditUserDataModal
-          id={user.userId}
-          openModal={openEditUserData}
-          onClose={() => setOpenEditUserData(false)}
-        />
-        <EditUserEmailModal
-          id={user.userId}
-          openModal={openEditMailModal}
-          onClose={() => setOpenEditMailModal(false)}
-        />
-        <EditUserPasswordModal
-          id={user.userId}
-          openModal={openEditUserPasswordModal}
-          onClose={() => setOpenEditUserPasswordModal(false)}
-        />
       </MyProfileTemplate>
+      <EditUserDataModal
+        id={user.userId}
+        openModal={openEditUserData}
+        onClose={() => setOpenEditUserData(false)}
+      />
+      <EditUserEmailModal
+        id={user.userId}
+        openModal={openEditMailModal}
+        onClose={() => setOpenEditMailModal(false)}
+      />
+      <EditUserPasswordModal
+        id={user.userId}
+        openModal={openEditUserPasswordModal}
+        onClose={() => setOpenEditUserPasswordModal(false)}
+      />
       <MyProfilePanel
         setOpenEditUserData={setOpenEditUserData}
         setOpenEditMailModal={setOpenEditMailModal}

@@ -29,26 +29,24 @@ const IconsCode = {
   cog: 'e918',
 };
 
-const Icon = ({
-  size, fill, name, cursorType, ...rest
-// eslint-disable-next-line react/jsx-props-no-spreading
-}) => {
-  const FontIcon = styled.span`
+const FontIcon = styled.span`
     font-family: 'icomoon', sans-serif;
-    font-size: ${size};
-    color: ${fill};
-    cursor: ${cursorType};
+    font-size: ${({ size }) => size};
+    color: ${({ fill }) => fill};
+    cursor: ${({ cursorType }) => cursorType};
     speak: none;
 
     :before{
-      content: "\\${IconsCode[name]}";
+      ${({ name }) => `content: "\\${IconsCode[name]}"`};
     }
   `;
 
-  return (
-    <FontIcon {...rest} />
-  );
-};
+const Icon = ({
+  size, fill, name, cursorType, ...rest
+// eslint-disable-next-line react/jsx-props-no-spreading
+}) => (
+  <FontIcon size={size} fill={fill} name={name} cursorType={cursorType} {...rest} />
+);
 
 Icon.propTypes = {
   name: PropTypes.oneOf([

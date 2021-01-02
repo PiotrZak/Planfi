@@ -1,15 +1,10 @@
 import React from 'react';
 import GlobalTemplate from 'templates/GlobalTemplate';
-import GenericElement from 'components/molecules/GenericElement';
+import Icon from 'components/atoms/Icon';
 
 const TestPage = () => (
   <GlobalTemplate>
-    <GenericElement
-      HeadLine="lorem ipsum"
-      SubLine="lorem ipsum der sit"
-      onMenuClick={() => console.log('menu clicked')}
-      onSecondaryMenuClick={() => console.log('Secondary menu clicked')}
-    />
+    <Icon name="cog" size="3rem" fill="red" cursorType="pointer" />
   </GlobalTemplate>
 );
 

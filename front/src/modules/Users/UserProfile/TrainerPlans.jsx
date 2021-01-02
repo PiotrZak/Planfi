@@ -25,7 +25,7 @@ export const TrainerPlans = ({ id }) => {
             state: { id: element.planId },
           }}
           >
-            <GenericElement key={i.toString()} HeadLine={element.title} SubLine={element.creatorName} plan={element} />
+            <GenericElement key={i} HeadLine={element.title} SubLine={element.creatorName} plan={element} />
           </Link>
         </div>
       ))

@@ -25,7 +25,7 @@ export const TrainerClients = ({ id }) => {
             state: { id: element.userId },
           }}
           >
-            <GenericElement circle image={element.avatar} key={i.toString()} HeadLine={`${element.firstName}  ${element.lastName}`} user={element} SubLine={element.role} />
+            <GenericElement circle image={element.avatar} key={i} HeadLine={`${element.firstName}  ${element.lastName}`} user={element} SubLine={element.role} />
           </Link>
         </div>
       ))

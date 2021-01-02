@@ -7,14 +7,18 @@ const Container = styled.div`
   display: flex;
 `;
 
+const StyledParagraph = styled(Paragraph)`
+  margin: 0;
+`;
+
 const Button = styled.div`
   width: 50%;
-  padding-bottom: .7rem;
+  padding: .6rem 0;
   border-bottom: 2px solid ${({ theme }) => theme.colorGray70};
-  text-align: center;
+  background-color: ${({ theme }) => theme.colorGray70};
   color: ${({ theme }) => theme.colorSecondary};
   cursor: pointer;
-
+  text-align: center;
 
   ${({ active, theme }) => active && `
     border-bottom: 2px solid ${theme.colorPrimaryDefault};
@@ -42,10 +46,10 @@ const SwitchedButton = ({
   return (
     <Container>
       <Button onClick={(e) => { setToActive(e); firstButtonFunc(); }} id="switched-button-1" active={activeTabID === 'switched-button-1'}>
-        <Paragraph type="Label-Button" id="switched-button-1">{firstButtonText}</Paragraph>
+        <StyledParagraph type="Label-Button" id="switched-button-1">{firstButtonText}</StyledParagraph>
       </Button>
       <Button onClick={(e) => { setToActive(e); secondButtonFunc(); }} id="switched-button-2" active={activeTabID === 'switched-button-2'}>
-        <Paragraph type="Label-Button" id="switched-button-2">{secondButtonText}</Paragraph>
+        <StyledParagraph type="Label-Button" id="switched-button-2">{secondButtonText}</StyledParagraph>
       </Button>
     </Container>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from 'services/categoryService';
 import { exerciseService } from 'services/exerciseService';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 import { routes } from 'utils/routes';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
@@ -12,10 +12,10 @@ import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
 import SmallButton from 'components/atoms/SmallButton';
-import ReturnWithTitle from 'components/molecules/ReturnWithTitle';
 import Nav from 'components/atoms/Nav';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import styled from 'styled-components';
+
 import { PlanPanelExercises } from './PlanPanelExercises';
 
 const Container = styled.div`
@@ -27,15 +27,16 @@ const Container = styled.div`
 const Category = (props) => {
   const { theme } = useThemeContext();
 
-  const [category, setCategory] = useState();
-  const [exercises, setExercises] = useState();
+  const [category, setCategory] = useState([]);
+  const [exercises, setExercises] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedExercise, setselectedExercise] = useState([]);
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
 
+  const history = useHistory();
   const { notificationDispatch } = useNotificationContext();
   const { match } = props;
   const { id } = match.params;
@@ -74,6 +75,11 @@ const Category = (props) => {
       });
   };
 
+  useEffect(() => {
+    getCategory(id);
+    getCategoryExercise(id);
+  }, [id]);
+
   const getCategoryExercise = useCallback((id) => {
     exerciseService
       .getExercisesByCategory(id)
@@ -85,11 +91,6 @@ const Category = (props) => {
         console.error(error);
       });
   }, []);
-
-  useEffect(() => {
-    getCategory(id);
-    getCategoryExercise(id);
-  }, [id, deleteExercise]);
 
   const submissionHandleElement = (selectedData) => {
     const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
@@ -105,11 +106,17 @@ const Category = (props) => {
     ? exercises
     : exercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
+  const redirectToAddExercise = () => {
+    history.push({
+      pathname: routes.addExercise,
+      state: { id },
+    });
+  };
   return (
     <>
       <GlobalTemplate>
         <Nav>
-        {category && <BackTopNav text={category.title} />}
+          {category && <BackTopNav text={category.title} />}
           {category
           && (
             <Link
@@ -125,7 +132,7 @@ const Category = (props) => {
             </Link>
           )}
         </Nav>
-        <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+        <Search callback={filterExercises} placeholder={translate('ExerciseSearch')} />
         {results
           ? (
             <CheckboxGenericComponent
@@ -149,4 +156,4 @@ const Category = (props) => {
   );
 };
 
-export default Category;
+export default withRouter(Category);
