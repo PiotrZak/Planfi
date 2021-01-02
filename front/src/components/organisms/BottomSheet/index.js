@@ -99,7 +99,22 @@ const StyledReactBottomSheet = styled(ReactBottomsheet)`
         z-index: 4;
         display: ${({ visible }) => visible};
         @media only screen and ${breakPointSize.xs} {
-            background: transparent;
+            border-top-left-radius: 2.4rem;
+        justify-content: center;
+        border-top-right-radius: 2.4rem;
+        border-top-width: 2rem;
+        align-items: center;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        padding: 0 0 0 0;
+        position: fixed;
+        bottom: 0;
+        height: 37.2rem;
+        overflow-y: scroll;
+        width: 100%;
+        z-index: 4;
+        background: ${({ theme }) => theme.colorWhite};
+        display: ${({ visible }) => visible};
         }
 `;
 

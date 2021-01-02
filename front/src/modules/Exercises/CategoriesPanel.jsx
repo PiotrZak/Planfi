@@ -1,13 +1,19 @@
-import React from 'react';
-import Icon from 'components/atoms/Icon';
+import React from "react";
+import Icon from "components/atoms/Icon";
 import { isMobile } from "react-device-detect";
-import styled from 'styled-components';
-import { translate } from 'utils/Translation';
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended,  PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
-import EditCategoryModal from './EditCategoryModal';
+import styled from "styled-components";
+import { translate } from "utils/Translation";
+import StyledReactBottomSheet, {
+  StyledReactBottomSheetExtended,
+  PanelContainer,
+  PanelItem,
+  MobilePanelItem,
+  StyledMobileReactBottomSheet,
+} from "components/organisms/BottomSheet";
+import EditCategoryModal from "./EditCategoryModal";
 
 const IconWrapper = styled.div`
-    margin-top: .4rem;
+  margin-top: 0.4rem;
 `;
 
 const CategoriesPanel = ({
@@ -18,18 +24,17 @@ const CategoriesPanel = ({
   theme,
   bottomSheet,
   setBottomSheet,
-  selectedCategories
+  selectedCategories,
 }) => {
-
   const closeModal = () => {
-    setOpenEditModal(false)
-    setBottomSheet('none')
-  }
+    setOpenEditModal(false);
+    setBottomSheet("none");
+  };
 
   const openModal = () => {
-    setOpenEditModal(true)
-    setBottomSheet('none')
-  }
+    setOpenEditModal(true);
+    setBottomSheet("none");
+  };
 
   return (
     <StyledReactBottomSheet
@@ -37,50 +42,54 @@ const CategoriesPanel = ({
       visible={bottomSheet}
       className={""}
       onClose={() => setBottomSheet(false)}
-      appendCancelBtn={false}>
-      {isMobile ?
+      appendCancelBtn={false}
+    >
+      {isMobile ? (
         <>
-          <StyledReactBottomSheetExtended>
-            <PanelItem onClick={() => deleteCategories()}>
-              {selectedCategories.length == 1
-                ? <p>{translate('DeleteCategory')}</p>
-                : <p>{translate('DeleteCategory')}</p>
-              }
+          <PanelItem onClick={() => deleteCategories()}>
+            {selectedCategories.length == 1 ? (
+              <p>{translate("DeleteCategory")}</p>
+            ) : (
+              <p>{translate("DeleteCategory")}</p>
+            )}
+          </PanelItem>
+          {selectedCategories.length < 2 && (
+            <PanelItem onClick={openModal}>
+              <p>{translate("EditCategory")}</p>
             </PanelItem>
-            {selectedCategories.length < 2 &&
-          <PanelItem onClick={openModal}>
-                <p>{translate('EditCategory')}</p>
-            </PanelItem>
-            }
-          </StyledReactBottomSheetExtended>
+          )}
         </>
-        :
+      ) : (
         <>
           <PanelContainer>
             <PanelItem>
               <IconWrapper>
                 <Icon name="check" fill={theme.colorInputActive} />
               </IconWrapper>
-              {selectedCategories.length} {translate('selected')}
+              {selectedCategories.length} {translate("selected")}
             </PanelItem>
             <PanelItem onClick={() => deleteCategories()}>
-              <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteCategory')}
+              <Icon name="trash" fill={theme.colorInputActive} />
+              {translate("DeleteCategory")}
             </PanelItem>
-            {selectedCategories.length < 2 &&
+            {selectedCategories.length < 2 && (
               <PanelItem onClick={openModal}>
-                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
+                <Icon name="edit" fill={theme.colorInputActive} />
+                {translate("EditCategory")}
               </PanelItem>
-            }
+            )}
           </PanelContainer>
-        </>}
-        <EditCategoryModal
-                  selectedCategoryName={selectedCategoryName[0]}
-                  selectedCategories={selectedCategories[0]}
-                  theme={theme}
-                  openEditModal={openEditModal}
-                  onClose={closeModal} />
+        </>
+      )}
+      <EditCategoryModal
+        selectedCategoryName={selectedCategoryName[0]}
+        selectedCategories={selectedCategories[0]}
+        theme={theme}
+        openEditModal={openEditModal}
+        onClose={closeModal}
+      />
     </StyledReactBottomSheet>
-  )
-}
+  );
+};
 
 export default CategoriesPanel;
