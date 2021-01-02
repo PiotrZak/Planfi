@@ -4,7 +4,7 @@ import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import EditRoleModal from "./EditRoleModal";
-import StyledReactBottomSheet, { PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -52,7 +52,7 @@ export const UsersPanel = ({
         >
             {isMobile ?
                 <>
-                    <StyledMobileReactBottomSheet>
+                    <StyledReactBottomSheetExtended>
                         <PanelItem onClick={() => deleteUser()}>
                         {translate('DeleteUserText')}
                         </PanelItem>
@@ -62,7 +62,7 @@ export const UsersPanel = ({
                         <PanelItem onClick={() => openAssignTrainersToUsers()}>
                         {translate('AssignToTrainerText')}
                         </PanelItem>
-                    </StyledMobileReactBottomSheet>
+                    </StyledReactBottomSheetExtended>
                 </>
                 :
                 <>

@@ -146,4 +146,5 @@ export const pl = {
   Exercises: 'Ćwiczenia',
   AddCategoryModalDescription: 'Nazywając kategorię warto używać nazw zwiazanych z konkretnymi partiami ciała na przykład “Plecy”.',
   Add: 'Dodaj',
+  AddNextExercise: 'Dodaj następne ćwiczenie',
 };

@@ -3,7 +3,7 @@ import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import styled from 'styled-components';
 import { translate } from 'utils/Translation';
-import StyledReactBottomSheet, { PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {StyledReactBottomSheetExtended,  PanelContainer, PanelItem, MobilePanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import EditCategoryModal from './EditCategoryModal';
 
 const IconWrapper = styled.div`
@@ -40,7 +40,7 @@ const CategoriesPanel = ({
       appendCancelBtn={false}>
       {isMobile ?
         <>
-          <StyledMobileReactBottomSheet>
+          <StyledReactBottomSheetExtended>
             <PanelItem onClick={() => deleteCategories()}>
               {selectedCategories.length == 1
                 ? <p>{translate('DeleteCategory')}</p>
@@ -48,11 +48,11 @@ const CategoriesPanel = ({
               }
             </PanelItem>
             {selectedCategories.length < 2 &&
-            <PanelItem onClick={openModal}>
+          <PanelItem onClick={openModal}>
                 <p>{translate('EditCategory')}</p>
             </PanelItem>
             }
-          </StyledMobileReactBottomSheet>
+          </StyledReactBottomSheetExtended>
         </>
         :
         <>

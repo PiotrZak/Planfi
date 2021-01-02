@@ -44,8 +44,8 @@ export const PanelItem = styled.div`
         border-radius:1.8rem;
         width:calc(100% - 2.4rem);
         height:7.2rem;
-        background: ${({ theme }) => theme.colorGray100};
-        color: ${({ theme }) => theme.colorWhite};
+        background: ${({ theme }) => theme.colorWhite};
+        color: ${({ theme }) => theme.colorGray100};
         justify-content: center;
         align-items: center;
         z-index:1;
@@ -54,6 +54,7 @@ export const PanelItem = styled.div`
 
 export const StyledMobileReactBottomSheet = styled.div`
     position: absolute;
+    background: ${({ theme }) => theme.colorWhite};
     display: block;
     bottom: 0;
     width: 100%;

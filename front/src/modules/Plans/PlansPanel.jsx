@@ -4,7 +4,7 @@ import { translate } from 'utils/Translation';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import "react-multi-carousel/lib/styles.css";
-import StyledReactBottomSheet, { PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import EditPlanModal from "./EditPlanModal";
 
 const IconWrapper = styled.div`
@@ -35,7 +35,7 @@ const PlansPanel = ({
             appendCancelBtn={false}>
             {isMobile ?
                 <>
-                    <StyledMobileReactBottomSheet>
+                    <StyledReactBottomSheetExtended>
                         <PanelItem onClick={() => deletePlans()}>
                             {selectedPlans.length == 1
                                 ? <p>{translate('DeletePlan')}</p>
@@ -47,7 +47,7 @@ const PlansPanel = ({
                                 <p>{translate('EditPlan')}</p>
                             </PanelItem>
                         }
-                    </StyledMobileReactBottomSheet>
+                    </StyledReactBottomSheetExtended>
                 </>
                 :
                 <>

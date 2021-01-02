@@ -160,4 +160,5 @@ export const en = {
   Exercises: 'Exercises',
   AddCategoryModalDescription: "When naming a Category, it is worth using names related to specific parts of the body, for example 'Back'",
   Add: 'Add',
+  AddNextExercise: 'Add next exercise',
 };

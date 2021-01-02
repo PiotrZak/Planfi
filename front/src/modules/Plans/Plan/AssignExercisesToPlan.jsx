@@ -5,7 +5,7 @@ import Button from "components/atoms/Button"
 import { commonUtil } from "utils/common.util"
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import StyledReactBottomSheet from 'components/organisms/BottomSheet'
-import { translate } from 'utils/Translation';
+import { translate } from 'components/molecules/AddFiles/node_modules/utils/Translation';
 
 export const AssignExercisesToPlan = ({
     setAssignExercises,

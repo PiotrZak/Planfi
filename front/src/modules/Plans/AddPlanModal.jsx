@@ -7,8 +7,7 @@ import { StyledModal, ButtonContainer, IconContainer } from 'components/molecule
 import Button from "components/atoms/Button"
 import { userContext } from 'App';
 import * as Yup from 'yup';
-import { translate } from 'utils/Translation';
-import styled from 'styled-components';
+import { translate } from "utils/Translation";
 import { ModalHeading } from 'components/atoms/Heading';
 import InputContainer from 'components/atoms/InputContainerForm';
 import { useUserContext } from '../../support/context/UserContext';

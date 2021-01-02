@@ -11,7 +11,7 @@ import { Headline, Subline } from 'components/typography';
 import { translate } from 'utils/Translation';
 import { isMobile } from "react-device-detect";
 import styled from 'styled-components';
-import StyledReactBottomSheet, { PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet,  {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 
@@ -123,14 +123,14 @@ const Exercise = (props) => {
       >
         {isMobile ?
           <>
-            <StyledMobileReactBottomSheet>
+            <StyledReactBottomSheetExtended>
                 <PanelItem>
                   <Link to={{
                     pathname: `/edit-exercise/${props.location.state.id}`,
                     state: { exercise: exercise }
                   }}>{translate('Edit')}</Link>
                 </PanelItem>
-            </StyledMobileReactBottomSheet>
+            </StyledReactBottomSheetExtended>
           </>
           :
           <PanelContainer>
