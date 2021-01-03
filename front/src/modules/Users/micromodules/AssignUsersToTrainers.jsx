@@ -10,6 +10,7 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { Headline } from 'components/typography';
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -33,6 +34,7 @@ export const AssignUsersToTrainers = ({
   const [trainers, setTrainers] = useState();
   const [activeTrainers, setActiveTrainers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { notificationDispatch } = useNotificationContext();
 
   useEffect(() => {
     getAllTrainers();
@@ -67,6 +69,13 @@ export const AssignUsersToTrainers = ({
     userService
       .assignUsersToTrainer(data)
       .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+              content: { success: 'OK', message: translate('TrainersAssignedToUser') },
+              type: 'positive'
+          }
+      })
         setAssignTrainer('none')
         setBottomSheet('none');
       })

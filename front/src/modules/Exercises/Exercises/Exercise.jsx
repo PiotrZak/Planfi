@@ -9,11 +9,9 @@ import Nav from 'components/atoms/Nav';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { Headline, Subline } from 'components/typography';
 import { translate } from 'utils/Translation';
-import { isMobile } from "react-device-detect";
 import styled from 'styled-components';
-import StyledReactBottomSheet,  {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-
+import ExercisePanel from './ExercisePanel';
 
 const ExerciseDeleted = ""
 
@@ -101,8 +99,6 @@ const Exercise = (props) => {
             </Carousel>
           </>
         }
-
-
         {exercise &&
           <>
             <h1>{exercise.name}</h1>
@@ -114,38 +110,13 @@ const Exercise = (props) => {
           </>
         }
       </GlobalTemplate>
-      <StyledReactBottomSheet
-        showBlockLayer={false}
-        visible={bottomSheet}
-        className={""}
-        onClose={() => setBottomSheet('none')}
-        appendCancelBtn={false}
-      >
-        {isMobile ?
-          <>
-            <StyledReactBottomSheetExtended>
-                <PanelItem>
-                  <Link to={{
-                    pathname: `/edit-exercise/${props.location.state.id}`,
-                    state: { exercise: exercise }
-                  }}>{translate('Edit')}</Link>
-                </PanelItem>
-            </StyledReactBottomSheetExtended>
-          </>
-          :
-          <PanelContainer>
-            <PanelItem>
-              <Link to={{
-                pathname: `/edit-exercise/${props.location.state.id}`,
-                state: { exercise: exercise }
-              }}>{translate('Edit')}</Link>
-            </PanelItem>
-
-            <PanelItem onClick={() => deleteExercise()} className='bottom-sheet-item'>
-              {translate('Delete')}
-            </PanelItem>
-          </PanelContainer>}
-      </StyledReactBottomSheet>
+      <ExercisePanel
+        props={props}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+        exercise={exercise}
+        deleteExercise={deleteExercise}
+      />
     </>
   );
 };

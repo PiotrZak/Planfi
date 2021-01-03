@@ -35,30 +35,27 @@ export const PlanPanelExercises = ({
             onClose={() => setSelectedElementsBottomSheet(false)}
             appendCancelBtn={false}>
             {isMobile ?
-                <>
-                {/* todo - make it works */}
-                    <StyledReactBottomSheetExtended>
+            <>
                         {selectedExercise.length > 1 ?
                             < PanelItem onClick={() => deleteExercise()}>
-                                {selectedExercise.length > 1
-                                    ? <p>{translate('DeleteCategory')}</p>
-                                    : <p>{translate('DeleteCategories')}</p>
+                                {selectedExercise.length == 1
+                                    ? <p>{translate('DeleteExercise')}</p>
+                                    : <p>{translate('DeleteExercises')}</p>
                                 }
                             </PanelItem>
                             :
                             <>
                                 < PanelItem onClick={() => deleteExercise()}>
-                                    {selectedExercise.length > 1
-                                        ? <p>{translate('DeleteCategory')}</p>
-                                        : <p>{translate('DeleteCategories')}</p>
+                                    {selectedExercise.length == 1
+                                        ? <p>{translate('DeleteExercise')}</p>
+                                        : <p>{translate('DeleteExercises')}</p>
                                     }
                                 </PanelItem>
                                 <PanelItem onClick={() => editExercise()}>
-                                    <p>{translate('EditCategory')}</p>
+                                    <p>{translate('EditExercise')}</p>
                                 </PanelItem>
                             </>
                         }
-                    </StyledReactBottomSheetExtended>
                 </>
                 :
                 <>

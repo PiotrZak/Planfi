@@ -4,7 +4,7 @@ import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import EditRoleModal from "./EditRoleModal";
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, { StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -52,31 +52,29 @@ export const UsersPanel = ({
         >
             {isMobile ?
                 <>
-                    <StyledReactBottomSheetExtended>
-                        <PanelItem onClick={() => deleteUser()}>
+                    <PanelItem onClick={() => deleteUser()}>
                         {translate('DeleteUserText')}
-                        </PanelItem>
-                        <PanelItem onClick={() => openAssignPlansToUsers()}>
+                    </PanelItem>
+                    <PanelItem onClick={() => openAssignPlansToUsers()}>
                         {translate('AssignPlanText')}
-                        </PanelItem>
-                        <PanelItem onClick={() => openAssignTrainersToUsers()}>
+                    </PanelItem>
+                    <PanelItem onClick={() => openAssignTrainersToUsers()}>
                         {translate('AssignToTrainerText')}
-                        </PanelItem>
-                    </StyledReactBottomSheetExtended>
+                    </PanelItem>
                 </>
                 :
                 <>
                     <PanelContainer>
-                    <PanelItem>
-                        <IconWrapper>
-                            <Icon name="check" fill={theme.colorInputActive}/>
-                        </IconWrapper>
-                        {activeUsers.length}
-                        {translate('UsersSelected')}
+                        <PanelItem>
+                            <IconWrapper>
+                                <Icon name="check" fill={theme.colorInputActive} />
+                            </IconWrapper>
+                            {activeUsers.length}
+                            {translate('UsersSelected')}
                         </PanelItem>
                         <PanelItem onClick={() => deleteUser()} >
-                        <Icon name="trash" fill={theme.colorInputActive} />
-                        {translate('DeleteUserText')}
+                            <Icon name="trash" fill={theme.colorInputActive} />
+                            {translate('DeleteUserText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>
                             <IconWrapper>

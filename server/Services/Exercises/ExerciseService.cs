@@ -101,6 +101,11 @@ namespace WebApi.Services
             {
                 exercise.Description = updateExercise.Description;
             }
+            
+            if (updateExercise.Repeats != exercise.Repeats)
+            {
+                exercise.Repeats = updateExercise.Repeats;
+            }
 
             if (updateExercise.Series != exercise.Series)
             {

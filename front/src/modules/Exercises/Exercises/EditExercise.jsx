@@ -45,12 +45,12 @@ const AddFiles = withLazyComponent(
 );
 
 const initialValues = {
-  exerciseName: "",
-  exerciseDescription: "",
+  name: "",
+  description: "",
   times: "",
   series: "",
   weight: "",
-  file: "",
+  files: "",
 };
 
 const ImagePreviewContainer = styled.div`
@@ -123,8 +123,9 @@ const EditExercise = (props) => {
     exerciseService
       .getExerciseById(id)
       .then((data) => {
-        console.log(data);
         setExerciseData(data);
+        setSelectedFiles(data.files)
+        setPreviewFiles(data.files)
       })
       .catch((error) => {});
   };
@@ -132,66 +133,81 @@ const EditExercise = (props) => {
   const resetFileInput = () => {
     document.getElementById("choose-file-button").value = "";
   };
-  const [initialExerciseData] = useState();
   const [exerciseData, setExerciseData] = useState([]);
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const requiredFields = ["name", "description"];
 
-  const onSubmit = () => {
-    console.log("test");
-  };
 
-  const submit = (e) => {
-    editExercise(exerciseData);
-  };
+  console.log(exerciseData)
 
-  const editExercise = () => {
+  const onSubmit = (values) => {
+
+    console.log(values)
+    console.log(exerciseData)
+
     const formData = new FormData();
     formData.append(
       "Name",
-      exerciseData.name == null ? initialExerciseData.name : exerciseData.name
+      values.name == null ? exerciseData.name : values.name
     );
     formData.append(
       "Description",
-      exerciseData.description == null
-        ? initialExerciseData.description
-        : exerciseData.description
+      values.description == ""
+        ? exerciseData.description
+        : values.description
     );
     formData.append(
       "Times",
-      exerciseData.times == null
-        ? initialExerciseData.times
-        : exerciseData.times
+      values.times == ""
+        ? exerciseData.times
+        : values.times
     );
     formData.append(
       "Series",
-      exerciseData.series == null
-        ? initialExerciseData.series
-        : exerciseData.series
+      values.series == ""
+        ? exerciseData.series
+        : values.series
     );
     formData.append(
       "Weight",
-      exerciseData.weight == null
-        ? initialExerciseData.weight
-        : exerciseData.weight
+      values.weight == ""
+        ? exerciseData.weight
+        : values.weight
     );
-    if (exerciseData.files != null) {
+    if (values.files != null) {
       for (let i = 0; i < exerciseData.files.length; i++) {
         formData.append(`Files`, exerciseData.files[i]);
       }
     }
+
+
     formData.append("CategoryId", props.location.state.id);
 
     exerciseService
       .editExercise(id, formData)
       .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: "OK", message: translate("ExercisesEdited") },
+            type: "positive",
+          },
+        });
         history.push({
           pathname: `/exercises/${id}`,
           state: { id: id},
         });
       })
-      .catch((error) => {});
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: translate("AlertError") },
+            type: "error",
+          },
+        });
+      })
   };
 
   const handleSeries = (data) => {
@@ -307,6 +323,49 @@ const EditExercise = (props) => {
     }
   };
 
+  function removeFile(currentPhoto) {
+
+    for (let i = 0; i <= selectedFiles.length; ++i) {
+      if (currentPhoto == selectedFiles[i].ID) {
+
+        const selectedList = [...selectedFiles];
+        const previewList = [...previewFiles];
+
+        const updatedSelectedList = selectedList.filter(
+          (item) => item.ID !== selectedFiles[i].ID
+        );
+        const updatedPreviewList = previewList.filter(
+          (item) => item.ID !== previewFiles[i].ID
+        );
+        setSelectedFiles(updatedSelectedList);
+        setPreviewFiles(updatedPreviewList);
+        resetFileInput();
+        break;
+      }
+    }
+  }
+
+  const renderAttachmentsPreview = (source) => {
+    if (source.length > 0) {
+      return (
+        <ImagePreviewContainer id="image-preview-container">
+          {source.map((photo) => (
+            <AttachmentPreview
+              attachmentSrc={photo.File}
+              type={photo.Type}
+              videoType={photo.videoType}
+              alt=""
+              key={photo.ID}
+              setID={photo.ID}
+              remove={() => removeFile(photo.ID)}
+              complete
+            />
+          ))}
+        </ImagePreviewContainer>
+      );
+    }
+  };
+
   return (
     <>
       <GlobalTemplate>
@@ -324,22 +383,22 @@ const EditExercise = (props) => {
                   size="sm"
                   buttonType="primary"
                   type="submit"
-                  onClick={submit}
+                  onClick={onSubmit}
                   disabled={!isValid}
                 >
                   {translate("Save")}
                 </Button>
               </Nav>
               <Paragraph type="body-3-regular">
-                {translate("EditExerciseInfo")}
+                {translate("EditExerciseDescription")}
               </Paragraph>
               <Label text={translate("ExerciseName")}>
                 <Field
                   placeholder={exerciseData.name}
                   type="text"
-                  name="exerciseName"
+                  name="name"
                   as={Input}
-                  error={errors.exerciseName && touched.exerciseName}
+                  error={errors.name && touched.name}
                 />
               </Label>
               <ErrorMessageForm name="exerciseName" />
@@ -347,17 +406,7 @@ const EditExercise = (props) => {
                 triggerFileUploadButton={triggerFileUploadButton}
                 handleImageChange={handleImageChange}
               />
-              <ImagePreviewContainer id="image-preview-container">
-                {exerciseData.files &&
-                  exerciseData.files.map((file, i) => (
-                    <img
-                      className="exercise-image"
-                      key={i}
-                      alt={i}
-                      src={`data:image/jpeg;base64,${file}`}
-                    />
-                  ))}
-              </ImagePreviewContainer>
+                {renderAttachmentsPreview(previewFiles)}
               <ContainerDescription>
                 <Label text={translate("AddExerciseDescription")}>
                   <Field

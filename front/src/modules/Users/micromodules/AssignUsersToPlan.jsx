@@ -8,7 +8,7 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
-import {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const IconWrapper = styled.div`
@@ -88,7 +88,7 @@ export const AssignUsersToPlans = ({
                     }
                 })
                 setAssignPlan('none');
-                setBottomSheet(false);
+                setBottomSheet('none');
             })
             .catch((error) => {
                 console.log(error)
@@ -103,7 +103,7 @@ export const AssignUsersToPlans = ({
     };
 
     return (
-        <StyledReactBottomSheetExtended
+        <StyledReactBottomSheet
             showBlockLayer={false}
             visible={assignPlan}
             className={""}
@@ -138,6 +138,6 @@ export const AssignUsersToPlans = ({
                 <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
                 {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
-        </StyledReactBottomSheetExtended>
+        </StyledReactBottomSheet>
     );
 };

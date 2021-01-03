@@ -12,6 +12,7 @@ import GlobalTemplate from 'templates/GlobalTemplate';
 import CategoriesPanel from 'modules/Exercises/CategoriesPanel';
 import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
 import { withLazyComponent } from '../../utils/lazyComponent';
+import { isMobile } from "react-device-detect";
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 const Nav = withLazyComponent(React.lazy(() => import('components/atoms/Nav')));
 // const CheckboxGenericComponent = withLazyComponent(React.lazy(() => import('components/organisms/CheckboxGeneric')));
@@ -46,7 +47,17 @@ const Categories = () => {
     const selectedCategoriesName = commonUtil.getCheckedData(selectedData, 'title');
     setSelectedCategories(selectedCategoriesId);
     setSelectedCategoryName(selectedCategoriesName)
-    selectedCategoriesId.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+    if(selectedCategoriesId.length > 0){
+      if(isMobile){
+        setBottomSheet('inline') 
+      }
+      else{
+        setBottomSheet('flex') 
+      }
+    }
+    else{
+      setBottomSheet('none');
+    }
   };
 
   const deleteCategories = () => {

@@ -40,13 +40,11 @@ export const PanelItem = styled.div`
         cursor: pointer;
     }
     @media only screen and ${breakPointSize.xs} {
-        margin: 1.8rem 1.2rem;
-        border-radius:1.8rem;
-        width:calc(100% - 2.4rem);
         height:7.2rem;
         background: ${({ theme }) => theme.colorWhite};
         color: ${({ theme }) => theme.colorGray100};
         justify-content: center;
+        border-bottom:1px ${({ theme }) => theme.colorGray20}  solid;
         align-items: center;
         z-index:1;
   }
@@ -99,22 +97,24 @@ const StyledReactBottomSheet = styled(ReactBottomsheet)`
         z-index: 4;
         display: ${({ visible }) => visible};
         @media only screen and ${breakPointSize.xs} {
+            font-weight:600;
+            height:auto !important;
             border-top-left-radius: 2.4rem;
-        justify-content: center;
-        border-top-right-radius: 2.4rem;
-        border-top-width: 2rem;
-        align-items: center;
-        justify-content: flex-start;
-        box-sizing: border-box;
-        padding: 0 0 0 0;
-        position: fixed;
-        bottom: 0;
-        height: 37.2rem;
-        overflow-y: scroll;
-        width: 100%;
-        z-index: 4;
-        background: ${({ theme }) => theme.colorWhite};
-        display: ${({ visible }) => visible};
+            justify-content: center;
+            border-top-right-radius: 2.4rem;
+            border-top-width: 2rem;
+            align-items: center;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            padding: 0 0 0 0;
+            position: fixed;
+            bottom: 0;
+            height: 37.2rem;
+            overflow-y: scroll;
+            width: 100%;
+            z-index: 4;
+            background: ${({ theme }) => theme.colorWhite};
+            display: ${({ visible }) => visible};
         }
 `;
 

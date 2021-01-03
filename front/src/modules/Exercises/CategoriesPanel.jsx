@@ -4,11 +4,8 @@ import { isMobile } from "react-device-detect";
 import styled from "styled-components";
 import { translate } from "utils/Translation";
 import StyledReactBottomSheet, {
-  StyledReactBottomSheetExtended,
   PanelContainer,
   PanelItem,
-  MobilePanelItem,
-  StyledMobileReactBottomSheet,
 } from "components/organisms/BottomSheet";
 import EditCategoryModal from "./EditCategoryModal";
 
@@ -50,8 +47,8 @@ const CategoriesPanel = ({
             {selectedCategories.length == 1 ? (
               <p>{translate("DeleteCategory")}</p>
             ) : (
-              <p>{translate("DeleteCategory")}</p>
-            )}
+                <p>{translate("DeleteCategoriesText")}</p>
+              )}
           </PanelItem>
           {selectedCategories.length < 2 && (
             <PanelItem onClick={openModal}>
@@ -60,27 +57,30 @@ const CategoriesPanel = ({
           )}
         </>
       ) : (
-        <>
-          <PanelContainer>
-            <PanelItem>
-              <IconWrapper>
-                <Icon name="check" fill={theme.colorInputActive} />
-              </IconWrapper>
-              {selectedCategories.length} {translate("selected")}
-            </PanelItem>
-            <PanelItem onClick={() => deleteCategories()}>
-              <Icon name="trash" fill={theme.colorInputActive} />
-              {translate("DeleteCategory")}
-            </PanelItem>
-            {selectedCategories.length < 2 && (
-              <PanelItem onClick={openModal}>
-                <Icon name="edit" fill={theme.colorInputActive} />
-                {translate("EditCategory")}
+          <>
+            <PanelContainer>
+              <PanelItem>
+                <IconWrapper>
+                  <Icon name="check" fill={theme.colorInputActive} />
+                </IconWrapper>
+                {selectedCategories.length} {translate("selected")}
               </PanelItem>
-            )}
-          </PanelContainer>
-        </>
-      )}
+              <PanelItem onClick={() => deleteCategories()}>
+                <Icon name="trash" fill={theme.colorInputActive} />
+                {selectedCategories.length == 1
+                  ? translate("DeleteCategory")
+                  : translate("DeleteCategoriesText")
+                }
+              </PanelItem>
+              {selectedCategories.length < 2 && (
+                <PanelItem onClick={openModal}>
+                  <Icon name="edit" fill={theme.colorInputActive} />
+                  {translate("EditCategory")}
+                </PanelItem>
+              )}
+            </PanelContainer>
+          </>
+        )}
       <EditCategoryModal
         selectedCategoryName={selectedCategoryName[0]}
         selectedCategories={selectedCategories[0]}

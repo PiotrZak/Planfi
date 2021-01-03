@@ -71,6 +71,9 @@ export const en = {
 
   ditExercise: "Edit Exercise",
   DeleteExercise: "Delete Exercise",
+  DeleteExercises: "Delete Exercises",
+  EditExercise: "Edit Exercise",
+  EditExerciseDescription: "You can add any materials here and information that may be helpful regarding this exercise.",
   ExercisesDeleted: "The exercises succesfully deleted!",
   EditUserDetails: "Edit Your data",
   SaveChanges: "Save Changes",
