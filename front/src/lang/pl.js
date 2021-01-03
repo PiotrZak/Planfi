@@ -63,6 +63,7 @@ export const pl = {
   CategoryTitle: 'Nazwa kategorii',
   EditCategoryTitle: 'Edytuj kategorie',
   CategoryEdited: 'Kategorie pomyślnie zmienione',
+  categoriesTitle: 'Kategorie',
 
   NoExerciseInPlan: 'There are no added exercises in this Plan',
   Exercises: 'Ćwiczenia',

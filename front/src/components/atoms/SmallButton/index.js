@@ -62,11 +62,13 @@ const SmallButton = ({
 
 SmallButton.propTypes = {
   iconName: PropTypes.string.isRequired,
-  fill: PropTypes.string,
+  fill: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
   size: PropTypes.string,
   buttonType: PropTypes.oneOf(['primary', 'secondary', 'dangerous', 'regular']),
   buttonShape: PropTypes.oneOf(['square', 'circle']),
-  color: PropTypes.string,
 };
 
 SmallButton.defaultProps = {

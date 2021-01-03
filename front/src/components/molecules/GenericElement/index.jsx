@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colorGray80};
@@ -66,7 +67,7 @@ const handleAvatarType = (type) => {
         width: 4.8rem;
         border-radius: 3px;
       `;
-    case 'null':
+    case 'noAvatar':
       return css``;
     default:
       return css`
@@ -77,10 +78,32 @@ const handleAvatarType = (type) => {
   }
 };
 
-const Avatar = styled.img`
+const StyledAvatar = styled.img`
   border-radius: 4px;
   ${({ type }) => handleAvatarType(type)};
 `;
+
+const NoAvatarSquare = styled.div`
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: .3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colorGray50};
+`;
+
+const Avatar = (type, url, theme) => {
+  if (url === 'null') {
+    return (
+      <NoAvatarSquare>
+        <Icon name="image-slash" size="1.4rem" fill={theme.colorSecondary} />
+      </NoAvatarSquare>
+    );
+  }
+  return <StyledAvatar type={type} url={url} />;
+};
 
 const GenericElement = ({
   HeadLine,
@@ -91,38 +114,46 @@ const GenericElement = ({
   onMenuClick,
   onSecondaryMenuClick,
   ...rest
-}) => (
-  <Wrapper {...rest}>
-    <Container>
-      <Avatar type={AvatarType} url={AvatarURL} />
-      <ContainerText>
-        <Paragraph type="Label-Button">{HeadLine}</Paragraph>
-        <Paragraph type="body-3-regular">{SubLine}</Paragraph>
-      </ContainerText>
-    </Container>
-    <ContainerMenu>
-      <Circle onClick={onMenuClick}>
-        <Icon name="ellipsis-h" size="2rem" />
-      </Circle>
-      {SecondaryMenu && (
-        <Circle onClick={onSecondaryMenuClick} lastMenu>
-          <Icon name="draggabledots" size="2rem" />
+}) => {
+  const { theme } = useThemeContext();
+
+  return (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <Wrapper {...rest}>
+      <Container>
+        {Avatar(AvatarType, AvatarURL, theme)}
+        <ContainerText>
+          <Paragraph type="Label-Button">{HeadLine}</Paragraph>
+          <Paragraph type="body-3-regular">{SubLine}</Paragraph>
+        </ContainerText>
+      </Container>
+      <ContainerMenu>
+        <Circle onClick={onMenuClick}>
+          <Icon name="ellipsis-h" size="2rem" />
         </Circle>
-      )}
-    </ContainerMenu>
-  </Wrapper>
-);
+        {SecondaryMenu && (
+          <Circle onClick={onSecondaryMenuClick} lastMenu>
+            <Icon name="draggabledots" size="2rem" />
+          </Circle>
+        )}
+      </ContainerMenu>
+    </Wrapper>
+  );
+};
 
 GenericElement.propTypes = {
   HeadLine: PropTypes.string.isRequired,
-  SubLine: PropTypes.string.isRequired,
-  AvatarType: PropTypes.oneOf(['circle', 'square']),
+  // eslint-disable-next-line react/require-default-props
+  SubLine: PropTypes.string,
+  AvatarType: PropTypes.oneOf(['circle', 'square', 'noAvatar']),
   AvatarURL: PropTypes.string,
   SecondaryMenu: PropTypes.bool,
+  onMenuClick: PropTypes.func,
+  onSecondaryMenuClick: PropTypes.func,
 };
 
 GenericElement.defaultProps = {
-  AvatarType: 'null',
+  AvatarType: 'noAvatar',
   AvatarURL: 'null',
   SecondaryMenu: false,
 };

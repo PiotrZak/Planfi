@@ -8,12 +8,13 @@ import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
 
 const CheckboxContainer = styled.div`
   position: relative;
-
+  //bad practice
+  //to fix
   input{
-    z-index: 2;
+    z-index: 0;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: -6rem;
+    left: 1rem;
     @media only screen and ${breakPointSize.xs} {
       display: none;
     }

@@ -66,6 +66,7 @@ export const en = {
   CategoryTitle: 'Name of category',
   CreateCategory: 'Create Category',
   CategoryEdited: 'Category succesfull edited',
+  categoriesTitle: 'Categories',
 
   NoExerciseInPlan: 'There are no added exercises in this Plan',
   Exercises: 'Exercises',

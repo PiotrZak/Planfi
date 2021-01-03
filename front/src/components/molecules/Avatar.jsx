@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import { useThemeContext } from 'support/context/ThemeContext';
 import Image from 'components/atoms/Image';
 
-const addedAvatar = 'Avatar succesfully added!';
-
 const AvatarContainer = styled.div`
     display: inline-flex;
     width: 7.2rem;

@@ -1,7 +1,7 @@
 import React, {
   useState, useEffect,
 } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { UserInfo } from 'components/molecules/UserInfo/UserInfo';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { userService } from 'services/userServices';
@@ -25,13 +25,17 @@ import Search from 'components/molecules/Search';
 import breakPointSize from 'utils/rwd';
 
 const Container = styled.div`
-  ${({ type }) => type === 'bottom' && 'margin: 0 1.6rem;'};
-
   margin: auto;
   width: 74%;
 
   @media screen and ${breakPointSize.xs} {
     width: 100%;
+
+    ${({ type }) => type === 'entry' && css`
+      width: calc(100% - 3.2rem);
+      margin: 0 1.6rem;
+    `
+}
   }
 `;
 
@@ -125,7 +129,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
             {renderSwitchedButton()}
           </Container>
         </UserInfoBackground>
-        <Container type="bottom">
+        <Container type="entry">
           <Search placeholder={translate('Find')} callback={console.log('add search')} />
           {toRender}
         </Container>

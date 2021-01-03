@@ -116,21 +116,11 @@ const Category = (props) => {
     <>
       <GlobalTemplate>
         <Nav>
-          {category && <BackTopNav text={category.title} />}
-          {category
-          && (
-            <Link
-              to={{
-                pathname: routes.addExcersise,
-                state: { id },
-              }}
-            >
-              <Container>
-                <SmallButton iconName="ellipsis-h" onClick={() => alert('Add functionality')} color={theme.colorGray90} />
-                <SmallButton iconName="plus" onClick={() => alert('Add functionality')} />
-              </Container>
-            </Link>
-          )}
+          <BackTopNav text={category.title} />
+          <Container>
+            <SmallButton iconName="ellipsis-h" onClick={() => alert('Add functionality')} />
+            <SmallButton iconName="plus" onClick={() => alert('Add functionality')} />
+          </Container>
         </Nav>
         <Search callback={filterExercises} placeholder={translate('ExerciseSearch')} />
         {results

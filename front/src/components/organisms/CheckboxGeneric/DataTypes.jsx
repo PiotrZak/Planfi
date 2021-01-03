@@ -39,6 +39,7 @@ export const RenderType = ({
             HeadLine={element.title}
             SubLine="TO DO - Get number of exercise in category"
             category={element.category}
+            AvatarType="noAvatar"
           />
         );
 
@@ -72,9 +73,8 @@ export const RenderType = ({
           <StyledGenericElement
             key={i}
             onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
-            headline={element.name}
+            HeadLine={element.name}
             image={element.files && element.files[0]}
-            subline={`${element.series} / ${element.times}`}
             exercise={element}
           />
         );
