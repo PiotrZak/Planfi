@@ -10,7 +10,6 @@ import { StyledModal, ButtonContainer, IconContainer } from 'components/molecule
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { categoryService } from 'services/categoryService';
 import Icon from 'components/atoms/Icon';
-import styled from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';

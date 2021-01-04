@@ -5,7 +5,6 @@ import Input from 'components/molecules/Input';
 import { planService } from "services/planService";
 import { StyledModal, ButtonContainer, IconContainer } from 'components/molecules/Modal'
 import Button from "components/atoms/Button"
-import { userContext } from 'App';
 import * as Yup from 'yup';
 import { translate } from "utils/Translation";
 import { ModalHeading } from 'components/atoms/Heading';
@@ -28,7 +27,7 @@ const validationSchema = Yup.object().shape({
 const AddPlanModal = ({ openModal, onClose }) => {
 
     const { notificationDispatch } = useNotificationContext();
-    const { user } = useUserContext(userContext);
+    const { user } = useUserContext();
 
     const onSubmit = (values) => {
         const transformedData = { title: values.title, organizationId: user.organizationId, creatorId: user.userId, creatorName: user.firstName }

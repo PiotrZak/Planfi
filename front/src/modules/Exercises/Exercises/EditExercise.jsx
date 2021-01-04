@@ -346,6 +346,7 @@ const EditExercise = (props) => {
   }
 
   const renderAttachmentsPreview = (source) => {
+    if(source){
     if (source.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
@@ -364,6 +365,7 @@ const EditExercise = (props) => {
         </ImagePreviewContainer>
       );
     }
+  }
   };
 
   return (

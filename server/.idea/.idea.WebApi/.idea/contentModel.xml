@@ -63,6 +63,7 @@
           <e p="ForgotPassword.cs" t="Include" />
           <e p="ModifyExercise.cs" t="Include" />
           <e p="ResetPasswordRequest.cs" t="Include" />
+          <e p="UnAssignExerciseToPlan.cs" t="Include" />
         </e>
       </e>
       <e p="Dockerfile" t="Include" />

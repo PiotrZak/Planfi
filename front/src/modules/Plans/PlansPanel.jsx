@@ -35,7 +35,6 @@ const PlansPanel = ({
             appendCancelBtn={false}>
             {isMobile ?
                 <>
-                    <StyledReactBottomSheetExtended>
                         <PanelItem onClick={() => deletePlans()}>
                             {selectedPlans.length == 1
                                 ? <p>{translate('DeletePlan')}</p>
@@ -47,7 +46,6 @@ const PlansPanel = ({
                                 <p>{translate('EditPlan')}</p>
                             </PanelItem>
                         }
-                    </StyledReactBottomSheetExtended>
                 </>
                 :
                 <>

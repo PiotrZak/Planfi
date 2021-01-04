@@ -66,6 +66,7 @@ export const pl = {
   CategoryEdited: 'Gratulacje! Kategorie pomyślnie zmienione!',
   EditExercise: "Edytuj ćwiczenie",
   DeleteExercise: "Usuń ćwiczenie",
+  UnassignExercise: "Wypisz ćwiczenie z planu",
   DeleteExercises: "Usuń ćwiczenia",
   EditExercise: "Edytuj ćwiczenie",
   EditExerciseDescription: "Tutaj możesz dodać wszelkie materiały i informację, które mogą być pomocne odnośnie tego ćwiczenia.",

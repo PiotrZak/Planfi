@@ -79,6 +79,7 @@ export const ExerciseDetailsPanel = ({
     }
 
     const returnToExercises = () => {
+
         setOpenExerciseDetailsPlan('none')
         setAssignExercises('flex')
     }
