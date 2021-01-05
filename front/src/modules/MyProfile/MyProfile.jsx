@@ -40,8 +40,8 @@ const Container = styled.div`
 `;
 
 const ContainerCentred = styled.div`
-  margin-top: 4.7rem;
-  margin-bottom: 1rem;
+  margin-top: 4.8rem;
+  margin-bottom: 1.2rem;
 `;
 
 const IconContainer = styled.div`
@@ -124,7 +124,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
               <Icon name="cog" size="2rem" onClick={() => alert('Add functionality')} />
             </IconContainer>
             <ContainerCentred>
-              {user && <UserInfo user={updatedUser} />}
+              <UserInfo user={updatedUser} />
             </ContainerCentred>
             {renderSwitchedButton()}
           </Container>
