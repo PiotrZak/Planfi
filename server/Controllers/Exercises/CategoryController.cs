@@ -76,19 +76,6 @@ namespace WebApi.Controllers
         }
         
         [AllowAnonymous]
-        [HttpGet("categoryLength/{id}")]
-        public IActionResult GetExercisesLengthFromCategory(string id)
-        {
-
-            var Category = _categoryService.GetExercisesLengthFromCategory(id);
-            if (Category == null)
-                return NotFound();
-
-            return Ok(Category);
-        }
-        
-        
-        [AllowAnonymous]
         [HttpPost("delete")]
         public IActionResult Delete([FromBody] string[] id)
         {

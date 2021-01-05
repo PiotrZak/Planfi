@@ -27,9 +27,6 @@ const CATEGORY = gql`{
 `;
 
 const Categories = () => {
-
-  const [categories, setCategories] = useState([])
-
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState([]);
   const [openModal, setOpenModal] = useState(false);

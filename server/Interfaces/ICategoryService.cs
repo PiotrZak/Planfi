@@ -10,7 +10,6 @@ namespace WebApi.Interfaces
     public interface ICategoryService
     {
         Category GetById(string id);
-        int GetExercisesLengthFromCategory(string id);
         Category Create(Category category);
         IEnumerable<CategoryService.CategoryViewModel> GetAll();
         void Delete(string[] id);
