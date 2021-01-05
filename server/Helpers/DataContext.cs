@@ -1,11 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Protocols;
 using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
-using WebApi.GraphQl;
 
 namespace WebApi.Helpers
 {

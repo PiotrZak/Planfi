@@ -21,6 +21,7 @@ import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 import Categories from 'modules/Exercises/Categories';
 import Category from 'modules/Exercises/Category/Category';
 import AddExercise from 'modules/Exercises/Exercises/AddExercise';
+import EditExercise from 'modules/Exercises/Exercises/EditExercise';
 
 // plans
 import Plans from 'modules/Plans/Plans';
@@ -86,7 +87,8 @@ const Root = () => {
                   <PrivateRoute path="/user/:id" component={User} />
 
                   <MenuTemplate>
-                    <Route path={routes.addExcersise} component={AddExercise} />
+                    <Route path={routes.addExercise} component={AddExercise} />
+                    <Route path={routes.editExercise} component={EditExercise} />
                     <Route path={routes.exercise} component={Exercise} />
                     <Route path={routes.categories} component={Categories} />
                     <Route path={routes.myProfile} component={MyProfile} />

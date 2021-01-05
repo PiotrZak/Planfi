@@ -1,6 +1,21 @@
+const mainColors = {
+  white: '#FFFFFF',
+  colorGray110: '#09090B',
+  colorGray100: '#101013',
+  colorGray90: '#1D1D25',
+  colorGray80: '#31313D',
+  colorGray70: '#51515F',
+  colorGray60: '#666674',
+  colorGray50: '#9898A5',
+  colorGray40: '#C3C3CF',
+  colorGray30: '#DDDDE6',
+  colorGray20: '#E7E7F0',
+  colorGray10: '#F0F0F5',
+}
+
 export const darkTheme = {
 
-  colorPrimary: '#FFFFFF',
+  colorPrimary: mainColors.white,
   colorSecondary: '#C3C3CF',
   colorDisabled: '#666674',
 

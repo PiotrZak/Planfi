@@ -33,6 +33,23 @@ const StyledInput = styled.input`
   }
 `;
 
+const StyledLightInput = styled.input`
+  outline: none;
+  padding: .6rem 1.6rem;
+  border-radius: 3px;  
+  
+  ${() => handleTextType('body-3-regular')};
+
+  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorGray80)};
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorWhite : theme.colorWhite)};
+  border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
+  
+  :focus{
+    border: 1px solid ${({ theme }) => theme.colorNeutralDark};
+    background: ${({ theme }) => theme.colorGray10};
+  }
+`;
+
 // icon-left icon-right icon-both
 const StyledInputContainer = styled.input`
   outline: none;
@@ -47,6 +64,22 @@ const StyledInputContainer = styled.input`
   color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
 `;
+
+//light
+const StyledLightInputContainer = styled.input`
+  outline: none;
+  border: none;
+  
+  border-radius: ${({ disabled }) => ((disabled) ? 'none' : '3px')};
+        
+  ${() => handleTextType('body-3-regular')};
+        
+  padding: .6rem 1.6rem;$
+
+  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorWhite : theme.colorWhite)};
+`;
+
 
 const CenterIcon = styled.div`
   padding: .85rem;
@@ -161,6 +194,8 @@ const Input = (props) => {
   switch (typeInput) {
     case 'basic':
       return <StyledInput {...props} />;
+      case 'light':
+      return <StyledLightInput {...props}/>;
     case 'left':
       return (
         <ContainerLeft disabled={disabled} error={error} id="Container">

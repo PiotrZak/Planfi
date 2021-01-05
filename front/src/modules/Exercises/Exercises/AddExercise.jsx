@@ -1,33 +1,37 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import BackTopNav from 'components/molecules/BackTopNav';
-import { translate } from 'utils/Translation';
-import ExerciseTemplate from 'templates/ExerciseTemplate';
-import Button from 'components/atoms/Button';
-import Paragraph from 'components/atoms/Paragraph';
-import Label from 'components/atoms/Label';
-import Input from 'components/molecules/Input';
-import Icon from 'components/atoms/Icon';
-import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
-import { exerciseService } from 'services/exerciseService';
-import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
-import TextArea from 'components/molecules/TextArea';
-import AttachmentPreview, { TYPE } from 'components/molecules/AttachmentPreview';
-import Random from 'utils/Random';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import GlobalTemplate, { Nav } from 'templates/GlobalTemplate';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import BackTopNav from "components/molecules/BackTopNav";
+import { translate } from "utils/Translation";
+import ExerciseTemplate from "templates/ExerciseTemplate";
+import Button from "components/atoms/Button";
+import Paragraph from "components/atoms/Paragraph";
+import Label from "components/atoms/Label";
+import Input from "components/molecules/Input";
+import Icon from "components/atoms/Icon";
+import { Formik, Field, Form } from "formik";
+import * as Yup from "yup";
+import { exerciseService } from "services/exerciseService";
+import { routes } from 'utils/routes';
+import ErrorMessageForm from "components/atoms/ErrorMessageForm";
+import TextArea from "components/molecules/TextArea";
+import AttachmentPreview, {
+  TYPE,
+} from "components/molecules/AttachmentPreview";
+import Random from "utils/Random";
+import {
+  useNotificationContext,
+  ADD,
+} from "support/context/NotificationContext";
+import GlobalTemplate, { Nav } from "templates/GlobalTemplate";
+import { useHistory } from "react-router-dom";
+import { withLazyComponent } from "utils/lazyComponent";
 
-const WrapperAttachments = styled.div`
-  display: flex;
-  margin-top: 2.2rem;
-`;
-
-const StyledParagraph = styled(Paragraph)`
-  line-height: 0;
-  margin: .8rem 0 0 .5rem;
-`;
+const Checkbox = withLazyComponent(
+  React.lazy(() => import("components/atoms/Checkbox"))
+);
+const AddFiles = withLazyComponent(
+  React.lazy(() => import("components/molecules/AddFiles"))
+);
 
 const StyledTextArea = styled(TextArea)`
   height: 28.3rem;
@@ -37,42 +41,44 @@ const ContainerDescription = styled.div`
   margin-top: 2rem;
 `;
 
-const FileUploadButton = styled.input.attrs({ type: 'file' })`
-  display: none;
+const CheckboxContainer = styled.div`
+  display: flex;
 `;
 
 const ImagePreviewContainer = styled.div`
-   margin-top: 2rem;
-   display: grid;
-   grid-template-columns: repeat(4, 5rem);
-   grid-template-rows: 5rem;
-   grid-gap: .8rem;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 5rem);
+  grid-template-rows: 5rem;
+  grid-gap: 0.8rem;
 `;
 
 const triggerFileUploadButton = () => {
-  document.getElementById('choose-file-button').click();
+  document.getElementById("choose-file-button").click();
 };
 
 const initialValues = {
-  exerciseName: '',
-  exerciseDescription: '',
+  exerciseName: "",
+  exerciseDescription: "",
+  addNextExercise: false,
 };
 
 const validationSchema = Yup.object({
-  exerciseName: Yup.string().required(translate('ThisFieldIsRequired')),
+  exerciseName: Yup.string().required(translate("ThisFieldIsRequired")),
   exerciseDescription: Yup.string(),
 });
 
 const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [previewFiles, setPreviewFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
 
   const fileNotification = (message) => {
     notificationDispatch({
       type: ADD,
       payload: {
-        content: { success: 'OK', message },
-        type: 'error',
+        content: { success: "OK", message },
+        type: "error",
       },
     });
   };
@@ -80,18 +86,18 @@ const AddExerciseRefactor = (props) => {
   const history = useHistory();
 
   const resetFileInput = () => {
-    document.getElementById('choose-file-button').value = '';
+    document.getElementById("choose-file-button").value = "";
   };
 
   const onSubmit = (values) => {
     const formData = new FormData();
-    formData.append('Name', values.exerciseName);
-    formData.append('Description', values.exerciseDescription);
+    formData.append("Name", values.exerciseName);
+    formData.append("Description", values.exerciseDescription);
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append('Files', selectedFiles[i].File);
+      formData.append("Files", selectedFiles[i].File);
     }
     const { id } = props.history.location.state;
-    formData.append('CategoryId', id);
+    formData.append("CategoryId", id);
 
     exerciseService
       .addExercise(formData)
@@ -99,18 +105,31 @@ const AddExerciseRefactor = (props) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: 'OK', message: translate('ExerciseAdded') },
-            type: 'positive',
+            content: { success: "OK", message: translate("ExerciseAdded") },
+            type: "positive",
           },
         });
-        history.push(`/category/${id}`);
+        if (values.addNextExercise) {
+          values.exerciseName = "";
+          values.exerciseDescription = "";
+          values.addNextExercise = "";
+          setSelectedFiles([]);
+          setPreviewFiles([]);
+          history.push({
+            pathname: routes.addExercise,
+            state: { id },
+          });
+        }
+        else{
+          history.push(`/category/${id}`);
+        }
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
+            content: { error, message: translate("ErrorAlert") },
+            type: "error",
           },
         });
       });
@@ -118,8 +137,13 @@ const AddExerciseRefactor = (props) => {
 
   const handleImageChange = (e) => {
     // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
-    const acceptedImageFileType = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-    const acceptedVideoFileType = ['video/mp4'];
+    const acceptedImageFileType = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "image/gif",
+    ];
+    const acceptedVideoFileType = ["video/mp4"];
 
     // 10 mb
     const maxPhotoSize = 10000000;
@@ -139,15 +163,25 @@ const AddExerciseRefactor = (props) => {
             const ID = Random(1, 10000);
             const fileData = {
               ID,
+              File: File,
+              Type: TYPE.IMAGE,
+              VideoType: null,
+            };
+
+            const previewFileData = {
+              ID,
               File: URL.createObjectURL(File),
               Type: TYPE.IMAGE,
               VideoType: null,
             };
             // append file object to state
-            setSelectedFiles(((prevState) => prevState.concat(fileData)));
+            setSelectedFiles((prevState) => prevState.concat(fileData));
+            setPreviewFiles((prevState) => prevState.concat(previewFileData));
           } else {
             // file size if too big alert
-            fileNotification(`File size is too big ${File.name}. Photo size limit is 10 MB`);
+            fileNotification(
+              `File size is too big ${File.name}. Photo size limit is 10 MB`
+            );
             resetFileInput();
           }
           // checking if the video file type is correct
@@ -158,20 +192,32 @@ const AddExerciseRefactor = (props) => {
             const ID = Random(1, 10000);
             const fileData = {
               ID,
-              File: URL.createObjectURL(File),
+              File: File,
               Type: TYPE.VIDEO,
               VideoType: fileType,
             };
+
+            const previewFileData = {
+              ID,
+              File: URL.createObjectURL(File),
+              Type: TYPE.IMAGE,
+              VideoType: null,
+            };
             // append file object to state
-            setSelectedFiles(((prevState) => prevState.concat(fileData)));
+            setSelectedFiles((prevState) => prevState.concat(fileData));
+            setPreviewFiles((prevState) => prevState.concat(previewFileData));
           } else {
             // file size if too big alert
-            fileNotification(`File size is too big ${File.name}. Video size limit is 30 MB`);
+            fileNotification(
+              `File size is too big ${File.name}. Video size limit is 30 MB`
+            );
             resetFileInput();
           }
         } else {
           // invalid file type alert
-          fileNotification('Invalid file type. allowed files mp4, jpeg, jpg, png, gif');
+          fileNotification(
+            "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
+          );
           resetFileInput();
         }
       });
@@ -179,11 +225,21 @@ const AddExerciseRefactor = (props) => {
   };
 
   function removeFile(currentPhoto) {
+
     for (let i = 0; i <= selectedFiles.length; ++i) {
       if (currentPhoto == selectedFiles[i].ID) {
-        const list = [...selectedFiles];
-        const updatedList = list.filter((item) => item.ID !== selectedFiles[i].ID);
-        setSelectedFiles(updatedList);
+
+        const selectedList = [...selectedFiles];
+        const previewList = [...previewFiles];
+
+        const updatedSelectedList = selectedList.filter(
+          (item) => item.ID !== selectedFiles[i].ID
+        );
+        const updatedPreviewList = previewList.filter(
+          (item) => item.ID !== previewFiles[i].ID
+        );
+        setSelectedFiles(updatedSelectedList);
+        setPreviewFiles(updatedPreviewList);
         resetFileInput();
         break;
       }
@@ -223,25 +279,51 @@ const AddExerciseRefactor = (props) => {
           {({ errors, touched, isValid }) => (
             <Form>
               <Nav>
-                <BackTopNav text={translate('AddExercise')} />
-                <Button size="sm" buttonType="primary" type="submit" disabled={!isValid}>{translate('Save')}</Button>
+                <BackTopNav text={translate("AddExercise")} />
+                <Button
+                  size="sm"
+                  buttonType="primary"
+                  type="submit"
+                  disabled={!isValid}
+                >
+                  {translate("Save")}
+                </Button>
               </Nav>
-              <Paragraph type="body-3-regular">{translate('AddExerciseInfo')}</Paragraph>
-              <Label text={translate('ExerciseName')}>
-                <Field type="text" name="exerciseName" as={Input} error={errors.exerciseName && touched.exerciseName} />
+              <Paragraph type="body-3-regular">
+                {translate("AddExerciseInfo")}
+              </Paragraph>
+              <Label text={translate("ExerciseName")}>
+                <Field
+                  type="text"
+                  name="exerciseName"
+                  as={Input}
+                  error={errors.exerciseName && touched.exerciseName}
+                />
               </Label>
-              <ErrorMessageForm name="exerciseName" />
-              <WrapperAttachments onClick={triggerFileUploadButton}>
-                <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" />
-                <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
-                <FileUploadButton id="choose-file-button" onChange={handleImageChange} multiple />
-              </WrapperAttachments>
-              {renderAttachmentsPreview(selectedFiles)}
+              <AddFiles
+                triggerFileUploadButton={triggerFileUploadButton}
+                handleImageChange={handleImageChange}
+              />
+              {renderAttachmentsPreview(previewFiles)}
               <ContainerDescription>
-                <Label text={translate('AddExerciseDescription')}>
-                  <Field type="text" name="exerciseDescription" as={StyledTextArea} />
+                <Label text={translate("AddExerciseDescription")}>
+                  <Field
+                    type="text"
+                    name="exerciseDescription"
+                    as={StyledTextArea}
+                  />
                 </Label>
               </ContainerDescription>
+              <CheckboxContainer>
+              <Checkbox
+                checkboxType ="formik"
+                type="checkbox"
+                name="addNextExercise"
+              />
+              <Paragraph type="body-3-regular">
+              {translate("AddNextExercise")}
+              </Paragraph>
+              </CheckboxContainer>
             </Form>
           )}
         </Formik>

@@ -48,11 +48,6 @@ const PlansPanel = ({
             });
     };
 
-    const closeModal = () => {
-        setOpenEditModal(false)
-        setBottomSheet('none')
-    }
-
     return (
         <StyledReactBottomSheet
             showBlockLayer={false}
@@ -62,7 +57,7 @@ const PlansPanel = ({
             appendCancelBtn={false}>
             {isMobile ?
                 <>
-                    <StyledMobileReactBottomSheet>
+                    <StyledReactBottomSheetExtended>
                         <PanelItem onClick={() => deletePlans()}>
                             {selectedPlans.length == 1
                                 ? <p>{translate('DeletePlan')}</p>
@@ -74,7 +69,7 @@ const PlansPanel = ({
                                 <p>{translate('EditPlan')}</p>
                             </PanelItem>
                         }
-                    </StyledMobileReactBottomSheet>
+                    </StyledReactBottomSheetExtended>
                 </>
                 :
                 <>

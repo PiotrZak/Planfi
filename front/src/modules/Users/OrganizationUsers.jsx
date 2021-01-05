@@ -17,11 +17,6 @@ import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Loader from 'components/atoms/Loader';
 
-const noUsers = "No Users";
-const Clients = "Clients"
-const Trainers = "Trainers"
-const All = "All"
-
 const UsersFilters = styled.div`
    display:flex;
 `;
@@ -50,26 +45,26 @@ const OrganizationUsers = () => {
 
   const deleteUser = () => {
     userService
-        .deleteUsers(activeUsers)
-        .then((data) => {
-            notificationDispatch({
-                type: ADD,
-                payload: {
-                  content: { success: 'OK', message: translate('userDeleted') },
-                  type: 'positive',
-                },
-              });
-        })
-        .catch((error) => {
-            notificationDispatch({
-                type: ADD,
-                payload: {
-                  content: { error, message: translate('ErrorAlert') },
-                  type: 'error',
-                },
-              });
+      .deleteUsers(activeUsers)
+      .then((data) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('UserDeleted') },
+            type: 'positive',
+          },
         });
-};
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
+      });
+  };
 
   useEffect(() => {
     getAllUsers();
@@ -96,11 +91,11 @@ const OrganizationUsers = () => {
       setBottomSheet('flex');
     } else {
       setBottomSheet('none');
-      setAssignPlan(false);
+      setAssignPlan('none');
     }
   };
 
-
+  // todo - refactor this logic
   const filterUsers = (role) => {
     if (role == "All") {
       setFilteredUsers(users)
@@ -114,26 +109,26 @@ const OrganizationUsers = () => {
   return (
     <>
       <GlobalTemplate>
-      <Nav>
-        <h2>{user.firstName} of - {user.organizationId}</h2>
-        <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
+        <Nav>
+          <h2>{user.firstName} of - {user.organizationId}</h2>
+          <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
         <UsersFilters>
-        <Paragraph onClick={() => filterUsers("User")}>{Clients}</Paragraph>
-        <Paragraph onClick={() => filterUsers("Trainer")}>{Trainers}</Paragraph>
-        <Paragraph onClick={() => filterUsers("All")}>{All}</Paragraph>
-          </UsersFilters>
+          <Paragraph onClick={() => filterUsers("User")}>{translate('Clients')}</Paragraph>
+          <Paragraph onClick={() => filterUsers("Trainer")}>{translate('Trainers')}</Paragraph>
+          <Paragraph onClick={() => filterUsers("All")}>{translate('All')}</Paragraph>
+        </UsersFilters>
         <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Loader isLoading={isLoading}>
-        {filteredUsers ?
-          <CheckboxGenericComponent
-            dataType="users"
-            displayedValue="firstName"
-            dataList={filteredUsers}
-            onSelect={submissionHandleElement}
-          /> :
-          <h1>{noUsers}</h1>
-        }
+          {filteredUsers ?
+            <CheckboxGenericComponent
+              dataType="users"
+              displayedValue="firstName"
+              dataList={filteredUsers}
+              onSelect={submissionHandleElement}
+            /> :
+            <h1>{translate('NoUsers')}</h1>
+          }
         </Loader>
       </GlobalTemplate>
       <UsersPanel
@@ -145,6 +140,7 @@ const OrganizationUsers = () => {
         setAssignPlan={setAssignPlan}
         setAssignTrainer={setAssignTrainer} />
       <AssignUsersToPlans
+        theme={theme}
         organizationId={user.organizationId}
         assignPlan={assignPlan}
         setAssignPlan={setAssignPlan}

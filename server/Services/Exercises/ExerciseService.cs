@@ -27,6 +27,13 @@ namespace WebApi.Services
 
             return exercise;
         }
+        public Exercise CreateInstance(Exercise exercise)
+        {
+            _context.Exercises.Add(exercise);
+            _context.SaveChanges();
+
+            return exercise;
+        }
         
         public Exercise GetById(string id)
         {
@@ -93,6 +100,11 @@ namespace WebApi.Services
             if (!string.IsNullOrWhiteSpace(updateExercise.Description))
             {
                 exercise.Description = updateExercise.Description;
+            }
+            
+            if (updateExercise.Repeats != exercise.Repeats)
+            {
+                exercise.Repeats = updateExercise.Repeats;
             }
 
             if (updateExercise.Series != exercise.Series)

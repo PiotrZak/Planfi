@@ -7,24 +7,25 @@ import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
-import { Headline, MainHeadline } from 'components/typography';
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} from 'components/organisms/BottomSheet'
+import Loader from 'components/atoms/Loader';
+import StyledReactBottomSheet, {BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-
-const assignPlanToUserNotification = "assignPlanToUserNotification";
-const returnToSubMenu = "returnToSubMenu";
-const selectFromPlans = "selectFromPlans";
-const selectFromTrainers = "Select from trainers:"
-const PlansAssignedToUser = ""
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-const noPlans = "No plans";
+const SelectedUsers = ""
+const CloseMenu = ""
+
+export const BottomNavTitle = styled.div`
+    display:flex;
+    align-items:center;
+    margin:0.2rem 0 0 1.6rem;
+`
 
 export const AssignUsersToPlans = ({
-    bottomSheet,
+    theme,
     assignPlan,
     setAssignPlan,
     activeUsers,
@@ -87,7 +88,7 @@ export const AssignUsersToPlans = ({
                     }
                 })
                 setAssignPlan('none');
-                setBottomSheet(false);
+                setBottomSheet('none');
             })
             .catch((error) => {
                 console.log(error)
@@ -102,7 +103,7 @@ export const AssignUsersToPlans = ({
     };
 
     return (
-        <StyledReactBottomSheetExtended
+        <StyledReactBottomSheet
             showBlockLayer={false}
             visible={assignPlan}
             className={""}
@@ -111,24 +112,20 @@ export const AssignUsersToPlans = ({
         >
             <BottomNav>
                 <BottomNavItem>
-                    <Headline>{activeUsers.length}</Headline>
-                </BottomNavItem>
-                <IconWrapper>
-                    <Icon name="check" fill="#2E6D2C" />
-                </IconWrapper>
-                <BottomNavItem>
                     <IconWrapper>
-                        <Icon name="arrow-left" fill="#5E4AE3" />
+                        <Icon name="arrow-left" fill={theme.colorInputActive} />
                     </IconWrapper>
-                    <p onClick={() => closeAssignPlansToUser()}>
-                        {returnToSubMenu}
-                    </p>
+                    <p onClick={() => closeAssignPlansToUser()}>{translate('CloseMenu')}</p>
+                </BottomNavItem>
+                <BottomNavItem>
+                <IconWrapper>
+                    <Icon name="check" fill={theme.colorInputActive} />
+                </IconWrapper>
+                    <p>{activeUsers.length} {translate('SelectedUsers')}</p>
                 </BottomNavItem>
             </BottomNav>
-
-            <div>
-                <h4>{selectFromTrainers}</h4>
-                {/* <Loader isLoading={isLoading}> */}
+            <BottomNavTitle><h4>{translate('SelectFromPlans')}</h4></BottomNavTitle>
+                <Loader isLoading={isLoading}>
                 {plansResults ?
                     <CheckboxGenericComponent
                         dataType="plans"
@@ -136,13 +133,11 @@ export const AssignUsersToPlans = ({
                         displayedValue="title"
                         dataList={plansResults}
                         onSelect={getSelectedPlanIds} />
-                    : <p>No Plans</p>}
-                {/* </Loader> */}
+                    : <p>{translate('NoPlans')}</p>}
+                </Loader>
                 <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
-                {activePlans.length === 0 ? "Select Plan" : "Assign Plans to Users"}
+                {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
-            </div>
-
-        </StyledReactBottomSheetExtended>
+        </StyledReactBottomSheet>
     );
 };

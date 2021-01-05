@@ -3,6 +3,7 @@ import { categoryService } from 'services/categoryService';
 import { exerciseService } from 'services/exerciseService';
 import { Link, withRouter, useHistory } from 'react-router-dom';
 import { routes } from 'utils/routes';
+import { useHistory, withRouter } from 'react-router-dom';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
 import Search from 'components/molecules/Search';
@@ -23,6 +24,7 @@ const Container = styled.div`
   width: 7rem;
   justify-content: space-between;
 `;
+
 
 const Category = (props) => {
   const { theme } = useThemeContext();
@@ -59,21 +61,21 @@ const Category = (props) => {
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('ExercisesDeleted') },
-            type: 'positive',
-          },
-        });
+            type: 'positive'
+          }
+        })
         setBottomSheet('none');
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        });
+            content: { error: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
+        })
       });
-  };
+  }
 
   useEffect(() => {
     getCategory(id);
@@ -111,28 +113,32 @@ const Category = (props) => {
       pathname: routes.addExercise,
       state: { id },
     });
-  };
+  }
+
+
   return (
     <>
       <GlobalTemplate>
         <Nav>
-          <BackTopNav text={category.title} />
-          <Container>
-            <SmallButton iconName="ellipsis-h" onClick={() => alert('Add functionality')} />
-            <SmallButton iconName="plus" onClick={() => alert('Add functionality')} />
-          </Container>
+          {category && <BackTopNav text={category.title} />}
+          {category && <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />}
+          {/* <SmallButton iconName="ellipsis-h" onClick={() => alert('Add functionality')} />
+          <SmallButton iconName="plus" onClick={() => alert('Add functionality')} /> */}
         </Nav>
-        <Search callback={filterExercises} placeholder={translate('ExerciseSearch')} />
-        {results
-          ? (
-            <CheckboxGenericComponent
-              dataType="exercises"
-              displayedValue="name"
-              dataList={results}
-              onSelect={submissionHandleElement}
-            />
-          )
-          : <p>{translate('NoExercises')}</p>}
+        <Loader isLoading={isLoading} >
+          {exercises.length > 0
+            ? 
+            <>
+            <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+              <CheckboxGenericComponent
+                dataType="exercises"
+                displayedValue="name"
+                dataList={results}
+                onSelect={submissionHandleElement}
+              />
+            </>
+            : <p>{translate('NoExercises')}</p>}
+        </Loader>
       </GlobalTemplate>
       <PlanPanelExercises
         deleteExercise={deleteExercise}
@@ -145,5 +151,4 @@ const Category = (props) => {
     </>
   );
 };
-
 export default withRouter(Category);

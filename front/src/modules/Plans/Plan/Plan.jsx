@@ -15,6 +15,10 @@ import { categoryService } from "services/categoryService";
 import SmallButton from 'components/atoms/SmallButton';
 import { PlansPanel } from "./microModules/PlansPanel"
 import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { PlansExercises } from "./microModules/PlansExercises";
+
+const NotExerciseInCategory = "This category have not any exercises!"
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -22,13 +26,15 @@ const IconWrapper = styled.div`
 
 const Plan = (props) => {
 
+    const { notificationDispatch } = useNotificationContext();
     const { theme } = useThemeContext();
     const [plan, setPlan] = useState();
-    const [refresh, setRefresh] = useState()
 
     const [bottomSheet, setBottomSheet] = useState('none')
+    const [addExercisePanel, setAddExercisePanel] = useState('none')
     const [assignExercise, setAssignExercises] = useState('none')
     const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
+
 
     const [exercises, setExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
@@ -56,7 +62,7 @@ const Plan = (props) => {
             })
             .catch((error) => {
             });
-        },[])
+    }, [])
 
     const getAllCategories = useCallback(() => {
         categoryService
@@ -67,14 +73,13 @@ const Plan = (props) => {
             })
             .catch(() => {
             });
-    },[])
+    }, [])
 
     const getPlanExercise = useCallback((id) => {
         exerciseService
             .getExercisesByPlan(id)
             .then((data) => {
                 const uniqueExercises = commonUtil.getUnique(data, 'name');
-                console.log(uniqueExercises)
                 setExercises(uniqueExercises);
                 setIsLoading(false)
             })
@@ -89,19 +94,28 @@ const Plan = (props) => {
             .then((data) => {
                 const uniqueExercises = commonUtil.getUnique(data, 'name');
                 setCategoryExercises(uniqueExercises);
+                if (uniqueExercises.length > 0) {
+                    setAssignExercises('flex');
+                    setBottomSheet('none');
+                }
+                else {
+                    notificationDispatch({
+                        type: ADD,
+                        payload: {
+                            content: { message: translate('NotExerciseInCategory') },
+                            type: 'neutral'
+                        }
+                    })
+                }
                 setIsLoading(false)
             })
             .catch((error) => {
+
             });
     }
 
     const openAssignExercises = (id) => {
         loadExercises(id)
-        setAssignExercises('flex');
-        setBottomSheet('none');
-        if (categoryExercises.length > 0) {
-
-        }
     }
 
 
@@ -125,7 +139,7 @@ const Plan = (props) => {
     const submissionHandleElement = (selectedData) => {
         const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
         setActiveSelectedExercise(selectedExercises)
-        selectedExercises.length > 0 ? setSelectedElementsBottomSheet('flex') : setSelectedElementsBottomSheet('none');
+        selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
     }
 
     const filterExercises = event => {
@@ -144,7 +158,7 @@ const Plan = (props) => {
                 <Nav>
                     <BackTopNav />
                     {plan && <h2>{plan.title}</h2>}
-                    {plan && <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />}
+                    {plan && <SmallButton iconName="plus" onClick={() => setAddExercisePanel('flex')} />}
                 </Nav>
                 <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
                 {results ?
@@ -156,15 +170,26 @@ const Plan = (props) => {
                     :
                     <p>{translate('NoExercises')}</p>}
             </GlobalTemplate>
-            <PlansPanel
-                planId = {id}
+            <PlansExercises
+                selectedExercise={activeSelectedExercise}
+                theme={theme}
+                planId={id}
                 categories={categories}
                 bottomSheet={bottomSheet}
                 openAssignExercises={openAssignExercises}
                 setBottomSheet={setBottomSheet}
                 isLoading={isLoading} />
+            <PlansPanel
+                selectedExercise={activeSelectedExercise}
+                theme={theme}
+                planId={id}
+                categories={categories}
+                bottomSheet={addExercisePanel}
+                openAssignExercises={openAssignExercises}
+                setBottomSheet={setAddExercisePanel}
+                isLoading={isLoading} />
             <AssignExercisesToPlan
-                planId = {id}
+                planId={id}
                 setAssignExercises={setAssignExercises}
                 assignExerciseToPlan={assignExerciseToPlan}
                 closeAssignExercises={closeAssignExercises}

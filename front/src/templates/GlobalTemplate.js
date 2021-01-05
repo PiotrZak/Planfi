@@ -11,6 +11,7 @@ export const Nav = styled.div`
 
 const Container = styled.div`
   display: flex;
+  overflow-y:auto;
   flex-direction: column;
   text-align: left;
   background-color: ${({ theme }) => theme.colorGray90};
@@ -20,6 +21,7 @@ const Container = styled.div`
   margin: 0 1.6rem;
 
   @media screen and (min-width: 80rem) {
+    overflow-y:auto;
     max-width: 100rem;
     margin: auto;
   }

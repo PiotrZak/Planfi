@@ -94,7 +94,7 @@ namespace WebApi.Services
                 element.Repeats = exerciseModel.Repeats;
                 
                 //creating exercise instance
-                _exerciseService.Create(element);
+                _exerciseService.CreateInstance(element);
                 
                 //assigning exercise to plan
                 plan.Exercises.Add(element);

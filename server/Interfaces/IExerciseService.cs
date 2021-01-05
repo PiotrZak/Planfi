@@ -7,6 +7,7 @@ namespace WebApi.Interfaces
     {
         Exercise GetById(string id);
         Exercise Create(Exercise Exercise);
+        Exercise CreateInstance(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);

@@ -80,6 +80,7 @@ namespace WebApi
                     OnTokenValidated = context =>
                     {
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        if (context.Principal?.Identity == null) return Task.CompletedTask;
                         var userId = context.Principal.Identity.Name;
                         var user = userService.GetById(userId);
                         if (user == null)
