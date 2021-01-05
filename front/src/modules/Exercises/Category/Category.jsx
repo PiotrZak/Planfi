@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { categoryService } from 'services/categoryService';
 import { exerciseService } from 'services/exerciseService';
-import { Link, withRouter, useHistory } from 'react-router-dom';
 import { routes } from 'utils/routes';
 import { useHistory, withRouter } from 'react-router-dom';
 import { commonUtil } from 'utils/common.util';
@@ -16,15 +15,8 @@ import SmallButton from 'components/atoms/SmallButton';
 import Nav from 'components/atoms/Nav';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import styled from 'styled-components';
-
 import { PlanPanelExercises } from './PlanPanelExercises';
-
-const Container = styled.div`
-  display: flex;
-  width: 7rem;
-  justify-content: space-between;
-`;
-
+import Loader from 'components/atoms/Loader';
 
 const Category = (props) => {
   const { theme } = useThemeContext();

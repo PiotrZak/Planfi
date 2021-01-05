@@ -11,7 +11,6 @@ import SmallButton from 'components/atoms/SmallButton';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import CategoriesPanel from 'modules/Exercises/CategoriesPanel';
 import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
-import Nav from 'components/atoms/Nav';
 import { withLazyComponent } from '../../utils/lazyComponent';
 import { isMobile } from "react-device-detect";
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
@@ -22,11 +21,15 @@ const CATEGORY = gql`{
   categories{
          title
          categoryId
+         exercises
    }
   }
 `;
 
 const Categories = () => {
+
+  const [categories, setCategories] = useState([])
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState([]);
   const [openModal, setOpenModal] = useState(false);

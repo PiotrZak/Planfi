@@ -4,10 +4,9 @@ import Icon from 'components/atoms/Icon';
 import BackTopNav from 'components/molecules/BackTopNav';
 import styled from 'styled-components';
 import "react-multi-carousel/lib/styles.css";
-import { UserInfo } from "components/molecules/UserInfo"
+// import { UserInfo } from "components/molecules/UserInfo"
 import { isMobile } from "react-device-detect";
 import GlobalTemplate, { Nav as NavI } from "../../templates/GlobalTemplate"
-import { Navs } from '../MyProfile/MyProfile';
 
 import { TrainerClients } from "./UserProfile/TrainerClients"
 import { TrainerPlans } from "./UserProfile/TrainerPlans"
@@ -62,15 +61,15 @@ export const User = (props) => {
             <NavI>
                 <BackTopNav />
             </NavI>
-            {user && <UserInfo user={user} />}
+            {/* {user && <UserInfo user={user} />} */}
             <TabsContainer>
-                {sections.map((title, i) => (
+                {/* {sections.map((title, i) => (
                     <Navs
                         title={title}
                         setActiveItem={setActiveItem}
                         activeItem={activeItem}
                     />
-                ))}
+                ))} */}
             </TabsContainer>
             {user.role === "Trainer"
                 ?

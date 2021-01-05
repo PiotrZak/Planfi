@@ -36,8 +36,8 @@ export const RenderType = ({
           <StyledGenericElement
             key={i}
             onClick={() => redirectToItem(possibleTypes.category, element.categoryId)}
-            HeadLine={element.title}
-            SubLine="TO DO - Get number of exercise in category"
+            headline={element.title}
+            subline={element.exercises}
             category={element.category}
             AvatarType="noAvatar"
           />
@@ -49,11 +49,11 @@ export const RenderType = ({
             key={i}
             onClick={() => redirectToItem(possibleTypes.user, element.userId)}
             theme={theme}
-            AvatarType="circle"
+            avatarType="circle"
             image={element.avatar}
-            HeadLine={`${element.firstName}  ${element.lastName}`}
+            headline={`${element.firstName}  ${element.lastName}`}
             user={element}
-            SubLine={element.role}
+            subline={element.role}
           />
         );
       case 'plans':
@@ -73,7 +73,7 @@ export const RenderType = ({
           <StyledGenericElement
             key={i}
             onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
-            HeadLine={element.name}
+            headline={element.name}
             image={element.files && element.files[0]}
             exercise={element}
           />

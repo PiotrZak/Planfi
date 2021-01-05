@@ -53,7 +53,7 @@ const Circle = styled.div`
   }
 `;
 
-const handleAvatarType = (type) => {
+const handleavatarType = (type) => {
   switch (type) {
     case 'circle':
       return css`
@@ -80,7 +80,7 @@ const handleAvatarType = (type) => {
 
 const StyledAvatar = styled.img`
   border-radius: 4px;
-  ${({ type }) => handleAvatarType(type)};
+  ${({ type }) => handleavatarType(type)};
 `;
 
 const NoAvatarSquare = styled.div`
@@ -106,13 +106,13 @@ const Avatar = (type, url, theme) => {
 };
 
 const GenericElement = ({
-  HeadLine,
-  SubLine,
-  AvatarType,
-  AvatarURL,
-  SecondaryMenu,
+  headline,
+  subline,
+  avatarType,
+  avatarUrl,
+  secondaryMenu,
   onMenuClick,
-  onSecondaryMenuClick,
+  onsecondaryMenuClick,
   ...rest
 }) => {
   const { theme } = useThemeContext();
@@ -121,18 +121,18 @@ const GenericElement = ({
     // eslint-disable-next-line react/jsx-props-no-spreading
     <Wrapper {...rest}>
       <Container>
-        {Avatar(AvatarType, AvatarURL, theme)}
+        {Avatar(avatarType, avatarUrl, theme)}
         <ContainerText>
-          <Paragraph type="Label-Button">{HeadLine}</Paragraph>
-          <Paragraph type="body-3-regular">{SubLine}</Paragraph>
+          <Paragraph type="Label-Button">{headline}</Paragraph>
+          <Paragraph type="body-3-regular">{subline}</Paragraph>
         </ContainerText>
       </Container>
       <ContainerMenu>
         <Circle onClick={onMenuClick}>
           <Icon name="ellipsis-h" size="2rem" />
         </Circle>
-        {SecondaryMenu && (
-          <Circle onClick={onSecondaryMenuClick} lastMenu>
+        {secondaryMenu && (
+          <Circle onClick={onsecondaryMenuClick} lastMenu>
             <Icon name="draggabledots" size="2rem" />
           </Circle>
         )}
@@ -142,20 +142,20 @@ const GenericElement = ({
 };
 
 GenericElement.propTypes = {
-  HeadLine: PropTypes.string.isRequired,
+  headline: PropTypes.string.isRequired,
   // eslint-disable-next-line react/require-default-props
-  SubLine: PropTypes.string,
-  AvatarType: PropTypes.oneOf(['circle', 'square', 'noAvatar']),
-  AvatarURL: PropTypes.string,
-  SecondaryMenu: PropTypes.bool,
+  subline: PropTypes.string,
+  avatarType: PropTypes.oneOf(['circle', 'square', 'noAvatar']),
+  avatarUrl: PropTypes.string,
+  secondaryMenu: PropTypes.bool,
   onMenuClick: PropTypes.func,
-  onSecondaryMenuClick: PropTypes.func,
+  onsecondaryMenuClick: PropTypes.func,
 };
 
 GenericElement.defaultProps = {
-  AvatarType: 'noAvatar',
-  AvatarURL: 'null',
-  SecondaryMenu: false,
+  avatarType: 'noAvatar',
+  avatarUrl: 'null',
+  secondaryMenu: false,
 };
 
 export default GenericElement;

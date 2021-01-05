@@ -36,12 +36,36 @@ namespace WebApi.Services
             var category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
             return category;
         }
-        public IEnumerable<Category> GetAll()
+        
+        //check performance
+        public IEnumerable<CategoryViewModel> GetAll()
         {
-            return _context.Categories;
+            var allCategories = _context.Categories.ToList();
+            var transformModel = new List<CategoryViewModel>();
+            
+            foreach (var category in allCategories)
+            {
+                var exercises = _context.Exercises.Where(x => x.CategoryId == category.CategoryId);
+
+                var transformCategoryModel = new CategoryViewModel
+                {
+                    CategoryId = category.CategoryId,
+                    Title = category.Title,
+                    Exercises = exercises.Count(),
+                };
+                transformModel.Add(transformCategoryModel);
+            }
+            return transformModel;
         }
 
-
+        //prepare ViewModel Models - graphQl Correlated
+    public class CategoryViewModel
+    {
+        public string CategoryId { get; set; }
+        public string Title { get; set; }
+        public int Exercises { get; set; }
+    }
+    
         public void Delete(string[] id)
         {
             foreach (var categoryId in id)

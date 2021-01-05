@@ -35,31 +35,6 @@ const validationSchema = Yup.object().shape({
 const EditUserPasswordModal = ({ id, openModal, onClose }) => {
   const { notificationDispatch } = useNotificationContext();
 
-  const onSubmit = (values) => {
-    const transformedUserData = { password: values.password, newPassword: values.newPassword };
-    userService
-      .editUser(id, transformedUserData)
-      .then(() => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('userDataEdited') },
-            type: 'positive',
-          },
-        });
-        onClose();
-      })
-      .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        });
-      });
-  };
-
     const onSubmit = (values) => {
         const transformedUserData = { password: values.password, newPassword: values.newPassword }
         userService

@@ -9,7 +9,6 @@ import { useUserContext } from 'support/context/UserContext';
 import { TrainerClients } from 'modules/Users/UserProfile/TrainerClients';
 import { UserPlans } from 'modules/Users/UserProfile/UserPlans';
 import { MyProfilePanel } from 'modules/MyProfile/MyProfilePanel';
-
 import EditUserPasswordModal from 'modules/MyProfile/EditProfile/EditUserPassword';
 import EditUserEmailModal from 'modules/MyProfile/EditProfile/EditUserEmail';
 import EditUserDataModal from 'modules/MyProfile/EditProfile/EditUserData';
@@ -121,7 +120,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
         <UserInfoBackground place="MyProfile">
           <Container>
             <IconContainer>
-              <Icon name="cog" size="2rem" onClick={() => alert('Add functionality')} />
+              <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
             </IconContainer>
             <ContainerCentred>
               <UserInfo user={updatedUser} />

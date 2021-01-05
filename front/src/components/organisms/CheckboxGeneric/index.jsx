@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
+import { categoryService } from 'services/categoryService';
 
 const CheckboxContainer = styled.div`
   position: relative;
@@ -62,17 +63,12 @@ export const CheckboxGenericComponent = ({
   function handleChange(e) {
     dataList.map((el) => {
       if (isMobile) {
-        if (el[displayedValue] === e.currentTarget.getAttribute('name'))
-        {
+        if (el[displayedValue] === e.currentTarget.getAttribute('name')) {
           el.value = !el.value;
         }
       } else if (el[displayedValue] === e.target.name) { el.value = e.target.checked; }
       return el;
     });
-
-
-
-
     setList([...dataList]);
     onSelect([...dataList]);
   }

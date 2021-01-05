@@ -8,22 +8,29 @@ using HotChocolate.Types;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Services;
 
 namespace WebApi.GraphQl
 {
 
     public class Query
     {
-        public Category GetCategory(
-           [Service] DataContext dbContext, string id) =>
-               dbContext.Categories.FirstOrDefault(x => x.CategoryId == id);
-
+        private readonly ICategoryService _categoryService;
+        public Query(
+            ICategoryService categoryService)
+        {
+            _categoryService = categoryService ; ;
+        }
         public Exercise GetExercise(
            [Service] DataContext dbContext, string id) =>
                dbContext.Exercises.FirstOrDefault(x => x.ExerciseId == id);
 
 
-        public List<Category> GetCategories([Service] DataContext dbContext) => dbContext.Categories.Include(x => x.Exercises).ToList();
+        public List<CategoryService.CategoryViewModel> GetCategories([Service] DataContext dbContext) =>
+            _categoryService.GetAll().ToList();
+        
+        
         public List<Exercise> GetExercises([Service] DataContext dbContext) => dbContext.Exercises.ToList();
 
     }

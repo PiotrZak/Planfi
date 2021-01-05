@@ -36,7 +36,6 @@ const validationSchema = Yup.object().shape({
 const EditUserEmailModal = ({ id, openModal, onClose }) => {
   const { notificationDispatch } = useNotificationContext();
 
-    const { notificationDispatch } = useNotificationContext();
 
     const onSubmit = (values) => {
         const transformedUserData = { email: values.newMail }

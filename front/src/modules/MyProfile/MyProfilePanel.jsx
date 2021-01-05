@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'react-multi-carousel/lib/styles.css';
+import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
 import { useUserContext } from 'support/context/UserContext';
 import StyledReactBottomSheet, { PanelContainer, PanelItem } from 'components/organisms/BottomSheet';
@@ -17,36 +18,68 @@ export const MyProfilePanel = ({
   const { user } = useUserContext();
   const history = useHistory();
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const logout = () => {
     localStorage.removeItem('user');
     setTimeout(() => {
       history.push('/login/');
     }, timeToRedirectLogin);
   };
+
+  const openEditUserData = () => {
+    setOpenEditUserData(true);
+    setBottomSheet('none');
+  }
+
+  const openEditMailModal = () => {
+    setOpenEditMailModal(true);
+    setBottomSheet('none');
+  }
+
+  const openEditUserPasswordModal = () => {
+    setOpenEditUserPasswordModal(true);
+    setBottomSheet('none');
+  }
+
+
   return (
     <StyledReactBottomSheet
       showBlockLayer={false}
       visible={bottomSheet}
       className=""
-      onClose={() => setBottomSheet(false)}
+      onClose={() => setBottomSheet('none')}
       appendCancelBtn={false}
     >
-      <PanelContainer>
-        <PanelItem onClick={() => setOpenEditUserData(true)}>
-          {translate('UserEdit')}
-        </PanelItem>
-        <PanelItem onClick={() => setOpenEditMailModal(true)}>
-          {translate('ChangeMail')}
-        </PanelItem>
-        <PanelItem onClick={() => setOpenEditUserPasswordModal(true)}>
-          {translate('ChangePassword')}
-        </PanelItem>
-        <PanelItem onClick={() => logout()}>
-          {translate('Logout')}
-        </PanelItem>
-      </PanelContainer>
+      {isMobile ? (
+        <>
+          <PanelItem onClick={() => openEditUserData()}>
+            {translate('UserEdit')}
+          </PanelItem>
+          <PanelItem onClick={() => openEditMailModal()}>
+            {translate('ChangeMail')}
+          </PanelItem>
+          <PanelItem onClick={() => openEditUserPasswordModal()}>
+            {translate('ChangePassword')}
+          </PanelItem>
+          <PanelItem onClick={() => logout()}>
+            {translate('Logout')}
+          </PanelItem>
+        </>
+      ) : (
+          <PanelContainer >
+            <PanelItem onClick={() => openEditUserData()}>
+              {translate('UserEdit')}
+            </PanelItem>
+            <PanelItem onClick={() => openEditMailModal()}>
+              {translate('ChangeMail')}
+            </PanelItem>
+            <PanelItem onClick={() => openEditUserPasswordModal()}>
+              {translate('ChangePassword')}
+            </PanelItem>
+            <PanelItem onClick={() => logout()}>
+              {translate('Logout')}
+            </PanelItem>
+          </PanelContainer>
+        )}
     </StyledReactBottomSheet>
-  );
-};
+    );
+  };
