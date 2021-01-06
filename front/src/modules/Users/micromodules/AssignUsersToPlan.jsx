@@ -8,7 +8,7 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
+import {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const IconWrapper = styled.div`

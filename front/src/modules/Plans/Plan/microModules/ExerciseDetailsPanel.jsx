@@ -9,6 +9,7 @@ import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem} f
 import { Headline, MainHeadline } from 'components/typography';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { translate } from 'utils/Translation';
+import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
 
 const ExerciseAddItem = styled.div`
     display: flex;
@@ -64,18 +65,18 @@ export const ExerciseDetailsPanel = ({
     }
 
     const handleRepeat = (data) => {
-        setExerciseData({ ...exerciseData, repeat: data + 1 })
+        setExerciseData({ ...exerciseData, repeat: data})
     }
     const handleSeries = (data) => {
-        setExerciseData({ ...exerciseData, series: data + 1 })
+        setExerciseData({ ...exerciseData, series: data})
     }
 
     const handleTime = (data) => {
-        setExerciseData({ ...exerciseData, times: data + 1 })
+        setExerciseData({ ...exerciseData, times: data})
     }
 
     const handleWeight = (data) => {
-        setExerciseData({ ...exerciseData, weight: data + 1 })
+        setExerciseData({ ...exerciseData, weight: data})
     }
 
     const returnToExercises = () => {
@@ -103,22 +104,22 @@ export const ExerciseDetailsPanel = ({
 
             <ExerciseAddItem>
                 <Headline>{translate('Repeat')}</Headline>
-                <Counter valueToChange = {1} handleData={handleRepeat} unit ={''}/>
+                <Counter defaultValue = {0} valueToChange = {repeatsToChange} handleData={handleRepeat} unit ={''}/>
             </ExerciseAddItem>
 
             <ExerciseAddItem>
                 <Headline>{translate('ExerciseTime')}</Headline>
-                <Counter valueToChange = {30} handleData={handleTime} unit = {'s'}/>
+                <Counter defaultValue = {0} valueToChange = {timesToChange} handleData={handleTime} unit = {'s'}/>
             </ExerciseAddItem>
 
             <ExerciseAddItem>
                 <Headline>{translate('Series')}</Headline>
-                <Counter valueToChange = {1} handleData={handleSeries}  unit ={''}/>
+                <Counter defaultValue = {0} valueToChange = {seriesToChange} handleData={handleSeries}  unit ={''}/>
             </ExerciseAddItem>
 
             <ExerciseAddItem>
                 <Headline>{translate('Weight')}</Headline>
-                <Counter valueToChange = {5} handleData={handleWeight} unit = {'kg'} />
+                <Counter defaultValue = {0} valueToChange = {weightToChange} handleData={handleWeight} unit = {'kg'} />
             </ExerciseAddItem>
 
             <Button onClick = {updateExercise} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('AssignToPlan')}</Button>

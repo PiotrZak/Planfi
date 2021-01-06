@@ -23,17 +23,20 @@ const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
 
   useEffect(() => {
       setValue(defaultValue);
+      if(value){
+      setValue(value);
+      }
   }, [defaultValue]);
 
   const increment = () => {
     setValue(value + valueToChange);
-    handleData(value);
+    handleData(value + valueToChange);
   };
 
   const decrement = () => {
     if (value > 0) {
       setValue(value - valueToChange);
-      handleData(value);
+      handleData(value - valueToChange);
     }
   };
 

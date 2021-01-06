@@ -17,6 +17,7 @@ import {
   useNotificationContext,
   ADD,
 } from "support/context/NotificationContext";
+import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
 
 const Nav = withLazyComponent(React.lazy(() => import("components/atoms/Nav")));
 const GlobalTemplate = withLazyComponent(
@@ -93,11 +94,9 @@ const EditExercise = (props) => {
   const { notificationDispatch } = useNotificationContext();
 
   let id;
-  if (props.location.state.exercise != undefined) {
-    id = props.location.state.exercise.exerciseId;
-  } else {
-    id = props.location.state.selectedExercise;
-  }
+  props.location.state.exercise != undefined 
+  ? id = props.location.state.exercise.exerciseId 
+  : id = props.location.state.selectedExercise;
 
   const fileNotification = (message) => {
     notificationDispatch({
@@ -121,7 +120,7 @@ const EditExercise = (props) => {
         setSelectedFiles(data.files)
         setPreviewFiles(data.files)
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
 
   const resetFileInput = () => {
@@ -131,7 +130,7 @@ const EditExercise = (props) => {
   const history = useHistory();
 
   const onSubmit = (values) => {
-    
+
     const formData = new FormData();
     formData.append(
       "Name",
@@ -175,7 +174,8 @@ const EditExercise = (props) => {
         formData.append("Files", exerciseData.files[i].File);
       }
     }
-    else{
+    else {
+      if(selectedFiles)
       for (let i = 0; i < selectedFiles.length; i++) {
         formData.append("Files", selectedFiles[i].File);
       }
@@ -183,7 +183,7 @@ const EditExercise = (props) => {
 
     for (var value of formData.values()) {
       console.log(value);
-   }
+    }
 
     formData.append("CategoryId", props.location.state.id);
 
@@ -199,7 +199,7 @@ const EditExercise = (props) => {
         });
         history.push({
           pathname: `/exercises/${id}`,
-          state: { id: id},
+          state: { id: id },
         });
       })
       .catch((error) => {
@@ -214,19 +214,19 @@ const EditExercise = (props) => {
   };
 
   const handleSeries = (data) => {
-    setExerciseData({ ...exerciseData, series: data + 1 });
+    setExerciseData({ ...exerciseData, series: data });
   };
 
   const handleTime = (data) => {
-    setExerciseData({ ...exerciseData, times: data + 1 });
+    setExerciseData({ ...exerciseData, times: data  });
   };
 
   const handleWeight = (data) => {
-    setExerciseData({ ...exerciseData, weight: data + 1 });
+    setExerciseData({ ...exerciseData, weight: data  });
   };
 
   const handleRepeat = (data) => {
-    setExerciseData({ ...exerciseData, repeats: data + 1 });
+    setExerciseData({ ...exerciseData, repeats: data });
   };
 
   const handleFileData = (data) => {
@@ -349,26 +349,26 @@ const EditExercise = (props) => {
   }
 
   const renderAttachmentsPreview = (source) => {
-    if(source){
-    if (source.length > 0) {
-      return (
-        <ImagePreviewContainer id="image-preview-container">
-          {source.map((photo) => (
-            <AttachmentPreview
-              attachmentSrc={photo.File}
-              type={photo.Type}
-              videoType={photo.videoType}
-              alt=""
-              key={photo.ID}
-              setID={photo.ID}
-              remove={() => removeFile(photo.ID)}
-              complete
-            />
-          ))}
-        </ImagePreviewContainer>
-      );
+    if (source) {
+      if (source.length > 0) {
+        return (
+          <ImagePreviewContainer id="image-preview-container">
+            {source.map((photo) => (
+              <AttachmentPreview
+                attachmentSrc={photo.File}
+                type={photo.Type}
+                videoType={photo.videoType}
+                alt=""
+                key={photo.ID}
+                setID={photo.ID}
+                remove={() => removeFile(photo.ID)}
+                complete
+              />
+            ))}
+          </ImagePreviewContainer>
+        );
+      }
     }
-  }
   };
 
   return (
@@ -411,7 +411,7 @@ const EditExercise = (props) => {
                 triggerFileUploadButton={triggerFileUploadButton}
                 handleImageChange={handleImageChange}
               />
-                {renderAttachmentsPreview(previewFiles)}
+              {renderAttachmentsPreview(previewFiles)}
               <ContainerDescription>
                 <Label text={translate("AddExerciseDescription")}>
                   <Field
@@ -427,7 +427,7 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.repeats}
-                  valueToChange={1}
+                  valueToChange={repeatsToChange}
                   handleData={handleRepeat}
                   unit={""}
                 />
@@ -438,7 +438,7 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.times}
-                  valueToChange={30}
+                  valueToChange={timesToChange}
                   handleData={handleTime}
                   unit={"s"}
                 />
@@ -449,7 +449,7 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.series}
-                  valueToChange={1}
+                  valueToChange={seriesToChange}
                   handleData={handleSeries}
                   unit={""}
                 />
@@ -460,7 +460,7 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.weight}
-                  valueToChange={5}
+                  valueToChange={weightToChange}
                   handleData={handleWeight}
                   unit={"kg"}
                 />
