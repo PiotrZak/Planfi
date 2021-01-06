@@ -149,6 +149,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
         onClose={() => setOpenEditUserPasswordModal(false)}
       />
       <MyProfilePanel
+        userId = {user.userId}
         setOpenEditUserData={setOpenEditUserData}
         setOpenEditMailModal={setOpenEditMailModal}
         setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}
