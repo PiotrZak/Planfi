@@ -76,16 +76,19 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
 
   const renderGenericElement = (tab) => {
     const { role, userId } = user;
+    
 
     if (role === Role.Trainer) {
+
+      console.log(tab)
       if (tab === 'first') {
-        setToRender(<TrainerClients id={userId} />);
-      } else if (tab === 'second') {
         setToRender(<TrainerPlans id={userId} />);
-      } else {
+      } 
+      if (tab === 'second') {
         setToRender(<TrainerClients id={userId} />);
-      }
-    } else if (tab === 'first') {
+      } 
+    } 
+    else if (tab === 'first') {
       setToRender(<UserPlans id={userId} />);
     } else if (tab === 'second') {
       setToRender(<ClientTrainers id={userId} />);
@@ -100,7 +103,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
           firstButtonText={translate('MyPlans')}
           firstButtonFunc={() => renderGenericElement('first')}
           secondButtonText={translate('MyClients')}
-          secondButtonFunc={() => () => renderGenericElement('second')}
+          secondButtonFunc={() => renderGenericElement('second')}
         />
       );
     }

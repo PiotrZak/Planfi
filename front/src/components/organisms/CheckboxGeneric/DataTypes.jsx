@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import GenericElement from 'components/molecules/GenericElement';
 import styled from 'styled-components';
 
-const possibleTypes = {
+export const possibleTypes = {
   categories: 'categories',
   category: 'category',
   exercises: 'exercises',
