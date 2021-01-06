@@ -21,10 +21,18 @@ namespace WebApi.Services
 
         public Plan Create(Plan plan)
         {
-            // throw error if the new plan is already taken
-            if (_context.Plans.Any(x => x.Title == plan.Title))
-                throw new AppException("Plan " + plan.Title + " is already exist");
+            //check for duplication in orgaanization context
+            var isDuplicated = _context.Plans.Any(x => x.Title == plan.Title);
+            if (isDuplicated)
+            {
+                var duplicatedPlans = _context.Plans.Where(x => x.Title == plan.Title).ToList();
 
+                foreach (var duplicatedPlan in duplicatedPlans)
+                {
+                    if(duplicatedPlan.OrganizationId == plan.OrganizationId)
+                        throw new AppException("Plan " + plan.Title + " is already exist in this organization");
+                }
+            }
             _context.Plans.Add(plan);
             _context.SaveChanges();
 
@@ -141,9 +149,7 @@ namespace WebApi.Services
                 var plan = _context.Plans.FirstOrDefault(x => x.PlanId == planIds[i]);
                 plans.Add(plan);
             }
-
             return plans;
-
         }
 
         public IEnumerable<Plan> GetCreatorPlans(string id)
