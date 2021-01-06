@@ -10,7 +10,7 @@ import { createBrowserHistory } from 'history';
 import MainTemplate from 'templates/MainTemplate';
 import { routes } from 'utils/routes';
 
-// registration
+// auth
 import LoginPage from 'modules/Auth/LoginPage';
 import ForgotPasswordPage from 'modules/Auth/ForgotPasswordPage';
 import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
