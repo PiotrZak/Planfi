@@ -45,12 +45,13 @@ const AddFiles = withLazyComponent(
 );
 
 const initialValues = {
-  name: "",
-  description: "",
-  times: "",
-  series: "",
-  weight: "",
-  files: "",
+  name: undefined,
+  description: undefined,
+  repeats: undefined,
+  times: undefined,
+  series: undefined,
+  weight: undefined,
+  files: undefined,
 };
 
 const ImagePreviewContainer = styled.div`
@@ -86,13 +87,6 @@ const validationSchema = Yup.object({
 });
 
 const EditExercise = (props) => {
-  const exercisesEdited = "Exercise succesfully edited!";
-  const EditExercise = "Edit Exercise";
-  const EditExerciseInfo = "Edit Exercise";
-  const Times = "Times";
-  const Series = "Series";
-  const Weight = "Weight";
-  const Edit = "Edit";
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewFiles, setPreviewFiles] = useState([]);
@@ -134,53 +128,62 @@ const EditExercise = (props) => {
     document.getElementById("choose-file-button").value = "";
   };
   const [exerciseData, setExerciseData] = useState([]);
-  const [errors, setErrors] = useState({});
   const history = useHistory();
-  const requiredFields = ["name", "description"];
-
-
-  console.log(exerciseData)
 
   const onSubmit = (values) => {
-
-    console.log(values)
-    console.log(exerciseData)
-
+    
     const formData = new FormData();
     formData.append(
       "Name",
-      values.name == null ? exerciseData.name : values.name
+      values.name == undefined ? exerciseData.name : values.name
     );
     formData.append(
       "Description",
-      values.description == ""
+      values.description == undefined
         ? exerciseData.description
         : values.description
     );
     formData.append(
+      "Repeats",
+      values.repeats == undefined
+        ? exerciseData.repeats
+        : values.repeats
+    );
+    formData.append(
       "Times",
-      values.times == ""
+      values.times == undefined
         ? exerciseData.times
         : values.times
     );
     formData.append(
       "Series",
-      values.series == ""
+      values.series == undefined
         ? exerciseData.series
         : values.series
     );
     formData.append(
       "Weight",
-      values.weight == ""
+      values.weight == undefined
         ? exerciseData.weight
         : values.weight
     );
-    if (values.files != null) {
+
+    console.log(exerciseData.files)
+
+    if (values.files != undefined) {
       for (let i = 0; i < exerciseData.files.length; i++) {
-        formData.append(`Files`, exerciseData.files[i]);
+        formData.append("Files", exerciseData.files[i].File);
+      }
+    }
+    else{
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("Files", selectedFiles[i].File);
       }
     }
 
+    for (var value of formData.values()) {
+      console.log(value);
+   }
 
     formData.append("CategoryId", props.location.state.id);
 
@@ -223,7 +226,7 @@ const EditExercise = (props) => {
   };
 
   const handleRepeat = (data) => {
-    setExerciseData({ ...exerciseData, repeat: data + 1 });
+    setExerciseData({ ...exerciseData, repeats: data + 1 });
   };
 
   const handleFileData = (data) => {
@@ -414,7 +417,7 @@ const EditExercise = (props) => {
                   <Field
                     placeholder={exerciseData.description}
                     type="text"
-                    name="exerciseDescription"
+                    name="description"
                     as={StyledTextArea}
                   />
                 </Label>

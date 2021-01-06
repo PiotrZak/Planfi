@@ -112,6 +112,7 @@ const GenericElement = ({
   avatarUrl,
   secondaryMenu,
   onMenuClick,
+  type,
   onsecondaryMenuClick,
   ...rest
 }) => {

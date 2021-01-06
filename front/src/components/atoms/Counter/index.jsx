@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { Headline } from 'components/typography';
@@ -18,7 +18,12 @@ const CounterContainer = styled.div`
 `;
 
 const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
-  const [value, setValue] = useState(defaultValue || 0);
+
+  const [value, setValue] = useState();
+
+  useEffect(() => {
+      setValue(defaultValue);
+  }, [defaultValue]);
 
   const increment = () => {
     setValue(value + valueToChange);
@@ -34,9 +39,9 @@ const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
 
   return (
     <CounterContainer>
-      <Icon fill ={fill ? fill : null} onClick={increment} name="plus-circle" />
+      <Icon fill={fill ? fill : null} onClick={increment} name="plus-circle" />
       <Headline>{value} {unit}</Headline>
-      <Icon fill ={fill ? fill : null}  onClick={decrement} name="minus-circle" />
+      <Icon fill={fill ? fill : null} onClick={decrement} name="minus-circle" />
     </CounterContainer>
   );
 };

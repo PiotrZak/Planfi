@@ -15,6 +15,14 @@ import ExercisePanel from './ExercisePanel';
 
 const ExerciseDeleted = ""
 
+const InfoTab = styled.div`
+  display:flex;
+  border-bottom: 1px solid grey;
+  align-items: center;
+  justify-content: space-between;
+  height:4.4rem;
+`;
+
 const Exercise = (props) => {
 
   const { notificationDispatch } = useNotificationContext();
@@ -34,7 +42,6 @@ const Exercise = (props) => {
     exerciseService
       .getExerciseById(id)
       .then((data) => {
-        console.log(data)
         setExercise(data);
       })
       .catch((error) => {
@@ -102,11 +109,13 @@ const Exercise = (props) => {
         {exercise &&
           <>
             <h1>{exercise.name}</h1>
-            {exercise.series > 0 && <><Headline>{translate('Series')}</Headline> <Subline>{exercise.series}</Subline></>}
-            {exercise.times > 0 && <><Headline>{translate('ExerciseTime')}</Headline> <Subline>{exercise.times}</Subline></>}
-            {exercise.repeats > 0 && <><Headline>{translate('Repeat')}</Headline><Subline>{exercise.repeats}</Subline></>}
-            {exercise.weight > 0 && <><Headline>{translate('Weight')}</Headline><Subline>{exercise.weight}</Subline></>}
-            <p>Description:{exercise.description}</p>
+            {exercise.series > 0 && <InfoTab><Headline>{translate('Series')}</Headline> <Subline>{exercise.series} times</Subline></InfoTab>}
+            {exercise.times > 0 && <InfoTab><Headline>{translate('ExerciseTime')}</Headline><Subline>{exercise.times} s</Subline></InfoTab>}
+            {exercise.repeats > 0 && <InfoTab><Headline>{translate('Repeat')}</Headline><Subline>{exercise.repeats} x</Subline></InfoTab>}
+            {exercise.weight > 0 && <InfoTab><Headline>{translate('Weight')}</Headline><Subline>{exercise.weight} kg</Subline></InfoTab>}
+
+            <h3>Description:</h3>
+            <p>{exercise.description}</p>
           </>
         }
       </GlobalTemplate>

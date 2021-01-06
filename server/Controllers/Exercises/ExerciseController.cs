@@ -142,6 +142,7 @@ namespace WebApi.Controllers
             {
                 Name = model.Name,
                 Description = model.Description,
+                Repeats = model.Repeats,
                 Times = model.Times,
                 Series = model.Series,
                 Weight = model.Weight,

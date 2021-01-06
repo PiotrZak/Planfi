@@ -8,7 +8,7 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
-import StyledReactBottomSheet, {BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 
 const IconWrapper = styled.div`
@@ -50,19 +50,21 @@ export const AssignUsersToPlans = ({
         setAssignPlan('none');
     };
 
-    const filterPlans = (event) => {
-        setSearchTerm(event.target.value);
-    };
+    // search here?
+    // const filterPlans = (event) => {
+    //     setSearchTerm(event.target.value);
+    // };
 
-    const plansResults = !searchTerm
-        ? plans
-        : plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    // const plansResults = !searchTerm
+    //     ? plans
+    //     : plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
     const getAllPlans = () => {
         planService
             .getAllPlans()
             .then((data) => {
                 setPlans(data);
+                console.log(data)
                 setIsLoading(false);
             })
             .catch(() => {
@@ -103,7 +105,7 @@ export const AssignUsersToPlans = ({
     };
 
     return (
-        <StyledReactBottomSheet
+        <StyledReactBottomSheetExtended
             showBlockLayer={false}
             visible={assignPlan}
             className={""}
@@ -126,18 +128,18 @@ export const AssignUsersToPlans = ({
             </BottomNav>
             <BottomNavTitle><h4>{translate('SelectFromPlans')}</h4></BottomNavTitle>
                 <Loader isLoading={isLoading}>
-                {plansResults ?
+                {plans ?
                     <CheckboxGenericComponent
                         dataType="plans"
                         theme = "light"
                         displayedValue="title"
-                        dataList={plansResults}
+                        dataList={plans}
                         onSelect={getSelectedPlanIds} />
                     : <p>{translate('NoPlans')}</p>}
                 </Loader>
                 <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
                 {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
-        </StyledReactBottomSheet>
+        </StyledReactBottomSheetExtended>
     );
 };
