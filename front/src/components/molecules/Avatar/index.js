@@ -64,7 +64,7 @@ const renderAvatar = (user, size) => {
   const { avatar, firstName, lastName } = user;
   console.log(avatar);
 
-  if (typeof avatar === 'null') {
+  if (avatar === null) {
     const initials = firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
     return (
       <EmptyAvatar size={size}>
