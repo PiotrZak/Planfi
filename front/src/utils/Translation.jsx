@@ -1,8 +1,5 @@
-import React, { useContext } from 'react';
 import { pl as polish } from 'lang/pl';
 import { en as english } from 'lang/en';
-import { useLangContext } from '../support/context/LanguageContext';
-
 
 const Locales = {
   English: 'en-GB',

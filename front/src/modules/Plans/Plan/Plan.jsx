@@ -37,6 +37,7 @@ const Plan = (props) => {
 
 
     const [exercises, setExercises] = useState()
+    const [allExercises, setAllExercises] = useState()
     const [activeExercise, setActiveExercise] = useState([])
     const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
 
@@ -50,6 +51,7 @@ const Plan = (props) => {
 
     useEffect(() => {
         getPlan(id)
+        getAllExercises()
         getAllCategories()
         getPlanExercise(id)
     }, [id]);
@@ -74,6 +76,18 @@ const Plan = (props) => {
             .catch(() => {
             });
     }, [])
+
+    const getAllExercises = useCallback((id) => {
+        exerciseService
+          .getAllExercises(id)
+          .then((data) => {
+            setAllExercises(data);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }, []);
 
     const getPlanExercise = useCallback((id) => {
         exerciseService
@@ -164,7 +178,7 @@ const Plan = (props) => {
                 {results ?
                     <CheckboxGenericComponent
                         dataType="exercises"
-                        displayedValue={"name"}
+                    displayedValue={"name"}
                         dataList={results}
                         onSelect={submissionHandleElement} />
                     :
@@ -180,9 +194,11 @@ const Plan = (props) => {
                 setBottomSheet={setBottomSheet}
                 isLoading={isLoading} />
             <PlansPanel
+                setAssignExercises={setAssignExercises}
                 selectedExercise={activeSelectedExercise}
                 theme={theme}
                 planId={id}
+                allExercises={allExercises}
                 categories={categories}
                 bottomSheet={addExercisePanel}
                 openAssignExercises={openAssignExercises}

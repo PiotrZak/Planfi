@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { planService } from 'services/planService';
-import Icon from 'components/atoms/Icon';
 import styled from 'styled-components';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';

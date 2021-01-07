@@ -63,17 +63,18 @@ export const StyledMobileReactBottomSheet = styled.div`
 `;
 
 export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
-        border-top-left-radius: 2.4rem;
+
+        height:100%;
         justify-content: center;
+        /*border-top-left-radius: 2.4rem;
         border-top-right-radius: 2.4rem;
-        border-top-width: 2rem;
+        border-top-width: 2rem; */
         align-items: center;
         justify-content: flex-start;
         box-sizing: border-box;
         padding: 0 0 0 0;
         position: fixed;
         bottom: 0;
-        height: 37.2rem;
         overflow-y: scroll;
         width: 100%;
         z-index: 4;

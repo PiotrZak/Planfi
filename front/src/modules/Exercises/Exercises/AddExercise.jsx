@@ -7,12 +7,10 @@ import Button from "components/atoms/Button";
 import Paragraph from "components/atoms/Paragraph";
 import Label from "components/atoms/Label";
 import Input from "components/molecules/Input";
-import Icon from "components/atoms/Icon";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { exerciseService } from "services/exerciseService";
 import { routes } from 'utils/routes';
-import ErrorMessageForm from "components/atoms/ErrorMessageForm";
 import TextArea from "components/molecules/TextArea";
 import AttachmentPreview, {
   TYPE,
@@ -220,6 +218,7 @@ const AddExerciseRefactor = (props) => {
           );
           resetFileInput();
         }
+        return null;
       });
     }
   };
@@ -227,7 +226,7 @@ const AddExerciseRefactor = (props) => {
   function removeFile(currentPhoto) {
 
     for (let i = 0; i <= selectedFiles.length; ++i) {
-      if (currentPhoto == selectedFiles[i].ID) {
+      if (currentPhoto === selectedFiles[i].ID) {
 
         const selectedList = [...selectedFiles];
         const previewList = [...previewFiles];

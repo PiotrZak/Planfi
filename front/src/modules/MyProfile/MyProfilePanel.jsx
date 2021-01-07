@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
-import { useUserContext } from 'support/context/UserContext';
 import StyledReactBottomSheet, { PanelContainer, PanelItem } from 'components/organisms/BottomSheet';
 import { useHistory } from 'react-router-dom';
 import { accountService } from 'services/accountServices';
-import Random from "utils/Random";
 import styled from "styled-components";
 import AttachmentPreview, {
   TYPE,

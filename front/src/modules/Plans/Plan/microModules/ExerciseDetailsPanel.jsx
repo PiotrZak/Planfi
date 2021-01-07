@@ -18,12 +18,19 @@ const ExerciseAddItem = styled.div`
     margin:1.8rem 1.8rem;
 `;
 
+const ModalButtonContainer = styled.div`
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+`;
+
 export const ExerciseDetailsPanel = ({
     planId,
     exercise,
     openExerciseDetailsPlan,
     setOpenExerciseDetailsPlan,
-    setAssignExercises
+    setAssignExercises,
+    setBottomSheet
 }) => {
 
     const { notificationDispatch } = useNotificationContext();
@@ -80,9 +87,9 @@ export const ExerciseDetailsPanel = ({
     }
 
     const returnToExercises = () => {
-
         setOpenExerciseDetailsPlan('none')
-        setAssignExercises('flex')
+        // setAssignExercises('flex')
+        setBottomSheet('flex')
     }
 
     return (
@@ -121,8 +128,9 @@ export const ExerciseDetailsPanel = ({
                 <Headline>{translate('Weight')}</Headline>
                 <Counter defaultValue = {0} valueToChange = {weightToChange} handleData={handleWeight} unit = {'kg'} />
             </ExerciseAddItem>
-
+            <ModalButtonContainer>
             <Button onClick = {updateExercise} type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('AssignToPlan')}</Button>
+            </ModalButtonContainer>
         </StyledReactBottomSheetExtended>
     )
 }
