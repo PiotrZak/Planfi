@@ -219,6 +219,7 @@ const AddExerciseRefactor = (props) => {
           );
           resetFileInput();
         }
+        return null;
       });
     }
   };
@@ -226,7 +227,7 @@ const AddExerciseRefactor = (props) => {
   function removeFile(currentPhoto) {
 
     for (let i = 0; i <= selectedFiles.length; ++i) {
-      if (currentPhoto == selectedFiles[i].ID) {
+      if (currentPhoto === selectedFiles[i].ID) {
 
         const selectedList = [...selectedFiles];
         const previewList = [...previewFiles];

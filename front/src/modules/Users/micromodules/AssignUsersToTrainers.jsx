@@ -8,12 +8,18 @@ import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
-import { Headline } from 'components/typography';
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import Search from 'components/molecules/Search';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
+`;
+
+const ModalButtonContainer = styled.div`
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 `;
 
 export const BottomNavTitle = styled.div`
@@ -31,6 +37,7 @@ export const AssignUsersToTrainers = ({
   setBottomSheet,
 }) => {
 
+  const [searchTerm, setSearchTerm] = useState('');
   const [trainers, setTrainers] = useState();
   const [activeTrainers, setActiveTrainers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,7 +45,7 @@ export const AssignUsersToTrainers = ({
 
   useEffect(() => {
     getAllTrainers();
-    if (activeUsers == 0) {
+    if (activeUsers === 0) {
       setAssignTrainer('none')
     }
   }, [activeUsers]);
@@ -48,6 +55,15 @@ export const AssignUsersToTrainers = ({
     setAssignTrainer('none');
   };
 
+  const filterTrainers = (event) => {
+    setSearchTerm(event.target.value);
+};
+
+const trainersResult = !searchTerm
+    ? trainers
+    : trainers.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+
+    
   const getAllTrainers = () => {
     organizationService
       .getOrganizationTrainers(organizationId)
@@ -105,8 +121,9 @@ export const AssignUsersToTrainers = ({
         </BottomNavItem>
       </BottomNav>
       <BottomNavTitle><h4>{translate('SelectFromTrainers')}</h4></BottomNavTitle>
+      <Search typeInput="light" callBack={filterTrainers} placeholder={translate('PlanSearch')} />
         <Loader isLoading={isLoading}>
-        {trainers ?
+        {trainersResult ?
           <CheckboxGenericComponent
             dataType="users"
             theme = "light"
@@ -115,10 +132,11 @@ export const AssignUsersToTrainers = ({
             onSelect={getSelectedTrainerIds} />
           : <h1>{translate('NoUsers')}</h1>}
         </Loader>
+        <ModalButtonContainer>
         <Button disabled={activeTrainers.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToTrainer}>
           {activeTrainers.length === 0 ? translate('SelectTrainers') : translate('AssignTrainersToClients')}
         </Button>
-
+        </ModalButtonContainer>
     </StyledReactBottomSheetExtended>
   );
 };

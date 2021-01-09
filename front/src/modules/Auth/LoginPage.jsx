@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { routes } from 'routes';
 import Label from 'components/atoms/Label';
@@ -45,6 +45,10 @@ const LoginPage = () => {
   const { notificationDispatch } = useNotificationContext();
   const history = useHistory();
 
+  useEffect(() => {
+    detectBrowser()
+  }, []);
+
   const onSubmit = (values) => {
     const loginModelData = {
       email: values.email,
@@ -70,6 +74,27 @@ const LoginPage = () => {
       }, timeToRedirectLogin);
     }
   };
+
+  const detectBrowser = () => {
+    const isFirefox = typeof InstallTrigger !== 'undefined';
+    const isIE = /* @cc_on!@ */false || !!document.documentMode;
+    const isEdge = !isIE && !!window.StyleMedia;
+    const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+    if(isFirefox){
+      localStorage.setItem('browser', 'Firefox');
+    }
+    if(isIE){
+      localStorage.setItem('browser', 'IE');
+    }
+    if(isEdge){
+      localStorage.setItem('browser', 'Edge');
+    }
+    if(isChrome){
+      localStorage.setItem('browser', 'Chrome');
+    }
+  }
+
 
   const authenticateUser = (loginModelData) => {
     userService
@@ -121,22 +146,6 @@ const LoginPage = () => {
       </Formik>
       <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
-  );
-};
-
-const detectBrowser = () => {
-// const isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
-  // const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-
-  const isFirefox = typeof InstallTrigger !== 'undefined';
-  const isIE = /* @cc_on!@ */false || !!document.documentMode;
-  const isEdge = !isIE && !!window.StyleMedia;
-  const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-  return (
-    <>
-
-    </>
   );
 };
 

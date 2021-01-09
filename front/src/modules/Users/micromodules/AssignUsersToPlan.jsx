@@ -8,15 +8,19 @@ import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
 import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
-import {StyledReactBottomSheetExtended, BottomNav, BottomNavItem} from 'components/organisms/BottomSheet'
+import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import Search from 'components/molecules/Search';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
-const SelectedUsers = ""
-const CloseMenu = ""
+const ModalButtonContainer = styled.div`
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+`;
 
 export const BottomNavTitle = styled.div`
     display:flex;
@@ -50,14 +54,13 @@ export const AssignUsersToPlans = ({
         setAssignPlan('none');
     };
 
-    // search here?
-    // const filterPlans = (event) => {
-    //     setSearchTerm(event.target.value);
-    // };
+    const filterPlans = (event) => {
+        setSearchTerm(event.target.value);
+    };
 
-    // const plansResults = !searchTerm
-    //     ? plans
-    //     : plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    const plansResults = !searchTerm
+        ? plans
+        : plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
     const getAllPlans = () => {
         planService
@@ -120,26 +123,29 @@ export const AssignUsersToPlans = ({
                     <p onClick={() => closeAssignPlansToUser()}>{translate('CloseMenu')}</p>
                 </BottomNavItem>
                 <BottomNavItem>
-                <IconWrapper>
-                    <Icon name="check" fill={theme.colorInputActive} />
-                </IconWrapper>
+                    <IconWrapper>
+                        <Icon name="check" fill={theme.colorInputActive} />
+                    </IconWrapper>
                     <p>{activeUsers.length} {translate('SelectedUsers')}</p>
                 </BottomNavItem>
             </BottomNav>
             <BottomNavTitle><h4>{translate('SelectFromPlans')}</h4></BottomNavTitle>
-                <Loader isLoading={isLoading}>
+            <Search typeInput="light" callBack={filterPlans} placeholder={translate('PlanSearch')} />
+            <Loader isLoading={isLoading}>
                 {plans ?
                     <CheckboxGenericComponent
                         dataType="plans"
-                        theme = "light"
+                        theme="light"
                         displayedValue="title"
-                        dataList={plans}
+                        dataList={plansResults}
                         onSelect={getSelectedPlanIds} />
                     : <p>{translate('NoPlans')}</p>}
-                </Loader>
+            </Loader>
+            <ModalButtonContainer>
                 <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
-                {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
+                    {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
+            </ModalButtonContainer>
         </StyledReactBottomSheetExtended>
     );
 };
