@@ -120,6 +120,12 @@ const Menu = () => {
           </Square>
         </StyledNavLink>
 
+        <StyledNavLink to={routes.clients}>
+          <Square>
+            <Icon name="heart" fill={changeIconColor(currentUrl, routes.clients)} size="2rem" />
+          </Square>
+        </StyledNavLink>
+
         <StyledNavLink to={routes.myProfile}>
           <Square>
             <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} size="2rem" />

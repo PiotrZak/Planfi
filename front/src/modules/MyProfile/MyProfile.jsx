@@ -76,19 +76,15 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
 
   const renderGenericElement = (tab) => {
     const { role, userId } = user;
-    
 
     if (role === Role.Trainer) {
-
-      console.log(tab)
       if (tab === 'first') {
         setToRender(<TrainerPlans id={userId} />);
-      } 
+      }
       if (tab === 'second') {
         setToRender(<TrainerClients id={userId} />);
-      } 
-    } 
-    else if (tab === 'first') {
+      }
+    } else if (tab === 'first') {
       setToRender(<UserPlans id={userId} />);
     } else if (tab === 'second') {
       setToRender(<ClientTrainers id={userId} />);
@@ -132,7 +128,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
           </Container>
         </UserInfoBackground>
         <Container type="entry">
-          <Search placeholder={translate('Find')} callback={console.log('add search')} />
+          <Search placeholder={translate('Find')} callBack={console.log('add search')} />
           {toRender}
         </Container>
       </MyProfileTemplate>
@@ -152,7 +148,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
         onClose={() => setOpenEditUserPasswordModal(false)}
       />
       <MyProfilePanel
-        userId = {user.userId}
+        userId={user.userId}
         setOpenEditUserData={setOpenEditUserData}
         setOpenEditMailModal={setOpenEditMailModal}
         setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}

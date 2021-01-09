@@ -36,9 +36,10 @@ import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
 import Exercise from 'modules/Exercises/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
-import { User } from './Users/User';
+import { User } from 'modules/Users/User';
 
-import TestPage from './Auth/Test';
+import TestPage from 'modules/Auth/Test';
+import Clients from 'modules/Users/Clients';
 
 export const history = createBrowserHistory();
 
@@ -87,14 +88,15 @@ const Root = () => {
                   <PrivateRoute path="/user/:id" component={User} />
 
                   <MenuTemplate>
-                    <Route path={routes.addExercise} component={AddExercise} />
-                    <Route path={routes.editExercise} component={EditExercise} />
-                    <Route path={routes.exercise} component={Exercise} />
-                    <Route path={routes.categories} component={Categories} />
-                    <Route path={routes.myProfile} component={MyProfile} />
+                    <PrivateRoute path={routes.addExercise} component={AddExercise} />
+                    <PrivateRoute path={routes.editExercise} component={EditExercise} />
+                    <PrivateRoute path={routes.exercise} component={Exercise} />
+                    <PrivateRoute path={routes.categories} component={Categories} />
+                    <PrivateRoute path={routes.myProfile} component={MyProfile} />
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
+                    <PrivateRoute path={routes.clients} component={Clients} />
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationUsers} component={OrganizationUsers} />
                   </MenuTemplate>
                 </Switch>

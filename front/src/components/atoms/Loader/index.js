@@ -108,9 +108,14 @@ const Loader = ({
 };
 
 Loader.propTypes = {
-  type: PropTypes.oneOf(['spinner', 'dots']).isRequired,
-  color: PropTypes.oneOf(['primary', 'gray110']).isRequired,
+  type: PropTypes.oneOf(['spinner', 'dots']),
+  color: PropTypes.oneOf(['primary', 'gray110']),
   isLoading: PropTypes.bool.isRequired,
+};
+
+Loader.defaultProps = {
+  type: 'spinner',
+  color: 'primary',
 };
 
 export default Loader;

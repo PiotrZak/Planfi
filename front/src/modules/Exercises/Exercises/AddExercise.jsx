@@ -11,6 +11,7 @@ import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { exerciseService } from "services/exerciseService";
 import { routes } from 'utils/routes';
+import Nav from 'components/atoms/Nav'
 import TextArea from "components/molecules/TextArea";
 import AttachmentPreview, {
   TYPE,
@@ -20,7 +21,7 @@ import {
   useNotificationContext,
   ADD,
 } from "support/context/NotificationContext";
-import GlobalTemplate, { Nav } from "templates/GlobalTemplate";
+import GlobalTemplate from "templates/GlobalTemplate";
 import { useHistory } from "react-router-dom";
 import { withLazyComponent } from "utils/lazyComponent";
 
