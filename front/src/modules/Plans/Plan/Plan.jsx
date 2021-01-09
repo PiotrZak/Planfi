@@ -1,204 +1,203 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { exerciseService } from "services/exerciseService";
-import Icon from 'components/atoms/Icon';
+import { exerciseService } from 'services/exerciseService';
 import styled from 'styled-components';
-import { commonUtil } from "utils/common.util"
-import "react-multi-carousel/lib/styles.css";
-import { planService } from "services/planService";
-import Search from "components/molecules/Search"
+import { commonUtil } from 'utils/common.util';
+import 'react-multi-carousel/lib/styles.css';
+import { planService } from 'services/planService';
+import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
+import GlobalTemplate from 'templates/GlobalTemplate';
+import Nav from 'components/atoms/Nav';
 import { useThemeContext } from 'support/context/ThemeContext';
-import { categoryService } from "services/categoryService";
+import { categoryService } from 'services/categoryService';
 import SmallButton from 'components/atoms/SmallButton';
-import { PlansPanel } from "./microModules/PlansPanel"
-import { AssignExercisesToPlan } from "./microModules/AssignExercisesToPlan"
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import { PlansExercises } from "./microModules/PlansExercises";
+import { PlansPanel } from './microModules/PlansPanel';
+import { AssignExercisesToPlan } from './microModules/AssignExercisesToPlan';
+import { PlansExercises } from './microModules/PlansExercises';
 
-const NotExerciseInCategory = "This category have not any exercises!"
+const NotExerciseInCategory = 'This category have not any exercises!';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
 const Plan = (props) => {
+  const { notificationDispatch } = useNotificationContext();
+  const { theme } = useThemeContext();
+  const [plan, setPlan] = useState();
 
-    const { notificationDispatch } = useNotificationContext();
-    const { theme } = useThemeContext();
-    const [plan, setPlan] = useState();
+  const [bottomSheet, setBottomSheet] = useState('none');
+  const [addExercisePanel, setAddExercisePanel] = useState('none');
+  const [assignExercise, setAssignExercises] = useState('none');
+  const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none');
 
-    const [bottomSheet, setBottomSheet] = useState('none')
-    const [addExercisePanel, setAddExercisePanel] = useState('none')
-    const [assignExercise, setAssignExercises] = useState('none')
-    const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState('none')
+  const [exercises, setExercises] = useState();
+  const [activeExercise, setActiveExercise] = useState([]);
+  const [activeSelectedExercise, setActiveSelectedExercise] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categories, setCategories] = useState();
+  const [categoryExercises, setCategoryExercises] = useState([]);
 
-    const [exercises, setExercises] = useState()
-    const [activeExercise, setActiveExercise] = useState([])
-    const [activeSelectedExercise, setActiveSelectedExercise] = useState([])
+  const { match } = props;
+  const { id } = match.params;
 
-    const [isLoading, setIsLoading] = useState(true)
-    const [searchTerm, setSearchTerm] = useState("");
-    const [categories, setCategories] = useState()
-    const [categoryExercises, setCategoryExercises] = useState([])
+  useEffect(() => {
+    getPlan(id);
+    getAllCategories();
+    getPlanExercise(id);
+  }, [id]);
 
-    const { match } = props;
-    let id = match.params.id;
+  const getPlan = useCallback((id) => {
+    planService
+      .getPlanById(id)
+      .then((data) => {
+        setPlan(data);
+      })
+      .catch((error) => {
+      });
+  }, []);
 
-    useEffect(() => {
-        getPlan(id)
-        getAllCategories()
-        getPlanExercise(id)
-    }, [id]);
+  const getAllCategories = useCallback(() => {
+    categoryService
+      .getAllCategories()
+      .then((data) => {
+        setCategories(data);
+        setIsLoading(false);
+      })
+      .catch(() => {
+      });
+  }, []);
 
-    const getPlan = useCallback((id) => {
-        planService
-            .getPlanById(id)
-            .then((data) => {
-                setPlan(data);
-            })
-            .catch((error) => {
-            });
-    }, [])
+  const getPlanExercise = useCallback((id) => {
+    exerciseService
+      .getExercisesByPlan(id)
+      .then((data) => {
+        const uniqueExercises = commonUtil.getUnique(data, 'name');
+        setExercises(uniqueExercises);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-    const getAllCategories = useCallback(() => {
-        categoryService
-            .getAllCategories()
-            .then((data) => {
-                setCategories(data);
-                setIsLoading(false);
-            })
-            .catch(() => {
-            });
-    }, [])
+  const loadExercises = (id) => {
+    exerciseService
+      .getExercisesByCategory(id)
+      .then((data) => {
+        const uniqueExercises = commonUtil.getUnique(data, 'name');
+        setCategoryExercises(uniqueExercises);
+        if (uniqueExercises.length > 0) {
+          setAssignExercises('flex');
+          setBottomSheet('none');
+        } else {
+          notificationDispatch({
+            type: ADD,
+            payload: {
+              content: { message: translate('NotExerciseInCategory') },
+              type: 'neutral',
+            },
+          });
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
 
-    const getPlanExercise = useCallback((id) => {
-        exerciseService
-            .getExercisesByPlan(id)
-            .then((data) => {
-                const uniqueExercises = commonUtil.getUnique(data, 'name');
-                setExercises(uniqueExercises);
-                setIsLoading(false)
-            })
-            .catch((error) => {
-                console.error(error)
-            })
-    }, [])
+      });
+  };
 
-    const loadExercises = (id) => {
-        exerciseService
-            .getExercisesByCategory(id)
-            .then((data) => {
-                const uniqueExercises = commonUtil.getUnique(data, 'name');
-                setCategoryExercises(uniqueExercises);
-                if (uniqueExercises.length > 0) {
-                    setAssignExercises('flex');
-                    setBottomSheet('none');
-                }
-                else {
-                    notificationDispatch({
-                        type: ADD,
-                        payload: {
-                            content: { message: translate('NotExerciseInCategory') },
-                            type: 'neutral'
-                        }
-                    })
-                }
-                setIsLoading(false)
-            })
-            .catch((error) => {
+  const openAssignExercises = (id) => {
+    loadExercises(id);
+  };
 
-            });
-    }
+  const assignExerciseToPlan = () => {
+    const data = { planId: id, exerciseId: activeExercise };
+    planService
+      .assignExercises(data)
+      .then(() => {
+        setBottomSheet('none');
+        setAssignExercises(false);
+      })
+      .catch((error) => {
+      });
+  };
 
-    const openAssignExercises = (id) => {
-        loadExercises(id)
-    }
+  const closeAssignExercises = () => {
+    setBottomSheet('flex');
+    setAssignExercises('none');
+  };
 
+  const submissionHandleElement = (selectedData) => {
+    const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
+    setActiveSelectedExercise(selectedExercises);
+    selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+  };
 
-    const assignExerciseToPlan = () => {
-        const data = { planId: id, exerciseId: activeExercise }
-        planService
-            .assignExercises(data)
-            .then(() => {
-                setBottomSheet('none')
-                setAssignExercises(false)
-            })
-            .catch((error) => {
-            });
-    }
+  const filterExercises = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    const closeAssignExercises = () => {
-        setBottomSheet('flex');
-        setAssignExercises('none');
-    };
+  const results = !searchTerm
+    ? exercises
+    : exercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
-    const submissionHandleElement = (selectedData) => {
-        const selectedExercises = commonUtil.getCheckedData(selectedData, "exerciseId")
-        setActiveSelectedExercise(selectedExercises)
-        selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
-    }
-
-    const filterExercises = event => {
-        setSearchTerm(event.target.value);
-    };
-
-    const results = !searchTerm
-        ? exercises
-        : exercises.filter(exercise =>
-            exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
-        );
-
-    return (
-        <>
-            <GlobalTemplate>
-                <Nav>
-                    <BackTopNav />
-                    {plan && <h2>{plan.title}</h2>}
-                    {plan && <SmallButton iconName="plus" onClick={() => setAddExercisePanel('flex')} />}
-                </Nav>
-                <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
-                {results ?
-                    <CheckboxGenericComponent
-                        dataType="exercises"
-                        displayedValue={"name"}
-                        dataList={results}
-                        onSelect={submissionHandleElement} />
-                    :
-                    <p>{translate('NoExercises')}</p>}
-            </GlobalTemplate>
-            <PlansExercises
-                selectedExercise={activeSelectedExercise}
-                theme={theme}
-                planId={id}
-                categories={categories}
-                bottomSheet={bottomSheet}
-                openAssignExercises={openAssignExercises}
-                setBottomSheet={setBottomSheet}
-                isLoading={isLoading} />
-            <PlansPanel
-                selectedExercise={activeSelectedExercise}
-                theme={theme}
-                planId={id}
-                categories={categories}
-                bottomSheet={addExercisePanel}
-                openAssignExercises={openAssignExercises}
-                setBottomSheet={setAddExercisePanel}
-                isLoading={isLoading} />
-            <AssignExercisesToPlan
-                planId={id}
-                setAssignExercises={setAssignExercises}
-                assignExerciseToPlan={assignExerciseToPlan}
-                closeAssignExercises={closeAssignExercises}
-                assignExercise={assignExercise}
-                activeExercise={activeExercise}
-                categoryExercises={categoryExercises}
-                setActiveExercise={setActiveExercise} />
-        </>
-    );
-}
+  return (
+    <>
+      <GlobalTemplate>
+        <Nav>
+          <BackTopNav />
+          {plan && <h2>{plan.title}</h2>}
+          {plan && <SmallButton iconName="plus" onClick={() => setAddExercisePanel('flex')} />}
+        </Nav>
+        <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+        {results
+          ? (
+            <CheckboxGenericComponent
+              dataType="exercises"
+              displayedValue="name"
+              dataList={results}
+              onSelect={submissionHandleElement}
+            />
+          )
+          : <p>{translate('NoExercises')}</p>}
+      </GlobalTemplate>
+      <PlansExercises
+        selectedExercise={activeSelectedExercise}
+        theme={theme}
+        planId={id}
+        categories={categories}
+        bottomSheet={bottomSheet}
+        openAssignExercises={openAssignExercises}
+        setBottomSheet={setBottomSheet}
+        isLoading={isLoading}
+      />
+      <PlansPanel
+        selectedExercise={activeSelectedExercise}
+        theme={theme}
+        planId={id}
+        categories={categories}
+        bottomSheet={addExercisePanel}
+        openAssignExercises={openAssignExercises}
+        setBottomSheet={setAddExercisePanel}
+        isLoading={isLoading}
+      />
+      <AssignExercisesToPlan
+        planId={id}
+        setAssignExercises={setAssignExercises}
+        assignExerciseToPlan={assignExerciseToPlan}
+        closeAssignExercises={closeAssignExercises}
+        assignExercise={assignExercise}
+        activeExercise={activeExercise}
+        categoryExercises={categoryExercises}
+        setActiveExercise={setActiveExercise}
+      />
+    </>
+  );
+};
 
 export default Plan;

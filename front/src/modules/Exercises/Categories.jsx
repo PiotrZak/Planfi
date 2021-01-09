@@ -11,11 +11,9 @@ import SmallButton from 'components/atoms/SmallButton';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import CategoriesPanel from 'modules/Exercises/CategoriesPanel';
 import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
-import { withLazyComponent } from '../../utils/lazyComponent';
-import { isMobile } from "react-device-detect";
+import { isMobile } from 'react-device-detect';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-const Nav = withLazyComponent(React.lazy(() => import('components/atoms/Nav')));
-// const CheckboxGenericComponent = withLazyComponent(React.lazy(() => import('components/organisms/CheckboxGeneric')));
+import Nav from 'components/atoms/Nav';
 
 const CATEGORY = gql`{
   categories{
@@ -35,7 +33,9 @@ const Categories = () => {
 
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-  const { loading, error, data, refetch: _refetch } = useQuery(CATEGORY);
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(CATEGORY);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -47,16 +47,14 @@ const Categories = () => {
     const selectedCategoriesId = commonUtil.getCheckedData(selectedData, 'categoryId');
     const selectedCategoriesName = commonUtil.getCheckedData(selectedData, 'title');
     setSelectedCategories(selectedCategoriesId);
-    setSelectedCategoryName(selectedCategoriesName)
-    if(selectedCategoriesId.length > 0){
-      if(isMobile){
-        setBottomSheet('inline') 
+    setSelectedCategoryName(selectedCategoriesName);
+    if (selectedCategoriesId.length > 0) {
+      if (isMobile) {
+        setBottomSheet('inline');
+      } else {
+        setBottomSheet('flex');
       }
-      else{
-        setBottomSheet('flex') 
-      }
-    }
-    else{
+    } else {
       setBottomSheet('none');
     }
   };
@@ -87,7 +85,7 @@ const Categories = () => {
 
   useEffect(() => {
     refreshData();
-    setSelectedCategoryName([])
+    setSelectedCategoryName([]);
   }, [openModal, openEditModal]);
 
   if (loading) return <Loader isLoading={loading} />;
@@ -101,13 +99,14 @@ const Categories = () => {
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
         {data.categories.length > 0
-          ?
-          <CheckboxGenericComponent
-            dataType="categories"
-            displayedValue="title"
-            dataList={data.categories}
-            onSelect={submissionHandleElement}
-          />
+          ? (
+            <CheckboxGenericComponent
+              dataType="categories"
+              displayedValue="title"
+              dataList={data.categories}
+              onSelect={submissionHandleElement}
+            />
+          )
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel

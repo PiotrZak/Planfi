@@ -12,7 +12,7 @@ const Search = ({ callBack, placeholder }) => (
 );
 
 Search.propTypes = {
-  callback: PropTypes.func.isRequired,
+  callBack: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
 };
 

@@ -5,7 +5,7 @@ export const ModalHeading = styled.h3`
 `;
 
 const Heading = styled.h3`
-  margin: 0;
+  margin: .3rem 0 0 0;
   padding: 0;
 `;
 

@@ -1,39 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { organizationService } from 'services/organizationServices';
 import { commonUtil } from 'utils/common.util';
-import styled from 'styled-components';
-import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
-import { useUserContext } from "../../support/context/UserContext"
-import InviteUserModal from './InviteUsersModal';
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
+import { useUserContext } from 'support/context/UserContext';
 import { userService } from 'services/userServices';
-import GlobalTemplate, { Nav } from "templates/GlobalTemplate"
+import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
-import { UsersPanel } from "./micromodules/UsersPanel"
-import { AssignUsersToPlans } from "./micromodules/AssignUsersToPlan"
-import { AssignUsersToTrainers } from "./micromodules/AssignUsersToTrainers"
 import SmallButton from 'components/atoms/SmallButton';
-import handleTextType from 'support/TextType';
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Loader from 'components/atoms/Loader';
+import ScrollContainer from 'components/atoms/ScrollContainer';
+import Nav from 'components/atoms/Nav';
+import { Role } from 'utils/role';
+import Search from 'components/molecules/Search';
+import styled from 'styled-components';
+import Heading from 'components/atoms/Heading';
+import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
+import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
+import { UsersPanel } from './micromodules/UsersPanel';
+import InviteUserModal from './InviteUsersModal';
 
-const UsersFilters = styled.div`
-   display:flex;
-`;
-
-const Paragraph = styled.p`
-  ${() => handleTextType('Label-Button')};
-  margin: 0 1.8rem 0 0;
+const Container = styled.div`
+  margin-bottom: .8rem;
 `;
 
 const OrganizationUsers = () => {
-
   const { theme } = useThemeContext();
   const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
 
   const [users, setUsers] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState(users);
+  const [searchTerm, setSearchTerm] = useState('');
   const [activeUsers, setActiveUsers] = useState([]);
 
   const [bottomSheet, setBottomSheet] = useState('none');
@@ -66,23 +64,23 @@ const OrganizationUsers = () => {
       });
   };
 
-  useEffect(() => {
-    getAllUsers();
-  }, []);
-
   const getAllUsers = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     organizationService
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
-        setUsers(data);
-        setFilteredUsers(data)
+        const filteredUsers = data.filter((x) => x.role === Role.Trainer);
+        setUsers(filteredUsers);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
@@ -95,41 +93,49 @@ const OrganizationUsers = () => {
     }
   };
 
-  // todo - refactor this logic
-  const filterUsers = (role) => {
-    if (role == "All") {
-      setFilteredUsers(users)
-    }
-    else {
-      const filteredUsers = users.filter(x => x.role == role)
-      setFilteredUsers(filteredUsers)
-    }
-  }
+  const filterUsers = (event) => {
+    setSearchTerm(event.target.value);
+    console.log(event.target.value);
+    console.log(searchTerm);
+  };
+
+  /*  const results = !searchTerm
+    ? users
+    : users.filter((User) => User.firstName.toLowerCase().includes(searchTerm.toLowerCase())); */
+
+  const results = !searchTerm
+    ? users
+    : users.filter((User) => {
+      const userName = `${User.firstName} ${User.lastName}`;
+
+      return userName.toLowerCase().includes(searchTerm.toLowerCase());
+    });
 
   return (
     <>
       <GlobalTemplate>
         <Nav>
-          <h2>{user.firstName} of - {user.organizationId}</h2>
+          <Heading>{translate('Workers')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
-        <UsersFilters>
-          <Paragraph onClick={() => filterUsers("User")}>{translate('Clients')}</Paragraph>
-          <Paragraph onClick={() => filterUsers("Trainer")}>{translate('Trainers')}</Paragraph>
-          <Paragraph onClick={() => filterUsers("All")}>{translate('All')}</Paragraph>
-        </UsersFilters>
         <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
-        <Loader isLoading={isLoading}>
-          {filteredUsers ?
-            <CheckboxGenericComponent
-              dataType="users"
-              displayedValue="firstName"
-              dataList={filteredUsers}
-              onSelect={submissionHandleElement}
-            /> :
-            <h1>{translate('NoUsers')}</h1>
-          }
-        </Loader>
+        <Container>
+          <Search placeholder={translate('Find')} callBack={filterUsers} />
+        </Container>
+        <ScrollContainer>
+          <Loader isLoading={isLoading}>
+            {users
+              ? (
+                <CheckboxGenericComponent
+                  dataType="users"
+                  displayedValue="firstName"
+                  dataList={results}
+                  onSelect={submissionHandleElement}
+                />
+              )
+              : <h1>{translate('NoUsers')}</h1>}
+          </Loader>
+        </ScrollContainer>
       </GlobalTemplate>
       <UsersPanel
         deleteUser={deleteUser}
@@ -138,7 +144,8 @@ const OrganizationUsers = () => {
         setBottomSheet={setBottomSheet}
         activeUsers={activeUsers}
         setAssignPlan={setAssignPlan}
-        setAssignTrainer={setAssignTrainer} />
+        setAssignTrainer={setAssignTrainer}
+      />
       <AssignUsersToPlans
         theme={theme}
         organizationId={user.organizationId}
@@ -146,7 +153,8 @@ const OrganizationUsers = () => {
         setAssignPlan={setAssignPlan}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers} />
+        activeUsers={activeUsers}
+      />
       <AssignUsersToTrainers
         theme={theme}
         organizationId={user.organizationId}
@@ -154,12 +162,10 @@ const OrganizationUsers = () => {
         setAssignTrainer={setAssignTrainer}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers} />
+        activeUsers={activeUsers}
+      />
     </>
   );
 };
-
-
-
 
 export default OrganizationUsers;

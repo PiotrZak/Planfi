@@ -128,7 +128,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
           </Container>
         </UserInfoBackground>
         <Container type="entry">
-          <Search placeholder={translate('Find')} callback={console.log('add search')} />
+          <Search placeholder={translate('Find')} callBack={console.log('add search')} />
           {toRender}
         </Container>
       </MyProfileTemplate>
