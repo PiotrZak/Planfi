@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { organizationService } from 'services/organizationServices';
 import { commonUtil } from 'utils/common.util';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import { useUserContext } from 'support/context/UserContext';
@@ -12,10 +11,10 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import Loader from 'components/atoms/Loader';
 import ScrollContainer from 'components/atoms/ScrollContainer';
 import Nav from 'components/atoms/Nav';
-import { Role } from 'utils/role';
 import Search from 'components/molecules/Search';
 import styled from 'styled-components';
 import Heading from 'components/atoms/Heading';
+import { organizationService } from 'services/organizationServices';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 import { UsersPanel } from './micromodules/UsersPanel';
@@ -69,8 +68,7 @@ const OrganizationUsers = () => {
     organizationService
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
-        const filteredUsers = data.filter((x) => x.role === Role.Trainer);
-        setUsers(filteredUsers);
+        setUsers(data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -95,13 +93,7 @@ const OrganizationUsers = () => {
 
   const filterUsers = (event) => {
     setSearchTerm(event.target.value);
-    console.log(event.target.value);
-    console.log(searchTerm);
   };
-
-  /*  const results = !searchTerm
-    ? users
-    : users.filter((User) => User.firstName.toLowerCase().includes(searchTerm.toLowerCase())); */
 
   const results = !searchTerm
     ? users
@@ -122,7 +114,7 @@ const OrganizationUsers = () => {
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
-        <ScrollContainer>
+        <ScrollContainer mobileHeight="17rem" desktopHeight="14rem">
           <Loader isLoading={isLoading}>
             {users
               ? (

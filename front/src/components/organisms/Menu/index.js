@@ -87,8 +87,17 @@ const StyledNavLink = styled(NavLink).attrs({
   }
 `;
 
+const MenuOption = (iconName, route, fillFunc) => (
+  <StyledNavLink to={route}>
+    <Square>
+      <Icon name={iconName} fill={fillFunc} size="2rem" />
+    </Square>
+  </StyledNavLink>
+);
+
 // eslint-disable-next-line react/prop-types
 const Menu = () => {
+  const currentUser = JSON.parse((localStorage.getItem('user')));
   const [currentUrl, setCurrentUrl] = useState();
   const { theme } = useThemeContext();
 
@@ -99,38 +108,50 @@ const Menu = () => {
 
   const changeIconColor = (currentUrl, route) => (currentUrl === route.substring(1) ? theme.colorPrimary : theme.colorDisabled);
 
+  const toRender = (currentUser) => {
+    switch (currentUser.role) {
+      case Role.Owner:
+        return (
+          <>
+            {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('clipboard-notes', routes.plans, changeIconColor(currentUrl, routes.plans))}
+            {MenuOption('heart', routes.clients, changeIconColor(currentUrl, routes.clients))}
+            {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
+          </>
+        );
+      case Role.Trainer:
+        return (
+          <>
+            {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('heart', routes.clients, changeIconColor(currentUrl, routes.clients))}
+            {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
+          </>
+        );
+      case Role.User:
+        return (
+          <>
+            {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
+          </>
+        );
+      default:
+        return (
+          <>
+            {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
+          </>
+        );
+    }
+  };
+
   return (
     <Wrapper>
       <Container>
-        <StyledNavLink to={routes.categories}>
-          <Square>
-            <Icon name="dumbbell" fill={changeIconColor(currentUrl, routes.categories)} size="2rem" />
-          </Square>
-        </StyledNavLink>
-
-        <StyledNavLink to={getUsersRoute(currentUser)}>
-          <Square>
-            <Icon name="list-ul" fill={changeIconColor(currentUrl, routes.organizationUsers)} size="2rem" />
-          </Square>
-        </StyledNavLink>
-
-        <StyledNavLink to={routes.plans}>
-          <Square>
-            <Icon name="clipboard-notes" fill={changeIconColor(currentUrl, routes.plans)} size="2rem" />
-          </Square>
-        </StyledNavLink>
-
-        <StyledNavLink to={routes.clients}>
-          <Square>
-            <Icon name="heart" fill={changeIconColor(currentUrl, routes.clients)} size="2rem" />
-          </Square>
-        </StyledNavLink>
-
-        <StyledNavLink to={routes.myProfile}>
-          <Square>
-            <Icon name="user-circle" fill={changeIconColor(currentUrl, routes.myProfile)} size="2rem" />
-          </Square>
-        </StyledNavLink>
+        {toRender(currentUser)}
       </Container>
     </Wrapper>
   );
