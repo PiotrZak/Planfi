@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { planService } from 'services/planService';
 import GenericElement from 'components/molecules/GenericElement';
 import styled from 'styled-components';
-import { possibleTypes } from '../../../components/organisms/CheckboxGeneric/DataTypes';
+import { possibleTypes } from 'components/organisms/CheckboxGeneric/DataTypes';
 import { useThemeContext } from 'support/context/ThemeContext';
 
 const StyledGenericElement = styled(GenericElement)`
@@ -11,7 +11,6 @@ const StyledGenericElement = styled(GenericElement)`
 `;
 
 export const TrainerPlans = ({ id }) => {
-
   const { theme } = useThemeContext();
   const [plans, setPlans] = useState([]);
   const history = useHistory();
@@ -26,7 +25,6 @@ export const TrainerPlans = ({ id }) => {
       });
   }, [id]);
 
-
   const redirectToItem = (itemCase, id) => {
     history.push({
       pathname: `/${itemCase}/${id}`,
@@ -38,7 +36,7 @@ export const TrainerPlans = ({ id }) => {
     <div>
       {plans.length >= 1 ? plans.map((element, i) => (
         <div key={i.toString()}>
-            <StyledGenericElement
+          <StyledGenericElement
             onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
             theme={theme}
             avatarType="circle"
