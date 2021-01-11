@@ -65,6 +65,7 @@ namespace WebApi.Services
             var exercise = _context.Exercises.Find(id);
             if(exercise != null)
             {
+                
                 _context.Exercises.Remove(exercise);
                 _context.SaveChanges();
             }

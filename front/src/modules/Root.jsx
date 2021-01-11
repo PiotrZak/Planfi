@@ -28,6 +28,7 @@ import Plans from 'modules/Plans/Plans';
 import Plan from 'modules/Plans/Plan/Plan';
 
 import MyProfile from 'modules/MyProfile/MyProfile';
+import User  from 'modules/Users/User';
 
 import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { ThemeContext } from 'support/context/ThemeContext';
@@ -36,7 +37,7 @@ import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
 import Exercise from 'modules/Exercises/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
-import { User } from 'modules/Users/User';
+
 
 import TestPage from 'modules/Auth/Test';
 import Clients from 'modules/Users/Clients';
@@ -85,9 +86,10 @@ const Root = () => {
 
                   <Route path="/test" component={TestPage} />
 
+                 <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
 
-                  <MenuTemplate>
+
                     <PrivateRoute path={routes.addExercise} component={AddExercise} />
                     <PrivateRoute path={routes.editExercise} component={EditExercise} />
                     <PrivateRoute path={routes.exercise} component={Exercise} />

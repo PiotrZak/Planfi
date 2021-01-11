@@ -99,6 +99,15 @@ const Menu = () => {
 
   const changeIconColor = (currentUrl, route) => (currentUrl === route.substring(1) ? theme.colorPrimary : theme.colorDisabled);
 
+// owner menu:
+//5
+
+//traiiner menu:
+//4
+
+//client menu 
+//1
+
   return (
     <Wrapper>
       <Container>

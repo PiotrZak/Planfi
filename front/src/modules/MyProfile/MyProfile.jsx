@@ -22,6 +22,7 @@ import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
 import Search from 'components/molecules/Search';
 import breakPointSize from 'utils/rwd';
+import Nav from 'components/atoms/Nav';
 
 const Container = styled.div`
   margin: auto;
@@ -92,6 +93,8 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       setToRender(<UserPlans id={userId} />);
     }
   };
+
+
   const renderSwitchedButton = () => {
     if (user.role === Role.Trainer) {
       return (
@@ -116,11 +119,11 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   return (
     <>
       <MyProfileTemplate>
-        <UserInfoBackground place="MyProfile">
+        <UserInfoBackground>
           <Container>
-            <IconContainer>
-              <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
-            </IconContainer>
+          <Nav>
+          <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
+            </Nav>
             <ContainerCentred>
               <UserInfo user={updatedUser} />
             </ContainerCentred>

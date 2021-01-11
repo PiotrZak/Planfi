@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "react-multi-carousel/lib/styles.css";
 import { translate } from 'utils/Translation';
 import { isMobile } from "react-device-detect";
-import StyledReactBottomSheet, { StyledReactBottomSheetExtended, PanelContainer, PanelItem} from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, { PanelContainer, PanelItem} from 'components/organisms/BottomSheet'
 
 
 const ExercisePanel = (

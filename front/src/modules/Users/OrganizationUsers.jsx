@@ -95,8 +95,6 @@ const OrganizationUsers = () => {
 
   const filterUsers = (event) => {
     setSearchTerm(event.target.value);
-    console.log(event.target.value);
-    console.log(searchTerm);
   };
 
   /*  const results = !searchTerm
@@ -115,7 +113,7 @@ const OrganizationUsers = () => {
     <>
       <GlobalTemplate>
         <Nav>
-          <Heading>{translate('Workers')}</Heading>
+          <Heading>{translate('Trainers')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
         <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />

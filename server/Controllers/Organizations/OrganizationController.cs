@@ -73,7 +73,7 @@ namespace WebApi.Controllers
             return Ok(trainers);
         }
 
-        [Authorize(Roles = Role.Trainer)]
+        [Authorize(Roles = Role.Trainer + "," + Role.Owner)]
         [HttpGet("clients/{id}")]
         public IActionResult GetOrganizationClients(string id)
         {
