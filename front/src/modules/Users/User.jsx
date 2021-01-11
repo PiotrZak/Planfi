@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { UserInfo } from 'components/molecules/UserInfo/UserInfo';
 import { userService } from 'services/userServices';
-import { useUserContext } from 'support/context/UserContext';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { TrainerClients } from 'modules/Users/UserProfile/TrainerClients';
 import { UserPlans } from 'modules/Users/UserProfile/UserPlans';

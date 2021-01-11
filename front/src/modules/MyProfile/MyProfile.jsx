@@ -116,13 +116,26 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
     );
   };
 
+  const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  color: ${({ theme }) => theme.colorGray10};
+
+  &:hover {
+      cursor: pointer;
+  }
+`;
+
   return (
     <>
       <MyProfileTemplate>
         <UserInfoBackground>
           <Container>
           <Nav>
+            <Wrapper>
           <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
+          </Wrapper>
             </Nav>
             <ContainerCentred>
               <UserInfo user={updatedUser} />

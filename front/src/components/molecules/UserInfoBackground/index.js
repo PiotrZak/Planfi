@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 
 const StyledUserInfoBackground = styled.div`
   width: 100%;
-  padding-top: 2.6rem;
   margin-bottom: 1.6rem;
+  padding-left:1.6rem;
+  padding-right:1.6rem;
   background-color: ${({ theme }) => theme.colorGray70};
 
 `;

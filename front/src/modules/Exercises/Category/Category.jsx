@@ -113,8 +113,6 @@ const Category = (props) => {
         <Nav>
           {category && <BackTopNav text={category.title} />}
           {category && <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />}
-          {/* <SmallButton iconName="ellipsis-h" onClick={() => alert('Add functionality')} />
-          <SmallButton iconName="plus" onClick={() => alert('Add functionality')} /> */}
         </Nav>
         <Loader isLoading={isLoading} >
           {exercises.length > 0
