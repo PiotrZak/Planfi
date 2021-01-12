@@ -17,8 +17,6 @@ export const UserPlans = ({ id }) => {
       });
   }, [id]);
 
-  console.log(plans)
-
   return (
     <div>
       {plans.length >= 1 ? plans.map((element, i) => (

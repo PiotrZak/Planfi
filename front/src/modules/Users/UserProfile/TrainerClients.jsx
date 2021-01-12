@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { userService } from 'services/userServices';
-import GenericElement from 'components/molecules/GenericElement';
+import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 
 export const TrainerClients = ({ id }) => {
   const [clients, setClients] = useState([]);
@@ -20,13 +19,7 @@ export const TrainerClients = ({ id }) => {
     <div>
       {clients.length >= 1 ? clients.map((element, i) => (
         <div key={i.toString()}>
-          <Link to={{
-            pathname: `/user/${element.userId}`,
-            state: { id: element.userId },
-          }}
-          >
-            <GenericElement circle image={element.avatar} key={i} HeadLine={`${element.firstName}  ${element.lastName}`} user={element} SubLine={element.role} />
-          </Link>
+            <RenderType theme={theme} type={'users'} element={element} i={i} />
         </div>
       ))
         : <h2>Not Clients</h2>}
