@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { userService } from 'services/userServices';
 import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 export const TrainerClients = ({ id }) => {
   const [clients, setClients] = useState([]);
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     userService

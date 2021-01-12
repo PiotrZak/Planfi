@@ -5,7 +5,6 @@ import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import { useThemeContext } from 'support/context/ThemeContext';
 
 export const TrainerPlans = ({ id }) => {
-
   const { theme } = useThemeContext();
   const [plans, setPlans] = useState([]);
   const history = useHistory();

@@ -21,7 +21,6 @@ export const ClientTrainers = ({ id }) => {
     <div>
       {trainers.length >= 1 ? trainers.map((element, i) => (
         <div key={i}>
-            {/* <GenericElement circle image={element.avatar} key={i} HeadLine={`${element.firstName}  ${element.lastName}`} user={element} SubLine={element.role} /> */}
             <RenderType theme={theme} type={'users'} element={element} i={i} />
         </div>
       ))
