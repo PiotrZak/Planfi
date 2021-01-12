@@ -154,7 +154,7 @@ export const en = {
   SendEmails: 'Send Emails',
   InviteUsers: 'Invite Users',
   SeparateMails: 'Separate individual e-mail addresses with a comma',
-  InviteUsersButton: 'Invite Users',
+  InviteUsersButton: 'Send invite',
   EmailSent: 'Emails succesfully sent to clients!',
   EmailNotSent: 'Emails not sent to clients! - probably there is duplicate',
   Clients: 'Clients',
@@ -171,4 +171,6 @@ export const en = {
   MyTrainers: 'My trainers',
   AddNextExercise: 'Add next exercise',
   Workers: 'Workers',
+  NoClients: 'No Clients',
+  NoAddClients: 'No clients has been added',
 };

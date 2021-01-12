@@ -140,7 +140,7 @@ export const pl = {
   SendEmails: 'Wyślij e-maile',
   InviteUsers: 'Zaproś użytkowników',
   SeparateMails: 'Poszczególne adresy e-mail oddziel przecinkami',
-  InviteUsersButton: 'Zaproś użytkowników',
+  InviteUsersButton: 'Wyślij zaproszenie',
   EmailSent: 'Gratulacje! Zaproszenia wysłane na adresy email',
   EmailNotSent: 'E-maile nie wysyłane do klientów! - prawdopodobnie jest duplikat',
   Clients: 'Klienci',
@@ -158,4 +158,6 @@ export const pl = {
   MyTrainers: 'Moi trenerzy',
   AddNextExercise: 'Dodaj następne ćwiczenie',
   Workers: 'Pracownicy',
+  NoClients: 'Brak klientów',
+  NoAddClients: 'Nie dodano jeszcze żadnych klientów',
 };
