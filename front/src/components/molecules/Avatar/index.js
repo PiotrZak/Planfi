@@ -63,7 +63,6 @@ const StyledParagraph = styled(Paragraph)`
 const renderAvatar = (user, size) => {
   const { avatar, firstName, lastName } = user;
 
-
   if (avatar === null) {
     const initials = firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
     return (

@@ -14,7 +14,6 @@ import { useThemeContext } from 'support/context/ThemeContext';
 import SmallButton from 'components/atoms/SmallButton';
 import Nav from 'components/atoms/Nav';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import styled from 'styled-components';
 import { PlanPanelExercises } from './PlanPanelExercises';
 import Loader from 'components/atoms/Loader';
 

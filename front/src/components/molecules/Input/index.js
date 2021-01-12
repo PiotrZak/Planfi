@@ -65,22 +65,6 @@ const StyledInputContainer = styled.input`
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
 `;
 
-//light
-const StyledLightInputContainer = styled.input`
-  outline: none;
-  border: none;
-  
-  border-radius: ${({ disabled }) => ((disabled) ? 'none' : '3px')};
-        
-  ${() => handleTextType('body-3-regular')};
-        
-  padding: .6rem 1.6rem;$
-
-  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
-  background: ${({ disabled, theme }) => ((disabled) ? theme.colorWhite : theme.colorWhite)};
-`;
-
-
 const CenterIcon = styled.div`
   padding: .85rem;
 

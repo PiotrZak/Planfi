@@ -3,8 +3,12 @@ import { useHistory } from 'react-router-dom';
 import { planService } from 'services/planService';
 import GenericElement from 'components/molecules/GenericElement';
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { possibleTypes } from 'components/organisms/CheckboxGeneric/DataTypes';
+=======
+>>>>>>> master
 import { useThemeContext } from 'support/context/ThemeContext';
+import { possibleTypes } from '../../../components/organisms/CheckboxGeneric/DataTypes';
 
 const StyledGenericElement = styled(GenericElement)`
   margin-bottom: .8rem;

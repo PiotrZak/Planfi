@@ -26,7 +26,7 @@ const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
       if(value){
       setValue(value);
       }
-  }, [defaultValue]);
+  }, [defaultValue, value]);
 
   const increment = () => {
     setValue(value + valueToChange);

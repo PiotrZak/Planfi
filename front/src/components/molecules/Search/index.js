@@ -7,8 +7,8 @@ const StyledInput = styled(Input)`
   width: 100%;
 `;
 
-const Search = ({ callBack, placeholder }) => (
-  <StyledInput typeInput="left" icon="search" onChange={callBack} placeholder={placeholder} />
+const Search = ({ callBack, placeholder, typeInput }) => (
+  <StyledInput typeInput= {typeInput ? typeInput : "left"} icon="search" onChange={callBack} placeholder={placeholder} />
 );
 
 Search.propTypes = {
