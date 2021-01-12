@@ -6,13 +6,15 @@ import styled from 'styled-components';
 import { planService } from 'services/planService';
 import { userService } from 'services/userServices';
 import { possibleTypes } from 'components/organisms/CheckboxGeneric/DataTypes';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 const StyledGenericElement = styled(GenericElement)`
   margin-bottom: .8rem;
 `;
 
-const DisplayData = ({ dataType, id }) => {
+const DisplayData = ({ dataType, id, errorComponent }) => {
   const [dataToDisplay, setDataToDisplay] = useState([]);
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     if (dataType === 'ClientTrainers') {
@@ -54,17 +56,19 @@ const DisplayData = ({ dataType, id }) => {
     if (dataToDisplay >= 1) {
       dataToDisplay.map((element, i) => (
         <StyledGenericElement
-          onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
           theme={theme}
           avatarType="circle"
           key={i.toString()}
           headline={element.title}
           subline={element.creatorName}
-          plan={element}
         />
       ));
     } else {
-      return <h1>Empty</h1>;
+      return (
+        <>
+          {errorComponent()}
+        </>
+      );
     }
   };
 
@@ -76,8 +80,15 @@ const DisplayData = ({ dataType, id }) => {
 };
 
 DisplayData.propTypes = {
-  dataType: PropTypes.oneOf['ClientTrainers', 'TrainerPlans', 'UserPlans', 'TrainerClients'].isRequired,
-  id: PropTypes.number.isRequired,
+  dataType: PropTypes.oneOf(['ClientTrainers', 'TrainerPlans', 'UserPlans', 'TrainerClients']).isRequired,
+  id: PropTypes.oneOf([
+    PropTypes.number,
+    PropTypes.string,
+  ]).isRequired,
+  errorComponent: PropTypes.oneOf([
+    PropTypes.element,
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default DisplayData;

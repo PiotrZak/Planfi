@@ -1,8 +1,19 @@
 import React from 'react';
-import GenericElement from 'components/molecules/GenericElement';
+import DisplayData from 'components/organisms/DisplayData';
 
-const TestPage = () => (
-  <GenericElement headline="Tadeusz Olszewski" subline="User" />
-);
+const TestPage = () => {
+  const errorMsg = () => (
+    <>
+      <h1>Brak trener</h1>
+      <p>Poczekaj na przypisanie</p>
+    </>
+  );
+
+  return (
+    <>
+      <DisplayData dataType="TrainerClients" id="o2t1" errorComponent={errorMsg} />
+    </>
+  );
+};
 
 export default TestPage;

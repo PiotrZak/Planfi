@@ -124,7 +124,7 @@ const Menu = () => {
         return (
           <>
             {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('list-ul', routes.plans, changeIconColor(currentUrl, routes.plans))}
             {MenuOption('heart', routes.clients, changeIconColor(currentUrl, routes.clients))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
