@@ -107,7 +107,7 @@ const OrganizationUsers = () => {
     <>
       <GlobalTemplate>
         <Nav>
-          <Heading>{translate('Workers')}</Heading>
+          <Heading>{translate('Trainers')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
         <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import DisplayData from 'components/organisms/DisplayData';
 
 const TestPage = () => {
@@ -13,6 +14,13 @@ const TestPage = () => {
     <>
       <DisplayData dataType="TrainerClients" id="o2t1" errorComponent={errorMsg} />
     </>
+
+
+const TestPage = () => {
+
+  return (
+    <GlobalTemplate>
+    </GlobalTemplate>
   );
 };
 

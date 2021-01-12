@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { userService } from 'services/userServices';
-import GenericElement from 'components/molecules/GenericElement';
+import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
+import { useThemeContext } from 'support/context/ThemeContext';
 
 export const ClientTrainers = ({ id }) => {
   const [trainers, setTrainers] = useState([]);
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     userService
@@ -20,13 +21,7 @@ export const ClientTrainers = ({ id }) => {
     <div>
       {trainers.length >= 1 ? trainers.map((element, i) => (
         <div key={i}>
-          <Link to={{
-            pathname: `/user/${element.trainerId}`,
-            state: { id: element.trainerId },
-          }}
-          >
-            <GenericElement circle image={element.avatar} key={i} HeadLine={`${element.firstName}  ${element.lastName}`} user={element} SubLine={element.role} />
-          </Link>
+            <RenderType theme={theme} type={'users'} element={element} i={i} />
         </div>
       ))
         : <h2>No trainers!</h2>}

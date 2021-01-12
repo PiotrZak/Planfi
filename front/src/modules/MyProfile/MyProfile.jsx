@@ -22,6 +22,7 @@ import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
 import Search from 'components/molecules/Search';
 import breakPointSize from 'utils/rwd';
+import Nav from 'components/atoms/Nav';
 
 const Container = styled.div`
   margin: auto;
@@ -92,6 +93,8 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       setToRender(<UserPlans id={userId} />);
     }
   };
+
+
   const renderSwitchedButton = () => {
     if (user.role === Role.Trainer) {
       return (
@@ -113,14 +116,27 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
     );
   };
 
+  const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  color: ${({ theme }) => theme.colorGray10};
+
+  &:hover {
+      cursor: pointer;
+  }
+`;
+
   return (
     <>
       <MyProfileTemplate>
-        <UserInfoBackground place="MyProfile">
+        <UserInfoBackground>
           <Container>
-            <IconContainer>
-              <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
-            </IconContainer>
+          <Nav>
+            <Wrapper>
+          <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
+          </Wrapper>
+            </Nav>
             <ContainerCentred>
               <UserInfo user={updatedUser} />
             </ContainerCentred>

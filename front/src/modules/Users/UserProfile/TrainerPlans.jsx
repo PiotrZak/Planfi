@@ -3,16 +3,10 @@ import { useHistory } from 'react-router-dom';
 import { planService } from 'services/planService';
 import GenericElement from 'components/molecules/GenericElement';
 import styled from 'styled-components';
-<<<<<<< HEAD
 import { possibleTypes } from 'components/organisms/CheckboxGeneric/DataTypes';
-=======
->>>>>>> master
+import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { possibleTypes } from '../../../components/organisms/CheckboxGeneric/DataTypes';
-
-const StyledGenericElement = styled(GenericElement)`
-  margin-bottom: .8rem;
-`;
 
 export const TrainerPlans = ({ id }) => {
   const { theme } = useThemeContext();
@@ -36,10 +30,12 @@ export const TrainerPlans = ({ id }) => {
     });
   };
 
+
   return (
     <div>
       {plans.length >= 1 ? plans.map((element, i) => (
         <div key={i.toString()}>
+
           <StyledGenericElement
             onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
             theme={theme}
@@ -50,6 +46,7 @@ export const TrainerPlans = ({ id }) => {
             plan={element}
           />
         </div>
+            <RenderType theme={theme} type={'plans'} element={element} i={i} />        </div>
       ))
         : <h2>No Plans</h2>}
     </div>
