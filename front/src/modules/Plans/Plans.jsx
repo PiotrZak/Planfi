@@ -14,6 +14,7 @@ import { useUserContext } from 'support/context/UserContext';
 import Heading from 'components/atoms/Heading';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
+import { exerciseService } from '../../services/exerciseService';
 
 // todo - add loader
 
@@ -29,6 +30,8 @@ const Plan = (props) => {
   const [bottomSheet, setBottomSheet] = useState('none');
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlans, setSelectedPlans] = useState([]);
+
+
 
   const { match } = props;
   const { id } = match.params;

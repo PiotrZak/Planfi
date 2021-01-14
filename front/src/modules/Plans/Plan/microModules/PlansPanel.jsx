@@ -7,7 +7,7 @@ import { StyledReactBottomSheetExtended, BottomItem } from 'components/organisms
 import { Headline, Subline } from '../../../../components/typography';
 import { translate } from 'utils/Translation';
 import Search from "components/molecules/Search"
-import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
+import { ExerciseDetailsPanel } from '../../../../modules/Plans/Plan/microModules/ExerciseDetailsPanel';
 
 const BottomNav = styled.div`
     display:flex;
@@ -19,6 +19,13 @@ const BottomNavItem = styled.div`
     align-items:center;
     margin:3.6rem 0 0 3.6rem;
 `
+
+const SearchContainer = styled.div`
+margin: 1.8rem 1.8rem;
+`
+
+
+
 
 export const PlansPanel = ({
     planId,
@@ -51,7 +58,6 @@ export const PlansPanel = ({
             exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         );
 
-    console.log(allExercises)
     return (
         <>
             <StyledReactBottomSheetExtended
@@ -67,22 +73,15 @@ export const PlansPanel = ({
                             <Headline>{translate('SelectCategory')}</Headline>
                         </BottomNavItem>
                     </BottomNav>
+                    <SearchContainer>
                     <Search typeInput="light" callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+                    </SearchContainer>
                     {results && results.map((element, i) =>
                         <BottomItem onClick={() => openExerciseDetailsPanel(element)}>
                             <Headline>{element.name}</Headline>
                             <Subline>{`${element.series} / ${element.times}`}</Subline>
                         </BottomItem>
                     )}
-                    {/* {categories ?
-                    categories.map((element, i) =>
-                        <BottomItem onClick={() => openAssignExercises(element.categoryId)}>
-                            <Headline>{element.title}</Headline>
-                            <Subline>{`${element.series} / ${element.times}`}</Subline>
-                        </BottomItem>
-                    )
-                    : <p>{translate('NoCategories')}</p>
-                } */}
                 </Loader>
             </StyledReactBottomSheetExtended>
             <ExerciseDetailsPanel

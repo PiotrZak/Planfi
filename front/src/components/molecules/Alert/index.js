@@ -51,6 +51,7 @@ const handleIconColor = (type, theme) => {
 };
 
 const Wrapper = styled.div`
+  z-index:99;
   position: absolute;
   top: 0;
   width:100%;
