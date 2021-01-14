@@ -15,6 +15,7 @@ import { categoryService } from 'services/categoryService';
 import SmallButton from 'components/atoms/SmallButton';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { PlansPanel } from './microModules/PlansPanel';
+import { PlansExercises } from './PlansExercises';
 
 const NotExerciseInCategory = 'This category have not any exercises!';
 
@@ -34,6 +35,8 @@ const Plan = (props) => {
   const [activeSelectedExercise, setActiveSelectedExercise] = useState([]);
   const [assignExercise, setAssignExercises] = useState('none');
   const [bottomSheet, setBottomSheet] = useState('none')
+
+  const [planPanel, setPlanPanel] = useState('none')
 
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -99,7 +102,7 @@ const Plan = (props) => {
   const submissionHandleElement = (selectedData) => {
     const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
     setActiveSelectedExercise(selectedExercises);
-    // selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+    selectedExercises.length > 0 ? setPlanPanel('flex') : setPlanPanel('none');
   };
 
   const filterExercises = (event) => {
@@ -130,12 +133,21 @@ const Plan = (props) => {
           )
           : <p>{translate('NoExercises')}</p>}
       </GlobalTemplate>
+      <PlansExercises
+        selectedExercise={activeSelectedExercise}
+        theme={theme}
+        planId={id}
+        categories={categories}
+        planPanel={planPanel}
+        setPlanPanel={setPlanPanel}
+        isLoading={isLoading}
+      />
       <PlansPanel
         bottomSheet={addExercisePanel}
-        bottomSheet ={bottomSheet}
-        setBottomSheet ={setBottomSheet}
-        setAssignExercises = {setAssignExercises}
-        allExercises= {allExercises}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+        setAssignExercises={setAssignExercises}
+        allExercises={allExercises}
         selectedExercise={activeSelectedExercise}
         theme={theme}
         planId={id}

@@ -16,8 +16,8 @@ const IconWrapper = styled.div`
 export const PlansExercises = ({
     selectedExercise,
     theme,
-    bottomSheet,
-    setBottomSheet,
+    planPanel,
+    setPlanPanel,
     planId,
 }) => {
 
@@ -30,7 +30,7 @@ export const PlansExercises = ({
             planId: planId,
             exerciseId: selectedExercise
         }
-
+//todo
         planService.unAssignExercises(unAssignFromPlanModel)
             .then(() => {
                 notificationDispatch({
@@ -64,8 +64,8 @@ return (
     <StyledReactBottomSheet
         showBlockLayer={false}
         className={""}
-        visible={bottomSheet}
-        onClose={() => setBottomSheet('none')}
+        visible={planPanel}
+        onClose={() => setPlanPanel('none')}
         appendCancelBtn={false}>
         {isMobile ?
             <>
