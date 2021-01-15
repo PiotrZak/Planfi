@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem } from 'components/organisms/BottomSheet'
-import { ExerciseDetailsPanel } from './ExerciseDetailsPanel';
+import { ExerciseDetailsPanel } from '../../../../modules/Plans/Plan/microModules/ExerciseDetailsPanel';
 import { Headline } from '../../../../components/typography';
 import { translate } from 'utils/Translation';
 

@@ -118,6 +118,8 @@ namespace WebApi.Services
             foreach (var id in exerciseId)
             {
                 var element = _context.Exercises.Find(id);
+                element.PlanId = null;
+                _context.Exercises.Update(element);
                 plan.Exercises.Remove(element);
             }
             _context.Plans.Update(plan);

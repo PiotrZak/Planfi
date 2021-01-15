@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import GenericElement from 'components/molecules/GenericElement';
 import styled from 'styled-components';
+import { translate } from "utils/Translation";
 
 export const possibleTypes = {
   categories: 'categories',
@@ -29,15 +30,22 @@ export const RenderType = ({
     });
   };
 
+  
   const renderType = () => {
     switch (type) {
       case possibleTypes.categories:
+
+      let exerciseLabel =translate("Exercises");
+        if(element.exercises == 1){
+          console.log('one')
+          exerciseLabel = translate("Exercise")
+        }
         return (
           <StyledGenericElement
             key={i}
             onClick={() => redirectToItem(possibleTypes.category, element.categoryId)}
             headline={element.title}
-            subline={element.exercises}
+            subline={`${element.exercises}  ${exerciseLabel}`}
             category={element.category}
             AvatarType="noAvatar"
           />
@@ -50,7 +58,7 @@ export const RenderType = ({
             onClick={() => redirectToItem(possibleTypes.user, element.userId)}
             theme={theme}
             avatarType="circle"
-            image={element.avatar}
+            avatarUrl={element.avatar}
             headline={`${element.firstName}  ${element.lastName}`}
             user={element}
             subline={element.role}
@@ -61,7 +69,7 @@ export const RenderType = ({
           <StyledGenericElement
             onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
             theme={theme}
-            avatarType="circle"
+            avatarType="noAvatar"
             key={i}
             headline={element.title}
             subline={element.creatorName}
@@ -73,9 +81,10 @@ export const RenderType = ({
         return (
           <StyledGenericElement
             key={i}
+            avatarType="circle"
+            avatarUrl = {element.files && element.files[0]}
             onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
             headline={element.name}
-            image={element.files && element.files[0]}
             exercise={element}
           />
         );

@@ -35,7 +35,7 @@ const CategoriesPanel = ({
 
   return (
     <StyledReactBottomSheet
-      showBlockLayer={false}
+      showBlockLayer={true}
       visible={bottomSheet}
       className={""}
       onClose={() => setBottomSheet(false)}

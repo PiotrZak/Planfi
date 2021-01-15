@@ -7,17 +7,12 @@ import BackTopNav from 'components/molecules/BackTopNav';
 import { TrainerClients } from 'modules/Users/UserProfile/TrainerClients';
 import { UserPlans } from 'modules/Users/UserProfile/UserPlans';
 import MyProfileTemplate from 'templates/MyProfileTemplate';
-import Icon from 'components/atoms/Icon';
-import SmallButton from 'components/atoms/SmallButton';
-import Heading from 'components/atoms/Heading';
 import { translate } from 'utils/Translation';
 import UserInfoBackground from 'components/molecules/UserInfoBackground';
 import SwitchedButton from 'components/molecules/SwitchedButton';
 import { Role } from 'utils/role';
 import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
-import Search from 'components/molecules/Search';
-import GlobalTemplate from 'templates/GlobalTemplate';
 import styled, { css } from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
@@ -129,7 +124,6 @@ export const User = (props) => {
           </Container>
         </UserInfoBackground>
         <Container type="entry">
-          <Search placeholder={translate('Find')} callBack={console.log('add search')} />
           {toRender}
         </Container>
     </MyProfileTemplate>

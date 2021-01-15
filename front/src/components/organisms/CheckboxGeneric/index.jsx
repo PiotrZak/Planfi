@@ -5,17 +5,14 @@ import styled from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
-import { categoryService } from 'services/categoryService';
 
 const CheckboxContainer = styled.div`
   position: relative;
-  //bad practice
-  //to fix
   input{
     z-index: 0;
     position: absolute;
     top: -6rem;
-    left: 1rem;
+    left: -5rem;
     &:hover {
       cursor:pointer;
     }
@@ -36,7 +33,7 @@ const CheckboxLightContainer = styled.div`
     @media only screen and ${breakPointSize.xs} {
       display: none;
     }
-  }
+}
 `;
 
 export const CheckboxGenericComponent = ({

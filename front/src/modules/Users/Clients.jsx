@@ -11,31 +11,14 @@ import ScrollContainer from 'components/atoms/ScrollContainer';
 import Nav from 'components/atoms/Nav';
 import Search from 'components/molecules/Search';
 import Heading from 'components/atoms/Heading';
-import { userService } from 'services/userServices';
-import { commonUtil } from 'utils/common.util';
 import Loader from 'components/atoms/Loader';
 import styled from 'styled-components';
-import Paragraph from 'components/atoms/Paragraph';
+import { userService } from 'services/userServices';
 import { Role } from 'utils/role';
-
-const SearchContainer = styled.div`
-  margin-bottom: .8rem;
-`;
 
 const Container = styled.div`
   text-align: center;
 `;
-
-const StyledParagraph = styled(Paragraph)`
-  color: ${(theme) => theme.colorSecondary};
-  margin: 0;
-`;
-
-const Title = styled.h3`
-  margin: 0;
-  padding: 0;
-`;
-
 
 const Clients = () => {
 
@@ -47,10 +30,12 @@ const Clients = () => {
   
   const [users, setUsers] = useState([]);
 
-  const getAllClients = () => {
+  const { role, userId, organizationId } = user;
+
+  const getOrganizationClients = () => {
     setIsLoading(true);
     organizationService
-      .getOrganizationClients(user.organizationId)
+      .getOrganizationClients(organizationId)
       .then((data) => {
         setUsers(data);
         setIsLoading(false);
@@ -60,8 +45,25 @@ const Clients = () => {
       });
   };
 
+  const getClientsByTrainer = () => {
+    userService.allClientsByTrainer(userId)
+    .then((data) => {
+      setUsers(data);
+    })
+    .catch((error) => {
+    });
+  };
+
+
+
+
   useEffect(() => {
-    getAllClients();
+    if (role === Role.Trainer) {
+    getClientsByTrainer();
+    }
+    if( role === Role.Owner){
+      getOrganizationClients();
+    }
   }, []);
 
   const filterUsers = (event) => {

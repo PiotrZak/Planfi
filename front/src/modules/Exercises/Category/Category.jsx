@@ -77,7 +77,8 @@ const Category = (props) => {
     exerciseService
       .getExercisesByCategory(id)
       .then((data) => {
-        setExercises(data);
+        const uniqueExercises = commonUtil.getUnique(data, 'name');
+        setExercises(uniqueExercises);
         setIsLoading(false);
       })
       .catch((error) => {

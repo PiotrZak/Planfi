@@ -163,6 +163,7 @@ export const en = {
   All: 'All',
   NoExerciseInPlan: 'There are no added exercises in this Plan',
   Exercises: 'Exercises',
+  Exercises: 'Exercise',
   AddCategoryModalDescription: "When naming a Category, it is worth using names related to specific parts of the body, for example 'Back'",
   Add: 'Add',
   Find: 'Find',

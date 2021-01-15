@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useThemeContext } from 'support/context/ThemeContext';
+import Image from '../../atoms/Image';
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colorGray80};
@@ -94,15 +95,34 @@ const NoAvatarSquare = styled.div`
   background-color: ${({ theme }) => theme.colorGray50};
 `;
 
+const ImageContainer = styled.img`
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  ${({ type }) => handleavatarType(type)};
+`;
+
+
 const Avatar = (type, url, theme) => {
-  if (url === 'null') {
+  if(type == 'initials'){
+    return null
+  }
+  if(type == "noAvatar"){
+    return null
+  }
+  if (url == null || url == "null" || !url) {
     return (
       <NoAvatarSquare>
         <Icon name="image-slash" size="1.4rem" fill={theme.colorSecondary} />
       </NoAvatarSquare>
     );
   }
-  return <StyledAvatar type={type} url={url} />;
+  else{
+    return(
+      <ImageContainer src={`data:image/jpeg;base64,${url}`} />
+    )
+  }
 };
 
 const GenericElement = ({
@@ -114,6 +134,8 @@ const GenericElement = ({
   ...rest
 }) => {
   const { theme } = useThemeContext();
+
+console.log(avatarUrl)
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -127,7 +149,7 @@ const GenericElement = ({
       </Container>
       <ContainerMenu>
         <Circle onClick={onMenuClick}>
-          <Icon name="ellipsis-h" size="2rem" />
+          <Icon name="arrow-right" size="2rem" />
         </Circle>
       </ContainerMenu>
     </Wrapper>
@@ -136,11 +158,9 @@ const GenericElement = ({
 
 GenericElement.propTypes = {
   headline: PropTypes.string.isRequired,
-  // eslint-disable-next-line react/require-default-props
   subline: PropTypes.string,
   avatarType: PropTypes.oneOf(['circle', 'square', 'noAvatar']),
   avatarUrl: PropTypes.string,
-  // eslint-disable-next-line react/require-default-props
   onMenuClick: PropTypes.func,
 };
 

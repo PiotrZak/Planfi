@@ -150,6 +150,7 @@ export const pl = {
   All: 'Wszyscy',
   NoExerciseInPlan: 'W tym planie nie ma ćwiczeń',
   Exercises: 'Ćwiczenia',
+  Exercise: 'Ćwiczenie',
   AddCategoryModalDescription: 'Nazywając kategorię warto używać nazw zwiazanych z konkretnymi partiami ciała na przykład “Plecy”.',
   Add: 'Dodaj',
   Find: 'Znajdź',
