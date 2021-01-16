@@ -98,7 +98,7 @@ const MenuOption = (iconName, route, fillFunc) => (
 // eslint-disable-next-line react/prop-types
 const Menu = () => {
   const currentUser = JSON.parse((localStorage.getItem('user')));
-  const [currentUrl, setCurrentUrl] = useState();
+  const [currentUrl, setCurrentUrl] = useState('');
   const { theme } = useThemeContext();
 
   useEffect(() => {
@@ -106,9 +106,8 @@ const Menu = () => {
     setCurrentUrl(currentUrl[3]);
   }, [window.location.href]);
 
-  const changeIconColor = (currentUrl, route) => (currentUrl === route.substring(1) ? theme.colorPrimary : theme.colorDisabled);
+  const changeIconColor = (currentUrl, route) =>   (currentUrl.includes(route.substring(1,3)) ? theme.colorPrimary : theme.colorDisabled);
 
-  
   const toRender = (currentUser) => {
     switch (currentUser.role) {
       case Role.Owner:
