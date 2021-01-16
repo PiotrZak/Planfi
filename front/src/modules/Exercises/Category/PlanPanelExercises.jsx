@@ -67,11 +67,11 @@ export const PlanPanelExercises = ({
                             {selectedExercise.length} {translate('Selected')}
                         </PanelItem>
                         <PanelItem onClick={() => deleteExercise()}>
-                            <Icon name="trash" fill={theme.colorInputActive} />{translate('DeleteExercise')}
+                            {translate('DeleteExercise')}
                         </PanelItem>
                         {selectedExercise.length < 2 &&
                             <PanelItem onClick={() => editExercise()}>
-                                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditExercise')}
+                               {translate('EditExercise')}
                             </PanelItem>
                         }
                     </PanelContainer>

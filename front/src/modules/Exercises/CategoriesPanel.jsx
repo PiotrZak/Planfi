@@ -66,7 +66,6 @@ const CategoriesPanel = ({
                 {selectedCategories.length} {translate("selected")}
               </PanelItem>
               <PanelItem onClick={() => deleteCategories()}>
-                <Icon name="trash" fill={theme.colorInputActive} />
                 {selectedCategories.length == 1
                   ? translate("DeleteCategory")
                   : translate("DeleteCategoriesText")
@@ -74,7 +73,6 @@ const CategoriesPanel = ({
               </PanelItem>
               {selectedCategories.length < 2 && (
                 <PanelItem onClick={openModal}>
-                  <Icon name="edit" fill={theme.colorInputActive} />
                   {translate("EditCategory")}
                 </PanelItem>
               )}

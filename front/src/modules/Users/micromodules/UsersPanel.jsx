@@ -4,7 +4,7 @@ import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { isMobile } from "react-device-detect";
 import EditRoleModal from "./EditRoleModal";
-import StyledReactBottomSheet, { StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, { PanelContainer, PanelItem, } from 'components/organisms/BottomSheet'
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -76,23 +76,14 @@ export const UsersPanel = ({
                             <Icon name="trash" fill={theme.colorInputActive} />
                             {translate('DeleteUserText')}
                         </PanelItem>
-                        <PanelItem onClick={() => openAssignPlansToUsers()}>
-                            <IconWrapper>
-                                <Icon name="clipboard-notes" fill={theme.colorInputActive} />
-                            </IconWrapper>
+                        <PanelItem onClick={() => openAssignPlansToUsers()}>>
                             {translate('AssignPlanText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignTrainersToUsers()}>
-                            <IconWrapper>
-                                <Icon name="user-circle" fill={theme.colorInputActive} />
-                            </IconWrapper>
                             {translate('AssignToTrainerText')}
                         </PanelItem>
                         {activeUsers.length < 2 &&
                             <PanelItem>
-                                <IconWrapper>
-                                    <Icon name="edit" fill={theme.colorInputActive} />
-                                </IconWrapper>
                                 {translate('EditUserRole')}
                             </PanelItem>
                         }

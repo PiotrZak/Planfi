@@ -17,18 +17,11 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import { PlansPanel } from './microModules/PlansPanel';
 import { PlansExercises } from './PlansExercises';
 
-const NotExerciseInCategory = 'This category have not any exercises!';
-
-const IconWrapper = styled.div`
-    margin-top: .4rem;
-`;
-
 const Plan = (props) => {
-  const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
   const [plan, setPlan] = useState();
 
-  const [addExercisePanel, setAddExercisePanel] = useState('none');
+  const [addExercisePanel] = useState('none');
 
   const [allExercises, setAllExercises] = useState([])
   const [exercises, setExercises] = useState();

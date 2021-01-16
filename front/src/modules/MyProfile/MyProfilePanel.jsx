@@ -15,12 +15,9 @@ import {
 } from "support/context/NotificationContext";
 
 const timeToRedirectLogin = 3000;
-const UploadAvatar = "";
-
 const FileUploadButton = styled.input.attrs({ type: "file" })`
   display: none;
 `;
-
 
 export const MyProfilePanel = ({
   userId,

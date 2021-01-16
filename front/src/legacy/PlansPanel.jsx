@@ -32,7 +32,7 @@ const PlansPanel = ({
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                        content: { success: 'OK', message: translate('PlansDeleted') },
+                        content: { success: 'OK', message: translate('PlansDeletedInfo') },
                         type: 'positive'
                     }
                 })
@@ -81,10 +81,10 @@ const PlansPanel = ({
                              {translate('selected')}
                         </PanelItem>
                         <PanelItem onClick={() => deletePlans()}>
-                            <Icon name="trash" fill={theme.colorInputActive} />{translate('DeletePlan')}
+                            {translate('DeletePlan')}
                         </PanelItem>
                             <PanelItem onClick={setOpenEditModal}>
-                                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditCategory')}
+                                {translate('EditCategory')}
                             </PanelItem>
                     </PanelContainer>
                 </>

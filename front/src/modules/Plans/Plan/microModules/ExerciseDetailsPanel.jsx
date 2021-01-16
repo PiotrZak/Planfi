@@ -5,14 +5,14 @@ import styled from 'styled-components';
 import Button from "components/atoms/Button"
 import Counter from "components/atoms/Counter"
 import { planService } from "services/planService";
-import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem, BottomItem } from 'components/organisms/BottomSheet'
+import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
 import { Headline, MainHeadline } from 'components/typography';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Paragraph from "components/atoms/Paragraph";
 import { translate } from 'utils/Translation';
 import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
 import { withLazyComponent } from "utils/lazyComponent";
-import { Formik, Field, Form } from "formik";
+import { Formik, Form } from "formik";
 const Checkbox = withLazyComponent(
     React.lazy(() => import("components/atoms/Checkbox"))
 );
@@ -30,10 +30,6 @@ const ModalButtonContainer = styled.div`
     width: 100%;
 `;
 
-const ContainerDescription = styled.div`
-  margin-top: 2rem;
-`;
-
 const CheckboxContainer = styled.div`
   display: flex;
 `;
@@ -47,7 +43,6 @@ export const ExerciseDetailsPanel = ({
     exercise,
     openExerciseDetailsPlan,
     setOpenExerciseDetailsPlan,
-    setAssignExercises,
     setBottomSheet
 }) => {
 
@@ -176,7 +171,6 @@ export const ExerciseDetailsPanel = ({
                 </Form>
                 )}
             </Formik>
-
         </StyledReactBottomSheetExtended>
     )
 }

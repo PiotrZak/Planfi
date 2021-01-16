@@ -22,7 +22,6 @@ export const PlansExercises = ({
 }) => {
 
     const { notificationDispatch } = useNotificationContext();
-    console.log(selectedExercise)
 
     const unAssignFromPlan = () => {
 
@@ -30,7 +29,6 @@ export const PlansExercises = ({
             planId: planId,
             exerciseId: selectedExercise
         }
-//todo
         planService.unAssignExercises(unAssignFromPlanModel)
             .then(() => {
                 notificationDispatch({

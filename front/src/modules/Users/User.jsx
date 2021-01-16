@@ -16,6 +16,7 @@ import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
 import styled, { css } from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
+import Loader from 'components/atoms/Loader';
 
 const Container = styled.div`
   margin: auto;
@@ -37,18 +38,11 @@ const ContainerCentred = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-const IconContainer = styled.div`
-  margin-left: 1.8rem;
-`;
-
 export const User = (props) => {
 
   const [user, setUser] = useState()
   const [isLoading, setIsLoading] = useState(true);
-  const [activeItem, setActiveItem] = useState('TrainerClients');
   const [toRender, setToRender] = useState(null);
-  const [bottomSheet, setBottomSheet] = useState('none');
-  const [updatedUser, setUpdatedUser] = useState(user);
 
   const userId = props.location.state.id
 
@@ -113,6 +107,7 @@ export const User = (props) => {
     <>
     <MyProfileTemplate>
         <UserInfoBackground>
+        <Loader isLoading={isLoading} >
           <Container>
             <Nav>
             <BackTopNav text = {user && user.firstName}/>
@@ -122,6 +117,7 @@ export const User = (props) => {
             </ContainerCentred>
             {renderSwitchedButton()}
           </Container>
+          </Loader>
         </UserInfoBackground>
         <Container type="entry">
           {toRender}

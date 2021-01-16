@@ -11,7 +11,6 @@ export const TrainerPlans = ({ id }) => {
   const [plans, setPlans] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
 
-  const history = useHistory();
 
   useEffect(() => {
     planService

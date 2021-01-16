@@ -37,7 +37,6 @@ export const RenderType = ({
 
       let exerciseLabel =translate("Exercises");
         if(element.exercises == 1){
-          console.log('one')
           exerciseLabel = translate("Exercise")
         }
         return (

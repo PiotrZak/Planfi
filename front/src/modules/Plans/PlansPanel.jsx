@@ -4,7 +4,7 @@ import { translate } from 'utils/Translation';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import "react-multi-carousel/lib/styles.css";
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, { PanelContainer, PanelItem } from 'components/organisms/BottomSheet'
 import EditPlanModal from "./EditPlanModal";
 
 const IconWrapper = styled.div`
@@ -35,17 +35,17 @@ const PlansPanel = ({
             appendCancelBtn={false}>
             {isMobile ?
                 <>
-                        <PanelItem onClick={() => deletePlans()}>
-                            {selectedPlans.length == 1
-                                ? <p>{translate('DeletePlan')}</p>
-                                : <p>{translate('DeletePlans')}</p>
-                            }
-                        </PanelItem>
-                        {selectedPlans.length < 2 &&
-                            <PanelItem onClick={setOpenEditModal}>
-                                <p>{translate('EditPlan')}</p>
-                            </PanelItem>
+                    <PanelItem onClick={() => deletePlans()}>
+                        {selectedPlans.length == 1
+                            ? <p>{translate('DeletePlan')}</p>
+                            : <p>{translate('DeletePlans')}</p>
                         }
+                    </PanelItem>
+                    {selectedPlans.length < 2 &&
+                        <PanelItem onClick={setOpenEditModal}>
+                            <p>{translate('EditPlan')}</p>
+                        </PanelItem>
+                    }
                 </>
                 :
                 <>
@@ -57,11 +57,11 @@ const PlansPanel = ({
                             {selectedPlans.length} {translate('selected')}
                         </PanelItem>
                         <PanelItem onClick={() => deletePlans()}>
-                            <Icon name="trash" fill={theme.colorInputActive} />{translate('DeletePlan')}
+                            {translate('DeletePlan')}
                         </PanelItem>
                         {selectedPlans.length < 2 &&
                             <PanelItem onClick={setOpenEditModal}>
-                                <Icon name="edit" fill={theme.colorInputActive} />{translate('EditPlan')}
+                                {translate('EditPlan')}
                             </PanelItem>
                         }
                     </PanelContainer>

@@ -94,7 +94,7 @@ const EditExercise = (props) => {
   const { notificationDispatch } = useNotificationContext();
 
   let id;
-  props.location.state.exercise != undefined 
+  props.location.state.exercise !== undefined 
   ? id = props.location.state.exercise.exerciseId 
   : id = props.location.state.selectedExercise;
 
@@ -134,42 +134,40 @@ const EditExercise = (props) => {
     const formData = new FormData();
     formData.append(
       "Name",
-      values.name == undefined ? exerciseData.name : values.name
+      values.name === undefined ? exerciseData.name : values.name
     );
     formData.append(
       "Description",
-      values.description == undefined
+      values.description === undefined
         ? exerciseData.description
         : values.description
     );
     formData.append(
       "Repeats",
-      values.repeats == undefined
+      values.repeats === undefined
         ? exerciseData.repeats
         : values.repeats
     );
     formData.append(
       "Times",
-      values.times == undefined
+      values.times === undefined
         ? exerciseData.times
         : values.times
     );
     formData.append(
       "Series",
-      values.series == undefined
+      values.series === undefined
         ? exerciseData.series
         : values.series
     );
     formData.append(
       "Weight",
-      values.weight == undefined
+      values.weight === undefined
         ? exerciseData.weight
         : values.weight
     );
 
-    console.log(exerciseData.files)
-
-    if (values.files != undefined) {
+    if (values.files !== undefined) {
       for (let i = 0; i < exerciseData.files.length; i++) {
         formData.append("Files", exerciseData.files[i].File);
       }
@@ -179,10 +177,6 @@ const EditExercise = (props) => {
       for (let i = 0; i < selectedFiles.length; i++) {
         formData.append("Files", selectedFiles[i].File);
       }
-    }
-
-    for (var value of formData.values()) {
-      console.log(value);
     }
 
     formData.append("CategoryId", props.location.state.id);
@@ -229,9 +223,6 @@ const EditExercise = (props) => {
     setExerciseData({ ...exerciseData, repeats: data });
   };
 
-  const handleFileData = (data) => {
-    setExerciseData({ ...exerciseData, files: data });
-  };
 
   const triggerFileUploadButton = () => {
     document.getElementById("choose-file-button").click();
@@ -329,7 +320,7 @@ const EditExercise = (props) => {
   function removeFile(currentPhoto) {
 
     for (let i = 0; i <= selectedFiles.length; ++i) {
-      if (currentPhoto == selectedFiles[i].ID) {
+      if (currentPhoto === selectedFiles[i].ID) {
 
         const selectedList = [...selectedFiles];
         const previewList = [...previewFiles];

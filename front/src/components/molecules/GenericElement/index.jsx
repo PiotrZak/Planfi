@@ -8,6 +8,7 @@ import Image from '../../atoms/Image';
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colorGray80};
+  min-height: 72px;
   border-radius: 4px;
   display: flex;
   justify-content: space-between;

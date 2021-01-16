@@ -27,6 +27,7 @@ const initialValues = {
   privacy: false,
 };
 
+//todo exclude Regexes to common function
 const nameRegex = /^[a-zA-Z]{3,20} [a-zA-Z]{2,32}$/;
 const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
 const passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;

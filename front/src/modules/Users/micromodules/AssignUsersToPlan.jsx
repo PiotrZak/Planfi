@@ -67,7 +67,6 @@ export const AssignUsersToPlans = ({
             .getAllPlans()
             .then((data) => {
                 setPlans(data);
-                console.log(data)
                 setIsLoading(false);
             })
             .catch(() => {

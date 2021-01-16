@@ -34,7 +34,7 @@ const ForgotPasswordPage = () => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: 'OK', message: translate('EmailSent') },
+            content: { success: 'OK', message: translate('EmailSentToUser') },
             type: 'positive',
           },
         });
