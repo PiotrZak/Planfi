@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Identity;
-using WebApi.Entities;
 using System.Threading.Tasks;
 using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
@@ -75,7 +74,7 @@ namespace WebApi
             })
             .AddJwtBearer(x =>
             {
-                x.Events = new JwtBearerEvents
+                /*x.Events = new JwtBearerEvents
                 {
                     OnTokenValidated = context =>
                     {
@@ -90,7 +89,7 @@ namespace WebApi
                         }
                         return Task.CompletedTask;
                     }
-                };
+                };*/
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -106,7 +105,7 @@ namespace WebApi
             // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
-
+            
             // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "VuoSwnAYWyUw8YD/5QtxgEEW4zGKPs9KilErxWzufk3+tEoyw061hY43TSGNXrtfjKTWAEcjjriYwuxe/uZN9g==",
+  "dgSpecHash": "dWon9FlLikFRpUXj7/Yd2TR0LR8fNYcHS0qQ0lsE53zUH31XXpwelRsPpYdOh/nUjk7tA9RymMi8y2Orf2kBjQ==",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/FitApp/server/WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/admin/.nuget/packages/automapper/10.0.0/automapper.10.0.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/8.0.1/automapper.extensions.microsoft.dependencyinjection.8.0.1.nupkg.sha512",
+    "/Users/admin/.nuget/packages/dapper/2.0.78/dapper.2.0.78.nupkg.sha512",
     "/Users/admin/.nuget/packages/greendonut/10.5.3/greendonut.10.5.3.nupkg.sha512",
     "/Users/admin/.nuget/packages/hotchocolate/10.5.3/hotchocolate.10.5.3.nupkg.sha512",
     "/Users/admin/.nuget/packages/hotchocolate.abstractions/10.5.3/hotchocolate.abstractions.10.5.3.nupkg.sha512",

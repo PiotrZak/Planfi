@@ -13,6 +13,7 @@ using System.Text;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Common;
@@ -84,15 +85,41 @@ namespace WebApi.Controllers
         public IActionResult GetAllUsers()
         {
             var users = _userService.GetAllUsers();
-            return Ok(users);
-        }
 
+            var mappedUsers = users.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
+            
+            return Ok(mappedUsers);
+        }
+        
         [AllowAnonymous]
         [HttpGet("clients")]
         public IActionResult GetAllClients()
         {
             var clients =  _userService.GetAllClients();
-            return Ok(clients);
+            
+            var mappedUsers = clients.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
+            
+            return Ok(mappedUsers);
         }
 
         [AllowAnonymous]
@@ -101,7 +128,19 @@ namespace WebApi.Controllers
         {
             var trainers = _userService.GetAllTrainers();
 
-            return Ok(trainers);
+            var mappedUsers = trainers.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
+            
+            return Ok(mappedUsers);
         }
 
         [AllowAnonymous]
@@ -161,6 +200,8 @@ namespace WebApi.Controllers
             var success = ApiCommonResponse.Create()
                 .WithSuccess()
                 .Build();
+            
+            
             return CommonResponse(success);
         }
         

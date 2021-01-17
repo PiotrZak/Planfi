@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Services;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
@@ -55,8 +56,7 @@ namespace WebApi.Controllers
             return Ok(organizations);
         }
 
-        //[Authorize(Roles = Role.Admin + "," + Role.Owner)]
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Owner)]
         [HttpGet("users/{id}")]
         public IActionResult GetOrganizationUsers(string id)
         {
@@ -64,13 +64,24 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
-        /*[Authorize(Roles = Role.Owner)]*/
-        [AllowAnonymous]
+        [Authorize(Roles = Role.Owner)]
         [HttpGet("trainers/{id}")]
         public IActionResult GetOrganizationTrainers(string id)
         {
             var trainers = _OrganizationService.GetOrganizationTrainers(id);
-            return Ok(trainers);
+            
+            var mappedUsers = trainers.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
+            return Ok(mappedUsers);
         }
 
         [Authorize(Roles = Role.Trainer + "," + Role.Owner)]
@@ -78,6 +89,21 @@ namespace WebApi.Controllers
         public IActionResult GetOrganizationClients(string id)
         {
             var clients = _OrganizationService.GetOrganizationClients(id);
+            
+            var mappedUsers = clients.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
+            
+            return Ok(mappedUsers);
+            
             return Ok(clients);
         }
 

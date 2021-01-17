@@ -105,6 +105,7 @@
         <e p="UpdateCategoryModel.cs" t="Include" />
         <e p="UpdateExerciseModel.cs" t="Include" />
         <e p="UpdateUserModel.cs" t="Include" />
+        <e p="UserViewModel.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">

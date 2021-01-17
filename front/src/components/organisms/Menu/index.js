@@ -7,8 +7,6 @@ import { Role } from 'utils/role';
 import breakPointSize from 'utils/rwd';
 import { useThemeContext } from 'support/context/ThemeContext';
 
-const currentUser = JSON.parse((localStorage.getItem('user')));
-
 // eslint-disable-next-line no-shadow
 const getUsersRoute = (currentUser) => {
   switch (currentUser.role) {
@@ -106,7 +104,7 @@ const Menu = () => {
     setCurrentUrl(currentUrl[3]);
   }, [window.location.href]);
 
-  const changeIconColor = (currentUrl, route) =>   (currentUrl.includes(route.substring(1,3)) ? theme.colorPrimary : theme.colorDisabled);
+  const changeIconColor = (currentUrl, route) =>   (currentUrl.includes(route.substring(1,4)) ? theme.colorPrimary : theme.colorDisabled);
 
   const toRender = (currentUser) => {
     switch (currentUser.role) {
@@ -114,7 +112,7 @@ const Menu = () => {
         return (
           <>
             {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationTrainers))}
             {MenuOption('clipboard-notes', routes.plans, changeIconColor(currentUrl, routes.plans))}
             {MenuOption('heart', routes.clients, changeIconColor(currentUrl, routes.clients))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
@@ -133,7 +131,7 @@ const Menu = () => {
         return (
           <>
             {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationTrainers))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
         );
@@ -141,7 +139,7 @@ const Menu = () => {
         return (
           <>
             {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationUsers))}
+            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationTrainers))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
         );

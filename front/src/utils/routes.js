@@ -30,7 +30,6 @@ export const routes = {
   // todo expired
   linkExpired: '/expired',
 
-  // currently
   categories: categoriesRoutes.categories,
   category: categoriesRoutes.category,
   addExercise: '/add-exercise',
@@ -43,8 +42,8 @@ export const routes = {
 
   // organizations
   organizations: '/organizations',
-  organizationUsers: '/organizationusers',
-  organizationTrainer: '/organizationclients',
+  organizationTrainers: '/organizationtrainers',
+  organizationUsers: '/organizationtrainers',
   organizationClients: '/organizationclients',
 
   // users

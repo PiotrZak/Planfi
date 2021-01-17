@@ -10,9 +10,12 @@ export const http = {
 
 const currentUser = JSON.parse((localStorage.getItem('user')));   
 
+
 const config = {
   headers: { Authorization: `Bearer ${currentUser && currentUser.token}` }
 };
+
+console.log(config)
 
 function get(url) {
   return axios.get(url, config).then((response) => {

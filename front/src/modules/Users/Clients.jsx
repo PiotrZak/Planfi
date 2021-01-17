@@ -15,6 +15,8 @@ import { userService } from 'services/userServices';
 import { Role } from 'utils/role';
 import { commonUtil } from 'utils/common.util';
 import { AssignUsersToTrainer } from './AssignUsersToTrainer';
+import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
+import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 
 const Container = styled.div`
   text-align: center;
@@ -53,19 +55,19 @@ const Clients = () => {
 
   const getClientsByTrainer = () => {
     userService.allClientsByTrainer(userId)
-    .then((data) => {
-      setUsers(data);
-    })
-    .catch((error) => {
-    });
+      .then((data) => {
+        setUsers(data);
+      })
+      .catch((error) => {
+      });
   };
 
   useEffect(() => {
     if (role === Role.Trainer) {
-    // getClientsByTrainer();
-    getOrganizationClients();
+      // getClientsByTrainer();
+      getOrganizationClients();
     }
-    if( role === Role.Owner){
+    if (role === Role.Owner) {
       getOrganizationClients();
     }
   }, []);
@@ -88,39 +90,64 @@ const Clients = () => {
     ? users
     : users.filter((User) => User.firstName.toLowerCase().includes(searchTerm.toLowerCase()));
 
-return(
-  <>
-  <GlobalTemplate>
-    <Nav>
-      <Heading>{translate('Clients')}</Heading>
-    </Nav>
-    <Container>
+  return (
+    <>
+      <GlobalTemplate>
+        <Nav>
+          <Heading>{translate('Clients')}</Heading>
+        </Nav>
+        <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
-          <Loader isLoading={isLoading}>
-            {users
-              ? (
-                <CheckboxGenericComponent
-                  dataType="users"
-                  displayedValue="firstName"
-                  dataList={results}
-                  onSelect={submissionHandleElement}
-                />
-              )
-              : <h1>{translate('NoUsers')}</h1>}
-          </Loader>
-  </GlobalTemplate>
+        <Loader isLoading={isLoading}>
+          {users
+            ? (
+              <CheckboxGenericComponent
+                dataType="users"
+                displayedValue="firstName"
+                dataList={results}
+                onSelect={submissionHandleElement}
+              />
+            )
+            : <h1>{translate('NoUsers')}</h1>}
+        </Loader>
+      </GlobalTemplate>
+      {user.role != "Owner" ?
         <AssignUsersToTrainer
+          theme={theme}
+          userId={userId}
+          organizationId={user.organizationId}
+          assignTrainer={assignTrainer}
+          setAssignTrainer={setAssignTrainer}
+          bottomSheet={bottomSheet}
+          setBottomSheet={setBottomSheet}
+          activeUsers={activeUsers}
+        />
+        :
+        <>
+        <AssignUsersToTrainers
+          theme={theme}
+          userId={userId}
+          organizationId={user.organizationId}
+          assignTrainer={assignTrainer}
+          setAssignTrainer={setAssignTrainer}
+          bottomSheet={bottomSheet}
+          setBottomSheet={setBottomSheet}
+          activeUsers={activeUsers}
+        />
+        {/* todo - assign plans to clients */}
+        <AssignUsersToPlans
         theme={theme}
-        userId={userId}
         organizationId={user.organizationId}
-        assignTrainer={assignTrainer}
-        setAssignTrainer={setAssignTrainer}
+        assignPlan={assignPlan}
+        setAssignPlan={setAssignPlan}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
         activeUsers={activeUsers}
       />
-  </>
+      </>
+      }
+    </>
   );
 };
 

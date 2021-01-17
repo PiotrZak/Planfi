@@ -39,8 +39,10 @@ import Exercise from 'modules/Exercises/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
 
 
+
 import TestPage from 'modules/Auth/Test';
 import Clients from 'modules/Users/Clients';
+import OrganizationTrainers from './Users/OrganizationTrainers';
 
 export const history = createBrowserHistory();
 
@@ -76,6 +78,8 @@ const Root = () => {
             <BrowserRouter history={history}>
               <MainTemplate>
                 <Switch>
+
+                 {/* to test  */}
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
@@ -87,6 +91,8 @@ const Root = () => {
                  <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
 
+                    <PrivateRoute roles={[Role.Owner]} path={routes.organizationTrainers} component={OrganizationTrainers} />
+                    <PrivateRoute roles ={[Role.Owner, Role.Trainer]} path={routes.clients} component={Clients} />
 
                     <PrivateRoute path={routes.addExercise} component={AddExercise} />
                     <PrivateRoute path={routes.editExercise} component={EditExercise} />
@@ -96,8 +102,8 @@ const Root = () => {
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
-                    <PrivateRoute path={routes.clients} component={Clients} />
-                    <PrivateRoute roles={[Role.Owner]} path={routes.organizationUsers} component={OrganizationUsers} />
+
+
                   </MenuTemplate>
                 </Switch>
               </MainTemplate>

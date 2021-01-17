@@ -4,7 +4,7 @@ using WebApi.Controllers.ViewModels;
 
 namespace WebApi.Entities
 {
-    public class Trainer : User
+    public sealed class Trainer : User
     {
         public Trainer()
         {
@@ -17,6 +17,6 @@ namespace WebApi.Entities
         public string TrainerId { get; set; }
 
         public List<Plan> Plans { get; set; }
-        public virtual ICollection<ClientsTrainers> ClientsTrainers { get; set; }
+        public ICollection<ClientsTrainers> ClientsTrainers { get; set; }
     }
 }

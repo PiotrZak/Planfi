@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using AutoMapper;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using Npgsql;
 using WebApi.Controllers.ViewModels;
+using Microsoft.Extensions.Configuration;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -18,8 +20,11 @@ namespace WebApi.Services{
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public UserService(DataContext context, IMapper mapper)
+        public IConfiguration Configuration { get; }
+
+        public UserService(DataContext context, IMapper mapper, IConfiguration configuration)
         {
+            Configuration = configuration;
             _context = context;
             _mapper = mapper;
         }
@@ -49,7 +54,7 @@ namespace WebApi.Services{
             // for seeded data - for testing
             if (user.PasswordHash != null && user.PasswordSalt != null)
             {
-                bool isCorrect = VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt);
+                var isCorrect = VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt);
                 if (isCorrect == false)
                     return null;
             }
@@ -57,7 +62,7 @@ namespace WebApi.Services{
             // authentication successful
             return user.WithoutPassword(); ;
         }
-
+        
         public IEnumerable<User> GetAllUsers ()
         {
             var users = _context.Users;
@@ -79,10 +84,18 @@ namespace WebApi.Services{
 
         public User GetById(string id)
         {
-            var user = _context.Users.FirstOrDefault(x => x.UserId == id);
-            return user.WithoutPassword();
+           // var user = _context.Users.FirstOrDefault(x => x.UserId == id);
+            
+            //dapper query
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("VPS"));
+            connection.Open();
+            
+            var users = connection.Query<Client>("SELECT * FROM public.\u0022Users\u0022 WHERE \u0022ClientId\u0022 = @id",
+                new { id }).FirstOrDefault();
+            
+            return users.WithoutPassword();
         }
-
+        
         public void Update(string id, UpdateUserModel model)
         {
             var user = _context.Users.Find(id);
