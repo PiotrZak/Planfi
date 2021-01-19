@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
+    <e p="$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.8.3/build/netcoreapp2.1" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="$USER_HOME$/.nuget/packages/microsoft.testplatform.testhost/16.8.3/build/netcoreapp2.1/Microsoft.TestPlatform.PlatformAbstractions.dll" t="Include" />
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
@@ -141,6 +145,9 @@
         </e>
       </e>
       <e p="Startup.cs" t="Include" />
+      <e p="Tests" t="Include">
+        <e p="ExercisesTest.cs" t="Include" />
+      </e>
       <e p="WebApi.csproj" t="IncludeRecursive" />
       <e p="WebApi.sln" t="IncludeFlat" />
       <e p="wwwroot" t="Include" />
