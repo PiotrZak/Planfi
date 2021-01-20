@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WebApi.Controllers.ViewModels;
@@ -200,27 +202,27 @@ namespace WebApi.Services{
             }
         }
         
-        public void AssignPlanToClients(string[] ClientIds, string[] PlanIds)
+        public async Task<int> AssignPlanToClients(string[] ClientIds, string[] PlanIds)
         {
-
-        // [u1, u2]
-        // to every user add plan
-        // [p1, p2, p3, p4]
-
             foreach (var clientId in ClientIds)
             {
                 //finding an client 
-                var client = _context.Clients.Find(clientId);
+                var client = await _context.Clients.FindAsync(clientId);
 
                 foreach (var planId in PlanIds)
                 {
                     //finding a plan
                         var plan = _context.Plans.Find(planId);
                         var usersPlans = new ClientsPlans {Client = client, Plan = plan};
-                        _context.ClientsPlans.Add(usersPlans);
+                        
+                        // todo - validation here
+                        
+                        
+                        _context.ClientsPlans.AddAsync(usersPlans);
                         try
                         { 
-                            _context.SaveChanges();
+                            await _context.SaveChangesAsync();
+                            return 1;
                         }
                         catch (DbUpdateException ex)
                         {
@@ -228,7 +230,10 @@ namespace WebApi.Services{
                         }
                 }
             }
+
+            return 1;
         }
+        
 
         public IEnumerable<Client> GetClientsByTrainer(string id)
 

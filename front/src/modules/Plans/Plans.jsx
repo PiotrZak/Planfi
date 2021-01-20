@@ -14,10 +14,8 @@ import { useUserContext } from 'support/context/UserContext';
 import Heading from 'components/atoms/Heading';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
-import { exerciseService } from '../../services/exerciseService';
 import Loader from 'components/atoms/Loader';
 
-// todo - add loader
 
 const Plan = (props) => {
   const { notificationDispatch } = useNotificationContext();

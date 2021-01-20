@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Models;
 
@@ -16,7 +17,7 @@ namespace WebApi.Interfaces
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
         void AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
-        void AssignPlanToClients(string[] userIds, string[] planIds);
+        Task<int> AssignPlanToClients(string[] userIds, string[] planIds);
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
         IEnumerable<Client> GetClientsByTrainer(string TrainerId);
