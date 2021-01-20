@@ -14,7 +14,7 @@ export const BottomNavTitle = styled.div`
     margin:0.2rem 0 0 1.6rem;
 `
 
-export const AssignUsersToTrainer = ({
+export const ClientPanel = ({
   userId,
   theme,
   assignTrainer,

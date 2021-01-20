@@ -16,7 +16,7 @@ import { Role } from 'utils/role';
 import { commonUtil } from 'utils/common.util';
 
 
-import { AssignUsersToTrainer } from './AssignUsersToTrainer';
+import { ClientPanel } from './ClientPanel';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 
@@ -115,7 +115,7 @@ const Clients = () => {
         </Loader>
       </GlobalTemplate>
       {user.role != "Owner" ?
-        <AssignUsersToTrainer
+        <ClientPanel
           theme={theme}
           userId={userId}
           organizationId={user.organizationId}

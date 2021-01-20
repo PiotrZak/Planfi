@@ -84,6 +84,7 @@ namespace WebApi.Services{
             return trainers;
         }
 
+        //todo - make to client and trainer separately
         public User GetById(string id)
         {
            // var user = _context.Users.FirstOrDefault(x => x.UserId == id);
