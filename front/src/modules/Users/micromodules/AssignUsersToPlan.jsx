@@ -11,6 +11,7 @@ import Loader from 'components/atoms/Loader';
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Search from 'components/molecules/Search';
+import { useUserContext } from 'support/context/UserContext';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -39,11 +40,12 @@ export const AssignUsersToPlans = ({
     const [plans, setPlans] = useState();
     const [activePlans, setActivePlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { user } = useUserContext();
 
     const { notificationDispatch } = useNotificationContext();
 
     useEffect(() => {
-        getAllPlans();
+        getPlans(user.organizationId);
         if (activeUsers == 0) {
             setAssignPlan('none')
         }
@@ -62,16 +64,17 @@ export const AssignUsersToPlans = ({
         ? plans
         : plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
-    const getAllPlans = () => {
-        planService
-            .getAllPlans()
-            .then((data) => {
+        const getPlans = (id) => {
+            planService
+              .getOrganizationPlans(id)
+              .then((data) => {
                 setPlans(data);
-                setIsLoading(false);
-            })
-            .catch(() => {
-            });
-    };
+                setIsLoading(false)
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          };
 
     const getSelectedPlanIds = (selectedData) => {
         const selectedPlans = commonUtil.getCheckedData(selectedData, 'planId');

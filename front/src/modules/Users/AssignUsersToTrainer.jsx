@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { userService } from 'services/userServices';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import StyledReactBottomSheet, { PanelContainer, PanelItem, } from 'components/organisms/BottomSheet'
-
+import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
+import { useUserContext } from 'support/context/UserContext';
 
 export const BottomNavTitle = styled.div`
     display:flex;
@@ -22,7 +23,9 @@ export const AssignUsersToTrainer = ({
   setBottomSheet,
 }) => {
 
+  const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
+  const [assignPlan, setAssignPlan] = useState('none');
 
   const assignUserToTrainer = () => {
     const data = { userIds: activeUsers, trainerIds: [userId] };
@@ -49,7 +52,13 @@ export const AssignUsersToTrainer = ({
       });
   };
 
+  const openAssignPlansToUsers = () => {
+    setAssignPlan("flex");
+    setAssignTrainer("none");
+};
+
   return (
+      <>
     <StyledReactBottomSheet
       showBlockLayer={false}
       visible={assignTrainer}
@@ -69,9 +78,20 @@ export const AssignUsersToTrainer = ({
                       <PanelItem onClick={() => assignUserToTrainer()}>
                             {translate('AssignToMe')}
                         </PanelItem>
+                        <PanelItem onClick={() => openAssignPlansToUsers()}>
+                            {translate('AssignPlanText')}
+                        </PanelItem>
                     </PanelContainer>
                 </>
             }
     </StyledReactBottomSheet>
+            <AssignUsersToPlans
+            theme={theme}
+            organizationId={user.organizationId}
+            assignPlan={assignPlan}
+            setAssignPlan={setAssignPlan}
+            activeUsers={activeUsers}
+          />
+          </>
   );
 };

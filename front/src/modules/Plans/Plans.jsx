@@ -15,6 +15,7 @@ import Heading from 'components/atoms/Heading';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
 import { exerciseService } from '../../services/exerciseService';
+import Loader from 'components/atoms/Loader';
 
 // todo - add loader
 
@@ -100,16 +101,18 @@ const Plan = (props) => {
           <Heading>{translate('PlansTitle')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
-        <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
-        {plans.length >= 1 ? (
-          <CheckboxGenericComponent
-            dataType="plans"
-            displayedValue="title"
-            dataList={results}
-            onSelect={submissionHandleElement}
-          />
-        )
-          : <h3>{translate('NoPlans')}</h3>}
+        <Loader isLoading={isLoading} >
+          <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
+          {plans.length >= 1 ? (
+            <CheckboxGenericComponent
+              dataType="plans"
+              displayedValue="title"
+              dataList={results}
+              onSelect={submissionHandleElement}
+            />
+          )
+            : <h3>{translate('NoPlans')}</h3>}
+        </Loader>
       </GlobalTemplate>
       <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
       <PlansPanel

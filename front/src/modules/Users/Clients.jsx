@@ -14,6 +14,8 @@ import styled from 'styled-components';
 import { userService } from 'services/userServices';
 import { Role } from 'utils/role';
 import { commonUtil } from 'utils/common.util';
+
+
 import { AssignUsersToTrainer } from './AssignUsersToTrainer';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
@@ -31,7 +33,7 @@ const Clients = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [bottomSheet, setBottomSheet] = useState('none');
 
-  const [assignPlan, setAssignPlan] = useState('none');
+
   const [activeUsers, setActiveUsers] = useState([]);
   const [assignTrainer, setAssignTrainer] = useState('none');
 
@@ -135,16 +137,6 @@ const Clients = () => {
           setBottomSheet={setBottomSheet}
           activeUsers={activeUsers}
         />
-        {/* todo - assign plans to clients */}
-        <AssignUsersToPlans
-        theme={theme}
-        organizationId={user.organizationId}
-        assignPlan={assignPlan}
-        setAssignPlan={setAssignPlan}
-        bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers}
-      />
       </>
       }
     </>
