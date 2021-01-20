@@ -41,7 +41,7 @@ const StyledInputContainer = styled(InputContainer)`
 `;
 
 const ResetPasswordPage = () => {
-  const timeToRedirect = 5000;
+  const timeToRedirect = 1000;
   const { resetToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
   const history = useHistory();
