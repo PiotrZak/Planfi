@@ -67,7 +67,7 @@ export const RenderType = ({
         return (
           <StyledGenericElement
             onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
-            theme={theme}
+            version={theme}
             avatarType="noAvatar"
             key={i}
             headline={element.title}

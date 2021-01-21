@@ -34,7 +34,7 @@ const initialValues = {
   password: '',
 };
 
-const timeToRedirectLogin = 3000;
+const timeToRedirectLogin = 1000;
 
 const validationSchema = Yup.object({
   email: Yup.string().email(translate('EnterValidMail')).required(translate('ThisFieldIsRequired')),
@@ -60,12 +60,12 @@ const LoginPage = () => {
   const redirectToPage = (data) => {
     if (data.role === Role.User) {
       setTimeout(() => {
-        history.push(`/user/${data.userId}`);
+        history.push(`/myprofile`);
       }, timeToRedirectLogin);
     }
     if (data.role === Role.Trainer || data.role === Role.Owner) {
       setTimeout(() => {
-        history.push('/users');
+        history.push('/clients');
       }, timeToRedirectLogin);
     }
     if (data.role === Role.Owner) {
@@ -140,7 +140,7 @@ const LoginPage = () => {
               </Label>
               <ValidationHint name="password" />
             </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth" disabled={!isValid}>{translate('SignIn')}</Button>
+            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
           </Form>
         )}
       </Formik>

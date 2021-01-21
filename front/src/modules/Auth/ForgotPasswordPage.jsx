@@ -38,7 +38,7 @@ const ForgotPasswordPage = () => {
             type: 'positive',
           },
         });
-        setTimeout(() => { history.push(routes.login); }, 3000);
+        setTimeout(() => { history.push(routes.login); }, 1000);
       })
       .catch((error) => {
         notificationDispatch({
@@ -64,7 +64,7 @@ const ForgotPasswordPage = () => {
                 </Label>
                 <ErrorMessageForm name="email" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth" disabled={!isValid}>{translate('Send')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
             </Form>
           </Center>
         )}

@@ -93,7 +93,7 @@ namespace WebApi.Services{
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("VPS"));
             connection.Open();
             
-            var users = connection.Query<Client>("SELECT * FROM public.\u0022Users\u0022 WHERE \u0022ClientId\u0022 = @id",
+            var users = connection.Query<Client>("SELECT * FROM public.\u0022Users\u0022 WHERE \u0022UserId\u0022 = @id",
                 new { id }).FirstOrDefault();
             
             return users.WithoutPassword();

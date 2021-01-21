@@ -100,7 +100,7 @@ const ResetPasswordPage = () => {
                 </Label>
                 <ErrorMessageForm name="confirmPassword" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth" disabled={!isValid}>{translate('Send')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
             </Form>
           </Center>
         )}

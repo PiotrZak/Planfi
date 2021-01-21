@@ -68,9 +68,12 @@ export const ClientPanel = ({
     >
             {isMobile ?
                 <>
-                    <PanelItem onClick={() => assignUserToTrainer()}>
-                        {translate('DeleteUserText')}
-                    </PanelItem>
+                      <PanelItem onClick={() => assignUserToTrainer()}>
+                            {translate('AssignToMe')}
+                        </PanelItem>
+                        <PanelItem onClick={() => openAssignPlansToUsers()}>
+                            {translate('AssignPlanText')}
+                        </PanelItem>
                 </>
                 :
                 <>
@@ -91,6 +94,7 @@ export const ClientPanel = ({
             assignPlan={assignPlan}
             setAssignPlan={setAssignPlan}
             activeUsers={activeUsers}
+            setBottomSheet ={setBottomSheet}            
           />
           </>
   );

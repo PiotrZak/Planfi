@@ -102,7 +102,7 @@ const ActivateAccountPage = () => {
     activateUser(activateUserModel);
   };
 
-  const timeToRedirect = 5000;
+  const timeToRedirect = 1500;
 
   const activateUser = (activateUserModel) => {
     accountService

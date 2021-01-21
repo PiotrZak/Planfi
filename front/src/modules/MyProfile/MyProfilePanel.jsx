@@ -14,7 +14,7 @@ import {
   ADD,
 } from "support/context/NotificationContext";
 
-const timeToRedirectLogin = 3000;
+const timeToRedirectLogin = 1000;
 const FileUploadButton = styled.input.attrs({ type: "file" })`
   display: none;
 `;

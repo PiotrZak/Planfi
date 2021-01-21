@@ -42,7 +42,7 @@ const StyledLightInput = styled.input`
 
   color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorGray80)};
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorWhite : theme.colorWhite)};
-  border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
+  border: 1px solid ${({ theme }) => theme.colorGray30};
   
   :focus{
     border: 1px solid ${({ theme }) => theme.colorNeutralDark};

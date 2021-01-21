@@ -5,6 +5,21 @@ import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useThemeContext } from 'support/context/ThemeContext';
 import Image from '../../atoms/Image';
+import breakPointSize from 'utils/rwd';
+
+const LightWrapper = styled.div`
+  background: ${({ theme }) => theme.colorWhite};
+  min-height: 72px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom:1px solid ${({ theme }) => theme.colorGray30};
+  padding: 0rem 1.6rem;
+  margin-left:4.8rem;
+  cursor: pointer;
+  @media only screen and ${breakPointSize.xs} {
+     margin-left:1.6rem;
+    }
+`;
 
 const Wrapper = styled.div`
   background: ${({ theme }) => theme.colorGray80};
@@ -34,6 +49,25 @@ const ContainerText = styled.div`
   flex-direction: column;
   margin-left: .8rem;
   justify-content: center;
+`;
+
+const LightCircle = styled.div`
+  background: ${({ theme }) => theme.colorGray30};
+  border-radius: 50%;
+  width: 3.2rem;
+  height: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  ${({ lastMenu }) => lastMenu && 'margin-left: .8rem;'}
+
+  :hover{
+    background: ${({ theme }) => theme.colorDisabled};
+  }
 `;
 
 const Circle = styled.div`
@@ -132,6 +166,7 @@ const GenericElement = ({
   avatarType,
   avatarUrl,
   onMenuClick,
+  version,
   ...rest
 }) => {
   const { theme } = useThemeContext();
@@ -139,21 +174,38 @@ const GenericElement = ({
 console.log(avatarUrl)
 
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <Wrapper {...rest}>
-      <Container>
-        {Avatar(avatarType, avatarUrl, theme)}
-        <ContainerText>
-          <StyledParagraph type="Label-Button">{headline}</StyledParagraph>
-          <StyledParagraph type="body-3-regular">{subline}</StyledParagraph>
-        </ContainerText>
-      </Container>
-      <ContainerMenu>
-        <Circle onClick={onMenuClick}>
-          <Icon name="arrow-right" size="2rem" />
-        </Circle>
-      </ContainerMenu>
-    </Wrapper>
+    <>
+    {version == 'light'
+  ? <LightWrapper {...rest}>
+  <Container>
+    {Avatar(avatarType, avatarUrl, theme)}
+    <ContainerText>
+      <StyledParagraph type="Label-Button">{headline}</StyledParagraph>
+      <StyledParagraph type="body-3-regular">{subline}</StyledParagraph>
+    </ContainerText>
+  </Container>
+  <ContainerMenu>
+    <LightCircle onClick={onMenuClick}>
+      <Icon name="arrow-right" size="2rem" />
+    </LightCircle>
+  </ContainerMenu>
+  </LightWrapper>
+:    <Wrapper {...rest}>
+<Container>
+  {Avatar(avatarType, avatarUrl, theme)}
+  <ContainerText>
+    <StyledParagraph type="Label-Button">{headline}</StyledParagraph>
+    <StyledParagraph type="body-3-regular">{subline}</StyledParagraph>
+  </ContainerText>
+</Container>
+<ContainerMenu>
+  <Circle onClick={onMenuClick}>
+    <Icon name="arrow-right" size="2rem" />
+  </Circle>
+</ContainerMenu>
+</Wrapper>
+}
+</>
   );
 };
 

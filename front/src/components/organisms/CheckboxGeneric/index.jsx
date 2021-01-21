@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox';
+import { useUserContext } from 'support/context/UserContext';
 
 const CheckboxContainer = styled.div`
   position: relative;
@@ -24,7 +25,7 @@ const CheckboxContainer = styled.div`
 
 const CheckboxLightContainer = styled.div`
   input{
-    margin: -6rem 0 0 3.4rem;
+    margin: -6rem 0 0 1.6rem;
     z-index:2;
     position: absolute;
     &:hover {
@@ -47,6 +48,7 @@ export const CheckboxGenericComponent = ({
 }) => {
   const [list, setList] = useState();
   const [type, setType] = useState();
+  const { user } = useUserContext();
 
   useEffect(() => {
     dataList.map((el) => {
@@ -118,6 +120,8 @@ export const CheckboxGenericComponent = ({
               : (
                 <>
                   <RenderType theme={theme} type={type} element={element} i={i} />
+                  {user.role != "User" &&
+                  <>
                   {theme == 'light' ?
                     <CheckboxLightContainer>
                       <Checkbox
@@ -137,6 +141,8 @@ export const CheckboxGenericComponent = ({
                       />
                     </CheckboxContainer>
                   }
+                  </>
+                }
                 </>
               )}
           </>,

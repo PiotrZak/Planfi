@@ -13,6 +13,10 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import Search from 'components/molecules/Search';
 import { useUserContext } from 'support/context/UserContext';
 
+const SearchLightContainer = styled.div`
+      margin: 1.6rem 1.6rem 0 1.6rem;
+`;
+
 const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
@@ -114,7 +118,7 @@ export const AssignUsersToPlans = ({
             showBlockLayer={false}
             visible={assignPlan}
             className={""}
-            onClose={() => setBottomSheet(false)}
+            onClose={() => setBottomSheet('none')}
             appendCancelBtn={false}
         >
             <BottomNav>
@@ -132,7 +136,9 @@ export const AssignUsersToPlans = ({
                 </BottomNavItem>
             </BottomNav>
             <BottomNavTitle><h4>{translate('SelectFromPlans')}</h4></BottomNavTitle>
+            <SearchLightContainer>
             <Search typeInput="light" callBack={filterPlans} placeholder={translate('PlanSearch')} />
+            </SearchLightContainer>
             <Loader isLoading={isLoading}>
                 {plans ?
                     <CheckboxGenericComponent

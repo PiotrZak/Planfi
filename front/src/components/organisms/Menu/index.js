@@ -131,7 +131,7 @@ const Menu = () => {
         return (
           <>
             {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationTrainers))}
+            {MenuOption('clipboard-notes', routes.plans, changeIconColor(currentUrl, routes.plans))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
         );
@@ -139,7 +139,7 @@ const Menu = () => {
         return (
           <>
             {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('list-ul', getUsersRoute(currentUser), changeIconColor(currentUrl, routes.organizationTrainers))}
+            {MenuOption('clipboard-notes', routes.plans, changeIconColor(currentUrl, routes.plans))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
         );
