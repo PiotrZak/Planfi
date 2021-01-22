@@ -67,7 +67,9 @@ const Root = () => {
   };
 
   const toggleLanguage = () => {
-    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'en-GB' : 'pl-PL');
+    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'pl-PL' : 'pl-PL');
+    setSelectedLanguage(selectedLanguage == 'pl-PL' ? 'en-GB' : 'pl-PL');
+    localStorage.setItem('language', selectedLanguage);
   };
 
   return (
@@ -98,7 +100,7 @@ const Root = () => {
                     <PrivateRoute path={routes.editExercise} component={EditExercise} />
                     <PrivateRoute path={routes.exercise} component={Exercise} />
                     <PrivateRoute path={routes.categories} component={Categories} />
-                    <PrivateRoute path={routes.myProfile} component={MyProfile} />
+                    <PrivateRoute path={routes.myProfile} component={() => <MyProfile toggleLanguage ={toggleLanguage} toggleTheme ={toggleTheme}/>} />
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />

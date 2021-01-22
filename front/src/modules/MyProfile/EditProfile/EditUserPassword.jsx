@@ -14,6 +14,8 @@ import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import ValidateInvalidData from 'components/atoms/ValidateInvalidData';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { darkTheme } from 'theme/darkTheme';
+
 
 const initialValues = {
   newPassword: '',
@@ -67,7 +69,7 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
             onEscapeKeydown={onClose}
         >
             <IconContainer>
-                <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
+            <Icon fill ={darkTheme.colorGray80} name="union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
             <ModalHeading toggle={onClose}>
                 <h2>            {translate("EditUserDetails")}</h2>

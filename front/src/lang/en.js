@@ -27,6 +27,9 @@ export const en = {
   PasswordsNotSame: 'Given passwords not same !',
   PasswordNeedsCondition: 'The password must meet the above condition',
 
+  EnterFirstName: 'Enter your first name',
+  EnterLastName: 'Enter your lirst name',
+  EnterPhone: 'Enter your phone number',
   EnterFirstNameAndLastName: 'Enter your First name and Last name',
   MustAcceptPrivacy: 'You must accept the terms and conditions to activate your account',
 
@@ -78,6 +81,7 @@ export const en = {
   EditExerciseDescription: 'You can add any materials here and information that may be helpful regarding this exercise.',
   ExercisesDeleted: 'The exercises succesfully deleted!',
   PhoneValidation: 'Telephone number should be correct',
+  EmailValidation: 'E-mail should have proper format with @',
 
   FirstNamePlaceholder: 'What is your first name ?',
   LastNamePlaceholder: 'What is your last name ?',
@@ -166,4 +170,12 @@ export const en = {
   NoAddClients: 'No clients has been added',
 
   AssignToMe: 'Assign to me',
+
+  ChangeUserData: 'Change personal data',
+  ChangeMail: 'Change E-mai',
+  ChangePassword: 'Change password',
+  UploadAvatar: 'Upload avatar',
+  ChangeLanguage: 'Change language',
+  ChangeTheme: 'Change design',
+  Logout: 'Logout',
 };

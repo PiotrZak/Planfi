@@ -13,6 +13,8 @@ import { Formik, Field, Form } from 'formik';
 import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { darkTheme } from 'theme/darkTheme';
+import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
 
 const initialValues = {
   newMail: '',
@@ -27,7 +29,7 @@ const REGEX = `^${ATOM}+(\\.${ATOM}+)*@${DOMAIN}|${IP_DOMAIN})$`;
 const validationSchema = Yup.object().shape({
     newMail: Yup.string()
         .required(translate('EnterMail'))
-        .matches(REGEX, translate('PhoneValidation')),
+        .matches(REGEX, translate('EmailValidation')),
     repeatNewMail: Yup.string()
         .required(translate('EnterMail'))
         .oneOf([Yup.ref('newMail')], translate('IdenticalEmails')),
@@ -69,7 +71,7 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
             onEscapeKeydown={onClose}
         >
             <IconContainer>
-                <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
+            <Icon fill ={darkTheme.colorGray80} name="union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
             <ModalHeading toggle={onClose}>
                 <h2>{translate("EditUserDetails")}</h2>
@@ -80,7 +82,7 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                         <InputContainer>
                             <Label type="top" text={translate('NewMail')} required>
                                 <Field 
-                                                                     typeInput ="light"
+                                    typeInput ="light"
                                     placeholder={translate('NewMailPlaceholder')}
                                     type="text"
                                     name="newMail"
@@ -92,14 +94,14 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                         <InputContainer>
                             <Label type="top" text={translate('RepeatNewMail')} required>
                                 <Field 
-                                                                     typeInput ="light"
+                                    typeInput ="light"
                                     placeholder={translate('RepeatNewMailPlaceholder')}
                                     type="string"
                                     name="repeatNewMail"
                                     as={Input}
                                     error={errors.name && touched.name} />
                             </Label>
-                            <ValidationHint name="RepeatNewMail" />
+                            <ValidationHint name="repeatNewMail" />
                         </InputContainer>
                         <ButtonContainer>
                         <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>

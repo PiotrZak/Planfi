@@ -38,6 +38,7 @@ export const StyledModal = Modal.styled`
   top: 0 ;
   position: relative;
   padding: 0 1.6rem;
+  margin:0 1.6rem 0 1.6rem;
   z-index: 1;
   opacity: 1.0;
   width: 40rem;

@@ -52,7 +52,6 @@ namespace WebApi.Services{
             if (user.Email == null)
                 return null;
 
-
             // for seeded data - for testing
             if (user.PasswordHash != null && user.PasswordSalt != null)
             {
@@ -109,13 +108,13 @@ namespace WebApi.Services{
             // update username if it has changed
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
-                // throw error if the new username is already taken
-                if (_context.Clients.Any(x => x.Email == model.Email))
-                    throw new AppException("Username " + model.Email + " is already taken");
-
-                // throw error if the password is incorrect
-                if (user.Password != model.Password)
-                    throw new AppException("Incorrect password");
+                // // throw error if the new username is already taken
+                // if (_context.Clients.Any(x => x.Email == model.Email))
+                //     throw new AppException("Username " + model.Email + " is already taken");
+                //
+                // // throw error if the password is incorrect
+                // if (user.Password != model.Password)
+                //     throw new AppException("Incorrect password");
 
                 user.Email = model.Email;
             }

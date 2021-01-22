@@ -13,6 +13,8 @@ import Icon from 'components/atoms/Icon';
 import Paragraph from 'components/atoms/Paragraph';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
+import { darkTheme } from 'theme/darkTheme';
+import styled from 'styled-components';
 
 const initialValues = {
   title: '',
@@ -56,10 +58,10 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
       onBackgroundClick={onClose}
       onEscapeKeydown={onClose}
     >
-      <IconContainer>
-        <Icon name="Union" size="1.2" cursorType="pointer" onClick={onClose} />
-      </IconContainer>
       <ModalHeading>{translate('AddCategoryTitle')}</ModalHeading>
+      <IconContainer>
+        <Icon fill ={darkTheme.colorGray80}name="union" size="1.2" cursorType="pointer" onClick={onClose} />
+      </IconContainer>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
         {({ errors, touched, isValid }) => (
           <Form>

@@ -20,6 +20,8 @@ const FileUploadButton = styled.input.attrs({ type: "file" })`
 `;
 
 export const MyProfilePanel = ({
+  toggleTheme,
+  toggleLanguage,
   userId,
   setOpenEditUserData,
   setOpenEditMailModal,
@@ -142,7 +144,7 @@ export const MyProfilePanel = ({
       {isMobile ? (
         <>
           <PanelItem onClick={() => openEditUserData()}>
-            {translate('UserEdit')}
+            {translate('ChangeUserData')}
           </PanelItem>
           <PanelItem onClick={() => openEditMailModal()}>
             {translate('ChangeMail')}
@@ -158,15 +160,21 @@ export const MyProfilePanel = ({
               />
               {translate('UploadAvatar')}
             </PanelItem>
+            <PanelItem onClick={() => toggleLanguage()}>
+            {translate('ChangeLanguage')}
+          </PanelItem>
+          <PanelItem onClick={() => toggleTheme()}>
+            {translate('ChangeTheme')}
+          </PanelItem>
           <PanelItem onClick={() => logout()}>
             {translate('Logout')}
           </PanelItem>
         </>
       ) : (
           <PanelContainer >
-            <PanelItem onClick={() => openEditUserData()}>
-              {translate('UserEdit')}
-            </PanelItem>
+          <PanelItem onClick={() => openEditUserData()}>
+            {translate('ChangeUserData')}
+          </PanelItem>
             <PanelItem onClick={() => openEditMailModal()}>
               {translate('ChangeMail')}
             </PanelItem>
@@ -181,6 +189,12 @@ export const MyProfilePanel = ({
               />
               {translate('UploadAvatar')}
             </PanelItem>
+            <PanelItem onClick={() => toggleLanguage()}>
+            {translate('ChangeLanguage')}
+          </PanelItem>
+          <PanelItem onClick={() => toggleTheme()}>
+            {translate('ChangeTheme')}
+          </PanelItem>
             <PanelItem onClick={() => logout()}>
               {translate('Logout')}
             </PanelItem>

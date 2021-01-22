@@ -27,8 +27,13 @@ export const pl = {
   PasswordMaxLength: 'Hasło nie może zawierać wiecęj niż 32 znaki !',
   PasswordsNotSame: 'Podane hasła nie są takie same !',
   PasswordNeedsCondition: 'Hasło musi spełniać powyższy warunek',
+  phoneValidation: 'Telefon powinien mieć  000000000',
+  EmailValidation: 'Adres E-mail powinien mieć poprawny format z @',
 
-  EnterFirstNameAndLastName: 'Uzupełnij imię i nazwisko',
+  Phone: 'Numer Telefonu:',
+  EnterFirstName: 'Uzupełnij imię',
+  EnterLastName: 'Uzupełnij nazwisko',
+  EnterPhone: 'Uzupełnij numer telefonu',
   MustAcceptPrivacy: 'Musisz zaakceptować regulamin, aby aktywować konto',
 
   ActivateAccount: 'Aktywacja konta',
@@ -156,7 +161,14 @@ export const pl = {
   Workers: 'Pracownicy',
   NoClients: 'Brak klientów',
   NoAddClients: 'Nie dodano jeszcze żadnych klientów',
-
-
   AssignToMe: 'Przypisz do mnie',
+
+  ChangeUserData: 'Zmień dane personalne',
+  ChangeMail: 'Zmień E-mai',
+  ChangePassword: 'Zmień hasło',
+  UploadAvatar: 'Dodaj avatar',
+  ChangeLanguage: 'Zmień język',
+  ChangeTheme: 'Zmień design',
+  Logout: 'Wyloguj',
+
 };

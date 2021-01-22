@@ -44,11 +44,8 @@ const ContainerCentred = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-const IconContainer = styled.div`
-  margin-left: 1.8rem;
-`;
 
-export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
+const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   const { user } = useUserContext();
   const { theme } = useThemeContext();
   const [updatedUser, setUpdatedUser] = useState(user);
@@ -145,7 +142,7 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
           </Container>
         </UserInfoBackground>
         <Container type="entry">
-          {toRender}
+          {toRender} 
         </Container>
       </MyProfileTemplate>
       <EditUserDataModal
@@ -164,6 +161,8 @@ export const MyProfile = ({ toggleTheme, toggleLanguage }) => {
         onClose={() => setOpenEditUserPasswordModal(false)}
       />
       <MyProfilePanel
+        toggleTheme = {toggleTheme}
+        toggleLanguage = {toggleLanguage}
         userId={user.userId}
         setOpenEditUserData={setOpenEditUserData}
         setOpenEditMailModal={setOpenEditMailModal}

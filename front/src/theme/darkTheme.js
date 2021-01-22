@@ -1,4 +1,4 @@
-const mainColors = {
+export const mainColors = {
   white: '#FFFFFF',
   colorGray110: '#09090B',
   colorGray100: '#101013',
