@@ -14,9 +14,12 @@ import styled from 'styled-components';
 import { userService } from 'services/userServices';
 import { Role } from 'utils/role';
 import { commonUtil } from 'utils/common.util';
-
+import InviteUserModal from './InviteUsersModal';
+import SmallButton from 'components/atoms/SmallButton';
 
 import { ClientPanel } from './ClientPanel';
+import { ClientOwnerPanel } from './ClientOwnerPanel';
+
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 
@@ -27,60 +30,55 @@ const Container = styled.div`
 const Clients = () => {
 
   const { theme } = useThemeContext();
-  const { user } = useUserContext();
+  const { userContext } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [bottomSheet, setBottomSheet] = useState('none');
-
+  const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 
   const [activeUsers, setActiveUsers] = useState([]);
   const [assignTrainer, setAssignTrainer] = useState('none');
 
   const [users, setUsers] = useState([]);
 
-  const { role, userId, organizationId } = user;
+  // const { role, userId, organizationId } = user;
+  const user = JSON.parse((localStorage.getItem('user')));
 
   const getOrganizationClients = () => {
     setIsLoading(true);
     organizationService
-      .getOrganizationClients(organizationId)
+      .getOrganizationClients(user.organizationId)
       .then((data) => {
-        console.log(data)
         setUsers(data);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getClientsByTrainer = () => {
-    userService.allClientsByTrainer(userId)
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((error) => {
+        console.error(error);
       });
   };
 
   useEffect(() => {
-    if (role === Role.Trainer) {
-      // getClientsByTrainer();
       getOrganizationClients();
-    }
-    if (role === Role.Owner) {
-      getOrganizationClients();
-    }
   }, []);
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
     if (selectedUsers.length > 0) {
-      setAssignTrainer('flex');
+      if(user.role == "Owner" ){
+        setBottomSheet('flex');
+      }
+      else{
+        setAssignTrainer('flex');
+      }
     } else {
-      setAssignTrainer('none');
+      if(user.role == "Owner" ){
+        setBottomSheet('none');
+      }
+      else{
+        setAssignTrainer('none');
+      }
     }
   };
 
@@ -97,7 +95,9 @@ const Clients = () => {
       <GlobalTemplate>
         <Nav>
           <Heading>{translate('Clients')}</Heading>
+          <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
+        <InviteUserModal role = {Role.User} openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
@@ -117,7 +117,7 @@ const Clients = () => {
       {user.role != "Owner" ?
         <ClientPanel
           theme={theme}
-          userId={userId}
+          userId={user.userId}
           organizationId={user.organizationId}
           assignTrainer={assignTrainer}
           setAssignTrainer={setAssignTrainer}
@@ -127,9 +127,9 @@ const Clients = () => {
         />
         :
         <>
-        <AssignUsersToTrainers
+        <ClientOwnerPanel
           theme={theme}
-          userId={userId}
+          userId={user.userId}
           organizationId={user.organizationId}
           assignTrainer={assignTrainer}
           setAssignTrainer={setAssignTrainer}

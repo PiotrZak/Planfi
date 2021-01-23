@@ -132,7 +132,7 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
           <Container>
           <Nav>
             <Wrapper>
-          <Icon name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
+          <Icon fill = {theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
           </Wrapper>
             </Nav>
             <ContainerCentred>

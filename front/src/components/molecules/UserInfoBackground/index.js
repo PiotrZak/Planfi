@@ -19,7 +19,6 @@ const UserInfoBackground = ({ children }) => (
 
 UserInfoBackground.propTypes = {
   children: PropTypes.node.isRequired,
-  place: PropTypes.oneOf(['User', 'MyProfile']).isRequired,
 };
 
 export default UserInfoBackground;

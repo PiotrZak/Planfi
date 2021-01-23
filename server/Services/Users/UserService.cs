@@ -82,20 +82,17 @@ namespace WebApi.Services{
             var trainers = _context.Trainers;
             return trainers;
         }
-
-        //todo - make to client and trainer separately
-        public User GetById(string id)
+        
+        public UserViewModel GetById(string id)
         {
-           // var user = _context.Users.FirstOrDefault(x => x.UserId == id);
-            
             //dapper query
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("VPS"));
             connection.Open();
             
-            var users = connection.Query<Client>("SELECT * FROM public.\u0022Users\u0022 WHERE \u0022UserId\u0022 = @id",
+            var user = connection.Query<UserViewModel>("SELECT \u0022UserId\u0022, \u0022Avatar\u0022, \u0022FirstName\u0022, \u0022LastName\u0022, \u0022Role\u0022, \u0022Email\u0022, \u0022PhoneNumber\u0022 FROM public.\u0022Users\u0022 WHERE \u0022UserId\u0022 = @id",
                 new { id }).FirstOrDefault();
-            
-            return users.WithoutPassword();
+
+            return user;
         }
         
         public void Update(string id, UpdateUserModel model)
@@ -192,16 +189,6 @@ namespace WebApi.Services{
             }
         }
 
-        public class HttpStatusException : Exception
-        {
-            public HttpStatusCode Status { get; private set; }
-
-            public HttpStatusException(HttpStatusCode status, string msg) : base(msg)
-            {
-                Status = status;
-            }
-        }
-        
         public async Task<int> AssignPlanToClients(string[] ClientIds, string[] PlanIds)
         {
             foreach (var clientId in ClientIds)
@@ -218,7 +205,7 @@ namespace WebApi.Services{
                         // todo - validation here
                         
                         
-                        _context.ClientsPlans.AddAsync(usersPlans);
+                        await _context.ClientsPlans.AddAsync(usersPlans);
                         try
                         { 
                             await _context.SaveChangesAsync();

@@ -32,24 +32,29 @@ namespace WebApi.Services
         {
             var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
 
-            selectedUser.Email = selectedUser.Email;
-            selectedUser.Role = "User";
-            selectedUser.PhoneNumber = user.PhoneNumber;
-            selectedUser.FirstName = user.FirstName;
-            selectedUser.LastName = user.LastName;
-            selectedUser.PhoneNumber = user.PhoneNumber;
-            
-            byte[] passwordHash, passwordSalt;
-            _userService.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
-            
-            selectedUser.Password = user.Password;
-            selectedUser.PasswordHash = passwordHash;
-            selectedUser.PasswordSalt = passwordSalt;
-            selectedUser.IsActivated = true;
+            if (selectedUser != null)
+            {
+                selectedUser.Avatar = null;
+                selectedUser.Email = selectedUser.Email;
+                selectedUser.Role = selectedUser.Role;
+                selectedUser.PhoneNumber = user.PhoneNumber;
+                selectedUser.FirstName = user.FirstName;
+                selectedUser.LastName = user.LastName;
+                selectedUser.PhoneNumber = user.PhoneNumber;
 
-            _context.Users.Update(selectedUser);
-            _context.SaveChanges();
-            return selectedUser;
+                byte[] passwordHash, passwordSalt;
+                _userService.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+
+                selectedUser.Password = user.Password;
+                selectedUser.PasswordHash = passwordHash;
+                selectedUser.PasswordSalt = passwordSalt;
+                selectedUser.IsActivated = true;
+
+                _context.Users.Update(selectedUser);
+                _context.SaveChanges();
+                return selectedUser;
+            }
+            throw new AppException();
         }
         
         public Boolean ForgotPassword(ForgotPassword model, string origin)
@@ -168,12 +173,13 @@ namespace WebApi.Services
 
                     var user = _mapper.Map<Client>(model);
 
+                    user.Role = model.Role;
                     user.OrganizationId = model.OrganizationId;
                     user.VerificationToken = RandomTokenString();
                     user.Email = email;
 
-                    _context.Users.Add(user);
-                    _context.SaveChanges();
+                    await _context.Users.AddAsync(user);
+                    await _context.SaveChangesAsync();
 
                     string message;
                     if (!string.IsNullOrEmpty(origin))
@@ -213,7 +219,7 @@ namespace WebApi.Services
                         <p>Thanks for registering!</p>
                              {message}",
                     };
-                    _emailService.Send(messageData);
+                    await _emailService.Send(messageData);
                     return 1;
                 }
                 return 1;

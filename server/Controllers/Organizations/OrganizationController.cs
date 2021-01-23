@@ -103,16 +103,25 @@ namespace WebApi.Controllers
                 .ToList();
             
             return Ok(mappedUsers);
-            
-            return Ok(clients);
         }
 
         [Authorize(Roles = Role.Admin + "," + Role.Owner)]
         [HttpGet("user/{id}")]
         public IActionResult GetUserById(string organizationId, [FromForm] string userId)
         {
-            var users = _OrganizationService.GetUserById(organizationId, userId);
-            return Ok(users);
+            var user = _OrganizationService.GetUserById(organizationId, userId);
+
+            var mappedUser = new UserViewModel
+            {
+                UserId = user.UserId,
+                Avatar = user.Avatar,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Role = user.Role,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return Ok(mappedUser);
         }
 
         [Authorize(Roles = Role.Owner)]

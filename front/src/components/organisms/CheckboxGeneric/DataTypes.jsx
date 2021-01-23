@@ -55,7 +55,7 @@ export const RenderType = ({
           <StyledGenericElement
             key={i}
             onClick={() => redirectToItem(possibleTypes.user, element.userId)}
-            theme={theme}
+            version={theme}
             avatarType="circle"
             avatarUrl={element.avatar}
             headline={`${element.firstName}  ${element.lastName}`}
@@ -68,7 +68,7 @@ export const RenderType = ({
           <StyledGenericElement
             onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
             version={theme}
-            avatarType="noAvatar"
+          avatarType="noAvatar"
             key={i}
             headline={element.title}
             subline={element.creatorName}

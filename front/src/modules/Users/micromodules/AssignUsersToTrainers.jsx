@@ -16,6 +16,10 @@ const IconWrapper = styled.div`
     margin-top: .4rem;
 `;
 
+const SearchLightContainer = styled.div`
+      margin: 1.6rem 1.6rem 0 1.6rem;
+`;
+
 const ModalButtonContainer = styled.div`
     position: fixed;
     bottom: 0;
@@ -57,13 +61,13 @@ export const AssignUsersToTrainers = ({
 
   const filterTrainers = (event) => {
     setSearchTerm(event.target.value);
-};
+  };
 
-const trainersResult = !searchTerm
+  const trainersResult = !searchTerm
     ? trainers
     : trainers.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
-    
+
   const getAllTrainers = () => {
     organizationService
       .getOrganizationTrainers(organizationId)
@@ -88,16 +92,18 @@ const trainersResult = !searchTerm
         notificationDispatch({
           type: ADD,
           payload: {
-              content: { success: 'OK', message: translate('TrainersAssignedToUser') },
-              type: 'positive'
+            content: { success: 'OK', message: translate('TrainersAssignedToUser') },
+            type: 'positive'
           }
-      })
+        })
         setAssignTrainer('none')
         setBottomSheet('none');
       })
       .catch((error) => {
       });
   };
+
+
 
   return (
     <StyledReactBottomSheetExtended
@@ -108,35 +114,35 @@ const trainersResult = !searchTerm
       appendCancelBtn={false}
     >
       <BottomNav>
-      <BottomNavItem>
-          <IconWrapper>
-            <Icon name="arrow-left" fill={theme.colorInputActive} />
-          </IconWrapper><p onClick={() => closeAssignPlansToUser()}>{translate('CloseMenu')}</p>
+        <BottomNavItem>
+          <IconWrapper onClick={() => closeAssignPlansToUser()}>
+            <Icon name="union" fill={theme.colorGray70} />
+          </IconWrapper>
         </BottomNavItem>
         <BottomNavItem>
-        <IconWrapper>
-          <Icon name="check" fill={theme.colorInputActive} />
-        </IconWrapper>
-          <p>{activeUsers.length} {translate('SelectedUsers')}</p>
         </BottomNavItem>
       </BottomNav>
       <BottomNavTitle><h4>{translate('SelectFromTrainers')}</h4></BottomNavTitle>
-      <Search typeInput="light" callBack={filterTrainers} placeholder={translate('PlanSearch')} />
-        <Loader isLoading={isLoading}>
+      <SearchLightContainer>
+        <IconWrapper>
+        </IconWrapper>
+        <Search typeInput="light" callBack={filterTrainers} placeholder={translate('PlanSearch')} />
+      </SearchLightContainer>
+      <Loader isLoading={isLoading}>
         {trainersResult ?
           <CheckboxGenericComponent
             dataType="users"
-            theme = "light"
+            theme="light"
             displayedValue="firstName"
             dataList={trainers}
             onSelect={getSelectedTrainerIds} />
           : <h1>{translate('NoUsers')}</h1>}
-        </Loader>
-        <ModalButtonContainer>
+      </Loader>
+      <ModalButtonContainer>
         <Button disabled={activeTrainers.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToTrainer}>
           {activeTrainers.length === 0 ? translate('SelectTrainers') : translate('AssignTrainersToClients')}
         </Button>
-        </ModalButtonContainer>
+      </ModalButtonContainer>
     </StyledReactBottomSheetExtended>
   );
 };

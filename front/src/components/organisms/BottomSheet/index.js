@@ -66,9 +66,6 @@ export const StyledReactBottomSheetExtended = styled(ReactBottomsheet)`
 
         height:100%;
         justify-content: center;
-        /*border-top-left-radius: 2.4rem;
-        border-top-right-radius: 2.4rem;
-        border-top-width: 2rem; */
         align-items: center;
         justify-content: flex-start;
         box-sizing: border-box;

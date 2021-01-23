@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApi.Services;
 using WebApi.Entities;
 using WebApi.Models;
 using WebApi.Helpers;
@@ -13,9 +12,7 @@ using System.Text;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using WebApi.Common;
 using WebApi.Interfaces;
 
@@ -144,15 +141,10 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
+        /*[Authorize(Roles = Role.Admin + "," + Role.Owner)]*/
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-
-            // only allow admins to access other user records
-            //var currentUserId = int.Parse(User.Identity.Name);
-            //if (id != currentUserId.ToString() && !User.IsInRole(Role.Admin))
-            //    return Forbid();
-
             var user =  _userService.GetById(id);
 
             if (user == null)

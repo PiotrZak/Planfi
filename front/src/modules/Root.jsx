@@ -67,7 +67,7 @@ const Root = () => {
   };
 
   const toggleLanguage = () => {
-    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'pl-PL' : 'pl-PL');
+    setSelectedLanguage(selectedLanguage == 'en-GB' ? 'pl-PL' : 'en-GB');
     setSelectedLanguage(selectedLanguage == 'pl-PL' ? 'en-GB' : 'pl-PL');
     localStorage.setItem('language', selectedLanguage);
   };

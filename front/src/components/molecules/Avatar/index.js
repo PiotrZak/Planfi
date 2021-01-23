@@ -78,12 +78,7 @@ const Avatar = ({ user, size }) => <>{renderAvatar(user, size)}</>;
 
 Avatar.propTypes = {
   user: PropTypes.object.isRequired,
-  size: PropTypes.oneOf(['sm, md, lg']),
-
-};
-
-Avatar.propTypes = {
-  size: 'sm',
+  size: PropTypes.string,
 };
 
 export default Avatar;

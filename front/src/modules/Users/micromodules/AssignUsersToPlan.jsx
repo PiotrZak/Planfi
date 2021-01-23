@@ -55,11 +55,6 @@ export const AssignUsersToPlans = ({
         }
     }, [activeUsers]);
 
-    const closeAssignPlansToUser = () => {
-        setBottomSheet('flex');
-        setAssignPlan('none');
-    };
-
     const filterPlans = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -87,7 +82,6 @@ export const AssignUsersToPlans = ({
 
     const assignUserToPlan = () => {
         const data = { clientIds: activeUsers, planIds: activePlans };
-
         userService
             .assignPlanToUser(data)
             .then(() => {
@@ -113,6 +107,8 @@ export const AssignUsersToPlans = ({
             });
     };
 
+
+
     return (
         <StyledReactBottomSheetExtended
             showBlockLayer={false}
@@ -124,15 +120,8 @@ export const AssignUsersToPlans = ({
             <BottomNav>
                 <BottomNavItem>
                     <IconWrapper>
-                        <Icon name="arrow-left" fill={theme.colorInputActive} />
+                    <Icon name="union" fill={theme.colorGray70} />
                     </IconWrapper>
-                    <p onClick={() => closeAssignPlansToUser()}>{translate('CloseMenu')}</p>
-                </BottomNavItem>
-                <BottomNavItem>
-                    <IconWrapper>
-                        <Icon name="check" fill={theme.colorInputActive} />
-                    </IconWrapper>
-                    <p>{activeUsers.length} {translate('SelectedUsers')}</p>
                 </BottomNavItem>
             </BottomNav>
             <BottomNavTitle><h4>{translate('SelectFromPlans')}</h4></BottomNavTitle>

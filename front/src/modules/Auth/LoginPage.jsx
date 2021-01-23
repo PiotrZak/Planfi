@@ -100,13 +100,6 @@ const LoginPage = () => {
     userService
       .login(loginModelData)
       .then((data) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('CongratulationsLogin') },
-            type: 'positive',
-          },
-        });
         redirectToPage(data);
         localStorage.setItem('user', JSON.stringify(data));
       })

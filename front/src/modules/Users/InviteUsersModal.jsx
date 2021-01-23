@@ -9,15 +9,17 @@ import { StyledModal, ButtonContainer } from 'components/molecules/Modal';
 import { useUserContext } from 'support/context/UserContext';
 import { accountService } from 'services/accountServices';
 
-const InviteUserModal = ({ openModal, onClose }) => {
+const InviteUserModal = ({ openModal, onClose, role }) => {
   const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
   const [emails, setEmails] = useState([]);
 
   const submitForm = () => {
+
     const inviteModel = {
       organizationId: user.organizationId,
       emails,
+      role,
     };
 
     accountService
@@ -42,22 +44,28 @@ const InviteUserModal = ({ openModal, onClose }) => {
       });
   };
 
+
   return (
     <StyledModal
       isOpen={openModal}
       onBackgroundClick={onClose}
       onEscapeKeydown={onClose}
     >
-      <ModalHeading>{translate('InviteUsers')}</ModalHeading>
+      {role == "trainer"
+        ? <ModalHeading>{translate('InviteTrainers')}</ModalHeading>
+        : <ModalHeading>{translate('InviteUsers')}</ModalHeading>
+      }
       <MultiInviteForm emails={emails} setEmails={setEmails} />
+      <br/>
       <ButtonContainer>
-        <Button onClick={submitForm} type="submit" buttonType="primary" size="md">{translate('InviteUsersButton')}</Button>
+        <Button disabled = {emails.length == 0} onClick={submitForm} type="submit" buttonType="primary" size="md">{translate('InviteUsersButton')}</Button>
       </ButtonContainer>
     </StyledModal>
   );
 };
 
 const MultiInviteForm = ({ emails, setEmails }) => (
+
   <ReactMultiEmail
     placeholder={translate('SeparateMails')}
     emails={emails}
@@ -65,19 +73,19 @@ const MultiInviteForm = ({ emails, setEmails }) => (
       setEmails([..._emails]);
     }}
     validateEmail={(email) => isEmail(email) // return boolean
-            }
+    }
     getLabel={(
       email,
       index,
       removeEmail,
     ) => (
-      <div data-tag key={index}>
-        {email}
-        <span data-tag-handle onClick={() => removeEmail(index)}>
-          ×
+        <div data-tag key={index}>
+          {email}
+          <span data-tag-handle onClick={() => removeEmail(index)}>
+            ×
         </span>
-      </div>
-    )}
+        </div>
+      )}
   />
 );
 

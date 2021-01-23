@@ -393,8 +393,8 @@ namespace WebApi.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("bytea");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
 
                     b.Property<string>("ResetToken")
                         .HasColumnType("text");
@@ -440,9 +440,9 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "admin",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "Admin",
-                            AdminId = "5c2ea201-08a3-4988-9d12-868048a715d6"
+                            AdminId = "11d3ba92-e79e-4806-a1b7-b21ec92c41b0"
                         });
                 });
 
@@ -466,7 +466,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Teodor",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "u1"
@@ -481,7 +481,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Jillana",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 666666666,
+                            PhoneNumber = "666666666",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "u2"
@@ -496,7 +496,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Teodor",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "u3"
@@ -511,7 +511,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Kiel",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "u4"
@@ -526,7 +526,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Augustus",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "u5"
@@ -541,7 +541,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Bondy",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 666666666,
+                            PhoneNumber = "666666666",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "u6"
@@ -556,7 +556,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Jacklyn",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "o2u1"
@@ -571,7 +571,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Jillana",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 666666666,
+                            PhoneNumber = "666666666",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "o2u2"
@@ -586,7 +586,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Teodor",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "o2u3"
@@ -601,7 +601,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Kiel",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "o2u4"
@@ -616,7 +616,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Augustus",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "o2u5"
@@ -631,7 +631,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Bondy",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 666666666,
+                            PhoneNumber = "666666666",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "o2u6"
@@ -646,7 +646,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Titus",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "o3u1"
@@ -661,7 +661,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Maribel",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 666666666,
+                            PhoneNumber = "666666666",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "o3u2"
@@ -676,7 +676,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Trumann",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "o3u3"
@@ -691,7 +691,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Jarret",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "o2u4"
@@ -706,7 +706,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Godfry",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "User",
                             Token = "t-user",
                             ClientId = "o3u5"
@@ -721,7 +721,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Bondy",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 666666666,
+                            PhoneNumber = "666666666",
                             Role = "User",
                             Token = "t-trainer",
                             ClientId = "o3u6"
@@ -748,9 +748,9 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Owner1",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "c29a4837-07ab-4819-8f3d-1b310e34ffc5"
+                            OwnerId = "d97c19c7-3ce9-4920-a059-45dcd737ca28"
                         },
                         new
                         {
@@ -762,9 +762,9 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Owner2",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "c1d8d277-89d8-4c61-9dbb-c80629df3ae9"
+                            OwnerId = "158289cd-eae1-4f8f-b229-e254ff4f87fc"
                         },
                         new
                         {
@@ -776,9 +776,9 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Owner3",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 555555555,
+                            PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "229c3880-e26d-440f-9f2b-d85f777132c9"
+                            OwnerId = "7cf33b04-8eee-4a3a-b45f-cba371e5c364"
                         });
                 });
 
@@ -802,7 +802,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Valentia",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "t1"
@@ -817,7 +817,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O1",
                             Password = "Eadith",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "t2"
@@ -832,7 +832,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Talia",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "o2t1"
@@ -847,7 +847,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O2",
                             Password = "Malachi",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "o2t2"
@@ -862,7 +862,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Valentia",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "o3t1"
@@ -877,7 +877,7 @@ namespace WebApi.Migrations
                             OrganizationId = "O3",
                             Password = "Eadith",
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PhoneNumber = 777777777,
+                            PhoneNumber = "777777777",
                             Role = "Trainer",
                             Token = "t-organization",
                             TrainerId = "o3t2"

@@ -5,7 +5,6 @@ import { useUserContext } from 'support/context/UserContext';
 import { userService } from 'services/userServices';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
-import SmallButton from 'components/atoms/SmallButton';
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Loader from 'components/atoms/Loader';
@@ -18,7 +17,9 @@ import { organizationService } from 'services/organizationServices';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 import { UsersPanel } from './micromodules/UsersPanel';
+import SmallButton from 'components/atoms/SmallButton';
 import InviteUserModal from './InviteUsersModal';
+import { Role } from 'utils/role';
 
 const Container = styled.div`
   margin-bottom: .8rem;
@@ -26,8 +27,9 @@ const Container = styled.div`
 
 const OrganizationTrainers = () => {
   const { theme } = useThemeContext();
-  const { user } = useUserContext();
+  // const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
+  const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,7 +40,9 @@ const OrganizationTrainers = () => {
   const [assignTrainer, setAssignTrainer] = useState('none');
 
   const [isLoading, setIsLoading] = useState(false);
-  const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
+
+  const user = JSON.parse((localStorage.getItem('user')));
+  console.log(user)
 
   const deleteUser = () => {
     userService
@@ -110,7 +114,7 @@ const OrganizationTrainers = () => {
           <Heading>{translate('Trainers')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
-        <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
+        <InviteUserModal role = {Role.Trainer}  openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
