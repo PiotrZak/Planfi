@@ -18,7 +18,7 @@ export const routes = {
   user: '/user',
   organizations: '/organizations',
   organizationUsers: '/organizationusers',
-  organizationTrainer: '/organizationclients',
+  organizationTrainer: '/organizationtrainers',
   organizationClients: '/organizationclients',
   trainers: '/trainers',
   clients: '/clients',

@@ -60,17 +60,17 @@ const LoginPage = () => {
   const redirectToPage = (data) => {
     if (data.role === Role.User) {
       setTimeout(() => {
-        history.push(`/myprofile`);
+        history.push(routes.myProfile);
       }, timeToRedirectLogin);
     }
     if (data.role === Role.Trainer || data.role === Role.Owner) {
       setTimeout(() => {
-        history.push('/clients');
+        history.push(routes.clients);
       }, timeToRedirectLogin);
     }
     if (data.role === Role.Owner) {
       setTimeout(() => {
-        history.push(routes.organizationUsers);
+        history.push(routes.organizationTrainer);
       }, timeToRedirectLogin);
     }
   };
