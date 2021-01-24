@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -235,7 +235,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "IsActivated", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "VerificationToken", "OwnerId" },
-                values: new object[] { "owner2", null, "Owner", "owner2@eventbrite.com", "Owner2", false, "lol", "O2", "Owner2", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Owner", null, null, "158289cd-eae1-4f8f-b229-e254ff4f87fc" });
+                values: new object[] { "owner2", null, "Owner", "owner2@eventbrite.com", "Owner2", false, "lol", "O2", "Owner2", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Owner", null, null, "73f15cca-8385-4ed6-8326-358878538be5" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -261,7 +261,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "IsActivated", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "VerificationToken", "OwnerId" },
-                values: new object[] { "owner3", null, "Owner", "owner3@eventbrite.com", "Owner3", false, "lol", "O3", "Owner3", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Owner", null, null, "7cf33b04-8eee-4a3a-b45f-cba371e5c364" });
+                values: new object[] { "owner3", null, "Owner", "owner3@eventbrite.com", "Owner3", false, "lol", "O3", "Owner3", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Owner", null, null, "6123ee86-6a56-4721-a62d-d54916eafd2d" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -288,7 +288,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "IsActivated", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "VerificationToken", "OwnerId" },
-                values: new object[] { "owner1", null, "Owner", "owner1@eventbrite.com", "Owner1", false, "LastName", "O1", "Owner1", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Owner", null, null, "d97c19c7-3ce9-4920-a059-45dcd737ca28" });
+                values: new object[] { "owner1", null, "Owner", "owner1@eventbrite.com", "Owner1", false, "LastName", "O1", "Owner1", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Owner", null, null, "7db3890d-bd65-472e-a3a1-3f0309e92706" });
 
             migrationBuilder.InsertData(
                 table: "Users",
@@ -310,7 +310,7 @@ namespace WebApi.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "UserId", "Avatar", "Discriminator", "Email", "FirstName", "IsActivated", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "Role", "Token", "VerificationToken", "AdminId" },
-                values: new object[] { "a1", null, "Admin", "tgianelli0@eventbrite.com", "admin", false, "lol", "O1", "admin", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Admin", null, null, "11d3ba92-e79e-4806-a1b7-b21ec92c41b0" });
+                values: new object[] { "a1", null, "Admin", "tgianelli0@eventbrite.com", "admin", false, "lol", "O1", "admin", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, "Admin", null, null, "24615be8-185e-4ff8-b7ef-e3c44bf107f1" });
 
             migrationBuilder.InsertData(
                 table: "Users",

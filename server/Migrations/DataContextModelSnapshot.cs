@@ -442,7 +442,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Admin",
-                            AdminId = "11d3ba92-e79e-4806-a1b7-b21ec92c41b0"
+                            AdminId = "24615be8-185e-4ff8-b7ef-e3c44bf107f1"
                         });
                 });
 
@@ -750,7 +750,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "d97c19c7-3ce9-4920-a059-45dcd737ca28"
+                            OwnerId = "7db3890d-bd65-472e-a3a1-3f0309e92706"
                         },
                         new
                         {
@@ -764,7 +764,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "158289cd-eae1-4f8f-b229-e254ff4f87fc"
+                            OwnerId = "73f15cca-8385-4ed6-8326-358878538be5"
                         },
                         new
                         {
@@ -778,7 +778,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "7cf33b04-8eee-4a3a-b45f-cba371e5c364"
+                            OwnerId = "6123ee86-6a56-4721-a62d-d54916eafd2d"
                         });
                 });
 

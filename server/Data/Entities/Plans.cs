@@ -6,7 +6,7 @@ using WebApi.GraphQl;
 
 namespace WebApi.Entities
 {
-    public class Plan
+    public sealed class Plan
     {
         public Plan()
         {
@@ -24,6 +24,6 @@ namespace WebApi.Entities
 
         public List<Exercise> Exercises { get; set; }
 
-        public virtual ICollection<ClientsPlans> ClientsPlans { get; set; }
+        public ICollection<ClientsPlans> ClientsPlans { get; set; }
     }
 }
