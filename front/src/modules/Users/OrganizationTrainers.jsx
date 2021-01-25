@@ -42,30 +42,6 @@ const OrganizationTrainers = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const user = JSON.parse((localStorage.getItem('user')));
-  console.log(user)
-
-  const deleteUser = () => {
-    userService
-      .deleteUsers(activeUsers)
-      .then((data) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('UserDeleted') },
-            type: 'positive',
-          },
-        });
-      })
-      .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        });
-      });
-  };
 
   const getAllUsers = () => {
     setIsLoading(true);
@@ -108,7 +84,6 @@ const OrganizationTrainers = () => {
     });
 
   return (
-    <>
       <GlobalTemplate>
         <Nav>
           <Heading>{translate('Trainers')}</Heading>
@@ -133,34 +108,6 @@ const OrganizationTrainers = () => {
           </Loader>
         </ScrollContainer>
       </GlobalTemplate>
-      <UsersPanel
-        deleteUser={deleteUser}
-        theme={theme}
-        bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers}
-        setAssignPlan={setAssignPlan}
-        setAssignTrainer={setAssignTrainer}
-      />
-      <AssignUsersToPlans
-        theme={theme}
-        organizationId={user.organizationId}
-        assignPlan={assignPlan}
-        setAssignPlan={setAssignPlan}
-        bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers}
-      />
-      <AssignUsersToTrainers
-        theme={theme}
-        organizationId={user.organizationId}
-        assignTrainer={assignTrainer}
-        setAssignTrainer={setAssignTrainer}
-        bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers}
-      />
-    </>
   );
 };
 

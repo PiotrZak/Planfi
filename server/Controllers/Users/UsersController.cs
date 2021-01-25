@@ -13,6 +13,7 @@ using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Common;
 using WebApi.Interfaces;
 
@@ -175,11 +176,11 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("assignPlans")]
-        public IActionResult AssignPlanToUser([FromBody] AssignPlansToClient model)
+        public async Task<IActionResult> AssignPlanToUser([FromBody] AssignPlansToClient model)
         {
             try
             {
-                _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
+                await _userService.AssignPlanToClients(model.ClientIds, model.PlanIds);
             }
             catch (Exception ex)
             {

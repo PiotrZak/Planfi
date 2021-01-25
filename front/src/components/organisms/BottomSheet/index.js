@@ -16,8 +16,10 @@ export const BottomNav = styled.div`
 
 export const BottomNavItem = styled.div`
     display:flex;
+    justify-content: space-between;
+    width: 100%;
     align-items:center;
-    margin:3.6rem 0 0 1.6rem;
+    margin:3.6rem 1.6rem 0 1.6rem;
 `
 
 export const BottomItem = styled.div`

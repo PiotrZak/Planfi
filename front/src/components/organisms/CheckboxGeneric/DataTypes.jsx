@@ -57,7 +57,7 @@ export const RenderType = ({
             onClick={() => redirectToItem(possibleTypes.user, element.userId)}
             version={theme}
             avatarType="circle"
-            avatarUrl={element.avatar}
+            avatarUrl={element.avatar && element.avatar}
             headline={`${element.firstName}  ${element.lastName}`}
             user={element}
             subline={element.role}

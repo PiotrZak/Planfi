@@ -50,6 +50,7 @@ export const pl = {
   CategoriesDeleted: 'Kategorie usunięte!',
   AddExerciseToCategory: 'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
   DeleteCategory: 'Usuń kategorię',
+  DeleteCategoryText: 'Usunięcie kategorii jest nieodwracalne i zostanie usunieta w raz z ćwiczeniami.',
   EditCategory: 'Edytuj kategorię',
   Selected: 'wybrane',
 

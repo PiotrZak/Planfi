@@ -199,7 +199,7 @@ namespace WebApi.Services{
                 foreach (var planId in PlanIds)
                 {
                     //finding a plan
-                        var plan = _context.Plans.Find(planId);
+                        var plan = await _context.Plans.FindAsync(planId);
                         var usersPlans = new ClientsPlans {Client = client, Plan = plan};
                         
                         // todo - validation here

@@ -38,6 +38,7 @@ const CheckboxLightContainer = styled.div`
 `;
 
 export const CheckboxGenericComponent = ({
+  refreshData,
   id,
   selectAll,
   theme,

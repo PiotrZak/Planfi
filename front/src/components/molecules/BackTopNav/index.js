@@ -16,11 +16,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const BackTopNav = ({ text, history }) => (
-  <Wrapper onClick={() => history.goBack()}>
+const BackTopNav = ({ text, history, route }) => {
+  return(
+    <>
+  {route ?
+  <Wrapper onClick={() => history.push(route)}>
     <ReturnWithTitle text={text} />
   </Wrapper>
-);
+  :  
+   <Wrapper onClick={() => history.goBack()}>
+  <ReturnWithTitle text={text} />
+</Wrapper>
+}</>)
+};
 
 BackTopNav.propTypes = {
   history: PropTypes.shape(historyPropTypes).isRequired,

@@ -5,7 +5,7 @@ import { useUserContext } from 'support/context/UserContext';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { translate } from 'utils/Translation';
-import { useNotificationContext } from 'support/context/NotificationContext';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Nav from 'components/atoms/Nav';
 import Search from 'components/molecules/Search';
 import Heading from 'components/atoms/Heading';
@@ -20,6 +20,7 @@ import SmallButton from 'components/atoms/SmallButton';
 import { ClientPanel } from './ClientPanel';
 import { ClientOwnerPanel } from './ClientOwnerPanel';
 
+import { UsersPanel } from './micromodules/UsersPanel';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 
@@ -38,6 +39,7 @@ const Clients = () => {
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 
   const [activeUsers, setActiveUsers] = useState([]);
+  const [assignPlan, setAssignPlan] = useState('none');
   const [assignTrainer, setAssignTrainer] = useState('none');
 
   const [users, setUsers] = useState([]);
@@ -59,24 +61,47 @@ const Clients = () => {
   };
 
   useEffect(() => {
-      getOrganizationClients();
+    getOrganizationClients();
   }, []);
+
+  const deleteUser = () => {
+    userService
+      .deleteUsers(activeUsers)
+      .then((data) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('UserDeleted') },
+            type: 'positive',
+          },
+        });
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
+      });
+  };
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
     if (selectedUsers.length > 0) {
-      if(user.role == "Owner" ){
+      if (user.role == "Owner") {
         setBottomSheet('flex');
       }
-      else{
+      else {
         setAssignTrainer('flex');
       }
     } else {
-      if(user.role == "Owner" ){
+      if (user.role == "Owner") {
         setBottomSheet('none');
       }
-      else{
+      else {
         setAssignTrainer('none');
       }
     }
@@ -97,7 +122,7 @@ const Clients = () => {
           <Heading>{translate('Clients')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
         </Nav>
-        <InviteUserModal role = {Role.User} openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
+        <InviteUserModal role={Role.User} openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
@@ -116,28 +141,47 @@ const Clients = () => {
       </GlobalTemplate>
       {user.role != "Owner" ?
         <ClientPanel
-          theme={theme}
-          userId={user.userId}
-          organizationId={user.organizationId}
-          assignTrainer={assignTrainer}
-          setAssignTrainer={setAssignTrainer}
-          bottomSheet={bottomSheet}
-          setBottomSheet={setBottomSheet}
-          activeUsers={activeUsers}
-        />
+        theme={theme}
+        userId={user.userId}
+        organizationId={user.organizationId}
+        assignTrainer={assignTrainer}
+        setAssignTrainer={setAssignTrainer}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+        activeUsers={activeUsers}
+      />
         :
         <>
-        <ClientOwnerPanel
-          theme={theme}
-          userId={user.userId}
-          organizationId={user.organizationId}
-          assignTrainer={assignTrainer}
-          setAssignTrainer={setAssignTrainer}
-          bottomSheet={bottomSheet}
-          setBottomSheet={setBottomSheet}
-          activeUsers={activeUsers}
-        />
-      </>
+        <>
+          <UsersPanel
+            deleteUser={deleteUser}
+            theme={theme}
+            bottomSheet={bottomSheet}
+            setBottomSheet={setBottomSheet}
+            activeUsers={activeUsers}
+            setAssignPlan={setAssignPlan}
+            setAssignTrainer={setAssignTrainer}
+          />
+          <AssignUsersToPlans
+            theme={theme}
+            organizationId={user.organizationId}
+            assignPlan={assignPlan}
+            setAssignPlan={setAssignPlan}
+            bottomSheet={bottomSheet}
+            setBottomSheet={setBottomSheet}
+            activeUsers={activeUsers}
+          />
+          <AssignUsersToTrainers
+            theme={theme}
+            organizationId={user.organizationId}
+            assignTrainer={assignTrainer}
+            setAssignTrainer={setAssignTrainer}
+            bottomSheet={bottomSheet}
+            setBottomSheet={setBottomSheet}
+            activeUsers={activeUsers}
+          />
+        </>
+        </>
       }
     </>
   );

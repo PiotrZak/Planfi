@@ -49,6 +49,7 @@ export const en = {
   CategoryAdded: 'Category added sucessfully!',
   AddExerciseToCategory: 'To be able to add exercises you need to add a category first',
   DeleteCategory: 'Delete category',
+  DeleteCategoryText: 'Deleting a category is irreversible and will be deleted along with the exercises.',
   Selected: 'selected',
 
   AddExercise: 'Add exercise',

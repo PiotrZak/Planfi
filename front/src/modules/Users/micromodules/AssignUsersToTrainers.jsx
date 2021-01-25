@@ -54,7 +54,7 @@ export const AssignUsersToTrainers = ({
     }
   }, [activeUsers]);
 
-  const closeAssignPlansToUser = () => {
+  const closeAssignTrainersToUser = () => {
     setBottomSheet('flex');
     setAssignTrainer('none');
   };
@@ -115,14 +115,12 @@ export const AssignUsersToTrainers = ({
     >
       <BottomNav>
         <BottomNavItem>
-          <IconWrapper onClick={() => closeAssignPlansToUser()}>
+          <h4>{translate('SelectFromTrainers')}</h4>
+          <IconWrapper onClick={() => closeAssignTrainersToUser()}>
             <Icon name="union" fill={theme.colorGray70} />
           </IconWrapper>
         </BottomNavItem>
-        <BottomNavItem>
-        </BottomNavItem>
       </BottomNav>
-      <BottomNavTitle><h4>{translate('SelectFromTrainers')}</h4></BottomNavTitle>
       <SearchLightContainer>
         <IconWrapper>
         </IconWrapper>

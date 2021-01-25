@@ -14,7 +14,7 @@ import Paragraph from 'components/atoms/Paragraph';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import { darkTheme } from 'theme/darkTheme';
-import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const initialValues = {
   title: '',
@@ -27,11 +27,13 @@ const validationSchema = Yup.object().shape({
 
 const AddCategoryModal = ({ openModal, onClose, theme }) => {
   const { notificationDispatch } = useNotificationContext();
+  const history = useHistory();
 
   const onSubmit = (values) => {
     categoryService
       .addCategory(values)
-      .then(() => {
+      .then((data) => {
+        console.log(data)
         notificationDispatch({
           type: ADD,
           payload: {
@@ -39,6 +41,9 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
             type: 'positive',
           },
         });
+
+
+        history.push(`/category/${data.categoryId}`);
         onClose()
       })
       .catch((error) => {

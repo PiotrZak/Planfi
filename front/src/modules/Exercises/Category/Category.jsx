@@ -112,7 +112,7 @@ const Category = (props) => {
     <>
       <GlobalTemplate>
         <Nav>
-          {category && <BackTopNav text={category.title} />}
+          {category && <BackTopNav route ={routes.categories} text={category.title} />}
           {category && <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />}
         </Nav>
         <Loader isLoading={isLoading} >

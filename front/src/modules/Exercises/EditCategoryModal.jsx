@@ -8,8 +8,10 @@ import * as Yup from 'yup';
 import { categoryService } from 'services/categoryService';
 import Button from 'components/atoms/Button';
 import { ModalHeading } from 'components/atoms/Heading';
-import { StyledModal, ButtonContainer } from 'components/molecules/Modal';
+import { StyledModal, ButtonContainer, IconContainer } from 'components/molecules/Modal'
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import Icon from 'components/atoms/Icon';
+import { darkTheme } from 'theme/darkTheme';
 
 const initialValues = {
   title: '',
@@ -21,11 +23,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditCategoryModal = ({
+  refreshData,
   selectedCategoryName,
   selectedCategories,
   openEditModal,
   onClose,
-  theme,
 }) => {
   const { notificationDispatch } = useNotificationContext();
 
@@ -43,6 +45,7 @@ const EditCategoryModal = ({
         type: 'positive',
       },
     });
+    refreshData();
     onClose()
       .then(() => {
       })
@@ -64,6 +67,9 @@ const EditCategoryModal = ({
       onEscapeKeydown={onClose}
     >
       <ModalHeading>{translate('EditCategoryTitle')}</ModalHeading>
+      <IconContainer>
+        <Icon fill ={darkTheme.colorGray80}name="union" size="1.2" cursorType="pointer" onClick={onClose} />
+      </IconContainer>
       <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
         {({ errors, touched, values }) => (
           <Form>

@@ -31,6 +31,8 @@ const Categories = () => {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
 
+  const [rerender, setRerender] = useState('none');
+
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
   const {
@@ -71,6 +73,7 @@ const Categories = () => {
             type: 'positive',
           },
         });
+        refreshData()
       })
       .catch((error) => {
         notificationDispatch({
@@ -86,7 +89,7 @@ const Categories = () => {
   useEffect(() => {
     refreshData();
     setSelectedCategoryName([]);
-  }, [openModal, openEditModal]);
+  }, [openModal, openEditModal, refreshData]);
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
@@ -110,6 +113,7 @@ const Categories = () => {
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel
+        refreshData={refreshData}
         selectedCategoryName={selectedCategoryName}
         deleteCategories={deleteCategories}
         theme={theme}
