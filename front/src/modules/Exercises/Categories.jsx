@@ -61,7 +61,7 @@ const Categories = () => {
     }
   };
 
-  const deleteCategories = () => {
+  const deleteCategories = useCallback(() => {
     categoryService
       .deleteCategories(selectedCategories)
       .then(() => {
@@ -84,7 +84,31 @@ const Categories = () => {
           },
         });
       });
-  };
+  }, [selectedCategories]);
+
+  const editCategory = useCallback((addCategoryData) => {
+    categoryService
+      .editCategory(selectedCategories, addCategoryData)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('CategoryEdited') },
+            type: 'positive',
+          },
+        });
+        refreshData();
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
+          },
+        });
+      });
+    }, [selectedCategories]);
 
   useEffect(() => {
     refreshData();
@@ -113,6 +137,7 @@ const Categories = () => {
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
       <CategoriesPanel
+        editCategory={editCategory}
         refreshData={refreshData}
         selectedCategoryName={selectedCategoryName}
         deleteCategories={deleteCategories}

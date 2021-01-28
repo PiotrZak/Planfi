@@ -15,6 +15,7 @@ import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';
 import { darkTheme } from 'theme/darkTheme';
 import { useHistory } from 'react-router-dom';
+import { useUserContext } from '../../support/context/UserContext';
 
 const initialValues = {
   title: '',
@@ -27,11 +28,15 @@ const validationSchema = Yup.object().shape({
 
 const AddCategoryModal = ({ openModal, onClose, theme }) => {
   const { notificationDispatch } = useNotificationContext();
+  const { user } = useUserContext();
   const history = useHistory();
 
   const onSubmit = (values) => {
+
+    const transformedData = { title: values.title, organizationId: user.organizationId}
+
     categoryService
-      .addCategory(values)
+      .addCategory(transformedData)
       .then((data) => {
         console.log(data)
         notificationDispatch({

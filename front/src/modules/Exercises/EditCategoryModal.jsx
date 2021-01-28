@@ -23,41 +23,14 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditCategoryModal = ({
-  refreshData,
+  editCategory,
   selectedCategoryName,
-  selectedCategories,
   openEditModal,
   onClose,
 }) => {
-  const { notificationDispatch } = useNotificationContext();
-
   const onSubmit = (values) => {
     editCategory(values);
-  };
-
-  const editCategory = (addCategoryData) => {
-    categoryService
-      .editCategory(selectedCategories, addCategoryData);
-    notificationDispatch({
-      type: ADD,
-      payload: {
-        content: { success: 'OK', message: translate('CategoryEdited') },
-        type: 'positive',
-      },
-    });
-    refreshData();
     onClose()
-      .then(() => {
-      })
-      .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        });
-      });
   };
 
   return (

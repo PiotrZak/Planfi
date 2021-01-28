@@ -117,6 +117,18 @@ namespace WebApi.Services
 
                 if (category == null)
                     throw new AppException("Category not found!");
+                
+                var isDuplicated = _context.Categories.Any(x => x.Title == model.Title);
+                if (isDuplicated)
+                {
+                    var duplicatedCategories = _context.Categories.Where(x => x.Title == model.Title).ToList();
+
+                    foreach (var duplicatedPlan in duplicatedCategories)
+                    {
+                        if(duplicatedPlan.OrganizationId == category.OrganizationId)
+                            throw new AppException("Category " + model.Title + " is already exist in this organization");
+                    }
+                }
 
                 if (!string.IsNullOrWhiteSpace(model.Title))
                 {

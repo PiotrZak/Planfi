@@ -11,6 +11,7 @@ namespace WebApi.Entities
             OrganizationId = Guid.NewGuid().ToString();
             Users = new List<User>();
             Plans = new List<Plan>();
+            Categories = new List<Category>();
         }
 
         [Key]
@@ -19,5 +20,6 @@ namespace WebApi.Entities
 
         public List<User> Users { get; set; }
         public List<Plan> Plans { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }

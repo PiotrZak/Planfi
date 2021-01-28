@@ -171,8 +171,6 @@ const GenericElement = ({
 }) => {
   const { theme } = useThemeContext();
 
-console.log(avatarUrl)
-
   return (
     <>
     {version == 'light'

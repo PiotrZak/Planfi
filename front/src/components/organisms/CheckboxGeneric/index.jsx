@@ -104,7 +104,7 @@ export const CheckboxGenericComponent = ({
     if (Array.isArray(list)) {
       dataList.map((element, i) => {
         row.push(
-          <>
+          <div key = {i}>
             {isMobile
               ? (
                 <Holdable
@@ -146,7 +146,7 @@ export const CheckboxGenericComponent = ({
                 }
                 </>
               )}
-          </>,
+          </div>,
         );
         return element;
       });

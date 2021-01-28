@@ -15,7 +15,6 @@ const DeteleConfirmationModal = ({
   deleteCategories,
   setOpenDeleteModal,
 }) => {
-  const { notificationDispatch } = useNotificationContext();
 
   const onDelete = () => {
     deleteCategories();

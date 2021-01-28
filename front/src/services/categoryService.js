@@ -12,6 +12,9 @@ export const categoryService = {
   function getAllCategories(body) {
     return http.get(CATEGORIES_URL, body);
   }
+  function getOrganizationCategories(id) {
+    return http.get(`${CATEGORIES_URL}/organizationscategory/${id}`);
+  }
   function addCategory(body) {
     return http.post(`${CATEGORIES_URL}create`, body);
   }

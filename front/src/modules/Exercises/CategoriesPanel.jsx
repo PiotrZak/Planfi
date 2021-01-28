@@ -16,6 +16,7 @@ const IconWrapper = styled.div`
 `;
 
 const CategoriesPanel = ({
+  editCategory,
   refreshData,
   selectedCategoryName,
   deleteCategories,
@@ -91,6 +92,7 @@ const CategoriesPanel = ({
           </>
         )}
       <EditCategoryModal
+        editCategory ={editCategory}
         refreshData={refreshData}
         selectedCategoryName={selectedCategoryName[0]}
         selectedCategories={selectedCategories[0]}

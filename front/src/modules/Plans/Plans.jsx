@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { planService } from 'services/planService';
 import { commonUtil } from 'utils/common.util';
 import Nav from 'components/atoms/Nav';
@@ -30,12 +30,10 @@ const Plan = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPlans, setSelectedPlans] = useState([]);
 
-
-
   const { match } = props;
   const { id } = match.params;
 
-  const deletePlans = () => {
+  const deletePlans = useCallback(() => {
     planService
       .deletePlans(selectedPlans)
       .then(() => {
@@ -57,7 +55,7 @@ const Plan = (props) => {
           },
         });
       });
-  };
+    }, [selectedPlans]);
 
   const getPlans = (id) => {
     planService
@@ -72,7 +70,8 @@ const Plan = (props) => {
 
   useEffect(() => {
     getPlans(user.organizationId);
-  }, [id, openModal, openEditModal, setOpenEditModal]);
+    console.log('rerender')
+  }, [id, openModal, openEditModal, setOpenEditModal,deletePlans]);
 
   const closeModal = () => {
     setOpenModal(false);

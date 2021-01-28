@@ -89,14 +89,13 @@ namespace WebApi.Controllers
         {
             try
             {
-                var categoryResponse = _categoryService.Update(model, id);
+                var categoryResponse = await _categoryService.Update(model, id);
                 
                 var success = ApiCommonResponse.Create()
                     .WithSuccess()
                     .WithData(categoryResponse)
                     .Build();
                 
-                /*return Ok(new { message = "ok" });*/
                 return CommonResponse(success);
             }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -51,9 +53,9 @@ namespace WebApi.Services
             return _context.Plans;
         }
 
-        public void Update(string id, string title)
+        public async Task<int> Update(string id, string title)
         {
-            var plan = _context.Plans.Find(id);
+            var plan = await _context.Plans.FindAsync(id);
 
             if (plan == null)
                 throw new AppException("Plan not found");
@@ -63,28 +65,34 @@ namespace WebApi.Services
                 plan.Title = title;
 
             _context.Plans.Update(plan);
-            _context.SaveChanges();
+            return await _context.SaveChangesAsync();
         }
 
 
-        public void Delete(string[] id)
+        public async Task<int> Delete(IEnumerable<string> id)
         {
-            foreach(var planId in id)
+            try
             {
-                var exercisesInPlan = _context.Exercises.Where(x => x.PlanId == planId);
-
-                foreach(var exerciseItem in exercisesInPlan)
+                foreach (var planId in id)
                 {
-                    exerciseItem.PlanId = null;
-                }
+                    var exercisesInPlan = _context.Exercises.Where(x => x.PlanId == planId);
 
-                var plan = _context.Plans.Find(planId);
-                if (plan != null)
-                {
+                    foreach (var exerciseItem in exercisesInPlan)
+                    {
+                        exerciseItem.PlanId = null;
+                    }
+
+                    var plan = await _context.Plans.FindAsync(planId);
+                    if (plan == null) continue;
                     _context.Plans.Remove(plan);
-                    _context.SaveChanges();
+                    return await _context.SaveChangesAsync();
                 }
             }
+            catch (ValidationException)
+            {
+                return 0;
+            }
+            return 1;
         }
 
         public void AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)

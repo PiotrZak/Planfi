@@ -16,9 +16,9 @@ namespace WebApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .UseIdentityByDefaultColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("WebApi.Controllers.ViewModels.ClientsPlans", b =>
                 {
@@ -55,10 +55,15 @@ namespace WebApi.Migrations
                     b.Property<string>("CategoryId")
                         .HasColumnType("text");
 
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
                     b.HasKey("CategoryId");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Categories");
 
@@ -89,15 +94,15 @@ namespace WebApi.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .HasColumnType("character varying(3600000)")
-                        .HasMaxLength(3600000);
+                        .HasMaxLength(3600000)
+                        .HasColumnType("character varying(3600000)");
 
                     b.Property<List<byte[]>>("Files")
                         .HasColumnType("bytea[]");
 
                     b.Property<string>("Name")
-                        .HasColumnType("character varying(160)")
-                        .HasMaxLength(160);
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
 
                     b.Property<string>("PlanId")
                         .HasColumnType("text");
@@ -442,7 +447,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Admin",
-                            AdminId = "24615be8-185e-4ff8-b7ef-e3c44bf107f1"
+                            AdminId = "e93dfc73-acad-48ee-b850-de5d2facff35"
                         });
                 });
 
@@ -750,7 +755,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "7db3890d-bd65-472e-a3a1-3f0309e92706"
+                            OwnerId = "d631a970-1007-433d-add8-a53585a44c89"
                         },
                         new
                         {
@@ -764,7 +769,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "73f15cca-8385-4ed6-8326-358878538be5"
+                            OwnerId = "73274165-3f32-4fac-83eb-308cd0cbba1a"
                         },
                         new
                         {
@@ -778,7 +783,7 @@ namespace WebApi.Migrations
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PhoneNumber = "555555555",
                             Role = "Owner",
-                            OwnerId = "6123ee86-6a56-4721-a62d-d54916eafd2d"
+                            OwnerId = "f7485f24-97bd-4e28-aed7-c2836f23f9ff"
                         });
                 });
 
@@ -897,6 +902,10 @@ namespace WebApi.Migrations
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Plan");
                 });
 
             modelBuilder.Entity("WebApi.Controllers.ViewModels.ClientsTrainers", b =>
@@ -912,6 +921,17 @@ namespace WebApi.Migrations
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Trainer");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Category", b =>
+                {
+                    b.HasOne("WebApi.Entities.Organization", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("OrganizationId");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Exercise", b =>
@@ -945,6 +965,43 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Organization", null)
                         .WithMany("Users")
                         .HasForeignKey("OrganizationId");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Category", b =>
+                {
+                    b.Navigation("Exercises");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Organization", b =>
+                {
+                    b.Navigation("Categories");
+
+                    b.Navigation("Plans");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Plan", b =>
+                {
+                    b.Navigation("ClientsPlans");
+
+                    b.Navigation("Exercises");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Client", b =>
+                {
+                    b.Navigation("ClientsPlans");
+
+                    b.Navigation("ClientsTrainers");
+
+                    b.Navigation("Plans");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.Trainer", b =>
+                {
+                    b.Navigation("ClientsTrainers");
+
+                    b.Navigation("Plans");
                 });
 #pragma warning restore 612, 618
         }

@@ -203,8 +203,6 @@ namespace WebApi.Services{
                         var usersPlans = new ClientsPlans {Client = client, Plan = plan};
                         
                         // todo - validation here
-                        
-                        
                         await _context.ClientsPlans.AddAsync(usersPlans);
                         try
                         { 

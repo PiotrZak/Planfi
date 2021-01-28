@@ -8,6 +8,7 @@ using AutoMapper;
 using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Interfaces;
 
 namespace WebApi.Controllers
@@ -68,11 +69,11 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPut("{id}")]
-        public IActionResult Update(string id,[FromForm]string title)
+        public async Task<IActionResult> Update(string id,[FromForm]string title)
         {
             try
             {
-                _planService.Update(id, title);
+                await _planService.Update(id, title);
                 return Ok();
             }
             catch (AppException ex)
@@ -150,9 +151,9 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("delete")]
-        public IActionResult Delete([FromBody] string[] id)
+        public async Task<IActionResult> Delete([FromBody] string[] id)
         {
-            _planService.Delete(id);
+            await _planService.Delete(id);
             return Ok();
         }
 

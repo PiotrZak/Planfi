@@ -7,5 +7,6 @@ namespace WebApi.Models
         [Required]
         public string Title { get; set; }
         //public string[] ExerciseId { get; set; }
+        public string OrganizationId { get; set; }
     }
 }
