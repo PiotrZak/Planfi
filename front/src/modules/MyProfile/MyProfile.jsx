@@ -46,11 +46,12 @@ const ContainerCentred = styled.div`
 
 
 const MyProfile = ({ toggleTheme, toggleLanguage }) => {
-  const { user } = useUserContext();
   const { theme } = useThemeContext();
-  const [updatedUser, setUpdatedUser] = useState(user);
   const [toRender, setToRender] = useState(null);
 
+  const user = JSON.parse((localStorage.getItem('user')));
+  const [updatedUser, setUpdatedUser] = useState(user);
+  
   useEffect(() => {
     setUpdatedUser(user);
     getUserById();

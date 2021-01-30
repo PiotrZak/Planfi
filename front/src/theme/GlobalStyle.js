@@ -1,7 +1,21 @@
 import { createGlobalStyle } from 'styled-components';
+import { validationUtil } from '../utils/validation.util';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('/fonts/icomoon.woff2?9h1pxj') format('woff2');
+  src:  url('/fonts/icomoon.eot?9h1pxj#iefix') format('embedded-opentype'),
+    url('/fonts/icomoon.woff2?9h1pxj') format('woff2'),
+    url('/fonts/icomoon.ttf?9h1pxj') format('truetype'),
+    url('/fonts/icomoon.woff?9h1pxj') format('woff'),
+    url('/fonts/icomoon.svg?9h1pxj#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 
   *, *::before, *::after{
     box-sizing: border-box;

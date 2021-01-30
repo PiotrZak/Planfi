@@ -52,6 +52,7 @@ namespace WebApi.Services
                     CategoryId = category.CategoryId,
                     Title = category.Title,
                     Exercises = exercises.Count(),
+                    OrganizationId = category.OrganizationId
                 };
                 transformModel.Add(transformCategoryModel);
             }
@@ -64,6 +65,7 @@ namespace WebApi.Services
         public string CategoryId { get; set; }
         public string Title { get; set; }
         public int Exercises { get; set; }
+        public string OrganizationId { get; set; }
     }
     
         public void Delete(string[] id)

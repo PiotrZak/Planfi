@@ -3,6 +3,7 @@ import { planService } from 'services/planService';
 import { commonUtil } from 'utils/common.util';
 import Nav from 'components/atoms/Nav';
 import 'react-multi-carousel/lib/styles.css';
+import { useQuery, gql } from '@apollo/client';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
@@ -16,18 +17,31 @@ import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
 import Loader from 'components/atoms/Loader';
 
-
 const Plan = (props) => {
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
   const { user } = useUserContext();
 
-  const [plans, setPlans] = useState([]);
+  const PLANS = gql`{
+    plans(where: {organizationId: "${user.organizationId}"})
+    {
+      creatorId
+      creatorName
+      planId
+      title
+     }
+    }
+  `;
+
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(PLANS);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedPlans, setSelectedPlans] = useState([]);
 
   const { match } = props;
@@ -45,6 +59,7 @@ const Plan = (props) => {
             type: 'positive',
           },
         });
+        refreshData()
       })
       .catch((error) => {
         notificationDispatch({
@@ -57,21 +72,10 @@ const Plan = (props) => {
       });
     }, [selectedPlans]);
 
-  const getPlans = (id) => {
-    planService
-      .getOrganizationPlans(id)
-      .then((data) => {
-        setPlans(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
   useEffect(() => {
-    getPlans(user.organizationId);
-    console.log('rerender')
-  }, [id, openModal, openEditModal, setOpenEditModal,deletePlans]);
+    refreshData();
+  }, [openModal, openEditModal, refreshData]);
 
   const closeModal = () => {
     setOpenModal(false);
@@ -86,10 +90,16 @@ const Plan = (props) => {
   const filterPlans = (event) => {
     setSearchTerm(event.target.value);
   };
+  
+  let results;
+  if(data){
+  results = !searchTerm
+    ? data.plans
+    : data.plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  }
 
-  const results = !searchTerm
-    ? plans
-    : plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
 
   return (
     <>
@@ -98,9 +108,8 @@ const Plan = (props) => {
           <Heading>{translate('PlansTitle')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
-        <Loader isLoading={isLoading} >
           <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
-          {plans.length >= 1 ? (
+          {data.plans.length >= 1 ? (
             <CheckboxGenericComponent
               dataType="plans"
               displayedValue="title"
@@ -109,7 +118,6 @@ const Plan = (props) => {
             />
           )
             : <h3>{translate('NoPlans')}</h3>}
-        </Loader>
       </GlobalTemplate>
       <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
       <PlansPanel

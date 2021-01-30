@@ -14,36 +14,38 @@ import AddCategoryModal from 'modules/Exercises/AddCategoryModal';
 import { isMobile } from 'react-device-detect';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import Nav from 'components/atoms/Nav';
-
-const CATEGORY = gql`{
-  categories{
-         title
-         categoryId
-         exercises
-   }
-  }
-`;
+import { useUserContext } from 'support/context/UserContext';
 
 const Categories = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const { user } = useUserContext();
   const [bottomSheet, setBottomSheet] = useState('none');
-
-  const [rerender, setRerender] = useState('none');
-
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
+
+  const CATEGORY = gql`{
+    categories(where: {organizationId: "${user.organizationId}"})
+    {
+           title
+           categoryId
+           exercises
+     }
+    }
+  `;
+
   const {
     loading, error, data, refetch: _refetch,
   } = useQuery(CATEGORY);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   const closeModal = () => {
     setOpenModal(false);
   };
 
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
 
   const submissionHandleElement = (selectedData) => {
     const selectedCategoriesId = commonUtil.getCheckedData(selectedData, 'categoryId');

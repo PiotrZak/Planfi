@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { commonUtil } from 'utils/common.util';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import { useUserContext } from 'support/context/UserContext';
-import { userService } from 'services/userServices';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { translate } from 'utils/Translation';
@@ -14,9 +12,6 @@ import Search from 'components/molecules/Search';
 import styled from 'styled-components';
 import Heading from 'components/atoms/Heading';
 import { organizationService } from 'services/organizationServices';
-import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
-import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
-import { UsersPanel } from './micromodules/UsersPanel';
 import SmallButton from 'components/atoms/SmallButton';
 import InviteUserModal from './InviteUsersModal';
 import { Role } from 'utils/role';
@@ -27,7 +22,6 @@ const Container = styled.div`
 
 const OrganizationTrainers = () => {
   const { theme } = useThemeContext();
-  // const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 

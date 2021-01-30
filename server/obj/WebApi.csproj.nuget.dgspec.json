@@ -59,19 +59,27 @@
             },
             "HotChocolate": {
               "target": "Package",
-              "version": "[10.5.3, )"
+              "version": "[11.1.0-preview.8, )"
             },
             "HotChocolate.AspNetCore": {
               "target": "Package",
-              "version": "[10.5.3, )"
+              "version": "[11.1.0-preview.8, )"
             },
             "HotChocolate.AspNetCore.Authorization": {
               "target": "Package",
-              "version": "[10.5.3, )"
+              "version": "[11.1.0-preview.8, )"
             },
             "HotChocolate.AspNetCore.Playground": {
               "target": "Package",
-              "version": "[10.5.3, )"
+              "version": "[10.5.5, )"
+            },
+            "HotChocolate.Language": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
+            },
+            "HotChocolate.Types.Filters": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
             },
             "MailKit": {
               "target": "Package",

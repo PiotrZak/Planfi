@@ -73,22 +73,6 @@ namespace WebApi
             })
             .AddJwtBearer(x =>
             {
-                /*x.Events = new JwtBearerEvents
-                {
-                    OnTokenValidated = context =>
-                    {
-                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        if (context.Principal?.Identity == null) return Task.CompletedTask;
-                        var userId = context.Principal.Identity.Name;
-                        var user = userService.GetById(userId);
-                        if (user == null)
-                        {
-                            // return unauthorized if user no longer exists
-                            context.Fail("Unauthorized");
-                        }
-                        return Task.CompletedTask;
-                    }
-                };*/
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -116,7 +100,7 @@ namespace WebApi
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAccountService, AccountService>();
 
-
+            services.AddScoped<Query>();
             services.AddGraphQL(SchemaBuilder.New()
                 .AddQueryType<Query>()
                 //.AddMutationType<Mutation>()
