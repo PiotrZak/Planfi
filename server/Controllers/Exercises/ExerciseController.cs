@@ -1,6 +1,4 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Services;
 using WebApi.Entities;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
@@ -10,6 +8,7 @@ using WebApi.Models;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Interfaces;
 
 namespace WebApi.Controllers
@@ -38,14 +37,13 @@ namespace WebApi.Controllers
         
         [AllowAnonymous]
         [HttpPost("create")]
-        public ActionResult<Exercise> CreateExercise([FromForm] CreateExercise model)
+        public async Task<IActionResult> CreateExercise([FromForm] CreateExercise model)
         {
-            //repair todo 
-            var filesList = new List<byte[]>();
-            
+            var transformModel = new ExerciseModel();
             //transform IFormFile List to byte[]
             if (model.Files != null)
             {
+                var filesList = new List<byte[]>();
                 foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
                     /*Compress(formFile);*/
@@ -53,22 +51,25 @@ namespace WebApi.Controllers
                     formFile.CopyTo(memoryStream);
                     filesList.Add(memoryStream.ToArray());
                 }
+                transformModel.Name = model.Name;
+                transformModel.Description = model.Description;
+                transformModel.Files = filesList;
+                transformModel.CategoryId = model.CategoryId;
             }
-
-            var transformModel = new ExerciseModel
+            else
             {
-                Name = model.Name,
-                Description = model.Description,
-                Files = filesList ,
-                CategoryId = model.CategoryId
-            };
+                transformModel.Name = model.Name;
+                transformModel.Description = model.Description;
+                transformModel.Files = null;
+                transformModel.CategoryId = model.CategoryId;
+            }
 
 
             var exercise = _mapper.Map<Exercise>(transformModel);
 
             try
             {
-                _CategoryService.AssignExercise(model.CategoryId, exercise);
+                await _CategoryService.AssignExercise(model.CategoryId, exercise);
                 return Ok();
             }
             catch (AppException ex)
@@ -124,7 +125,7 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromForm] UpdateExerciseModel model)
+        public async Task<IActionResult> Update(string id, [FromForm] UpdateExerciseModel model)
         {
             
             var filesList = new List<byte[]>();
@@ -154,7 +155,7 @@ namespace WebApi.Controllers
 
             try
             {
-                _ExerciseService.Update(exercise, id);
+                await _ExerciseService.Update(exercise, id);
                 return Ok();
             }
             catch (AppException ex)
@@ -166,9 +167,9 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            _ExerciseService.Delete(id);
+            await _ExerciseService.Delete(id);
             return Ok();
         }
     }

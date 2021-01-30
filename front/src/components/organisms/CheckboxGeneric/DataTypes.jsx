@@ -23,13 +23,22 @@ export const RenderType = ({
   theme, type, element, i,
 }) => {
   const history = useHistory();
-  const redirectToItem = (itemCase, id) => {
-    history.push({
-      pathname: `/${itemCase}/${id}`,
-      state: { id },
-    });
-  };
 
+
+    const redirectToItem = (itemCase, id, title) => {
+      if(itemCase == possibleTypes.category || itemCase == possibleTypes.plan){
+        history.push({
+          pathname: `/${itemCase}/${id}`,
+          state: { id:id,title:title },
+        });
+      }
+      else{
+      history.push({
+        pathname: `/${itemCase}/${id}`,
+        state: { id },
+      });
+    }
+  }
   
   const renderType = () => {
     switch (type) {
@@ -42,7 +51,7 @@ export const RenderType = ({
         return (
           <StyledGenericElement
             key={i}
-            onClick={() => redirectToItem(possibleTypes.category, element.categoryId)}
+            onClick={() => redirectToItem(possibleTypes.category, element.categoryId, element.title)}
             headline={element.title}
             subline={`${element.exercises}  ${exerciseLabel}`}
             category={element.category}
@@ -66,7 +75,7 @@ export const RenderType = ({
       case 'plans':
         return (
           <StyledGenericElement
-            onClick={() => redirectToItem(possibleTypes.plan, element.planId)}
+            onClick={() => redirectToItem(possibleTypes.plan, element.planId, element.title)}
             version={theme}
           avatarType="noAvatar"
             key={i}
@@ -81,7 +90,7 @@ export const RenderType = ({
           <StyledGenericElement
             key={i}
             avatarType="circle"
-            avatarUrl = {element.files && element.files[0]}
+            avatarUrl = {element.file}
             onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
             headline={element.name}
             exercise={element}

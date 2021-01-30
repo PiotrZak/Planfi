@@ -6,6 +6,7 @@ import { useHistory, withRouter } from 'react-router-dom';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
 import Search from 'components/molecules/Search';
+import { useQuery, gql } from '@apollo/client';
 import { translate } from 'utils/Translation';
 import BackTopNav from 'components/molecules/BackTopNav';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
@@ -19,30 +20,30 @@ import Loader from 'components/atoms/Loader';
 
 const Category = (props) => {
   const { theme } = useThemeContext();
-
-  const [category, setCategory] = useState([]);
-  const [exercises, setExercises] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
-  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedExercise, setselectedExercise] = useState([]);
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
+  const  id  = props.match.params.id;
+  const  title  = props.location.state.title;
 
+  const CATEGORYEXERCISES = gql`{
+    serializedCategoryExercise(where: {categoryId: "${id}"})
+    {
+        exerciseId
+        name
+        file
+     }
+    }
+  `;
+
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(CATEGORYEXERCISES);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
   const history = useHistory();
   const { notificationDispatch } = useNotificationContext();
-  const { match } = props;
-  const { id } = match.params;
-
-  const getCategory = (id) => {
-    categoryService
-      .getCategoryById(id)
-      .then((data) => {
-        setCategory(data);
-      })
-      .catch((error) => {
-      });
-  };
 
   const deleteExercise = () => {
     exerciseService
@@ -55,6 +56,7 @@ const Category = (props) => {
             type: 'positive'
           }
         })
+        refreshData()
         setBottomSheet('none');
       })
       .catch((error) => {
@@ -68,55 +70,47 @@ const Category = (props) => {
       });
   }
 
+
   useEffect(() => {
-    getCategory(id);
-    getCategoryExercise(id);
+    refreshData();
   }, [id]);
 
-  const getCategoryExercise = useCallback((id) => {
-    exerciseService
-      .getExercisesByCategory(id)
-      .then((data) => {
-        const uniqueExercises = commonUtil.getUnique(data, 'name');
-        setExercises(uniqueExercises);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+  const filterExercises = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
+  let results;
+  if(data){
+  results = !searchTerm
+    ? data.serializedCategoryExercise
+    : data.serializedCategoryExercise.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  }
+
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
+
+    const redirectToAddExercise = () => {
+      history.push({
+        pathname: routes.addExercise,
+        state: { id:id, categoryTitle: title },
+      });
+    }
+
+  
   const submissionHandleElement = (selectedData) => {
     const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
     setselectedExercise(selectedExercises);
     selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   };
 
-  const filterExercises = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const results = !searchTerm
-    ? exercises
-    : exercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
-
-  const redirectToAddExercise = () => {
-    history.push({
-      pathname: routes.addExercise,
-      state: { id },
-    });
-  }
-
-
   return (
     <>
       <GlobalTemplate>
         <Nav>
-          {category && <BackTopNav route ={routes.categories} text={category.title} />}
-          {category && <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />}
+          <BackTopNav route ={routes.categories} text={title} />
+          <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />
         </Nav>
-        <Loader isLoading={isLoading} >
-          {exercises.length > 0
+          {results.length > 0
             ? 
             <>
             <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
@@ -128,7 +122,6 @@ const Category = (props) => {
               />
             </>
             : <p>{translate('NoExercises')}</p>}
-        </Loader>
       </GlobalTemplate>
       <PlanPanelExercises
         deleteExercise={deleteExercise}

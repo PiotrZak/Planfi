@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { exerciseService } from 'services/exerciseService';
-import styled from 'styled-components';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
-import { planService } from 'services/planService';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
 import BackTopNav from 'components/molecules/BackTopNav';
@@ -16,6 +14,7 @@ import SmallButton from 'components/atoms/SmallButton';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { PlansPanel } from './microModules/PlansPanel';
 import { PlansExercises } from './PlansExercises';
+import { routes } from 'utils/routes';
 
 const Plan = (props) => {
   const { theme } = useThemeContext();
@@ -30,30 +29,18 @@ const Plan = (props) => {
   const [bottomSheet, setBottomSheet] = useState('none')
 
   const [planPanel, setPlanPanel] = useState('none')
-
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState();
-
-  const { match } = props;
-  const { id } = match.params;
+  const  id  = props.match.params.id;
+  const  title  = props.location.state.title;
 
   useEffect(() => {
-    getPlan(id);
     getAllCategories();
     getPlanExercise(id);
     getAllExercises();
   }, [id]);
 
-  const getPlan = useCallback((id) => {
-    planService
-      .getPlanById(id)
-      .then((data) => {
-        setPlan(data);
-      })
-      .catch((error) => {
-      });
-  }, []);
 
   const getAllCategories = useCallback(() => {
     categoryService
@@ -110,9 +97,8 @@ const Plan = (props) => {
     <>
       <GlobalTemplate>
         <Nav>
-          <BackTopNav />
-          {plan && <h2>{plan.title}</h2>}
-          {plan && <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />}
+        <BackTopNav route ={routes.plans} text={title} />
+          <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />
         </Nav>
         <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
         {results

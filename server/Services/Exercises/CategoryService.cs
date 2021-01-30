@@ -58,8 +58,7 @@ namespace WebApi.Services
             }
             return transformModel;
         }
-
-        //prepare ViewModel Models - graphQl Correlated
+        
     public class CategoryViewModel
     {
         public string CategoryId { get; set; }
@@ -88,14 +87,25 @@ namespace WebApi.Services
             }
         }
 
-        public void AssignExercise(string id, Exercise exercise)
+        public async Task<int> AssignExercise(string id, Exercise exercise)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
+            
+            var isDuplicated = _context.Exercises.Any(x => x.Name == exercise.Name);
+            if (isDuplicated)
+            {
+                var duplicatedExercises = _context.Exercises.Where(x => x.Name == exercise.Name).ToList();
 
+                if (duplicatedExercises.Any(duplicatedExercise => duplicatedExercise.CategoryId == exercise.CategoryId))
+                {
+                    throw new AppException("Plan " + exercise.Name + " is already exist in this organization");
+                }
+            }
+            
             category.Exercises.Add(exercise);
-
             _context.Categories.Update(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return 1;
         }
 
         public void AssignExercisesToCategory(string categoryId, IEnumerable<string> exerciseId)

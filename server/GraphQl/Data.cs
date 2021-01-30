@@ -15,13 +15,16 @@ namespace WebApi.GraphQl
     {
         private readonly ICategoryService _categoryService;
         private readonly IPlanService _planService;
+        private readonly IExerciseService _exerciseService;
         public Query(
             ICategoryService categoryService,
-            IPlanService planService
+            IPlanService planService,
+            IExerciseService exerciseService
             )
         {
             _categoryService = categoryService ;
             _planService = planService ;
+            _exerciseService = exerciseService;
         }
         
         [UseFiltering]
@@ -38,8 +41,8 @@ namespace WebApi.GraphQl
             _planService.GetAll().ToList();
         
         [UseFiltering]
-        public List<Exercise> GetExercises([Service] DataContext dbContext) => dbContext.Exercises.ToList();
-
+        public List<ExerciseService.ExerciseViewModel> GetSerializedCategoryExercise([Service] DataContext dbContext) => 
+            _exerciseService.GetSerializedCategoryExercise().ToList();
     }
     
     public static class ExtensionMethods

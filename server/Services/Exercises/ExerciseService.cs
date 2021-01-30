@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -47,6 +48,48 @@ namespace WebApi.Services
             return _context.Exercises;
         }
 
+        public IEnumerable<ExerciseViewModel> GetSerializedCategoryExercise()
+        {
+            var allExercises = _context.Exercises;
+            var transformedExercises = new List<ExerciseViewModel>();
+            
+            foreach (var exercise in allExercises)
+            {
+                var modelExercise = new ExerciseViewModel();
+                    
+                if (exercise.Files != null && exercise.Files.Any())
+                {
+                    modelExercise.ExerciseId = exercise.ExerciseId;
+                    modelExercise.Name = exercise.Name;
+                    modelExercise.File = Convert.ToBase64String(exercise.Files?[0]);
+                    modelExercise.CategoryId = exercise.CategoryId;
+                }
+                else
+                {
+                    modelExercise.ExerciseId = exercise.ExerciseId;
+                    modelExercise.Name = exercise.Name;
+                    modelExercise.File = null;
+                    modelExercise.CategoryId = exercise.CategoryId;
+                }
+                
+                transformedExercises.Add(modelExercise);
+            }
+
+            return transformedExercises;
+        }
+        
+        public class ExerciseViewModel
+        {
+            public ExerciseViewModel()
+            {
+                File = new string("");
+            }
+            public string ExerciseId { get; set; }
+            public string Name { get; set; }
+            public string? File { get; set; }
+            public string CategoryId { get; set; }
+        }
+
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
             var Exercises = _context.Exercises.Where(x => x.CategoryId == categoryId);
@@ -60,18 +103,19 @@ namespace WebApi.Services
         }
 
 
-        public void Delete(string id)
+        public async Task<int>  Delete(string id)
         {
             var exercise = _context.Exercises.Find(id);
             if(exercise != null)
             {
-                
                 _context.Exercises.Remove(exercise);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
+
+            return 1;
         }
 
-        public void Update(Exercise updateExercise, string id)
+        public async Task<int> Update(Exercise updateExercise, string id)
         {
             var exercise = _context.Exercises.Find(id);
 
@@ -124,10 +168,12 @@ namespace WebApi.Services
             }
 
             _context.Exercises.Update(exercise);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
+            return 1;
         }
     }
+    
 }
 
 

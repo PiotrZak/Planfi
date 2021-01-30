@@ -72,6 +72,9 @@ const AddExerciseRefactor = (props) => {
   const [previewFiles, setPreviewFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
 
+  console.log(props)
+  const  categoryTitle  = props.location.state.categoryTitle;
+
   const fileNotification = (message) => {
     notificationDispatch({
       type: ADD,
@@ -116,11 +119,14 @@ const AddExerciseRefactor = (props) => {
           setPreviewFiles([]);
           history.push({
             pathname: routes.addExercise,
-            state: { id },
+            state: { id:id, title:categoryTitle},
           });
         }
         else{
-          history.push(`/category/${id}`);
+          history.push({
+            pathname: `/category/${id}`,
+            state: { id:id, title:categoryTitle},
+          });
         }
       })
       .catch((error) => {

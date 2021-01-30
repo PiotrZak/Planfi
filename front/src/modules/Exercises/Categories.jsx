@@ -45,8 +45,6 @@ const Categories = () => {
     setOpenModal(false);
   };
 
-
-
   const submissionHandleElement = (selectedData) => {
     const selectedCategoriesId = commonUtil.getCheckedData(selectedData, 'categoryId');
     const selectedCategoriesName = commonUtil.getCheckedData(selectedData, 'title');
