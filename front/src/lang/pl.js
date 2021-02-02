@@ -172,4 +172,9 @@ export const pl = {
   ChangeTheme: 'Zmień design',
   Logout: 'Wyloguj',
 
+  TrainerPlans: "Plany trenera",
+  TrainerClients: "Klienci trenera",
+  ClientPlans: "Plany klienta",
+  UserTrainers: "Trenerzy klienta",
+
 };

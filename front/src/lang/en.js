@@ -179,4 +179,10 @@ export const en = {
   ChangeLanguage: 'Change language',
   ChangeTheme: 'Change design',
   Logout: 'Logout',
+
+  TrainerPlans:'Trainer plans',
+  TrainerClients: 'Trainer clients',
+  ClientPlans: "Client plans",
+  UserTrainers: "Client trainers",
+
 };

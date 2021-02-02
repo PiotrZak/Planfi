@@ -85,18 +85,18 @@ export const User = (props) => {
     if (user.role === Role.Trainer) {
       return (
         <SwitchedButton
-          firstButtonText={translate('MyPlans')}
+          firstButtonText={translate('TrainerPlans')}
           firstButtonFunc={() => renderGenericElement('first')}
-          secondButtonText={translate('MyClients')}
+          secondButtonText={translate('TrainerClients')}
           secondButtonFunc={() => renderGenericElement('second')}
         />
       );
     }
     return (
       <SwitchedButton
-        firstButtonText={translate('MyPlans')}
+        firstButtonText={translate('ClientPlans')}
         firstButtonFunc={() => renderGenericElement('first')}
-        secondButtonText={translate('MyTrainers')}
+        secondButtonText={translate('UserTrainers')}
         secondButtonFunc={() => renderGenericElement('second')}
       />
     );
