@@ -11,16 +11,36 @@ import Nav from 'components/atoms/Nav';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { categoryService } from 'services/categoryService';
 import SmallButton from 'components/atoms/SmallButton';
+import { useQuery, gql } from '@apollo/client';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { PlansPanel } from './microModules/PlansPanel';
 import { PlansExercises } from './PlansExercises';
 import { routes } from 'utils/routes';
+import Loader from 'components/atoms/Loader';
+import { useUserContext } from 'support/context/UserContext';
 
 const Plan = (props) => {
   const { theme } = useThemeContext();
-  const [plan, setPlan] = useState();
 
+  const { user } = useUserContext();
   const [addExercisePanel] = useState('none');
+  const  id  = props.match.params.id;
+  const  title  = props.location.state.title;
+
+  const PLANSEXERCISES = gql`{
+    serializedExercises(where: {planId: "${id}"})
+    {
+        exerciseId
+        name
+        file
+     }
+    }
+  `;
+
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(PLANSEXERCISES);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   const [allExercises, setAllExercises] = useState([])
   const [exercises, setExercises] = useState();
@@ -32,12 +52,12 @@ const Plan = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState();
-  const  id  = props.match.params.id;
-  const  title  = props.location.state.title;
+
 
   useEffect(() => {
+    refreshData();
+
     getAllCategories();
-    getPlanExercise(id);
     getAllExercises();
   }, [id]);
 
@@ -53,22 +73,9 @@ const Plan = (props) => {
       });
   }, []);
 
-  const getPlanExercise = useCallback((id) => {
-    exerciseService
-      .getExercisesByPlan(id)
-      .then((data) => {
-        const uniqueExercises = commonUtil.getUnique(data, 'name');
-        setExercises(uniqueExercises);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
 
   const getAllExercises = () => {
-    exerciseService
-      .getAllExercises()
+    exerciseService.getExercisesByOrganization(user.organizationId)
       .then((data) => {
         setAllExercises(commonUtil.getUnique(data, 'name'));
       })
@@ -77,7 +84,8 @@ const Plan = (props) => {
       });
   };
 
-
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
 
   const submissionHandleElement = (selectedData) => {
     const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
@@ -89,9 +97,12 @@ const Plan = (props) => {
     setSearchTerm(event.target.value);
   };
 
-  const results = !searchTerm
-    ? exercises
-    : exercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  let results;
+  if(data){
+  results = !searchTerm
+    ? data.serializedExercises
+    : data.serializedExercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  }
 
   return (
     <>
@@ -101,7 +112,7 @@ const Plan = (props) => {
           <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />
         </Nav>
         <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
-        {results
+        {results.length > 0
           ? (
             <CheckboxGenericComponent
               dataType="exercises"
@@ -120,6 +131,7 @@ const Plan = (props) => {
         planPanel={planPanel}
         setPlanPanel={setPlanPanel}
         isLoading={isLoading}
+        refreshData={refreshData}
       />
       <PlansPanel
         bottomSheet={addExercisePanel}
@@ -132,6 +144,7 @@ const Plan = (props) => {
         planId={id}
         categories={categories}
         isLoading={isLoading}
+        refreshData={refreshData}
       />
     </>
   );

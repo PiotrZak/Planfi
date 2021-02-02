@@ -85,6 +85,14 @@ namespace WebApi.Controllers
             var exercises = _ExerciseService.GetAll();
             return Ok(exercises);
         }
+        
+        [AllowAnonymous]
+        [HttpGet("organization/{organizationId}")]
+        public async Task<IActionResult> GetAllByOrganization(string organizationId)
+        {
+            var exercises = await _ExerciseService.GetAllByOrganization(organizationId);
+            return Ok(exercises);
+        }
 
         [AllowAnonymous]
         [HttpGet("category/{categoryId}")]

@@ -29,7 +29,7 @@ const Category = (props) => {
   const  title  = props.location.state.title;
 
   const CATEGORYEXERCISES = gql`{
-    serializedCategoryExercise(where: {categoryId: "${id}"})
+    serializedExercises(where: {categoryId: "${id}"})
     {
         exerciseId
         name
@@ -82,8 +82,8 @@ const Category = (props) => {
   let results;
   if(data){
   results = !searchTerm
-    ? data.serializedCategoryExercise
-    : data.serializedCategoryExercise.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    ? data.serializedExercises
+    : data.serializedExercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
   }
 
   if (loading) return <Loader isLoading={loading} />;

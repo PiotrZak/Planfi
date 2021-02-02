@@ -35,7 +35,8 @@ export const PlansPanel = ({
     setBottomSheet,
     categories,
     openAssignExercises,
-    isLoading
+    isLoading,
+    refreshData
 }) => {
 
     const [selectedExercise, setSelectedExercise] = useState([])
@@ -85,6 +86,7 @@ export const PlansPanel = ({
                 </Loader>
             </StyledReactBottomSheetExtended>
             <ExerciseDetailsPanel
+                refreshData ={refreshData}
                 setBottomSheet ={setBottomSheet}
                 planId={planId}
                 setOpenExerciseDetailsPlan={setOpenExerciseDetailsPlan}

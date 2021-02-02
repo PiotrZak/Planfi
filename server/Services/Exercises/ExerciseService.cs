@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -47,8 +48,48 @@ namespace WebApi.Services
         {
             return _context.Exercises;
         }
+        
+        public async Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId)
+        {
+            var organizationCategories = await _context.Categories
+                .Where(x => x.OrganizationId == organizationId)
+                .ToListAsync();
+            
+            var organizationExercises = new List<ExerciseViewModel>();
+            
+            foreach(var organizationCategory in organizationCategories)
+            {
+                var categoryExercises = await _context.Exercises
+                    .Where(x => x.CategoryId == organizationCategory.CategoryId)
+                    .ToListAsync();
+                
+                foreach(var categoryExercise in categoryExercises){
+                    
+                    var modelExercise = new ExerciseViewModel();
+                    
+                    if (categoryExercise.Files != null && categoryExercise.Files.Any())
+                    {
+                        modelExercise.ExerciseId = categoryExercise.ExerciseId;
+                        modelExercise.Name = categoryExercise.Name;
+                        modelExercise.File = Convert.ToBase64String(categoryExercise.Files?[0]);
+                        modelExercise.CategoryId = categoryExercise.CategoryId;
+                        modelExercise.PlanId = categoryExercise.PlanId;
+                    }
+                    else
+                    {
+                        modelExercise.ExerciseId = categoryExercise.ExerciseId;
+                        modelExercise.Name = categoryExercise.Name;
+                        modelExercise.File = null;
+                        modelExercise.CategoryId = categoryExercise.CategoryId;
+                        modelExercise.PlanId = categoryExercise.PlanId;
+                    }
+                    organizationExercises.Add(modelExercise);
+                }
+            }
+            return organizationExercises;
+        }
 
-        public IEnumerable<ExerciseViewModel> GetSerializedCategoryExercise()
+        public IEnumerable<ExerciseViewModel> GetSerializedExercises()
         {
             var allExercises = _context.Exercises;
             var transformedExercises = new List<ExerciseViewModel>();
@@ -63,6 +104,7 @@ namespace WebApi.Services
                     modelExercise.Name = exercise.Name;
                     modelExercise.File = Convert.ToBase64String(exercise.Files?[0]);
                     modelExercise.CategoryId = exercise.CategoryId;
+                    modelExercise.PlanId = exercise.PlanId;
                 }
                 else
                 {
@@ -70,6 +112,7 @@ namespace WebApi.Services
                     modelExercise.Name = exercise.Name;
                     modelExercise.File = null;
                     modelExercise.CategoryId = exercise.CategoryId;
+                    modelExercise.PlanId = exercise.PlanId;
                 }
                 
                 transformedExercises.Add(modelExercise);
@@ -88,6 +131,7 @@ namespace WebApi.Services
             public string Name { get; set; }
             public string? File { get; set; }
             public string CategoryId { get; set; }
+            public string PlanId { get; set; }
         }
 
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
@@ -105,7 +149,7 @@ namespace WebApi.Services
 
         public async Task<int>  Delete(string id)
         {
-            var exercise = _context.Exercises.Find(id);
+            var exercise = await _context.Exercises.FindAsync(id);
             if(exercise != null)
             {
                 _context.Exercises.Remove(exercise);

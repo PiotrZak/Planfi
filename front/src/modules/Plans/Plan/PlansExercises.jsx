@@ -19,6 +19,7 @@ export const PlansExercises = ({
     planPanel,
     setPlanPanel,
     planId,
+    refreshData,
 }) => {
 
     const { notificationDispatch } = useNotificationContext();
@@ -38,6 +39,8 @@ export const PlansExercises = ({
                         type: 'positive'
                     }
                 })
+                refreshData()
+                setPlanPanel('none')
             })
             .catch((error) => {
                 notificationDispatch({

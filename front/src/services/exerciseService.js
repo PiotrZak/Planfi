@@ -2,6 +2,7 @@ import { http } from "./http.service";
 import { EXERCISES_URL } from "./utils"
 
 export const exerciseService = {
+  getExercisesByOrganization,
   getExercisesByCategory,
   getExercisesByPlan,
   getAllExercises,
@@ -13,6 +14,10 @@ export const exerciseService = {
 
 function getAllExercises(body) {
   return http.get(EXERCISES_URL, body);
+}
+
+function getExercisesByOrganization(id) {
+  return http.get(`${EXERCISES_URL}/organization/${id}`);
 }
 
 function getExercisesByCategory(id) {

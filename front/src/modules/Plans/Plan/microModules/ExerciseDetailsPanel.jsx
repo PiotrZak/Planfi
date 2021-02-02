@@ -13,9 +13,15 @@ import { translate } from 'utils/Translation';
 import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
 import { withLazyComponent } from "utils/lazyComponent";
 import { Formik, Form } from "formik";
+import { useThemeContext } from 'support/context/ThemeContext';
+
 const Checkbox = withLazyComponent(
     React.lazy(() => import("components/atoms/Checkbox"))
 );
+
+const IconWrapper = styled.div`
+    margin-top: .4rem;
+`;
 
 const ExerciseAddItem = styled.div`
     display: flex;
@@ -43,9 +49,11 @@ export const ExerciseDetailsPanel = ({
     exercise,
     openExerciseDetailsPlan,
     setOpenExerciseDetailsPlan,
-    setBottomSheet
+    setBottomSheet,
+    refreshData,
 }) => {
 
+    const { theme } = useThemeContext();
     const { notificationDispatch } = useNotificationContext();
     const [exerciseData, setExerciseData] = useState([])
 
@@ -72,6 +80,7 @@ export const ExerciseDetailsPanel = ({
                         type: 'positive',
                     },
                 });
+                refreshData()
                 values.addNextExercise === true ? returnToExercises() : returnToPlan()
             })
             .catch((error) => {
@@ -119,8 +128,9 @@ export const ExerciseDetailsPanel = ({
             appendCancelBtn={false}>
             <BottomNav>
                 <BottomNavItem onClick={() => returnToExercises()}>
-                    <Icon name="arrow-left" fill="#5E4AE3" />
-                    {translate('ReturnToSubMenuExercises')}
+                <IconWrapper>
+                    <Icon name="union" fill={theme.colorGray70} />
+                    </IconWrapper>
                 </BottomNavItem>
                 <BottomNavItem>
                     <MainHeadline>{exercise.name}</MainHeadline>

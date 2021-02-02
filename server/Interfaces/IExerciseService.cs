@@ -11,7 +11,9 @@ namespace WebApi.Interfaces
         Exercise Create(Exercise Exercise);
         Exercise CreateInstance(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
-        IEnumerable<ExerciseService.ExerciseViewModel> GetSerializedCategoryExercise();
+        //todo - exclude model
+        Task<IEnumerable<ExerciseService.ExerciseViewModel>> GetAllByOrganization(string organizationId);
+        IEnumerable<ExerciseService.ExerciseViewModel> GetSerializedExercises();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);
         Task<int> Update(Exercise exercise, string id);
