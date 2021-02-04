@@ -43,6 +43,10 @@ namespace WebApi.GraphQl
         [UseFiltering]
         public List<ExerciseService.ExerciseViewModel> GetSerializedExercises([Service] DataContext dbContext) => 
             _exerciseService.GetSerializedExercises().ToList();
+        
+        [UseFiltering]
+        public List<ExerciseService.ExerciseViewModel> GetSerializedExercisesInstances([Service] DataContext dbContext) => 
+            _exerciseService.GetSerializedExercisesInstances().ToList();
     }
     
     public static class ExtensionMethods

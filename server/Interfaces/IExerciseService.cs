@@ -14,6 +14,7 @@ namespace WebApi.Interfaces
         //todo - exclude model
         Task<IEnumerable<ExerciseService.ExerciseViewModel>> GetAllByOrganization(string organizationId);
         IEnumerable<ExerciseService.ExerciseViewModel> GetSerializedExercises();
+        IEnumerable<ExerciseService.ExerciseViewModel> GetSerializedExercisesInstances();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);
         Task<int> Update(Exercise exercise, string id);

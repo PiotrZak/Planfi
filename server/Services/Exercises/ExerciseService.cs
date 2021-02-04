@@ -88,6 +88,44 @@ namespace WebApi.Services
             }
             return organizationExercises;
         }
+        
+        public IEnumerable<ExerciseViewModel> GetSerializedExercisesInstances()
+        {
+            var allInstanceExercises = _context.Exercises
+                .Where(x => 
+                    x.Repeats == 0 &&
+                    x.Series == 0 &&
+                    x.Weight == 0 &&
+                    x.Repeats == 0);
+            
+            var transformedExercises = new List<ExerciseViewModel>();
+            
+            foreach (var exercise in allInstanceExercises)
+            {
+                var modelExercise = new ExerciseViewModel();
+                    
+                if (exercise.Files != null && exercise.Files.Any())
+                {
+                    modelExercise.ExerciseId = exercise.ExerciseId;
+                    modelExercise.Name = exercise.Name;
+                    modelExercise.File = Convert.ToBase64String(exercise.Files?[0]);
+                    modelExercise.CategoryId = exercise.CategoryId;
+                    modelExercise.PlanId = exercise.PlanId;
+                }
+                else
+                {
+                    modelExercise.ExerciseId = exercise.ExerciseId;
+                    modelExercise.Name = exercise.Name;
+                    modelExercise.File = null;
+                    modelExercise.CategoryId = exercise.CategoryId;
+                    modelExercise.PlanId = exercise.PlanId;
+                }
+                
+                transformedExercises.Add(modelExercise);
+            }
+
+            return transformedExercises;
+        }
 
         public IEnumerable<ExerciseViewModel> GetSerializedExercises()
         {
