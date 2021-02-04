@@ -26,6 +26,7 @@ const Category = (props) => {
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
   const  id  = props.match.params.id;
+
   const  title  = props.location.state.title;
 
   const CATEGORYEXERCISES = gql`{

@@ -47,9 +47,10 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
           },
         });
 
-
-        history.push(`/category/${data.categoryId}`);
-        onClose()
+        history.push({
+          pathname: `/category/${data.categoryId}`,
+          state: { title: values.title },
+        });
       })
       .catch((error) => {
         notificationDispatch({

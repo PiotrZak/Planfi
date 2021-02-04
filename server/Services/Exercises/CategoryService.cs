@@ -45,7 +45,14 @@ namespace WebApi.Services
             
             foreach (var category in allCategories)
             {
-                var exercises = _context.Exercises.Where(x => x.CategoryId == category.CategoryId);
+                var exercises = _context.Exercises
+                    .Where(
+                        x => x.CategoryId == category.CategoryId &&
+                             x.Repeats == 0 &&
+                             x.Series == 0 &&
+                             x.Weight == 0 &&
+                             x.Repeats == 0
+                        );
 
                 var transformCategoryModel = new CategoryViewModel
                 {

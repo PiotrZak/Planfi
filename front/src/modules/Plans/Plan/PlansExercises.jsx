@@ -53,57 +53,57 @@ export const PlansExercises = ({
             });
     }
 
-const history = useHistory();
-const editExercise = () => {
-    history.push({
-        pathname: `/edit-exercise/${selectedExercise}`,
-        state: { selectedExercise: selectedExercise },
-    })
-}
+    const history = useHistory();
+    const editExercise = () => {
+        history.push({
+            pathname: `/edit-exercise/${selectedExercise}`,
+            state: { selectedExercise: selectedExercise },
+        })
+    }
 
-return (
-    <StyledReactBottomSheet
-        showBlockLayer={false}
-        className={""}
-        visible={planPanel}
-        onClose={() => setPlanPanel('none')}
-        appendCancelBtn={false}>
-        {isMobile ?
-            <>
-                {selectedExercise.length > 1 ?
-                    < PanelItem onClick={() => unAssignFromPlan()}>
-                        <p>{translate('UnassignExercise')}</p>
-                    </PanelItem>
-                    :
-                    <>
+    return (
+        <StyledReactBottomSheet
+            showBlockLayer={false}
+            className={""}
+            visible={planPanel}
+            onClose={() => setPlanPanel('none')}
+            appendCancelBtn={false}>
+            {isMobile ?
+                <>
+                    {selectedExercise.length > 1 ?
                         < PanelItem onClick={() => unAssignFromPlan()}>
                             <p>{translate('UnassignExercise')}</p>
                         </PanelItem>
-                        <PanelItem onClick={() => editExercise()}>
-                            <p>{translate('EditExercise')}</p>
-                        </PanelItem>
-                    </>
-                }
-            </>
-            :
-            <>
-                <PanelContainer>
-                    <PanelItem>
-                        <IconWrapper>
-                            <Icon name="check" fill={theme.colorInputActive} />
-                        </IconWrapper>
-                        {selectedExercise.length} {translate('Selected')}
-                    </PanelItem>
-                    <PanelItem onClick={() => unAssignFromPlan()}>
-                        <Icon name="trash" fill={theme.colorInputActive} />{translate('UnassignExercise')}
-                    </PanelItem>
-                    {selectedExercise.length < 2 &&
-                        <PanelItem onClick={() => editExercise()}>
-                            <Icon name="edit" fill={theme.colorInputActive} />{translate('EditExercise')}
-                        </PanelItem>
+                        :
+                        <>
+                            < PanelItem onClick={() => unAssignFromPlan()}>
+                                <p>{translate('UnassignExercise')}</p>
+                            </PanelItem>
+                            <PanelItem onClick={() => editExercise()}>
+                                <p>{translate('EditExercise')}</p>
+                            </PanelItem>
+                        </>
                     }
-                </PanelContainer>
-            </>}
-    </StyledReactBottomSheet>
-);
+                </>
+                :
+                <>
+                    <PanelContainer>
+                        <PanelItem>
+                            <IconWrapper>
+                                <Icon name="check" fill={theme.colorInputActive} />
+                            </IconWrapper>
+                            {selectedExercise.length} {translate('Selected')}
+                        </PanelItem>
+                        <PanelItem onClick={() => unAssignFromPlan()}>
+                            {translate('UnassignExercise')}
+                        </PanelItem>
+                        {selectedExercise.length < 2 &&
+                            <PanelItem onClick={() => editExercise()}>
+                                {translate('EditExercise')}
+                            </PanelItem>
+                        }
+                    </PanelContainer>
+                </>}
+        </StyledReactBottomSheet>
+    );
 }

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Icon from 'components/atoms/Icon';
 import "react-multi-carousel/lib/styles.css";
 import { isMobile } from "react-device-detect";
-import StyledReactBottomSheet, {StyledReactBottomSheetExtended, PanelContainer, PanelItem, StyledMobileReactBottomSheet, } from 'components/organisms/BottomSheet'
+import StyledReactBottomSheet, {PanelContainer, PanelItem } from 'components/organisms/BottomSheet'
 import { translate } from 'utils/Translation';
 
 const IconWrapper = styled.div`
