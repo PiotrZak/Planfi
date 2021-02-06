@@ -18,10 +18,10 @@ import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 
 // exercises
-import Categories from 'modules/Exercises/Categories';
-import Category from 'modules/Exercises/Category/Category';
-import AddExercise from 'modules/Exercises/Exercises/AddExercise';
-import EditExercise from 'modules/Exercises/Exercises/EditExercise';
+import Categories from 'modules/Categories/Categories';
+import Category from 'modules/Categories/Category/Category';
+import AddExercise from 'modules/Categories/Exercises/AddExercise';
+import EditExercise from 'modules/Categories/Exercises/EditExercise';
 
 // plans
 import Plans from 'modules/Plans/Plans';
@@ -35,7 +35,7 @@ import { ThemeContext } from 'support/context/ThemeContext';
 import { LanguageContext } from 'support/context/LanguageContext';
 import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
-import Exercise from 'modules/Exercises/Exercises/Exercise';
+import Exercise from 'modules/Categories/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
 
 

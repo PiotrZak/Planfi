@@ -28,7 +28,7 @@ namespace WebApi.Services
             _mapper = mapper;
         }
         
-        public User Activate(ActivateAccount user)
+        public async Task<User> Activate(ActivateAccount user)
         {
             var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
 
@@ -42,22 +42,21 @@ namespace WebApi.Services
                 selectedUser.LastName = user.LastName;
                 selectedUser.PhoneNumber = user.PhoneNumber;
 
-                byte[] passwordHash, passwordSalt;
-                _userService.CreatePasswordHash(user.Password, out passwordHash, out passwordSalt);
+                _userService.CreatePasswordHash(user.Password, out var passwordHash, out var passwordSalt);
 
                 selectedUser.Password = user.Password;
                 selectedUser.PasswordHash = passwordHash;
                 selectedUser.PasswordSalt = passwordSalt;
                 selectedUser.IsActivated = true;
 
-                _context.Users.Update(selectedUser);
-                _context.SaveChanges();
+                 _context.Users.Update(selectedUser);
+                 await _context.SaveChangesAsync();
                 return selectedUser;
             }
             throw new AppException();
         }
         
-        public Boolean ForgotPassword(ForgotPassword model, string origin)
+        public async Task<bool> ForgotPassword(ForgotPassword model, string origin)
         {
             var user = _context.Users.FirstOrDefault(x => x.Email == model.Email).WithoutPassword();
 
@@ -70,17 +69,18 @@ namespace WebApi.Services
             SendPasswordResetEmail(user, origin);
             
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public void UploadAvatar(string userId, byte[] avatar)
+        public async Task<int>  UploadAvatar(string userId, byte[] avatar)
         {
-            var user = _context.Users.Find(userId);
+            var user = await _context.Users.FindAsync(userId);
 
             user.Avatar = avatar;
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return 1;
         }
         
         private void SendPasswordResetEmail(User account, string origin)
@@ -123,7 +123,7 @@ namespace WebApi.Services
             _emailService.Send(messageData);
         }
 
-        public string RandomTokenString()
+        private static string RandomTokenString()
         {
             using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
             var randomBytes = new byte[40];
@@ -170,9 +170,9 @@ namespace WebApi.Services
                 {
                     if (_context.Clients.Any(x => x.Email == email))
                         throw new AppException("Email \"" + email + "\" is already taken");
-
+                    
                     var user = _mapper.Map<Client>(model);
-
+                    
                     user.Role = model.Role;
                     user.OrganizationId = model.OrganizationId;
                     user.VerificationToken = RandomTokenString();

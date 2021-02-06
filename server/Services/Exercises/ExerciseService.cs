@@ -59,6 +59,7 @@ namespace WebApi.Services
             
             foreach(var organizationCategory in organizationCategories)
             {
+                var i = 0;
                 var categoryExercises = await _context.Exercises
                     .Where(x => x.CategoryId == organizationCategory.CategoryId)
                     .ToListAsync();
@@ -74,6 +75,7 @@ namespace WebApi.Services
                         modelExercise.File = Convert.ToBase64String(categoryExercise.Files?[0]);
                         modelExercise.CategoryId = categoryExercise.CategoryId;
                         modelExercise.PlanId = categoryExercise.PlanId;
+                        modelExercise.CategoryName = organizationCategories[i].Title;
                     }
                     else
                     {
@@ -82,9 +84,11 @@ namespace WebApi.Services
                         modelExercise.File = null;
                         modelExercise.CategoryId = categoryExercise.CategoryId;
                         modelExercise.PlanId = categoryExercise.PlanId;
+                        modelExercise.CategoryName = organizationCategories[i].Title;
                     }
                     organizationExercises.Add(modelExercise);
                 }
+                i++;
             }
             return organizationExercises;
         }
@@ -169,6 +173,8 @@ namespace WebApi.Services
             public string Name { get; set; }
             public string? File { get; set; }
             public string CategoryId { get; set; }
+            
+            public string? CategoryName { get; set; }
             public string PlanId { get; set; }
         }
 

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import ValidationHint from 'components/atoms/ErrorMessageForm';
 import { useParams, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Label from 'components/atoms/Label';
@@ -18,6 +19,7 @@ import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Heading from 'components/atoms/Heading';
 import { accountService } from 'services/accountServices';
+import PhoneInput from 'react-phone-input-2'
 
 const initialValues = {
   name: '',
@@ -49,17 +51,35 @@ const validationSchema = Yup.object().shape({
     .oneOf([true], translate('MustAcceptPrivacy')),
 });
 
-// todo - all those components need to be available globally
-const StyledInputContainer = styled(InputContainer)`
-  height: 13rem;
-`;
 
-const StyledInputPhoneContainer = styled(InputContainer)`
-  margin-top: 2rem;
-`;
 const Container = styled.div`
   display: flex;
+  margin-bottom:2.6rem;
 `;
+
+const PhoneInputContainer = styled.div`
+  input{
+    width:100% !important;
+    outline: none !important;
+    border-radius: 3px !important;
+    font-weight: 400 !important;
+    font-size: 1.4rem !important;
+    line-height: 2.1rem !important;
+    color: #FFFFFF !important;
+    background: ${({ theme }) => theme.colorGray80} !important;
+    border: 1px solid #666674 !important;
+}
+li.search, ul.country-list, .selected-flag{
+  background: ${({ theme }) => theme.colorGray80} !important;
+}
+li.country.highlight {
+  background: ${({ theme }) => theme.colorGray60} !important;
+}
+  .flag-dropdown{
+    border: 1px solid #666674 !important;
+  }
+  }
+`
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorPrimaryDefault};
@@ -83,6 +103,7 @@ const ActivateAccountPage = () => {
   useEffect(() => {
   }, []);
 
+  const [phoneNumber, setPhoneNumber] = useState();
   const { verificationToken } = useParams();
   const { notificationDispatch } = useNotificationContext();
   const history = useHistory();
@@ -95,7 +116,7 @@ const ActivateAccountPage = () => {
     const activateUserModel = {
       firstName,
       lastName,
-      phoneNumber: values.phoneNumber,
+      phoneNumber: phoneNumber,
       password: values.confirmPassword,
       verificationToken: verificationToken.substring(1),
     };
@@ -148,22 +169,34 @@ const ActivateAccountPage = () => {
                 </Label>
                 <ValidateInvalidData errors={errors} touched={touched} text={translate('FirstNameAndLastNameMustSpace')} inputName="name" />
               </InputContainer>
-              <StyledInputPhoneContainer>
-                <Label type="top" text={translate('EnterPhoneNumber')}>
-                  <Field type="text" name="phone" as={Input} error={errors.phone && touched.phone} />
-                </Label>
-              </StyledInputPhoneContainer>
-              <StyledInputContainer>
+              <InputContainer>
                 <Label type="top" text={translate('EnterNewPassword')} required>
                   <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
                 </Label>
                 <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
-              </StyledInputContainer>
+              </InputContainer>
               <InputContainer>
                 <Label type="top" text={translate('RepeatNewPassword')} required>
                   <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
                 </Label>
                 <ErrorMessageForm name="confirmPassword" />
+              </InputContainer>
+              <InputContainer>
+              <PhoneInputContainer>
+                <Label type="top" text={translate('Phone')}>
+                  <PhoneInput
+                    enableSearch={true}
+                    typeInput="light"
+                    country={'pl'}
+                    name="phone"
+                    value={'test'}
+                    as={Input}
+                    error={errors.name && touched.name}
+                    onChange={phone => setPhoneNumber(phone)}
+                  />
+                   </Label>
+                  </PhoneInputContainer>
+                <ValidationHint name="phone" />
               </InputContainer>
               <Container>
                 <CheckboxContainer>
@@ -177,12 +210,21 @@ const ActivateAccountPage = () => {
                 <ValidateInvalidData
                   errors={errors}
                   touched={touched}
-                  text={translate('PolicyPrivacy')}
+                  text={translate('Required')}
+                  />
+                <Paragraph
+                  type="small-tag"
                   inputName="privacy"
                 />
+                <Paragraph
+                  type="small-tag"
+                  inputName="privacy"
+                >
+                {translate('PolicyPrivacy')}
+                </Paragraph>
                 <Link href={routes.privacy}>{translate('Here')}</Link>
               </Container>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Save')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="bottom">{translate('Save')}</Button>
             </Form>
           </Center>
         )}

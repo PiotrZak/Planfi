@@ -12,8 +12,7 @@ import { translate } from 'utils/Translation';
 import styled from 'styled-components';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import ExercisePanel from './ExercisePanel';
-
-const ExerciseDeleted = ""
+import { useUserContext } from 'support/context/UserContext';
 
 const InfoTab = styled.div`
   display:flex;
@@ -25,6 +24,7 @@ const InfoTab = styled.div`
 
 const Exercise = (props) => {
 
+  const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
 
   const [exercise, setExercise] = useState();
@@ -92,7 +92,8 @@ const Exercise = (props) => {
       <GlobalTemplate>
         <Nav>
           {exercise && <BackTopNav text={exercise.title} />}
-          {exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
+          {user.role != "user" &&
+          exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
         </Nav>
 
         {exercise && exercise.files &&

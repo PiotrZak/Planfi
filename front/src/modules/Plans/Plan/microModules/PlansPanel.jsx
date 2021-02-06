@@ -53,6 +53,8 @@ export const PlansPanel = ({
         setSearchTerm(event.target.value);
     };
 
+    console.log(allExercises)
+
     const results = !searchTerm
         ? allExercises
         : allExercises.filter(exercise =>
@@ -74,15 +76,22 @@ export const PlansPanel = ({
                             <Headline>{translate('SelectCategory')}</Headline>
                         </BottomNavItem>
                     </BottomNav>
+                    {results.length >= 1 ?
+                    <>
                     <SearchContainer>
                     <Search typeInput="light" callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
                     </SearchContainer>
-                    {results && results.map((element, i) =>
+                    {results.map((element, i) =>
                         <BottomItem onClick={() => openExerciseDetailsPanel(element)}>
                             <Headline>{element.name}</Headline>
-                            <Subline>{`${element.series} / ${element.times}`}</Subline>
+                            <Subline>{element.categoryName}</Subline>
                         </BottomItem>
                     )}
+                    </>
+                    : <>
+                    {translate('NotExercises')}
+                    </>
+                } 
                 </Loader>
             </StyledReactBottomSheetExtended>
             <ExerciseDetailsPanel

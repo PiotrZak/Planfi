@@ -168,10 +168,25 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("assignUsers")]
-        public IActionResult AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
+        public async Task<IActionResult> AssignUsersToTrainer([FromBody] AssignUsersToTrainer model)
         {
-            _userService.AssignClientsToTrainers(model.TrainerIds, model.UserIds);
-            return Ok();
+            try
+            {
+                await _userService.AssignClientsToTrainers(model.TrainerIds, model.UserIds);
+            }
+            catch (Exception ex)
+            {
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure(ex.Message)
+                    .Build();
+                
+                return CommonResponse(failure);
+            }
+            var success = ApiCommonResponse.Create()
+                .WithSuccess()
+                .Build();
+            
+            return CommonResponse(success);
         }
 
         [AllowAnonymous]
@@ -225,15 +240,16 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("trainerClients/{id}")]
-        public IActionResult GetClientsByTrainer(string id)
+        public async Task<IActionResult>  GetClientsByTrainer(string id)
         {
-            var clients = _userService.GetClientsByTrainer(id);
+            var clients = await _userService.GetClientsByTrainer(id);
 
             if (clients == null)
                 return NotFound();
 
             // Convert it to the DTO
-            var transformedClients = _mapper.Map<List<Client>, List<TrainerClient>>(clients.ToList());
+            var transformedClients = _mapper
+                .Map<List<Client>, List<UserViewModel>>(clients.ToList());
 
             return Ok(transformedClients);
             //return Ok(transformedClient);
@@ -242,15 +258,16 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("clientTrainers/{id}")]
-        public IActionResult GetTrainersByClient(string id)
+        public async Task<IActionResult>  GetTrainersByClient(string id)
         {
-            var trainers = _userService.GetTrainersByClient(id);
+            var trainers = await _userService.GetTrainersByClient(id);
 
             if (trainers == null)
                 return NotFound();
 
             // Convert it to the DTO
-            var transformedTrainers = _mapper.Map<List<Trainer>, List<TrainerClient>>(trainers.ToList());
+            var transformedTrainers = _mapper
+                .Map<List<Trainer>, List<UserViewModel>>(trainers.ToList());
 
             return Ok(transformedTrainers);
             //return Ok(transformedClient);

@@ -44,7 +44,6 @@ const Clients = () => {
 
   const [users, setUsers] = useState([]);
 
-  // const { role, userId, organizationId } = user;
   const user = JSON.parse((localStorage.getItem('user')));
 
   const getOrganizationClients = () => {
@@ -139,7 +138,8 @@ const Clients = () => {
             : <h1>{translate('NoUsers')}</h1>}
         </Loader>
       </GlobalTemplate>
-      {user.role != "Owner" ?
+      {user.role &&
+      user.role != "Owner" ?
         <ClientPanel
         theme={theme}
         userId={user.userId}
@@ -182,6 +182,7 @@ const Clients = () => {
           />
         </>
         </>
+        
       }
     </>
   );

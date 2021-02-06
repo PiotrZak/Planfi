@@ -162,12 +162,12 @@ namespace WebApi.Services{
 
         public IEnumerable<User> GetByRole(string role)
         {
-            var Users = _context.Clients.Where(x => x.Role == role);
-            return Users;
+            var users = _context.Clients.Where(x => x.Role == role);
+            return users;
         }
         
-        public void AssignClientsToTrainers(string[] TrainersId, string[] UserIds)
-        {         
+        public async Task<int> AssignClientsToTrainers(string[] TrainersId, string[] UserIds)
+        {
             // [t1]
             // to every trainer add user
             // [u1, u2, u3, u4]
@@ -175,18 +175,23 @@ namespace WebApi.Services{
             foreach (var trainerId in TrainersId)
             {
                 //finding an trainer
-                var trainer = _context.Trainers.Find(trainerId);
-
+                var trainer = await _context.Users.FindAsync(trainerId);
                 foreach (var userId in UserIds)
                 {
                     //finding a clients
-                    var client = _context.Clients.Find(userId);
-                    var usersTrainers = new ClientsTrainers { Trainer = trainer, Client = client };
+                    var client = await _context.Clients.FindAsync(userId);
+                    var usersTrainers = new ClientsTrainers
+                    {
+                        TrainerId = trainer.UserId,
+                        ClientId = client.UserId
+                    };
 
-                    _context.ClientsTrainers.Add(usersTrainers);
-                    _context.SaveChanges();
+                    await _context.ClientsTrainers.AddAsync(usersTrainers);
+                    await _context.SaveChangesAsync();
                 }
             }
+
+            return 0;
         }
 
         public async Task<int> AssignPlanToClients(string[] ClientIds, string[] PlanIds)
@@ -220,7 +225,7 @@ namespace WebApi.Services{
         }
         
 
-        public IEnumerable<Client> GetClientsByTrainer(string id)
+        public async Task<IEnumerable<Client>>GetClientsByTrainer(string id)
 
         // [t1]
         // ["u1","u2","u3"]
@@ -239,10 +244,11 @@ namespace WebApi.Services{
             return clientIds.Select((t, i) => (Client) _context.Clients.FirstOrDefault(x => x.ClientId == clientIds[i])).ToList();
         }
 
-        public IEnumerable<Trainer> GetTrainersByClient(string id)
+        public async Task<IEnumerable<Trainer>> GetTrainersByClient(string id)
 
         {
-            var clientsTrainers = _context.ClientsTrainers.Where(x => x.ClientId == id);
+            var clientsTrainers = _context.ClientsTrainers
+                .Where(x => x.ClientId == id);
 
             var trainersIds = new List<string>();
 
@@ -252,7 +258,9 @@ namespace WebApi.Services{
                 trainersIds.Add(trainerId);
             }
 
-            return trainersIds.Select((t, i) => (Trainer) _context.Trainers.FirstOrDefault(x => x.TrainerId == trainersIds[i])).ToList();
+            return trainersIds.Select((t, i) => (Trainer) 
+                _context.Trainers.
+                    FirstOrDefault(x => x.TrainerId == trainersIds[i])).ToList();
         }
         
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)

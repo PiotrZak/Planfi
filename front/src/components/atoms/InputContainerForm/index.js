@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 9rem;
+  margin:1.2rem 0 1.2rem 0;
 `;
 
 export default InputContainer;

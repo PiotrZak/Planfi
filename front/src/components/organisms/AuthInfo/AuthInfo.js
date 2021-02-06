@@ -11,7 +11,6 @@ const AuthInfo = ({
 }) => (
   <AuthTemplate>
     <Center place="authInfo">
-      {/* eslint-disable-next-line react/prop-types */}
       <Icon name={iconName} height="5.2rem" width="5.2rem" fill={theme.colorInputActive} />
       <h3>{title}</h3>
       <AuthRedirectButton route={route} title="Wróć do ekranu logowania" />

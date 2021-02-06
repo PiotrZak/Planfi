@@ -42,6 +42,8 @@ const ContainerDescription = styled.div`
 
 const CheckboxContainer = styled.div`
   display: flex;
+  margin-top:2rem;
+  align-items: center;
 `;
 
 const ImagePreviewContainer = styled.div`
@@ -326,7 +328,7 @@ const AddExerciseRefactor = (props) => {
                 type="checkbox"
                 name="addNextExercise"
               />
-              <Paragraph type="body-3-regular">
+              <Paragraph type="body-2-medium">
               {translate("AddNextExercise")}
               </Paragraph>
               </CheckboxContainer>

@@ -36,10 +36,6 @@ const validationSchema = Yup.object().shape({
     .required(translate('FillAllFields')),
 });
 
-const StyledInputContainer = styled(InputContainer)`
-  height: 12.5rem;
-`;
-
 const ResetPasswordPage = () => {
   const timeToRedirect = 1000;
   const { resetToken } = useParams();
@@ -52,7 +48,6 @@ const ResetPasswordPage = () => {
       password: values.password,
     };
 
-    // todo - repair
     accountService
       .resetPassword(resetPasswordModel)
       .then(() => {
@@ -88,19 +83,19 @@ const ResetPasswordPage = () => {
         {({ errors, touched, isValid }) => (
           <Center place="authForm">
             <Form>
-              <StyledInputContainer>
+              <InputContainer>
                 <Label type="top" text={translate('EnterNewPassword')}>
                   <Field type="password" name="password" as={Input} error={errors.password && touched.password} />
                 </Label>
                 <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
-              </StyledInputContainer>
+              </InputContainer>
               <InputContainer>
                 <Label type="top" text={translate('RepeatNewPassword')}>
                   <Field type="password" name="confirmPassword" as={Input} error={errors.confirmPassword && touched.confirmPassword} />
                 </Label>
                 <ErrorMessageForm name="confirmPassword" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="bottom">{translate('Send')}</Button>
             </Form>
           </Center>
         )}

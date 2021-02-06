@@ -24,7 +24,6 @@ export const RenderType = ({
 }) => {
   const history = useHistory();
 
-
     const redirectToItem = (itemCase, id, title) => {
       if(itemCase == possibleTypes.category || itemCase == possibleTypes.plan){
         history.push({

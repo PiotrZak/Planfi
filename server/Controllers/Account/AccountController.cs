@@ -5,6 +5,7 @@ using WebApi.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using WebApi.Models;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
@@ -30,16 +31,15 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("sendMail")]
-        public IActionResult SendEmail([FromBody] EmailMessage message)
+        public async Task<IActionResult> SendEmail([FromBody] EmailMessage message)
         {
-
-            _emailService.SendEmail(message);
+            await _emailService.SendEmail(message);
             return Ok(message);
         }
 
         [AllowAnonymous]
         [HttpPost("uploadAvatar")]
-        public IActionResult UploadAvatar([FromForm]string userId, IFormFile avatar)
+        public async Task<IActionResult> UploadAvatar([FromForm]string userId, IFormFile avatar)
         {
 
             using var memoryStream = new MemoryStream();
@@ -49,7 +49,7 @@ namespace WebApi.Controllers
 
             try
             {
-                _accountService.UploadAvatar(userId, Avatar);
+                await _accountService.UploadAvatar(userId, Avatar);
                 return Ok();
             }
             catch (AppException ex)
@@ -60,24 +60,26 @@ namespace WebApi.Controllers
         
         [AllowAnonymous]
         [HttpPost("forgot-password")]
-        public IActionResult ForgotPassword(ForgotPassword model)
+        public async Task<IActionResult> ForgotPassword(ForgotPassword model)
         {
-            var result = _accountService.ForgotPassword(model, Request.Headers["origin"]);
-
-            if (result)
+            try
             {
+                var result = await _accountService.ForgotPassword(model, Request.Headers["origin"]);
                 return Ok(new { message = "Please check your email for password reset instructions" });
             }
-            return Ok(new { message = "This User dont exist" });
+            catch
+            {
+                return Ok(new { message = "This User dont exist" });
+            }
         }
         
         [AllowAnonymous]
         [HttpPost("reset-password")]
-        public IActionResult ResetPassword(ResetPasswordRequest model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequest model)
         {
             try
             {
-                var resetPasswordResponse = _accountService.ResetPassword(model);
+                var resetPasswordResponse = await _accountService.ResetPassword(model);
                 
                 var success = ApiCommonResponse.Create()
                     .WithSuccess()
@@ -101,12 +103,12 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("invite")]
-        public IActionResult RegisterAccount(RegisterModel model)
+        public async Task<IActionResult> RegisterAccount(RegisterModel model)
         {
 
             try
             {
-                var sendVerificationResponse = _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
+                var sendVerificationResponse = await _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
                 
                 var success = ApiCommonResponse.Create()
                     .WithSuccess()
@@ -129,9 +131,9 @@ namespace WebApi.Controllers
         
         [AllowAnonymous]
         [HttpPost("activate")]
-        public IActionResult ActivateAccount(ActivateAccount model)
+        public async Task<IActionResult> ActivateAccount(ActivateAccount model)
         {
-            var user = _accountService.Activate(model);
+            var user = await _accountService.Activate(model);
 
             return Ok(user);
         }

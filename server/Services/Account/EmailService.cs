@@ -11,7 +11,7 @@ namespace WebApi.Services
 
     public interface IEmailService
     {
-        void SendEmail(EmailMessage message);
+        Task<int> SendEmail(EmailMessage message);
         Task<int> Send(EmailMessage messageData);
     }
 
@@ -27,9 +27,17 @@ namespace WebApi.Services
         }
 
 
-        public void SendEmail(EmailMessage message)
+        public async Task<int> SendEmail(EmailMessage message)
         {
-            Send(message);
+            try
+            {
+                await Send(message);
+                return 1;
+            }
+            catch (Exception e)
+            {
+                return await Task.FromException<int>(new InvalidOperationException());
+            }
         }
 
 
@@ -41,8 +49,11 @@ namespace WebApi.Services
 
                 if (emailMessage.FromAddresses == null)
                 {
-                    emailMessage.FromAddresses[0].Name = "Planfi";
-                    emailMessage.FromAddresses[0].Address = "planfi.contact@gmail.com";
+                    if (emailMessage.FromAddresses != null)
+                    {
+                        emailMessage.FromAddresses[0].Name = "Planfi";
+                        emailMessage.FromAddresses[0].Address = "planfi.contact@gmail.com";
+                    }
                 }
 
                 message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress(x.Name, x.Address)));
@@ -59,13 +70,13 @@ namespace WebApi.Services
                 //Be careful that the SmtpClient class is the one from Mailkit not the framework!
                 using var emailClient = new SmtpClient();
                 //The last parameter here is to use SSL (Which you should!)
-                emailClient.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
+                await emailClient.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
 
                 //Remove any OAuth functionality as we won't be using it. 
                 emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-                emailClient.Authenticate(_emailConfig.Username, _emailConfig.Password);
-                emailClient.Send(message);
-                emailClient.Disconnect(true);
+                await emailClient.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
+                await emailClient.SendAsync(message);
+                await emailClient.DisconnectAsync(true);
                 return 1;
             }
             catch(Exception e)

@@ -8,10 +8,10 @@ namespace WebApi.Interfaces
 {
     public interface IAccountService
     {
-        void UploadAvatar(string userId, byte[] avatar);
-        Boolean ForgotPassword(ForgotPassword model, string origin);
+        Task<int> UploadAvatar(string userId, byte[] avatar);
+        Task<bool> ForgotPassword(ForgotPassword model, string origin);
         Task<int> ResetPassword(ResetPasswordRequest model);
         Task<int> SendVerificationEmail(RegisterModel register, string origin);
-        User Activate(ActivateAccount user);
+        Task<User> Activate(ActivateAccount user);
     }
 }

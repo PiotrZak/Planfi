@@ -14,6 +14,7 @@ import { translate } from 'utils/Translation';
 import { accountService } from 'services/accountServices';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { routes } from 'utils/routes';
+import GlobalTemplate from '../../templates/GlobalTemplate';
 
 const initialValues = {
   email: '',
@@ -64,7 +65,7 @@ const ForgotPasswordPage = () => {
                 </Label>
                 <ErrorMessageForm name="email" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('Send')}</Button>
+              <Button type="submit" buttonType="primary" size="lg" buttonPlace="bottom">{translate('Send')}</Button>
             </Form>
           </Center>
         )}

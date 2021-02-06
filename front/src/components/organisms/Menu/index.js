@@ -130,16 +130,12 @@ const Menu = () => {
       case Role.User:
         return (
           <>
-            {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('clipboard-notes', routes.plans, changeIconColor(currentUrl, routes.plans))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
         );
       default:
         return (
           <>
-            {MenuOption('dumbbell', routes.categories, changeIconColor(currentUrl, routes.categories))}
-            {MenuOption('clipboard-notes', routes.plans, changeIconColor(currentUrl, routes.plans))}
             {MenuOption('user-circle', routes.myProfile, changeIconColor(currentUrl, routes.myProfile))}
           </>
         );

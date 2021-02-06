@@ -16,12 +16,12 @@ namespace WebApi.Interfaces
         void Update(string id, UpdateUserModel model);
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
-        void AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
+        Task<int> AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
         Task<int> AssignPlanToClients(string[] userIds, string[] planIds);
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
-        IEnumerable<Client> GetClientsByTrainer(string TrainerId);
-        IEnumerable<Trainer> GetTrainersByClient(string ClientId);
+        Task<IEnumerable<Client>> GetClientsByTrainer(string TrainerId);
+        Task<IEnumerable<Trainer>> GetTrainersByClient(string ClientId);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 }

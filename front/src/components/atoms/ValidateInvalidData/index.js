@@ -5,12 +5,14 @@ import PropTypes from 'prop-types';
 
 const ErrorText = styled.div`
   color: ${({ theme }) => theme.colorErrorDefault};
+  font-size:1.2rem !important;
+  margin-top:1.2rem;
 `;
 
 const ValidateInvalidData = ({
   errors, touched, text, inputName,
 }) => {
-  const toReturn = <Paragraph type="body-3-regular">{text}</Paragraph>;
+  const toReturn =text
 
   if (errors[inputName] && touched[inputName]) {
     return (
@@ -19,8 +21,9 @@ const ValidateInvalidData = ({
       </ErrorText>
     );
   }
+  else
+  return null;
 
-  return toReturn;
 };
 
 ValidateInvalidData.propTypes = {

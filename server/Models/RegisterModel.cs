@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Entities;
 
 namespace WebApi.Models
 {

@@ -18,6 +18,7 @@ import {
   ADD,
 } from "support/context/NotificationContext";
 import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
+import { truncateSync } from "fs";
 
 const Nav = withLazyComponent(React.lazy(() => import("components/atoms/Nav")));
 const GlobalTemplate = withLazyComponent(
@@ -92,6 +93,7 @@ const EditExercise = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewFiles, setPreviewFiles] = useState([]);
   const { notificationDispatch } = useNotificationContext();
+  const [ifPlanEdited, setIfPlanEdited] = useState(false)
 
   let id;
   props.location.state.exercise !== undefined 
@@ -109,6 +111,9 @@ const EditExercise = (props) => {
   };
 
   useEffect(() => {
+    if(props.location.state.ifPlanEdited){
+      setIfPlanEdited(true)
+    }
     getExercise(id);
   }, []);
 
@@ -413,6 +418,8 @@ const EditExercise = (props) => {
                   />
                 </Label>
               </ContainerDescription>
+              {ifPlanEdited &&
+              <>
               <ExerciseEditItem>
                 <Headline>{translate("Repeat")}</Headline>
                 <Counter
@@ -456,6 +463,8 @@ const EditExercise = (props) => {
                   unit={"kg"}
                 />
               </ExerciseEditItem>
+              </>
+              }
             </Form>
           )}
         </Formik>

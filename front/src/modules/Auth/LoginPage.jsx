@@ -130,7 +130,7 @@ const LoginPage = () => {
             <InputContainer>
               <Label type="top" text={translate('Password')}>
                 <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} error={errors.password && touched.password} />
-              </Label>
+            </Label>
               <ValidationHint name="password" />
             </InputContainer>
             <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import Label from 'components/atoms/Label';
 import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
 import Input from 'components/molecules/Input';
 import ValidationHint from 'components/atoms/ErrorMessageForm';
 import InputContainer from 'components/atoms/InputContainerForm';

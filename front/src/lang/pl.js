@@ -59,6 +59,7 @@ export const pl = {
   ExerciseName: 'Nazwa ćwiczenia',
   AddAttachments: 'Dodaj załączniki',
   AddExerciseDescription: 'Opis ćwiczenia',
+  NotExercises: 'Nie ma jeszcze ćwiczeń',
 
   AddCategoryTitle: 'Dodaj kategorie',
   AddCategoryTip: 'Nazywając kategorię warto posługiwać się nazwami związanymi z określonymi częściami ciała, np. Plecys',

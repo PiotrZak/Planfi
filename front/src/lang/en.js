@@ -57,6 +57,7 @@ export const en = {
   ExerciseName: 'Exercise name',
   AddAttachments: 'Add attachments',
   AddExerciseDescription: 'Exercise description',
+  NotExercises: 'There is not exercises yet',
 
   CategoriesDeleted: 'Categories finally deleted!',
   DeleteCategoriesText: 'Delete categories',

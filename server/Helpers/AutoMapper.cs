@@ -22,6 +22,9 @@ namespace WebApi.Helpers
 
             CreateMap<Client, TrainerClient>();
             CreateMap<Trainer, TrainerClient>();
+            CreateMap<User, Trainer>();
+            CreateMap<User, Client>();
+            CreateMap<Trainer, UserViewModel>();
 
             CreateMap<CreateCategory, Category>();
 

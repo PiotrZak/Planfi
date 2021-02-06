@@ -3,9 +3,8 @@ import styled from 'styled-components';
 
 const StyledLogo = styled.img`
    width: 10rem;
-   height: 10rem;
-   
-   margin: 10rem auto;
+    margin-top:0;
+   margin: 0 auto 10rem auto;
 `;
 
 const Logo = (props) => <StyledLogo {...props} />;

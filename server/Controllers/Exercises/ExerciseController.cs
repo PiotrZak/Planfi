@@ -47,8 +47,8 @@ namespace WebApi.Controllers
                 foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
                     /*Compress(formFile);*/
-                    using var memoryStream = new MemoryStream();
-                    formFile.CopyTo(memoryStream);
+                    await using var memoryStream = new MemoryStream();
+                    await formFile.CopyToAsync(memoryStream);
                     filesList.Add(memoryStream.ToArray());
                 }
                 transformModel.Name = model.Name;
@@ -63,10 +63,8 @@ namespace WebApi.Controllers
                 transformModel.Files = null;
                 transformModel.CategoryId = model.CategoryId;
             }
-
-
+            
             var exercise = _mapper.Map<Exercise>(transformModel);
-
             try
             {
                 await _CategoryService.AssignExercise(model.CategoryId, exercise);

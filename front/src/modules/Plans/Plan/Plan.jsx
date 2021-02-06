@@ -56,7 +56,6 @@ const Plan = (props) => {
 
   useEffect(() => {
     refreshData();
-
     getAllCategories();
     getAllExercises();
   }, [id]);
