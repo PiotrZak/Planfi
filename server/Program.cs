@@ -22,6 +22,7 @@ namespace WebApi
                 .Build();
 
             return WebHost.CreateDefaultBuilder(args)
+                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseUrls("http://*:5005")
                 .UseConfiguration(config)
                 .UseStartup<Startup>();

@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import ExercisePanel from './ExercisePanel';
 import { useUserContext } from 'support/context/UserContext';
+import ReactPlayer from 'react-player'
 
 const InfoTab = styled.div`
   display:flex;
@@ -43,6 +44,7 @@ const Exercise = (props) => {
       .getExerciseById(id)
       .then((data) => {
         setExercise(data);
+        console.log(data)
       })
       .catch((error) => {
       });
@@ -98,6 +100,7 @@ const Exercise = (props) => {
 
         {exercise && exercise.files &&
           <>
+              <Video video ={exercise.files} videoName = {exercise.name}/>
             <Carousel
               swipeable={true}
               responsive={Breakpoints}
@@ -136,6 +139,18 @@ height: 400px;
 width: auto;
 object-fit: cover;
 `;
+
+const Video= ({video, videoName}) => {
+
+
+  
+  return(
+    <>
+    <ReactPlayer url={require(`../../../../../server/wwwroot/Movies/${videoName}.mp4`)} 
+      controls = {true}/>
+</>
+  )
+}
 
 
 const Slide = ({ key, img }) => {

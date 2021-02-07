@@ -31,8 +31,9 @@
     "react-i18next": "^11.7.3",
     "react-multi-carousel": "^2.5.5",
     "react-multi-email": "^0.5.3",
+    "react-native-video": "^5.1.1",
     "react-phone-input-2": "^2.13.9",
-    "react-player": "^2.7.0",
+    "react-player": "^2.8.2",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
@@ -43,6 +44,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.6.3",
+    "start": "^5.1.0",
     "styled-components": "^5.2.0",
     "styled-react-modal": "^2.0.1",
     "svg-fill": "git+https://github.com/c1rrus/svg-fill.git",
@@ -50,7 +52,7 @@
     "yup": "^0.29.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -68,10 +70,12 @@
     ]
   },
   "devDependencies": {
+    "customize-cra": "^1.0.0",
     "eslint-config-airbnb": "18.2.0",
     "eslint-plugin-import": "2.21.2",
     "eslint-plugin-jsx-a11y": "6.3.0",
     "eslint-plugin-react": "7.20.0",
-    "eslint-plugin-react-hooks": "4.0.0"
+    "eslint-plugin-react-hooks": "4.0.0",
+    "react-app-rewired": "^2.1.8"
   }
 }

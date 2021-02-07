@@ -57,7 +57,7 @@ export const PlansExercises = ({
     const editExercise = () => {
         history.push({
             pathname: `/edit-exercise/${selectedExercise}`,
-            state: { selectedExercise: selectedExercise, ifPlanEdited: true },
+            state: { selectedExercise: selectedExercise, ifPlanEdited: true, },
         })
     }
 

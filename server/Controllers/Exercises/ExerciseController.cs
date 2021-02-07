@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -9,6 +10,9 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Extensions.DependencyInjection;
 using WebApi.Interfaces;
 
 namespace WebApi.Controllers
@@ -18,21 +22,24 @@ namespace WebApi.Controllers
     [Route("[controller]")]
     public class ExercisesController : ControllerBase
     {
-        private IExerciseService _ExerciseService;
-        private ICategoryService _CategoryService;
-        private IMapper _mapper;
+        private readonly IExerciseService _ExerciseService;
+        private readonly ICategoryService _CategoryService;
+        private readonly IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private readonly IHostingEnvironment _environment;
 
         public ExercisesController(
-            ICategoryService CategoryService,
-            IExerciseService ExerciseService,
+            ICategoryService categoryService,
+            IExerciseService exerciseService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings,
+            IHostingEnvironment environment)
         {
-            _CategoryService = CategoryService;
-            _ExerciseService = ExerciseService;
+            _CategoryService = categoryService;
+            _ExerciseService = exerciseService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _environment = environment;
         }
         
         [AllowAnonymous]
@@ -46,6 +53,23 @@ namespace WebApi.Controllers
                 var filesList = new List<byte[]>();
                 foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
+                    if (formFile.ContentType =="video/mp4" || formFile.ContentType == "video/mov" || formFile.ContentType == "video.avi")
+                    {
+                        
+                        _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                        var path = Path.Combine(_environment.WebRootPath, "Movies");
+                            
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        var fileName = Path.GetFileName(model.Name);
+                        await using (var stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+                    }
+                    
                     /*Compress(formFile);*/
                     await using var memoryStream = new MemoryStream();
                     await formFile.CopyToAsync(memoryStream);
@@ -75,7 +99,7 @@ namespace WebApi.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
-
+        
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()

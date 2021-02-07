@@ -150,7 +150,11 @@ const AddExerciseRefactor = (props) => {
       "image/png",
       "image/gif",
     ];
-    const acceptedVideoFileType = ["video/mp4"];
+    const acceptedVideoFileType = [
+      "video/mp4",
+      "video/mov",
+      "video/avi",
+    ];
 
     // 10 mb
     const maxPhotoSize = 10000000;
@@ -161,6 +165,9 @@ const AddExerciseRefactor = (props) => {
       Array.from(e.target.files).map((File) => {
         const fileType = File.type;
         const fileSize = File.size;
+
+        console.log(fileType)
+        console.log(fileSize)
 
         // checking if the photo file type is correct
         if (acceptedImageFileType.includes(fileType)) {
