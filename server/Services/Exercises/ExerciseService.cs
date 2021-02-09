@@ -191,13 +191,17 @@ namespace WebApi.Services
         }
 
 
-        public async Task<int>  Delete(string id)
+        public async Task<int> Delete(string[] id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
-            if(exercise != null)
+            
+            foreach (var exerciseId in id)
             {
-                _context.Exercises.Remove(exercise);
-                await _context.SaveChangesAsync();
+                var exercise = await _context.Exercises.FindAsync(exerciseId);
+                if (exercise != null)
+                {
+                    _context.Exercises.Remove(exercise);
+                    await _context.SaveChangesAsync();
+                }
             }
 
             return 1;

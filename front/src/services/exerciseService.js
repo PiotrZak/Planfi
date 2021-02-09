@@ -40,6 +40,6 @@ function getExerciseById(id) {
   return http.get(`${EXERCISES_URL}/${id}`);
 }
 
-function deleteExerciseById(id) {
-  return http.del(`${EXERCISES_URL}/${id}`);
+function deleteExerciseById(ids) {
+  return http.post(`${EXERCISES_URL}/delete`, ids);
 }

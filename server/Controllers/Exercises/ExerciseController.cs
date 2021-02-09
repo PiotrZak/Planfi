@@ -9,6 +9,7 @@ using WebApi.Models;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
@@ -50,12 +51,17 @@ namespace WebApi.Controllers
             //transform IFormFile List to byte[]
             if (model.Files != null)
             {
+                int i = 0;
                 var filesList = new List<byte[]>();
                 foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
-                    if (formFile.ContentType =="video/mp4" || formFile.ContentType == "video/mov" || formFile.ContentType == "video.avi")
+
+                    //movie processing
+                    if (formFile.ContentType =="video/mp4" 
+                        || formFile.ContentType == "video/mov" 
+                        || formFile.ContentType == "video/avi" 
+                        || formFile.ContentType == "video/quicktime")
                     {
-                        
                         _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                         var path = Path.Combine(_environment.WebRootPath, "Movies");
                             
@@ -63,17 +69,27 @@ namespace WebApi.Controllers
                         {
                             Directory.CreateDirectory(path);
                         }
-                        var fileName = Path.GetFileName(model.Name);
-                        await using (var stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                        var fileName = Path.GetFileName(model.Name+i);
+                        var ext = Path.GetExtension(formFile.FileName);
+                        await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
                         {
                             await formFile.CopyToAsync(stream);
                         }
+                        
+                        var bytes = Encoding.ASCII.GetBytes(ext);
+                        await using var memoryStream = new MemoryStream();
+                        await formFile.CopyToAsync(memoryStream);
+                        filesList.Add(bytes);
                     }
                     
-                    /*Compress(formFile);*/
-                    await using var memoryStream = new MemoryStream();
-                    await formFile.CopyToAsync(memoryStream);
-                    filesList.Add(memoryStream.ToArray());
+                    //images processing
+                    else
+                    {
+                        await using var memoryStream = new MemoryStream();
+                        await formFile.CopyToAsync(memoryStream);
+                        filesList.Add(memoryStream.ToArray());
+                    }
+                    i++;
                 }
                 transformModel.Name = model.Name;
                 transformModel.Description = model.Description;
@@ -196,8 +212,8 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpPost("delete")]
+        public async Task<IActionResult> Delete([FromBody] string[] id)
         {
             await _ExerciseService.Delete(id);
             return Ok();

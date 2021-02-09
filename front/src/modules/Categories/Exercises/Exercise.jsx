@@ -27,7 +27,6 @@ const Exercise = (props) => {
 
   const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
-
   const [exercise, setExercise] = useState();
   const [bottomSheet, setBottomSheet] = useState('none')
   const history = useHistory();
@@ -37,14 +36,15 @@ const Exercise = (props) => {
 
   useEffect(() => {
     getExercise(id)
+
   }, [id]);
+
 
   const getExercise = (id) => {
     exerciseService
       .getExerciseById(id)
       .then((data) => {
         setExercise(data);
-        console.log(data)
       })
       .catch((error) => {
       });
@@ -74,6 +74,8 @@ const Exercise = (props) => {
       });
   }
 
+  
+  
   const Breakpoints = {
     desktop: {
       breakpoint: { max: 5000, min: 768 },
@@ -95,18 +97,19 @@ const Exercise = (props) => {
         <Nav>
           {exercise && <BackTopNav text={exercise.title} />}
           {user.role != "user" &&
-          exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
+            exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
         </Nav>
-
         {exercise && exercise.files &&
           <>
-              <Video video ={exercise.files} videoName = {exercise.name}/>
             <Carousel
               swipeable={true}
               responsive={Breakpoints}
             >
-              {exercise.files.map((file, i) =>
-                <Slide key={i} img={file} />)}
+              {exercise.files.map((file, index) =>
+              <>
+                <Slide videoName ={exercise.name} index={index} img={file} />
+              </>
+                )}
             </Carousel>
           </>
         }
@@ -140,22 +143,14 @@ width: auto;
 object-fit: cover;
 `;
 
-const Video= ({video, videoName}) => {
+const Slide = ({ videoName, index, img }) => {
 
-
-  
-  return(
-    <>
-    <ReactPlayer url={require(`../../../../../server/wwwroot/Movies/${videoName}.mp4`)} 
-      controls = {true}/>
-</>
-  )
-}
-
-
-const Slide = ({ key, img }) => {
+  console.log(index)
   return (
-    <ExerciseImageContainer key={key} alt={key} src={`data:image/jpeg;base64,${img}`} />
+    img.length > 100 ?
+    <ExerciseImageContainer key={index} alt={index} src={`data:image/jpeg;base64,${img}`} />
+    :
+      <ReactPlayer  controls = {true}  url={require(`../../../../../server/wwwroot/Movies/${videoName}${index}${atob(img)}`)}/>
   );
 };
 

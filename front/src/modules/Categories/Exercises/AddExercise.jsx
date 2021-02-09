@@ -154,6 +154,7 @@ const AddExerciseRefactor = (props) => {
       "video/mp4",
       "video/mov",
       "video/avi",
+      "video/quicktime"
     ];
 
     // 10 mb
@@ -165,9 +166,6 @@ const AddExerciseRefactor = (props) => {
       Array.from(e.target.files).map((File) => {
         const fileType = File.type;
         const fileSize = File.size;
-
-        console.log(fileType)
-        console.log(fileSize)
 
         // checking if the photo file type is correct
         if (acceptedImageFileType.includes(fileType)) {
@@ -230,7 +228,7 @@ const AddExerciseRefactor = (props) => {
         } else {
           // invalid file type alert
           fileNotification(
-            "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
+            "Invalid file type. allowed files mp4,mov,avi, jpeg, jpg, png, gif"
           );
           resetFileInput();
         }

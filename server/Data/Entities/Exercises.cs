@@ -14,7 +14,6 @@ namespace WebApi.Entities
 
         [Key]
         public string ExerciseId { get; set; }
-        //todo - change seeders
         [MaxLength(160)]
         public string Name { get; set; }
         [MaxLength(3600000)]

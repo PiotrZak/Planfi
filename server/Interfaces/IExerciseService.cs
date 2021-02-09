@@ -18,6 +18,6 @@ namespace WebApi.Interfaces
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);
         Task<int> Update(Exercise exercise, string id);
-        Task<int> Delete(string id);
+        Task<int> Delete(string[] id);
     }
 }
