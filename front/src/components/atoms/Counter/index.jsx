@@ -17,16 +17,18 @@ const CounterContainer = styled.div`
   }
 `;
 
-const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
+const Counter = ({ fill, valueToChange, handleData, unit }) => {
 
   const [value, setValue] = useState();
 
   useEffect(() => {
-      setValue(defaultValue);
-      if(value){
+    if(value === undefined){
+      setValue(0)
+    }
+    else{
       setValue(value);
-      }
-  }, [defaultValue, value]);
+    }
+  }, [value]);
 
   const increment = () => {
     setValue(value + valueToChange);
@@ -43,7 +45,7 @@ const Counter = ({ fill, valueToChange, defaultValue, handleData, unit }) => {
   return (
     <CounterContainer>
       <Icon fill={fill ? fill : null} onClick={increment} name="plus-circle" />
-      <Headline>{value} {unit}</Headline>
+      <Headline>{value && value} {unit}</Headline>
       <Icon fill={fill ? fill : null} onClick={decrement} name="minus-circle" />
     </CounterContainer>
   );

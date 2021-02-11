@@ -146,10 +146,10 @@ const Avatar = (type, url, theme) => {
   if(type == "noAvatar"){
     return null
   }
-  if (url == null || url == "null" || !url) {
+  if (url == null || url == "null" || !url || url.length < 10) {
     return (
       <NoAvatarSquare>
-        <Icon name="image-slash" size="1.4rem" fill={theme.colorSecondary} />
+        <Icon name="image-slash" size="1.8rem" fill={theme.colorSecondary} />
       </NoAvatarSquare>
     );
   }
@@ -193,7 +193,7 @@ const GenericElement = ({
   {Avatar(avatarType, avatarUrl, theme)}
   <ContainerText>
     <StyledParagraph type="Label-Button">{headline}</StyledParagraph>
-    <StyledParagraph type="body-3-regular">{subline}</StyledParagraph>
+    <StyledParagraph type="body-3-regular">{subline != undefined && subline}</StyledParagraph>
   </ContainerText>
 </Container>
 <ContainerMenu>

@@ -211,8 +211,8 @@ const AddExerciseRefactor = (props) => {
 
             const previewFileData = {
               ID,
-              File: URL.createObjectURL(File),
-              Type: TYPE.IMAGE,
+              File: null,
+              Type: TYPE.VIDEO,
               VideoType: null,
             };
             // append file object to state

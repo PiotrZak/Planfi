@@ -101,15 +101,7 @@ const AttachmentPreview = ({
       <Circle onClick={remove} id={`img-prev-${setID}`}>
         <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
       </Circle>
-      <ReactPlayer
-        url={attachmentSrc}
-        controls
-        light
-        onClick={() => setFullScreen(attachmentSrc)}
-        playing={false}
-        width="4.8rem"
-        height="4.8rem"
-      />
+      {/* // todo - add movie icon */}
     </Container>
   );
 };

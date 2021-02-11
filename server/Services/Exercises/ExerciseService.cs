@@ -147,6 +147,8 @@ namespace WebApi.Services
                     modelExercise.File = Convert.ToBase64String(exercise.Files?[0]);
                     modelExercise.CategoryId = exercise.CategoryId;
                     modelExercise.PlanId = exercise.PlanId;
+                    modelExercise.Series = exercise.Series;
+                    modelExercise.Repeats = exercise.Repeats;
                 }
                 else
                 {
@@ -155,6 +157,8 @@ namespace WebApi.Services
                     modelExercise.File = null;
                     modelExercise.CategoryId = exercise.CategoryId;
                     modelExercise.PlanId = exercise.PlanId;
+                    modelExercise.Series = exercise.Series;
+                    modelExercise.Repeats = exercise.Repeats;
                 }
                 
                 transformedExercises.Add(modelExercise);
@@ -173,9 +177,10 @@ namespace WebApi.Services
             public string Name { get; set; }
             public string? File { get; set; }
             public string CategoryId { get; set; }
-            
             public string? CategoryName { get; set; }
             public string PlanId { get; set; }
+            public int? Series { get; set; } 
+            public int? Repeats { get; set; }
         }
 
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)

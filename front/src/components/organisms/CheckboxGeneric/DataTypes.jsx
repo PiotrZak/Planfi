@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import GenericElement from 'components/molecules/GenericElement';
 import styled from 'styled-components';
 import { translate } from "utils/Translation";
+import { ConsoleView } from 'react-device-detect';
 
 export const possibleTypes = {
   categories: 'categories',
@@ -24,27 +25,27 @@ export const RenderType = ({
 }) => {
   const history = useHistory();
 
-    const redirectToItem = (itemCase, id, title) => {
-      if(itemCase == possibleTypes.category || itemCase == possibleTypes.plan){
-        history.push({
-          pathname: `/${itemCase}/${id}`,
-          state: { id:id,title:title },
-        });
-      }
-      else{
+  const redirectToItem = (itemCase, id, title) => {
+    if (itemCase == possibleTypes.category || itemCase == possibleTypes.plan) {
+      history.push({
+        pathname: `/${itemCase}/${id}`,
+        state: { id: id, title: title },
+      });
+    }
+    else {
       history.push({
         pathname: `/${itemCase}/${id}`,
         state: { id },
       });
     }
   }
-  
+
   const renderType = () => {
     switch (type) {
       case possibleTypes.categories:
 
-      let exerciseLabel =translate("Exercises");
-        if(element.exercises == 1){
+        let exerciseLabel = translate("Exercises");
+        if (element.exercises == 1) {
           exerciseLabel = translate("Exercise")
         }
         return (
@@ -76,7 +77,7 @@ export const RenderType = ({
           <StyledGenericElement
             onClick={() => redirectToItem(possibleTypes.plan, element.planId, element.title)}
             version={theme}
-          avatarType="noAvatar"
+            avatarType="noAvatar"
             key={i}
             headline={element.title}
             subline={element.creatorName}
@@ -89,9 +90,10 @@ export const RenderType = ({
           <StyledGenericElement
             key={i}
             avatarType="circle"
-            avatarUrl = {element.file}
+            avatarUrl={element.file}
             onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
             headline={element.name}
+            subline={element.series ? `${element.series}  /  ${element.repeats}` : undefined}
             exercise={element}
           />
         );

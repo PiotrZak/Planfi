@@ -150,13 +150,9 @@
       <e p="WebApi.sln" t="IncludeFlat" />
       <e p="wwwroot" t="Include">
         <e p="Movies" t="Include">
-          <e p="fdfd0.mov" t="Include" />
-          <e p="gfdfef" t="Include" />
-          <e p="gfdfef.mp4" t="Include" />
-          <e p="New File.mp4" t="Include" />
-          <e p="test.mp4" t="Include" />
+          <e p="dsada0.mp4" t="Include" />
           <e p="test0.mov" t="Include" />
-          <e p="test0.mp4" t="Include" />
+          <e p="test1.mp4" t="Include" />
         </e>
       </e>
     </e>

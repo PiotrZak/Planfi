@@ -25,6 +25,10 @@ const handleColor = (theme, color) => {
 };
 
 const Spinner = styled.div`
+  margin-top:10%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   border: .5rem solid transparent;
   border-top: .5rem solid ${({ theme, color }) => handleColor(theme, color)};
   border-radius: 50%;
@@ -41,6 +45,9 @@ const Spinner = styled.div`
 
 const Dots = styled.div`
   position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   top: -1rem;
   width: 1rem;
   height: 1rem;

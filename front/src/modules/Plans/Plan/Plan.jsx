@@ -33,6 +33,8 @@ const Plan = (props) => {
         exerciseId
         name
         file
+        series
+        repeats
      }
     }
   `;
@@ -43,7 +45,6 @@ const Plan = (props) => {
   const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   const [allExercises, setAllExercises] = useState([])
-  const [exercises, setExercises] = useState();
   const [activeSelectedExercise, setActiveSelectedExercise] = useState([]);
   const [assignExercise, setAssignExercises] = useState('none');
   const [bottomSheet, setBottomSheet] = useState('none')

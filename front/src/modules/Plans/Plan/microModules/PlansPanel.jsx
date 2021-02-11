@@ -25,16 +25,12 @@ margin: 1.8rem 1.8rem;
 `
 
 
-
-
 export const PlansPanel = ({
     planId,
     setAssignExercises,
     allExercises,
     bottomSheet,
     setBottomSheet,
-    categories,
-    openAssignExercises,
     isLoading,
     refreshData
 }) => {
@@ -82,7 +78,7 @@ export const PlansPanel = ({
                     <Search typeInput="light" callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
                     </SearchContainer>
                     {results.map((element, i) =>
-                        <BottomItem onClick={() => openExerciseDetailsPanel(element)}>
+                        <BottomItem key = {i} onClick={() => openExerciseDetailsPanel(element)}>
                             <Headline>{element.name}</Headline>
                             <Subline>{element.categoryName}</Subline>
                         </BottomItem>
