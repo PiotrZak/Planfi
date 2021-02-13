@@ -246,14 +246,20 @@ namespace WebApi.Controllers
 
             if (clients == null)
                 return NotFound();
+            
+            var mappedUsers = clients.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
 
-            // Convert it to the DTO
-            var transformedClients = _mapper
-                .Map<List<Client>, List<UserViewModel>>(clients.ToList());
-
-            return Ok(transformedClients);
-            //return Ok(transformedClient);
-
+            return Ok(mappedUsers);
         }
 
         [AllowAnonymous]
@@ -265,13 +271,19 @@ namespace WebApi.Controllers
             if (trainers == null)
                 return NotFound();
 
-            // Convert it to the DTO
-            var transformedTrainers = _mapper
-                .Map<List<Trainer>, List<UserViewModel>>(trainers.ToList());
+            var mappedUsers = trainers.Select(i => new UserViewModel
+                {
+                    UserId = i.UserId,
+                    Avatar = i.Avatar,
+                    FirstName = i.FirstName,
+                    LastName = i.LastName,
+                    Role = i.Role,
+                    Email = i.Email,
+                    PhoneNumber = i.PhoneNumber,
+                })
+                .ToList();
 
-            return Ok(transformedTrainers);
-            //return Ok(transformedClient);
-
+            return Ok(mappedUsers);
         }
 
     }

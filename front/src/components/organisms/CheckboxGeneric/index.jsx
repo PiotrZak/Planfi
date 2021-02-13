@@ -58,7 +58,6 @@ export const CheckboxGenericComponent = ({
       return el;
     });
     setActive(false)
-    console.log(dataList)
     setType(dataType);
     setList(dataList);
   }, [dataList]);
@@ -111,8 +110,8 @@ export const CheckboxGenericComponent = ({
             {isMobile
               ? (
                 <Holdable
-                active={active}
-                setActive={setActive}
+                  active={active}
+                  setActive={setActive}
                   theme={theme}
                   name={element[displayedValue]}
                   onHold={handleChange}

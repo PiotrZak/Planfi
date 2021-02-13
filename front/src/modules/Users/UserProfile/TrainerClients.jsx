@@ -14,6 +14,7 @@ export const TrainerClients = ({ id }) => {
     userService
       .allClientsByTrainer(id)
       .then((data) => {
+        console.log(data)
         setClients(data);
       })
       .catch((error) => {

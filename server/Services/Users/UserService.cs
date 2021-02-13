@@ -225,42 +225,33 @@ namespace WebApi.Services{
         }
         
 
-        public async Task<IEnumerable<Client>>GetClientsByTrainer(string id)
-
-        // [t1]
-        // ["u1","u2","u3"]
-        {
-            var clientsTrainers = _context.ClientsTrainers.Where(x => x.TrainerId == id);
-
-            var clientIds = new List<string>();
-
-            foreach (var i in clientsTrainers)
-            {
-                var clientId = i.ClientId;
-                clientIds.Add(clientId);
-
-            }
-
-            return clientIds.Select((t, i) => (Client) _context.Clients.FirstOrDefault(x => x.ClientId == clientIds[i])).ToList();
-        }
-
-        public async Task<IEnumerable<Trainer>> GetTrainersByClient(string id)
-
+        public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
+        
         {
             var clientsTrainers = _context.ClientsTrainers
-                .Where(x => x.ClientId == id);
+                .Where(x => x.TrainerId == id)
+                .Select(x => x.ClientId)
+                .ToList();
+            
+            var clientIds = clientsTrainers.ToList();
 
-            var trainersIds = new List<string>();
+            return clientIds.Select((t, i) => (User) _context.Users
+                .FirstOrDefault(x => x.UserId == clientIds[i]))
+                .ToList();
+        }
 
-            foreach (var i in clientsTrainers)
-            {
-                var trainerId = i.TrainerId;
-                trainersIds.Add(trainerId);
-            }
+        public async Task<IEnumerable<User>> GetTrainersByClient(string id)
+        {
+            var clientsTrainers = _context.ClientsTrainers
+                .Where(x => x.ClientId == id)
+                .Select(x => x.TrainerId)
+                .ToList();
+            
+            var trainersIds = clientsTrainers.ToList();
 
-            return trainersIds.Select((t, i) => (Trainer) 
-                _context.Trainers.
-                    FirstOrDefault(x => x.TrainerId == trainersIds[i])).ToList();
+            return trainersIds.Select((t, i) => (User) _context.Users
+                    .FirstOrDefault(x => x.UserId == trainersIds[i]))
+                    .ToList();
         }
         
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)

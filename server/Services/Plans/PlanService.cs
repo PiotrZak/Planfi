@@ -69,7 +69,7 @@ namespace WebApi.Services
         }
 
 
-        public async Task<int> Delete(IEnumerable<string> id)
+        public async Task<int> Delete(string[] id)
         {
             try
             {
@@ -83,9 +83,11 @@ namespace WebApi.Services
                     }
 
                     var plan = await _context.Plans.FindAsync(planId);
-                    if (plan == null) continue;
-                    _context.Plans.Remove(plan);
-                    return await _context.SaveChangesAsync();
+                    if (plan != null)
+                    {
+                        _context.Plans.Remove(plan);
+                        await _context.SaveChangesAsync();
+                    }
                 }
             }
             catch (ValidationException)

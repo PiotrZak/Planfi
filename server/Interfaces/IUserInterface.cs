@@ -20,8 +20,8 @@ namespace WebApi.Interfaces
         Task<int> AssignPlanToClients(string[] userIds, string[] planIds);
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
-        Task<IEnumerable<Client>> GetClientsByTrainer(string TrainerId);
-        Task<IEnumerable<Trainer>> GetTrainersByClient(string ClientId);
+        Task<IEnumerable<User>> GetClientsByTrainer(string TrainerId);
+        Task<IEnumerable<User>> GetTrainersByClient(string ClientId);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 }
