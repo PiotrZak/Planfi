@@ -50,12 +50,15 @@ export const CheckboxGenericComponent = ({
   const [list, setList] = useState();
   const [type, setType] = useState();
   const { user } = useUserContext();
+  const [active, setActive] = useState(false)
 
   useEffect(() => {
     dataList.map((el) => {
       { el.value = false; }
       return el;
     });
+    setActive(false)
+    console.log(dataList)
     setType(dataType);
     setList(dataList);
   }, [dataList]);
@@ -108,6 +111,8 @@ export const CheckboxGenericComponent = ({
             {isMobile
               ? (
                 <Holdable
+                active={active}
+                setActive={setActive}
                   theme={theme}
                   name={element[displayedValue]}
                   onHold={handleChange}

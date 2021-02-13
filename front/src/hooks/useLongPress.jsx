@@ -39,10 +39,10 @@ export const GenericLightMobile = styled.div`
   `}
 `
 
-export function Holdable({theme, onClick, onHold, children, forx }) {
+export function Holdable({active, setActive, theme, onClick, onHold, children, forx }) {
 
   const [timer, setTimer] = React.useState(null)
-  const [active, setActive] = useState(false)
+
 
   useEffect(() => {
     setActive(false)
