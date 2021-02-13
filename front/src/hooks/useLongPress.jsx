@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import { darkTheme } from 'theme/darkTheme';
 
@@ -39,21 +39,19 @@ export const GenericLightMobile = styled.div`
   `}
 `
 
-export function Holdable({active, setActive, theme, onClick, onHold, children, forx }) {
+export const Holdable = ({isActive, theme, onClick, onHold, children, forx }) => {
 
-  const [timer, setTimer] = React.useState(null)
+  const [timer, setTimer] = useState(null)
 
-  useEffect(() => {
-    //setActive(false)
-  }, []);
+  console.log(isActive)
 
-  function onPointerDown(evt) {
+  const  onPointerDown =(evt) => {
     const event = { ...evt }
     const timeoutId = window.setTimeout(timesup.bind(null, event), 200)
     setTimer(timeoutId)
   }
 
-  function onPointerUp(evt) {
+  const onPointerUp =(evt) => {
     if (timer) {
       window.clearTimeout(timer)
       setTimer(null)
@@ -61,17 +59,17 @@ export function Holdable({active, setActive, theme, onClick, onHold, children, f
     }
   }
 
-  function timesup(evt) {
+  const timesup = (evt) => {
     setTimer(null)
     onHold(evt)
-    setActive(!active)
+    isActive = !isActive
   }
 
-  return (
+  return useMemo(() => (
     theme   ==  'light' ?
     <GenericLightMobile
       name ={forx}
-      active ={active}
+      active ={isActive}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}>
       {children}
@@ -79,10 +77,10 @@ export function Holdable({active, setActive, theme, onClick, onHold, children, f
     :
     <GenericMobile
     name ={forx}
-    active ={active}
+    active ={isActive}
     onPointerDown={onPointerDown}
     onPointerUp={onPointerUp}>
     {children}
   </GenericMobile>
-  )
+  ))
 }
