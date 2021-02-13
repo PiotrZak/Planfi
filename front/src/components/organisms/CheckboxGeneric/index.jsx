@@ -15,21 +15,11 @@ export const CheckboxGenericComponent = ({
 }) => {
   const [type, setType] = useState();
   const { user } = useUserContext();
-
-
   useEffect(() => {
-
-    console.log(dataList)
-
     dataList.map((el) => {
-      { el.value = false; 
-      el.isActive = false
-    }
+      { el.value = false; el.isActive = false }
       return el;
     });
-    //todo
-    //setActive(false)
-    console.log('generic rerender')
     setType(dataType);
   }, [dataList]);
 
