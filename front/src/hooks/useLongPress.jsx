@@ -42,9 +42,6 @@ export const GenericLightMobile = styled.div`
 export const Holdable = ({isActive, theme, onClick, onHold, children, forx }) => {
 
   const [timer, setTimer] = useState(null)
-
-  console.log(isActive)
-
   const  onPointerDown =(evt) => {
     const event = { ...evt }
     const timeoutId = window.setTimeout(timesup.bind(null, event), 200)
