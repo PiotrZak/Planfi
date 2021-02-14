@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback} from 'react';
 import { organizationService } from 'services/organizationServices';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import { useUserContext } from 'support/context/UserContext';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { translate } from 'utils/Translation';
@@ -12,14 +11,13 @@ import Heading from 'components/atoms/Heading';
 import Loader from 'components/atoms/Loader';
 import styled from 'styled-components';
 import { userService } from 'services/userServices';
+import { useQuery, gql } from '@apollo/client';
 import { Role } from 'utils/role';
 import { commonUtil } from 'utils/common.util';
 import InviteUserModal from './InviteUsersModal';
 import SmallButton from 'components/atoms/SmallButton';
 
 import { ClientPanel } from './ClientPanel';
-import { ClientOwnerPanel } from './ClientOwnerPanel';
-
 import { UsersPanel } from './micromodules/UsersPanel';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
@@ -31,7 +29,6 @@ const Container = styled.div`
 const Clients = () => {
 
   const { theme } = useThemeContext();
-  const { userContext } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,22 +43,72 @@ const Clients = () => {
 
   const user = JSON.parse((localStorage.getItem('user')));
 
-  const getOrganizationClients = () => {
-    setIsLoading(true);
-    organizationService
-      .getOrganizationClients(user.organizationId)
-      .then((data) => {
-        setUsers(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  const Clients = gql`{
+    users(where: {organizationId: "${user.organizationId}" role: "${Role.User}"})
+    {
+        userId
+        avatar
+        firstName
+        lastName
+        role
+     }
+    }
+  `;
 
-  useEffect(() => {
-    getOrganizationClients();
-  }, []);
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(Clients);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
+  const assignUserToPlan = useCallback((activeUsers, activePlans) => {
+    const data = { clientIds: activeUsers, planIds: activePlans };
+    userService
+        .assignPlanToUser(data)
+        .then(() => {
+            notificationDispatch({
+                type: ADD,
+                payload: {
+                    content: { success: 'OK', message: translate('PlansAssignedToUser') },
+                    type: 'positive'
+                }
+            })
+            setAssignPlan('none');
+            setBottomSheet('none');
+        })
+        .catch((error) => {
+            console.log(error)
+            notificationDispatch({
+                type: ADD,
+                payload: {
+                    content: { error: error, message: translate('ErrorAlert') },
+                    type: 'error'
+                }
+            })
+        });
+}, []);
+
+const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
+  const data = { userIds: activeUsers, trainerIds: activeTrainers };
+  userService
+    .assignUsersToTrainer(data)
+    .then(() => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+          content: { success: 'OK', message: translate('TrainersAssignedToUser') },
+          type: 'positive'
+        }
+      })
+      setAssignTrainer('none')
+      setBottomSheet('none');
+    })
+    .catch((error) => {
+    });
+}, []);
+
+useEffect(() => {
+  refreshData();
+}, [assignUserToPlan, assignUserToTrainer]);
 
   const deleteUser = () => {
     userService
@@ -110,9 +157,15 @@ const Clients = () => {
     setSearchTerm(event.target.value);
   };
 
-  const results = !searchTerm
-    ? users
-    : users.filter((User) => User.firstName.toLowerCase().includes(searchTerm.toLowerCase()));
+  let results;
+  if(data){
+  results = !searchTerm
+    ? data.users
+    : data.users.filter((user) => user.firstName.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
+
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
 
   return (
     <>
@@ -126,7 +179,7 @@ const Clients = () => {
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
         <Loader isLoading={isLoading}>
-          {users
+          {results.length > 0
             ? (
               <CheckboxGenericComponent
                 dataType="users"
@@ -135,16 +188,19 @@ const Clients = () => {
                 onSelect={submissionHandleElement}
               />
             )
-            : <h1>{translate('NoUsers')}</h1>}
+            : <p>{translate('NoUsers')}</p>}
         </Loader>
       </GlobalTemplate>
       {user.role &&
       user.role != "Owner" ?
         <ClientPanel
+        assignPlan={assignPlan}
+        setAssignPlan={setAssignPlan}
         theme={theme}
         userId={user.userId}
         organizationId={user.organizationId}
         assignTrainer={assignTrainer}
+        assignUserToPlan={assignUserToPlan}
         setAssignTrainer={setAssignTrainer}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
@@ -160,6 +216,7 @@ const Clients = () => {
             setBottomSheet={setBottomSheet}
             activeUsers={activeUsers}
             setAssignPlan={setAssignPlan}
+            assignUserToPlan={assignUserToPlan}
             setAssignTrainer={setAssignTrainer}
           />
           <AssignUsersToPlans
@@ -167,6 +224,7 @@ const Clients = () => {
             organizationId={user.organizationId}
             assignPlan={assignPlan}
             setAssignPlan={setAssignPlan}
+            assignUserToPlan={assignUserToPlan}
             bottomSheet={bottomSheet}
             setBottomSheet={setBottomSheet}
             activeUsers={activeUsers}
@@ -175,6 +233,7 @@ const Clients = () => {
             theme={theme}
             organizationId={user.organizationId}
             assignTrainer={assignTrainer}
+            assignUserToTrainer={assignUserToTrainer}
             setAssignTrainer={setAssignTrainer}
             bottomSheet={bottomSheet}
             setBottomSheet={setBottomSheet}

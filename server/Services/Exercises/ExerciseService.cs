@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models.ViewModels;
 
 namespace WebApi.Services
 {
@@ -166,23 +167,6 @@ namespace WebApi.Services
 
             return transformedExercises;
         }
-        
-        public class ExerciseViewModel
-        {
-            public ExerciseViewModel()
-            {
-                File = new string("");
-            }
-            public string ExerciseId { get; set; }
-            public string Name { get; set; }
-            public string? File { get; set; }
-            public string CategoryId { get; set; }
-            public string? CategoryName { get; set; }
-            public string PlanId { get; set; }
-            public int? Series { get; set; } 
-            public int? Repeats { get; set; }
-        }
-
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
             var Exercises = _context.Exercises.Where(x => x.CategoryId == categoryId);

@@ -20,12 +20,14 @@ export const ClientPanel = ({
   assignTrainer,
   setAssignTrainer,
   activeUsers,
+  assignUserToPlan,
   setBottomSheet,
+  setAssignPlan,
+  assignPlan,
 }) => {
 
   const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
-  const [assignPlan, setAssignPlan] = useState('none');
 
   const assignUserToTrainer = () => {
     const data = { userIds: activeUsers, trainerIds: [userId] };
@@ -89,6 +91,7 @@ export const ClientPanel = ({
             }
     </StyledReactBottomSheet>
             <AssignUsersToPlans
+            assignUserToPlan={assignUserToPlan}
             theme={theme}
             organizationId={user.organizationId}
             assignPlan={assignPlan}

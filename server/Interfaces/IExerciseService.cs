@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Entities;
+using WebApi.Models.ViewModels;
 using WebApi.Services;
 
 namespace WebApi.Interfaces
@@ -12,9 +13,9 @@ namespace WebApi.Interfaces
         Exercise CreateInstance(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
         //todo - exclude model
-        Task<IEnumerable<ExerciseService.ExerciseViewModel>> GetAllByOrganization(string organizationId);
-        IEnumerable<ExerciseService.ExerciseViewModel> GetSerializedExercises();
-        IEnumerable<ExerciseService.ExerciseViewModel> GetSerializedExercisesInstances();
+        Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId);
+        IEnumerable<ExerciseViewModel> GetSerializedExercises();
+        IEnumerable<ExerciseViewModel> GetSerializedExercisesInstances();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);
         Task<int> Update(Exercise exercise, string id);

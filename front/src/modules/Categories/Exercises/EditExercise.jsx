@@ -18,7 +18,6 @@ import {
   ADD,
 } from "support/context/NotificationContext";
 import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
-import { truncateSync } from "fs";
 
 const Nav = withLazyComponent(React.lazy(() => import("components/atoms/Nav")));
 const GlobalTemplate = withLazyComponent(

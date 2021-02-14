@@ -73,10 +73,9 @@ export const UsersPanel = ({
                             {translate('UsersSelected')}
                         </PanelItem>
                         <PanelItem onClick={() => deleteUser()} >
-                            <Icon name="trash" fill={theme.colorInputActive} />
                             {translate('DeleteUserText')}
                         </PanelItem>
-                        <PanelItem onClick={() => openAssignPlansToUsers()}>>
+                        <PanelItem onClick={() => openAssignPlansToUsers()}>
                             {translate('AssignPlanText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignTrainersToUsers()}>

@@ -58,6 +58,8 @@ export const ExerciseDetailsPanel = ({
     const [exerciseData, setExerciseData] = useState([])
     const [defaultValue, setDefaultValue] = useState(0)
 
+    const [resetCounter, setResetCounter] = useState(false)
+
     const onSubmit = (values) => {
 
         const exerciseModel = {
@@ -106,22 +108,21 @@ export const ExerciseDetailsPanel = ({
     const handleSeries = (data) => {
         setExerciseData({ ...exerciseData, series: data })
     }
-
     const handleTime = (data) => {
         setExerciseData({ ...exerciseData, times: data })
     }
-
     const handleWeight = (data) => {
         setExerciseData({ ...exerciseData, weight: data })
     }
 
     const returnToExercises = () => {
-
+        setResetCounter(true)
         setOpenExerciseDetailsPlan('none')
         setBottomSheet('flex')
     }
 
     const returnToPlan = () => {
+        setResetCounter(true)
         setOpenExerciseDetailsPlan('none')
         setBottomSheet('none')
     }
@@ -146,22 +147,22 @@ export const ExerciseDetailsPanel = ({
 
             <ExerciseAddItem>
                 <Headline>{translate('Repeat')}</Headline>
-                <Counter defaultValue={defaultValue} valueToChange={repeatsToChange} handleData={handleRepeat} unit={''} />
+                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter}  defaultValue={defaultValue} initialValueToChange={repeatsToChange} handleData={handleRepeat} initialUnit={''} />
             </ExerciseAddItem>
 
             <ExerciseAddItem>
                 <Headline>{translate('ExerciseTime')}</Headline>
-                <Counter defaultValue={defaultValue} valueToChange={timesToChange} handleData={handleTime} unit={'s'} />
+                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter}  defaultValue={defaultValue} initialValueToChange={timesToChange} handleData={handleTime} initialUnit={'s'} />
             </ExerciseAddItem>
 
             <ExerciseAddItem>
                 <Headline>{translate('Series')}</Headline>
-                <Counter defaultValue={defaultValue} valueToChange={seriesToChange} handleData={handleSeries} unit={''} />
+                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter} defaultValue={defaultValue} initialValueToChange={seriesToChange} handleData={handleSeries} initialUnit={''} />
             </ExerciseAddItem>
 
             <ExerciseAddItem>
                 <Headline>{translate('Weight')}</Headline>
-                <Counter defaultValue={defaultValue} valueToChange={weightToChange} handleData={handleWeight} unit={'kg'} />
+                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter}  defaultValue={defaultValue} initialValueToChange={weightToChange} handleData={handleWeight} initialUnit={'kg'} />
             </ExerciseAddItem>
             
             <Formik

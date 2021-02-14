@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WebApi.Controllers.ViewModels;
@@ -22,7 +20,7 @@ namespace WebApi.Services{
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public UserService(DataContext context, IMapper mapper, IConfiguration configuration)
         {
@@ -49,7 +47,7 @@ namespace WebApi.Services{
             var user = _context.Users.SingleOrDefault(x => x.Email == Email);
 
             // check if email exists
-            if (user.Email == null)
+            if (user != null && user.Email == null)
                 return null;
 
             // for seeded data - for testing
@@ -59,7 +57,6 @@ namespace WebApi.Services{
                 if (isCorrect == false)
                     return null;
             }
-            
             // authentication successful
             return user.WithoutPassword(); ;
         }
@@ -134,9 +131,7 @@ namespace WebApi.Services{
                     throw new AppException("Incorrect password");
 
                 user.Password = model.NewPassword;
-                byte[] passwordHash, passwordSalt;
-                CreatePasswordHash(model.NewPassword, out passwordHash, out passwordSalt);
-
+                CreatePasswordHash(model.NewPassword, out var passwordHash, out var passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
             }
@@ -226,7 +221,6 @@ namespace WebApi.Services{
         
 
         public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
-        
         {
             var clientsTrainers = _context.ClientsTrainers
                 .Where(x => x.TrainerId == id)
@@ -259,8 +253,10 @@ namespace WebApi.Services{
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
 
-            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
+            if (storedHash.Length != 64)
+                throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 128)
+                throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
             using var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt);
             var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));

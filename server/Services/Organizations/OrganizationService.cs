@@ -1,17 +1,23 @@
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 
 namespace WebApi.Services
 {
     public class OrganizationService : IOrganizationService
     {
         private DataContext _context;
+        private IConfiguration Configuration { get; }
 
-        public OrganizationService(DataContext context)
+        public OrganizationService(DataContext context, IConfiguration configuration)
         {
+            Configuration = configuration;
             _context = context;
         }
 
@@ -63,7 +69,7 @@ namespace WebApi.Services
             _context.Organizations.Update(organization);
             _context.SaveChanges();
         }
-
+        
         public IEnumerable<User> GetOrganizationUsers(string organizationId)
         {
             var users = _context.Users.Where(x => x.OrganizationId == organizationId);
@@ -76,6 +82,18 @@ namespace WebApi.Services
             var usersInOrganization = _context.Users.Where(x => x.OrganizationId == organizationId);
             var clients = usersInOrganization.Where(x => x.Role == "User");
             return clients;
+        }
+
+        public IEnumerable<UserViewModel> GetUsers()
+        {
+            //dapper query
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("VPS"));
+            connection.Open();
+
+            var users = connection.Query<UserViewModel>(
+                "SELECT \u0022UserId\u0022, \u0022Avatar\u0022, \u0022FirstName\u0022, \u0022LastName\u0022, \u0022Role\u0022, \u0022Email\u0022, \u0022PhoneNumber\u0022, \u0022OrganizationId\u0022 FROM public.\u0022Users\u0022");
+
+            return (List<UserViewModel>) users;
         }
 
         public IEnumerable<User> GetOrganizationTrainers(string organizationId)

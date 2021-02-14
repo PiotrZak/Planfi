@@ -128,7 +128,6 @@ namespace WebApi.Services
             using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
             var randomBytes = new byte[40];
             rngCryptoServiceProvider.GetBytes(randomBytes);
-            // convert random bytes to hex string
             return BitConverter.ToString(randomBytes).Replace("-", "");
         }
         
@@ -143,8 +142,7 @@ namespace WebApi.Services
                     throw new AppException("Invalid token");
 
                 // update password and remove reset token
-                byte[] passwordHash, passwordSalt;
-                _userService.CreatePasswordHash(model.Password, out passwordHash, out passwordSalt);
+                _userService.CreatePasswordHash(model.Password, out var passwordHash, out var passwordSalt);
                 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -161,6 +159,50 @@ namespace WebApi.Services
                 return 0;
             }
         }
+
+        private async Task<int> ConstructMessage(User user, string origin)
+        {
+            string message;
+            if (!string.IsNullOrEmpty(origin))
+            {
+                //todo - port
+                var verifyUrl = $"{origin}/account/activate:{user.VerificationToken}";
+                message = $@"<p>Please click the below link to verify your email address:</p>
+                                 <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
+            }
+            else
+            {
+                message =
+                    $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
+                                 <p><code>{user.VerificationToken}</code></p>";
+            }
+
+            var messageData = new EmailMessage
+            {
+                ToAddresses = new List<EmailMessage.EmailAddress>()
+                {
+                    new EmailMessage.EmailAddress()
+                    {
+                        Name = user.Email,
+                        Address = user.Email,
+                    }
+                },
+                FromAddresses = new List<EmailMessage.EmailAddress>()
+                {
+                    new EmailMessage.EmailAddress()
+                    {
+                        Name = "Planfi",
+                        Address = "planfi.contact@gmail.com",
+                    }
+                },
+                Subject = "Activate Your Account",
+                Content = $@"<h4>Activation</h4>
+                        <p>Thanks for registering!</p>
+                             {message}",
+            };
+            await _emailService.Send(messageData);
+            return 1;
+        }
         
         public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
         {
@@ -168,59 +210,40 @@ namespace WebApi.Services
             {
                 foreach (var email in model.Emails)
                 {
-                    if (_context.Clients.Any(x => x.Email == email))
+                    if (_context.Users.Any(x => x.Email == email))
                         throw new AppException("Email \"" + email + "\" is already taken");
                     
-                    var user = _mapper.Map<Client>(model);
-                    
-                    user.Role = model.Role;
-                    user.OrganizationId = model.OrganizationId;
-                    user.VerificationToken = RandomTokenString();
-                    user.Email = email;
-
-                    await _context.Users.AddAsync(user);
-                    await _context.SaveChangesAsync();
-
-                    string message;
-                    if (!string.IsNullOrEmpty(origin))
+                    switch (model.Role)
                     {
-                        //todo - port
-                        var verifyUrl = $"{origin}/account/activate:{user.VerificationToken}";
-                        message = $@"<p>Please click the below link to verify your email address:</p>
-                                 <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
-                    }
-                    else
-                    {
-                        message =
-                            $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
-                                 <p><code>{user.VerificationToken}</code></p>";
-                    }
-
-                    var messageData = new EmailMessage
-                    {
-                        ToAddresses = new List<EmailMessage.EmailAddress>()
+                        case "Trainer":
                         {
-                            new EmailMessage.EmailAddress()
+                            var user = new Trainer
                             {
-                                Name = email,
-                                Address = email,
-                            }
-                        },
-                        FromAddresses = new List<EmailMessage.EmailAddress>()
+                                Role = model.Role,
+                                OrganizationId = model.OrganizationId,
+                                Email = email,
+                                VerificationToken = RandomTokenString(),
+                            };
+                            await _context.Users.AddAsync(user);
+                            await _context.SaveChangesAsync();
+                            await ConstructMessage(user, origin);
+                            break;
+                        }
+                        case "Client":
                         {
-                            new EmailMessage.EmailAddress()
+                            var user = new Client
                             {
-                                Name = "Planfi",
-                                Address = "planfi.contact@gmail.com",
-                            }
-                        },
-                        Subject = "Activate Your Account",
-                        Content = $@"<h4>Activation</h4>
-                        <p>Thanks for registering!</p>
-                             {message}",
-                    };
-                    await _emailService.Send(messageData);
-                    return 1;
+                                Role = model.Role,
+                                OrganizationId = model.OrganizationId,
+                                Email = email,
+                                VerificationToken = RandomTokenString(),
+                            };
+                            await _context.Users.AddAsync(user);
+                            await _context.SaveChangesAsync();
+                            await ConstructMessage(user, origin);
+                            break;
+                        }
+                    }
                 }
                 return 1;
             }

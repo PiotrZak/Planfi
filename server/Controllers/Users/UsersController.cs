@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApi.Entities;
 using WebApi.Models;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
@@ -11,7 +10,6 @@ using System;
 using System.Text;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApi.Common;

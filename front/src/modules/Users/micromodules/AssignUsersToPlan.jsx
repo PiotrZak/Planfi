@@ -38,6 +38,7 @@ export const AssignUsersToPlans = ({
     assignPlan,
     setAssignPlan,
     activeUsers,
+    assignUserToPlan,
     setBottomSheet,
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -45,8 +46,6 @@ export const AssignUsersToPlans = ({
     const [activePlans, setActivePlans] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useUserContext();
-
-    const { notificationDispatch } = useNotificationContext();
 
     useEffect(() => {
         getPlans(user.organizationId);
@@ -84,34 +83,6 @@ export const AssignUsersToPlans = ({
         const selectedPlans = commonUtil.getCheckedData(selectedData, 'planId');
         setActivePlans(selectedPlans);
     };
-
-    const assignUserToPlan = () => {
-        const data = { clientIds: activeUsers, planIds: activePlans };
-        userService
-            .assignPlanToUser(data)
-            .then(() => {
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { success: 'OK', message: translate('PlansAssignedToUser') },
-                        type: 'positive'
-                    }
-                })
-                setAssignPlan('none');
-                setBottomSheet('none');
-            })
-            .catch((error) => {
-                console.log(error)
-                notificationDispatch({
-                    type: ADD,
-                    payload: {
-                        content: { error: error, message: translate('ErrorAlert') },
-                        type: 'error'
-                    }
-                })
-            });
-    };
-
     return (
         <StyledReactBottomSheetExtended
             showBlockLayer={false}
@@ -142,7 +113,13 @@ export const AssignUsersToPlans = ({
                     : <p>{translate('NoPlans')}</p>}
             </Loader>
             <ModalButtonContainer>
-                <Button disabled={activePlans.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToPlan}>
+                <Button 
+                    disabled={activePlans.length === 0} 
+                    type="submit" 
+                    buttonType="primary" 
+                    size="lg" 
+                    buttonPlace="auth" 
+                    onClick={() => assignUserToPlan(activeUsers, activePlans)}>
                     {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
                 </Button>
             </ModalButtonContainer>

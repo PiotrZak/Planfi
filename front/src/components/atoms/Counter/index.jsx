@@ -17,18 +17,22 @@ const CounterContainer = styled.div`
   }
 `;
 
-const Counter = ({ fill, valueToChange, handleData, unit }) => {
 
-  const [value, setValue] = useState();
+
+const Counter = ({resetCounter, setResetCounter, fill, initialValueToChange, handleData, initialUnit }) => {
+
+  const [value, setValue] = useState(0);
+  const [unit, setUnit] = useState(initialUnit)
+  const [valueToChange, setValueToChange] = useState(initialValueToChange)
 
   useEffect(() => {
-    if(value === undefined){
+    if(resetCounter){
+    if(resetCounter == true){
       setValue(0)
+      setResetCounter(false)
     }
-    else{
-      setValue(value);
-    }
-  }, [value]);
+  }
+  }, [resetCounter]);
 
   const increment = () => {
     setValue(value + valueToChange);
@@ -42,11 +46,26 @@ const Counter = ({ fill, valueToChange, handleData, unit }) => {
     }
   };
 
+  //todo - handle on backend proper unit
+  const renderUnit = (unit) => {
+    if(unit == 's' && value > 60 && unit != 'min'){
+      setUnit('min');
+      setValue(1);
+      setValueToChange(1);
+    }
+    else if( unit == 's' && value > 3600){
+      unit = 'h';
+    }
+    return unit;
+  }
+
   return (
     <CounterContainer>
-      <Icon fill={fill ? fill : null} onClick={increment} name="plus-circle" />
-      <Headline>{value && value} {unit}</Headline>
       <Icon fill={fill ? fill : null} onClick={decrement} name="minus-circle" />
+      <Headline>{value && value} 
+      {renderUnit(unit)} 
+      </Headline>
+      <Icon fill={fill ? fill : null} onClick={increment} name="plus-circle" />
     </CounterContainer>
   );
 };

@@ -26,6 +26,12 @@ const PlansPanel = ({
         setBottomSheet('none')
     }
 
+    const openModalFunction = () => {
+        setOpenEditModal(true)
+        setBottomSheet('none')
+    }
+
+
     return (
         <StyledReactBottomSheet
             showBlockLayer={false}
@@ -42,7 +48,7 @@ const PlansPanel = ({
                         }
                     </PanelItem>
                     {selectedPlans.length < 2 &&
-                        <PanelItem onClick={setOpenEditModal}>
+                        <PanelItem onClick={openModalFunction}>
                             <p>{translate('EditPlan')}</p>
                         </PanelItem>
                     }
@@ -60,7 +66,7 @@ const PlansPanel = ({
                             {translate('DeletePlan')}
                         </PanelItem>
                         {selectedPlans.length < 2 &&
-                            <PanelItem onClick={setOpenEditModal}>
+                            <PanelItem onClick={openModalFunction}>
                                 {translate('EditPlan')}
                             </PanelItem>
                         }

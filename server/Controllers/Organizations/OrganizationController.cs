@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Services;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;

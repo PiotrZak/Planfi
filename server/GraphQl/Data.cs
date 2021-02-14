@@ -6,6 +6,8 @@ using HotChocolate.Types;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
+using WebApi.Models.ViewModels;
 using WebApi.Services;
 
 namespace WebApi.GraphQl
@@ -16,15 +18,19 @@ namespace WebApi.GraphQl
         private readonly ICategoryService _categoryService;
         private readonly IPlanService _planService;
         private readonly IExerciseService _exerciseService;
+        private readonly IOrganizationService _organizationService;
+        
         public Query(
             ICategoryService categoryService,
             IPlanService planService,
-            IExerciseService exerciseService
+            IExerciseService exerciseService, 
+            IOrganizationService organizationService
             )
         {
             _categoryService = categoryService ;
             _planService = planService ;
             _exerciseService = exerciseService;
+            _organizationService = organizationService;
         }
         
         [UseFiltering]
@@ -41,12 +47,16 @@ namespace WebApi.GraphQl
             _planService.GetAll().ToList();
         
         [UseFiltering]
-        public List<ExerciseService.ExerciseViewModel> GetSerializedExercises([Service] DataContext dbContext) => 
+        public List<ExerciseViewModel> GetSerializedExercises([Service] DataContext dbContext) => 
             _exerciseService.GetSerializedExercises().ToList();
         
         [UseFiltering]
-        public List<ExerciseService.ExerciseViewModel> GetSerializedExercisesInstances([Service] DataContext dbContext) => 
+        public List<ExerciseViewModel> GetSerializedExercisesInstances([Service] DataContext dbContext) => 
             _exerciseService.GetSerializedExercisesInstances().ToList();
+        
+        [UseFiltering]
+        public List<UserViewModel> GetUsers([Service] DataContext dbContext) => 
+            _organizationService.GetUsers().ToList();
     }
     
     public static class ExtensionMethods

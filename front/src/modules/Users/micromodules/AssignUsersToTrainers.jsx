@@ -38,6 +38,7 @@ export const AssignUsersToTrainers = ({
   assignTrainer,
   setAssignTrainer,
   activeUsers,
+  assignUserToTrainer,
   setBottomSheet,
 }) => {
 
@@ -45,7 +46,6 @@ export const AssignUsersToTrainers = ({
   const [trainers, setTrainers] = useState();
   const [activeTrainers, setActiveTrainers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { notificationDispatch } = useNotificationContext();
 
   useEffect(() => {
     getAllTrainers();
@@ -84,27 +84,6 @@ export const AssignUsersToTrainers = ({
     setActiveTrainers(selectedTrainers);
   };
 
-  const assignUserToTrainer = () => {
-    const data = { userIds: activeUsers, trainerIds: activeTrainers };
-    userService
-      .assignUsersToTrainer(data)
-      .then(() => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('TrainersAssignedToUser') },
-            type: 'positive'
-          }
-        })
-        setAssignTrainer('none')
-        setBottomSheet('none');
-      })
-      .catch((error) => {
-      });
-  };
-
-
-
   return (
     <StyledReactBottomSheetExtended
       showBlockLayer={false}
@@ -137,7 +116,13 @@ export const AssignUsersToTrainers = ({
           : <h1>{translate('NoUsers')}</h1>}
       </Loader>
       <ModalButtonContainer>
-        <Button disabled={activeTrainers.length === 0} type="submit" buttonType="primary" size="lg" buttonPlace="auth" onClick={assignUserToTrainer}>
+        <Button 
+          disabled={activeTrainers.length === 0} 
+          type="submit" 
+          buttonType="primary" 
+          size="lg" 
+          buttonPlace="auth" 
+          onClick={() => assignUserToTrainer(activeUsers, activeTrainers)}>
           {activeTrainers.length === 0 ? translate('SelectTrainers') : translate('AssignTrainersToClients')}
         </Button>
       </ModalButtonContainer>
