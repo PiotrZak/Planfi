@@ -38,9 +38,6 @@ const Clients = () => {
   const [activeUsers, setActiveUsers] = useState([]);
   const [assignPlan, setAssignPlan] = useState('none');
   const [assignTrainer, setAssignTrainer] = useState('none');
-
-  const [users, setUsers] = useState([]);
-
   const user = JSON.parse((localStorage.getItem('user')));
 
   const Clients = gql`{

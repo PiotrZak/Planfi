@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState, useCallback} from 'react';
 import { commonUtil } from 'utils/common.util';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate from 'templates/GlobalTemplate';
@@ -11,7 +11,7 @@ import Nav from 'components/atoms/Nav';
 import Search from 'components/molecules/Search';
 import styled from 'styled-components';
 import Heading from 'components/atoms/Heading';
-import { organizationService } from 'services/organizationServices';
+import { useQuery, gql } from '@apollo/client';
 import SmallButton from 'components/atoms/SmallButton';
 import InviteUserModal from './InviteUsersModal';
 import { Role } from 'utils/role';
@@ -37,21 +37,25 @@ const OrganizationTrainers = () => {
 
   const user = JSON.parse((localStorage.getItem('user')));
 
-  const getAllUsers = () => {
-    setIsLoading(true);
-    organizationService
-      .getOrganizationTrainers(user.organizationId)
-      .then((data) => {
-        setUsers(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const Trainers = gql`{
+    users(where: {organizationId: "${user.organizationId}" role: "${Role.Trainer}"})
+    {
+        userId
+        avatar
+        firstName
+        lastName
+        role
+     }
+    }
+  `;
+
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(Trainers);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   useEffect(() => {
-    getAllUsers();
+    refreshData();
   }, []);
 
   const submissionHandleElement = (selectedData) => {
@@ -69,13 +73,19 @@ const OrganizationTrainers = () => {
     setSearchTerm(event.target.value);
   };
 
-  const results = !searchTerm
-    ? users
-    : users.filter((User) => {
-      const userName = `${User.firstName} ${User.lastName}`;
-
+  let results;
+  if(data){
+  results = !searchTerm
+    ? data.users
+    : data.users.filter((user) => {
+      const userName = `${user.firstName} ${user.lastName}`;
       return userName.toLowerCase().includes(searchTerm.toLowerCase());
     });
+  }
+
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
+
 
   return (
       <GlobalTemplate>
@@ -89,7 +99,7 @@ const OrganizationTrainers = () => {
         </Container>
         <ScrollContainer mobileHeight="17rem" desktopHeight="14rem">
           <Loader isLoading={isLoading}>
-            {users
+            {results.length > 0
               ? (
                 <CheckboxGenericComponent
                   dataType="users"
