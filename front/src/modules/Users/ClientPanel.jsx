@@ -44,13 +44,14 @@ export const ClientPanel = ({
         setAssignTrainer('none')
       })
       .catch((error) => {
+          console.log(error)
         notificationDispatch({
-          type: ADD,
-          payload: {
-              content: { success: 'OK', message: translate('ErrorAlert') },
-              type: 'error'
-          }
-      })
+            type: ADD,
+            payload: {
+                content: { error: error, message: error.data.messages[0].text},
+                type: 'error'
+            }
+        })
       });
   };
 

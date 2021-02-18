@@ -183,7 +183,29 @@ namespace WebApi.Services{
                     };
 
                     await _context.ClientsTrainers.AddAsync(usersTrainers);
-                    await _context.SaveChangesAsync();
+                    try
+                    { 
+                        await _context.SaveChangesAsync();
+                        return 1;
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        if (ex.InnerException != null)
+                        {
+                            var trainerName = await _context.Users
+                                .Where(x => x.UserId == trainerId)
+                                .Select(x => x.FirstName)
+                                .FirstAsync();
+                                
+                            var clientName = await _context.Users
+                                .Where(x => x.UserId == userId)
+                                .Select(x => x.FirstName)
+                                .FirstAsync();
+
+                            throw new ValidationException(
+                                $"The trainer {trainerName} is already assigned to {clientName}");
+                        }
+                    }
                 }
             }
 

@@ -69,13 +69,10 @@ const Clients = () => {
                     type: 'positive'
                 }
             })
-            console.log(response)
             setAssignPlan('none');
             setBottomSheet('none');
         })
         .catch((error) => {
-            console.log(error)
-            
             notificationDispatch({
                 type: ADD,
                 payload: {
@@ -102,6 +99,13 @@ const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
       setBottomSheet('none');
     })
     .catch((error) => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+            content: { error: error, message: error.data.messages[0].text},
+            type: 'error'
+        }
+    })
     });
 }, []);
 
