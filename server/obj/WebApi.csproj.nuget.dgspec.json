@@ -57,6 +57,10 @@
               "target": "Package",
               "version": "[3.2.0, )"
             },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[9.5.1, )"
+            },
             "HotChocolate": {
               "target": "Package",
               "version": "[11.1.0-preview.8, )"

@@ -61,7 +61,7 @@ const Clients = () => {
     const data = { clientIds: activeUsers, planIds: activePlans };
     userService
         .assignPlanToUser(data)
-        .then(() => {
+        .then((response) => {
             notificationDispatch({
                 type: ADD,
                 payload: {
@@ -69,15 +69,17 @@ const Clients = () => {
                     type: 'positive'
                 }
             })
+            console.log(response)
             setAssignPlan('none');
             setBottomSheet('none');
         })
         .catch((error) => {
             console.log(error)
+            
             notificationDispatch({
                 type: ADD,
                 payload: {
-                    content: { error: error, message: translate('ErrorAlert') },
+                    content: { error: error, message: error.data.messages[0].text},
                     type: 'error'
                 }
             })

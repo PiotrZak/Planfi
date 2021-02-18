@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WebApi.Controllers.ViewModels;
@@ -202,7 +203,6 @@ namespace WebApi.Services{
                         var plan = await _context.Plans.FindAsync(planId);
                         var usersPlans = new ClientsPlans {Client = client, Plan = plan};
                         
-                        // todo - validation here
                         await _context.ClientsPlans.AddAsync(usersPlans);
                         try
                         { 
@@ -211,7 +211,21 @@ namespace WebApi.Services{
                         }
                         catch (DbUpdateException ex)
                         {
-                            if (ex.InnerException != null) throw new Exception(ex.InnerException.Message);
+                            if (ex.InnerException != null)
+                            {
+                                var clientName = await _context.Clients
+                                    .Where(x => x.UserId == clientId)
+                                    .Select(x => x.FirstName)
+                                    .FirstAsync();
+                                
+                                var planTitle = await _context.Plans
+                                    .Where(x => x.PlanId == planId)
+                                    .Select(x => x.Title)
+                                    .FirstAsync();
+
+                                throw new ValidationException(
+                                    $"The client {clientName} is already assigned to {planTitle}");
+                            }
                         }
                 }
             }

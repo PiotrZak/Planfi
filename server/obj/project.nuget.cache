@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+KuezeF/Wh0NW89ozYF7+ZQ+rdhP53zf/2DTG+4G6mcZ0LtcbAruXbtWdnFQsRly5ZM0g6LONgGTAwik2+gQIg==",
+  "dgSpecHash": "37RfJHT4AVMGit1BSMVmC7rYyXMGRtuVd7+ies7DTwFvb2ECPSQjYxVjERdICZNb4Mzetgp9xxhrYVxPLGWruA==",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/FitApp/server/WebApi.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "/Users/admin/.nuget/packages/dapper/2.0.78/dapper.2.0.78.nupkg.sha512",
     "/Users/admin/.nuget/packages/dapper.extensions.netcore/3.2.0/dapper.extensions.netcore.3.2.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/dapper.extensions.postgresql/3.2.0/dapper.extensions.postgresql.3.2.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/fluentvalidation/9.5.1/fluentvalidation.9.5.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/greendonut/11.1.0-preview.8/greendonut.11.1.0-preview.8.nupkg.sha512",
     "/Users/admin/.nuget/packages/hotchocolate/11.1.0-preview.8/hotchocolate.11.1.0-preview.8.nupkg.sha512",
     "/Users/admin/.nuget/packages/hotchocolate.abstractions/11.1.0-preview.8/hotchocolate.abstractions.11.1.0-preview.8.nupkg.sha512",
