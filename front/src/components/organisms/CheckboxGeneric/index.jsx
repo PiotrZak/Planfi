@@ -12,6 +12,8 @@ export const CheckboxGenericComponent = ({
   dataList,
   displayedValue,
   onSelect,
+  onClick,
+  interaction,
 }) => {
   const [type, setType] = useState();
   const { user } = useUserContext();
@@ -23,7 +25,12 @@ export const CheckboxGenericComponent = ({
     setType(dataType);
   }, [dataList]);
 
-  function handleChange(e) {
+
+  const handleClick = (e) => {
+    onClick(e)
+  }
+
+  const handleChange = (e) => {
     dataList.map((el) => {
       if (isMobile) {
         if (el[displayedValue] === e.currentTarget.getAttribute('name')) {
@@ -43,21 +50,33 @@ return useMemo(() => (
     {dataList.map((element, i) => (
       isMobile
         ? (
+          <div onClick ={ () => !interaction ? handleClick(element) : null}>
           <Holdable
             key = {i}
             isActive = {element.isActive}
             theme={theme}
             name={element[displayedValue]}
             onHold={handleChange}
-            onClick={(e) => e.preventDefault()}
             forx={element[displayedValue]}
           >
-            <RenderType theme={theme} type={type} element={element} i={i} />
+            <RenderType 
+              interaction = {interaction} 
+              theme={theme} 
+              type={type} 
+              element={element} 
+              i={i} />
           </Holdable>
+          </div>
         )
         : (
           <>
-            <RenderType theme={theme} type={type} element={element} i={i} />
+            <RenderType
+               theme={theme}
+                type={type} 
+                element={element}
+                 i={i} 
+                 interaction={interaction}
+                 />
             {user.role != "User" &&
             <>
             {theme == 'light' ?
@@ -67,6 +86,7 @@ return useMemo(() => (
                   name={element[displayedValue]}
                   checked={element.value}
                   onChange={handleChange}
+                  onClick = {handleClick}
                 />
               </CheckboxLightContainer>
               :
@@ -76,6 +96,7 @@ return useMemo(() => (
                   name={element[displayedValue]}
                   checked={element.value}
                   onChange={handleChange}
+                  onClick = {handleClick}
                 />
               </CheckboxContainer>
             }

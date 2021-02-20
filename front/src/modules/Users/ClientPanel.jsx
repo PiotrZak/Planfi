@@ -44,7 +44,6 @@ export const ClientPanel = ({
         setAssignTrainer('none')
       })
       .catch((error) => {
-          console.log(error)
         notificationDispatch({
             type: ADD,
             payload: {

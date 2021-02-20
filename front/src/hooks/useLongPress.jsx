@@ -39,7 +39,7 @@ export const GenericLightMobile = styled.div`
   `}
 `
 
-export const Holdable = ({isActive, theme, onClick, onHold, children, forx }) => {
+export const Holdable = ({isActive, theme, onHold, children, forx }) => {
 
   const [timer, setTimer] = useState(null)
   const  onPointerDown =(evt) => {
@@ -52,7 +52,6 @@ export const Holdable = ({isActive, theme, onClick, onHold, children, forx }) =>
     if (timer) {
       window.clearTimeout(timer)
       setTimer(null)
-      onClick(evt)
     }
   }
 

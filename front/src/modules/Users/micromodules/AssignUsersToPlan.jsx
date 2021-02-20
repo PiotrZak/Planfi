@@ -79,10 +79,10 @@ export const AssignUsersToPlans = ({
               });
           };
 
-    const getSelectedPlanIds = (selectedData) => {
-        const selectedPlans = commonUtil.getCheckedData(selectedData, 'planId');
-        setActivePlans(selectedPlans);
-    };
+    const getSelectedPlanId = (plan) => {
+        assignUserToPlan(activeUsers, plan.planId)
+    }
+
     return (
         <StyledReactBottomSheetExtended
             showBlockLayer={false}
@@ -109,19 +109,12 @@ export const AssignUsersToPlans = ({
                         theme="light"
                         displayedValue="title"
                         dataList={plansResults}
-                        onSelect={getSelectedPlanIds} />
+                        onClick = {getSelectedPlanId}
+                        interaction={false}
+                        />
                     : <p>{translate('NoPlans')}</p>}
             </Loader>
             <ModalButtonContainer>
-                <Button 
-                    disabled={activePlans.length === 0} 
-                    type="submit" 
-                    buttonType="primary" 
-                    size="lg" 
-                    buttonPlace="auth" 
-                    onClick={() => assignUserToPlan(activeUsers, activePlans)}>
-                    {activePlans.length === 0 ? translate('SelectPlan') : translate('AssignPlanToUsers')}
-                </Button>
             </ModalButtonContainer>
         </StyledReactBottomSheetExtended>
     );

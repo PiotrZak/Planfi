@@ -12,6 +12,7 @@ const LightWrapper = styled.div`
   min-height: 72px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom:1px solid ${({ theme }) => theme.colorGray30};
   padding: 0rem 1.6rem;
   margin-left:4.8rem;

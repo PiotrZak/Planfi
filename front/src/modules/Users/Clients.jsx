@@ -58,7 +58,9 @@ const Clients = () => {
   const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
   const assignUserToPlan = useCallback((activeUsers, activePlans) => {
-    const data = { clientIds: activeUsers, planIds: activePlans };
+    const data = { clientIds: activeUsers, planIds: [activePlans] };
+
+    console.log(data)
     userService
         .assignPlanToUser(data)
         .then((response) => {
@@ -110,8 +112,9 @@ const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
 }, []);
 
 useEffect(() => {
+  console.log('page')
   refreshData();
-}, [assignUserToPlan, assignUserToTrainer]);
+}, [assignUserToPlan, assignUserToTrainer, refreshData]);
 
   const deleteUser = () => {
     userService

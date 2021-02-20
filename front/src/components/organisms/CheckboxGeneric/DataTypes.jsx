@@ -21,9 +21,15 @@ const StyledGenericElement = styled(GenericElement)`
 `;
 
 export const RenderType = ({
-  theme, type, element, i,
+  theme, type, element, i, interaction
 }) => {
   const history = useHistory();
+
+console.log(interaction)
+
+  if(interaction == undefined){
+  interaction = true;
+  }
 
   const redirectToItem = (itemCase, id, title) => {
     if (itemCase == possibleTypes.category || itemCase == possibleTypes.plan) {
@@ -75,7 +81,7 @@ export const RenderType = ({
       case 'plans':
         return (
           <StyledGenericElement
-            onClick={() => redirectToItem(possibleTypes.plan, element.planId, element.title)}
+            onClick={() => interaction && redirectToItem(possibleTypes.plan, element.planId, element.title)}
             version={theme}
             avatarType="noAvatar"
             key={i}

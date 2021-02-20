@@ -101,6 +101,7 @@ const LoginPage = () => {
       .login(loginModelData)
       .then((data) => {
         redirectToPage(data);
+        localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify(data));
       })
       .catch((error) => {

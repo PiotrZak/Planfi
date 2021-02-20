@@ -65,7 +65,7 @@ export const AssignUsersToTrainers = ({
 
   const trainersResult = !searchTerm
     ? trainers
-    : trainers.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    : trainers.filter((user) => user.firstName.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
 
 
   const getAllTrainers = () => {
@@ -111,7 +111,7 @@ export const AssignUsersToTrainers = ({
             dataType="users"
             theme="light"
             displayedValue="firstName"
-            dataList={trainers}
+            dataList={trainersResult}
             onSelect={getSelectedTrainerIds} />
           : <h1>{translate('NoUsers')}</h1>}
       </Loader>
