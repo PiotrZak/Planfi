@@ -69,7 +69,7 @@ console.log(interaction)
         return (
           <StyledGenericElement
             key={i}
-            onClick={() => redirectToItem(possibleTypes.user, element.userId)}
+            onClick={() => interaction && redirectToItem(possibleTypes.user, element.userId)}
             version={theme}
             avatarType="circle"
             avatarUrl={element.avatar && element.avatar}

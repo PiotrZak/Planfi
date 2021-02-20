@@ -86,7 +86,7 @@ const Clients = () => {
 }, []);
 
 const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
-  const data = { userIds: activeUsers, trainerIds: activeTrainers };
+  const data = { userIds: activeUsers, trainerIds: [activeTrainers] };
   userService
     .assignUsersToTrainer(data)
     .then(() => {

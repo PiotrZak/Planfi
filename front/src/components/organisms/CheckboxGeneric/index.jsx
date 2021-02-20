@@ -50,7 +50,7 @@ return useMemo(() => (
     {dataList.map((element, i) => (
       isMobile
         ? (
-          <div onClick ={ () => !interaction ? handleClick(element) : null}>
+          <div onClick ={() => interaction != undefined && handleClick(element)}>
           <Holdable
             key = {i}
             isActive = {element.isActive}
@@ -69,7 +69,7 @@ return useMemo(() => (
           </div>
         )
         : (
-          <>
+          <div onClick ={() => interaction != undefined && handleClick(element)}>
             <RenderType
                theme={theme}
                 type={type} 
@@ -102,7 +102,7 @@ return useMemo(() => (
             }
             </>
           }
-          </>
+          </div>
         )
       ))}
   </>

@@ -79,10 +79,9 @@ export const AssignUsersToTrainers = ({
       });
   };
 
-  const getSelectedTrainerIds = (selectedData) => {
-    const selectedTrainers = commonUtil.getCheckedData(selectedData, 'userId');
-    setActiveTrainers(selectedTrainers);
-  };
+  const getSelectedTrainerId = (trainer) => {
+    assignUserToTrainer(activeUsers, trainer.userId)
+}
 
   return (
     <StyledReactBottomSheetExtended
@@ -112,19 +111,12 @@ export const AssignUsersToTrainers = ({
             theme="light"
             displayedValue="firstName"
             dataList={trainersResult}
-            onSelect={getSelectedTrainerIds} />
+            onClick={getSelectedTrainerId} 
+            interaction={false}
+            />
           : <h1>{translate('NoUsers')}</h1>}
       </Loader>
       <ModalButtonContainer>
-        <Button 
-          disabled={activeTrainers.length === 0} 
-          type="submit" 
-          buttonType="primary" 
-          size="lg" 
-          buttonPlace="auth" 
-          onClick={() => assignUserToTrainer(activeUsers, activeTrainers)}>
-          {activeTrainers.length === 0 ? translate('SelectTrainers') : translate('AssignTrainersToClients')}
-        </Button>
       </ModalButtonContainer>
     </StyledReactBottomSheetExtended>
   );
