@@ -25,7 +25,7 @@ const handleIconType = (type) => {
     case 'positive':
       return 'check-circle';
     case 'warning':
-      return 'circle';
+      return 'exclamation-triangle';
     case 'error':
       return 'exclamation-triangle';
     case 'neutral':

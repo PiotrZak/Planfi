@@ -39,6 +39,7 @@ const Clients = () => {
   const [assignPlan, setAssignPlan] = useState('none');
   const [assignTrainer, setAssignTrainer] = useState('none');
   const user = JSON.parse((localStorage.getItem('user')));
+  const [refresh, setRefresh] = useState(false)
 
   const Clients = gql`{
     users(where: {organizationId: "${user.organizationId}" role: "${Role.User}"})
@@ -60,10 +61,9 @@ const Clients = () => {
   const assignUserToPlan = useCallback((activeUsers, activePlans) => {
     const data = { clientIds: activeUsers, planIds: [activePlans] };
 
-    console.log(data)
     userService
         .assignPlanToUser(data)
-        .then((response) => {
+        .then(() => {
             notificationDispatch({
                 type: ADD,
                 payload: {
@@ -71,6 +71,7 @@ const Clients = () => {
                     type: 'positive'
                 }
             })
+            setRefresh(!refresh)
             setAssignPlan('none');
             setBottomSheet('none');
         })
@@ -79,11 +80,35 @@ const Clients = () => {
                 type: ADD,
                 payload: {
                     content: { error: error, message: error.data.messages[0].text},
-                    type: 'error'
+                    type: 'warning'
                 }
             })
         });
 }, []);
+
+const deleteUser = useCallback(() => {
+  userService
+    .deleteUsers(activeUsers)
+    .then(() => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+          content: { success: 'OK', message: translate('UserDeleted') },
+          type: 'positive',
+        },
+      });
+    })
+    .catch((error) => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+          content: { error, message: translate('ErrorAlert') },
+          type: 'warning'
+        },
+      });
+    });
+},[]);
+
 
 const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
   const data = { userIds: activeUsers, trainerIds: [activeTrainers] };
@@ -97,6 +122,7 @@ const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
           type: 'positive'
         }
       })
+      setRefresh(!refresh)
       setAssignTrainer('none')
       setBottomSheet('none');
     })
@@ -105,39 +131,15 @@ const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
         type: ADD,
         payload: {
             content: { error: error, message: error.data.messages[0].text},
-            type: 'error'
+            type: 'warning'
         }
     })
     });
 }, []);
 
 useEffect(() => {
-  console.log('page')
   refreshData();
-}, [assignUserToPlan, assignUserToTrainer, refreshData]);
-
-  const deleteUser = () => {
-    userService
-      .deleteUsers(activeUsers)
-      .then((data) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('UserDeleted') },
-            type: 'positive',
-          },
-        });
-      })
-      .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        });
-      });
-  };
+}, [refreshData])
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
@@ -192,13 +194,13 @@ useEffect(() => {
                 displayedValue="firstName"
                 dataList={results}
                 onSelect={submissionHandleElement}
+                refresh={refresh}
               />
             )
             : <p>{translate('NoUsers')}</p>}
         </Loader>
       </GlobalTemplate>
-      {user.role &&
-      user.role != "Owner" ?
+      {user.role && user.role != "Owner" ?
         <ClientPanel
         assignPlan={assignPlan}
         setAssignPlan={setAssignPlan}

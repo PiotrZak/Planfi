@@ -14,16 +14,19 @@ export const CheckboxGenericComponent = ({
   onSelect,
   onClick,
   interaction,
+  refresh,
 }) => {
   const [type, setType] = useState();
   const { user } = useUserContext();
+
   useEffect(() => {
+    console.log(refresh)
     dataList.map((el) => {
       { el.value = false; el.isActive = false }
       return el;
     });
     setType(dataType);
-  }, [dataList]);
+  }, [dataList, refresh]);
 
 
   const handleClick = (e) => {
@@ -79,27 +82,14 @@ return useMemo(() => (
                  />
             {user.role != "User" &&
             <>
-            {theme == 'light' ?
-              <CheckboxLightContainer>
-                <Checkbox
-                  checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
-                  name={element[displayedValue]}
-                  checked={element.value}
-                  onChange={handleChange}
-                  onClick = {handleClick}
-                />
-              </CheckboxLightContainer>
-              :
               <CheckboxContainer>
                 <Checkbox
                   checkboxType={CHECKBOX_TYPE.GENERIC_ELEMENT}
                   name={element[displayedValue]}
                   checked={element.value}
                   onChange={handleChange}
-                  onClick = {handleClick}
                 />
               </CheckboxContainer>
-            }
             </>
           }
           </div>

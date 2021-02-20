@@ -177,5 +177,6 @@ export const pl = {
   TrainerClients: "Klienci trenera",
   ClientPlans: "Plany klienta",
   UserTrainers: "Trenerzy klienta",
+  TrainersAssignedToUser: "Trenerzy przypisani do kllentów"
 
 };

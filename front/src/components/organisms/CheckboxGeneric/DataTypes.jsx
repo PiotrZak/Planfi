@@ -25,8 +25,6 @@ export const RenderType = ({
 }) => {
   const history = useHistory();
 
-console.log(interaction)
-
   if(interaction == undefined){
   interaction = true;
   }
