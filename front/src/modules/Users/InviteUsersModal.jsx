@@ -8,6 +8,7 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import { StyledModal, ButtonContainer } from 'components/molecules/Modal';
 import { useUserContext } from 'support/context/UserContext';
 import { accountService } from 'services/accountServices';
+import { Role } from 'utils/role';
 
 const InviteUserModal = ({ openModal, onClose, role }) => {
   const { user } = useUserContext();
@@ -37,7 +38,7 @@ const InviteUserModal = ({ openModal, onClose, role }) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: error, message: translate('EmailNotSent') },
+            content: { success: error, message: error.data.data.message },
             type: 'error',
           },
         });
@@ -51,7 +52,7 @@ const InviteUserModal = ({ openModal, onClose, role }) => {
       onBackgroundClick={onClose}
       onEscapeKeydown={onClose}
     >
-      {role == "trainer"
+      {role == Role.Trainer
         ? <ModalHeading>{translate('InviteTrainers')}</ModalHeading>
         : <ModalHeading>{translate('InviteUsers')}</ModalHeading>
       }

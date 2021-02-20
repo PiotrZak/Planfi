@@ -20,7 +20,6 @@ import SwitchedButton from 'components/molecules/SwitchedButton';
 import { Role } from 'utils/role';
 import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
-import Search from 'components/molecules/Search';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
 
@@ -133,7 +132,7 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
           <Container>
           <Nav>
             <Wrapper>
-          <Icon fill = {theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(true)} />
+          <Icon fill = {theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} />
           </Wrapper>
             </Nav>
             <ContainerCentred>

@@ -12,17 +12,16 @@ import { useThemeContext } from 'support/context/ThemeContext';
 import { categoryService } from 'services/categoryService';
 import SmallButton from 'components/atoms/SmallButton';
 import { useQuery, gql } from '@apollo/client';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { Role } from 'utils/role';
 import { PlansPanel } from './microModules/PlansPanel';
 import { PlansExercises } from './PlansExercises';
-import { routes } from 'utils/routes';
 import Loader from 'components/atoms/Loader';
 import { useUserContext } from 'support/context/UserContext';
 
 const Plan = (props) => {
   const { theme } = useThemeContext();
 
-  const { user } = useUserContext();
+  const user = JSON.parse((localStorage.getItem('user')));
   const [addExercisePanel] = useState('none');
   const  id  = props.match.params.id;
   const  title  = props.location.state.title;
@@ -53,6 +52,7 @@ const Plan = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState();
+
 
 
   useEffect(() => {
@@ -108,8 +108,8 @@ const Plan = (props) => {
     <>
       <GlobalTemplate>
         <Nav>
-        <BackTopNav route ={routes.plans} text={title} />
-          <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />
+        <BackTopNav text={title} />
+          {user && user.role != Role.User && <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />}
         </Nav>
         <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
         {results.length > 0
@@ -121,7 +121,7 @@ const Plan = (props) => {
               onSelect={submissionHandleElement}
             />
           )
-          : <p>{translate('NoExercises')}</p>}
+          : <p>{translate('NoExercisesPlan')}</p>}
       </GlobalTemplate>
       <PlansExercises
         selectedExercise={activeSelectedExercise}

@@ -45,6 +45,7 @@ export const User = (props) => {
   const [toRender, setToRender] = useState(null);
 
   const userId = props.location.state.id
+  const currentUser = JSON.parse((localStorage.getItem('user')));
 
   useEffect(() => {
     getUserById(userId);
@@ -115,13 +116,13 @@ export const User = (props) => {
             <ContainerCentred>
               {user && <UserInfo user={user} />}
             </ContainerCentred>
-            {renderSwitchedButton()}
+            {currentUser && currentUser.role != Role.User && renderSwitchedButton()}
           </Container>
           </Loader>
         </UserInfoBackground>
         <Container type="entry">
           {toRender}
-        </Container>
+        </Container> 
     </MyProfileTemplate>
     </>
   );

@@ -1,9 +1,7 @@
-import React, {useState} from 'react';
-import { userService } from 'services/userServices';
+import React from 'react';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import StyledReactBottomSheet, { PanelContainer, PanelItem, } from 'components/organisms/BottomSheet'
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 import { useUserContext } from 'support/context/UserContext';
@@ -15,7 +13,6 @@ export const BottomNavTitle = styled.div`
 `
 
 export const ClientPanel = ({
-  userId,
   theme,
   assignTrainer,
   setAssignTrainer,
@@ -24,35 +21,10 @@ export const ClientPanel = ({
   setBottomSheet,
   setAssignPlan,
   assignPlan,
+  assignUserToTrainer,
 }) => {
 
   const { user } = useUserContext();
-  const { notificationDispatch } = useNotificationContext();
-
-  const assignUserToTrainer = () => {
-    const data = { userIds: activeUsers, trainerIds: [userId] };
-    userService
-      .assignUsersToTrainer(data)
-      .then(() => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-              content: { success: 'OK', message: translate('TrainersAssignedToUser') },
-              type: 'positive'
-          }
-      })
-        setAssignTrainer('none')
-      })
-      .catch((error) => {
-        notificationDispatch({
-            type: ADD,
-            payload: {
-                content: { error: error, message: error.data.messages[0].text},
-                type: 'error'
-            }
-        })
-      });
-  };
 
   const openAssignPlansToUsers = () => {
     setAssignPlan("flex");

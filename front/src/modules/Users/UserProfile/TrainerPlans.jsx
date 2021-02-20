@@ -1,39 +1,54 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import { planService } from 'services/planService';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useQuery, gql } from '@apollo/client';
 import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import { useThemeContext } from 'support/context/ThemeContext';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
+import Loader from 'components/atoms/Loader';
 
 export const TrainerPlans = ({ id }) => {
   const { theme } = useThemeContext();
-  const [plans, setPlans] = useState([]);
   const [searchTerm, setSearchTerm] = React.useState('');
 
 
+  const PLANS = gql`{
+    plans(where: {creatorId: "${id}"})
+    {
+      creatorId
+      creatorName
+      planId
+      title
+     }
+    }
+  `;
+
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(PLANS);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
   useEffect(() => {
-    planService
-      .getCreatorPlans(id)
-      .then((data) => {
-        setPlans(data);
-      })
-      .catch((error) => {
-      });
+    refreshData()
 }, [id]);
 
 const filterPlans = (event) => {
   setSearchTerm(event.target.value);
 };
 
-const results = !searchTerm
-? plans
-: plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+let results;
+if(data){
+results = !searchTerm
+  ? data.plans
+  : data.plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+}
+
+if (loading) return <Loader isLoading={loading} />;
+if (error) return <p>Error :(</p>;
 
   return (
     <div>
       <Search placeholder={translate('Find')} callBack={filterPlans} />
-      {results.length >= 1 ? results.map((element, i) => (
+      {data.plans.length >= 1 ? results.map((element, i) => (
         <div key={i.toString()}>
             <RenderType theme={theme} type={'plans'} element={element} i={i} />
             </div>

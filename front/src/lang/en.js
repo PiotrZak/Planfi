@@ -68,6 +68,7 @@ export const en = {
 
   ExerciseSearch: 'Which exercises You searching?',
   NoExercises: 'There are no added exercises in this category',
+  NoExercisesPlan: 'There are no added exercises in this plan',
   EditCategory: 'Edit Category',
   EditCategoryTitle: 'Edit a category',
   CategoryTitle: 'Title',
@@ -148,7 +149,8 @@ export const en = {
   UsersSelected: 'Selected users',
   UserDeleted: 'User deleted',
   SendEmails: 'Send Emails',
-  InviteUsers: 'Invite Users',
+  InviteUsers: 'Invite users',
+  InviteTrainers: 'Invite trainers',
   SeparateMails: 'Separate individual e-mail addresses with a comma',
   InviteUsersButton: 'Send invite',
   EmailSent: 'Emails succesfully sent to clients!',

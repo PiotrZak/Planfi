@@ -185,7 +185,7 @@ useEffect(() => {
         <InviteUserModal role={Role.User} openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
-        </Container>
+      </Container>
         <Loader isLoading={isLoading}>
           {results.length > 0
             ? (
@@ -203,6 +203,7 @@ useEffect(() => {
       {user.role && user.role != "Owner" ?
         <ClientPanel
         assignPlan={assignPlan}
+        assignUserToTrainer={assignUserToTrainer}
         setAssignPlan={setAssignPlan}
         theme={theme}
         userId={user.userId}

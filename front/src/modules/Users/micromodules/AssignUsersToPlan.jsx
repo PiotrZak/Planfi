@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { userService } from 'services/userServices';
-import { planService } from 'services/planService';
+import React, { useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
-import { commonUtil } from 'utils/common.util';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
-import Button from "components/atoms/Button"
 import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Search from 'components/molecules/Search';
 import { useUserContext } from 'support/context/UserContext';
+import { useQuery, gql } from '@apollo/client';
 
 const SearchLightContainer = styled.div`
       margin: 1.6rem 1.6rem 0 1.6rem;
@@ -42,13 +38,26 @@ export const AssignUsersToPlans = ({
     setBottomSheet,
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [plans, setPlans] = useState();
-    const [activePlans, setActivePlans] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const { user } = useUserContext();
 
+    const PLANS = gql`{
+        plans(where: {organizationId: "${user.organizationId}"})
+        {
+          creatorId
+          creatorName
+          planId
+          title
+         }
+        }
+      `;
+
+      const {
+        loading, error, data, refetch: _refetch,
+      } = useQuery(PLANS);
+      const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
     useEffect(() => {
-        getPlans(user.organizationId);
+        refreshData();
         if (activeUsers == 0) {
             setAssignPlan('none')
         }
@@ -63,25 +72,19 @@ export const AssignUsersToPlans = ({
         setSearchTerm(event.target.value);
     };
 
-    const plansResults = !searchTerm
-        ? plans
-        : plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
-
-        const getPlans = (id) => {
-            planService
-              .getOrganizationPlans(id)
-              .then((data) => {
-                setPlans(data);
-                setIsLoading(false)
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-          };
+    let results;
+    if(data){
+    results = !searchTerm
+      ? data.plans
+      : data.plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    }
 
     const getSelectedPlanId = (plan) => {
         assignUserToPlan(activeUsers, plan.planId)
     }
+
+    if (loading) return <Loader isLoading={loading} />;
+    if (error) return <p>Error :(</p>;
 
     return (
         <StyledReactBottomSheetExtended
@@ -102,18 +105,16 @@ export const AssignUsersToPlans = ({
             <SearchLightContainer>
             <Search typeInput="light" callBack={filterPlans} placeholder={translate('PlanSearch')} />
             </SearchLightContainer>
-            <Loader isLoading={isLoading}>
-                {plans ?
+                {data.plans.length > 1 ?
                     <CheckboxGenericComponent
                         dataType="plans"
                         theme="light"
                         displayedValue="title"
-                        dataList={plansResults}
+                        dataList={results}
                         onClick = {getSelectedPlanId}
                         interaction={false}
                         />
                     : <p>{translate('NoPlans')}</p>}
-            </Loader>
             <ModalButtonContainer>
             </ModalButtonContainer>
         </StyledReactBottomSheetExtended>
