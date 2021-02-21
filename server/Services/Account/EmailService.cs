@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
 using WebApi.Models;
@@ -70,7 +71,7 @@ namespace WebApi.Services
                 //Be careful that the SmtpClient class is the one from Mailkit not the framework!
                 using var emailClient = new SmtpClient();
                 //The last parameter here is to use SSL (Which you should!)
-                await emailClient.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
+                await emailClient.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, SecureSocketOptions.StartTls);
 
                 //Remove any OAuth functionality as we won't be using it. 
                 emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
