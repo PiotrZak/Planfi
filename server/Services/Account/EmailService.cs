@@ -81,7 +81,7 @@ namespace WebApi.Services
             }
             catch(Exception e)
             {
-                return await Task.FromException<int>(new InvalidOperationException());
+                return await Task.FromException<int>(new Exception(e.ToString()));
             }
         }
 	}
