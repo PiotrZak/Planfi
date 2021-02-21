@@ -179,6 +179,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Models/UpdateExerciseModel.cs" />
+        <option value="$PROJECT_DIR$/appsettings.Development.json" />
         <option value="$PROJECT_DIR$/Services/Users/UserQuery.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Users/Trainer.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Users/Client.cs" />
@@ -224,11 +225,10 @@
         <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
         <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
         <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
+        <option value="$PROJECT_DIR$/Services/Account/EmailService.cs" />
         <option value="$PROJECT_DIR$/WebApi.csproj" />
         <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/Startup.cs" />
-        <option value="$PROJECT_DIR$/appsettings.Development.json" />
-        <option value="$PROJECT_DIR$/Services/Account/EmailService.cs" />
       </list>
     </option>
   </component>
@@ -323,7 +323,7 @@
       <workItem from="1612289370571" duration="3357000" />
       <workItem from="1612462864315" duration="2116000" />
       <workItem from="1612547701762" duration="47126000" />
-      <workItem from="1613916559810" duration="2803000" />
+      <workItem from="1613916559810" duration="860000" />
     </task>
     <servers />
   </component>
@@ -639,12 +639,12 @@
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="846" y="-285" key="run.anything.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1611493444258" />
-    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup" timestamp="1613926734419">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup" timestamp="1613916996087">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1057.2560.1057/0.23.1920.1177@-98.-1057.2560.1057" timestamp="1607163651762" />
     <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1613916996087" />
-    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1613926734419" />
+    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1612630499096" />
     <state x="845" y="-841" width="672" height="678" key="search.everywhere.popup/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1609930294748" />
     <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/0.0.1920.1200@0.0.1920.1200" timestamp="1608899660291" />
   </component>
@@ -858,6 +858,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
+          <line>259</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="231">
+            <startOffsets>
+              <option value="9182" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9183" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>

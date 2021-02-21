@@ -66,15 +66,15 @@ namespace WebApi.Services
                 {
                     Text = emailMessage.Content
                 };
-                
+
                 //Be careful that the SmtpClient class is the one from Mailkit not the framework!
                 using var emailClient = new SmtpClient();
                 //The last parameter here is to use SSL (Which you should!)
-                await emailClient.ConnectAsync("smtp.gmail.com", 465, true);
+                await emailClient.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, true);
 
                 //Remove any OAuth functionality as we won't be using it. 
                 emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-                await emailClient.AuthenticateAsync("planfi.contact@gmail.com", "Dupadupa1");
+                await emailClient.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
                 await emailClient.SendAsync(message);
                 await emailClient.DisconnectAsync(true);
                 return 1;
