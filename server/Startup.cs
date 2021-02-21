@@ -16,6 +16,7 @@ using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
 using HotChocolate.AspNetCore;
 using HotChocolate;
+using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 
 namespace WebApi
@@ -44,6 +45,7 @@ namespace WebApi
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
 
+            services.Configure<FormOptions>(options => options.ValueCountLimit = 20000); 
 
             // todo
             services.AddIdentityCore<IdentityUser>()

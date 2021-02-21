@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace WebApi
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -13,7 +13,7 @@ namespace WebApi
         }
 
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())

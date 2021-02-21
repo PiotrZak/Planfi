@@ -258,10 +258,10 @@ namespace WebApi.Services{
 
         public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
         {
-            var clientsTrainers = _context.ClientsTrainers
+            var clientsTrainers = await _context.ClientsTrainers
                 .Where(x => x.TrainerId == id)
                 .Select(x => x.ClientId)
-                .ToList();
+                .ToListAsync();
             
             var clientIds = clientsTrainers.ToList();
 
@@ -272,10 +272,10 @@ namespace WebApi.Services{
 
         public async Task<IEnumerable<User>> GetTrainersByClient(string id)
         {
-            var clientsTrainers = _context.ClientsTrainers
+            var clientsTrainers = await _context.ClientsTrainers
                 .Where(x => x.ClientId == id)
                 .Select(x => x.TrainerId)
-                .ToList();
+                .ToListAsync();
             
             var trainersIds = clientsTrainers.ToList();
 
