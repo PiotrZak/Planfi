@@ -72,17 +72,17 @@ const Square = styled.div`
   margin: 0 .5rem;
 `;
 
-// style active NavLink
-const activeClassName = 'active';
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})`
+
+const activeClassName= 'active';
+
+const StyledNavLink = styled(NavLink)`
   text-decoration: none;
 
-  &.${activeClassName} > ${Square}{
+ /* todo */ 
+  /* &.${activeClassName} > ${Square}{
     border-radius: .8rem;
     background: ${({ theme }) => theme.colorPrimaryDefault};
-  }
+  } */
 `;
 
 const MenuOption = (iconName, route, fillFunc) => (

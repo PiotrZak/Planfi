@@ -5,7 +5,7 @@ const handleCenterPlace = (place) => {
     case 'authInfo':
       return css`
         width: 100%;
-        height: 100vh;
+        //height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;

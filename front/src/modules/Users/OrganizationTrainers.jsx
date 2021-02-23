@@ -98,7 +98,6 @@ const OrganizationTrainers = () => {
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
         <ScrollContainer mobileHeight="17rem" desktopHeight="14rem">
-          <Loader isLoading={isLoading}>
             {results.length > 0
               ? (
                 <CheckboxGenericComponent
@@ -108,8 +107,7 @@ const OrganizationTrainers = () => {
                   onSelect={submissionHandleElement}
                 />
               )
-              : <h1>{translate('NoUsers')}</h1>}
-          </Loader>
+              : <p>{translate('NoUsers')}</p>}
         </ScrollContainer>
       </GlobalTemplate>
   );

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useThemeContext } from 'support/context/ThemeContext';
-import Image from '../../atoms/Image';
 import breakPointSize from 'utils/rwd';
 
 const LightWrapper = styled.div`
@@ -26,7 +25,7 @@ const Wrapper = styled.div`
   background: ${({ theme }) => theme.colorGray80};
   min-height: 72px;
   border-radius: 4px;
-  display: flex;
+display: flex;
   justify-content: space-between;
   padding: 1.2rem 1.6rem;
   cursor: pointer;

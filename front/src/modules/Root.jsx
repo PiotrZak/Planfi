@@ -37,8 +37,7 @@ import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
 import Exercise from 'modules/Categories/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
-
-
+import { useScrollData } from "scroll-data-hook";
 
 import TestPage from 'modules/Auth/Test';
 import Clients from 'modules/Users/Clients';
@@ -55,7 +54,6 @@ const Root = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
     });
-
     const currentLanguage = localStorage.getItem('language');
     if (currentLanguage == null) {
       localStorage.setItem('language', 'en-GB');
@@ -90,6 +88,8 @@ const Root = () => {
 
                   <Route path="/test" component={TestPage} />
 
+
+
                  <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
 
@@ -104,6 +104,8 @@ const Root = () => {
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
+
+
 
 
                   </MenuTemplate>

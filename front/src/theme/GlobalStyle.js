@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { validationUtil } from '../utils/validation.util';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
@@ -28,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   body{
+    height: auto !important;
     margin: 0;
     padding: 0;
     font-size: 1.6rem;
@@ -64,11 +64,6 @@ const GlobalStyle = createGlobalStyle`
   p{
     font-size:1.4rem;
   }
-
-   @media screen and (max-width: 80rem) {
-   overflow-y:scroll;
-   
-   }
 `;
 
 export default GlobalStyle;

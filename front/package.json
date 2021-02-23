@@ -44,6 +44,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.6.3",
+    "scroll-data-hook": "^1.0.4",
     "start": "^5.1.0",
     "styled-components": "^5.2.0",
     "styled-react-modal": "^2.0.1",

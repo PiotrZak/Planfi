@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+flex-direction: column;
   text-align: left;
   background-color: ${({ theme }) => theme.colorGray90};
   width: calc(100% - 3.2rem);

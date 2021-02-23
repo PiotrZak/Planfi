@@ -117,7 +117,7 @@ const Plan = (props) => {
               onSelect={submissionHandleElement}
             />
           )
-            : <h3>{translate('NoPlans')}</h3>}
+            : <p>{translate('NoPlans')}</p>}
       </GlobalTemplate>
       <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
       <PlansPanel

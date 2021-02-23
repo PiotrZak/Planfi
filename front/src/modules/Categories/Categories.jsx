@@ -15,16 +15,21 @@ import { isMobile } from 'react-device-detect';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import Nav from 'components/atoms/Nav';
 import { useUserContext } from 'support/context/UserContext';
+import { useScrollContext } from 'support/context/ScrollContext';
+import Search from 'components/molecules/Search';
 
-const Categories = () => {
+const Categories = (props) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedCategoryName, setSelectedCategoryName] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const { user } = useUserContext();
+  const { scrollPosition } = useScrollContext();
   const [bottomSheet, setBottomSheet] = useState('none');
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
+
+  console.log(scrollPosition)
 
   const CATEGORY = gql`{
     categories(where: {organizationId: "${user.organizationId}"})
@@ -111,12 +116,15 @@ const Categories = () => {
     }, [selectedCategories]);
 
   useEffect(() => {
+
+    console.log(props)
     refreshData();
     setSelectedCategoryName([]);
   }, [openModal, openEditModal, refreshData]);
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
+
 
   return (
     <>
@@ -125,6 +133,7 @@ const Categories = () => {
           <Heading>{translate('CategoriesTitle')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
+        {/* <Search callBack={filterPlans} placeholder={translate('PlanSearch')} /> */}
         {data.categories.length > 0
           ? (
             <CheckboxGenericComponent

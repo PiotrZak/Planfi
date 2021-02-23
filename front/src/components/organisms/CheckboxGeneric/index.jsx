@@ -20,7 +20,6 @@ export const CheckboxGenericComponent = ({
   const { user } = useUserContext();
 
   useEffect(() => {
-    console.log(refresh)
     dataList.map((el) => {
       { el.value = false; el.isActive = false }
       return el;
