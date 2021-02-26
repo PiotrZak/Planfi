@@ -70,7 +70,6 @@ export const userService = {
     return http.post(`${USER_URL}delete`, body);
   }
 
-
   function assignUsersToTrainer(body) {
     return http.post(`${USER_URL}assignUsers`, body);
   }

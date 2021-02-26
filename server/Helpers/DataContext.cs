@@ -86,34 +86,7 @@ namespace WebApi.Helpers
                 .HasMany(b => b.Plans)
                 .WithOne();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            
             modelBuilder.Entity<Organization>().HasData(
                     new Organization
                     {
@@ -334,6 +307,7 @@ namespace WebApi.Helpers
                         PasswordHash = null,
                         PasswordSalt = null,
                         Role = Role.Admin,
+                        IsActivated = true,
                     }
                 );
 
@@ -351,6 +325,7 @@ namespace WebApi.Helpers
                             PasswordHash = null,
                             PasswordSalt = null,
                             Role = Role.Owner,
+                            IsActivated = true,
                         }
                     );
 
@@ -368,6 +343,7 @@ namespace WebApi.Helpers
                             PasswordHash = null,
                             PasswordSalt = null,
                             Role = Role.Owner,
+                            IsActivated = true,
                         }
                     );
 
@@ -385,6 +361,7 @@ namespace WebApi.Helpers
                             PasswordHash = null,
                             PasswordSalt = null,
                             Role = Role.Owner,
+                            IsActivated = true,
                         }
                     );
 
@@ -406,6 +383,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -422,6 +400,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -438,6 +417,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -454,6 +434,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -470,6 +451,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -486,6 +468,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     }
                     );
 
@@ -505,6 +488,7 @@ namespace WebApi.Helpers
                     PasswordSalt = null,
                     Role = Role.Trainer,
                     Token = "t-organization",
+                    IsActivated = true,
                 },
 
                 new Trainer
@@ -522,6 +506,7 @@ namespace WebApi.Helpers
                     PasswordSalt = null,
                     Role = Role.Trainer,
                     Token = "t-organization",
+                    IsActivated = true,
                 }
                 );
 
@@ -543,6 +528,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -559,6 +545,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -575,6 +562,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -591,6 +579,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -607,6 +596,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -623,6 +613,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     }
                     );
 
@@ -642,6 +633,7 @@ namespace WebApi.Helpers
                     PasswordSalt = null,
                     Role = Role.Trainer,
                     Token = "t-organization",
+                    IsActivated = true,
                 },
 
                 new Trainer
@@ -659,6 +651,7 @@ namespace WebApi.Helpers
                     PasswordSalt = null,
                     Role = Role.Trainer,
                     Token = "t-organization",
+                    IsActivated = true,
                 }
                 );
 
@@ -680,6 +673,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -696,6 +690,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -712,6 +707,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -728,6 +724,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -744,6 +741,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-user",
+                        IsActivated = true,
                     },
                     new Client
                     {
@@ -760,6 +758,7 @@ namespace WebApi.Helpers
                         PasswordSalt = null,
                         Role = Role.User,
                         Token = "t-trainer",
+                        IsActivated = true,
                     }
                     );
 
@@ -779,6 +778,7 @@ namespace WebApi.Helpers
                     PasswordSalt = null,
                     Role = Role.Trainer,
                     Token = "t-organization",
+                    IsActivated = true,
                 },
 
                 new Trainer
@@ -796,6 +796,7 @@ namespace WebApi.Helpers
                     PasswordSalt = null,
                     Role = Role.Trainer,
                     Token = "t-organization",
+                    IsActivated = true,
                 }
                 );
         }

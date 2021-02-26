@@ -116,8 +116,6 @@ const Categories = (props) => {
     }, [selectedCategories]);
 
   useEffect(() => {
-
-    console.log(props)
     refreshData();
     setSelectedCategoryName([]);
   }, [openModal, openEditModal, refreshData]);

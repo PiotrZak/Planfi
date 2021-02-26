@@ -49,8 +49,6 @@ export const PlansPanel = ({
         setSearchTerm(event.target.value);
     };
 
-    console.log(allExercises)
-
     const results = !searchTerm
         ? allExercises
         : allExercises.filter(exercise =>

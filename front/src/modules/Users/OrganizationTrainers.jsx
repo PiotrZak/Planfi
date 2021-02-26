@@ -6,7 +6,6 @@ import { useThemeContext } from 'support/context/ThemeContext';
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Loader from 'components/atoms/Loader';
-import ScrollContainer from 'components/atoms/ScrollContainer';
 import Nav from 'components/atoms/Nav';
 import Search from 'components/molecules/Search';
 import styled from 'styled-components';
@@ -97,7 +96,6 @@ const OrganizationTrainers = () => {
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
-        <ScrollContainer mobileHeight="17rem" desktopHeight="14rem">
             {results.length > 0
               ? (
                 <CheckboxGenericComponent
@@ -108,7 +106,6 @@ const OrganizationTrainers = () => {
                 />
               )
               : <p>{translate('NoUsers')}</p>}
-        </ScrollContainer>
       </GlobalTemplate>
   );
 };

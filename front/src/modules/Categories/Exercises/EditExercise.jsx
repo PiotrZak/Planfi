@@ -1,5 +1,5 @@
 import { withLazyComponent } from "utils/lazyComponent";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Button from "components/atoms/Button";
 import styled from "styled-components";
 import { exerciseService } from "services/exerciseService";
@@ -91,7 +91,7 @@ const EditExercise = (props) => {
 
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewFiles, setPreviewFiles] = useState([]);
-  const { notificationDispatch } = useNotificationContext();
+  const {notificationDispatch} = useNotificationContext();
   const [ifPlanEdited, setIfPlanEdited] = useState(false)
 
   let id;
@@ -109,14 +109,7 @@ const EditExercise = (props) => {
     });
   };
 
-  useEffect(() => {
-    if(props.location.state.ifPlanEdited){
-      setIfPlanEdited(true)
-    }
-    getExercise(id);
-  }, []);
-
-  const getExercise = (id) => {
+  const getExercise = useCallback((id) => {
     exerciseService
       .getExerciseById(id)
       .then((data) => {
@@ -125,7 +118,16 @@ const EditExercise = (props) => {
         setPreviewFiles(data.files)
       })
       .catch((error) => { });
-  };
+  }, []);
+
+  useEffect(() => {
+    if(props.location.state.ifPlanEdited){
+      setIfPlanEdited(true)
+    }
+    getExercise(id);
+  }, []);
+
+
 
   const resetFileInput = () => {
     document.getElementById("choose-file-button").value = "";
@@ -366,6 +368,8 @@ const EditExercise = (props) => {
     }
   };
 
+console.log(exerciseData)
+
   return (
     <>
       <GlobalTemplate>
@@ -424,9 +428,9 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.repeats}
-                  valueToChange={repeatsToChange}
+                  initialValueToChange={repeatsToChange}
                   handleData={handleRepeat}
-                  unit={""}
+                  initialUnit={""}
                 />
               </ExerciseEditItem>
 
@@ -435,9 +439,9 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.times}
-                  valueToChange={timesToChange}
+                  initialValueToChange={timesToChange}
                   handleData={handleTime}
-                  unit={"s"}
+                  initialUnit={"s"}
                 />
               </ExerciseEditItem>
 
@@ -446,9 +450,9 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.series}
-                  valueToChange={seriesToChange}
+                  initialValueToChange={seriesToChange}
                   handleData={handleSeries}
-                  unit={""}
+                  initialUnit={""}
                 />
               </ExerciseEditItem>
 
@@ -457,9 +461,9 @@ const EditExercise = (props) => {
                 <Counter
                   fill={"#FFFFFF"}
                   defaultValue={exerciseData.weight}
-                  valueToChange={weightToChange}
+                  initialValueToChange={weightToChange}
                   handleData={handleWeight}
-                  unit={"kg"}
+                  initialUnit={"kg"}
                 />
               </ExerciseEditItem>
               </>

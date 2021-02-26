@@ -67,8 +67,7 @@ namespace WebApi.Services
             _context.Plans.Update(plan);
             return await _context.SaveChangesAsync();
         }
-
-
+        
         public async Task<int> Delete(string[] id)
         {
             try

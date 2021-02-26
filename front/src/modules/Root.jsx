@@ -104,11 +104,10 @@ const Root = () => {
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
-
-
-
-
                   </MenuTemplate>
+
+
+                  
                 </Switch>
               </MainTemplate>
             </BrowserRouter>

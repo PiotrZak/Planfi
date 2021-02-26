@@ -19,20 +19,26 @@ const CounterContainer = styled.div`
 
 
 
-const Counter = ({resetCounter, setResetCounter, fill, initialValueToChange, handleData, initialUnit }) => {
+const Counter = ({defaultValue, resetCounter, setResetCounter, fill, initialValueToChange, handleData, initialUnit }) => {
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(defaultValue ? defaultValue : 0);
   const [unit, setUnit] = useState(initialUnit)
   const [valueToChange, setValueToChange] = useState(initialValueToChange)
 
+  console.log('default value', defaultValue)
+  console.log('value', value)
+
   useEffect(() => {
+
+    setValue(defaultValue)
+
     if(resetCounter){
     if(resetCounter == true){
       setValue(0)
       setResetCounter(false)
     }
   }
-  }, [resetCounter]);
+  }, [resetCounter, defaultValue]);
 
   const increment = () => {
     setValue(value + valueToChange);

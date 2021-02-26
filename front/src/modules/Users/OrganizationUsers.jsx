@@ -9,7 +9,6 @@ import SmallButton from 'components/atoms/SmallButton';
 import { translate } from 'utils/Translation';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Loader from 'components/atoms/Loader';
-import ScrollContainer from 'components/atoms/ScrollContainer';
 import Nav from 'components/atoms/Nav';
 import Search from 'components/molecules/Search';
 import styled from 'styled-components';
@@ -114,7 +113,6 @@ const OrganizationUsers = () => {
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
-        <ScrollContainer mobileHeight="17rem" desktopHeight="14rem">
           <Loader isLoading={isLoading}>
             {users
               ? (
@@ -127,7 +125,6 @@ const OrganizationUsers = () => {
               )
               : <h1>{translate('NoUsers')}</h1>}
           </Loader>
-        </ScrollContainer>
       </GlobalTemplate>
       <UsersPanel
         deleteUser={deleteUser}

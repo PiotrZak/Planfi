@@ -72,26 +72,44 @@ const Square = styled.div`
   margin: 0 .5rem;
 `;
 
-
-const activeClassName= 'active';
-
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
-
- /* todo */ 
-  /* &.${activeClassName} > ${Square}{
-    border-radius: .8rem;
-    background: ${({ theme }) => theme.colorPrimaryDefault};
-  } */
 `;
 
-const MenuOption = (iconName, route, fillFunc) => (
-  <StyledNavLink to={route}>
-    <Square>
+const StyledSquare = styled(Square)`
+
+  ${({ active,  }) => active && `
+      border-radius: .8rem;
+      width:42px;
+      height:42px;
+      background: #5E4AE3;
+  `}
+`;
+
+const MenuOption = (iconName,route, fillFunc) => {
+
+const [active, setActive] = useState(false)
+const [currentUrl, setCurrentUrl] = useState('');
+
+useEffect(() => {
+
+  if(window.location.href.split('/')[3].includes(route.substring(1,4))){
+    setActive(true)
+  }
+  else{
+    setActive(false)
+  }
+
+}, [window.location.href]);
+
+return(
+  <StyledNavLink active={active} to={route}>
+    <StyledSquare active = {active}>
       <Icon name={iconName} fill={fillFunc} size="2rem" />
-    </Square>
+    </StyledSquare>
   </StyledNavLink>
-);
+)
+};
 
 // eslint-disable-next-line react/prop-types
 const Menu = () => {
