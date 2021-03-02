@@ -7,7 +7,6 @@ namespace WebApi.Helpers
 {
     public class DataContext : DbContext
     {
-
         public IConfiguration Configuration { get; }
 
         public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration)

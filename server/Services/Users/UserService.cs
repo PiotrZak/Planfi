@@ -129,7 +129,8 @@ namespace WebApi.Services{
             {
                 // throw error if the password is incorrect
                 if (user.Password != model.Password)
-                    throw new AppException("Incorrect password");
+                    throw new ValidationException(
+                        $"Incorrect Password");
 
                 user.Password = model.NewPassword;
                 CreatePasswordHash(model.NewPassword, out var passwordHash, out var passwordSalt);

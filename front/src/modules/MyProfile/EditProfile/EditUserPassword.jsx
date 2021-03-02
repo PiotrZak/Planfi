@@ -18,6 +18,7 @@ import { darkTheme } from 'theme/darkTheme';
 
 
 const initialValues = {
+  actualPassword: '',
   newPassword: '',
   repeatNewPassword: '',
 };
@@ -30,7 +31,7 @@ const validationSchema = Yup.object().shape({
         .max(32, translate('PasswordMaxLength'))
         .required(),
     repeatNewPassword: Yup.string()
-        .required(translate('EnterMail'))
+        .required(translate('EnterPassword'))
         .oneOf([Yup.ref('newPassword')], translate('IdenticalPassword')),
 });
 
@@ -38,7 +39,8 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
   const { notificationDispatch } = useNotificationContext();
 
     const onSubmit = (values) => {
-        const transformedUserData = { password: values.password, newPassword: values.newPassword }
+        console.log(values)
+        const transformedUserData = { password: values.actualPassword, newPassword: values.newPassword }
         userService
             .editUser(id, transformedUserData)
             .then(() => {
@@ -78,11 +80,24 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
                 {({ errors, touched, values }) => (
                     <Form>
                         <InputContainer>
+                        <Label type="top" text={translate('ActualPassword')} required>
+                                <Field
+                                    typeInput="light"
+                                    placeholder={translate('ActualPasswordPlaceholder')}
+                                    type="password"
+                                    name="actualPassword"
+                                    as={Input}
+                                    error={errors.name && touched.name} />
+                            </Label>
+                            <ValidateInvalidData errors={errors} touched={touched} text={translate('PasswordRequirements')} inputName="password" />
+                            <ValidationHint name="actualPassword" />
+                            </InputContainer>
+                            <InputContainer>
                             <Label type="top" text={translate('NewPassword')} required>
                                 <Field
                                     typeInput="light"
                                     placeholder={translate('NewPasswordPlaceholder')}
-                                    type="text"
+                                    type="password"
                                     name="newPassword"
                                     as={Input}
                                     error={errors.name && touched.name} />
@@ -95,7 +110,7 @@ const EditUserPasswordModal = ({ id, openModal, onClose }) => {
                                 <Field
                                     typeInput="light"
                                     placeholder={translate('RepeatNewPasswordPlaceholder')}
-                                    type="string"
+                                    type="password"
                                     name="repeatNewPassword"
                                     as={Input}
                                     error={errors.name && touched.name} />

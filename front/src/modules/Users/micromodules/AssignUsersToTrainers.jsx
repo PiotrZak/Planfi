@@ -44,7 +44,6 @@ export const AssignUsersToTrainers = ({
 
   const [searchTerm, setSearchTerm] = useState('');
   const [trainers, setTrainers] = useState();
-  const [activeTrainers, setActiveTrainers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

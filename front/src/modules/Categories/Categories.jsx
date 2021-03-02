@@ -28,8 +28,7 @@ const Categories = (props) => {
   const [bottomSheet, setBottomSheet] = useState('none');
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-
-  console.log(scrollPosition)
+  const [searchTerm, setSearchTerm] = useState('');
 
   const CATEGORY = gql`{
     categories(where: {organizationId: "${user.organizationId}"})
@@ -120,6 +119,17 @@ const Categories = (props) => {
     setSelectedCategoryName([]);
   }, [openModal, openEditModal, refreshData]);
 
+  const filterCategories = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  let results;
+  if(data){
+  results = !searchTerm
+    ? data.categories
+    : data.categories.filter((category) => category.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  }
+
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
 
@@ -131,18 +141,19 @@ const Categories = (props) => {
           <Heading>{translate('CategoriesTitle')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
-        {/* <Search callBack={filterPlans} placeholder={translate('PlanSearch')} /> */}
-        {data.categories.length > 0
+        <Search callBack={filterCategories} placeholder={translate('CategorySearch')} />
+        {data.categories.length >= 1
           ? (
             <CheckboxGenericComponent
               dataType="categories"
               displayedValue="title"
-              dataList={data.categories}
+              dataList={results}
               onSelect={submissionHandleElement}
             />
           )
           : <p>{translate('NoCategories')}</p>}
       </GlobalTemplate>
+      <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
       <CategoriesPanel
         editCategory={editCategory}
         refreshData={refreshData}
@@ -155,7 +166,6 @@ const Categories = (props) => {
         setOpenEditModal={setOpenEditModal}
         openEditModal={openEditModal}
       />
-      <AddCategoryModal theme={theme} openModal={openModal} onClose={closeModal} />
     </>
   );
 };

@@ -16,7 +16,7 @@ export const SpecialModalBackground = styled.div`
     width: 100vw;
     height: 100vh;
     position: absolute;
-    opacity: 0.05;
+    opacity: 0.25;
 }
   }
 `;

@@ -43,15 +43,27 @@ export const lightTheme = {
     colorGray100: '#101013',
     colorGray90: 'white',
     colorGray80: '#FFFFFF',
-    colorGray70: '#51515F',
+
+    //ediited
+    colorGray70: '#DDDDE6',
+
+
     colorGray60: '#FFFFFF',
     colorGray50: '#9898A5',
     colorGray40: '#C3C3CF',
-    colorGray30: '#DDDDE6',
+
+    //edited
+    colorGray30: '#101013',
     colorGray20: '#E7E7F0',
-    colorGray10: '#F0F0F5',
+
+
+  // edited
+    colorGray10: '#51515F',
     colorWhite: '#FFFFFF',
   
+    // edited
+    colorWhiteBorder: '#E7E7F0',
+
     colorOverlay30: 'rgba(81, 81, 95, 0.3)',
     colorOverlay10: 'rgba(81, 81, 95, 0.1)',
   

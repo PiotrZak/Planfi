@@ -123,6 +123,7 @@ const Exercise = (props) => {
 
             <h3>Description:</h3>
             <p>{exercise.description}</p>
+            <br/><br/><br/><br/><br/>
           </>
         }
       </GlobalTemplate>
@@ -145,7 +146,6 @@ object-fit: cover;
 
 const Slide = ({ videoName, index, img }) => {
 
-  console.log(index)
   return (
     img.length > 100 ?
     <ExerciseImageContainer key={index} alt={index} src={`data:image/jpeg;base64,${img}`} />

@@ -26,9 +26,9 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required(translate('EnterFirstName')),
     lastName: Yup.string().required(translate('EnterLastName')),
-    phone: Yup.string()
-        .required(translate('EnterPhone'))
-        .matches(/^\d{9}$/, translate('phoneValidation')),
+    // phone: Yup.string()
+    //     .required(translate('EnterPhone'))
+    //     .matches(/^\d{9}$/, translate('phoneValidation')),
 });
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
