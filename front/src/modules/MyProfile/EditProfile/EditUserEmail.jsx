@@ -53,14 +53,17 @@ const EditUserEmailModal = ({ id, openModal, onClose }) => {
                 });
                 onClose()
             })
+
             .catch((error) => {
+                // todo - communicate
+                console.log(error)
                 notificationDispatch({
                     type: ADD,
                     payload: {
-                        content: { success: error, message: translate('ErrorAlert') },
-                        type: 'error',
+                      content: { success: error, message: translate('ErrorAlert')},
+                      type: 'error',
                     },
-                });
+                  });
             });
     };
 

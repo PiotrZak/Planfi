@@ -13,7 +13,7 @@ namespace WebApi.Interfaces
         IEnumerable<Client> GetAllClients();
         IEnumerable<Trainer> GetAllTrainers();
         UserViewModel GetById(string id);
-        void Update(string id, UpdateUserModel model);
+        Task<int> Update(string id, UpdateUserModel model);
         void Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
         Task<int> AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);

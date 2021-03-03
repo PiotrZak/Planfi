@@ -5,7 +5,6 @@ import styled, { css } from 'styled-components';
 import { UserInfo } from 'components/molecules/UserInfo/UserInfo';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { userService } from 'services/userServices';
-import { useUserContext } from 'support/context/UserContext';
 import { TrainerClients } from 'modules/Users/UserProfile/TrainerClients';
 import { UserPlans } from 'modules/Users/UserProfile/UserPlans';
 import { MyProfilePanel } from 'modules/MyProfile/MyProfilePanel';
@@ -76,20 +75,24 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   const renderGenericElement = (tab) => {
     const { role, userId } = user;
 
-    if (role === Role.Trainer) {
+
+    if (role === Role.Trainer || role === Role.Owner) {
       if (tab === 'first') {
         setToRender(<TrainerPlans id={userId} />);
       }
       if (tab === 'second') {
         setToRender(<TrainerClients id={userId} />);
       }
-    } else if (tab === 'first') {
-      setToRender(<UserPlans id={userId} />);
-    } else if (tab === 'second') {
-      setToRender(<ClientTrainers id={userId} />);
-    } else {
-      setToRender(<UserPlans id={userId} />);
     }
+
+    if(role === Role.User){
+      if (tab === 'first') {
+        setToRender(<UserPlans id={userId} />);
+      }
+      if (tab === 'second') {
+        setToRender(<ClientTrainers id={userId} />);
+      }
+    }  
   };
 
 

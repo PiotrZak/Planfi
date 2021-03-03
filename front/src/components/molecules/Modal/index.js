@@ -18,7 +18,7 @@ export const SpecialModalBackground = styled.div`
     position: absolute;
     opacity: 0.25;
 }
-  }
+}
 `;
 
 export const IconContainer = styled.div`

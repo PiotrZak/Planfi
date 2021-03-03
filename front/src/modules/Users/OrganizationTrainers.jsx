@@ -20,19 +20,14 @@ const Container = styled.div`
 `;
 
 const OrganizationTrainers = () => {
-  const { theme } = useThemeContext();
-  const { notificationDispatch } = useNotificationContext();
+
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
 
-  const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeUsers, setActiveUsers] = useState([]);
 
   const [bottomSheet, setBottomSheet] = useState('none');
   const [assignPlan, setAssignPlan] = useState('none');
-  const [assignTrainer, setAssignTrainer] = useState('none');
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const user = JSON.parse((localStorage.getItem('user')));
 

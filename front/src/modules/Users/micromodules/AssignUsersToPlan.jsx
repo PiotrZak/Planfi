@@ -38,7 +38,7 @@ export const AssignUsersToPlans = ({
     setBottomSheet,
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
-    const { user } = useUserContext();
+    const user = JSON.parse((localStorage.getItem('user')));
 
     const PLANS = gql`{
         plans(where: {organizationId: "${user.organizationId}"})

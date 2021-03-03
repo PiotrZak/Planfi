@@ -8,7 +8,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System;
 using System.Text;
-using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,16 +22,13 @@ namespace WebApi.Controllers
     public class UsersController : ApiControllerBase
     {
         private IUserService _userService;
-        private IMapper _mapper;
         private readonly AppSettings _appSettings;
        
         public UsersController(
             IUserService userService,
-            IMapper mapper,
             IOptions<AppSettings> appSettings)
         {
             _userService = userService;
-            _mapper = mapper;
             _appSettings = appSettings.Value;
         }
 
@@ -40,40 +36,46 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Email, model.Password);
-
-            if (user == null)
+            try
             {
-                return BadRequest(new { message = "Email or password is incorrect" });
-            }
-            // authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
+                var user = _userService.Authenticate(model.Email, model.Password);
+                // authentication successful so generate jwt token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    new Claim(ClaimTypes.Name, user.UserId),
-                    new Claim(ClaimTypes.Role, user.Role)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(ClaimTypes.Name, user.UserId),
+                        new Claim(ClaimTypes.Role, user.Role)
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
             
-            return Ok(new
+                return Ok(new
+                {
+                    user.UserId,
+                    user.OrganizationId,
+                    user.Email,
+                    user.FirstName,
+                    user.LastName,
+                    user.Avatar,
+                    user.Role,
+                    Token = tokenString
+                });
+            }
+            catch (Exception ex)
             {
-                user.UserId,
-                user.OrganizationId,
-                user.Email,
-                user.FirstName,
-                user.LastName,
-                user.Avatar,
-                user.Role,
-                Token = tokenString
-            });
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure(ex.Message)
+                    .Build();
+                
+                return CommonResponse(failure);
+            }
         }
         
         [AllowAnonymous]
@@ -210,24 +212,31 @@ namespace WebApi.Controllers
             
             return CommonResponse(success);
         }
-        
-        // todo - repair edition 
+
         [AllowAnonymous]
         [HttpPut("{id}")]
-        public IActionResult Update(string id, [FromBody] UpdateUserModel model)
+        public async Task<IActionResult> Update(string id, [FromBody] UpdateUserModel model)
         {
             try
             {
-                _userService.Update(id, model);
-                return Ok();
+                await _userService.Update(id, model);
             }
             catch (AppException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure(ex.Message)
+                    .Build();
+
+                return CommonResponse(failure);
             }
+            var success = ApiCommonResponse.Create()
+                .WithSuccess()
+                .Build();
+
+
+            return CommonResponse(success);
         }
-
-
+        
         [AllowAnonymous]
         [HttpPost("delete")]
         public IActionResult Delete([FromBody] string[] id)

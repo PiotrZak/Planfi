@@ -61,7 +61,6 @@ export const lightTheme = {
     colorGray10: '#51515F',
     colorWhite: '#FFFFFF',
   
-    // edited
     colorWhiteBorder: '#E7E7F0',
 
     colorOverlay30: 'rgba(81, 81, 95, 0.3)',

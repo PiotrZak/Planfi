@@ -43,20 +43,22 @@ namespace WebApi.Services{
             return user;
         }
         
-        public User Authenticate(string Email, string Password)
+        public User Authenticate(string email, string password)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Email == Email);
+            var user = _context.Users.SingleOrDefault(x => x.Email == email);
 
             // check if email exists
-            if (user != null && user.Email == null)
-                return null;
+            if (user == null)
+                throw new ValidationException(
+                    $"Invalid mail");
 
             // for seeded data - for testing
             if (user.PasswordHash != null && user.PasswordSalt != null)
             {
-                var isCorrect = VerifyPasswordHash(Password, user.PasswordHash, user.PasswordSalt);
+                var isCorrect = VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
                 if (isCorrect == false)
-                    return null;
+                    throw new ValidationException(
+                        $"Invalid password");
             }
             // authentication successful
             return user.WithoutPassword(); ;
@@ -93,9 +95,9 @@ namespace WebApi.Services{
             return user;
         }
         
-        public void Update(string id, UpdateUserModel model)
+        public async Task<int> Update(string id, UpdateUserModel model)
         {
-            var user = _context.Users.Find(id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
                 throw new AppException("User not found");
@@ -104,13 +106,10 @@ namespace WebApi.Services{
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
                 // // throw error if the new username is already taken
-                // if (_context.Clients.Any(x => x.Email == model.Email))
-                //     throw new AppException("Username " + model.Email + " is already taken");
-                //
-                // // throw error if the password is incorrect
-                // if (user.Password != model.Password)
-                //     throw new AppException("Incorrect password");
-
+                if (_context.Users.Any(x => x.Email == model.Email))
+                    throw new ValidationException(
+                        $"Mail {model.Email} is already assigned to another user");
+                
                 user.Email = model.Email;
             }
 
@@ -139,7 +138,8 @@ namespace WebApi.Services{
             }
 
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+            return 1;
         }
 
 

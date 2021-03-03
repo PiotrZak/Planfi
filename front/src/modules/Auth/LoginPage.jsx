@@ -108,7 +108,7 @@ const LoginPage = () => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: error, message: translate('ErrorAlert') },
+            content: { success: error, message: error.data.messages[0].text},
             type: 'error',
           },
         });

@@ -29,6 +29,7 @@ export const TrainerPlans = ({ id }) => {
 
   useEffect(() => {
     refreshData()
+    console.log(id)
 }, [id]);
 
 const filterPlans = (event) => {
