@@ -14,6 +14,7 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import ExercisePanel from './ExercisePanel';
 import { useUserContext } from 'support/context/UserContext';
 import ReactPlayer from 'react-player'
+import { Role } from 'utils/role';
 
 const InfoTab = styled.div`
   display:flex;
@@ -96,8 +97,7 @@ const Exercise = (props) => {
       <GlobalTemplate>
         <Nav>
           {exercise && <BackTopNav text={exercise.title} />}
-          {user.role != "user" &&
-            exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
+          {user.role != Role.User && exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
         </Nav>
         {exercise && exercise.files &&
           <>

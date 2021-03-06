@@ -14,6 +14,7 @@ export const BottomNavTitle = styled.div`
 
 export const ClientPanel = ({
   theme,
+  assignUserToMe,
   assignTrainer,
   setAssignTrainer,
   activeUsers,
@@ -42,7 +43,7 @@ export const ClientPanel = ({
     >
             {isMobile ?
                 <>
-                      <PanelItem onClick={() => assignUserToTrainer()}>
+                      <PanelItem onClick={() => assignUserToMe(activeUsers)}>
                             {translate('AssignToMe')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>
@@ -52,7 +53,7 @@ export const ClientPanel = ({
                 :
                 <>
                     <PanelContainer>
-                      <PanelItem onClick={() => assignUserToTrainer()}>
+                      <PanelItem onClick={() => assignUserToMe(activeUsers)}>
                             {translate('AssignToMe')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>

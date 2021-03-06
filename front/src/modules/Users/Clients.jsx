@@ -109,8 +109,36 @@ const deleteUser = useCallback(() => {
     });
 },[]);
 
+const assignUserToMe =  useCallback((activeUsers, activeTrainers) => {
+
+  const data = { userIds: activeUsers, trainerIds: [user.userId] };
+  userService
+    .assignUsersToTrainer(data)
+    .then(() => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+          content: { success: 'OK', message: translate('TrainersAssignedToUser') },
+          type: 'positive'
+        }
+      })
+      setRefresh(!refresh)
+      setAssignTrainer('none')
+      setBottomSheet('none');
+    })
+    .catch((error) => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+            content: { error: error, message: error.data.messages[0].text},
+            type: 'warning'
+        }
+    })
+    });
+}, []);
 
 const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
+
   const data = { userIds: activeUsers, trainerIds: [activeTrainers] };
   userService
     .assignUsersToTrainer(data)
@@ -200,8 +228,9 @@ useEffect(() => {
             : <p>{translate('NoUsers')}</p>}
         </Loader>
       </GlobalTemplate>
-      {user.role && user.role != "Owner" ?
+      {user.role && user.role != Role.Owner ?
         <ClientPanel
+        assignUserToMe={assignUserToMe}
         assignPlan={assignPlan}
         assignUserToTrainer={assignUserToTrainer}
         setAssignPlan={setAssignPlan}

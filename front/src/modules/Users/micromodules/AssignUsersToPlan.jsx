@@ -105,7 +105,7 @@ export const AssignUsersToPlans = ({
             <SearchLightContainer>
             <Search typeInput="light" callBack={filterPlans} placeholder={translate('PlanSearch')} />
             </SearchLightContainer>
-                {data.plans.length > 1 ?
+                {data.plans.length >= 1 ?
                     <CheckboxGenericComponent
                         dataType="plans"
                         theme="light"

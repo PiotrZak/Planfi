@@ -229,7 +229,7 @@ namespace WebApi.Services
                             await ConstructMessage(user, origin);
                             break;
                         }
-                        case "Client":
+                        case "User":
                         {
                             var user = new Client
                             {
