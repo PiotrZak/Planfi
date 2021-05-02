@@ -22,10 +22,8 @@ describe('Category Service', () => {
 
         //arrange
         const categories = [{ "categoryId": "1", "exercises": [], "title": "Amatorskie" }, { "categoryId": "2", "exercises": [], "title": "Średnio-Zaawansowane" }, { "categoryId": "3", "exercises": [], "title": "Profesjonalistyczne" }]
-
         //act
         const title = await getCategories();
-
         //assert
         expect(title).toEqual(categories);
     });

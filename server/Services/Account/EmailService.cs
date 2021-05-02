@@ -7,7 +7,7 @@ using MimeKit;
 using MimeKit.Text;
 using WebApi.Models;
 
-namespace WebApi.Services
+namespace WebApi.Services.Account
 {
 
     public interface IEmailService

@@ -11,7 +11,7 @@ using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 
-namespace WebApi.Services
+namespace WebApi.Services.Account
 {
     public class AccountService : IAccountService
     {
@@ -32,28 +32,26 @@ namespace WebApi.Services
         {
             var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
 
-            if (selectedUser != null)
-            {
-                selectedUser.Avatar = null;
-                selectedUser.Email = selectedUser.Email;
-                selectedUser.Role = selectedUser.Role;
-                selectedUser.PhoneNumber = user.PhoneNumber;
-                selectedUser.FirstName = user.FirstName;
-                selectedUser.LastName = user.LastName;
-                selectedUser.PhoneNumber = user.PhoneNumber;
+            if (selectedUser == null) throw new AppException();
+            
+            selectedUser.Avatar = null;
+            selectedUser.Email = selectedUser.Email;
+            selectedUser.Role = selectedUser.Role;
+            selectedUser.PhoneNumber = user.PhoneNumber;
+            selectedUser.FirstName = user.FirstName;
+            selectedUser.LastName = user.LastName;
+            selectedUser.PhoneNumber = user.PhoneNumber;
 
-                _userService.CreatePasswordHash(user.Password, out var passwordHash, out var passwordSalt);
+            _userService.CreatePasswordHash(user.Password, out var passwordHash, out var passwordSalt);
 
-                selectedUser.Password = user.Password;
-                selectedUser.PasswordHash = passwordHash;
-                selectedUser.PasswordSalt = passwordSalt;
-                selectedUser.IsActivated = true;
+            selectedUser.Password = user.Password;
+            selectedUser.PasswordHash = passwordHash;
+            selectedUser.PasswordSalt = passwordSalt;
+            selectedUser.IsActivated = true;
 
-                 _context.Users.Update(selectedUser);
-                 await _context.SaveChangesAsync();
-                return selectedUser;
-            }
-            throw new AppException();
+            _context.Users.Update(selectedUser);
+            await _context.SaveChangesAsync();
+            return selectedUser;
         }
         
         public async Task<bool> ForgotPassword(ForgotPassword model, string origin)

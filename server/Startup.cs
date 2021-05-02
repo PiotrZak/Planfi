@@ -18,6 +18,8 @@ using HotChocolate.AspNetCore;
 using HotChocolate;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
+using WebApi.Services.Account;
+using WebApi.Services.Exercises;
 
 namespace WebApi
 {

@@ -48,11 +48,12 @@
     "start": "^5.1.0",
     "styled-components": "^5.2.0",
     "styled-react-modal": "^2.0.1",
-    "svg-fill": "git+https://github.com/c1rrus/svg-fill.git",
+    "svg-fill": "0.3.6",
     "video-thumbnail-generator": "^1.1.3",
     "yup": "^0.29.3"
   },
   "scripts": {
+    "docker-start": "react-scripts start --mode development --hot --port 3001 --host 0.0.0.0",
     "start": "react-app-rewired start",
     "build": "react-scripts build",
     "test": "react-scripts test",

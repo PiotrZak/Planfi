@@ -150,7 +150,10 @@ const Slide = ({ videoName, index, img }) => {
     img.length > 100 ?
     <ExerciseImageContainer key={index} alt={index} src={`data:image/jpeg;base64,${img}`} />
     :
-      <ReactPlayer  controls = {true}  url={require(`../../../../../server/wwwroot/Movies/${videoName}${index}${atob(img)}`)}/>
+    //TODO - MOVIES
+    // need to refactor that folder - to exclude from backend
+    <></>
+      // <ReactPlayer  controls = {true}  url={require(`../../../../../server/wwwroot/Movies/${videoName}${index}${atob(img)}`)}/>
   );
 };
 

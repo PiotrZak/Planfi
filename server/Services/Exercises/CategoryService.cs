@@ -7,7 +7,7 @@ using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 
-namespace WebApi.Services
+namespace WebApi.Services.Exercises
 {
     public class CategoryService : ICategoryService
     {

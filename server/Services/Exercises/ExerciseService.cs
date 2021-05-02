@@ -198,7 +198,7 @@ namespace WebApi.Services
 
         public async Task<int> Update(Exercise updateExercise, string id)
         {
-            var exercise = _context.Exercises.Find(id);
+            var exercise = await _context.Exercises.FindAsync(id);
 
             if(exercise == null)
                 throw new AppException("Exercise not found!");

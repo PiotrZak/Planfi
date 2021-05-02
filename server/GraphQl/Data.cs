@@ -9,6 +9,7 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
 using WebApi.Services;
+using WebApi.Services.Exercises;
 
 namespace WebApi.GraphQl
 {

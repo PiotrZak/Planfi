@@ -21,9 +21,7 @@ namespace WebApi.Entities
         public string CreatorId { get; set; }
         public string CreatorName { get; set; }
         public string OrganizationId { get; set; }
-
         public List<Exercise> Exercises { get; set; }
-
         public ICollection<ClientsPlans> ClientsPlans { get; set; }
     }
 }

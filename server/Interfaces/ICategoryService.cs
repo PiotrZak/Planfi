@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Models;
 using WebApi.Services;
+using WebApi.Services.Exercises;
 
 namespace WebApi.Interfaces
 {

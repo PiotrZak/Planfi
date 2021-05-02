@@ -60,6 +60,8 @@ namespace WebApi.Controllers
                         || formFile.ContentType == "video/avi" 
                         || formFile.ContentType == "video/quicktime")
                     {
+                        
+                        //TODO - save that file not to CurrentDirectory but to frontend directory
                         _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                         var path = Path.Combine(_environment.WebRootPath, "Movies");
                             
