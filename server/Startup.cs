@@ -42,7 +42,7 @@ namespace WebApi
 
 
             // Use a PostgreSQL database
-            var sqlConnectionString = Configuration.GetConnectionString("VPS");
+            var sqlConnectionString = Configuration.GetConnectionString("DockerCommandsConnectionString");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));

@@ -17,7 +17,7 @@ namespace WebApi.Helpers
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var sqlConnectionString = Configuration.GetConnectionString("VPS");
+            var sqlConnectionString = Configuration.GetConnectionString("DockerCommandsConnectionString");
             optionsBuilder.UseNpgsql(sqlConnectionString);
         }
 

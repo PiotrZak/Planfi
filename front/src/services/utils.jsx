@@ -2,7 +2,6 @@ import { isDevelopment } from 'environment';
 
 const localHostApiUrl = 'http://localhost:5005';
 const developmentApiUrl = 'http://188.165.16.160:5005';
-const hamachiServer = 'http://145.239.86.206:5005';
 
 const apiUrl = isDevelopment ? hamachiServer : localHostApiUrl;
 

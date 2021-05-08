@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   frontend:
     container_name: frontend
     build: ./front
@@ -15,19 +14,33 @@ services:
       - CHOKIDAR_USEPOLLING=true
     command: npm run start
 
-    # planfiApi:
-    #   image: planfiapi:${TAG: latest}
-    #   build:
-    #     context: ../
-    #     dockerfile: server/Dockerfile
-    #   ports:
-    #     - "9001:9001"
-    #   restart: on-failure
-    #   environment:
-    #    - ASPNERCORE_ENVIRONMENT=development
-    #   networks:
-    #   - my-network
-  #    networks:
-  #     my-network:
-  #          external: true
-  
+  api:
+    image: api:${TAG:-latest}
+    build:
+      context: ../
+      dockerfile: server/Dockerfile
+    ports:
+      - "5005:5005"
+    restart: on-failure
+    depends_on:
+     - database
+    networks:
+      - planfi-network  
+
+  database:
+    container_name: database
+    image: postgres:latest
+    ports:
+     - 5432:5432
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - planfi-network
+
+networks:
+  planfi-network:
+    driver: bridge
