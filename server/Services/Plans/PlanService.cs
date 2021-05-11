@@ -27,12 +27,13 @@ namespace WebApi.Services
             var isDuplicated = _context.Plans.Any(x => x.Title == plan.Title);
             if (isDuplicated)
             {
-                var duplicatedPlans = _context.Plans.Where(x => x.Title == plan.Title).ToList();
+                var duplicatedPlans = _context.Plans
+                    .Where(x => x.Title == plan.Title)
+                    .ToList();
 
-                foreach (var duplicatedPlan in duplicatedPlans)
+                if (duplicatedPlans.Any(x => x.OrganizationId == plan.OrganizationId))
                 {
-                    if(duplicatedPlan.OrganizationId == plan.OrganizationId)
-                        throw new AppException("Plan " + plan.Title + " is already exist in this organization");
+                    throw new AppException("Plan " + plan.Title + " is already exist in this organization");
                 }
             }
             _context.Plans.Add(plan);

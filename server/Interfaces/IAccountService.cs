@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Models;
 

@@ -3,7 +3,7 @@ import { isDevelopment } from 'environment';
 const localHostApiUrl = 'http://localhost:5005';
 const developmentApiUrl = 'http://188.165.16.160:5005';
 
-const apiUrl = isDevelopment ? hamachiServer : localHostApiUrl;
+const apiUrl = isDevelopment ? developmentApiUrl : localHostApiUrl;
 
 export const ORGANIZATION_URL = `${apiUrl}/Organization/`;
 export const ACCOUNT_URL = `${apiUrl}/Account/`;

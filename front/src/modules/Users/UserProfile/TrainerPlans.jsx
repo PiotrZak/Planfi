@@ -5,11 +5,11 @@ import { useThemeContext } from 'support/context/ThemeContext';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
+import { filterDataByTerm } from '../../../utils/common.util';
 
 export const TrainerPlans = ({ id }) => {
   const { theme } = useThemeContext();
   const [searchTerm, setSearchTerm] = React.useState('');
-
 
   const PLANS = gql`{
     plans(where: {creatorId: "${id}"})
@@ -38,9 +38,7 @@ const filterPlans = (event) => {
 
 let results;
 if(data){
-results = !searchTerm
-  ? data.plans
-  : data.plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  results = filterDataByTerm(searchTerm, data.plans, ['title']);
 }
 
 if (loading) return <Loader isLoading={loading} />;
@@ -48,7 +46,7 @@ if (error) return <p>Error :(</p>;
 
   return (
     <div>
-      <Search placeholder={translate('Find')} callBack={filterPlans} />
+      <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)}/>
       {data.plans.length >= 1 ? results.map((element, i) => (
         <div key={i.toString()}>
             <RenderType theme={theme} type={'plans'} element={element} i={i} />

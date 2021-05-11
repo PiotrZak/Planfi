@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WebApi.Controllers.ViewModels;
 using Microsoft.Extensions.Configuration;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -86,7 +87,7 @@ namespace WebApi.Services{
         public UserViewModel GetById(string id)
         {
             //dapper query
-            var connection = new NpgsqlConnection(Configuration.GetConnectionString("VPS"));
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             connection.Open();
             
             var user = connection.Query<UserViewModel>("SELECT \u0022UserId\u0022, \u0022Avatar\u0022, \u0022FirstName\u0022, \u0022LastName\u0022, \u0022Role\u0022, \u0022Email\u0022, \u0022PhoneNumber\u0022 FROM public.\u0022Users\u0022 WHERE \u0022UserId\u0022 = @id",
@@ -144,22 +145,24 @@ namespace WebApi.Services{
 
 
 
-        public void Delete(string[] id)
+        public async Task Delete(string[] id)
         {
-            foreach (var UserId in id)
+            foreach (var userId in id)
             {
-                var user = _context.Users.Find(UserId);
+                var user = await _context.Users.FindAsync(userId);
                 if (user != null)
                 {
                     _context.Users.Remove(user);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
             }
         }
 
         public IEnumerable<User> GetByRole(string role)
         {
-            var users = _context.Clients.Where(x => x.Role == role);
+            var users = _context.Clients
+                .Where(x => x.Role == role);
+            
             return users;
         }
         

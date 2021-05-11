@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 
 namespace WebApi.Helpers

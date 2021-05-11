@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Models;
 

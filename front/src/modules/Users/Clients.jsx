@@ -21,6 +21,7 @@ import { ClientPanel } from './ClientPanel';
 import { UsersPanel } from './micromodules/UsersPanel';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
+import { filterDataByTerm } from '../../utils/common.util';
 
 const Container = styled.div`
   text-align: center;
@@ -86,7 +87,7 @@ const Clients = () => {
         });
 }, []);
 
-const deleteUser = useCallback(() => {
+const deleteUser = useCallback((activeUsers) => {
   userService
     .deleteUsers(activeUsers)
     .then(() => {
@@ -172,33 +173,20 @@ useEffect(() => {
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
-    if (selectedUsers.length > 0) {
-      if (user.role == "Owner") {
-        setBottomSheet('flex');
-      }
-      else {
-        setAssignTrainer('flex');
-      }
-    } else {
-      if (user.role == "Owner") {
-        setBottomSheet('none');
-      }
-      else {
-        setAssignTrainer('none');
-      }
-    }
+    user.role == "Owner" ? setBottomSheet('flex') : setAssignTrainer('flex');
+
   };
 
   const filterUsers = (event) => {
-    setSearchTerm(event.target.value);
+    
   };
 
   let results;
+  
   if(data){
-  results = !searchTerm
-    ? data.users
-    : data.users.filter((user) => user.firstName.toLowerCase().includes(searchTerm.toLowerCase()));
+   results = filterDataByTerm(searchTerm, data.users, ['firstName', 'lastName']);
   }
+
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
@@ -212,7 +200,7 @@ useEffect(() => {
         </Nav>
         <InviteUserModal role={Role.User} openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Container>
-          <Search placeholder={translate('Find')} callBack={filterUsers} />
+          <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
       </Container>
         <Loader isLoading={isLoading}>
           {results.length > 0
@@ -228,7 +216,8 @@ useEffect(() => {
             : <p>{translate('NoUsers')}</p>}
         </Loader>
       </GlobalTemplate>
-      {user.role && user.role != Role.Owner ?
+      {user.role && 
+      user.role != Role.Owner ?
         <ClientPanel
         assignUserToMe={assignUserToMe}
         assignPlan={assignPlan}

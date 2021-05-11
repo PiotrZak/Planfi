@@ -1,113 +1,48 @@
-using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using WebApi.Entities;
 using WebApi.Helpers;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
-using WebApi.Models;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using WebApi.Interfaces;
+using WebApi.Models;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Exercises
 {
     [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ExercisesController : ControllerBase
     {
-        private readonly IExerciseService _ExerciseService;
-        private readonly ICategoryService _CategoryService;
+        private readonly IExerciseService _exerciseService;
+        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
-        private readonly AppSettings _appSettings;
-        private readonly IHostingEnvironment _environment;
 
         public ExercisesController(
             ICategoryService categoryService,
             IExerciseService exerciseService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings,
-            IHostingEnvironment environment)
+            IMapper mapper
+            )
         {
-            _CategoryService = categoryService;
-            _ExerciseService = exerciseService;
+            _categoryService = categoryService;
+            _exerciseService = exerciseService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
-            _environment = environment;
         }
         
         [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> CreateExercise([FromForm] CreateExercise model)
         {
-            var transformModel = new ExerciseModel();
-            //transform IFormFile List to byte[]
-            if (model.Files != null)
-            {
-                int i = 0;
-                var filesList = new List<byte[]>();
-                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
-                {
-
-                    //movie processing
-                    if (formFile.ContentType =="video/mp4" 
-                        || formFile.ContentType == "video/mov" 
-                        || formFile.ContentType == "video/avi" 
-                        || formFile.ContentType == "video/quicktime")
-                    {
-                        
-                        //TODO - save that file not to CurrentDirectory but to frontend directory
-                        _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-                        var path = Path.Combine(_environment.WebRootPath, "Movies");
-                            
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        var fileName = Path.GetFileName(model.Name+i);
-                        var ext = Path.GetExtension(formFile.FileName);
-                        await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
-                        {
-                            await formFile.CopyToAsync(stream);
-                        }
-                        
-                        var bytes = Encoding.ASCII.GetBytes(ext);
-                        await using var memoryStream = new MemoryStream();
-                        await formFile.CopyToAsync(memoryStream);
-                        filesList.Add(bytes);
-                    }
-                    
-                    //images processing
-                    else
-                    {
-                        await using var memoryStream = new MemoryStream();
-                        await formFile.CopyToAsync(memoryStream);
-                        filesList.Add(memoryStream.ToArray());
-                    }
-                    i++;
-                }
-                transformModel.Name = model.Name;
-                transformModel.Description = model.Description;
-                transformModel.Files = filesList;
-                transformModel.CategoryId = model.CategoryId;
-            }
-            else
-            {
-                transformModel.Name = model.Name;
-                transformModel.Description = model.Description;
-                transformModel.Files = null;
-                transformModel.CategoryId = model.CategoryId;
-            }
-            
-            var exercise = _mapper.Map<Exercise>(transformModel);
+            var convertedModel = await _exerciseService.TransformData(model);
+            var exercise = _mapper.Map<Exercise>(convertedModel);
             try
             {
-                await _CategoryService.AssignExercise(model.CategoryId, exercise);
+                await _categoryService.AssignExercise(model.CategoryId, exercise);
                 return Ok();
             }
             catch (AppException ex)
@@ -120,7 +55,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var exercises = _ExerciseService.GetAll();
+            var exercises = _exerciseService.GetAll();
             return Ok(exercises);
         }
         
@@ -128,7 +63,7 @@ namespace WebApi.Controllers
         [HttpGet("organization/{organizationId}")]
         public async Task<IActionResult> GetAllByOrganization(string organizationId)
         {
-            var exercises = await _ExerciseService.GetAllByOrganization(organizationId);
+            var exercises = await _exerciseService.GetAllByOrganization(organizationId);
             return Ok(exercises);
         }
 
@@ -136,7 +71,7 @@ namespace WebApi.Controllers
         [HttpGet("category/{categoryId}")]
         public IActionResult GetExercisesByCategory(string categoryId)
         {
-            var exercises = _ExerciseService.GetAllOfCategory(categoryId);
+            var exercises = _exerciseService.GetAllOfCategory(categoryId);
 
             if (exercises == null)
                 return NotFound();
@@ -148,7 +83,7 @@ namespace WebApi.Controllers
         [HttpGet("plan/{planId}")]
         public IActionResult GetExercisesByPlan(string planId)
         {
-            var exercises = _ExerciseService.GetAllOfPlan(planId);
+            var exercises = _exerciseService.GetAllOfPlan(planId);
 
             if (exercises == null)
                 return NotFound();
@@ -161,7 +96,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-            var exercise = _ExerciseService.GetById(id);
+            var exercise = _exerciseService.GetById(id);
 
             if (exercise == null)
                 return NotFound();
@@ -201,7 +136,7 @@ namespace WebApi.Controllers
 
             try
             {
-                await _ExerciseService.Update(exercise, id);
+                await _exerciseService.Update(exercise, id);
                 return Ok();
             }
             catch (AppException ex)
@@ -215,7 +150,7 @@ namespace WebApi.Controllers
         [HttpPost("delete")]
         public async Task<IActionResult> Delete([FromBody] string[] id)
         {
-            await _ExerciseService.Delete(id);
+            await _exerciseService.Delete(id);
             return Ok();
         }
     }

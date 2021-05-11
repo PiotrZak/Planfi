@@ -1,22 +1,28 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 using WebApi.Models.ViewModels;
 
-namespace WebApi.Services
+namespace WebApi.Services.Exercises
 {
     public class ExerciseService : IExerciseService
     {
-        private DataContext _context;
+        private readonly DataContext _context;
+        private readonly IHostingEnvironment _environment;
 
-        public ExerciseService(DataContext context)
+        public ExerciseService(DataContext context, IHostingEnvironment environment)
         {
             _context = context;
+            _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
 
         public Exercise Create(Exercise exercise)
@@ -169,14 +175,16 @@ namespace WebApi.Services
         }
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
-            var Exercises = _context.Exercises.Where(x => x.CategoryId == categoryId);
-            return Exercises;
+            var exercises = _context.Exercises
+                .Where(x => x.CategoryId == categoryId);
+            return exercises;
         }
 
         public IEnumerable<Exercise> GetAllOfPlan(string planId)
         {
-            var Exercises = _context.Exercises.Where(x => x.PlanId == planId);
-            return Exercises;
+            var exercises = _context.Exercises
+                .Where(x => x.PlanId == planId);
+            return exercises;
         }
 
 
@@ -194,6 +202,65 @@ namespace WebApi.Services
             }
 
             return 1;
+        }
+
+        public async Task<ExerciseModel> TransformData(CreateExercise model)
+        {
+            var transformModel = new ExerciseModel();
+            if (model.Files != null)
+            {
+                var i = 0;
+                var filesList = new List<byte[]>();
+                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
+                {
+                    if (formFile.ContentType =="video/mp4" 
+                        || formFile.ContentType == "video/mov" 
+                        || formFile.ContentType == "video/avi" 
+                        || formFile.ContentType == "video/quicktime")
+                    {
+                        
+                        //TODO - save that file not to CurrentDirectory but to frontend directory
+                        _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                        var path = Path.Combine(_environment.WebRootPath, "Movies");
+                            
+                        if (!Directory.Exists(path))
+                        {
+                            Directory.CreateDirectory(path);
+                        }
+                        var fileName = Path.GetFileName(model.Name+i);
+                        var ext = Path.GetExtension(formFile.FileName);
+                        await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+                        
+                        var bytes = Encoding.ASCII.GetBytes(ext);
+                        await using var memoryStream = new MemoryStream();
+                        await formFile.CopyToAsync(memoryStream);
+                        filesList.Add(bytes);
+                    }
+                    else
+                    {
+                        await using var memoryStream = new MemoryStream();
+                        await formFile.CopyToAsync(memoryStream);
+                        filesList.Add(memoryStream.ToArray());
+                    }
+                    i++;
+                }
+                transformModel.Name = model.Name;
+                transformModel.Description = model.Description;
+                transformModel.Files = filesList;
+                transformModel.CategoryId = model.CategoryId;
+            }
+            else
+            {
+                transformModel.Name = model.Name;
+                transformModel.Description = model.Description;
+                transformModel.Files = null;
+                transformModel.CategoryId = model.CategoryId;
+            }
+
+            return transformModel;
         }
 
         public async Task<int> Update(Exercise updateExercise, string id)

@@ -1,27 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApi.Models;
-using WebApi.Helpers;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System;
-using System.Text;
-using WebApi.Controllers.ViewModels;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using WebApi.Common;
+using WebApi.Controllers.ViewModels;
+using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Users
 {
     [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class UsersController : ApiControllerBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
         private readonly AppSettings _appSettings;
        
         public UsersController(

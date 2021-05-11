@@ -1,4 +1,5 @@
 ﻿using System;
+using WebApi.Data.Entities.Users;
 
 namespace WebApi.Entities
 {

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Entities;
+using WebApi.Models;
 using WebApi.Models.ViewModels;
 using WebApi.Services;
 
@@ -20,5 +21,6 @@ namespace WebApi.Interfaces
         IEnumerable<Exercise> GetAllOfPlan(string planId);
         Task<int> Update(Exercise exercise, string id);
         Task<int> Delete(string[] id);
+        Task<ExerciseModel> TransformData(CreateExercise model);
     }
 }

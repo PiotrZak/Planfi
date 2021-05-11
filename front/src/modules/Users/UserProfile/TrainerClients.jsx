@@ -4,6 +4,7 @@ import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import { useThemeContext } from 'support/context/ThemeContext';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
+import { filterDataByTerm } from '../../../utils/common.util';
 
 export const TrainerClients = ({ id }) => {
   const [clients, setClients] = useState([]);
@@ -21,18 +22,11 @@ export const TrainerClients = ({ id }) => {
       });
   }, [id]);
 
-  const filterClients = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  //searching for first name - add last name too
-  const results = !searchTerm
-  ? clients
-  : clients.filter((client) => client.firstName.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+  let results = filterDataByTerm(searchTerm, clients, ['firstName', 'lastName']);
 
   return (
     <div>
-      <Search placeholder={translate('Find')} callBack={filterClients} />
+      <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
       {results.length >= 1 ? results.map((element, i) => (
         <div key={i.toString()}>
             <RenderType theme={theme} type={'users'} element={element} i={i} />

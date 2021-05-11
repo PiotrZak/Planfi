@@ -1,4 +1,5 @@
-﻿using WebApi.Entities;
+﻿using WebApi.Data.Entities.Users;
+using WebApi.Entities;
 
 namespace WebApi.Controllers.ViewModels
 {

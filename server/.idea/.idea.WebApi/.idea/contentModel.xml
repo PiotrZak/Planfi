@@ -154,6 +154,7 @@
       <e p="WebApi.sln" t="IncludeFlat" />
       <e p="wwwroot" t="Include">
         <e p="Movies" t="Include">
+          <e p="a0.mov" t="Include" />
           <e p="bjhb0.mov" t="Include" />
           <e p="dsada0.mp4" t="Include" />
           <e p="Email Testing0.mov" t="Include" />

@@ -1,18 +1,17 @@
 ﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using WebApi.Services;
-using WebApi.Helpers;
-using Microsoft.AspNetCore.Authorization;
-using WebApi.Models;
 using System.IO;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
+using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 using WebApi.Services.Account;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers.Account
 {
     [Authorize]
     [ApiController]
@@ -40,17 +39,16 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("uploadAvatar")]
-        public async Task<IActionResult> UploadAvatar([FromForm]string userId, IFormFile avatar)
+        public async Task<IActionResult> UploadAvatar([FromForm]string userId, IFormFile avatarFile)
         {
-
-            using var memoryStream = new MemoryStream();
-            avatar.CopyTo(memoryStream);
+            await using var memoryStream = new MemoryStream();
+            await avatarFile.CopyToAsync(memoryStream);
             memoryStream.ToArray();
-            var Avatar = memoryStream.ToArray();
+            var avatar = memoryStream.ToArray();
 
             try
             {
-                await _accountService.UploadAvatar(userId, Avatar);
+                await _accountService.UploadAvatar(userId, avatar);
                 return Ok();
             }
             catch (AppException ex)
@@ -87,8 +85,7 @@ namespace WebApi.Controllers
                     .WithData(resetPasswordResponse)
                     .Build();
                 
-                return Ok(new { message = "ok" });
-                /*return CommonResponse(success);*/
+                return CommonResponse(success);
             }
 
             catch(Exception e)

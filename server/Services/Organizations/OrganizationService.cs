@@ -3,6 +3,7 @@ using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -87,7 +88,7 @@ namespace WebApi.Services
         public IEnumerable<UserViewModel> GetUsers()
         {
             //dapper query
-            var connection = new NpgsqlConnection(Configuration.GetConnectionString("VPS"));
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             connection.Open();
 
             var users = connection.Query<UserViewModel>(

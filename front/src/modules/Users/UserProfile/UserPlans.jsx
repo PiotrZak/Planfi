@@ -4,6 +4,7 @@ import { RenderType } from 'components/organisms/CheckboxGeneric/DataTypes';
 import { useThemeContext } from 'support/context/ThemeContext';
 import Search from 'components/molecules/Search';
 import { translate } from 'utils/Translation';
+import { filterDataByTerm } from '../../../utils/common.util';
 
 export const UserPlans = ({ id }) => {
   const [plans, setPlans] = useState([]);
@@ -20,18 +21,12 @@ export const UserPlans = ({ id }) => {
       });
   }, [id]);
 
-  const filterPlans = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  let filteredPlans = filterDataByTerm(searchTerm, plans, ['title']);
 
-  const results = !searchTerm
-  ? plans
-  : plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
-  
     return (
       <div>
-        <Search placeholder={translate('Find')} callBack={filterPlans} />
-      {plans.length >= 1 ? plans.map((element, i) => (
+        <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
+      {filteredPlans.length >= 1 ? filteredPlans.map((element, i) => (
         <div key={i.toString()}>
             <RenderType theme={theme} type={'plans'} element={element} i={i} />
         </div>

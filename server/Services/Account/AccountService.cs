@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -198,8 +199,17 @@ namespace WebApi.Services.Account
                         <p>Thanks for registering!</p>
                              {message}",
             };
-            await _emailService.Send(messageData);
-            return 1;
+            try
+            {
+                await _emailService.Send(messageData);
+                return 1;
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+
         }
         
         public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
@@ -222,9 +232,12 @@ namespace WebApi.Services.Account
                                 Email = email,
                                 VerificationToken = RandomTokenString(),
                             };
-                            await _context.Users.AddAsync(user);
-                            await _context.SaveChangesAsync();
-                            await ConstructMessage(user, origin);
+                            var result = await ConstructMessage(user, origin);
+                            if (result == 1)
+                            {
+                                await _context.Users.AddAsync(user);
+                                await _context.SaveChangesAsync();
+                            }
                             break;
                         }
                         case "User":
@@ -236,9 +249,12 @@ namespace WebApi.Services.Account
                                 Email = email,
                                 VerificationToken = RandomTokenString(),
                             };
-                            await _context.Users.AddAsync(user);
-                            await _context.SaveChangesAsync();
-                            await ConstructMessage(user, origin);
+                            var result = await ConstructMessage(user, origin);
+                            if (result == 1)
+                            {
+                                await _context.Users.AddAsync(user);
+                                await _context.SaveChangesAsync();
+                            }
                             break;
                         }
                     }

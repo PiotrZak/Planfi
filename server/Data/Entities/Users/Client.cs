@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
 
 namespace WebApi.Entities
 {

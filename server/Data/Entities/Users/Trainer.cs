@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using WebApi.Controllers.ViewModels;
+using WebApi.Entities;
 
-namespace WebApi.Entities
+namespace WebApi.Data.Entities.Users
 {
     public sealed class Trainer : User
     {

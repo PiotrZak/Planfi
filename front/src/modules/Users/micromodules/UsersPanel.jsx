@@ -52,7 +52,7 @@ export const UsersPanel = ({
         >
             {isMobile ?
                 <>
-                    <PanelItem onClick={() => deleteUser()}>
+                    <PanelItem onClick={() => deleteUser(activeUsers)}>
                         {translate('DeleteUserText')}
                     </PanelItem>
                     <PanelItem onClick={() => openAssignPlansToUsers()}>
@@ -72,7 +72,7 @@ export const UsersPanel = ({
                             {activeUsers.length}
                             {translate('UsersSelected')}
                         </PanelItem>
-                        <PanelItem onClick={() => deleteUser()} >
+                        <PanelItem onClick={() => deleteUser(activeUsers)} >
                             {translate('DeleteUserText')}
                         </PanelItem>
                         <PanelItem onClick={() => openAssignPlansToUsers()}>

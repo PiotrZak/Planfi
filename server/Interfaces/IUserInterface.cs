@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Models;
 
@@ -14,7 +15,7 @@ namespace WebApi.Interfaces
         IEnumerable<Trainer> GetAllTrainers();
         UserViewModel GetById(string id);
         Task<int> Update(string id, UpdateUserModel model);
-        void Delete(string[] id);
+        Task Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
         Task<int> AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
         Task<int> AssignPlanToClients(string[] userIds, string[] planIds);

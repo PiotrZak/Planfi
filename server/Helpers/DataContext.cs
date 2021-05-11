@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 
 namespace WebApi.Helpers
@@ -17,7 +18,7 @@ namespace WebApi.Helpers
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var sqlConnectionString = Configuration.GetConnectionString("DockerCommandsConnectionString");
+            var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
             optionsBuilder.UseNpgsql(sqlConnectionString);
         }
 

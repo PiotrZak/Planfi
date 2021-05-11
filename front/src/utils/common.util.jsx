@@ -1,7 +1,10 @@
+import { uniqBy } from 'lodash';
 export const commonUtil = {
   getCheckedData,
   getUnique,
 };
+
+
 
 function filteringArraysScopes(allElements, removeElementsFromList) {
   return allElements.filter((el) => !removeElementsFromList.includes(el));
@@ -29,5 +32,22 @@ function getUnique(arr, index) {
 
    return unique;
 }
+
+export const filterDataByTerm = (searchTerm, data, dataProperty) => {
+	if (!searchTerm) {
+		return data;
+	} else {
+		const result = [];
+		let uniqueResult;
+		for (let i = 0; i < dataProperty.length; i++) {
+			const filteredData = data.filter((x) =>
+				x[dataProperty[i]].toLowerCase().includes(searchTerm?.toLocaleLowerCase()),
+			);
+			result.push(...filteredData);
+			uniqueResult = uniqBy(result, 'id');
+		}
+		return uniqueResult;
+	}
+};
 
 export default commonUtil;
