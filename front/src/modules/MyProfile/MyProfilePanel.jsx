@@ -6,9 +6,6 @@ import StyledReactBottomSheet, { PanelContainer, PanelItem } from 'components/or
 import { useHistory } from 'react-router-dom';
 import { accountService } from 'services/accountServices';
 import styled from "styled-components";
-import AttachmentPreview, {
-  TYPE,
-} from "components/molecules/AttachmentPreview";
 import {
   useNotificationContext,
   ADD,
@@ -135,7 +132,7 @@ export const MyProfilePanel = ({
 
   return (
     <StyledReactBottomSheet
-      showBlockLayer={false}
+      showBlockLayer={true}
       visible={bottomSheet}
       className=""
       onClose={() => setBottomSheet('none')}

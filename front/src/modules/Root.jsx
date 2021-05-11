@@ -30,14 +30,12 @@ import Plan from 'modules/Plans/Plan/Plan';
 import MyProfile from 'modules/MyProfile/MyProfile';
 import User  from 'modules/Users/User';
 
-import OrganizationUsers from 'modules/Users/OrganizationUsers';
 import { ThemeContext } from 'support/context/ThemeContext';
 import { LanguageContext } from 'support/context/LanguageContext';
 import { userContext } from 'support/context/UserContext';
 import MenuTemplate from 'templates/MenuTemplate';
 import Exercise from 'modules/Categories/Exercises/Exercise';
 import { PrivateRoute, Role } from 'utils/PrivateRoute';
-import { useScrollData } from "scroll-data-hook";
 
 import TestPage from 'modules/Auth/Test';
 import Clients from 'modules/Users/Clients';
@@ -78,8 +76,6 @@ const Root = () => {
             <BrowserRouter history={history}>
               <MainTemplate>
                 <Switch>
-
-                 {/* to test  */}
                   <Route path exact ="/" component={LoginPage} />
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
@@ -88,9 +84,6 @@ const Root = () => {
                   <Route path={routes.confirmation} component={ConfirmationPage} />
 
                   <Route path="/test" component={TestPage} />
-
-
-
                  <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
 

@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { userService } from 'services/userServices';
 import styled from 'styled-components';
 import { organizationService } from 'services/organizationServices';
-import { commonUtil } from 'utils/common.util';
 import Loader from 'components/atoms/Loader';
 import { translate } from 'utils/Translation';
 import Icon from 'components/atoms/Icon';
 import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric"
-import Button from "components/atoms/Button"
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Search from 'components/molecules/Search';
+import { filterDataByTerm } from 'utils/common.util';
 
 const IconWrapper = styled.div`
     margin-top: .4rem;
@@ -62,10 +59,7 @@ export const AssignUsersToTrainers = ({
     setSearchTerm(event.target.value);
   };
 
-  const trainersResult = !searchTerm
-    ? trainers
-    : trainers.filter((user) => user.firstName.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
-
+  const trainersResult  = filterDataByTerm(searchTerm, trainers, ['firstName', 'lastName']);
 
   const getAllTrainers = () => {
     organizationService

@@ -7,8 +7,8 @@ namespace WebApi.Interfaces
 {
     public interface IPlanService
     {
-        Plan GetById(string id);
-        Plan Create(Plan plan);
+        Task<Plan> GetById(string id);
+        Task<Plan> Create(Plan plan);
         IEnumerable<Plan> GetAll();
         IEnumerable<Plan> GetOrganizationPlans(string id);
         IEnumerable<Plan> GetUserPlans(string id);

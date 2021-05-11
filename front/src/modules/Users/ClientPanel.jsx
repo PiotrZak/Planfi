@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
@@ -22,10 +22,16 @@ export const ClientPanel = ({
   setBottomSheet,
   setAssignPlan,
   assignPlan,
-  assignUserToTrainer,
 }) => {
 
   const { user } = useUserContext();
+
+
+  useEffect(() => {
+    if (activeUsers == 0) {
+      setAssignTrainer('none')
+    }
+}, [activeUsers]);
 
   const openAssignPlansToUsers = () => {
     setAssignPlan("flex");

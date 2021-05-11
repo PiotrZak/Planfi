@@ -16,7 +16,6 @@ import { Role } from 'utils/role';
 import { commonUtil } from 'utils/common.util';
 import InviteUserModal from './InviteUsersModal';
 import SmallButton from 'components/atoms/SmallButton';
-
 import { ClientPanel } from './ClientPanel';
 import { UsersPanel } from './micromodules/UsersPanel';
 import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
@@ -26,6 +25,8 @@ import { filterDataByTerm } from '../../utils/common.util';
 const Container = styled.div`
   text-align: center;
 `;
+
+
 
 const Clients = () => {
 
@@ -62,6 +63,7 @@ const Clients = () => {
   const assignUserToPlan = useCallback((activeUsers, activePlans) => {
     const data = { clientIds: activeUsers, planIds: [activePlans] };
 
+    refreshView()
     userService
         .assignPlanToUser(data)
         .then(() => {
@@ -72,9 +74,6 @@ const Clients = () => {
                     type: 'positive'
                 }
             })
-            setRefresh(!refresh)
-            setAssignPlan('none');
-            setBottomSheet('none');
         })
         .catch((error) => {
             notificationDispatch({
@@ -110,9 +109,17 @@ const deleteUser = useCallback((activeUsers) => {
     });
 },[]);
 
-const assignUserToMe =  useCallback((activeUsers, activeTrainers) => {
+const refreshView = () => {
+  setAssignTrainer('none')
+  setBottomSheet('none');
+  setRefresh(!refresh)
+}
 
+const assignUserToMe =  useCallback((activeUsers, activeTrainers) => {
+  
   const data = { userIds: activeUsers, trainerIds: [user.userId] };
+  refreshView()
+
   userService
     .assignUsersToTrainer(data)
     .then(() => {
@@ -123,9 +130,7 @@ const assignUserToMe =  useCallback((activeUsers, activeTrainers) => {
           type: 'positive'
         }
       })
-      setRefresh(!refresh)
-      setAssignTrainer('none')
-      setBottomSheet('none');
+
     })
     .catch((error) => {
       notificationDispatch({
@@ -141,6 +146,8 @@ const assignUserToMe =  useCallback((activeUsers, activeTrainers) => {
 const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
 
   const data = { userIds: activeUsers, trainerIds: [activeTrainers] };
+  refreshView()
+
   userService
     .assignUsersToTrainer(data)
     .then(() => {
@@ -152,8 +159,6 @@ const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
         }
       })
       setRefresh(!refresh)
-      setAssignTrainer('none')
-      setBottomSheet('none');
     })
     .catch((error) => {
       notificationDispatch({
@@ -174,15 +179,9 @@ useEffect(() => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
     user.role == "Owner" ? setBottomSheet('flex') : setAssignTrainer('flex');
-
-  };
-
-  const filterUsers = (event) => {
-    
   };
 
   let results;
-  
   if(data){
    results = filterDataByTerm(searchTerm, data.users, ['firstName', 'lastName']);
   }

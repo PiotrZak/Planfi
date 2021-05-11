@@ -11,7 +11,7 @@ namespace WebApi.Services.Exercises
 {
     public class CategoryService : ICategoryService
     {
-        private DataContext _context;
+        private readonly DataContext _context;
 
         public CategoryService(DataContext context)
         {
@@ -20,8 +20,11 @@ namespace WebApi.Services.Exercises
 
         public Category Create(Category category)
         {
-            // throw error if the new plan is already taken
-            if (_context.Categories.Any(x => x.Title == category.Title))
+            var duplication = _context.Categories
+                .Where(x => x.OrganizationId == category.OrganizationId)
+                .Any(x => x.Title == category.Title);
+            
+            if (duplication)
                 throw new AppException("Category " + category.Title + " is already exist");
            
             _context.Categories.Add(category);
