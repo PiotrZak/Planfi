@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Data.Entities;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -184,6 +185,7 @@ namespace WebApi.Services.Exercises
         {
             var exercises = _context.Exercises
                 .Where(x => x.PlanId == planId);
+            
             return exercises;
         }
 
@@ -197,11 +199,17 @@ namespace WebApi.Services.Exercises
                 if (exercise != null)
                 {
                     _context.Exercises.Remove(exercise);
-                    await _context.SaveChangesAsync();
+                    var exerciseInstancesIds = _context.Exercises
+                        .Where(x => x.Name == exercise.Name && x.Description == exercise.Description);
+
+                    foreach(var exerciseInstanceId in exerciseInstancesIds)
+                    {
+                        _context.Exercises.Remove(exerciseInstanceId);
+                    }
                 }
             }
-
-            return 1;
+            var count = await _context.SaveChangesAsync();
+            return count;
         }
 
         public async Task<ExerciseModel> TransformData(CreateExercise model)

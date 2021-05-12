@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HotChocolate;
 using HotChocolate.Types;
+using WebApi.Data.Entities;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;

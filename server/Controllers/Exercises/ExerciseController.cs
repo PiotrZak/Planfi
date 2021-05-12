@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using WebApi.Data.Entities;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;

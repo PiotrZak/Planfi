@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApi.Data.Entities;
 using WebApi.Entities;
 using WebApi.Models;
 using WebApi.Services;

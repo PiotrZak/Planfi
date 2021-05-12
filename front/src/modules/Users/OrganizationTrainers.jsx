@@ -14,6 +14,7 @@ import { useQuery, gql } from '@apollo/client';
 import SmallButton from 'components/atoms/SmallButton';
 import InviteUserModal from './InviteUsersModal';
 import { Role } from 'utils/role';
+import { filterDataByTerm } from '../../utils/common.util';
 
 const Container = styled.div`
   margin-bottom: .8rem;
@@ -69,12 +70,7 @@ const OrganizationTrainers = () => {
 
   let results;
   if(data){
-  results = !searchTerm
-    ? data.users
-    : data.users.filter((user) => {
-      const userName = `${user.firstName} ${user.lastName}`;
-      return userName.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+   results = filterDataByTerm(searchTerm, data.users, ['firstName', 'lastName']);
   }
 
   if (loading) return <Loader isLoading={loading} />;
@@ -94,9 +90,11 @@ const OrganizationTrainers = () => {
             {results.length > 0
               ? (
                 <CheckboxGenericComponent
+                  checkboxVisible = {false}
                   dataType="users"
                   displayedValue="firstName"
                   dataList={results}
+                  checkboxVisible={false}
                   onSelect={submissionHandleElement}
                 />
               )

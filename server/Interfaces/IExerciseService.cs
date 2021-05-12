@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Entities;
+using WebApi.Data.Entities;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
-using WebApi.Services;
 
 namespace WebApi.Interfaces
 {

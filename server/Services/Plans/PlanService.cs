@@ -40,8 +40,8 @@ namespace WebApi.Services
 
         public async Task<Plan> GetById(string id)
         {
-
-            var plan = await _context.Plans.FirstOrDefaultAsync(x => x.PlanId == id);
+            var plan = await _context.Plans
+                .FirstOrDefaultAsync(x => x.PlanId == id);
             return plan;
         }
         public IEnumerable<Plan> GetAll()
@@ -95,7 +95,7 @@ namespace WebApi.Services
 
         public void AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)
         {
-            var plan = GetById(planId);
+            var plan = GetById(planId).Result;
 
             foreach (var id in exerciseId)
             {
@@ -119,7 +119,7 @@ namespace WebApi.Services
 
         public void UnassignExercisesToPlan(string planId, string[] exerciseId)
         {
-            var plan = GetById(planId);
+            var plan = GetById(planId).Result;
 
             foreach (var id in exerciseId)
             {
