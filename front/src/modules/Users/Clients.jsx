@@ -254,6 +254,7 @@ useEffect(() => {
             bottomSheet={bottomSheet}
             setBottomSheet={setBottomSheet}
             activeUsers={activeUsers}
+            refreshView={refreshView}
           />
           <AssignUsersToTrainers
             theme={theme}
@@ -264,6 +265,7 @@ useEffect(() => {
             bottomSheet={bottomSheet}
             setBottomSheet={setBottomSheet}
             activeUsers={activeUsers}
+            refreshView={refreshView}
           />
         </>
         </>

@@ -17,6 +17,8 @@ import Nav from 'components/atoms/Nav';
 import { useUserContext } from 'support/context/UserContext';
 import { useScrollContext } from 'support/context/ScrollContext';
 import Search from 'components/molecules/Search';
+import { filterDataByTerm } from '../../utils/common.util';
+
 
 const Categories = (props) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -123,11 +125,10 @@ const Categories = (props) => {
     setSearchTerm(event.target.value);
   };
 
+
   let results;
   if(data){
-  results = !searchTerm
-    ? data.categories
-    : data.categories.filter((category) => category.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+   results = filterDataByTerm(searchTerm, data.categories, ['title']);
   }
 
   if (loading) return <Loader isLoading={loading} />;

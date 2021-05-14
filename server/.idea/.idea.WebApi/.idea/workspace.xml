@@ -220,7 +220,6 @@
         <option value="$PROJECT_DIR$/Startup.cs" />
         <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
         <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
-        <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
         <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
         <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Users/Trainer.cs" />
@@ -232,6 +231,7 @@
         <option value="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Exercises.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IExerciseService.cs" />
+        <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
       </list>
     </option>
   </component>
@@ -651,19 +651,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>169</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="166">
-            <startOffsets>
-              <option value="5585" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5586" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>

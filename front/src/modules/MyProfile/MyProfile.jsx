@@ -59,7 +59,6 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
     userService
       .getUserById(user.userId)
       .then((data) => {
-        console.log(data)
         setUpdatedUser(data);
       })
       .catch((error) => {

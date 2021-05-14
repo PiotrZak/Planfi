@@ -7,6 +7,7 @@ import Loader from 'components/atoms/Loader';
 import { StyledReactBottomSheetExtended, BottomNav, BottomNavItem } from 'components/organisms/BottomSheet'
 import Search from 'components/molecules/Search';
 import { useUserContext } from 'support/context/UserContext';
+import { filterDataByTerm } from '../../../utils/common.util';
 import { useQuery, gql } from '@apollo/client';
 
 const SearchLightContainer = styled.div`
@@ -36,6 +37,7 @@ export const AssignUsersToPlans = ({
     activeUsers,
     assignUserToPlan,
     setBottomSheet,
+    refreshView,
 }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const user = JSON.parse((localStorage.getItem('user')));
@@ -72,15 +74,15 @@ export const AssignUsersToPlans = ({
         setSearchTerm(event.target.value);
     };
 
+
     let results;
     if(data){
-    results = !searchTerm
-      ? data.plans
-      : data.plans.filter((plan) => plan.title.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+     results = filterDataByTerm(searchTerm, data.plans, ['title']);
     }
 
     const getSelectedPlanId = (plan) => {
         assignUserToPlan(activeUsers, plan.planId)
+        refreshView()
     }
 
     if (loading) return <Loader isLoading={loading} />;

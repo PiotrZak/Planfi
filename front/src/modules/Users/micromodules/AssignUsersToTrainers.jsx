@@ -37,6 +37,7 @@ export const AssignUsersToTrainers = ({
   activeUsers,
   assignUserToTrainer,
   setBottomSheet,
+  refreshView,
 }) => {
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -74,6 +75,7 @@ export const AssignUsersToTrainers = ({
 
   const getSelectedTrainerId = (trainer) => {
     assignUserToTrainer(activeUsers, trainer.userId)
+    refreshView()
 }
 
   return (

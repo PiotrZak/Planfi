@@ -132,10 +132,11 @@ const AddExerciseRefactor = (props) => {
         }
       })
       .catch((error) => {
+        console.log(error)
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error, message: translate("ErrorAlert") },
+            content: { error, message: error.data.message },
             type: "error",
           },
         });
