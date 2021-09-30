@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace WebApi.Models
 {
-    public class CreateExercise
+    public class 
+        CreateExercise
     {
 
         [Required]

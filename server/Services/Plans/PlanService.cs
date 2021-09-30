@@ -25,7 +25,7 @@ namespace WebApi.Services
         public async Task<Plan> Create(Plan plan)
         {
             //check for duplication in orgaanization context
-            var duplication = _context.Categories
+            var duplication = _context.Plans
                 .Where(x => x.OrganizationId == plan.OrganizationId)
                 .Any(x => x.Title == plan.Title);
             
@@ -144,7 +144,6 @@ namespace WebApi.Services
             var userPlans = _context.ClientsPlans.Where(x => x.ClientId == userId);
 
             var planIds = new List<string>();
-            var plans = new List<Plan>();
 
             foreach (var i in userPlans)
             {
@@ -152,12 +151,7 @@ namespace WebApi.Services
                 planIds.Add(planId);
             }
 
-            for (int i = 0; i < planIds.Count; i++)
-            {
-                var plan = _context.Plans.FirstOrDefault(x => x.PlanId == planIds[i]);
-                plans.Add(plan);
-            }
-            return plans;
+            return planIds.Select((t, i) => _context.Plans.FirstOrDefault(x => x.PlanId == planIds[i])).ToList();
         }
 
         public IEnumerable<Plan> GetCreatorPlans(string id)

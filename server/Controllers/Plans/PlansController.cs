@@ -34,13 +34,13 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("create")]
-        public IActionResult Create([FromBody]CreatePlan model)
+        public async Task<IActionResult> Create([FromBody]CreatePlan model)
         {
-            var plan = _mapper.Map<Plan>(model);
+            var plan =  _mapper.Map<Plan>(model);
 
             try
             {
-                _planService.Create(plan);
+                await _planService.Create(plan);
                 return Ok(new
                 {
                     plan.PlanId,

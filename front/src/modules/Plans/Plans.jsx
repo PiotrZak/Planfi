@@ -16,6 +16,8 @@ import Heading from 'components/atoms/Heading';
 import AddPlanModal from './AddPlanModal';
 import PlansPanel from './PlansPanel';
 import Loader from 'components/atoms/Loader';
+import { filterDataByTerm } from '../../utils/common.util';
+
 
 const Plan = (props) => {
   const { notificationDispatch } = useNotificationContext();
@@ -93,9 +95,7 @@ const Plan = (props) => {
   
   let results;
   if(data){
-  results = !searchTerm
-    ? data.plans
-    : data.plans.filter((plan) => plan.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+   results = filterDataByTerm(searchTerm, data.plans, ['name']);
   }
 
   if (loading) return <Loader isLoading={loading} />;

@@ -45,11 +45,9 @@ namespace WebApi.Services.Exercises
             return exercise;
         }
         
-        public Exercise GetById(string id)
+        public Task<Exercise> GetById(string id)
         {
-
-            var exercise = _context.Exercises.FirstOrDefault(x => x.ExerciseId == id);
-            return exercise;
+            return _context.Exercises.SingleOrDefaultAsync(x => x.ExerciseId == id);
         }
 
         public IEnumerable<Exercise> GetAll()
@@ -67,36 +65,22 @@ namespace WebApi.Services.Exercises
             
             foreach(var organizationCategory in organizationCategories)
             {
-                var i = 0;
                 var categoryExercises = await _context.Exercises
                     .Where(x => x.CategoryId == organizationCategory.CategoryId)
                     .ToListAsync();
-                
-                foreach(var categoryExercise in categoryExercises){
-                    
-                    var modelExercise = new ExerciseViewModel();
-                    
-                    if (categoryExercise.Files != null && categoryExercise.Files.Any())
-                    {
-                        modelExercise.ExerciseId = categoryExercise.ExerciseId;
-                        modelExercise.Name = categoryExercise.Name;
-                        modelExercise.File = Convert.ToBase64String(categoryExercise.Files?[0]);
-                        modelExercise.CategoryId = categoryExercise.CategoryId;
-                        modelExercise.PlanId = categoryExercise.PlanId;
-                        modelExercise.CategoryName = organizationCategories[i].Title;
-                    }
-                    else
-                    {
-                        modelExercise.ExerciseId = categoryExercise.ExerciseId;
-                        modelExercise.Name = categoryExercise.Name;
-                        modelExercise.File = null;
-                        modelExercise.CategoryId = categoryExercise.CategoryId;
-                        modelExercise.PlanId = categoryExercise.PlanId;
-                        modelExercise.CategoryName = organizationCategories[i].Title;
-                    }
-                    organizationExercises.Add(modelExercise);
-                }
-                i++;
+
+                organizationExercises
+                    .AddRange(categoryExercises
+                    .Select(exercise => new ExerciseViewModel
+                {
+                    ExerciseId = exercise.ExerciseId,
+                    Name = exercise.Name,
+                    File = exercise.Files != null && exercise.Files.Any()
+                        ? Convert.ToBase64String(exercise.Files[0])
+                        : null,
+                    CategoryId = exercise.CategoryId,
+                    PlanId = exercise.PlanId
+                }));
             }
             return organizationExercises;
         }
@@ -114,24 +98,16 @@ namespace WebApi.Services.Exercises
             
             foreach (var exercise in allInstanceExercises)
             {
-                var modelExercise = new ExerciseViewModel();
-                    
-                if (exercise.Files != null && exercise.Files.Any())
+                var modelExercise = new ExerciseViewModel
                 {
-                    modelExercise.ExerciseId = exercise.ExerciseId;
-                    modelExercise.Name = exercise.Name;
-                    modelExercise.File = Convert.ToBase64String(exercise.Files?[0]);
-                    modelExercise.CategoryId = exercise.CategoryId;
-                    modelExercise.PlanId = exercise.PlanId;
-                }
-                else
-                {
-                    modelExercise.ExerciseId = exercise.ExerciseId;
-                    modelExercise.Name = exercise.Name;
-                    modelExercise.File = null;
-                    modelExercise.CategoryId = exercise.CategoryId;
-                    modelExercise.PlanId = exercise.PlanId;
-                }
+                    ExerciseId = exercise.ExerciseId,
+                    Name = exercise.Name,
+                    File = exercise.Files != null && exercise.Files.Any()
+                        ? Convert.ToBase64String(exercise.Files[0])
+                        : null,
+                    CategoryId = exercise.CategoryId,
+                    PlanId = exercise.PlanId
+                };
                 
                 transformedExercises.Add(modelExercise);
             }
@@ -141,38 +117,20 @@ namespace WebApi.Services.Exercises
 
         public IEnumerable<ExerciseViewModel> GetSerializedExercises()
         {
-            var allExercises = _context.Exercises;
-            var transformedExercises = new List<ExerciseViewModel>();
-            
-            foreach (var exercise in allExercises)
-            {
-                var modelExercise = new ExerciseViewModel();
-                    
-                if (exercise.Files != null && exercise.Files.Any())
+            return _context.Exercises
+                .Select(exercise => new ExerciseViewModel
                 {
-                    modelExercise.ExerciseId = exercise.ExerciseId;
-                    modelExercise.Name = exercise.Name;
-                    modelExercise.File = Convert.ToBase64String(exercise.Files?[0]);
-                    modelExercise.CategoryId = exercise.CategoryId;
-                    modelExercise.PlanId = exercise.PlanId;
-                    modelExercise.Series = exercise.Series;
-                    modelExercise.Repeats = exercise.Repeats;
-                }
-                else
-                {
-                    modelExercise.ExerciseId = exercise.ExerciseId;
-                    modelExercise.Name = exercise.Name;
-                    modelExercise.File = null;
-                    modelExercise.CategoryId = exercise.CategoryId;
-                    modelExercise.PlanId = exercise.PlanId;
-                    modelExercise.Series = exercise.Series;
-                    modelExercise.Repeats = exercise.Repeats;
-                }
-                
-                transformedExercises.Add(modelExercise);
-            }
-
-            return transformedExercises;
+                    ExerciseId = exercise.ExerciseId,
+                    Name = exercise.Name,
+                    File = exercise.Files != null && exercise.Files.Any()
+                        ? Convert.ToBase64String(exercise.Files[0])
+                        : null,
+                    CategoryId = exercise.CategoryId,
+                    PlanId = exercise.PlanId,
+                    Series = exercise.Series,
+                    Repeats = exercise.Repeats
+                })
+                .ToList();
         }
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {

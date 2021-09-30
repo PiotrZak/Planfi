@@ -8,7 +8,7 @@ namespace WebApi.Interfaces
 {
     public interface IExerciseService
     {
-        Exercise GetById(string id);
+        Task<Exercise> GetById(string id);
         Exercise Create(Exercise Exercise);
         Exercise CreateInstance(Exercise Exercise);
         IEnumerable<Exercise> GetAll();
