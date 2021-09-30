@@ -10,6 +10,7 @@ using Npgsql;
 using WebApi.Controllers.ViewModels;
 using Microsoft.Extensions.Configuration;
 using WebApi.Data.Entities.Users;
+using WebApi.Data.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -33,7 +34,7 @@ namespace WebApi.Services{
         
         public User Register(string Email)
         {
-            if (_context.Clients.Any(x => x.Email == Email))
+            if (_context.Users.Any(x => x.Email == Email))
                 throw new AppException("Email \"" + Email + "\" is already taken"); 
             
             var user = _mapper.Map<User>(Email);
@@ -69,19 +70,6 @@ namespace WebApi.Services{
         {
             var users = _context.Users;
             return users;
-        }
-
-        public IEnumerable<Client> GetAllClients()
-        {
-            var clients = _context.Clients;
-            return clients;
-        }
-
-        public IEnumerable<Trainer> GetAllTrainers()
-        {
-            //security issues
-            var trainers = _context.Trainers;
-            return trainers;
         }
         
         public UserViewModel GetById(string id)
@@ -160,33 +148,35 @@ namespace WebApi.Services{
 
         public IEnumerable<User> GetByRole(string role)
         {
-            var users = _context.Clients
-                .Where(x => x.Role == role);
+            var users = _context.Users
+                .Where(x => x.Role.Name == role);
             
             return users;
         }
         
-        public async Task<int> AssignClientsToTrainers(string[] TrainersId, string[] UserIds)
+        public async Task<int> AssignClientsToTrainers(string[] trainersId, string[] userIds)
         {
             // [t1]
             // to every trainer add user
             // [u1, u2, u3, u4]
 
-            foreach (var trainerId in TrainersId)
+            foreach (var trainerId in trainersId)
             {
                 //finding an trainer
                 var trainer = await _context.Users.FindAsync(trainerId);
-                foreach (var userId in UserIds)
+                foreach (var userId in userIds)
                 {
                     //finding a clients
-                    var client = await _context.Clients.FindAsync(userId);
-                    var usersTrainers = new ClientsTrainers
+                    var client = await _context.Users.FindAsync(userId);
+                    var usersTrainers = new UsersTrainers
                     {
                         TrainerId = trainer.UserId,
                         ClientId = client.UserId
                     };
 
-                    await _context.ClientsTrainers.AddAsync(usersTrainers);
+                    await _context.UsersTrainers.AddAsync(usersTrainers);
+                    
+                    
                     try
                     { 
                         await _context.SaveChangesAsync();
@@ -216,20 +206,20 @@ namespace WebApi.Services{
             return 0;
         }
 
-        public async Task<int> AssignPlanToClients(string[] ClientIds, string[] PlanIds)
+        public async Task<int> AssignPlanToClients(string[] clientIds, string[] planIds)
         {
-            foreach (var clientId in ClientIds)
+            foreach (var clientId in clientIds)
             {
                 //finding an client 
-                var client = await _context.Clients.FindAsync(clientId);
+                var client = await _context.Users.FindAsync(clientId);
 
-                foreach (var planId in PlanIds)
+                foreach (var planId in planIds)
                 {
                     //finding a plan
                         var plan = await _context.Plans.FindAsync(planId);
-                        var usersPlans = new ClientsPlans {Client = client, Plan = plan};
+                        client.Plans.Add(plan);
+                        await _context.Users.AddAsync(client);
                         
-                        await _context.ClientsPlans.AddAsync(usersPlans);
                         try
                         { 
                             await _context.SaveChangesAsync();
@@ -239,7 +229,7 @@ namespace WebApi.Services{
                         {
                             if (ex.InnerException != null)
                             {
-                                var clientName = await _context.Clients
+                                var clientName = await _context.Users
                                     .Where(x => x.UserId == clientId)
                                     .Select(x => x.FirstName)
                                     .FirstAsync();
@@ -262,7 +252,7 @@ namespace WebApi.Services{
 
         public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
         {
-            var clientsTrainers = await _context.ClientsTrainers
+            var clientsTrainers = await _context.UsersTrainers
                 .Where(x => x.TrainerId == id)
                 .Select(x => x.ClientId)
                 .ToListAsync();
@@ -276,7 +266,7 @@ namespace WebApi.Services{
 
         public async Task<IEnumerable<User>> GetTrainersByClient(string id)
         {
-            var clientsTrainers = await _context.ClientsTrainers
+            var clientsTrainers = await _context.UsersTrainers
                 .Where(x => x.ClientId == id)
                 .Select(x => x.TrainerId)
                 .ToListAsync();

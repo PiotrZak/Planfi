@@ -38,12 +38,8 @@
           <e p="Organization.cs" t="Include" />
           <e p="Plans.cs" t="Include" />
           <e p="Users" t="Include">
-            <e p="Admin.cs" t="Include" />
-            <e p="Client.cs" t="Include" />
-            <e p="Owner.cs" t="Include" />
             <e p="RefreshToken.cs" t="Include" />
             <e p="Role.cs" t="Include" />
-            <e p="Trainer.cs" t="Include" />
             <e p="User.cs" t="Include" />
           </e>
         </e>
@@ -55,7 +51,6 @@
           <e p="AssignExerciseToPlan.cs" t="Include" />
           <e p="AssignUsersToOrganization.cs" t="Include" />
           <e p="ChangeRole.cs" t="Include" />
-          <e p="ClientPlans.cs" t="Include" />
           <e p="ClientTrainers.cs" t="Include" />
           <e p="CreateCategory.cs" t="Include" />
           <e p="CreateExercise.cs" t="Include" />
@@ -79,6 +74,7 @@
         <e p="AutoMapper.cs" t="Include" />
         <e p="DataContext.cs" t="Include" />
         <e p="ExtensionMethods.cs" t="Include" />
+        <e p="MockDeveloperData" t="Include" />
       </e>
       <e p="hostsettings.json" t="Include" />
       <e p="Interfaces" t="Include">

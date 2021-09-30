@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = PossibleRoles.Admin)]
         [HttpPost("create")]
         public IActionResult Create([FromBody]CreateOrganization model)
         {
@@ -47,7 +47,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = PossibleRoles.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -55,7 +55,7 @@ namespace WebApi.Controllers
             return Ok(organizations);
         }
 
-        [Authorize(Roles = Role.Owner)]
+        [Authorize(Roles = PossibleRoles.Owner)]
         [HttpGet("users/{id}")]
         public IActionResult GetOrganizationUsers(string id)
         {
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles = Role.Owner)]
+        [Authorize(Roles = PossibleRoles.Owner)]
         [HttpGet("trainers/{id}")]
         public IActionResult GetOrganizationTrainers(string id)
         {
@@ -83,7 +83,7 @@ namespace WebApi.Controllers
             return Ok(mappedUsers);
         }
 
-        [Authorize(Roles = Role.Trainer + "," + Role.Owner)]
+        [Authorize(Roles = PossibleRoles.Trainer + "," + PossibleRoles.Owner)]
         [HttpGet("clients/{id}")]
         public IActionResult GetOrganizationClients(string id)
         {
@@ -104,7 +104,7 @@ namespace WebApi.Controllers
             return Ok(mappedUsers);
         }
 
-        [Authorize(Roles = Role.Admin + "," + Role.Owner)]
+        [Authorize(Roles = PossibleRoles.Admin + "," + PossibleRoles.Owner)]
         [HttpGet("user/{id}")]
         public IActionResult GetUserById(string organizationId, [FromForm] string userId)
         {
@@ -123,7 +123,7 @@ namespace WebApi.Controllers
             return Ok(mappedUser);
         }
 
-        [Authorize(Roles = Role.Owner)]
+        [Authorize(Roles = PossibleRoles.Owner)]
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
@@ -131,7 +131,7 @@ namespace WebApi.Controllers
             return Ok(organization);
         }
 
-        [Authorize(Roles = Role.Owner)]
+        [Authorize(Roles = PossibleRoles.Owner)]
         [HttpPost("role")]
         public IActionResult ChangeRole([FromBody]ChangeRole model)
         {
@@ -140,7 +140,7 @@ namespace WebApi.Controllers
         }
 
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = PossibleRoles.Admin)]
         [HttpPost("delete")]
         public IActionResult Delete([FromBody] string[] id)
         {
@@ -148,7 +148,7 @@ namespace WebApi.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = PossibleRoles.Admin)]
         [HttpPost("assignUsers")]
         public IActionResult AssignUsersToOrganization([FromBody] AssignUsersToOrganization model)
         {

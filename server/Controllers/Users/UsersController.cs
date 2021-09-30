@@ -10,6 +10,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.ViewModels;
+using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
@@ -44,10 +46,11 @@ namespace WebApi.Controllers.Users
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
+                    //todo
                     Subject = new ClaimsIdentity(new Claim[]
                     {
                         new Claim(ClaimTypes.Name, user.UserId),
-                        new Claim(ClaimTypes.Role, user.Role)
+                        new Claim(ClaimTypes.Role, Role.Name)
                     }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -100,48 +103,6 @@ namespace WebApi.Controllers.Users
         }
         
         [AllowAnonymous]
-        [HttpGet("clients")]
-        public IActionResult GetAllClients()
-        {
-            var clients =  _userService.GetAllClients();
-            
-            var mappedUsers = clients.Select(i => new UserViewModel
-                {
-                    UserId = i.UserId,
-                    Avatar = i.Avatar,
-                    FirstName = i.FirstName,
-                    LastName = i.LastName,
-                    Role = i.Role,
-                    Email = i.Email,
-                    PhoneNumber = i.PhoneNumber,
-                })
-                .ToList();
-            
-            return Ok(mappedUsers);
-        }
-
-        [AllowAnonymous]
-        [HttpGet("trainers")]
-        public IActionResult GetAllTrainers()
-        {
-            var trainers = _userService.GetAllTrainers();
-
-            var mappedUsers = trainers.Select(i => new UserViewModel
-                {
-                    UserId = i.UserId,
-                    Avatar = i.Avatar,
-                    FirstName = i.FirstName,
-                    LastName = i.LastName,
-                    Role = i.Role,
-                    Email = i.Email,
-                    PhoneNumber = i.PhoneNumber,
-                })
-                .ToList();
-            
-            return Ok(mappedUsers);
-        }
-
-        [AllowAnonymous]
         /*[Authorize(Roles = Role.Admin + "," + Role.Owner)]*/
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
@@ -187,6 +148,18 @@ namespace WebApi.Controllers.Users
                 .Build();
             
             return CommonResponse(success);
+        }
+        
+        public class AssignPlansToClient
+        {
+            public AssignPlansToClient()
+            {
+                ClientIds = new string[] { };
+                PlanIds = new string[] { };
+            }
+
+            public string[] ClientIds { get; set; }
+            public string[] PlanIds { get; set; }
         }
 
         [AllowAnonymous]

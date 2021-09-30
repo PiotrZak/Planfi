@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
+using WebApi.Data.ViewModels;
 using WebApi.Entities;
 
 namespace WebApi.Helpers
@@ -22,22 +23,14 @@ namespace WebApi.Helpers
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
             optionsBuilder.UseNpgsql(sqlConnectionString);
         }
-
-
-
+        
         public DbSet<Organization> Organizations { get; set; }
-
         public DbSet<User> Users { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Trainer> Trainers { get; set; }
-
-        public DbSet<ClientsTrainers> ClientsTrainers { get; set; }
-
         public DbSet<Plan> Plans { get; set; }
-        public DbSet<ClientsPlans> ClientsPlans { get; set; }
-
+        public DbSet<UsersTrainers> UsersTrainers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,32 +42,16 @@ namespace WebApi.Helpers
             modelBuilder.Entity<Organization>()
                 .HasMany(b => b.Plans)
                 .WithOne();
-
+            
             // Plans <-> Users relationship
-            modelBuilder.Entity<ClientsPlans>()
-                .HasKey(e => new { e.ClientId, e.PlanId });
-
-            modelBuilder.Entity<ClientsPlans>()
-                .HasOne(e => e.Client)
-                .WithMany(p => p.ClientsPlans);
-
-            modelBuilder.Entity<ClientsPlans>()
-                .HasOne(e => e.Plan)
-                .WithMany(p => p.ClientsPlans);
-
-
-            // Trainers <-> Client relationship
-            modelBuilder.Entity<ClientsTrainers>()
-                .HasKey(e => new { e.ClientId, e.TrainerId });
-
-            modelBuilder.Entity<ClientsTrainers>()
-                .HasOne(e => e.Client)
-                .WithMany(p => p.ClientsTrainers);
-
-            modelBuilder.Entity<ClientsTrainers>()
-                .HasOne(e => e.Trainer)
-                .WithMany(p => p.ClientsTrainers);
-
+            modelBuilder.Entity<User>()
+                .HasMany(b => b.Plans)
+                .WithOne();
+            
+            // Users <-> User relationship
+            modelBuilder.Entity<UsersTrainers>()
+                .HasOne(b => b.Client);
+            
             modelBuilder.Entity<Plan>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
@@ -82,11 +59,7 @@ namespace WebApi.Helpers
             modelBuilder.Entity<Category>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
-
-            modelBuilder.Entity<Trainer>()
-                .HasMany(b => b.Plans)
-                .WithOne();
-
+            
             
             modelBuilder.Entity<Organization>().HasData(
                     new Organization
@@ -294,8 +267,8 @@ namespace WebApi.Helpers
                 }
             );
 
-            modelBuilder.Entity<Admin>().HasData(
-                    new Admin
+            modelBuilder.Entity<User>().HasData(
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "a1",
@@ -307,73 +280,76 @@ namespace WebApi.Helpers
                         Password = "admin",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.Admin,
+                        Role = 
+   new Role { Name = "Trainer" },
                         IsActivated = true,
                     }
                 );
 
-            modelBuilder.Entity<Owner>().HasData(
-                    new Owner
+            modelBuilder.Entity<User>().HasData(
+                    new User
                         {
                             OrganizationId = "O1",
                             UserId = "owner1",
                             Avatar = null,
-                            FirstName = "Owner1",
+                            FirstName = "User1",
                             LastName = "LastName",
                             Email = "owner1@eventbrite.com",
                             PhoneNumber = "555555555",
-                            Password = "Owner1",
+                            Password = "User1",
                             PasswordHash = null,
                             PasswordSalt = null,
-                            Role = Role.Owner,
+                            Role = 
+       new Role { Name = "Trainer" },
                             IsActivated = true,
                         }
                     );
 
-                    modelBuilder.Entity<Owner>().HasData(
-                        new Owner
+                    modelBuilder.Entity<User>().HasData(
+                        new User
                         {
                             OrganizationId = "O2",
                             UserId = "owner2",
                             Avatar = null,
-                            FirstName = "Owner2",
+                            FirstName = "User2",
                             LastName = "lol",
                             Email = "owner2@eventbrite.com",
                             PhoneNumber = "555555555",
-                            Password = "Owner2",
+                            Password = "User2",
                             PasswordHash = null,
                             PasswordSalt = null,
-                            Role = Role.Owner,
+                            Role = 
+       new Role { Name = "Trainer" },
                             IsActivated = true,
                         }
                     );
 
-                    modelBuilder.Entity<Owner>().HasData(
-                        new Owner
+                    modelBuilder.Entity<User>().HasData(
+                        new User
                         {
                             OrganizationId = "O3",
                             UserId = "owner3",
                             Avatar = null,
-                            FirstName = "Owner3",
+                            FirstName = "User3",
                             LastName = "lol",
                             Email = "owner3@eventbrite.com",
                             PhoneNumber = "555555555",
-                            Password = "Owner3",
+                            Password = "User3",
                             PasswordHash = null,
                             PasswordSalt = null,
-                            Role = Role.Owner,
+                            Role = 
+       new Role { Name = "Trainer" },
                             IsActivated = true,
                         }
                     );
 
             // O1
 
-            modelBuilder.Entity<Client>().HasData(
-                    new Client
+            modelBuilder.Entity<User>().HasData(
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "u1",
-                        ClientId = "u1",
                         Avatar = null,
                         FirstName = "Teodoor",
                         LastName = "Gianelli",
@@ -382,15 +358,16 @@ namespace WebApi.Helpers
                         Password = "Teodor",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "u2",
-                        ClientId = "u2",
+
                         Avatar = null,
                         FirstName = "Jillana",
                         LastName = "Casson",
@@ -399,15 +376,16 @@ namespace WebApi.Helpers
                         Password = "Jillana",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "u3",
-                        ClientId = "u3",
+
                         Avatar = null,
                         FirstName = "Camille",
                         LastName = "Teloinic",
@@ -416,15 +394,16 @@ namespace WebApi.Helpers
                         Password = "Teodor",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "u4",
-                        ClientId = "u4",
+
                         Avatar = null,
                         FirstName = "Kiel",
                         LastName = "Burgne",
@@ -433,15 +412,16 @@ namespace WebApi.Helpers
                         Password = "Kiel",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "u5",
-                        ClientId = "u5",
+
                         Avatar = null,
                         FirstName = "Augustus",
                         LastName = "Wharin",
@@ -450,15 +430,16 @@ namespace WebApi.Helpers
                         Password = "Augustus",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O1",
                         UserId = "u6",
-                        ClientId = "u6",
+
                         Avatar = null,
                         FirstName = "Bondy",
                         LastName = "Caulliere",
@@ -467,18 +448,19 @@ namespace WebApi.Helpers
                         Password = "Bondy",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     }
                     );
 
-            modelBuilder.Entity<Trainer>().HasData(
-                new Trainer
+            modelBuilder.Entity<User>().HasData(
+                new User
                 {
                     OrganizationId = "O1",
                     UserId = "t1",
-                    TrainerId = "t1",
+
                     Avatar = null,
                     FirstName = "Valentia",
                     LastName = "MacCathay",
@@ -487,16 +469,16 @@ namespace WebApi.Helpers
                     Password = "Valentia",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Trainer,
+                    Role = new Role { Name = "Trainer" },
                     Token = "t-organization",
                     IsActivated = true,
                 },
 
-                new Trainer
+                new User
                 {
                     OrganizationId = "O1",
                     UserId = "t2",
-                    TrainerId = "t2",
+
                     Avatar = null,
                     FirstName = "Eadith",
                     LastName = "Fearey",
@@ -505,7 +487,7 @@ namespace WebApi.Helpers
                     Password = "Eadith",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Trainer,
+                    Role = new Role { Name = "Trainer" },
                     Token = "t-organization",
                     IsActivated = true,
                 }
@@ -513,12 +495,12 @@ namespace WebApi.Helpers
 
             // O2 
 
-            modelBuilder.Entity<Client>().HasData(
-                    new Client
+            modelBuilder.Entity<User>().HasData(
+                    new User
                     {
                         OrganizationId = "O2",
                         UserId = "o2u1",
-                        ClientId = "o2u1",
+
                         Avatar = null,
                         FirstName = "Jacklyn",
                         LastName = "Meachem",
@@ -527,15 +509,16 @@ namespace WebApi.Helpers
                         Password = "Jacklyn",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O2",
                         UserId = "o2u2",
-                        ClientId = "o2u2",
+
                         Avatar = null,
                         FirstName = "Georgie",
                         LastName = "Kryska",
@@ -544,15 +527,15 @@ namespace WebApi.Helpers
                         Password = "Jillana",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O2",
                         UserId = "o2u3",
-                        ClientId = "o2u3",
                         Avatar = null,
                         FirstName = "Kiah",
                         LastName = "Cridge",
@@ -561,32 +544,32 @@ namespace WebApi.Helpers
                         Password = "Teodor",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O2",
                         UserId = "o2u4",
-                        ClientId = "o2u4",
                         Avatar = null,
                         FirstName = "Jarret",
                         LastName = "Sarrell",
                         Email = "jsarrell3@whitehouse.gov",
                         PhoneNumber = "777777777",
-                        Password = "Kiel",
+                        Password = "KielH",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O2",
                         UserId = "o2u5",
-                        ClientId = "o2u5",
                         Avatar = null,
                         FirstName = "Felice",
                         LastName = "Lydiate",
@@ -595,15 +578,15 @@ namespace WebApi.Helpers
                         Password = "Augustus",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O2",
                         UserId = "o2u6",
-                        ClientId = "o2u6",
                         Avatar = null,
                         FirstName = "Gerald",
                         LastName = "Pedlingham",
@@ -612,18 +595,18 @@ namespace WebApi.Helpers
                         Password = "Bondy",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     }
                     );
 
-            modelBuilder.Entity<Trainer>().HasData(
-                new Trainer
+            modelBuilder.Entity<User>().HasData(
+                new User
                 {
                     OrganizationId = "O2",
                     UserId = "o2t1",
-                    TrainerId = "o2t1",
                     Avatar = null,
                     FirstName = "Talia",
                     LastName = "Bullerwell",
@@ -632,16 +615,15 @@ namespace WebApi.Helpers
                     Password = "Talia",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Trainer,
+                    Role = new Role { Name = "Trainer" },
                     Token = "t-organization",
                     IsActivated = true,
                 },
 
-                new Trainer
+                new User
                 {
                     OrganizationId = "O2",
                     UserId = "o2t2",
-                    TrainerId = "o2t2",
                     Avatar = null,
                     FirstName = "Malachi",
                     LastName = "Babb",
@@ -650,7 +632,7 @@ namespace WebApi.Helpers
                     Password = "Malachi",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Trainer,
+                    Role = new Role { Name = "Trainer" },
                     Token = "t-organization",
                     IsActivated = true,
                 }
@@ -658,12 +640,11 @@ namespace WebApi.Helpers
 
             // O3 
 
-            modelBuilder.Entity<Client>().HasData(
-                    new Client
+            modelBuilder.Entity<User>().HasData(
+                    new User
                     {
                         OrganizationId = "O3",
                         UserId = "o3u1",
-                        ClientId = "o3u1",
                         Avatar = null,
                         FirstName = "Titus",
                         LastName = "Hilldrup",
@@ -672,15 +653,15 @@ namespace WebApi.Helpers
                         Password = "Titus",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O3",
                         UserId = "o3u2",
-                        ClientId = "o3u2",
                         Avatar = null,
                         FirstName = "Maribel",
                         LastName = "Tames",
@@ -689,15 +670,15 @@ namespace WebApi.Helpers
                         Password = "Maribel",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O3",
                         UserId = "o3u3",
-                        ClientId = "o3u3",
                         Avatar = null,
                         FirstName = "Trumann",
                         LastName = "Knowlden",
@@ -706,15 +687,15 @@ namespace WebApi.Helpers
                         Password = "Trumann",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O3",
-                        UserId = "o3u4",
-                        ClientId = "o2u4",
+                        UserId = "o2u4",
                         Avatar = null,
                         FirstName = "Jarret",
                         LastName = "Sarrell",
@@ -723,15 +704,15 @@ namespace WebApi.Helpers
                         Password = "Jarret",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O3",
                         UserId = "o3u5",
-                        ClientId = "o3u5",
                         Avatar = null,
                         FirstName = "Godfry",
                         LastName = "Camidge",
@@ -740,15 +721,15 @@ namespace WebApi.Helpers
                         Password = "Godfry",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-user",
                         IsActivated = true,
                     },
-                    new Client
+                    new User
                     {
                         OrganizationId = "O3",
                         UserId = "o3u6",
-                        ClientId = "o3u6",
                         Avatar = null,
                         FirstName = "Maison",
                         LastName = "Corby",
@@ -757,18 +738,18 @@ namespace WebApi.Helpers
                         Password = "Bondy",
                         PasswordHash = null,
                         PasswordSalt = null,
-                        Role = Role.User,
+                        Role = 
+   new Role { Name = "Trainer" },
                         Token = "t-trainer",
                         IsActivated = true,
                     }
                     );
 
-            modelBuilder.Entity<Trainer>().HasData(
-                new Trainer
+            modelBuilder.Entity<User>().HasData(
+                new User
                 {
                     OrganizationId = "O3",
                     UserId = "o3t1",
-                    TrainerId = "o3t1",
                     Avatar = null,
                     FirstName = "Benedikta",
                     LastName = "Dunstan",
@@ -777,16 +758,15 @@ namespace WebApi.Helpers
                     Password = "Valentia",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Trainer,
+                    Role = new Role { Name = "Trainer" },
                     Token = "t-organization",
                     IsActivated = true,
                 },
 
-                new Trainer
+                new User
                 {
                     OrganizationId = "O3",
                     UserId = "o3t2",
-                    TrainerId = "o3t2",
                     Avatar = null,
                     FirstName = "Freddie",
                     LastName = "Hobden",
@@ -795,7 +775,7 @@ namespace WebApi.Helpers
                     Password = "Eadith",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = Role.Trainer,
+                    Role = new Role { Name = "Trainer" },
                     Token = "t-organization",
                     IsActivated = true,
                 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.ViewModels;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;

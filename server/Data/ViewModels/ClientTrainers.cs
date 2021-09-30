@@ -1,25 +1,23 @@
 ﻿using WebApi.Data.Entities.Users;
-using WebApi.Entities;
 
-namespace WebApi.Controllers.ViewModels
+namespace WebApi.Data.ViewModels
 {
     public class AssignUsersToTrainer
     {
         public AssignUsersToTrainer()
         {
-            TrainerIds = new string[] { };
-            UserIds = new string[] { };
+            TrainerIds = System.Array.Empty<string>();
+            UserIds = System.Array.Empty<string>();
         }
         public string[] TrainerIds { get; set; }
         public string[] UserIds { get; set; }
     }
 
-    public class ClientsTrainers
+    public class UsersTrainers
     {
         public string TrainerId { get; set; }
-        public Trainer Trainer { get; set; }
-
+        public User Trainer { get; set; }
         public string ClientId { get; set; }
-        public Client Client { get; set; }
+        public User Client { get; set; }
     }
 }

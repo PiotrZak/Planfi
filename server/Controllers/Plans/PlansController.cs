@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Services;
-using WebApi.Entities;
 using WebApi.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +7,7 @@ using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.Data.Entities;
 using WebApi.Interfaces;
 
 namespace WebApi.Controllers
@@ -115,9 +114,9 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("usersplan/{id}")]
-        public IActionResult GetUserPlans(string id)
+        public async Task<IActionResult> GetUserPlans(string id)
         {
-            var plans = _planService.GetUserPlans(id);
+            var plans = await _planService.GetUserPlans(id);
 
             if (plans == null)
                 return NotFound();

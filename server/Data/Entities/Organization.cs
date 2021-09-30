@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 
 namespace WebApi.Entities
@@ -18,7 +19,6 @@ namespace WebApi.Entities
         [Key]
         public string OrganizationId { get; set; }
         public string Name { get; set; }
-
         public List<User> Users { get; set; }
         public List<Plan> Plans { get; set; }
         public List<Category> Categories { get; set; }

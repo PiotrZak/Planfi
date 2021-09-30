@@ -4,7 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Entities;
+using WebApi.Data.Entities;
+using WebApi.Data.Entities.Users;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
@@ -139,19 +140,14 @@ namespace WebApi.Services
 
         }
 
-        public IEnumerable<Plan> GetUserPlans(string userId)
+        public Task<IEnumerable<Plan>> GetUserPlans(string userId)
         {
-            var userPlans = _context.ClientsPlans.Where(x => x.ClientId == userId);
-
-            var planIds = new List<string>();
-
-            foreach (var i in userPlans)
-            {
-                var planId = i.PlanId;
-                planIds.Add(planId);
-            }
-
-            return planIds.Select((t, i) => _context.Plans.FirstOrDefault(x => x.PlanId == planIds[i])).ToList();
+            var plans = await _context.Users
+                .Where(x => x.UserId == userId)
+                .Select(x => x.Plans)
+                .Cast<Plan>();
+            
+            return plans.AsEnumerable();
         }
 
         public IEnumerable<Plan> GetCreatorPlans(string id)

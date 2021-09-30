@@ -15,18 +15,12 @@ namespace WebApi.Helpers
             CreateMap<CreateOrganization, Organization>();
 
             CreateMap<ActivateAccount, User>();
-            CreateMap<ActivateAccount, Client>();
-            
+
             CreateMap<RegisterModel, User>();
-            CreateMap<RegisterModel, Client>();
             CreateMap<AuthenticateModel, User>();
             CreateMap<UpdateUserModel, User>();
-
-            CreateMap<Client, TrainerClient>();
-            CreateMap<Trainer, TrainerClient>();
-            CreateMap<User, Trainer>();
-            CreateMap<User, Client>();
-            CreateMap<Trainer, UserViewModel>();
+            
+            CreateMap<User, UserViewModel>();
 
             CreateMap<CreateCategory, Category>();
 

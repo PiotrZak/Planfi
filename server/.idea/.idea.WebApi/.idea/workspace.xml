@@ -56,7 +56,7 @@
       <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/AssignExerciseToPlan.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/AssignExerciseToPlan.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/AssignUsersToOrganization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/AssignUsersToOrganization.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ChangeRole.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ChangeRole.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ClientPlans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ClientPlans.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ClientPlans.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/ClientTrainers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/CreateCategory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/ViewModels/CreateExercise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/ViewModels/ModifyExercise.cs" afterDir="false" />
@@ -68,11 +68,11 @@
       <change beforePath="$PROJECT_DIR$/Entities/Exercises.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Exercises.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Entities/Organization.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Organization.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Entities/Plans.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Plans.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/Admin.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Admin.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Client.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/Owner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Owner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Admin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Client.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Owner.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Entities/Users/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Role.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entities/Users/Trainer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Trainer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entities/Users/Trainer.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GraphQl/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphQl/Data.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
@@ -131,108 +131,111 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1CAEA579-7BC0-4E55-ADEB-CC8011B21AB8/9/OptionsFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7FC6E9E0-9FE1-4872-88B4-AEE2D404A9CC/9/CorsMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AABF22C8-0443-4F75-A371-6B76C765A950/88/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/1/ConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/905CEBD1-C0DE-49F8-8F0D-FDCC5844386D/26/QueryableFilterMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/593B42DD-0B05-4EF3-A52E-4B51D992D63D/0a/3c263b84/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4019D9F0-3897-4B8C-B268-F02F4533964F/dd/06820c4e/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/446F0B27-F438-492E-A9B0-D11E08CE42DA/3/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/A/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/15DE1D7F-E43D-4358-B955-237058162D22/0/ClaimTypes.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/402/List.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1BA52DC0-B103-422E-BA91-AD87A1AA9FE3/9/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/1AB/InternalDbSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/13A/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CE937F39-7871-428C-AAF5-C4192A6B4787/5d/69994cb9/HMACSHA512.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CFA593D3-0C35-44A4-8A36-55404C349D29/5/HttpGetSchemaMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90703D9-42C6-4B50-80F6-51918748EA87/19/4faee492/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/7/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4CDEACE8-5372-4F45-A1EF-FCA788C925FB/8/QueryMiddlewareBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9D7F563A-65BE-45E1-8CC7-B7C641344536/b0/71047590/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7FC6E9E0-9FE1-4872-88B4-AEE2D404A9CC/9/CorsMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/66/659d23f5/Void.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AABF22C8-0443-4F75-A371-6B76C765A950/88/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/RegisterModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596BB-C84D-47B5-BDB2-391440B66C59/D/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/34/ModelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/1/ConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/905CEBD1-C0DE-49F8-8F0D-FDCC5844386D/26/QueryableFilterMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/GraphQl/Data.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/hostsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/593B42DD-0B05-4EF3-A52E-4B51D992D63D/0a/3c263b84/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/446F0B27-F438-492E-A9B0-D11E08CE42DA/3/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/A/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/402/List.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1BA52DC0-B103-422E-BA91-AD87A1AA9FE3/9/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/1AB/InternalDbSet.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/13A/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Services/Users/UserService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/736CA1A8-5CD9-4C65-BF33-2BCC07D5546A/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Services/Account/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CFA593D3-0C35-44A4-8A36-55404C349D29/5/HttpGetSchemaMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Services/Account/AccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90703D9-42C6-4B50-80F6-51918748EA87/19/4faee492/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/7/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4CDEACE8-5372-4F45-A1EF-FCA788C925FB/8/QueryMiddlewareBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9D7F563A-65BE-45E1-8CC7-B7C641344536/b0/71047590/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/11/DbContextOptions`.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Controllers/Users/UsersController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Controllers/Account/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Data/Entities/Users/Client.cs" />
-        <option value="$PROJECT_DIR$/Tests/ExercisesTest.cs" />
-        <option value="$PROJECT_DIR$/Tests/TestTests.cs" />
         <option value="$PROJECT_DIR$/Tests/AssignUsersToPlansTest.cs" />
         <option value="$PROJECT_DIR$/Data/ViewModels/ActivateAccount.cs" />
         <option value="$PROJECT_DIR$/Models/UpdateUserModel.cs" />
         <option value="$PROJECT_DIR$/Models/UserViewModel.cs" />
-        <option value="$PROJECT_DIR$/Models/RegisterModel.cs" />
         <option value="$PROJECT_DIR$/Data/ViewModels/CreatePlan.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/CategoryController.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Category.cs" />
         <option value="$PROJECT_DIR$/Data/ViewModels/CreateCategory.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Organization.cs" />
         <option value="$PROJECT_DIR$/Interfaces/ICategoryService.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IAccountService.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Users/Role.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Users/RefreshToken.cs" />
-        <option value="$PROJECT_DIR$/Helpers/AutoMapper.cs" />
         <option value="$PROJECT_DIR$/Models/ExerciseModel.cs" />
-        <option value="$PROJECT_DIR$/Interfaces/IPlanService.cs" />
         <option value="$PROJECT_DIR$/Models/ViewModels/ExerciseViewModel.cs" />
-        <option value="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" />
         <option value="$PROJECT_DIR$/GraphQl/Data.cs" />
-        <option value="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" />
         <option value="$PROJECT_DIR$/WebApi.csproj" />
         <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/hostsettings.json" />
-        <option value="$PROJECT_DIR$/Interfaces/IUserInterface.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Plans.cs" />
         <option value="$PROJECT_DIR$/Services/Account/EmailService.cs" />
         <option value="$PROJECT_DIR$/entrypoint.sh" />
         <option value="$PROJECT_DIR$/Startup.cs" />
-        <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
-        <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
-        <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
-        <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Users/Trainer.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Users/User.cs" />
         <option value="$PROJECT_DIR$/Controllers/Account/AccountController.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
         <option value="$PROJECT_DIR$/Services/Exercises/CategoryService.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Exercises.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IExerciseService.cs" />
-        <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
         <option value="$PROJECT_DIR$/appsettings.json" />
         <option value="$PROJECT_DIR$/appsettings.Development.json" />
-        <option value="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" />
         <option value="$PROJECT_DIR$/Data/ViewModels/CreateExercise.cs" />
-        <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
+        <option value="$PROJECT_DIR$/Data/ViewModels/ResetPasswordRequest.cs" />
+        <option value="$PROJECT_DIR$/Data/ViewModels/ClientPlans.cs" />
+        <option value="$PROJECT_DIR$/Interfaces/IUserInterface.cs" />
+        <option value="$PROJECT_DIR$/Helpers/AutoMapper.cs" />
+        <option value="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Users/Role.cs" />
+        <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
+        <option value="$PROJECT_DIR$/Models/RegisterModel.cs" />
+        <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Organization.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Plans.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
+        <option value="$PROJECT_DIR$/Interfaces/IPlanService.cs" />
         <option value="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" />
+        <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
+        <option value="$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Users/User.cs" />
+        <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
+        <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
       </list>
     </option>
   </component>
@@ -344,7 +347,7 @@
       <workItem from="1620751912631" duration="3470000" />
       <workItem from="1626008024035" duration="2262000" />
       <workItem from="1626801506519" duration="626000" />
-      <workItem from="1633021818620" duration="1571000" />
+      <workItem from="1633021818620" duration="5877000" />
     </task>
     <servers />
   </component>
@@ -477,9 +480,14 @@
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="691" y="-901" key="SettingsEditor/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633021845368" />
-    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup" timestamp="1626801818795">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state x="860" y="-814" width="644" height="548" key="find.popup" timestamp="1633032620345">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
+    <state x="860" y="-814" width="644" height="548" key="find.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633032620345" />
+    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup" timestamp="1633033258918">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
+    </state>
+    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633033258918" />
     <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1626801818795" />
     <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/0.0.1920.1200@0.0.1920.1200" timestamp="1626011249194" />
   </component>
@@ -501,120 +509,94 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>127</line>
+          <line>115</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="127">
             <startOffsets>
-              <option value="4232" />
+              <option value="3937" />
             </startOffsets>
             <endOffsets>
-              <option value="4282" />
+              <option value="3987" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>107</line>
+          <line>95</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="106">
             <startOffsets>
-              <option value="3445" />
+              <option value="3150" />
             </startOffsets>
             <endOffsets>
-              <option value="3446" />
+              <option value="3151" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>99</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="98">
-            <startOffsets>
-              <option value="3176" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3177" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>117</line>
+          <line>105</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="116">
             <startOffsets>
-              <option value="3858" />
+              <option value="3563" />
             </startOffsets>
             <endOffsets>
-              <option value="3906" />
+              <option value="3611" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>120</line>
+          <line>108</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="119">
             <startOffsets>
-              <option value="3970" />
+              <option value="3675" />
             </startOffsets>
             <endOffsets>
-              <option value="4017" />
+              <option value="3722" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>123</line>
+          <line>111</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="122">
             <startOffsets>
-              <option value="4079" />
+              <option value="3784" />
             </startOffsets>
             <endOffsets>
-              <option value="4121" />
+              <option value="3826" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>149</line>
+          <line>137</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="148">
             <startOffsets>
-              <option value="4966" />
+              <option value="4671" />
             </startOffsets>
             <endOffsets>
-              <option value="4992" />
+              <option value="4697" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Plans/PlansController.cs</url>
-          <line>38</line>
+          <line>37</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" initialLine="38">
             <startOffsets>
-              <option value="1046" />
+              <option value="1028" />
             </startOffsets>
             <endOffsets>
-              <option value="1083" />
+              <option value="1065" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Plans/PlanService.cs</url>
-          <line>27</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Plans/PlanService.cs" initialLine="27">
-            <startOffsets>
-              <option value="781" />
-            </startOffsets>
-            <endOffsets>
-              <option value="932" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="149" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

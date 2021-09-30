@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data.Entities;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;

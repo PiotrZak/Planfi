@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using WebApi.Controllers.ViewModels;
-using WebApi.Data.Entities;
-using WebApi.GraphQl;
+using WebApi.Data.Entities.Users;
 
-namespace WebApi.Entities
+namespace WebApi.Data.Entities
 {
     public sealed class Plan
     {
@@ -13,7 +11,7 @@ namespace WebApi.Entities
         {
             PlanId = Guid.NewGuid().ToString();
             Exercises = new List<Exercise>();
-            ClientsPlans = new List<ClientsPlans>();
+            Users = new List<User>();
         }
 
         [Key]
@@ -23,6 +21,6 @@ namespace WebApi.Entities
         public string CreatorName { get; set; }
         public string OrganizationId { get; set; }
         public List<Exercise> Exercises { get; set; }
-        public ICollection<ClientsPlans> ClientsPlans { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

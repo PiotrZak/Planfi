@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
@@ -36,8 +37,8 @@ namespace WebApi.Services
         public Organization GetById(string id)
         {
 
-            var Organization = _context.Organizations.FirstOrDefault(x => x.OrganizationId == id);
-            return Organization;
+            var organization = _context.Organizations.FirstOrDefault(x => x.OrganizationId == id);
+            return organization;
         }
         public IEnumerable<Organization> GetAll()
         {
@@ -81,7 +82,7 @@ namespace WebApi.Services
         public IEnumerable<User> GetOrganizationClients(string organizationId)
         {
             var usersInOrganization = _context.Users.Where(x => x.OrganizationId == organizationId);
-            var clients = usersInOrganization.Where(x => x.Role == "User");
+            var clients = usersInOrganization.Where(x => x.Role.Name == "User");
             return clients;
         }
 
@@ -100,7 +101,7 @@ namespace WebApi.Services
         public IEnumerable<User> GetOrganizationTrainers(string organizationId)
         {
             var usersInOrganization = _context.Users.Where(x => x.OrganizationId == organizationId);
-            var trainers = usersInOrganization.Where(x => x.Role == "Trainer");
+            var trainers = usersInOrganization.Where(x => x.Role.Name == "Trainer");
             return trainers;
         }
 
@@ -116,9 +117,10 @@ namespace WebApi.Services
             var user = _context.Users.FirstOrDefault(x => x.UserId == userId);
 
             if (!string.IsNullOrWhiteSpace(role))
-                user.Role = role;
+                if (user != null)
+                    user.Role.Name = role;
 
-            _context.Users.Update(user);
+            _context.Users.Update(user ?? throw new Exception());
             _context.SaveChanges();
         }
     }

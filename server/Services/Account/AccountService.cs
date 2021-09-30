@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
+using WebApi.Data.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
@@ -221,44 +222,22 @@ namespace WebApi.Services.Account
                     if (_context.Users.Any(x => x.Email == email))
                         throw new AppException("Email \"" + email + "\" is already taken");
                     
-                    switch (model.Role)
+                    var user = new User
                     {
-                        case "Trainer":
-                        {
-                            var user = new Trainer
-                            {
-                                Role = model.Role,
-                                OrganizationId = model.OrganizationId,
-                                Email = email,
-                                VerificationToken = RandomTokenString(),
-                            };
-                            var result = await ConstructMessage(user, origin);
-                            if (result == 1)
-                            {
-                                await _context.Users.AddAsync(user);
-                                await _context.SaveChangesAsync();
-                            }
-                            break;
-                        }
-                        case "User":
-                        {
-                            var user = new Client
-                            {
-                                Role = model.Role,
-                                OrganizationId = model.OrganizationId,
-                                Email = email,
-                                VerificationToken = RandomTokenString(),
-                            };
-                            var result = await ConstructMessage(user, origin);
-                            if (result == 1)
-                            {
-                                await _context.Users.AddAsync(user);
-                                await _context.SaveChangesAsync();
-                            }
-                            break;
-                        }
+                        Role = new Role { Name = model.Role },
+                        OrganizationId = model.OrganizationId,
+                        Email = email,
+                        VerificationToken = RandomTokenString(),
+                    };
+                    var result = await ConstructMessage(user, origin);
+                    if (result == 1)
+                    {
+                        await _context.Users.AddAsync(user);
+                        await _context.SaveChangesAsync();
                     }
+                    break;
                 }
+                
                 return 1;
             }
             catch(Exception e)
