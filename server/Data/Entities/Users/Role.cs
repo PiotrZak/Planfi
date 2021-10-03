@@ -1,8 +1,15 @@
-namespace WebApi.Entities
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApi.Data.Entities.Users
 {
     public class Role
     {
-        public string Name;
+        [Key]
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public ICollection<User> Users { get; set; }
     }
     
     public class PossibleRoles

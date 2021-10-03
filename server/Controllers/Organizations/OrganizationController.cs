@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using WebApi.Models;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Interfaces;
 

@@ -42,6 +42,7 @@
             <e p="Role.cs" t="Include" />
             <e p="User.cs" t="Include" />
           </e>
+          <e p="UsersPlans.cs" t="Include" />
         </e>
         <e p="Infrastructure" t="Include" />
         <e p="SQLScripts" t="Include" />
@@ -74,7 +75,9 @@
         <e p="AutoMapper.cs" t="Include" />
         <e p="DataContext.cs" t="Include" />
         <e p="ExtensionMethods.cs" t="Include" />
-        <e p="MockDeveloperData" t="Include" />
+        <e p="MockDeveloperData" t="Include">
+          <e p="MockExercises.cs" t="Include" />
+        </e>
       </e>
       <e p="hostsettings.json" t="Include" />
       <e p="Interfaces" t="Include">
@@ -86,8 +89,8 @@
         <e p="IUserInterface.cs" t="Include" />
       </e>
       <e p="Migrations" t="Include">
-        <e p="20210508171632_InitialCreate.cs" t="Include" />
-        <e p="20210508171632_InitialCreate.Designer.cs" t="Include" />
+        <e p="20211003214851_InitialA.cs" t="Include" />
+        <e p="20211003214851_InitialA.Designer.cs" t="Include" />
         <e p="DataContextModelSnapshot.cs" t="Include" />
       </e>
       <e p="Models" t="Include">

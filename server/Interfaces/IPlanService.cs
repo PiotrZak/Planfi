@@ -12,7 +12,7 @@ namespace WebApi.Interfaces
         Task<Plan> Create(Plan plan);
         IEnumerable<Plan> GetAll();
         IEnumerable<Plan> GetOrganizationPlans(string id);
-        Task<IEnumerable<Plan>> GetUserPlans(string id);
+        IEnumerable<Plan> GetUserPlans(string id);
         IEnumerable<Plan> GetCreatorPlans(string id);
         Task<int> Delete(string[] id);
         Task<int> Update(string id, string title);

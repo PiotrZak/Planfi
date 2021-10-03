@@ -1,8 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Data.ViewModels;
-using WebApi.Entities;
 
 namespace WebApi.Data.Entities.Users
 {
@@ -20,17 +21,19 @@ namespace WebApi.Data.Entities.Users
         }
 
         public User()
-        {
-            throw new NotImplementedException();
-        }
+        { }
 
         public string OrganizationId { get; set; }
         [Key]
         public string UserId { get; set; }
-        public Role Role { get; set; }
-        public List<Plan> Plans { get; set; }
-        public ICollection<UsersTrainers> UsersTrainers { get; set; }
+        //
+        // [ForeignKey("RoleId")]
+        // public string RoleId { get; set; }
         
+        public Role Role { get; set; }
+        public ICollection<UsersPlans> Plans { get; set; }
+        
+        public ICollection<UsersTrainers> UsersTrainers { get; set; }
         public byte[] Avatar { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

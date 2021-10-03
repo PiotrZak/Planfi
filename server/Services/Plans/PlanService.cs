@@ -140,9 +140,9 @@ namespace WebApi.Services
 
         }
 
-        public Task<IEnumerable<Plan>> GetUserPlans(string userId)
+        public IEnumerable<Plan> GetUserPlans(string userId)
         {
-            var plans = await _context.Users
+            var plans = _context.Users
                 .Where(x => x.UserId == userId)
                 .Select(x => x.Plans)
                 .Cast<Plan>();

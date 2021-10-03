@@ -23,9 +23,11 @@
       <change afterPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Exercises/ExercisesTests.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Data/Entities/Users/RefreshToken.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Data/Entities/UsersPlans.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Data/ViewModels/ActivateAccount.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Data/ViewModels/CreateExercise.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Data/ViewModels/UnAssignExerciseToPlan.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Helpers/MockDeveloperData/MockExercises.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IAccountService.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/ICategoryService.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IExerciseService.cs" afterDir="false" />
@@ -86,6 +88,7 @@
       <change beforePath="$PROJECT_DIR$/Models/UpdateExerciseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateExerciseModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/UpdateUserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateUserModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/AccountService.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Exercises/CategoryService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Account/EmailService.cs" afterDir="false" />
@@ -152,13 +155,17 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CFA593D3-0C35-44A4-8A36-55404C349D29/5/HttpGetSchemaMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90703D9-42C6-4B50-80F6-51918748EA87/19/4faee492/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/7/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/5d/d7a5bb00/ICollection`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4CDEACE8-5372-4F45-A1EF-FCA788C925FB/8/QueryMiddlewareBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/09BB8616-9246-4030-8796-6C7008640ACE/2C/SecurityTokenDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9D7F563A-65BE-45E1-8CC7-B7C641344536/b0/71047590/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/C/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/185/EntityTypeBuilder`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
@@ -185,27 +192,19 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Tests/AssignUsersToPlansTest.cs" />
-        <option value="$PROJECT_DIR$/Data/ViewModels/ActivateAccount.cs" />
-        <option value="$PROJECT_DIR$/Models/UpdateUserModel.cs" />
-        <option value="$PROJECT_DIR$/Models/UserViewModel.cs" />
         <option value="$PROJECT_DIR$/Data/ViewModels/CreatePlan.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/CategoryController.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Category.cs" />
         <option value="$PROJECT_DIR$/Data/ViewModels/CreateCategory.cs" />
         <option value="$PROJECT_DIR$/Interfaces/ICategoryService.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IAccountService.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Users/RefreshToken.cs" />
         <option value="$PROJECT_DIR$/Models/ExerciseModel.cs" />
         <option value="$PROJECT_DIR$/Models/ViewModels/ExerciseViewModel.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" />
-        <option value="$PROJECT_DIR$/GraphQl/Data.cs" />
         <option value="$PROJECT_DIR$/WebApi.csproj" />
         <option value="$PROJECT_DIR$/Program.cs" />
         <option value="$PROJECT_DIR$/hostsettings.json" />
-        <option value="$PROJECT_DIR$/Services/Account/EmailService.cs" />
         <option value="$PROJECT_DIR$/entrypoint.sh" />
-        <option value="$PROJECT_DIR$/Startup.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/Users/Trainer.cs" />
         <option value="$PROJECT_DIR$/Controllers/Account/AccountController.cs" />
         <option value="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" />
@@ -219,23 +218,31 @@
         <option value="$PROJECT_DIR$/Data/ViewModels/ClientPlans.cs" />
         <option value="$PROJECT_DIR$/Interfaces/IUserInterface.cs" />
         <option value="$PROJECT_DIR$/Helpers/AutoMapper.cs" />
+        <option value="$PROJECT_DIR$/Models/RegisterModel.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Organization.cs" />
+        <option value="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" />
+        <option value="$PROJECT_DIR$/Helpers/ExtensionMethods.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Users/RefreshToken.cs" />
+        <option value="$PROJECT_DIR$/Services/Account/EmailService.cs" />
+        <option value="$PROJECT_DIR$/Interfaces/IPlanService.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/GraphQl/Data.cs" />
+        <option value="$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" />
+        <option value="$PROJECT_DIR$/Helpers/MockDeveloperData/MockExercises.cs" />
+        <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Users/Role.cs" />
+        <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
         <option value="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" />
         <option value="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Users/Role.cs" />
-        <option value="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" />
-        <option value="$PROJECT_DIR$/Models/RegisterModel.cs" />
-        <option value="$PROJECT_DIR$/Services/Account/AccountService.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Organization.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Plans.cs" />
-        <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
-        <option value="$PROJECT_DIR$/Interfaces/IPlanService.cs" />
-        <option value="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" />
-        <option value="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" />
+        <option value="$PROJECT_DIR$/Startup.cs" />
         <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
-        <option value="$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Users/User.cs" />
+        <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Plans.cs" />
         <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Users/User.cs" />
         <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/UsersPlans.cs" />
       </list>
     </option>
   </component>
@@ -347,7 +354,8 @@
       <workItem from="1620751912631" duration="3470000" />
       <workItem from="1626008024035" duration="2262000" />
       <workItem from="1626801506519" duration="626000" />
-      <workItem from="1633021818620" duration="5877000" />
+      <workItem from="1633021818620" duration="7255000" />
+      <workItem from="1633289780983" duration="7814000" />
     </task>
     <servers />
   </component>
@@ -372,28 +380,33 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="681" y="409" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1626008052958">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state x="810" y="-712" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1633290367623">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
+    <state x="810" y="-712" key="#com.intellij.fileTypes.FileTypeChooser/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633290367623" />
     <state x="681" y="409" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1200@0.0.1920.1200" timestamp="1626008052958" />
-    <state width="1878" height="261" key="GridCell.Tab.0.bottom" timestamp="1626018259346">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state width="2518" height="429" key="GridCell.Tab.0.bottom" timestamp="1633290349911">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
+    <state width="2518" height="429" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633290349911" />
     <state width="1878" height="261" key="GridCell.Tab.0.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259346" />
     <state width="1878" height="294" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411611" />
-    <state width="1878" height="261" key="GridCell.Tab.0.center" timestamp="1626018259345">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state width="2518" height="429" key="GridCell.Tab.0.center" timestamp="1633290349909">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
+    <state width="2518" height="429" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633290349909" />
     <state width="1878" height="261" key="GridCell.Tab.0.center/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259345" />
     <state width="1878" height="294" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411610" />
-    <state width="1878" height="261" key="GridCell.Tab.0.left" timestamp="1626018259344">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state width="2518" height="429" key="GridCell.Tab.0.left" timestamp="1633290349908">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
+    <state width="2518" height="429" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633290349908" />
     <state width="1878" height="261" key="GridCell.Tab.0.left/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259344" />
     <state width="1878" height="294" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411609" />
-    <state width="1878" height="261" key="GridCell.Tab.0.right" timestamp="1626018259346">
-      <screen x="0" y="0" width="1920" height="1200" />
+    <state width="2518" height="429" key="GridCell.Tab.0.right" timestamp="1633290349910">
+      <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
+    <state width="2518" height="429" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633290349910" />
     <state width="1878" height="261" key="GridCell.Tab.0.right/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259346" />
     <state width="1878" height="294" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411610" />
     <state width="1878" height="294" key="GridCell.Tab.1.bottom" timestamp="1626018256845">
@@ -484,10 +497,10 @@
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
     <state x="860" y="-814" width="644" height="548" key="find.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633032620345" />
-    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup" timestamp="1633033258918">
+    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup" timestamp="1633297519017">
       <screen x="-98" y="-1080" width="2560" height="1080" />
     </state>
-    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633033258918" />
+    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633297519017" />
     <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1626801818795" />
     <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/0.0.1920.1200@0.0.1920.1200" timestamp="1626011249194" />
   </component>
@@ -509,78 +522,78 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>115</line>
+          <line>116</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="127">
             <startOffsets>
-              <option value="3937" />
+              <option value="3965" />
             </startOffsets>
             <endOffsets>
-              <option value="3987" />
+              <option value="4015" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>95</line>
+          <line>96</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="106">
             <startOffsets>
-              <option value="3150" />
+              <option value="3178" />
             </startOffsets>
             <endOffsets>
-              <option value="3151" />
+              <option value="3179" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>105</line>
+          <line>106</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="116">
             <startOffsets>
-              <option value="3563" />
+              <option value="3591" />
             </startOffsets>
             <endOffsets>
-              <option value="3611" />
+              <option value="3639" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>108</line>
+          <line>109</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="119">
             <startOffsets>
-              <option value="3675" />
+              <option value="3703" />
             </startOffsets>
             <endOffsets>
-              <option value="3722" />
+              <option value="3750" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>111</line>
+          <line>112</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="122">
             <startOffsets>
-              <option value="3784" />
+              <option value="3812" />
             </startOffsets>
             <endOffsets>
-              <option value="3826" />
+              <option value="3854" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>137</line>
+          <line>138</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="148">
             <startOffsets>
-              <option value="4671" />
+              <option value="4699" />
             </startOffsets>
             <endOffsets>
-              <option value="4697" />
+              <option value="4725" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="130" />
@@ -597,6 +610,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Helpers/DataContext.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Helpers/DataContext.cs" initialLine="37">
+            <startOffsets>
+              <option value="1382" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1383" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="149" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

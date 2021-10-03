@@ -11,7 +11,7 @@ namespace WebApi.Data.Entities
         {
             PlanId = Guid.NewGuid().ToString();
             Exercises = new List<Exercise>();
-            Users = new List<User>();
+            Users = new List<UsersPlans>();
         }
 
         [Key]
@@ -21,6 +21,6 @@ namespace WebApi.Data.Entities
         public string CreatorName { get; set; }
         public string OrganizationId { get; set; }
         public List<Exercise> Exercises { get; set; }
-        public ICollection<User> Users { get; set; }
+        public ICollection<UsersPlans> Users { get; set; }
     }
 }

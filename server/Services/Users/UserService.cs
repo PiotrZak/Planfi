@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using WebApi.Controllers.ViewModels;
 using Microsoft.Extensions.Configuration;
+using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Entities;
@@ -217,8 +218,8 @@ namespace WebApi.Services{
                 {
                     //finding a plan
                         var plan = await _context.Plans.FindAsync(planId);
-                        client.Plans.Add(plan);
-                        await _context.Users.AddAsync(client);
+                        var usersPlans = new UsersPlans {User = client, Plan = plan};
+                        await _context.UsersPlans.AddAsync(usersPlans);
                         
                         try
                         { 

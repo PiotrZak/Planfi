@@ -5,6 +5,7 @@ using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Entities;
+using WebApi.Helpers.MockDeveloperData;
 
 namespace WebApi.Helpers
 {
@@ -26,7 +27,9 @@ namespace WebApi.Helpers
         
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Role { get; set; }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<UsersPlans> UsersPlans { get; set; }
         public DbSet<UsersTrainers> UsersTrainers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
@@ -38,24 +41,35 @@ namespace WebApi.Helpers
             modelBuilder.Entity<Organization>()
                 .HasMany(b => b.Users)
                 .WithOne();
-
+            
             modelBuilder.Entity<Organization>()
                 .HasMany(b => b.Plans)
                 .WithOne();
             
             // Plans <-> Users relationship
-            modelBuilder.Entity<User>()
-                .HasMany(b => b.Plans)
-                .WithOne();
+            modelBuilder.Entity<UsersPlans>()
+                .HasKey(bc => new { bc.UserId, bc.PlanId });  
+            modelBuilder.Entity<UsersPlans>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.Plans)
+                .HasForeignKey(bc => bc.UserId);  
+            modelBuilder.Entity<UsersPlans>()
+                .HasOne(bc => bc.Plan)
+                .WithMany(c => c.Users)
+                .HasForeignKey(bc => bc.PlanId);
             
-            // Users <-> User relationship
+            //todo - verify if it will work
             modelBuilder.Entity<UsersTrainers>()
-                .HasOne(b => b.Client);
+                .HasKey(bc => new { bc.ClientId, bc.TrainerId });  
+            modelBuilder.Entity<UsersTrainers>()
+                .HasOne(bc => bc.Client)
+                .WithMany(b => b.UsersTrainers) 
+                .HasForeignKey(bc => bc.ClientId);
             
             modelBuilder.Entity<Plan>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
-
+            
             modelBuilder.Entity<Category>()
                 .HasMany(b => b.Exercises)
                 .WithOne();
@@ -266,520 +280,66 @@ namespace WebApi.Helpers
                     CategoryId = "3",
                 }
             );
-
-            modelBuilder.Entity<User>().HasData(
-                    new User
+            
+                modelBuilder.Entity<Role>().HasData(
+                    new Role
                     {
-                        OrganizationId = "O1",
-                        UserId = "a1",
-                        Avatar = null,
-                        FirstName = "admin",
-                        LastName = "lol",
-                        Email = "tgianelli0@eventbrite.com",
-                        PhoneNumber = "555555555",
-                        Password = "admin",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        IsActivated = true,
+                        Id = "1",
+                        Name = "Trainer",
                     }
                 );
-
-            modelBuilder.Entity<User>().HasData(
-                    new User
-                        {
-                            OrganizationId = "O1",
-                            UserId = "owner1",
-                            Avatar = null,
-                            FirstName = "User1",
-                            LastName = "LastName",
-                            Email = "owner1@eventbrite.com",
-                            PhoneNumber = "555555555",
-                            Password = "User1",
-                            PasswordHash = null,
-                            PasswordSalt = null,
-                            Role = 
-       new Role { Name = "Trainer" },
-                            IsActivated = true,
-                        }
-                    );
-
-                    modelBuilder.Entity<User>().HasData(
-                        new User
-                        {
-                            OrganizationId = "O2",
-                            UserId = "owner2",
-                            Avatar = null,
-                            FirstName = "User2",
-                            LastName = "lol",
-                            Email = "owner2@eventbrite.com",
-                            PhoneNumber = "555555555",
-                            Password = "User2",
-                            PasswordHash = null,
-                            PasswordSalt = null,
-                            Role = 
-       new Role { Name = "Trainer" },
-                            IsActivated = true,
-                        }
-                    );
-
-                    modelBuilder.Entity<User>().HasData(
-                        new User
-                        {
-                            OrganizationId = "O3",
-                            UserId = "owner3",
-                            Avatar = null,
-                            FirstName = "User3",
-                            LastName = "lol",
-                            Email = "owner3@eventbrite.com",
-                            PhoneNumber = "555555555",
-                            Password = "User3",
-                            PasswordHash = null,
-                            PasswordSalt = null,
-                            Role = 
-       new Role { Name = "Trainer" },
-                            IsActivated = true,
-                        }
-                    );
 
             // O1
-
-            modelBuilder.Entity<User>().HasData(
-                    new User
-                    {
-                        OrganizationId = "O1",
-                        UserId = "u1",
-                        Avatar = null,
-                        FirstName = "Teodoor",
-                        LastName = "Gianelli",
-                        Email = "tgianelli0@eventbrite.com",
-                        PhoneNumber = "555555555",
-                        Password = "Teodor",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O1",
-                        UserId = "u2",
-
-                        Avatar = null,
-                        FirstName = "Jillana",
-                        LastName = "Casson",
-                        Email = "jcasson3@prlog.org",
-                        PhoneNumber = "666666666",
-                        Password = "Jillana",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O1",
-                        UserId = "u3",
-
-                        Avatar = null,
-                        FirstName = "Camille",
-                        LastName = "Teloinic",
-                        Email = "Teloinic@gmail.com",
-                        PhoneNumber = "555555555",
-                        Password = "Teodor",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O1",
-                        UserId = "u4",
-
-                        Avatar = null,
-                        FirstName = "Kiel",
-                        LastName = "Burgne",
-                        Email = "kburgne2@hp.com",
-                        PhoneNumber = "777777777",
-                        Password = "Kiel",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O1",
-                        UserId = "u5",
-
-                        Avatar = null,
-                        FirstName = "Augustus",
-                        LastName = "Wharin",
-                        Email = "awharinu@tmall.com",
-                        PhoneNumber = "555555555",
-                        Password = "Augustus",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O1",
-                        UserId = "u6",
-
-                        Avatar = null,
-                        FirstName = "Bondy",
-                        LastName = "Caulliere",
-                        Email = "bcaullieres@auda.org.au",
-                        PhoneNumber = "666666666",
-                        Password = "Bondy",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    }
-                    );
-
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     OrganizationId = "O1",
-                    UserId = "t1",
-
+                    UserId = "u1",
                     Avatar = null,
-                    FirstName = "Valentia",
-                    LastName = "MacCathay",
-                    Email = "vmaccathay17@house.gov",
-                    PhoneNumber = "777777777",
-                    Password = "Valentia",
+                    FirstName = "Teodoor",
+                    LastName = "Gianelli",
+                    Email = "tgianelli0@eventbrite.com",
+                    PhoneNumber = "555555555",
+                    Password = "Teodor",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = new Role { Name = "Trainer" },
-                    Token = "t-organization",
+                    Token = "t-user",
                     IsActivated = true,
                 },
-
-                new User
-                {
-                    OrganizationId = "O1",
-                    UserId = "t2",
-
-                    Avatar = null,
-                    FirstName = "Eadith",
-                    LastName = "Fearey",
-                    Email = "efearey1f@mlb.com",
-                    PhoneNumber = "777777777",
-                    Password = "Eadith",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = new Role { Name = "Trainer" },
-                    Token = "t-organization",
-                    IsActivated = true,
-                }
-                );
-
-            // O2 
-
-            modelBuilder.Entity<User>().HasData(
-                    new User
-                    {
-                        OrganizationId = "O2",
-                        UserId = "o2u1",
-
-                        Avatar = null,
-                        FirstName = "Jacklyn",
-                        LastName = "Meachem",
-                        Email = "jmeachem0@eventbrite.com",
-                        PhoneNumber = "555555555",
-                        Password = "Jacklyn",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O2",
-                        UserId = "o2u2",
-
-                        Avatar = null,
-                        FirstName = "Georgie",
-                        LastName = "Kryska",
-                        Email = "gkryska1@about.com",
-                        PhoneNumber = "666666666",
-                        Password = "Jillana",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O2",
-                        UserId = "o2u3",
-                        Avatar = null,
-                        FirstName = "Kiah",
-                        LastName = "Cridge",
-                        Email = "kcridge2@xrea.com",
-                        PhoneNumber = "555555555",
-                        Password = "Teodor",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O2",
-                        UserId = "o2u4",
-                        Avatar = null,
-                        FirstName = "Jarret",
-                        LastName = "Sarrell",
-                        Email = "jsarrell3@whitehouse.gov",
-                        PhoneNumber = "777777777",
-                        Password = "KielH",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O2",
-                        UserId = "o2u5",
-                        Avatar = null,
-                        FirstName = "Felice",
-                        LastName = "Lydiate",
-                        Email = "flydiate5@biblegateway.com",
-                        PhoneNumber = "555555555",
-                        Password = "Augustus",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O2",
-                        UserId = "o2u6",
-                        Avatar = null,
-                        FirstName = "Gerald",
-                        LastName = "Pedlingham",
-                        Email = "gpedlingham6@ow.ly",
-                        PhoneNumber = "666666666",
-                        Password = "Bondy",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    }
-                    );
-
-            modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     OrganizationId = "O2",
-                    UserId = "o2t1",
+                    UserId = "o2u1",
                     Avatar = null,
-                    FirstName = "Talia",
-                    LastName = "Bullerwell",
-                    Email = "tbullerwell1n@sitemeter.com",
-                    PhoneNumber = "777777777",
-                    Password = "Talia",
+                    FirstName = "Jacklyn",
+                    LastName = "Meachem",
+                    Email = "jmeachem0@eventbrite.com",
+                    PhoneNumber = "555555555",
+                    Password = "Jacklyn",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = new Role { Name = "Trainer" },
-                    Token = "t-organization",
+                    Token = "t-user",
                     IsActivated = true,
                 },
-
-                new User
-                {
-                    OrganizationId = "O2",
-                    UserId = "o2t2",
-                    Avatar = null,
-                    FirstName = "Malachi",
-                    LastName = "Babb",
-                    Email = "mbabb1x@java.com",
-                    PhoneNumber = "777777777",
-                    Password = "Malachi",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = new Role { Name = "Trainer" },
-                    Token = "t-organization",
-                    IsActivated = true,
-                }
-                );
-
-            // O3 
-
-            modelBuilder.Entity<User>().HasData(
-                    new User
-                    {
-                        OrganizationId = "O3",
-                        UserId = "o3u1",
-                        Avatar = null,
-                        FirstName = "Titus",
-                        LastName = "Hilldrup",
-                        Email = "thilldrupe@berkeley.edu",
-                        PhoneNumber = "555555555",
-                        Password = "Titus",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O3",
-                        UserId = "o3u2",
-                        Avatar = null,
-                        FirstName = "Maribel",
-                        LastName = "Tames",
-                        Email = "mtamesf@netvibes.com",
-                        PhoneNumber = "666666666",
-                        Password = "Maribel",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O3",
-                        UserId = "o3u3",
-                        Avatar = null,
-                        FirstName = "Trumann",
-                        LastName = "Knowlden",
-                        Email = "tknowldenh@wsj.com",
-                        PhoneNumber = "555555555",
-                        Password = "Trumann",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O3",
-                        UserId = "o2u4",
-                        Avatar = null,
-                        FirstName = "Jarret",
-                        LastName = "Sarrell",
-                        Email = "jsarrell3@whitehouse.gov",
-                        PhoneNumber = "777777777",
-                        Password = "Jarret",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O3",
-                        UserId = "o3u5",
-                        Avatar = null,
-                        FirstName = "Godfry",
-                        LastName = "Camidge",
-                        Email = "gcamidgej@umich.edu",
-                        PhoneNumber = "555555555",
-                        Password = "Godfry",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-user",
-                        IsActivated = true,
-                    },
-                    new User
-                    {
-                        OrganizationId = "O3",
-                        UserId = "o3u6",
-                        Avatar = null,
-                        FirstName = "Maison",
-                        LastName = "Corby",
-                        Email = "mcorbyl@comsenz.com",
-                        PhoneNumber = "666666666",
-                        Password = "Bondy",
-                        PasswordHash = null,
-                        PasswordSalt = null,
-                        Role = 
-   new Role { Name = "Trainer" },
-                        Token = "t-trainer",
-                        IsActivated = true,
-                    }
-                    );
-
-            modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     OrganizationId = "O3",
-                    UserId = "o3t1",
+                    UserId = "o3u1",
                     Avatar = null,
-                    FirstName = "Benedikta",
-                    LastName = "Dunstan",
-                    Email = "bdunstan8@dell.com",
-                    PhoneNumber = "777777777",
-                    Password = "Valentia",
+                    FirstName = "Titus",
+                    LastName = "Hilldrup",
+                    Email = "thilldrupe@berkeley.edu",
+                    PhoneNumber = "555555555",
+                    Password = "Titus",
                     PasswordHash = null,
                     PasswordSalt = null,
-                    Role = new Role { Name = "Trainer" },
-                    Token = "t-organization",
-                    IsActivated = true,
-                },
-
-                new User
-                {
-                    OrganizationId = "O3",
-                    UserId = "o3t2",
-                    Avatar = null,
-                    FirstName = "Freddie",
-                    LastName = "Hobden",
-                    Email = "fhobdena@census.gov",
-                    PhoneNumber = "777777777",
-                    Password = "Eadith",
-                    PasswordHash = null,
-                    PasswordSalt = null,
-                    Role = new Role { Name = "Trainer" },
-                    Token = "t-organization",
+                    Token = "t-user",
                     IsActivated = true,
                 }
-                );
+            );
+
+            
+
         }
     }
 }

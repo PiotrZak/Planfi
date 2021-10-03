@@ -47,11 +47,11 @@ namespace WebApi.Controllers.Users
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     //todo
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Name, user.UserId),
-                        new Claim(ClaimTypes.Role, Role.Name)
-                    }),
+                    // Subject = new ClaimsIdentity(new[]
+                    // {
+                    //     new Claim(ClaimTypes.Name, user.UserId),
+                    //     new Claim(ClaimTypes.Role, Role.Name)
+                    // }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
@@ -67,7 +67,7 @@ namespace WebApi.Controllers.Users
                     user.FirstName,
                     user.LastName,
                     user.Avatar,
-                    user.Role,
+                    //user.RoleId,
                     Token = tokenString
                 });
             }
@@ -93,7 +93,7 @@ namespace WebApi.Controllers.Users
                     Avatar = i.Avatar,
                     FirstName = i.FirstName,
                     LastName = i.LastName,
-                    Role = i.Role,
+                    // RoleId = i.RoleId,
                     Email = i.Email,
                     PhoneNumber = i.PhoneNumber,
                 })
@@ -233,7 +233,7 @@ namespace WebApi.Controllers.Users
                     Avatar = i.Avatar,
                     FirstName = i.FirstName,
                     LastName = i.LastName,
-                    Role = i.Role,
+                    //RoleId = i.RoleId,
                     Email = i.Email,
                     PhoneNumber = i.PhoneNumber,
                 })
@@ -257,7 +257,7 @@ namespace WebApi.Controllers.Users
                     Avatar = i.Avatar,
                     FirstName = i.FirstName,
                     LastName = i.LastName,
-                    Role = i.Role,
+                    //RoleId = i.RoleId,
                     Email = i.Email,
                     PhoneNumber = i.PhoneNumber,
                 })
