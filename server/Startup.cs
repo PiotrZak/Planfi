@@ -6,6 +6,7 @@ using WebApi.Helpers;
 using WebApi.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -92,6 +93,11 @@ namespace WebApi
             // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
+            
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
             
             // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();

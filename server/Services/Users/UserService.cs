@@ -46,10 +46,17 @@ namespace WebApi.Services{
             return user;
         }
         
-        public User Authenticate(string email, string password)
+        public User Authenticate(string email, string? password)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Email == email);
+            var user = _context.Users
+                .Include(x => x.Role)
+                .SingleOrDefault(x => x.Email == email);
 
+            if (password == null && user == null)
+            {
+                return null;
+            }
+            
             // check if email exists
             if (user == null)
                 throw new ValidationException(
@@ -73,16 +80,28 @@ namespace WebApi.Services{
             return users;
         }
         
-        public UserViewModel GetById(string id)
+        public async Task<UserViewModel> GetById(string id)
         {
-            //dapper query
-            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
-            connection.Open();
+            var user = await _context.Users
+                .Include(x => x.Role)
+                .SingleOrDefaultAsync(x => x.UserId == id);
             
-            var user = connection.Query<UserViewModel>("SELECT \u0022UserId\u0022, \u0022Avatar\u0022, \u0022FirstName\u0022, \u0022LastName\u0022, \u0022Role\u0022, \u0022Email\u0022, \u0022PhoneNumber\u0022 FROM public.\u0022Users\u0022 WHERE \u0022UserId\u0022 = @id",
-                new { id }).FirstOrDefault();
-
-            return user;
+            var userViewModel = new UserViewModel()
+            {
+                UserId = user.UserId,
+                Avatar = user.Avatar,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Role = new Role()
+                {
+                    Id = user.Role.Id,
+                    Name = user.Role.Name,
+                },
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                OrganizationId = user.OrganizationId,
+            };
+            return userViewModel;
         }
         
         public async Task<int> Update(string id, UpdateUserModel model)

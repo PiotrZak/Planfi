@@ -8,19 +8,19 @@ namespace WebApi.Interfaces
 {
     public interface IUserService
     {
-        User Authenticate(string Email, string Password);
+        User Authenticate(string email, string? password);
         User Register(string email);
         IEnumerable<User> GetAllUsers();
-        UserViewModel GetById(string id);
+        Task<UserViewModel> GetById(string id);
         Task<int> Update(string id, UpdateUserModel model);
         Task Delete(string[] id);
         IEnumerable<User> GetByRole(string role);
-        Task<int> AssignClientsToTrainers(string[] TrainerIds, string[] UserIds);
+        Task<int> AssignClientsToTrainers(string[] trainerIds, string[] userIds);
         Task<int> AssignPlanToClients(string[] userIds, string[] planIds);
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
-        Task<IEnumerable<User>> GetClientsByTrainer(string TrainerId);
-        Task<IEnumerable<User>> GetTrainersByClient(string ClientId);
+        Task<IEnumerable<User>> GetClientsByTrainer(string trainerId);
+        Task<IEnumerable<User>> GetTrainersByClient(string clientId);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 }

@@ -60,7 +60,9 @@ namespace WebApi.Services.Account
         {
             var user = _context.Users.FirstOrDefault(x => x.Email == model.Email).WithoutPassword();
 
-            if (user == null) return false;
+            if (user == null)
+                throw new ValidationException(
+                    $"Invalid mail");
 
             // create reset token that expires after 1 day
             user.ResetToken = RandomTokenString();

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -41,6 +42,7 @@ namespace WebApi.Controllers.Users
             try
             {
                 var user = _userService.Authenticate(model.Email, model.Password);
+                
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -67,7 +69,11 @@ namespace WebApi.Controllers.Users
                     user.FirstName,
                     user.LastName,
                     user.Avatar,
-                    //user.RoleId,
+                    Role = new Role
+                    {
+                        Id = user.Role.Id,
+                        Name = user.Role.Name,
+                    },
                     Token = tokenString
                 });
             }
@@ -105,9 +111,9 @@ namespace WebApi.Controllers.Users
         [AllowAnonymous]
         /*[Authorize(Roles = Role.Admin + "," + Role.Owner)]*/
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var user =  _userService.GetById(id);
+            var user = await  _userService.GetById(id);
 
             if (user == null)
                 return NotFound();

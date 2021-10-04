@@ -97,7 +97,7 @@ const Exercise = (props) => {
       <GlobalTemplate>
         <Nav>
           {exercise && <BackTopNav text={exercise.title} />}
-          {user.role != Role.User && exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
+          {user.role.name != Role.User && exercise && <SmallButton onClick={() => setBottomSheet('flex')} iconName="plus" />}
         </Nav>
         {exercise && exercise.files &&
           <>

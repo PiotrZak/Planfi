@@ -83,7 +83,7 @@ export const User = (props) => {
 
   const renderSwitchedButton = () => {
     if(user){
-    if (user.role === Role.Trainer) {
+    if (user.role.name === Role.Trainer) {
       return (
         <SwitchedButton
           firstButtonText={translate('TrainerPlans')}

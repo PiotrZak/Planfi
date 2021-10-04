@@ -5,6 +5,7 @@ export const accountService = {
     uploadAvatar,
     activate,
     sendInvitation,
+    gmailSignUp,
     forgotPassword,
     resetPassword,
   };
@@ -19,6 +20,10 @@ export const accountService = {
 
   function sendInvitation(body) {
     return http.post(`${ACCOUNT_URL}invite`, body);
+  }
+
+  function gmailSignUp(body) {
+    return http.post(`${ACCOUNT_URL}gmailSignUp`, body);
   }
 
   function forgotPassword(body) {

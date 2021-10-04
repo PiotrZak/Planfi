@@ -9,7 +9,7 @@ import { useThemeContext } from 'support/context/ThemeContext';
 
 // eslint-disable-next-line no-shadow
 const getUsersRoute = (currentUser) => {
-  switch (currentUser.role) {
+  switch (currentUser.role.name) {
     case Role.Admin:
       return routes.users;
     case Role.Owner:
@@ -125,7 +125,7 @@ const Menu = () => {
   const changeIconColor = (currentUrl, route) =>   (currentUrl.includes(route.substring(1,4)) ? theme.colorPrimary : theme.colorDisabled);
 
   const toRender = (currentUser) => {
-    switch (currentUser.role) {
+    switch (currentUser.role.name) {
       case Role.Owner:
         return (
           <>

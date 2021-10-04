@@ -17,6 +17,7 @@ import * as Yup from 'yup';
 import Logo from 'components/atoms/Logo';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { Role } from 'utils/PrivateRoute';
+import LoginHooks from './Google/LoginHooks';
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -58,17 +59,21 @@ const LoginPage = () => {
   };
 
   const redirectToPage = (data) => {
-    if (data.role === Role.User) {
+
+    console.log(data)
+
+    if (data.role.name === Role.User) {
       setTimeout(() => {
         history.push(routes.myProfile);
       }, timeToRedirectLogin);
     }
-    if (data.role === Role.Trainer || data.role === Role.Owner) {
+    if (data.role.name === Role.Trainer || data.role.name === Role.Owner) {
+      console.log('test')
       setTimeout(() => {
         history.push(routes.clients);
       }, timeToRedirectLogin);
     }
-    if (data.role === Role.Owner) {
+    if (data.role.name === Role.Admin) {
       setTimeout(() => {
         history.push(routes.organizationTrainer);
       }, timeToRedirectLogin);
@@ -100,6 +105,7 @@ const LoginPage = () => {
     userService
       .login(loginModelData)
       .then((data) => {
+        console.log(data)
         redirectToPage(data);
         localStorage.removeItem('user');
         localStorage.setItem('user', JSON.stringify(data));
@@ -125,7 +131,7 @@ const LoginPage = () => {
               <Label type="top" text={translate('YourMail')}>
                 <Field type="email" name="email" placeholder={translate('EmailAddress')} as={Input} error={errors.email && touched.email} />
               </Label>
-              <ValidationHint name="email" />
+              <ValidationHint name="pUemail" />
             </InputContainer>
 
             <InputContainer>
@@ -138,6 +144,7 @@ const LoginPage = () => {
           </Form>
         )}
       </Formik>
+      <LoginHooks />
       <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   );

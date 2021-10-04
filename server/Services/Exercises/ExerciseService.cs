@@ -46,7 +46,7 @@ namespace WebApi.Services.Exercises
         
         public Task<Exercise> GetById(string id)
         {
-            return _context.Exercises.SingleOrDefaultAsync(x => x.ExerciseId == id);
+            return _context.Exercises.FirstOrDefaultAsync(x => x.ExerciseId == id);
         }
 
         public IEnumerable<Exercise> GetAll()

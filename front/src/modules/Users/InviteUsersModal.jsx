@@ -52,7 +52,7 @@ const InviteUserModal = ({ openModal, onClose, role }) => {
       onBackgroundClick={onClose}
       onEscapeKeydown={onClose}
     >
-      {role == Role.Trainer
+      {role.name == Role.Trainer
         ? <ModalHeading>{translate('InviteTrainers')}</ModalHeading>
         : <ModalHeading>{translate('InviteUsers')}</ModalHeading>
       }

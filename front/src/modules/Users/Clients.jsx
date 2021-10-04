@@ -44,13 +44,12 @@ const Clients = () => {
   const [refresh, setRefresh] = useState(false)
 
   const Clients = gql`{
-    users(where: {organizationId: "${user.organizationId}" role: "${Role.User}"})
+    users(where: {organizationId: "${user.organizationId}"})
     {
         userId
         avatar
         firstName
         lastName
-        role
      }
     }
   `;
@@ -178,7 +177,7 @@ useEffect(() => {
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
-    user.role == "Owner" ? setBottomSheet('flex') : setAssignTrainer('flex');
+    user.role.name == "Owner" ? setBottomSheet('flex') : setAssignTrainer('flex');
   };
 
   let results;
@@ -216,7 +215,7 @@ useEffect(() => {
         </Loader>
       </GlobalTemplate>
       {user.role && 
-      user.role != Role.Owner ?
+      user.role.name != Role.Owner ?
         <ClientPanel
         assignUserToMe={assignUserToMe}
         assignPlan={assignPlan}

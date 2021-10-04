@@ -33,7 +33,7 @@ export const UserInfo = ({ user }) => {
         <StyledParagraph type="Label-Button">
           {`${firstName} ${lastName}`}
         </StyledParagraph>
-        <StyledParagraph type="body-3-regular" notFirst>{role}</StyledParagraph>
+        <StyledParagraph type="body-3-regular" notFirst>{role.name}</StyledParagraph>
         <StyledParagraph type="body-3-regular" notFirst>{phoneNumber}</StyledParagraph>
       </Container>
     </UserInfoContainer>

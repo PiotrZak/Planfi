@@ -72,7 +72,9 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
   const renderGenericElement = (tab) => {
-    const { role, userId } = user;
+
+    const userId = user.userId;
+    const role = user.role.name;
 
 
     if (role === Role.Trainer || role === Role.Owner) {
@@ -84,7 +86,7 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       }
     }
 
-    if(role === Role.User){
+    if(role  === Role.User){
       if (tab === 'first') {
         setToRender(<UserPlans id={userId} />);
       }
@@ -96,7 +98,7 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
 
 
   const renderSwitchedButton = () => {
-    if (user.role === Role.Trainer) {
+    if (user.role.name === Role.Trainer) {
       return (
         <SwitchedButton
           firstButtonText={translate('MyPlans')}

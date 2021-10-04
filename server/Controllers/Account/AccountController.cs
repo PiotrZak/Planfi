@@ -21,12 +21,14 @@ namespace WebApi.Controllers.Account
     {
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
 
         public AccountController(
             IEmailService emailService,
-            IAccountService accountService)
+            IAccountService accountService, IUserService userService)
         {
             _accountService = accountService;
+            _userService = userService;
             _emailService = emailService;
             }
 
@@ -36,6 +38,43 @@ namespace WebApi.Controllers.Account
         {
             await _emailService.SendEmail(message);
             return Ok(message);
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("gmailSignUp")]
+        public async Task<IActionResult> GmailSignUp([FromBody] RegisterModel model)
+        {
+            try
+            {
+                ApiCommonResponse success;
+                var user = _userService.Authenticate(model.Emails[0], null);
+                if (user != null)
+                {
+                    success = ApiCommonResponse.Create()
+                        .WithSuccess()
+                        .WithData(user)
+                        .Build();
+                    return CommonResponse(success);
+                }
+                var sendVerificationResponse = await _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
+                
+                success = ApiCommonResponse.Create()
+                    .WithSuccess()
+                    .WithData(sendVerificationResponse)
+                    .Build();
+                
+                return CommonResponse(success);
+            }
+
+            catch(Exception e)
+            {
+                var failure = ApiCommonResponse.Create()
+                    .WithFailure()
+                    .WithData(e)
+                    .Build();
+                
+                return CommonResponse(failure);
+            }
         }
 
         [AllowAnonymous]

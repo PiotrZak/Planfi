@@ -95,9 +95,9 @@ namespace WebApi.Controllers.Exercises
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var exercise = _exerciseService.GetById(id);
+            var exercise = await _exerciseService.GetById(id);
 
             if (exercise == null)
                 return NotFound();

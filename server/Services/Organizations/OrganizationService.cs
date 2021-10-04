@@ -91,9 +91,9 @@ namespace WebApi.Services
             //dapper query
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             connection.Open();
-
+            
             var users = connection.Query<UserViewModel>(
-                "SELECT \u0022UserId\u0022, \u0022Avatar\u0022, \u0022FirstName\u0022, \u0022LastName\u0022, \u0022Role\u0022, \u0022Email\u0022, \u0022PhoneNumber\u0022, \u0022OrganizationId\u0022 FROM public.\u0022Users\u0022 WHERE \u0022IsActivated\u0022 = true");
+                "SELECT \u0022UserId\u0022, \u0022Avatar\u0022, \u0022FirstName\u0022, \u0022LastName\u0022, \u0022Email\u0022, \u0022PhoneNumber\u0022, \u0022OrganizationId\u0022 FROM public.\u0022Users\u0022 WHERE \u0022IsActivated\u0022 = true");
 
             return (List<UserViewModel>) users;
         }

@@ -89,7 +89,7 @@ export const CheckboxGenericComponent = ({
             />
             {checkboxVisible != false && (
               <>
-                {user.role != "User" && (
+                {user.role.name != "User" && (
                   <>
                     <CheckboxContainer>
                       <Checkbox
