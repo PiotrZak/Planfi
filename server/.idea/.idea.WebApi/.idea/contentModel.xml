@@ -102,7 +102,6 @@
         <e p="RegisterModel.cs" t="Include" />
         <e p="ResetPasswordModel.cs" t="Include" />
         <e p="ResultPlan.cs" t="Include" />
-        <e p="TrainerClient.cs" t="Include" />
         <e p="UpdateCategoryModel.cs" t="Include" />
         <e p="UpdateExerciseModel.cs" t="Include" />
         <e p="UpdateUserModel.cs" t="Include" />

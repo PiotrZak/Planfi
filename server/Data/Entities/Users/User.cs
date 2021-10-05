@@ -26,10 +26,6 @@ namespace WebApi.Data.Entities.Users
         public string OrganizationId { get; set; }
         [Key]
         public string UserId { get; set; }
-        //
-        // [ForeignKey("RoleId")]
-        // public string RoleId { get; set; }
-        
         public Role Role { get; set; }
         public ICollection<UsersPlans> Plans { get; set; }
         
