@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "37RfJHT4AVMGit1BSMVmC7rYyXMGRtuVd7+ies7DTwFvb2ECPSQjYxVjERdICZNb4Mzetgp9xxhrYVxPLGWruA==",
+  "dgSpecHash": "4sJrNaz8o0gPXKy2Hkn1soOTwFl8ZecG6I32XRkUlm/I3agdzrXbtVHFaUXuvvVqDtX9BCSSKnR1rqcHQ/wfgg==",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/FitApp/server/WebApi.csproj",
   "expectedPackageFiles": [
@@ -116,6 +116,10 @@
     "/Users/admin/.nuget/packages/npgsql.entityframeworkcore.postgresql.design/1.1.1/npgsql.entityframeworkcore.postgresql.design.1.1.1.nupkg.sha512",
     "/Users/admin/.nuget/packages/nuget.frameworks/5.0.0/nuget.frameworks.5.0.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/nunit/3.13.0/nunit.3.13.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/openssl.privatekeydecoder/1.2.0/openssl.privatekeydecoder.1.2.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/openssl.x509certificate2.provider/1.2.0/openssl.x509certificate2.provider.1.2.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/paypal/1.9.1/paypal.1.9.1.nupkg.sha512",
+    "/Users/admin/.nuget/packages/paypal.api/1.0.6/paypal.api.1.0.6.nupkg.sha512",
     "/Users/admin/.nuget/packages/portable.bouncycastle/1.8.5/portable.bouncycastle.1.8.5.nupkg.sha512",
     "/Users/admin/.nuget/packages/runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl/4.3.2/runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
     "/Users/admin/.nuget/packages/runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl/4.3.2/runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
@@ -158,9 +162,12 @@
     "/Users/admin/.nuget/packages/system.linq/4.3.0/system.linq.4.3.0.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/system.linq.expressions/4.1.0/system.linq.expressions.4.1.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.net.http/4.3.4/system.net.http.4.3.4.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/system.net.nameresolution/4.3.0/system.net.nameresolution.4.3.0.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/system.net.primitives/4.3.0/system.net.primitives.4.3.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.net.requests/4.3.0/system.net.requests.4.3.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/system.net.security/4.3.2/system.net.security.4.3.2.nupkg.sha512",
+    "/Users/admin/.nuget/packages/system.net.webheadercollection/4.3.0/system.net.webheadercollection.4.3.0.nupkg.sha512",
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/system.objectmodel/4.0.12/system.objectmodel.4.0.12.nupkg.sha512",
     "/Users/admin/.nuget/packages/system.reflection/4.3.0/system.reflection.4.3.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/system.reflection.emit/4.7.0/system.reflection.emit.4.7.0.nupkg.sha512",
@@ -200,5 +207,26 @@
     "/usr/local/share/dotnet/sdk/NuGetFallbackFolder/system.threading.threadpool/4.3.0/system.threading.threadpool.4.3.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PayPal 1.9.1' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PayPal",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'PayPal.Api 1.0.6' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework 'net5.0'. This package may not be fully compatible with your project.",
+      "libraryId": "PayPal.Api",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }

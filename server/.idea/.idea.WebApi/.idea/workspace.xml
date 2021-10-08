@@ -16,8 +16,40 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="75f0394a-0129-4872-af79-38dc993a83ca" name="Default Changelist" comment="iiii">
+    <list default="true" id="75f0394a-0129-4872-af79-38dc993a83ca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Interfaces/IPayPalProcessing.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalProcessing.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/PaypalIntegrationTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/contentModel.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interfaces/IPlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IPlanService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebApi.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.deps.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/ref/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/ref/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.assets.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csprojAssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.g.props" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="false" />
@@ -27,63 +59,82 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1CAEA579-7BC0-4E55-ADEB-CC8011B21AB8/9/OptionsFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/30/HttpContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/RegisterModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5260901d4e084b7782b885e1db7817af53c00/2E/WebHostBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/C/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Users/UserService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/1C/HttpRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Account/AccountService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/593B42DD-0B05-4EF3-A52E-4B51D992D63D/0a/3c263b84/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Controllers/Account/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/1D/HttpResponse.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Account/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4019D9F0-3897-4B8C-B268-F02F4533964F/dd/06820c4e/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Controllers/Users/UsersController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596bbc84d47b5bdb2391440b66c598600/2B/ISession.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a37ace8e60634f15813d844031561c4410600/C/SessionMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/185/EntityTypeBuilder`.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/446F0B27-F438-492E-A9B0-D11E08CE42DA/3/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/A/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b69afa0752154c70bfca9964ef56a91f16c00/73/2c6ce914/Amount.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/15DE1D7F-E43D-4358-B955-237058162D22/0/ClaimTypes.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/66/659d23f5/Void.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/74/045c38b1/APIContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/402/List.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596BB-C84D-47B5-BDB2-391440B66C59/D/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/01/e04180ff/Payment.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/34/ModelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1BA52DC0-B103-422E-BA91-AD87A1AA9FE3/9/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/hostsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/1AB/InternalDbSet.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/736CA1A8-5CD9-4C65-BF33-2BCC07D5546A/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/13A/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/11/DbContextOptions`.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c62e2700794d413984ace46559defd642a8658/87/3d521103/Request.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1CAEA579-7BC0-4E55-ADEB-CC8011B21AB8/9/OptionsFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CE937F39-7871-428C-AAF5-C4192A6B4787/5d/69994cb9/HMACSHA512.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7FC6E9E0-9FE1-4872-88B4-AEE2D404A9CC/9/CorsMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CFA593D3-0C35-44A4-8A36-55404C349D29/5/HttpGetSchemaMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AABF22C8-0443-4F75-A371-6B76C765A950/88/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/1/ConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/905CEBD1-C0DE-49F8-8F0D-FDCC5844386D/26/QueryableFilterMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/593B42DD-0B05-4EF3-A52E-4B51D992D63D/0a/3c263b84/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4019D9F0-3897-4B8C-B268-F02F4533964F/dd/06820c4e/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/446F0B27-F438-492E-A9B0-D11E08CE42DA/3/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/A/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/15DE1D7F-E43D-4358-B955-237058162D22/0/ClaimTypes.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/402/List.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1BA52DC0-B103-422E-BA91-AD87A1AA9FE3/9/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/1AB/InternalDbSet.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/13A/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CE937F39-7871-428C-AAF5-C4192A6B4787/5d/69994cb9/HMACSHA512.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CFA593D3-0C35-44A4-8A36-55404C349D29/5/HttpGetSchemaMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90703D9-42C6-4B50-80F6-51918748EA87/19/4faee492/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/1/ConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/7/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/5d/d7a5bb00/ICollection`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/4CDEACE8-5372-4F45-A1EF-FCA788C925FB/8/QueryMiddlewareBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/09BB8616-9246-4030-8796-6C7008640ACE/2C/SecurityTokenDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/905CEBD1-C0DE-49F8-8F0D-FDCC5844386D/26/QueryableFilterMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GraphQl/Data.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9D7F563A-65BE-45E1-8CC7-B7C641344536/b0/71047590/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/C/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/185/EntityTypeBuilder`.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/66/659d23f5/Void.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/RegisterModel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596BB-C84D-47B5-BDB2-391440B66C59/D/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/34/ModelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GraphQl/Data.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/hostsettings.json" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Users/UserService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/736CA1A8-5CD9-4C65-BF33-2BCC07D5546A/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Account/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Account/AccountService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/11/DbContextOptions`.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Controllers/Users/UsersController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Controllers/Account/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -125,8 +176,6 @@
         <option value="$PROJECT_DIR$/Data/Entities/Users/Role.cs" />
         <option value="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" />
         <option value="$PROJECT_DIR$/Services/Plans/PlanService.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Plans.cs" />
-        <option value="$PROJECT_DIR$/Data/Entities/Users/User.cs" />
         <option value="$PROJECT_DIR$/Helpers/DataContext.cs" />
         <option value="$PROJECT_DIR$/Data/Entities/UsersPlans.cs" />
         <option value="$PROJECT_DIR$/Startup.cs" />
@@ -139,6 +188,8 @@
         <option value="$PROJECT_DIR$/Controllers/Users/UsersController.cs" />
         <option value="$PROJECT_DIR$/Controllers/Account/AccountController.cs" />
         <option value="$PROJECT_DIR$/Services/Users/UserService.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Users/User.cs" />
+        <option value="$PROJECT_DIR$/Data/Entities/Plans.cs" />
       </list>
     </option>
   </component>
@@ -151,7 +202,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.99242014" />
-    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.9848403" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="XThreadsFramesViewSplitterKey" value="0.6208426" />
@@ -253,13 +304,19 @@
       <workItem from="1633021818620" duration="7255000" />
       <workItem from="1633289780983" duration="8548000" />
       <workItem from="1633366230070" duration="7007000" />
-      <workItem from="1633452187470" duration="386000" />
+      <workItem from="1633452187470" duration="1044000" />
+      <workItem from="1633698898258" duration="2668000" />
+      <workItem from="1633701769461" duration="187000" />
+      <workItem from="1633702005074" duration="1408000" />
+      <workItem from="1633704075780" duration="2555000" />
+      <workItem from="1633707220803" duration="2861000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="Vcs.Log.Tabs.Properties">
@@ -276,206 +333,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="810" y="-712" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1633290367623">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state x="810" y="-712" key="#com.intellij.fileTypes.FileTypeChooser/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633290367623" />
-    <state x="681" y="409" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1200@0.0.1920.1200" timestamp="1626008052958" />
-    <state width="432" height="516" key="DebuggerActiveHint" timestamp="1633376229160">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="472" height="464" key="DebuggerActiveHint/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372963727" />
-    <state width="432" height="516" key="DebuggerActiveHint/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633376229160" />
-    <state width="408" height="464" key="DebuggerActiveHint/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633367289107" />
-    <state width="1878" height="479" key="GridCell.Tab.0.bottom" timestamp="1633377246580">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937797" />
-    <state width="1878" height="479" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246580" />
-    <state width="2518" height="127" key="GridCell.Tab.0.bottom/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749656" />
-    <state width="1878" height="261" key="GridCell.Tab.0.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259346" />
-    <state width="1878" height="294" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411611" />
-    <state width="1878" height="479" key="GridCell.Tab.0.center" timestamp="1633377246578">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937791" />
-    <state width="1878" height="479" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246578" />
-    <state width="2518" height="127" key="GridCell.Tab.0.center/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749654" />
-    <state width="1878" height="261" key="GridCell.Tab.0.center/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259345" />
-    <state width="1878" height="294" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411610" />
-    <state width="1878" height="479" key="GridCell.Tab.0.left" timestamp="1633377246577">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937790" />
-    <state width="1878" height="479" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246577" />
-    <state width="2518" height="127" key="GridCell.Tab.0.left/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749653" />
-    <state width="1878" height="261" key="GridCell.Tab.0.left/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259344" />
-    <state width="1878" height="294" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411609" />
-    <state width="1878" height="479" key="GridCell.Tab.0.right" timestamp="1633377246579">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937795" />
-    <state width="1878" height="479" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246579" />
-    <state width="2518" height="127" key="GridCell.Tab.0.right/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749655" />
-    <state width="1878" height="261" key="GridCell.Tab.0.right/0.0.1920.1200@0.0.1920.1200" timestamp="1626018259346" />
-    <state width="1878" height="294" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411610" />
-    <state width="1878" height="479" key="GridCell.Tab.1.bottom" timestamp="1633377246587">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="1878" height="189" key="GridCell.Tab.1.bottom/-98.-1057.2560.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1633376725739" />
-    <state width="2518" height="391" key="GridCell.Tab.1.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372950528" />
-    <state width="1878" height="479" key="GridCell.Tab.1.bottom/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246587" />
-    <state width="2518" height="127" key="GridCell.Tab.1.bottom/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369768325" />
-    <state width="1878" height="294" key="GridCell.Tab.1.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256845" />
-    <state width="1878" height="294" key="GridCell.Tab.1.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1626011427826" />
-    <state width="1878" height="479" key="GridCell.Tab.1.center" timestamp="1633377246582">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="1878" height="189" key="GridCell.Tab.1.center/-98.-1057.2560.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1633376725737" />
-    <state width="2518" height="391" key="GridCell.Tab.1.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372950527" />
-    <state width="1878" height="479" key="GridCell.Tab.1.center/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246582" />
-    <state width="2518" height="127" key="GridCell.Tab.1.center/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369768324" />
-    <state width="1878" height="294" key="GridCell.Tab.1.center/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256844" />
-    <state width="1878" height="294" key="GridCell.Tab.1.center/0.23.1920.1177@0.23.1920.1177" timestamp="1626011427824" />
-    <state width="1878" height="479" key="GridCell.Tab.1.left" timestamp="1633377246581">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="1878" height="189" key="GridCell.Tab.1.left/-98.-1057.2560.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1633376725736" />
-    <state width="2518" height="391" key="GridCell.Tab.1.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372950525" />
-    <state width="1878" height="479" key="GridCell.Tab.1.left/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246581" />
-    <state width="2518" height="127" key="GridCell.Tab.1.left/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369768323" />
-    <state width="1878" height="294" key="GridCell.Tab.1.left/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256844" />
-    <state width="1878" height="294" key="GridCell.Tab.1.left/0.23.1920.1177@0.23.1920.1177" timestamp="1626011427823" />
-    <state width="1878" height="479" key="GridCell.Tab.1.right" timestamp="1633377246583">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="1878" height="189" key="GridCell.Tab.1.right/-98.-1057.2560.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1633376725738" />
-    <state width="2518" height="391" key="GridCell.Tab.1.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372950527" />
-    <state width="1878" height="479" key="GridCell.Tab.1.right/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246583" />
-    <state width="2518" height="127" key="GridCell.Tab.1.right/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369768324" />
-    <state width="1878" height="294" key="GridCell.Tab.1.right/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256844" />
-    <state width="1878" height="294" key="GridCell.Tab.1.right/0.23.1920.1177@0.23.1920.1177" timestamp="1626011427825" />
-    <state width="1878" height="479" key="GridCell.Tab.2.bottom" timestamp="1633377246590">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.2.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937488" />
-    <state width="1878" height="479" key="GridCell.Tab.2.bottom/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246590" />
-    <state width="2518" height="127" key="GridCell.Tab.2.bottom/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749411" />
-    <state width="1878" height="294" key="GridCell.Tab.2.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256846" />
-    <state width="1878" height="294" key="GridCell.Tab.2.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411305" />
-    <state width="1878" height="479" key="GridCell.Tab.2.center" timestamp="1633377246589">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.2.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937486" />
-    <state width="1878" height="479" key="GridCell.Tab.2.center/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246589" />
-    <state width="2518" height="127" key="GridCell.Tab.2.center/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749409" />
-    <state width="1878" height="294" key="GridCell.Tab.2.center/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256846" />
-    <state width="1878" height="294" key="GridCell.Tab.2.center/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411304" />
-    <state width="1878" height="479" key="GridCell.Tab.2.left" timestamp="1633377246588">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.2.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937485" />
-    <state width="1878" height="479" key="GridCell.Tab.2.left/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246588" />
-    <state width="2518" height="127" key="GridCell.Tab.2.left/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749408" />
-    <state width="1878" height="294" key="GridCell.Tab.2.left/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256845" />
-    <state width="1878" height="294" key="GridCell.Tab.2.left/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411304" />
-    <state width="1878" height="479" key="GridCell.Tab.2.right" timestamp="1633377246589">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.2.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937487" />
-    <state width="1878" height="479" key="GridCell.Tab.2.right/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246589" />
-    <state width="2518" height="127" key="GridCell.Tab.2.right/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749410" />
-    <state width="1878" height="294" key="GridCell.Tab.2.right/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256846" />
-    <state width="1878" height="294" key="GridCell.Tab.2.right/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411304" />
-    <state width="1878" height="479" key="GridCell.Tab.3.bottom" timestamp="1633377246594">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.3.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937499" />
-    <state width="1878" height="479" key="GridCell.Tab.3.bottom/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246594" />
-    <state width="2518" height="127" key="GridCell.Tab.3.bottom/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749418" />
-    <state width="1878" height="294" key="GridCell.Tab.3.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256848" />
-    <state width="1878" height="294" key="GridCell.Tab.3.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411308" />
-    <state width="1878" height="479" key="GridCell.Tab.3.center" timestamp="1633377246592">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.3.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937497" />
-    <state width="1878" height="479" key="GridCell.Tab.3.center/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246592" />
-    <state width="2518" height="127" key="GridCell.Tab.3.center/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749416" />
-    <state width="1878" height="294" key="GridCell.Tab.3.center/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256847" />
-    <state width="1878" height="294" key="GridCell.Tab.3.center/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411306" />
-    <state width="1878" height="479" key="GridCell.Tab.3.left" timestamp="1633377246591">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.3.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937491" />
-    <state width="1878" height="479" key="GridCell.Tab.3.left/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246591" />
-    <state width="2518" height="127" key="GridCell.Tab.3.left/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749415" />
-    <state width="1878" height="294" key="GridCell.Tab.3.left/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256847" />
-    <state width="1878" height="294" key="GridCell.Tab.3.left/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411305" />
-    <state width="1878" height="479" key="GridCell.Tab.3.right" timestamp="1633377246593">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.3.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937498" />
-    <state width="1878" height="479" key="GridCell.Tab.3.right/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246593" />
-    <state width="2518" height="127" key="GridCell.Tab.3.right/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749417" />
-    <state width="1878" height="294" key="GridCell.Tab.3.right/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256848" />
-    <state width="1878" height="294" key="GridCell.Tab.3.right/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411307" />
-    <state x="-98" y="-635" width="1878" height="479" key="GridCell.Tab.4.bottom" timestamp="1633377246598">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.4.bottom/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937506" />
-    <state width="1878" height="479" key="GridCell.Tab.4.bottom/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246598" />
-    <state width="2518" height="127" key="GridCell.Tab.4.bottom/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749424" />
-    <state width="1878" height="294" key="GridCell.Tab.4.bottom/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256850" />
-    <state width="1878" height="294" key="GridCell.Tab.4.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411311" />
-    <state x="-98" y="-635" width="1878" height="479" key="GridCell.Tab.4.center" timestamp="1633377246596">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.4.center/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937502" />
-    <state width="1878" height="479" key="GridCell.Tab.4.center/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246596" />
-    <state width="2518" height="127" key="GridCell.Tab.4.center/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749421" />
-    <state width="1878" height="294" key="GridCell.Tab.4.center/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256849" />
-    <state width="1878" height="294" key="GridCell.Tab.4.center/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411310" />
-    <state x="-98" y="-635" width="1878" height="479" key="GridCell.Tab.4.left" timestamp="1633377246595">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.4.left/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937500" />
-    <state width="1878" height="479" key="GridCell.Tab.4.left/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246595" />
-    <state width="2518" height="127" key="GridCell.Tab.4.left/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749419" />
-    <state width="1878" height="294" key="GridCell.Tab.4.left/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256849" />
-    <state width="1878" height="294" key="GridCell.Tab.4.left/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411309" />
-    <state x="-98" y="-635" width="1878" height="479" key="GridCell.Tab.4.right" timestamp="1633377246597">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state width="2518" height="391" key="GridCell.Tab.4.right/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372937504" />
-    <state width="1878" height="479" key="GridCell.Tab.4.right/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246597" />
-    <state width="2518" height="127" key="GridCell.Tab.4.right/-98.-1080.2560.1080/0.23.1920.1177@-98.-1080.2560.1080" timestamp="1633369749422" />
-    <state width="1878" height="294" key="GridCell.Tab.4.right/0.0.1920.1200@0.0.1920.1200" timestamp="1626018256850" />
-    <state width="1878" height="294" key="GridCell.Tab.4.right/0.23.1920.1177@0.23.1920.1177" timestamp="1626011411310" />
-    <state x="691" y="-901" key="SettingsEditor" timestamp="1633021845368">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state x="691" y="-901" key="SettingsEditor/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633021845368" />
-    <state x="100" y="79" width="1720" height="1020" key="VCS.FileHistoryDialog" timestamp="1633377246652">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state x="100" y="100" width="1720" height="1000" key="VCS.FileHistoryDialog/-98.-1057.2560.1057/0.23.1920.1177@0.23.1920.1177" timestamp="1633375043477" />
-    <state x="100" y="79" width="1720" height="1020" key="VCS.FileHistoryDialog/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633377246652" />
-    <state width="1280" height="540" key="XDebugger.FullValuePopup" timestamp="1633372606284">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state width="1280" height="540" key="XDebugger.FullValuePopup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633372606284" />
-    <state x="860" y="-814" width="644" height="548" key="find.popup" timestamp="1633032620345">
-      <screen x="-98" y="-1080" width="2560" height="1080" />
-    </state>
-    <state x="860" y="-814" width="644" height="548" key="find.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633032620345" />
-    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup" timestamp="1633374846424">
-      <screen x="0" y="0" width="1920" height="1200" />
-    </state>
-    <state x="845" y="-841" width="896" height="679" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@-98.-1080.2560.1080" timestamp="1633371754005" />
-    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/-98.-1080.2560.1080/0.0.1920.1200@0.0.1920.1200" timestamp="1633374846424" />
-    <state x="707" y="266" width="672" height="754" key="search.everywhere.popup/0.0.1920.1200@0.0.1920.1200" timestamp="1626011249194" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -752,6 +609,162 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
+          <line>41</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" initialLine="42" containingFunctionPresentation="method 'PaymentWithPaypal'">
+            <startOffsets>
+              <option value="1383" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1494" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
+          <line>44</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" initialLine="45" containingFunctionPresentation="method 'PaymentWithPaypal'">
+            <startOffsets>
+              <option value="1528" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1567" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="182" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
+          <line>64</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" initialLine="65" containingFunctionPresentation="method 'PaymentWithPaypal'">
+            <startOffsets>
+              <option value="2629" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2630" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
+          <line>66</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" initialLine="67" containingFunctionPresentation="method 'PaymentWithPaypal'">
+            <startOffsets>
+              <option value="2716" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2806" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="184" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" initialLine="39" containingFunctionPresentation="method 'PaymentWithPaypal'">
+            <startOffsets>
+              <option value="1334" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1335" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
+          <line>39</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" initialLine="40" containingFunctionPresentation="method 'PaymentWithPaypal'">
+            <startOffsets>
+              <option value="1348" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3225" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
+          <line>27</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="27" containingFunctionPresentation="method 'GetAPIContext'">
+            <startOffsets>
+              <option value="1060" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1112" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="187" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
+          <line>13</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="13" containingFunctionPresentation="constructor 'PaypalConfiguration'">
+            <startOffsets>
+              <option value="459" />
+            </startOffsets>
+            <endOffsets>
+              <option value="484" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
+          <line>14</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="14" containingFunctionPresentation="constructor 'PaypalConfiguration'">
+            <startOffsets>
+              <option value="499" />
+            </startOffsets>
+            <endOffsets>
+              <option value="545" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
+          <line>15</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="15" containingFunctionPresentation="constructor 'PaypalConfiguration'">
+            <startOffsets>
+              <option value="560" />
+            </startOffsets>
+            <endOffsets>
+              <option value="614" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
+          <line>18</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="18" containingFunctionPresentation="method 'GetConfig'">
+            <startOffsets>
+              <option value="694" />
+            </startOffsets>
+            <endOffsets>
+              <option value="695" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
+          <line>19</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="19" containingFunctionPresentation="method 'GetConfig'">
+            <startOffsets>
+              <option value="709" />
+            </startOffsets>
+            <endOffsets>
+              <option value="755" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="192" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

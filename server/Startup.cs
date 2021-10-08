@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 using WebApi.Services.Account;
 using WebApi.Services.Exercises;
+using WebApi.Services.Payment.PaypalIntegration;
 
 namespace WebApi
 {
@@ -94,6 +95,7 @@ namespace WebApi
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             
+            services.AddSession();
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
@@ -105,7 +107,8 @@ namespace WebApi
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
-            
+            services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
+
             //interfaces
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAccountService, AccountService>();
@@ -124,6 +127,9 @@ namespace WebApi
                 dataContext.Database.Migrate();
                 app.UseRouting();
                 app.UseSwagger();
+                
+                
+                app.UseSession();
 
                 app.UseSwaggerUI(c =>
                 {
