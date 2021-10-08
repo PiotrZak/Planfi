@@ -11,7 +11,6 @@ namespace WebApi.Helpers
     {
         public AutoMapperProfile()
         {
-
             CreateMap<CreateOrganization, Organization>();
 
             CreateMap<ActivateAccount, User>();

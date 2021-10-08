@@ -39,8 +39,8 @@ namespace WebApi.Controllers.Payment
         public async Task<IActionResult>  PaymentWithPaypal(string cancel = null) {
             try {
             
-                var allParams = Request.Query.Concat(Request.Form)
-                    .ToDictionary(p => p.Key, p => p.Value);
+                // var allParams = Request.Query.Concat(Request.Form)
+                //     .ToDictionary(p => p.Key, p => p.Value);
                 
                 var payerId = Request.Query["PayerID"];
                 

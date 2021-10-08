@@ -19,6 +19,7 @@ using HotChocolate.AspNetCore;
 using HotChocolate;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
+using WebApi.Models.Configuration;
 using WebApi.Services.Account;
 using WebApi.Services.Exercises;
 using WebApi.Services.Payment.PaypalIntegration;
@@ -95,6 +96,9 @@ namespace WebApi
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             
+            //payment conf
+            services.Configure<PaymentConfiguration>(Configuration.GetSection("Payments"));
+
             services.AddSession();
             services.AddMvc().AddJsonOptions(options =>
             {

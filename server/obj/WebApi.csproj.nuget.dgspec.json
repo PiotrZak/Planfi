@@ -147,6 +147,10 @@
               "target": "Package",
               "version": "[5.0.0-rc4, )"
             },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[6.0.0-rc.1.21451.13, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[5.6.0, )"
