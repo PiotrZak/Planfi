@@ -318,7 +318,7 @@
       <workItem from="1633701769461" duration="187000" />
       <workItem from="1633702005074" duration="1408000" />
       <workItem from="1633704075780" duration="2555000" />
-      <workItem from="1633707220803" duration="6586000" />
+      <workItem from="1633707220803" duration="6920000" />
     </task>
     <servers />
   </component>
@@ -673,68 +673,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
-          <line>29</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="20" containingFunctionPresentation="method 'GetAccessToken'">
-            <startOffsets>
-              <option value="1241" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1263" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="209" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
-          <line>18</line>
+          <line>17</line>
           <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="19" containingFunctionPresentation="constructor 'PaypalConfiguration'">
             <startOffsets>
-              <option value="684" />
+              <option value="592" />
             </startOffsets>
             <endOffsets>
-              <option value="734" />
+              <option value="642" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="212" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
-          <line>30</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="26" containingFunctionPresentation="method 'GetAccessToken'">
-            <startOffsets>
-              <option value="1298" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1384" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="215" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
-          <line>27</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="29" containingFunctionPresentation="method 'GetAccessToken'">
-            <startOffsets>
-              <option value="1094" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1149" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="217" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
-          <line>26</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="26" containingFunctionPresentation="method 'GetAccessToken'">
-            <startOffsets>
-              <option value="998" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1078" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="219" />
         </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.IO.FileNotFoundException" isInternal="false" displayValue="FileNotFoundException" namespaceName="System.IO">

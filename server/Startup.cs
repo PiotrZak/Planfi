@@ -95,10 +95,6 @@ namespace WebApi
             // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
-            
-            //payment conf
-            services.Configure<PaymentConfiguration>(Configuration.GetSection("Payments"));
-
             services.AddSession();
             services.AddMvc().AddJsonOptions(options =>
             {

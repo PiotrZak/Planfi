@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using PayPal.Api;
-using WebApi.Models.Configuration;
 
 namespace WebApi.Services.Payment.PaypalIntegration
 {
@@ -11,12 +9,6 @@ namespace WebApi.Services.Payment.PaypalIntegration
     //https://developer.paypal.com/developer/applications/
     public class PaypalConfiguration {
         
-        private static PaymentConfiguration _paymentConfiguration;
-
-        public PaypalConfiguration(IOptions<PaymentConfiguration> paymentConfiguration)
-        {
-            _paymentConfiguration = paymentConfiguration.Value;
-        }
         private static Dictionary <string, string > GetConfig() { 
             return ConfigManager.Instance.GetProperties();  
         }  
