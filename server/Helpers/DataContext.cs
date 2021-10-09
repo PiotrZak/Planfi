@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Entities;
-using WebApi.Helpers.MockDeveloperData;
+using WebApi.Services.Payment.StripeIntegration;
 
 namespace WebApi.Helpers
 {
@@ -29,6 +28,8 @@ namespace WebApi.Helpers
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Plan> Plans { get; set; }
+        
+        public DbSet<Tenant> Tenants { get; set; }
         public DbSet<UsersPlans> UsersPlans { get; set; }
         public DbSet<UsersTrainers> UsersTrainers { get; set; }
         public DbSet<Category> Categories { get; set; }

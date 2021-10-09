@@ -19,10 +19,13 @@ using HotChocolate.AspNetCore;
 using HotChocolate;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
-using WebApi.Models.Configuration;
 using WebApi.Services.Account;
 using WebApi.Services.Exercises;
 using WebApi.Services.Payment.PaypalIntegration;
+using WebApi.Services.Payment.StripeIntegration;
+using AccountService = WebApi.Services.Account.AccountService;
+using PlanService = WebApi.Services.PlanService;
+using StripeConfiguration = Stripe.StripeConfiguration;
 
 namespace WebApi
 {
@@ -101,6 +104,10 @@ namespace WebApi
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
             
+            //payment conf
+            //add products and plans
+            StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
+            
             // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
@@ -108,6 +115,7 @@ namespace WebApi
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
+            services.AddScoped<IStripeProcessing, StripeProcessing>();
 
             //interfaces
             services.AddScoped<ICategoryService, CategoryService>();

@@ -1947,6 +1947,19 @@
           }
         }
       },
+      "Stripe.net/39.71.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3",
+          "System.Configuration.ConfigurationManager": "5.0.0"
+        },
+        "compile": {
+          "lib/net5.0/Stripe.net.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Stripe.net.dll": {}
+        }
+      },
       "Swashbuckle.AspNetCore/5.0.0-rc4": {
         "type": "package",
         "dependencies": {
@@ -5775,6 +5788,28 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
+    "Stripe.net/39.71.0": {
+      "sha512": "beCxqt8hnewWPHVPP4/whtNy0topHUF/zLWue0BbIqdA6VWWB1IxA9L0oEk54NT202lwWgCEEJmfuMJuPI+RoQ==",
+      "type": "package",
+      "path": "stripe.net/39.71.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "icon.png",
+        "lib/net461/Stripe.net.dll",
+        "lib/net461/Stripe.net.pdb",
+        "lib/net461/Stripe.net.xml",
+        "lib/net5.0/Stripe.net.dll",
+        "lib/net5.0/Stripe.net.pdb",
+        "lib/net5.0/Stripe.net.xml",
+        "lib/netstandard2.0/Stripe.net.dll",
+        "lib/netstandard2.0/Stripe.net.pdb",
+        "lib/netstandard2.0/Stripe.net.xml",
+        "stripe.net.39.71.0.nupkg.sha512",
+        "stripe.net.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/5.0.0-rc4": {
       "sha512": "jAgsEbL+1EIUdxtbkmINk9WEJCfG6vsoolJqGcypCI87NEZFTeaz8SZyUB3pXBcuogab2yr7Hi7dP0XyrfAPtQ==",
       "type": "package",
@@ -9359,6 +9394,7 @@
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 5.0.2",
       "PayPal >= 1.9.1",
       "PayPal.Api >= 1.0.6",
+      "Stripe.net >= 39.71.0",
       "Swashbuckle.AspNetCore >= 5.0.0-rc4",
       "System.Configuration.ConfigurationManager >= 6.0.0-rc.1.21451.13",
       "System.IdentityModel.Tokens.Jwt >= 5.6.0",
@@ -9508,6 +9544,10 @@
           "PayPal.Api": {
             "target": "Package",
             "version": "[1.0.6, )"
+          },
+          "Stripe.net": {
+            "target": "Package",
+            "version": "[39.71.0, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

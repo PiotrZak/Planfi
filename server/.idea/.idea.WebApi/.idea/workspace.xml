@@ -19,9 +19,11 @@
     <list default="true" id="75f0394a-0129-4872-af79-38dc993a83ca" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IPayPalProcessing.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Models/Configuration/PaymentConfiguration.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalProcessing.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Payment/StripeIntegration/StripeConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Payment/StripeIntegration/StripeProcessing.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Payment/StripeIntegration/testProducts.jsx" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Tests/PaypalIntegrationTests.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/contentModel.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/indexLayout.xml" afterDir="false" />
@@ -29,6 +31,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/DataContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IPlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IPlanService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.csproj" afterDir="false" />
@@ -87,38 +90,49 @@
     <setting file="file://$PROJECT_DIR$/Services/Account/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4019D9F0-3897-4B8C-B268-F02F4533964F/dd/06820c4e/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Controllers/Users/UsersController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3F9/ProductService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596bbc84d47b5bdb2391440b66c598600/2B/ISession.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a37ace8e60634f15813d844031561c4410600/C/SessionMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3DD/PlanCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/185/EntityTypeBuilder`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/446F0B27-F438-492E-A9B0-D11E08CE42DA/3/AuthorizationMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3E1/PlanService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/A/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b69afa0752154c70bfca9964ef56a91f16c00/73/2c6ce914/Amount.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/501/Service.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/15DE1D7F-E43D-4358-B955-237058162D22/0/ClaimTypes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/66/659d23f5/Void.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/212/StripeConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/74/045c38b1/APIContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1F4F0914-5411-4A47-9D76-C00412957903/402/List.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/49F/SubscriptionCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596BB-C84D-47B5-BDB2-391440B66C59/D/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/01/e04180ff/Payment.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2DF/CustomerUpdateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/34/ModelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1BA52DC0-B103-422E-BA91-AD87A1AA9FE3/9/ServiceProviderServiceExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/hostsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2DC/CustomerService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/1AB/InternalDbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/736CA1A8-5CD9-4C65-BF33-2BCC07D5546A/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2D2/CustomerCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/13A/ResourceInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/11/DbContextOptions`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c62e2700794d413984ace46559defd642a8658/87/3d521103/Request.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/94/Customer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1CAEA579-7BC0-4E55-ADEB-CC8011B21AB8/9/OptionsFactory.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/CE937F39-7871-428C-AAF5-C4192A6B4787/5d/69994cb9/HMACSHA512.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3F3/PlanProductOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7FC6E9E0-9FE1-4872-88B4-AEE2D404A9CC/9/CorsMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/CFA593D3-0C35-44A4-8A36-55404C349D29/5/HttpGetSchemaMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
@@ -318,7 +332,8 @@
       <workItem from="1633701769461" duration="187000" />
       <workItem from="1633702005074" duration="1408000" />
       <workItem from="1633704075780" duration="2555000" />
-      <workItem from="1633707220803" duration="6920000" />
+      <workItem from="1633707220803" duration="6997000" />
+      <workItem from="1633769865155" duration="3091000" />
     </task>
     <servers />
   </component>
@@ -670,19 +685,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="184" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs</url>
-          <line>17</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" initialLine="19" containingFunctionPresentation="constructor 'PaypalConfiguration'">
-            <startOffsets>
-              <option value="592" />
-            </startOffsets>
-            <endOffsets>
-              <option value="642" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="212" />
         </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.IO.FileNotFoundException" isInternal="false" displayValue="FileNotFoundException" namespaceName="System.IO">

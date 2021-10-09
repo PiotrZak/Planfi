@@ -32,6 +32,7 @@
     <PackageReference Include="NUnit" Version="3.13.0" />
     <PackageReference Include="PayPal" Version="1.9.1" />
     <PackageReference Include="PayPal.Api" Version="1.0.6" />
+    <PackageReference Include="Stripe.net" Version="39.71.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0-rc.1.21451.13" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
