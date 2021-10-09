@@ -4,7 +4,6 @@ using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Entities;
-using WebApi.Services.Payment.StripeIntegration;
 
 namespace WebApi.Helpers
 {
@@ -29,7 +28,7 @@ namespace WebApi.Helpers
         public DbSet<Role> Role { get; set; }
         public DbSet<Plan> Plans { get; set; }
         
-        public DbSet<Tenant> Tenants { get; set; }
+        //public DbSet<Tenant> Tenants { get; set; }
         public DbSet<UsersPlans> UsersPlans { get; set; }
         public DbSet<UsersTrainers> UsersTrainers { get; set; }
         public DbSet<Category> Categories { get; set; }

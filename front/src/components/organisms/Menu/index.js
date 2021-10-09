@@ -125,6 +125,7 @@ const Menu = () => {
   const changeIconColor = (currentUrl, route) =>   (currentUrl.includes(route.substring(1,4)) ? theme.colorPrimary : theme.colorDisabled);
 
   const toRender = (currentUser) => {
+
     switch (currentUser.role.name) {
       case Role.Owner:
         return (

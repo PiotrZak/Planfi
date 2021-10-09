@@ -22,10 +22,8 @@ using WebApi.Interfaces;
 using WebApi.Services.Account;
 using WebApi.Services.Exercises;
 using WebApi.Services.Payment.PaypalIntegration;
-using WebApi.Services.Payment.StripeIntegration;
 using AccountService = WebApi.Services.Account.AccountService;
 using PlanService = WebApi.Services.PlanService;
-using StripeConfiguration = Stripe.StripeConfiguration;
 
 namespace WebApi
 {
@@ -106,7 +104,7 @@ namespace WebApi
             
             //payment conf
             //add products and plans
-            StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
+            //StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
             
             // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();
@@ -115,7 +113,7 @@ namespace WebApi
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
-            services.AddScoped<IStripeProcessing, StripeProcessing>();
+            //services.AddScoped<IStripeProcessing, StripeProcessing>();
 
             //interfaces
             services.AddScoped<ICategoryService, CategoryService>();

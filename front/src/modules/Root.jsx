@@ -17,6 +17,11 @@ import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 
+//payment
+import { StripeContainer } from './Payment/Stripe';
+import { StripeSuccess } from './Payment/Success';
+import { StripeCancel } from './Payment/Cancel';
+
 // exercises
 import Categories from 'modules/Categories/Categories';
 import Category from 'modules/Categories/Category/Category';
@@ -77,6 +82,10 @@ const Root = () => {
               <MainTemplate>
                 <Switch>
                   <Route path exact ="/" component={LoginPage} />
+                  <Route path ="/stripe" component={StripeContainer} />
+                  <Route path ="/stripeSuccess" component={StripeSuccess} />
+                  <Route path ="/stripeCancel" component={StripeCancel} />
+
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
@@ -84,7 +93,7 @@ const Root = () => {
                   <Route path={routes.confirmation} component={ConfirmationPage} />
 
                   <Route path="/test" component={TestPage} />
-                 <MenuTemplate>
+                 {/* <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
 
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationTrainers} component={OrganizationTrainers} />
@@ -98,7 +107,7 @@ const Root = () => {
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
-                  </MenuTemplate>
+                  </MenuTemplate> */}
 
 
                   

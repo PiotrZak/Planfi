@@ -115,8 +115,8 @@ namespace WebApi.Controllers.Exercises
             {
                 foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
-                    using var memoryStream = new MemoryStream();
-                    formFile.CopyTo(memoryStream);
+                    await using var memoryStream = new MemoryStream();
+                    await formFile.CopyToAsync(memoryStream);
                     filesList.Add(memoryStream.ToArray());
                 }
             }
