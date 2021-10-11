@@ -149,7 +149,10 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/09BB8616-9246-4030-8796-6C7008640ACE/2C/SecurityTokenDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/1D7/Subscription.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2B2/SessionService.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/29E/SessionCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/32/2bd212f7/PayPalResource.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2AE/SessionPaymentMethodOptionsOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/faef7f886f2040518b3c61b078040fda60a68/28/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
@@ -338,7 +341,7 @@
       <workItem from="1633702005074" duration="1408000" />
       <workItem from="1633704075780" duration="2555000" />
       <workItem from="1633707220803" duration="6997000" />
-      <workItem from="1633769865155" duration="10094000" />
+      <workItem from="1633769865155" duration="11693000" />
     </task>
     <servers />
   </component>
@@ -699,7 +702,7 @@
               <option value="774" />
             </startOffsets>
             <endOffsets>
-              <option value="812" />
+              <option value="811" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="205" />

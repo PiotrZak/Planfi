@@ -93,7 +93,7 @@ const Root = () => {
                   <Route path={routes.confirmation} component={ConfirmationPage} />
 
                   <Route path="/test" component={TestPage} />
-                 {/* <MenuTemplate>
+                 <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
 
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationTrainers} component={OrganizationTrainers} />
@@ -107,7 +107,7 @@ const Root = () => {
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
-                  </MenuTemplate> */}
+                  </MenuTemplate>
 
 
                   

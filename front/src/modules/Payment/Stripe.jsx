@@ -61,9 +61,9 @@ export const StripeContainer = () => {
 
   return (
     <GlobalTemplate>
-      <Elements stripe={stripePromise}>
+      {/* <Elements stripe={stripePromise}>
         <CheckoutForm />
-      </Elements>
+      </Elements> */}
       <h1>Test</h1>
       <html>
         <head>
