@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using WebApi.Services.Chat.ChatRepository;
@@ -32,7 +33,8 @@ namespace WebApi.Services.Chat
 
         public void AddMessage(string message)
         {
-            var chatMessage = _chatService.CreateNewMessage("Juergen", message);
+            var username = Context.User.Identity.Name;
+            var chatMessage =  _chatService.CreateNewMessage(username, message);
             // Call the MessageAdded method to update clients.
             Clients.All.InvokeAsync("MessageAdded", chatMessage);
         }
@@ -40,7 +42,7 @@ namespace WebApi.Services.Chat
 
     public interface IChatService
     {
-        Task<IEnumerable<ChatMessage>> GetAllInitially();
+        Task<List<ChatMessage>> GetAllInitially();
         Task<ChatMessage> CreateNewMessage(string senderName, string message);
     }
     
@@ -65,9 +67,10 @@ namespace WebApi.Services.Chat
             return chatMessage;
         }
 
-        public async Task<IEnumerable<ChatMessage>> GetAllInitially()
+        public async Task<List<ChatMessage>> GetAllInitially()
         {
-            return await _repository.GetTopMessages();
+            var messages = await _repository.GetTopMessages();
+            return messages.ToList();
         }
     }
 }

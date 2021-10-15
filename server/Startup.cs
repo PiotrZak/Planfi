@@ -20,6 +20,7 @@ using HotChocolate;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 using WebApi.Services.Account;
+using WebApi.Services.Chat;
 using WebApi.Services.Exercises;
 using WebApi.Services.Payment.PaypalIntegration;
 using AccountService = WebApi.Services.Account.AccountService;
@@ -107,7 +108,14 @@ namespace WebApi
             //StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
             
             //chat module
-            services.AddSignalR();
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryIdentityResources(ChatIdentityServer.GetIdentityResources())
+                .AddInMemoryApiResources(ChatIdentityServer.GetApiResources())
+                .AddInMemoryClients(ChatIdentityServer.GetClients())
+                .AddTestUsers(ChatIdentityServer.GetUsers());
+            
+            services.AddSignalR(); 
             services.AddSingleton<IChatService, ChatService>();
             
             // configure DI for application services
@@ -137,8 +145,6 @@ namespace WebApi
                 dataContext.Database.Migrate();
                 app.UseRouting();
                 app.UseSwagger();
-                
-                
                 app.UseSession();
 
                 app.UseSwaggerUI(c =>
@@ -151,9 +157,10 @@ namespace WebApi
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
-                
+                    
                 //chat module
-                app.UseSignalR(routes =>
+                app.UseIdentityServer();
+                app.UseEndpoints(routes =>
                 {
                     routes.MapHub<ChatHub>("chat");
                 });

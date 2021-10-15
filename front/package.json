@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.2.5",
+    "@aspnet/signalr": "^1.0.27",
     "@stripe/react-stripe-js": "^1.6.0",
     "@stripe/stripe-js": "^1.19.1",
     "@testing-library/jest-dom": "^4.2.4",

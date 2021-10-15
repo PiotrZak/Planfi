@@ -22,6 +22,7 @@
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/StripeController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IPayPalProcessing.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Chat/ChatIdentityServer.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Chat/ChatRepository/ChatMessageRepository.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalProcessing.cs" afterDir="false" />
@@ -151,12 +152,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/4AB/SubscriptionService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/09BB8616-9246-4030-8796-6C7008640ACE/2C/SecurityTokenDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/1D7/Subscription.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/F/Hub.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2B2/SessionService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/29E/SessionCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/32/2bd212f7/PayPalResource.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2AE/SessionPaymentMethodOptionsOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/faef7f886f2040518b3c61b078040fda60a68/28/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/519468d0250d4254862da79f0051f843aae10/2/IdentityServerApplicationBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/905CEBD1-C0DE-49F8-8F0D-FDCC5844386D/26/QueryableFilterMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
@@ -169,6 +172,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1af9673264b246bbb20975964c843969132580/128/TableOperation.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -345,7 +349,8 @@
       <workItem from="1633704075780" duration="2555000" />
       <workItem from="1633707220803" duration="6997000" />
       <workItem from="1633769865155" duration="11693000" />
-      <workItem from="1634304227513" duration="1241000" />
+      <workItem from="1634304227513" duration="2782000" />
+      <workItem from="1634307783486" duration="1849000" />
     </task>
     <servers />
   </component>

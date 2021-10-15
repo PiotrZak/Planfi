@@ -6,6 +6,42 @@ const ChatContainer = () => {
         this.panel = div;
     }
 
+    const registerUserLoggedOn = (userLoggedOn (id, name)) => {
+        // get new user from the server
+        this._connection.on('UserLoggedOn', (id, name) => {
+            userLoggedOn(id, name);
+        });
+    }
+
+    const registerMessageAdded = (messageAdded (msg)) =>  {
+        // get nre chat message from the server
+        this._connection.on('MessageAdded', (message) => {
+            messageAdded(message);
+        });
+    }
+    
+    sendMessage(message) {
+        // send the chat message to the server
+        this._connection.invoke('AddMessage', message);
+    }
+
+    //Chat.tsx
+    let that = this;
+    this._chatService = new ChatService((msg) => {
+        this.handleOnSocket(that, msg);
+    });
+
+    const handleOnSocket = (that, message) => {
+        let messages = that.state.messages;
+        messages.push(message);
+        that.setState({
+            messages: messages,
+            currentMessage: ''
+        });
+        that.scrollDown(that);
+        that.focusField(that);
+    }
+
 
     const handleMessageRef = (input) =>{
         this.msg = input;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper.Configuration;
@@ -6,12 +7,12 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 namespace WebApi.Services.Chat.ChatRepository
 {
     
-    public class ChatMessageTableEntity
+    public class ChatMessageTableEntity : TableEntity
     {
-        public ChatMessageTableEntity(string key)
+        public ChatMessageTableEntity(Guid key)
         {
             PartitionKey = "chatmessages";
-            RowKey = key;
+            RowKey = key.ToString("X");
         }
 
         public ChatMessageTableEntity() { }
@@ -52,12 +53,12 @@ namespace WebApi.Services.Chat.ChatRepository
 
             // Create the table if it doesn't exist.
             await table.CreateIfNotExistsAsync();
-
+    
             string filter = TableQuery.GenerateFilterCondition(
-                "PartitionKey",
-                QueryComparisons.Equal,
+                "PartitionKey", 
+                QueryComparisons.Equal, 
                 "chatmessages");
-
+            
             var query = new TableQuery<ChatMessageTableEntity>()
                 .Where(filter)
                 .Take(number);
@@ -76,14 +77,14 @@ namespace WebApi.Services.Chat.ChatRepository
             return result;
         }
 
-        public async Task AddMessage(ChatMessage message)
+        public async Task<ChatMessageTableEntity> AddMessage(ChatMessage message)
         {
             var table = _tableClient.GetTableReference(_tableName);
 
             // Create the table if it doesn't exist.
             await table.CreateIfNotExistsAsync();
 
-            var chatMessage = new ChatMessageTableEntity(message.Id)
+            var chatMessage = new ChatMessageTableEntity(Guid.NewGuid())
             {
                 Message = message.Message,
                 Sender = message.Sender
@@ -93,7 +94,9 @@ namespace WebApi.Services.Chat.ChatRepository
             TableOperation insertOperation = TableOperation.Insert(chatMessage);
 
             // Execute the insert operation.
-            var result = await table.ExecuteAsync(insertOperation);
+            await table.ExecuteAsync(insertOperation);
+
+            return chatMessage;
         }
 
     }
