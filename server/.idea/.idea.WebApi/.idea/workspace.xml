@@ -17,9 +17,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75f0394a-0129-4872-af79-38dc993a83ca" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Controllers/Chat/ChatController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/StripeController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IPayPalProcessing.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Services/Chat/ChatRepository/ChatMessageRepository.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalConfiguration.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Services/Payment/PaypalIntegration/PayPalProcessing.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Tests/PaypalIntegrationTests.cs" afterDir="false" />
@@ -342,6 +345,7 @@
       <workItem from="1633704075780" duration="2555000" />
       <workItem from="1633707220803" duration="6997000" />
       <workItem from="1633769865155" duration="11693000" />
+      <workItem from="1634304227513" duration="1241000" />
     </task>
     <servers />
   </component>

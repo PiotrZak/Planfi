@@ -106,6 +106,10 @@ namespace WebApi
             //add products and plans
             //StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
             
+            //chat module
+            services.AddSignalR();
+            services.AddSingleton<IChatService, ChatService>();
+            
             // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
@@ -147,6 +151,12 @@ namespace WebApi
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader());
+                
+                //chat module
+                app.UseSignalR(routes =>
+                {
+                    routes.MapHub<ChatHub>("chat");
+                });
 
                 app.UseGraphQL("/graphql");
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });

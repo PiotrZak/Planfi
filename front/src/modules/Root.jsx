@@ -22,6 +22,9 @@ import { StripeContainer } from './Payment/Stripe';
 import { StripeSuccess } from './Payment/Success';
 import { StripeCancel } from './Payment/Cancel';
 
+//chat
+import {ChatContainer} from './Chat/Chat';
+
 // exercises
 import Categories from 'modules/Categories/Categories';
 import Category from 'modules/Categories/Category/Category';
@@ -86,6 +89,7 @@ const Root = () => {
                   <Route path ="/stripeSuccess" component={StripeSuccess} />
                   <Route path ="/stripeCancel" component={StripeCancel} />
 
+                  <Route path ="/chat" component={ChatContainer} />
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
