@@ -17,7 +17,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="75f0394a-0129-4872-af79-38dc993a83ca" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Controllers/Chat/ChatController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Chat/ChatRoomController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Chat/MessageController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" afterDir="false" />
@@ -52,6 +51,7 @@
       <change beforePath="$PROJECT_DIR$/WebApi.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.sln.DotSettings.user" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/Microsoft.IdentityModel.Protocols.dll" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/Microsoft.IdentityModel.Protocols.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.deps.json" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/net5.0/WebApi.deps.json" afterDir="false" />
@@ -168,6 +168,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/66/659d23f5/Void.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/74/045c38b1/APIContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/1C/ControllerEndpointRouteBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596BB-C84D-47B5-BDB2-391440B66C59/D/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/01/e04180ff/Payment.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/34/ModelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
@@ -254,11 +255,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.5207945" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.33735424" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="XThreadsFramesViewSplitterKey" value="0.497921" />
+    <property name="XThreadsFramesViewSplitterKey" value="0.49761337" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -365,7 +366,7 @@
       <workItem from="1633707220803" duration="6997000" />
       <workItem from="1633769865155" duration="11693000" />
       <workItem from="1634304227513" duration="2782000" />
-      <workItem from="1634307783486" duration="8809000" />
+      <workItem from="1634307783486" duration="11120000" />
     </task>
     <servers />
   </component>

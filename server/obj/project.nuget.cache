@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "YiYf9shWihL+Ifqb92R1sgFdrDwf0cTk6vaBnKju/W+orv5Ty1lDbZAH4MQ/EYf7NnlZUZHniTJJ28KMqazraQ==",
+  "dgSpecHash": "F5ZiYvI80zIK9JeMB6Gc9X2uIRBBjc3LJEfIvLqPCP3SU+olY6hhurk5MvuG21tcogLsuPZD4TBgk1aohlrklg==",
   "success": true,
   "projectFilePath": "/Users/admin/Desktop/FitApp/server/WebApi.csproj",
   "expectedPackageFiles": [
@@ -43,7 +43,7 @@
     "/Users/admin/.nuget/packages/microsoft.aspnet.signalr/2.4.2/microsoft.aspnet.signalr.2.4.2.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.authentication.abstractions/2.2.0/microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.authentication.core/2.0.0/microsoft.aspnetcore.authentication.core.2.0.0.nupkg.sha512",
-    "/Users/admin/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/3.1.0/microsoft.aspnetcore.authentication.jwtbearer.3.1.0.nupkg.sha512",
+    "/Users/admin/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/3.1.18/microsoft.aspnetcore.authentication.jwtbearer.3.1.18.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/3.1.0/microsoft.aspnetcore.authentication.openidconnect.3.1.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.authorization/3.1.0/microsoft.aspnetcore.authorization.3.1.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/microsoft.aspnetcore.authorization.policy/2.2.0/microsoft.aspnetcore.authorization.policy.2.2.0.nupkg.sha512",

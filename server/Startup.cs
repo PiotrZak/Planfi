@@ -17,6 +17,7 @@ using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
 using HotChocolate.AspNetCore;
 using HotChocolate;
+using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 using WebApi.Services.Account;
@@ -31,7 +32,7 @@ namespace WebApi
     public class Startup
     {
         private readonly IWebHostEnvironment _env;
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
@@ -45,6 +46,15 @@ namespace WebApi
             // services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
 
+            services.AddCors(options => 
+                options.AddPolicy(name: "AllowAll",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowAnyOrigin();
+                    }));
 
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
@@ -156,9 +166,11 @@ namespace WebApi
 
                 // global cors policy
                 app.UseCors(x => x
-                    .AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader());
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(_ => true) // allow any origin
+                    .AllowCredentials());
+
                     
                 //chat module
                 app.UseIdentityServer();
@@ -166,19 +178,14 @@ namespace WebApi
                 app.UseEndpoints(routes =>
                 {
                     routes.MapHub<ChatHub>("chat");
+                    routes.MapControllers();
                 });
-
+                
+            
                 app.UseGraphQL("/graphql");
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
 
                 app.UseAuthentication();
-
-
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                });
-
         }
     }
 }

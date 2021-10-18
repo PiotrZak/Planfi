@@ -1,70 +1,50 @@
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { receiveRoom, setRoom } from "store/actions/roomActions";
+import useFetch from "../../hooks/useFetch";
+import { useDispatch } from 'react-redux'
 
-import React, {useState, useEffect} from 'react';
-import { connect } from 'react-redux';
-import { requestRooms, receiveRoom, setRoom } from 'store/actions/roomActions';
+const ChatRoomList = ({ openRoom, connection }) => {
+  const [rooms, setRooms] = useState([]);
+  const {
+    data,
+    loading,
+    error,
+  } = useFetch("http://localhost:5005/api/ChatRoom");
 
-const ChatRoomList = ({openRoom, connection}) => {
+  const dispatch = useDispatch()
 
-    const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    setRooms(data)
+    connection.on("NewRoom", (roomName, roomId) => {
+      this.props.onReceiveRoom(roomName, roomId);
+    });
+  }, [data]);
+
+  return (
+    <div className="rooms-list">
+      <ul>
+        <h4>Rooms Available</h4>
+        {rooms && rooms.map((room) => {
+          return (
+            <li key={room.id} className={"room"}>
+              <a onClick={() => dispatch(setRoom(room))} href="#active">
+                {room.name}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 
 
-    useEffect(() => {
-        requestRooms();
-
-        connection.on(
-          "NewRoom",
-          (roomName, roomId) =>
-          {
-            this.props.onReceiveRoom(
-              roomName,
-              roomId
-            )
-          }
-        )
-      }, []);
-
-    return (
-      <div className="rooms-list">
-        <ul>
-          <h4>Rooms Available</h4>
-            {rooms.map(room => {
-              
-              return (
-                <li key={room.id} className={'room'}>
-                  <a
-                    onClick={() => this.props.onSetRoom(room)} href="#active">
-                    {room.name}
-                  </a>
-                </li>
-              )
-            })}
-        </ul>
-      </div>
-    )
-}
-
-const mapStateToProps = (state) => {
-  return {
-    rooms: state.requestRooms.rooms,
-    currentRoom: state.requestRooms.currentRoom
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onRequestRooms: () => dispatch(requestRooms()),
-    onReceiveRoom: (roomName, id) =>
-      dispatch(receiveRoom(roomName,id)
-      ),
-    onSetRoom: (room) => dispatch(setRoom(room))
-  }
-}
-
-const ChatRoom = ({name, peopleInside, selected}) => (
+const ChatRoom = ({ name, peopleInside, selected }) => (
   <div>
     <h3>{name}</h3>
     <p>{peopleInside}</p>
   </div>
-)
+);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatRoomList);
+export default ChatRoomList;

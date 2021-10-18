@@ -1,10 +1,14 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
 using WebApi.Models;
 
 namespace WebApi.Services.Chat
 {
+    [EnableCors("AllowAll")] 
+    [AllowAnonymous]
     public class ChatHub : Hub
     {
         private readonly IChatRoomService _chatRoomService;
