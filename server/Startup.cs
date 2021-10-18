@@ -104,6 +104,7 @@ namespace WebApi
             });
             
             //payment conf
+            //todo - for what clients are able to pay?
             //add products and plans
             //StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
             
@@ -115,8 +116,9 @@ namespace WebApi
                 .AddInMemoryClients(ChatIdentityServer.GetClients())
                 .AddTestUsers(ChatIdentityServer.GetUsers());
             
-            services.AddSignalR(); 
-            services.AddSingleton<IChatService, ChatService>();
+            services.AddScoped<IChatRoomService, ChatRoomService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddSignalR();
             
             // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();
@@ -160,6 +162,7 @@ namespace WebApi
                     
                 //chat module
                 app.UseIdentityServer();
+                app.UseAuthorization();
                 app.UseEndpoints(routes =>
                 {
                     routes.MapHub<ChatHub>("chat");
@@ -169,7 +172,7 @@ namespace WebApi
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
 
                 app.UseAuthentication();
-                app.UseAuthorization();
+
 
                 app.UseEndpoints(endpoints =>
                 {

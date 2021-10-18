@@ -4,6 +4,7 @@ using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Entities;
+using WebApi.Models;
 
 namespace WebApi.Helpers
 {
@@ -27,6 +28,8 @@ namespace WebApi.Helpers
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<ChatRoom> ChatRooms { get; set; }
         
         //public DbSet<Tenant> Tenants { get; set; }
         public DbSet<UsersPlans> UsersPlans { get; set; }

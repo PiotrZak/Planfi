@@ -1,76 +1,58 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
-using WebApi.Services.Chat.ChatRepository;
+using WebApi.Models;
 
 namespace WebApi.Services.Chat
 {
-    
-    public class ChatMessage
-    {
-        public ChatMessage(Guid id)
-        {
-            Id = id.ToString("X");
-            Date = DateTimeOffset.Now;
-        }
-        public ChatMessage() { }
-        public string Id { get; set; }
-        public DateTimeOffset Date { get; set; }
-        public string Message { get; set; }
-        public string Sender { get; set; }
-    }
-    
     public class ChatHub : Hub
     {
-        private readonly IChatService _chatService;
+        private readonly IChatRoomService _chatRoomService;
+        private readonly IMessageService _messageService;
+        private int UsersOnline;
 
-        public ChatHub(IChatService chatService)
+        public ChatHub(IChatRoomService chatRoomService, IMessageService messageService)
         {
-            _chatService = chatService;
+            _chatRoomService = chatRoomService;
+            _messageService = messageService;
         }
 
-        public void AddMessage(string message)
+        public async Task SendMessage(Guid roomId, string user, string message)
         {
-            var username = Context.User.Identity.Name;
-            var chatMessage =  _chatService.CreateNewMessage(username, message);
-            // Call the MessageAdded method to update clients.
-            Clients.All.InvokeAsync("MessageAdded", chatMessage);
-        }
-    }
-
-    public interface IChatService
-    {
-        Task<List<ChatMessage>> GetAllInitially();
-        Task<ChatMessage> CreateNewMessage(string senderName, string message);
-    }
-    
-    public class ChatService : IChatService
-    {
-        private readonly IChatMessageRepository _repository;
-
-        public ChatService(IChatMessageRepository repository)
-        {
-            _repository = repository;
-        }
-
-        public async Task<ChatMessage> CreateNewMessage(string senderName, string message)
-        {
-            var chatMessage = new ChatMessage(Guid.NewGuid())
+            var m = new Message()
             {
-                Sender = senderName,
-                Message = message
+                RoomId = roomId,
+                Contents = message,
+                UserName = user
             };
-            await _repository.AddMessage(chatMessage);
 
-            return chatMessage;
+            await _messageService.AddMessageToRoomAsync(roomId, m);
+            await Clients.All.SendAsync("ReceiveMessage", user, message, roomId, m.Id, m.PostedAt);
         }
 
-        public async Task<List<ChatMessage>> GetAllInitially()
+        public async Task AddChatRoom(string roomName)
         {
-            var messages = await _repository.GetTopMessages();
-            return messages.ToList();
+            var chatRoom = new ChatRoom()
+            {
+                Name = roomName
+            };
+
+            await _chatRoomService.AddChatRoomAsync(chatRoom);
+            await Clients.All.SendAsync("NewRoom", roomName, chatRoom.Id);
+        }
+
+        public override async Task OnConnectedAsync()
+        {
+            UsersOnline++;
+            await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
+            await base.OnConnectedAsync();
+        }
+
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            UsersOnline--;
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }

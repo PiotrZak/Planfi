@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Common;
 using WebApi.Data.Entities.Users;
+using WebApi.Interfaces;
+using WebApi.Models;
 using WebApi.Services.Chat;
 
 namespace WebApi.Controllers.Chat

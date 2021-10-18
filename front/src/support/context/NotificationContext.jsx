@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useContext } from 'react';
 import { createPortal } from 'react-dom';
 import Alert from 'components/molecules/Alert';
 
+
 export const NotificationContext = createContext();
 
 const initialState = [];

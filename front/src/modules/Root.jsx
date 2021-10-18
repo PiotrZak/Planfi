@@ -23,7 +23,7 @@ import { StripeSuccess } from './Payment/Success';
 import { StripeCancel } from './Payment/Cancel';
 
 //chat
-import {ChatContainer} from './Chat/Chat';
+import ChatContainer from './Chat/Chat';
 
 // exercises
 import Categories from 'modules/Categories/Categories';

@@ -12,7 +12,7 @@ namespace WebApi.Services.Chat
             {
                 return new List<Client>
                 {
-                    new Client
+                    new()
                     {
                         ClientId = "reactchat",
                         ClientName = "React Chat Demo",
@@ -34,7 +34,7 @@ namespace WebApi.Services.Chat
             internal static List<TestUser> GetUsers()
             {
                 return new List<TestUser> {
-                    new TestUser
+                    new()
                     {
                         SubjectId = "1",
                         Username = "juergen@gutsch-online.de",
@@ -48,7 +48,7 @@ namespace WebApi.Services.Chat
             {
                 return new List<ApiResource>
                 {
-                    new ApiResource("ChatDemo", "ChatDemo")
+                    new("ChatDemo", "ChatDemo")
                 };
             }
 
