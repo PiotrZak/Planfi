@@ -47,14 +47,16 @@ namespace WebApi
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddCors(options => 
-                options.AddPolicy(name: "AllowAll",
+                options.AddPolicy(name: "AllowSetOrigins",
                     builder =>
                     {
-                        builder
-                            .AllowAnyHeader()
+                        builder.AllowAnyOrigin()
                             .AllowAnyMethod()
-                            .AllowAnyOrigin();
+                            .AllowAnyHeader()
+                            .AllowCredentials()
+                            .WithOrigins("http://localhost:3000");
                     }));
+            services.AddSignalR();
 
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
@@ -108,10 +110,6 @@ namespace WebApi
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             services.AddSession();
-            services.AddMvc().AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-            });
             
             //payment conf
             //todo - for what clients are able to pay?
@@ -128,20 +126,23 @@ namespace WebApi
             
             services.AddScoped<IChatRoomService, ChatRoomService>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddSignalR();
-            
-            // configure DI for application services
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
             //services.AddScoped<IStripeProcessing, StripeProcessing>();
 
-            //interfaces
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IAccountService, AccountService>();
+
+
+            
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+            });
 
             services.AddScoped<Query>();
             services.AddGraphQL(SchemaBuilder.New()
@@ -153,8 +154,11 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
-
                 dataContext.Database.Migrate();
+            
+                app.UseCors("AllowSetOrigins");
+                
+                
                 app.UseRouting();
                 app.UseSwagger();
                 app.UseSession();
@@ -163,15 +167,8 @@ namespace WebApi
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Planfi");
                 });
-
-                // global cors policy
-                app.UseCors(x => x
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .SetIsOriginAllowed(_ => true) // allow any origin
-                    .AllowCredentials());
-
-                    
+                
+            
                 //chat module
                 app.UseIdentityServer();
                 app.UseAuthorization();

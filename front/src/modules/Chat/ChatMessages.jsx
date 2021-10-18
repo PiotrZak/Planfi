@@ -17,6 +17,7 @@ const MessageList = ({roomId, connection}) => {
 
   useEffect(() => {
 
+    console.log(data)
     setMessages(data)
     connection.on(
       "ReceiveMessage",
@@ -31,29 +32,27 @@ const MessageList = ({roomId, connection}) => {
         );
       }
     );
-  }, []);
+  }, [roomId]);
 
-  if (!roomId) {
-    return (
-      <div className="message-list">
-        <div className="join-room">Join a room to start chatting.</div>
-      </div>
-    );
-  }
   return (
     <div className="message-list">
-      {messages && messages.map((message, i) => {
-        return (
-          <Message
-            key={i}
-            userName={message.userName}
-            contents={message.contents}
-            postedAt={message.postedAt}
-          />
-        );
-      })}
-      <AddMessageForm connection ={connection}/>
-      <div/>
+        {!roomId
+        ?<div className="join-room">Join a room to start chatting.</div>
+        :
+        <div>
+        {messages && messages.map((message, i) => {
+            return (
+              <Message
+                key={i}
+                userName={message.userName}
+                contents={message.contents}
+                postedAt={message.postedAt}
+              />
+            );
+          })}
+    
+        </div>
+}
     </div>
   );
 };

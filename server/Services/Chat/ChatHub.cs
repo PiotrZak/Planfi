@@ -13,7 +13,7 @@ namespace WebApi.Services.Chat
     {
         private readonly IChatRoomService _chatRoomService;
         private readonly IMessageService _messageService;
-        private int UsersOnline;
+        private int _usersOnline;
 
         public ChatHub(IChatRoomService chatRoomService, IMessageService messageService)
         {
@@ -47,14 +47,14 @@ namespace WebApi.Services.Chat
 
         public override async Task OnConnectedAsync()
         {
-            UsersOnline++;
+            _usersOnline++;
             await Groups.AddToGroupAsync(Context.ConnectionId, "SignalR Users");
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            UsersOnline--;
+            _usersOnline--;
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, "SignalR Users");
             await base.OnDisconnectedAsync(exception);
         }
