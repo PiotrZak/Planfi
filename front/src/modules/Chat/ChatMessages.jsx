@@ -1,7 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
-import { baseUrl } from "store/actions/messageActions";
-import AddMessageForm from "./AddMessageForm";
+import { receiveMessage, baseUrl } from "store/actions/messageActions";
 
 const MessageList = ({roomId, connection}) => {
 
@@ -17,18 +16,17 @@ const MessageList = ({roomId, connection}) => {
 
   useEffect(() => {
 
-    console.log(data)
     setMessages(data)
     connection.on(
       "ReceiveMessage",
       (user, message, roomId, messageId, postedAt) => {
-        this.props.onReceiveMessage(
+        receiveMessage(
           user,
           message,
           roomId,
           messageId,
           postedAt,
-          this.props.currentRoom.id
+          roomId
         );
       }
     );

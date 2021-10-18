@@ -5,7 +5,6 @@ import {
 //url
 export const baseUrl = "http://localhost:5005/api/message";
 
-
 export function receiveMessage(
   userName = "",
   message = "",

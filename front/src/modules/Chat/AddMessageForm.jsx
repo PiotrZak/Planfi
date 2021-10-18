@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const AddMessageForm = ({ connection, roomId }) => {
+const AddMessageForm = ({ connection, room }) => {
   const [message, setMessage] = useState("");
+  const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
+
+    console.log(room)
 
   const handleSubmit = () => {
-
     connection
-      .invoke("SendMessage", roomId, 'user', message)
+      .invoke("SendMessage", room.id, 'user', message)
       .catch((err) => console.error(err.toString()));
 
       setMessage('');
   };
 
+  useEffect(() => {
+  }, [currentRoom]);
+
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="add-message-form">
+      
+      {room &&
+      <>
+      <p>{room.id}</p>
+      <p>{room.name}</p>
+      </>}
+      
       <input
         onChange={(e) => setMessage(e.target.value)}
         value={message}

@@ -12,7 +12,8 @@ const hubUrl = "http://localhost:5005/chat";
 
 const ChatContainer = () => {
   const [connection, setConnection] = useState();
-
+  const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
+  
   useEffect(() => {
     const connection = new HubConnectionBuilder().withUrl(hubUrl).build();
     setConnection(connection);
@@ -20,10 +21,7 @@ const ChatContainer = () => {
     connection
       .start({ withCredentials: false})
       .catch((err) => console.error(err.toString()));
-      
-  }, []);
-
-  const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
+  }, [currentRoom]);
 
   return (
     <div className="panel panel-default">
@@ -39,7 +37,7 @@ const ChatContainer = () => {
 
       {currentRoom && (
         <AddMessageForm
-          roomId={currentRoom.id}
+          room={currentRoom}
           userName={"userName"}
           connection={connection}
         />
