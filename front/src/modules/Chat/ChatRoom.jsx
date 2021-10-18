@@ -16,6 +16,7 @@ const ChatRoomList = ({ openRoom, connection }) => {
 
   useEffect(() => {
     setRooms(data)
+    data && dispatch(setRoom(data[0]));
     connection.on("NewRoom", (roomName, roomId) => {
       receiveRoom(roomName, roomId);
     });

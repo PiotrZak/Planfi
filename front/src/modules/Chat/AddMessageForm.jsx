@@ -5,13 +5,10 @@ const AddMessageForm = ({ connection, room }) => {
   const [message, setMessage] = useState("");
   const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
 
-    console.log(room)
-
   const handleSubmit = () => {
     connection
       .invoke("SendMessage", room.id, 'user', message)
       .catch((err) => console.error(err.toString()));
-
       setMessage('');
   };
 
