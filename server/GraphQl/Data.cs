@@ -1,15 +1,14 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
 using WebApi.Data.Entities;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
-using WebApi.Services;
+using WebApi.Services.Chat;
 using WebApi.Services.Exercises;
 
 namespace WebApi.GraphQl
@@ -21,18 +20,22 @@ namespace WebApi.GraphQl
         private readonly IPlanService _planService;
         private readonly IExerciseService _exerciseService;
         private readonly IOrganizationService _organizationService;
+        private readonly IChatRoomService _chatRoomService;
+        private readonly IMessageService _messageService;
         
         public Query(
             ICategoryService categoryService,
             IPlanService planService,
             IExerciseService exerciseService, 
-            IOrganizationService organizationService
-            )
+            IOrganizationService organizationService, 
+            IChatRoomService chatRoomService, IMessageService messageService)
         {
             _categoryService = categoryService ;
             _planService = planService ;
             _exerciseService = exerciseService;
             _organizationService = organizationService;
+            _chatRoomService = chatRoomService;
+            _messageService = messageService;
         }
         
         [UseFiltering]
@@ -59,6 +62,14 @@ namespace WebApi.GraphQl
         [UseFiltering]
         public List<UserViewModel> GetUsers([Service] DataContext dbContext) => 
             _organizationService.GetUsers().ToList();
+
+        [UseFiltering]
+        public async Task<List<ChatRoom>> GetChatRooms([Service] DataContext dbContext) =>
+            await _chatRoomService.GetChatRoomsAsync();
+        
+        [UseFiltering]
+        public async Task<List<Message>> GetMessages([Service] DataContext dbContext) => 
+            await _messageService.GetMessagesAsync();
     }
     
     public static class ExtensionMethods

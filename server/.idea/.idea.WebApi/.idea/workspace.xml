@@ -37,6 +37,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphQl/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphQl/Data.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/DataContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IPlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IPlanService.cs" afterDir="false" />

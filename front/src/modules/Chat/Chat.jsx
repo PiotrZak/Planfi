@@ -35,13 +35,6 @@ const ChatContainer = () => {
         <p>No room selected</p>
       )}
 
-      {currentRoom && (
-        <AddMessageForm
-          room={currentRoom}
-          userName={"userName"}
-          connection={connection}
-        />
-      )}
 
       {/* {userName ? (
 
