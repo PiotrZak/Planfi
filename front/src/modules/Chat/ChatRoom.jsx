@@ -1,42 +1,32 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { receiveRoom, setRoom } from "store/actions/roomActions";
+import useFetch from "../../hooks/useFetch";
 import { useDispatch } from 'react-redux'
-import { useQuery, gql } from '@apollo/client';
-import Loader from 'components/atoms/Loader';
-
-const CHATROOM = gql`{
-    chatRooms
-    {
-		name
-      	id
-     }
-    }
-  `;
 
 const ChatRoomList = ({ openRoom, connection }) => {
+  const [rooms, setRooms] = useState([]);
   const {
-    loading, error, data, refetch: _refetch,
-  } = useQuery(CHATROOM);
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+    data,
+    loading,
+    error,
+  } = useFetch("http://localhost:5005/api/ChatRoom");
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    refreshData();
-    data && dispatch(setRoom(data.chatRooms[0]));
+    setRooms(data)
+    data && dispatch(setRoom(data[0]));
     connection.on("NewRoom", (roomName, roomId) => {
       receiveRoom(roomName, roomId);
     });
-  }, [data,refreshData]);
-
-  if (loading) return <Loader isLoading={loading} />;
-  if (error) return <p>Error :(</p>;
+  }, [data]);
 
   return (
     <div className="rooms-list">
       <ul>
         <h4>Rooms Available</h4>
-        {data && data.chatRooms.map((room) => {
+        {rooms && rooms.map((room) => {
           return (
             <li key={room.id} className={"room"}>
               <a onClick={() => dispatch(setRoom(room))} href="#active">
@@ -49,5 +39,13 @@ const ChatRoomList = ({ openRoom, connection }) => {
     </div>
   );
 };
+
+
+const ChatRoom = ({ name, peopleInside, selected }) => (
+  <div>
+    <h3>{name}</h3>
+    <p>{peopleInside}</p>
+  </div>
+);
 
 export default ChatRoomList;

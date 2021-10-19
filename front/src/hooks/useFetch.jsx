@@ -1,6 +1,7 @@
 //useFetch.js
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ConsoleView } from 'react-device-detect';
 
 function useFetch(url) {
   const [data, setData] = useState();
