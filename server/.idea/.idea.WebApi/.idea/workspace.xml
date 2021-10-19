@@ -176,12 +176,9 @@
     <setting file="file://$PROJECT_DIR$/hostsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/736CA1A8-5CD9-4C65-BF33-2BCC07D5546A/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/26/DefaultHubActivator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/11/DbContextOptions`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c62e2700794d413984ace46559defd642a8658/87/3d521103/Request.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/28/DefaultHubDispatcher.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1CAEA579-7BC0-4E55-ADEB-CC8011B21AB8/9/OptionsFactory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/2AC/AsyncTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7FC6E9E0-9FE1-4872-88B4-AEE2D404A9CC/9/CorsMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AABF22C8-0443-4F75-A371-6B76C765A950/88/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
@@ -736,6 +733,84 @@
           <option name="timeStamp" value="205" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/MessageService.cs</url>
+          <line>45</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/MessageService.cs" initialLine="45" containingFunctionPresentation="method 'AddMessageToRoomAsync'">
+            <startOffsets>
+              <option value="1230" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1258" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/MessageService.cs</url>
+          <line>47</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/MessageService.cs" initialLine="47" containingFunctionPresentation="method 'AddMessageToRoomAsync'">
+            <startOffsets>
+              <option value="1308" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1346" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="207" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/MessageService.cs</url>
+          <line>46</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/MessageService.cs" initialLine="46" containingFunctionPresentation="method 'AddMessageToRoomAsync'">
+            <startOffsets>
+              <option value="1271" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1295" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/MessageService.cs</url>
+          <line>49</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/MessageService.cs" initialLine="49" containingFunctionPresentation="method 'AddMessageToRoomAsync'">
+            <startOffsets>
+              <option value="1360" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1391" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="209" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/MessageService.cs</url>
+          <line>51</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/MessageService.cs" initialLine="51" containingFunctionPresentation="method 'AddMessageToRoomAsync'">
+            <startOffsets>
+              <option value="1405" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1457" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/MessageService.cs</url>
+          <line>53</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/MessageService.cs" initialLine="53" containingFunctionPresentation="method 'AddMessageToRoomAsync'">
+            <startOffsets>
+              <option value="1471" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1494" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Chat/ChatRoomController.cs</url>
           <line>29</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/Chat/ChatRoomController.cs" initialLine="29" containingFunctionPresentation="method 'Post'">
@@ -747,6 +822,84 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="212" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/ChatHub.cs</url>
+          <line>24</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" initialLine="24" containingFunctionPresentation="method 'SendMessage'">
+            <startOffsets>
+              <option value="743" />
+            </startOffsets>
+            <endOffsets>
+              <option value="744" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="213" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/ChatHub.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" initialLine="38" containingFunctionPresentation="method 'AddChatRoom'">
+            <startOffsets>
+              <option value="1166" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1256" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="214" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/ChatHub.cs</url>
+          <line>48</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" initialLine="48" containingFunctionPresentation="method 'OnConnectedAsync'">
+            <startOffsets>
+              <option value="1469" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1470" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/ChatHub.cs</url>
+          <line>49</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" initialLine="49" containingFunctionPresentation="method 'OnConnectedAsync'">
+            <startOffsets>
+              <option value="1483" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1498" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/ChatHub.cs</url>
+          <line>56</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" initialLine="56" containingFunctionPresentation="method 'OnDisconnectedAsync'">
+            <startOffsets>
+              <option value="1732" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1747" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Chat/ChatHub.cs</url>
+          <line>57</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Chat/ChatHub.cs" initialLine="57" containingFunctionPresentation="method 'OnDisconnectedAsync'">
+            <startOffsets>
+              <option value="1760" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1833" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="218" />
         </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.IO.FileNotFoundException" isInternal="false" displayValue="FileNotFoundException" namespaceName="System.IO">

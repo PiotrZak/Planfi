@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { receiveMessage, baseUrl } from "store/actions/messageActions";
-import { useSelector } from "react-redux";
 
 const MessageList = ({roomId, connection}) => {
 
-    const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
-    const url = roomId ? `${baseUrl}/${currentRoom.id}` : baseUrl;
+    const [messages, setMessages] = useState([]);
+    const url = roomId ? `${baseUrl}/${roomId}` : baseUrl;
 
     const {
         data,
@@ -17,7 +16,7 @@ const MessageList = ({roomId, connection}) => {
 
   useEffect(() => {
 
-    console.log(roomId)
+    setMessages(data)
     connection.on(
       "ReceiveMessage",
       (user, message, roomId, messageId, postedAt) => {
@@ -31,7 +30,7 @@ const MessageList = ({roomId, connection}) => {
         );
       }
     );
-  }, [roomId, currentRoom]);
+  }, [roomId]);
 
   return (
     <div className="message-list">
@@ -39,7 +38,7 @@ const MessageList = ({roomId, connection}) => {
         ?<div className="join-room">Join a room to start chatting.</div>
         :
         <div>
-        {data && data.map((message, i) => {
+        {messages && messages.map((message, i) => {
             return (
               <Message
                 key={i}
