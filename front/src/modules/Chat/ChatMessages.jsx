@@ -2,22 +2,39 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import { receiveMessage, baseUrl } from "store/actions/messageActions";
 import { useSelector } from "react-redux";
+import axios from 'axios';
+import AddMessageForm from './AddMessageForm';
+import useDebounce from '../../hooks/useDebounce';
 
 const MessageList = ({roomId, connection}) => {
 
     const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
     const url = roomId ? `${baseUrl}/${currentRoom.id}` : baseUrl;
+    const [messages, setMessages] = useState([])
+    const [message, setMessage] = useState("");
+    const [rerender, setRerender] = useState(false);
 
-    const {
-        data,
-        loading,
-        error,
-      } = useFetch(url);
+      const handleSubmit = () => {
+        connection
+          .invoke("SendMessage", currentRoom.id, 'user', message)
+          .catch((err) => console.error(err.toString()));
+          setMessage("")
+          setRerender(!rerender);
+      };
 
-
+      const fetchMessages = (url) => {
+        const source = axios.CancelToken.source();
+        axios.get(url, { cancelToken: source.token })
+        .then(res => {
+          setMessages(res.data)
+        })
+        .catch(err => {
+            console.error(err)
+        })
+      }
+    
   useEffect(() => {
-
-    console.log(roomId)
+    fetchMessages(url)
     connection.on(
       "ReceiveMessage",
       (user, message, roomId, messageId, postedAt) => {
@@ -31,7 +48,7 @@ const MessageList = ({roomId, connection}) => {
         );
       }
     );
-  }, [roomId, currentRoom]);
+  }, [roomId, currentRoom, rerender]);
 
   return (
     <div className="message-list">
@@ -39,7 +56,7 @@ const MessageList = ({roomId, connection}) => {
         ?<div className="join-room">Join a room to start chatting.</div>
         :
         <div>
-        {data && data.map((message, i) => {
+        {messages && messages.map((message, i) => {
             return (
               <Message
                 key={i}
@@ -52,6 +69,16 @@ const MessageList = ({roomId, connection}) => {
     
         </div>
 }
+      {currentRoom && (
+        <AddMessageForm
+          setMessage={setMessage}
+          message ={message}
+          room={currentRoom}
+          userName={"userName"}
+          connection={connection}
+          handleSubmit={handleSubmit}
+        />
+      )}
     </div>
   );
 };
