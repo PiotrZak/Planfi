@@ -1,23 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
-const AddMessageForm = ({ connection, room }) => {
-  const [message, setMessage] = useState("");
-  const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
+const AddMessageForm = ({ connection, room, setMessage, message, handleSubmit}) => {
 
-  const handleSubmit = () => {
-    connection
-      .invoke("SendMessage", room.id, 'user', message)
-      .catch((err) => console.error(err.toString()));
-      setMessage('');
-  };
-
-  useEffect(() => {
-  }, [currentRoom]);
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="add-message-form">
-      
+      <>
       {room &&
       <>
       <p>{room.id}</p>
@@ -33,7 +20,7 @@ const AddMessageForm = ({ connection, room }) => {
       <button type="submit" onClick={() => handleSubmit()}>
         Submit
       </button>
-    </form>
+    </>
   );
 };
 
