@@ -9,6 +9,7 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
+using WebApi.Models.ViewModels;
 
 namespace WebApi.Services
 {

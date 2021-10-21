@@ -37,15 +37,22 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/DataContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IPlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IPlanService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interfaces/IUserInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IUserInterface.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Migrations/20211003214851_InitialA.Designer.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Migrations/20211003214851_InitialA.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Migrations/DataContextModelSnapshot.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/UpdateCategoryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateModels/UpdateCategoryModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/UpdateExerciseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateModels/UpdateExerciseModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/UpdateUserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateModels/UpdateUserModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Users/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Users/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.sln.DotSettings.user" afterDir="false" />
@@ -65,6 +72,7 @@
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csprojAssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.csprojAssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.genruntimeconfig.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/WebApi.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WebApi.dll" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/net5.0/ref/WebApi.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/obj/WebApi.csproj.nuget.dgspec.json" afterDir="false" />
@@ -93,13 +101,8 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/30/HttpContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/5260901d4e084b7782b885e1db7817af53c00/2E/WebHostBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Users/UserService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Account/AccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/593B42DD-0B05-4EF3-A52E-4B51D992D63D/0a/3c263b84/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Controllers/Account/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Account/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4019D9F0-3897-4B8C-B268-F02F4533964F/dd/06820c4e/AuthorizeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Controllers/Users/UsersController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3F9/ProductService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a37ace8e60634f15813d844031561c4410600/C/SessionMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3DD/PlanCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -124,7 +127,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/1C3/StripeList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3F4/ProductCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90703D9-42C6-4B50-80F6-51918748EA87/19/4faee492/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/228/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/7/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/5d/d7a5bb00/ICollection`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/215/StripeResponse.cs" root0="SKIP_HIGHLIGHTING" />
@@ -133,62 +136,67 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/09BB8616-9246-4030-8796-6C7008640ACE/2C/SecurityTokenDescriptor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/1D7/Subscription.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/F/Hub.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Controllers/Users/UsersController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2B2/SessionService.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/29E/SessionCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/2AE/SessionPaymentMethodOptionsOptions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/519468d0250d4254862da79f0051f843aae10/2/IdentityServerApplicationBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Models/RegisterModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/905CEBD1-C0DE-49F8-8F0D-FDCC5844386D/26/QueryableFilterMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/519468d0250d4254862da79f0051f843aae10/7/InMemory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/GraphQl/Data.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9D7F563A-65BE-45E1-8CC7-B7C641344536/b0/71047590/SwaggerMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/ADD2055A-ED91-409C-AE4F-3047E55DABE2/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1af9673264b246bbb20975964c843969132580/128/TableOperation.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/RegisterModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/GraphQl/Data.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/C/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Data/ViewModels/ClientTrainers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/1C/HttpRequest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/1A7/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/1D/HttpResponse.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596bbc84d47b5bdb2391440b66c598600/2B/ISession.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2517FAC3-FBE2-4603-9C57-5BDFF1486DE4/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/185/EntityTypeBuilder`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/11A/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Account/EmailService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Controllers/Account/AccountController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b69afa0752154c70bfca9964ef56a91f16c00/73/2c6ce914/Amount.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/40795CCD-933D-4C36-B9E2-D224AD7F1B98/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Program.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/appsettings.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Account/AccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/66/659d23f5/Void.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Services/Users/UserService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/12/DbSet.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/74/045c38b1/APIContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/1C/ControllerEndpointRouteBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/893596BB-C84D-47B5-BDB2-391440B66C59/D/IFormFile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/01/e04180ff/Payment.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/E0136A62-7166-4D20-9E0F-34CE7F593D87/34/ModelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Dockerrun.aws.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/hostsettings.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/38/ControllerBase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/736CA1A8-5CD9-4C65-BF33-2BCC07D5546A/C4/HttpProtocol.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/26/DefaultHubActivator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/11/DbContextOptions`.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c62e2700794d413984ace46559defd642a8658/87/3d521103/Request.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/28/DefaultHubDispatcher.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/085df059dda44799877ae8c35f7f053c61600/28/DefaultHubDispatcher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1CAEA579-7BC0-4E55-ADEB-CC8011B21AB8/9/OptionsFactory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/2AC/AsyncTaskMethodBuilderT.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/2AC/AsyncTaskMethodBuilderT.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7FC6E9E0-9FE1-4872-88B4-AEE2D404A9CC/9/CorsMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/FE/ControllerActionInvoker.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/AABF22C8-0443-4F75-A371-6B76C765A950/88/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/1/ConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/6E00BC7D-BD1C-45F3-8A75-3D5E5637C938/13/FileInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/32/2bd212f7/PayPalResource.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Interfaces/IOrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/faef7f886f2040518b3c61b078040fda60a68/28/ConfigurationManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Interfaces/IAccountService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/10F/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/add2055aed91409cae4f3047e55dabe21bae00/170/ControllerFactoryProvider.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b5676661c70f49a2a7c804758d3686f14a400/94/1caeb6f9/OAuthTokenCredential.cs" root0="SKIP_HIGHLIGHTING" />
@@ -258,11 +266,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.33735424" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.5186972" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="XThreadsFramesViewSplitterKey" value="0.49761337" />
+    <property name="XThreadsFramesViewSplitterKey" value="0.3235066" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -370,6 +378,9 @@
       <workItem from="1633769865155" duration="11693000" />
       <workItem from="1634304227513" duration="2782000" />
       <workItem from="1634307783486" duration="11120000" />
+      <workItem from="1634651348215" duration="213000" />
+      <workItem from="1634652052569" duration="180000" />
+      <workItem from="1634797538599" duration="1047000" />
     </task>
     <servers />
   </component>
@@ -412,78 +423,78 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>135</line>
+          <line>136</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="127">
             <startOffsets>
-              <option value="4357" />
+              <option value="4389" />
             </startOffsets>
             <endOffsets>
-              <option value="4407" />
+              <option value="4439" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>115</line>
+          <line>116</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="106">
             <startOffsets>
-              <option value="3570" />
+              <option value="3602" />
             </startOffsets>
             <endOffsets>
-              <option value="3571" />
+              <option value="3603" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="113" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>125</line>
+          <line>126</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="116">
             <startOffsets>
-              <option value="3983" />
+              <option value="4015" />
             </startOffsets>
             <endOffsets>
-              <option value="4031" />
+              <option value="4063" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>128</line>
+          <line>129</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="119">
             <startOffsets>
-              <option value="4095" />
+              <option value="4127" />
             </startOffsets>
             <endOffsets>
-              <option value="4142" />
+              <option value="4174" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="118" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>131</line>
+          <line>132</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="122">
             <startOffsets>
-              <option value="4204" />
+              <option value="4236" />
             </startOffsets>
             <endOffsets>
-              <option value="4246" />
+              <option value="4278" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>157</line>
+          <line>158</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="148">
             <startOffsets>
-              <option value="5091" />
+              <option value="5123" />
             </startOffsets>
             <endOffsets>
-              <option value="5117" />
+              <option value="5149" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="130" />
@@ -503,32 +514,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>221</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="219">
-            <startOffsets>
-              <option value="7993" />
-            </startOffsets>
-            <endOffsets>
-              <option value="8028" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="160" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>38</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="36">
-            <startOffsets>
-              <option value="1144" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1183" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
           <line>166</line>
           <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="164">
             <startOffsets>
@@ -539,19 +524,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
-          <line>48</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="48">
-            <startOffsets>
-              <option value="1035" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1067" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="164" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
@@ -568,107 +540,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Users/UsersController.cs</url>
-          <line>114</line>
+          <line>116</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" initialLine="113">
             <startOffsets>
-              <option value="3819" />
+              <option value="3965" />
             </startOffsets>
             <endOffsets>
-              <option value="3820" />
+              <option value="3966" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="168" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>45</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="45">
-            <startOffsets>
-              <option value="1387" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1388" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="171" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>49</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="49">
-            <startOffsets>
-              <option value="1478" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1538" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="172" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>50</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="50">
-            <startOffsets>
-              <option value="1555" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1572" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="173" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>52</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="52">
-            <startOffsets>
-              <option value="1611" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1760" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="174" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>58</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="58">
-            <startOffsets>
-              <option value="1847" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1956" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="175" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>223</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="223">
-            <startOffsets>
-              <option value="8067" />
-            </startOffsets>
-            <endOffsets>
-              <option value="8113" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="177" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>226</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="226">
-            <startOffsets>
-              <option value="8247" />
-            </startOffsets>
-            <endOffsets>
-              <option value="8541" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="178" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
@@ -786,6 +667,45 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Users/UsersController.cs</url>
+          <line>44</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" initialLine="44" containingFunctionPresentation="method 'Authenticate'">
+            <startOffsets>
+              <option value="1233" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1299" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Users/UsersController.cs</url>
+          <line>64</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" initialLine="64" containingFunctionPresentation="method 'Authenticate'">
+            <startOffsets>
+              <option value="2255" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2807" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
+          <line>51</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="51" containingFunctionPresentation="method 'Authenticate'">
+            <startOffsets>
+              <option value="1416" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1536" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="223" />
         </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.IO.FileNotFoundException" isInternal="false" displayValue="FileNotFoundException" namespaceName="System.IO">

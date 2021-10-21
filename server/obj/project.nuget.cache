@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "F5ZiYvI80zIK9JeMB6Gc9X2uIRBBjc3LJEfIvLqPCP3SU+olY6hhurk5MvuG21tcogLsuPZD4TBgk1aohlrklg==",
+  "dgSpecHash": "jffJgoAOJjuX4qvDEJpGVier5G9SWq/E/BP7sUWOWhvPZDj5IA3oRHnPAoy/2/YqyQtZuub3yLeedeRb9sarvw==",
   "success": true,
-  "projectFilePath": "/Users/admin/Desktop/FitApp/server/WebApi.csproj",
+  "projectFilePath": "/Users/admin/Desktop/Planfi/server/WebApi.csproj",
   "expectedPackageFiles": [
     "/Users/admin/.nuget/packages/autofac/5.2.0/autofac.5.2.0.nupkg.sha512",
     "/Users/admin/.nuget/packages/autofac.extensions.dependencyinjection/6.0.0/autofac.extensions.dependencyinjection.6.0.0.nupkg.sha512",

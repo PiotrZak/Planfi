@@ -16,6 +16,7 @@ using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
+using WebApi.Models.ViewModels;
 
 namespace WebApi.Controllers.Users
 {
@@ -61,14 +62,14 @@ namespace WebApi.Controllers.Users
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
             
-                return Ok(new
+                return Ok(new UserViewModel
                 {
-                    user.UserId,
-                    user.OrganizationId,
-                    user.Email,
-                    user.FirstName,
-                    user.LastName,
-                    user.Avatar,
+                    UserId = user.UserId,
+                    OrganizationId = user.OrganizationId,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Avatar = user.Avatar,
                     Role = new Role
                     {
                         Id = user.Role.Id,
@@ -102,6 +103,7 @@ namespace WebApi.Controllers.Users
                     // RoleId = i.RoleId,
                     Email = i.Email,
                     PhoneNumber = i.PhoneNumber,
+                    Token = null,
                 })
                 .ToList();
             

@@ -4,7 +4,7 @@ const AddMessageForm = ({ connection, room, setMessage, message, handleSubmit}) 
 
 
   return (
-      <>
+   <form className="commentForm" onSubmit={() => handleSubmit()}>
       {room &&
       <>
       <p>{room.id}</p>
@@ -17,10 +17,10 @@ const AddMessageForm = ({ connection, room, setMessage, message, handleSubmit}) 
         placeholder="Say something to the room..."
         type="text"
       />
-      <button type="submit" onClick={() => handleSubmit()}>
+      <button autoFocus={true} type="submit">
         Submit
       </button>
-    </>
+    </form>
   );
 };
 

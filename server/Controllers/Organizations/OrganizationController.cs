@@ -9,6 +9,7 @@ using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Interfaces;
+using WebApi.Models.ViewModels;
 
 namespace WebApi.Controllers
 {

@@ -1,14 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using WebApi.Data.Entities.Users;
-using WebApi.Entities;
 
-namespace WebApi.Models
+namespace WebApi.Models.ViewModels
 {
     public class UserViewModel
     {
         [Key]
         public string UserId { get; set; }
-        public byte[] Avatar { get; set; }
+        public byte[]? Avatar { get; set; }
+        public string? Token { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Role Role { get; set; }

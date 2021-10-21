@@ -4,6 +4,7 @@ using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Models;
+using WebApi.Models.ViewModels;
 
 namespace WebApi.Helpers
 {
