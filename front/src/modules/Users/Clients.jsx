@@ -201,12 +201,12 @@ useEffect(() => {
           <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
       </Container>
         <Loader isLoading={isLoading}>
-          {results.length > 0
+          {results.filter(x => x.userId != user.userId).length > 0
             ? (
               <CheckboxGenericComponent
                 dataType="users"
                 displayedValue="firstName"
-                dataList={results}
+                dataList={results.filter(x => x.userId != user.userId)}
                 onSelect={submissionHandleElement}
                 refresh={refresh}
               />

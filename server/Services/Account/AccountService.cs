@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
@@ -197,17 +198,26 @@ namespace WebApi.Services.Account
         
         public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
         {
+            
+            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "User");
+            var trainerRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "Trainer");
+            
             try
             {
                 foreach (var email in model.Emails)
                 {
                     if (_context.Users.Any(x => x.Email == email))
                         throw new AppException("Email \"" + email + "\" is already taken");
+
+                    var userId = Guid.NewGuid().ToString();
+                    var roleId = Guid.NewGuid().ToString();
                     
                     var user = new User
                     {
-                        UserId = new Guid().ToString(),
-                        Role = new Role { Id = new Guid().ToString(), Name = model.Role },
+                        UserId = userId,
+                        Role = model.Role is "User" or "Trainer"
+                            ? userRole
+                            : new Role { Id = roleId, Name = model.Role },
                         OrganizationId = model.OrganizationId,
                         Email = email,
                         VerificationToken = RandomTokenString(),
@@ -218,7 +228,6 @@ namespace WebApi.Services.Account
                         await _context.Users.AddAsync(user);
                         await _context.SaveChangesAsync();
                     }
-                    break;
                 }
                 
                 return 1;
