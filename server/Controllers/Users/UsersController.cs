@@ -9,10 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApi.Common;
-using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
@@ -49,12 +47,11 @@ namespace WebApi.Controllers.Users
                 var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    //todo
-                    // Subject = new ClaimsIdentity(new[]
-                    // {
-                    //     new Claim(ClaimTypes.Name, user.UserId),
-                    //     new Claim(ClaimTypes.Role, Role.Name)
-                    // }),
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                        new Claim(ClaimTypes.Name, user.UserId),
+                        new Claim(ClaimTypes.Role, user.Role.Name)
+                    }),
                     Expires = DateTime.UtcNow.AddDays(7),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };

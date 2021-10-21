@@ -14,7 +14,6 @@ using WebApi.Services.Account;
 
 namespace WebApi.Controllers.Account
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AccountController : ApiControllerBase
@@ -40,9 +39,6 @@ namespace WebApi.Controllers.Account
             return Ok(message);
         }
         
-        //todo
-        // CORS ISSUE
-        // SAVING GUID WHEN ADD USER
         [AllowAnonymous]
         [HttpPost("gmailSignUp")]
         public async Task<IActionResult> GmailSignUp([FromBody] RegisterModel model)

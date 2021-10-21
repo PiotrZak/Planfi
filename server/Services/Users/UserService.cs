@@ -1,24 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using Dapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using WebApi.Controllers.ViewModels;
 using Microsoft.Extensions.Configuration;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
 
-namespace WebApi.Services{
+namespace WebApi.Services.Users{
 
 
     public class UserService : IUserService
@@ -140,8 +137,8 @@ namespace WebApi.Services{
                 if (user.Password != model.Password)
                     throw new ValidationException(
                         $"Incorrect Password");
-
-                user.Password = model.NewPassword;
+                
+                user.Password = EncryptPassword(model.NewPassword);
                 CreatePasswordHash(model.NewPassword, out var passwordHash, out var passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
@@ -151,9 +148,15 @@ namespace WebApi.Services{
             await _context.SaveChangesAsync();
             return 1;
         }
-
-
-
+        
+        public string EncryptPassword(string password)  
+        {  
+            var msg = "";
+            var encode = Encoding.UTF8.GetBytes(password);  
+            msg = Convert.ToBase64String(encode);  
+            return msg;  
+        }  
+        
         public async Task Delete(string[] id)
         {
             foreach (var userId in id)
@@ -180,6 +183,8 @@ namespace WebApi.Services{
             // [t1]
             // to every trainer add user
             // [u1, u2, u3, u4]
+            
+            var elementsNotAssigned = new List<ValidationInfo>();
 
             foreach (var trainerId in trainersId)
             {
@@ -196,8 +201,6 @@ namespace WebApi.Services{
                     };
 
                     await _context.UsersTrainers.AddAsync(usersTrainers);
-                    
-                    
                     try
                     { 
                         await _context.SaveChangesAsync();
@@ -205,35 +208,36 @@ namespace WebApi.Services{
                     }
                     catch (DbUpdateException ex)
                     {
-                        if (ex.InnerException != null)
+                        var validation = new ValidationInfo()
                         {
-                            var trainerName = await _context.Users
-                                .Where(x => x.UserId == trainerId)
-                                .Select(x => x.FirstName)
-                                .FirstAsync();
-                                
-                            var clientName = await _context.Users
-                                .Where(x => x.UserId == userId)
-                                .Select(x => x.FirstName)
-                                .FirstAsync();
-
-                            throw new ValidationException(
-                                $"The trainer {trainerName} is already assigned to {clientName}");
-                        }
+                            UserId = userId,
+                            TrainerId = trainer.UserId
+                        };
+                        elementsNotAssigned.Add(validation);
                     }
                 }
             }
+            
+            GenerateValidationInfo(elementsNotAssigned);
 
             return 0;
+        }
+        
+        public class ValidationInfo
+        {
+            public string UserId { get; set; }
+            public string? TrainerId { get; set; }
+            public string? PlanId { get; set; }
         }
 
         public async Task<int> AssignPlanToClients(string[] clientIds, string[] planIds)
         {
+            var elementsNotAssigned = new List<ValidationInfo>();
             foreach (var clientId in clientIds)
             {
                 //finding an client 
                 var client = await _context.Users.FindAsync(clientId);
-
+                
                 foreach (var planId in planIds)
                 {
                     //finding a plan
@@ -250,26 +254,30 @@ namespace WebApi.Services{
                         {
                             if (ex.InnerException != null)
                             {
-                                var clientName = await _context.Users
-                                    .Where(x => x.UserId == clientId)
-                                    .Select(x => x.FirstName)
-                                    .FirstAsync();
-                                
-                                var planTitle = await _context.Plans
-                                    .Where(x => x.PlanId == planId)
-                                    .Select(x => x.Title)
-                                    .FirstAsync();
-
-                                throw new ValidationException(
-                                    $"The client {clientName} is already assigned to {planTitle}");
+                                var validation = new ValidationInfo()
+                                {
+                                    UserId = clientId,
+                                    PlanId = planId
+                                };
+                                elementsNotAssigned.Add(validation);
                             }
                         }
                 }
             }
 
+            // exclude that records or throw exception?
+            GenerateValidationInfo(elementsNotAssigned);
+            
+            //return elementsNotAssigned instead number - for inform, which exactly element not processed correctly
             return 1;
         }
-        
+
+        private void GenerateValidationInfo(List<ValidationInfo> info)
+        {
+            throw new ValidationException(
+                 $"The client {info[0].UserId} is already assigned to {info[0].UserId}");
+        }
+
 
         public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
         {
@@ -325,6 +333,7 @@ namespace WebApi.Services{
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
     }
+    
 }
 
 

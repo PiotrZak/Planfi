@@ -24,6 +24,7 @@ using WebApi.Services.Account;
 using WebApi.Services.Chat;
 using WebApi.Services.Exercises;
 using WebApi.Services.Payment.PaypalIntegration;
+using WebApi.Services.Users;
 using AccountService = WebApi.Services.Account.AccountService;
 using PlanService = WebApi.Services.PlanService;
 
