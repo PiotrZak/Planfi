@@ -36,9 +36,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Entities/Users/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Role.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/DataContext.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" afterDir="false" />
@@ -51,6 +54,7 @@
       <change beforePath="$PROJECT_DIR$/Models/UpdateExerciseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateModels/UpdateExerciseModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/UpdateUserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateModels/UpdateUserModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Account/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Account/AccountService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Users/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Users/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
@@ -380,7 +384,7 @@
       <workItem from="1634307783486" duration="11120000" />
       <workItem from="1634651348215" duration="213000" />
       <workItem from="1634652052569" duration="180000" />
-      <workItem from="1634797538599" duration="1047000" />
+      <workItem from="1634797538599" duration="5767000" />
     </task>
     <servers />
   </component>
@@ -426,10 +430,10 @@
           <line>136</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="127">
             <startOffsets>
-              <option value="4389" />
+              <option value="4409" />
             </startOffsets>
             <endOffsets>
-              <option value="4439" />
+              <option value="4459" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="108" />
@@ -439,10 +443,10 @@
           <line>116</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="106">
             <startOffsets>
-              <option value="3602" />
+              <option value="3622" />
             </startOffsets>
             <endOffsets>
-              <option value="3603" />
+              <option value="3623" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="113" />
@@ -452,10 +456,10 @@
           <line>126</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="116">
             <startOffsets>
-              <option value="4015" />
+              <option value="4035" />
             </startOffsets>
             <endOffsets>
-              <option value="4063" />
+              <option value="4083" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="117" />
@@ -465,10 +469,10 @@
           <line>129</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="119">
             <startOffsets>
-              <option value="4127" />
+              <option value="4147" />
             </startOffsets>
             <endOffsets>
-              <option value="4174" />
+              <option value="4194" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="118" />
@@ -478,10 +482,10 @@
           <line>132</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="122">
             <startOffsets>
-              <option value="4236" />
+              <option value="4256" />
             </startOffsets>
             <endOffsets>
-              <option value="4278" />
+              <option value="4298" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="119" />
@@ -491,10 +495,10 @@
           <line>158</line>
           <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="148">
             <startOffsets>
-              <option value="5123" />
+              <option value="5143" />
             </startOffsets>
             <endOffsets>
-              <option value="5149" />
+              <option value="5169" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="130" />
@@ -511,45 +515,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="159" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>166</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="164">
-            <startOffsets>
-              <option value="6047" />
-            </startOffsets>
-            <endOffsets>
-              <option value="6062" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="162" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>102</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="63">
-            <startOffsets>
-              <option value="3330" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3331" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="165" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Users/UsersController.cs</url>
-          <line>116</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" initialLine="113">
-            <startOffsets>
-              <option value="3965" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3966" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="168" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
@@ -682,30 +647,108 @@
           <option name="timeStamp" value="221" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Users/UsersController.cs</url>
-          <line>64</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" initialLine="64" containingFunctionPresentation="method 'Authenticate'">
+          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
+          <line>186</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="206" containingFunctionPresentation="method 'ConstructMessage'">
             <startOffsets>
-              <option value="2255" />
+              <option value="6998" />
             </startOffsets>
             <endOffsets>
-              <option value="2807" />
+              <option value="7036" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="222" />
+          <option name="timeStamp" value="224" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
-          <line>51</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="51" containingFunctionPresentation="method 'Authenticate'">
+          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
+          <line>48</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="48" containingFunctionPresentation="method 'Send'">
             <startOffsets>
-              <option value="1416" />
+              <option value="1035" />
             </startOffsets>
             <endOffsets>
-              <option value="1536" />
+              <option value="1067" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="223" />
+          <option name="timeStamp" value="225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
+          <line>63</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="63" containingFunctionPresentation="method 'Send'">
+            <startOffsets>
+              <option value="1679" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1718" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
+          <line>77</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="77" containingFunctionPresentation="method 'Send'">
+            <startOffsets>
+              <option value="2477" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2559" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
+          <line>167</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="172" containingFunctionPresentation="method 'ActivateAccount'">
+            <startOffsets>
+              <option value="5224" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5225" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
+          <line>168</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="173" containingFunctionPresentation="method 'ActivateAccount'">
+            <startOffsets>
+              <option value="5238" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5287" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
+          <line>35</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="34" containingFunctionPresentation="method 'Activate'">
+            <startOffsets>
+              <option value="1156" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1258" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
+          <line>50</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="47" containingFunctionPresentation="method 'GmailSignUp'">
+            <startOffsets>
+              <option value="1491" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1492" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="231" />
         </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.IO.FileNotFoundException" isInternal="false" displayValue="FileNotFoundException" namespaceName="System.IO">

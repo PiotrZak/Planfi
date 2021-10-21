@@ -40,32 +40,25 @@ namespace WebApi.Controllers.Account
             return Ok(message);
         }
         
+        //todo
+        // CORS ISSUE
+        // SAVING GUID WHEN ADD USER
         [AllowAnonymous]
         [HttpPost("gmailSignUp")]
         public async Task<IActionResult> GmailSignUp([FromBody] RegisterModel model)
         {
             try
             {
-                ApiCommonResponse success;
-                var user = _userService.Authenticate(model.Emails[0], null);
+                var user = _userService.GetUserWithoutPassword(model.Emails[0]);
                 if (user != null)
                 {
-                    success = ApiCommonResponse.Create()
+                    var success = ApiCommonResponse.Create()
                         .WithSuccess()
                         .WithData(user)
                         .Build();
                     return CommonResponse(success);
                 }
-                var sendVerificationResponse = await _accountService.SendVerificationEmail(model, Request.Headers["origin"]);
-                
-                success = ApiCommonResponse.Create()
-                    .WithSuccess()
-                    .WithData(sendVerificationResponse)
-                    .Build();
-                
-                return CommonResponse(success);
             }
-
             catch(Exception e)
             {
                 var failure = ApiCommonResponse.Create()
@@ -75,6 +68,8 @@ namespace WebApi.Controllers.Account
                 
                 return CommonResponse(failure);
             }
+
+            return null;
         }
 
         [AllowAnonymous]

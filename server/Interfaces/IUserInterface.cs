@@ -11,6 +11,7 @@ namespace WebApi.Interfaces
     {
         User Authenticate(string email, string? password);
         User Register(string email);
+        User GetUserWithoutPassword(string email);
         IEnumerable<User> GetAllUsers();
         Task<UserViewModel> GetById(string id);
         Task<int> Update(string id, UpdateUserModel model);

@@ -291,7 +291,7 @@ namespace WebApi.Helpers
                         Name = "Trainer",
                     }
                 );
-
+                
             // O1
             modelBuilder.Entity<User>().HasData(
                 new User

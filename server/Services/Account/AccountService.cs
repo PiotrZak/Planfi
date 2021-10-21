@@ -8,7 +8,6 @@ using AutoMapper;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
@@ -21,6 +20,8 @@ namespace WebApi.Services.Account
         private readonly DataContext _context;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
+        private const string SenderName = "Planfi";
+        private const string SenderEmail = "planfi.contact@gmail.com";
 
         public AccountService(IEmailService emailService, DataContext context, IUserService userService, IMapper mapper)
         {
@@ -87,24 +88,16 @@ namespace WebApi.Services.Account
         
         private void SendPasswordResetEmail(User account, string origin)
         {
-            string message;
-            if (!string.IsNullOrEmpty(origin))
-            {
-                var resetUrl = $"{origin}/account/reset:{account.ResetToken}";
-                message = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
-                             <p><a href=""{resetUrl}"">{resetUrl}</a></p>";
-            }
-            else
-            {
-                message = $@"<p>Please use the below token to reset your password with the <code>/account/forgot</code> api route:</p>
-                             <p><code>{account.ResetToken}</code></p>";
-            }
-
+            var resetPasswordMailUrl = $"{origin}/account/reset:{account.ResetToken}";
+            const string resetPasswordMailTitle = "Reset password E-mail";
+            var resetPasswordMailMessage = $@"<p>Please click the below link to reset your password, the link will be valid for 1 day:</p><p><a href=""{resetPasswordMailUrl}"">{resetPasswordMailUrl}</a></p>";
+            
+            
             var messageData = new EmailMessage
             {
                 ToAddresses = new List<EmailMessage.EmailAddress>()
                 {
-                    new EmailMessage.EmailAddress()
+                    new()
                     {
                         Name = account.Email,
                         Address = account.Email
@@ -112,14 +105,14 @@ namespace WebApi.Services.Account
                 },
                 FromAddresses = new List<EmailMessage.EmailAddress>()
                 {
-                    new EmailMessage.EmailAddress()
+                    new()
                     {
-                        Name = "Planfi",
-                        Address = "planfi.contact@gmail.com",
+                        Name = SenderName,
+                        Address = SenderEmail,
                     }
                 },
-                Subject = "Reset password E-mail",
-                Content = message,
+                Subject = resetPasswordMailTitle,
+                Content = resetPasswordMailMessage,
             };
             
             _emailService.Send(messageData);
@@ -164,26 +157,15 @@ namespace WebApi.Services.Account
 
         private async Task<int> ConstructMessage(User user, string origin)
         {
-            string message;
-            if (!string.IsNullOrEmpty(origin))
-            {
-                //todo - port
-                var verifyUrl = $"{origin}/account/activate:{user.VerificationToken}";
-                message = $@"<p>Please click the below link to verify your email address:</p>
-                                 <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
-            }
-            else
-            {
-                message =
-                    $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>
-                                 <p><code>{user.VerificationToken}</code></p>";
-            }
-
+            var activationMailUrl = $"{origin}/account/activate:{user.VerificationToken}";
+            const string activationMailTitle = "Activate Your Account";
+            var activationMailMessage = $@"<h4>Activation</h4> <p>Thanks for registering!</p> <p>Please click the below link to verify your email address:</p><p><a href=""{activationMailUrl}"">{activationMailUrl}</a></p>";
+            
             var messageData = new EmailMessage
             {
                 ToAddresses = new List<EmailMessage.EmailAddress>()
                 {
-                    new EmailMessage.EmailAddress()
+                    new()
                     {
                         Name = user.Email,
                         Address = user.Email,
@@ -191,16 +173,14 @@ namespace WebApi.Services.Account
                 },
                 FromAddresses = new List<EmailMessage.EmailAddress>()
                 {
-                    new EmailMessage.EmailAddress()
+                    new()
                     {
-                        Name = "Planfi",
-                        Address = "planfi.contact@gmail.com",
+                        Name = SenderName,
+                        Address = SenderEmail,
                     }
                 },
-                Subject = "Activate Your Account",
-                Content = $@"<h4>Activation</h4>
-                        <p>Thanks for registering!</p>
-                             {message}",
+                Subject = activationMailTitle,
+                Content = activationMailMessage,
             };
             try
             {
@@ -226,7 +206,8 @@ namespace WebApi.Services.Account
                     
                     var user = new User
                     {
-                        Role = new Role { Name = model.Role },
+                        UserId = new Guid().ToString(),
+                        Role = new Role { Id = new Guid().ToString(), Name = model.Role },
                         OrganizationId = model.OrganizationId,
                         Email = email,
                         VerificationToken = RandomTokenString(),

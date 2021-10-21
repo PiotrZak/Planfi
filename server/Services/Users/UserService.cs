@@ -49,14 +49,7 @@ namespace WebApi.Services{
         
         public User Authenticate(string email, string? password)
         {
-            var user = _context.Users
-                .Include(x => x.Role)
-                .SingleOrDefault(x => x.Email == email);
-
-            if (password == null && user == null)
-            {
-                return null;
-            }
+            var user = GetUserWithoutPassword(email);
             
             // check if email exists
             if (user == null)
@@ -73,6 +66,13 @@ namespace WebApi.Services{
             }
             // authentication successful
             return user.WithoutPassword(); ;
+        }
+
+        public User GetUserWithoutPassword(string email)
+        {
+            return _context.Users
+                .Include(x => x.Role)
+                .SingleOrDefault(x => x.Email == email);
         }
         
         public IEnumerable<User> GetAllUsers ()
