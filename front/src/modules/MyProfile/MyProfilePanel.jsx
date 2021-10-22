@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import 'react-multi-carousel/lib/styles.css';
 import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
@@ -10,6 +10,7 @@ import {
   useNotificationContext,
   ADD,
 } from "support/context/NotificationContext";
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
 const timeToRedirectLogin = 1000;
 const FileUploadButton = styled.input.attrs({ type: "file" })`
@@ -129,8 +130,11 @@ export const MyProfilePanel = ({
     }
   };
 
+  const ref = (useRef(null));
+ useOnClickOutside(ref, () => setBottomSheet('none'));
 
   return (
+    <div ref ={ref}>
     <StyledReactBottomSheet
       showBlockLayer={true}
       visible={bottomSheet}
@@ -198,5 +202,6 @@ export const MyProfilePanel = ({
           </PanelContainer>
         )}
     </StyledReactBottomSheet>
+    </div>
   );
 };
