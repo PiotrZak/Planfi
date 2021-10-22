@@ -9,8 +9,8 @@ namespace WebApi.Interfaces
     public interface IExerciseService
     {
         Task<Exercise> GetById(string id);
-        Exercise Create(Exercise Exercise);
-        Exercise CreateInstance(Exercise Exercise);
+        Exercise Create(Exercise exercise);
+        Exercise CreateInstance(Exercise exercise);
         IEnumerable<Exercise> GetAll();
         //todo - exclude model
         Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId);

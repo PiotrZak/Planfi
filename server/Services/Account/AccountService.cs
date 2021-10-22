@@ -34,7 +34,7 @@ namespace WebApi.Services.Account
         
         public async Task<User> Activate(ActivateAccount user)
         {
-            var selectedUser = _context.Users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
+            var selectedUser = _context.users.SingleOrDefault(x => x.VerificationToken == user.VerificationToken);
 
             if (selectedUser == null) throw new AppException();
             
@@ -48,19 +48,19 @@ namespace WebApi.Services.Account
 
             _userService.CreatePasswordHash(user.Password, out var passwordHash, out var passwordSalt);
 
-            selectedUser.Password = user.Password;
+            selectedUser.Password = ExtensionMethods.EncryptPassword(user.Password);
             selectedUser.PasswordHash = passwordHash;
             selectedUser.PasswordSalt = passwordSalt;
             selectedUser.IsActivated = true;
 
-            _context.Users.Update(selectedUser);
+            _context.users.Update(selectedUser);
             await _context.SaveChangesAsync();
             return selectedUser;
         }
         
         public async Task<bool> ForgotPassword(ForgotPassword model, string origin)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Email == model.Email).WithoutPassword();
+            var user = _context.users.FirstOrDefault(x => x.Email == model.Email).WithoutPassword();
 
             if (user == null)
                 throw new ValidationException(
@@ -72,17 +72,17 @@ namespace WebApi.Services.Account
             
             SendPasswordResetEmail(user, origin);
             
-            _context.Users.Update(user);
+            _context.users.Update(user);
             await _context.SaveChangesAsync();
             return true;
         }
 
         public async Task<int>  UploadAvatar(string userId, byte[] avatar)
         {
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.users.FindAsync(userId);
 
             user.Avatar = avatar;
-            _context.Users.Update(user);
+            _context.users.Update(user);
             await _context.SaveChangesAsync();
             return 1;
         }
@@ -131,7 +131,7 @@ namespace WebApi.Services.Account
         {
             try
             {
-                var user = _context.Users.SingleOrDefault(x =>
+                var user = _context.users.SingleOrDefault(x =>
                     x.ResetToken == model.Token);
 
                 if (user == null)
@@ -147,7 +147,7 @@ namespace WebApi.Services.Account
                 user.ResetToken = null;
                 user.ResetTokenExpires = null;
 
-                _context.Users.Update(user);
+                _context.users.Update(user);
                 return await _context.SaveChangesAsync();
             }
             catch (ValidationException ex)
@@ -199,25 +199,22 @@ namespace WebApi.Services.Account
         public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
         {
             
-            var userRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "User");
-            var trainerRole = await _context.Role.FirstOrDefaultAsync(x => x.Name == "Trainer");
+            var userRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "User");
+            var trainerRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "Trainer");
             
             try
             {
                 foreach (var email in model.Emails)
                 {
-                    if (_context.Users.Any(x => x.Email == email))
+                    if (_context.users.Any(x => x.Email == email))
                         throw new AppException("Email \"" + email + "\" is already taken");
-
-                    var userId = Guid.NewGuid().ToString();
-                    var roleId = Guid.NewGuid().ToString();
                     
                     var user = new User
                     {
-                        UserId = userId,
+                        UserId = Guid.NewGuid().ToString(),
                         Role = model.Role is "User" or "Trainer"
                             ? userRole
-                            : new Role { Id = roleId, Name = model.Role },
+                            : new Role { Id = Guid.NewGuid().ToString(), Name = model.Role },
                         OrganizationId = model.OrganizationId,
                         Email = email,
                         VerificationToken = RandomTokenString(),
@@ -225,7 +222,7 @@ namespace WebApi.Services.Account
                     var result = await ConstructMessage(user, origin);
                     if (result == 1)
                     {
-                        await _context.Users.AddAsync(user);
+                        await _context.users.AddAsync(user);
                         await _context.SaveChangesAsync();
                     }
                 }

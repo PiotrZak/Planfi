@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 
@@ -21,5 +23,13 @@ namespace WebApi.Helpers
             user.PasswordSalt = null;
             return user;
         }
+        
+        public static string EncryptPassword(string password)  
+        {  
+            var msg = "";
+            var encode = Encoding.UTF8.GetBytes(password);  
+            msg = Convert.ToBase64String(encode);  
+            return msg;  
+        }  
     }
 }

@@ -24,14 +24,14 @@ namespace WebApi.Services.Chat
 
         public async Task<List<ChatRoom>> GetChatRoomsAsync()
         {
-            var chatRooms = await _context.ChatRooms.ToListAsync();
+            var chatRooms = await _context.chatrooms.ToListAsync();
             return chatRooms;
         }
 
         public async Task<bool> AddChatRoomAsync(ChatRoom chatRoom)
         {
             chatRoom.Id = Guid.NewGuid();
-            _context.ChatRooms.Add(chatRoom);
+            _context.chatrooms.Add(chatRoom);
             var saveResults = await _context.SaveChangesAsync();
 
             return saveResults > 0;

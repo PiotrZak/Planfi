@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
@@ -24,19 +25,16 @@ namespace WebApi.Helpers
             optionsBuilder.UseNpgsql(sqlConnectionString);
         }
         
-        public DbSet<Organization> Organizations { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<Plan> Plans { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<ChatRoom> ChatRooms { get; set; }
-        
-        //public DbSet<Tenant> Tenants { get; set; }
-        public DbSet<UsersPlans> UsersPlans { get; set; }
-        public DbSet<UsersTrainers> UsersTrainers { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Exercise> Exercises { get; set; }
-        
+        public DbSet<Organization> organizations { get; set; }
+        public DbSet<User> users { get; set; }
+        public DbSet<Role> role { get; set; }
+        public DbSet<Plan> plans { get; set; }
+        public DbSet<Message> messages { get; set; }
+        public DbSet<ChatRoom> chatrooms { get; set; }
+        public DbSet<UsersPlans> usersplans { get; set; }
+        public DbSet<UsersTrainers> userstrainers { get; set; }
+        public DbSet<Category> categories { get; set; }
+        public DbSet<Exercise> exercises { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -288,7 +286,17 @@ namespace WebApi.Helpers
                     new Role
                     {
                         Id = "1",
-                        Name = "Trainer",
+                        Name = "Trainer"
+                    },
+                    new Role
+                    {
+                        Id = "2",
+                        Name = "User",
+                    },
+                    new Role
+                    {
+                        Id = "3",
+                        Name = "Owner",
                     }
                 );
                 
@@ -340,9 +348,61 @@ namespace WebApi.Helpers
                     IsActivated = true,
                 }
             );
-
             
+            
+            modelBuilder.NamesToSnakeCase();
+        }
+    }
 
+    public static class ModelBuilderExtensions
+    {
+
+        public static string ToSnakeCase(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return input;
+            }
+
+            var startUnderscores = Regex.Match(input, @"^_+");
+            return startUnderscores + Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2").ToLower();
+        }
+
+        public static void NamesToSnakeCase(this ModelBuilder modelBuilder)
+        {
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
+            {
+                // Replace table names
+
+                var tableName = entity.GetTableName();
+                entity.SetTableName(ToSnakeCase(tableName));
+                
+
+                // Replace column names            
+                foreach (var property in entity.GetProperties())
+                {
+                    var propertyName = property.GetColumnName();
+                    property.SetColumnName(ToSnakeCase(propertyName));
+                }
+
+                //keys, foreignkeys, indexes
+                
+                
+                // foreach (var key in entity.GetKeys())
+                // {
+                //     key.Relational().Name = key.Relational().Name.ToSnakeCase();
+                // }
+                //
+                // foreach (var key in entity.GetForeignKeys())
+                // {
+                //     key.Relational().Name = key.Relational().Name.ToSnakeCase();
+                // }
+                //
+                // foreach (var index in entity.GetIndexes())
+                // {
+                //     index.Relational().Name = index.Relational().Name.ToSnakeCase();
+                // }
+            }
         }
     }
 }

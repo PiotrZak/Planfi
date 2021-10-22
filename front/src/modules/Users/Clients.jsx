@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { organizationService } from 'services/organizationServices';
 import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate from 'templates/GlobalTemplate';
@@ -30,17 +30,32 @@ const Container = styled.div`
 
 const Clients = () => {
 
+
+  // 
+  const user = JSON.parse((localStorage.getItem('user')));
   const { theme } = useThemeContext();
   const { notificationDispatch } = useNotificationContext();
+
+
+
+
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [bottomSheet, setBottomSheet] = useState('none');
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
-
   const [activeUsers, setActiveUsers] = useState([]);
-  const [assignPlan, setAssignPlan] = useState('none');
-  const [assignTrainer, setAssignTrainer] = useState('none');
-  const user = JSON.parse((localStorage.getItem('user')));
+
+
+  //bottom panel logic
+
+  const invisible = 'none';
+  const visible = 'flex';
+
+  const [bottomSheet, setBottomSheet] = useState(invisible);
+  const [assignPlan, setAssignPlan] = useState(invisible);
+  const [assignTrainer, setAssignTrainer] = useState(invisible);
+
+
+
   const [refresh, setRefresh] = useState(false)
 
   const Clients = gql`{
@@ -64,134 +79,133 @@ const Clients = () => {
 
     refreshView()
     userService
-        .assignPlanToUser(data)
-        .then(() => {
-            notificationDispatch({
-                type: ADD,
-                payload: {
-                    content: { success: 'OK', message: translate('PlansAssignedToUser') },
-                    type: 'positive'
-                }
-            })
+      .assignPlanToUser(data)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('PlansAssignedToUser') },
+            type: 'positive'
+          }
         })
-        .catch((error) => {
-            notificationDispatch({
-                type: ADD,
-                payload: {
-                    content: { error: error, message: error.data.messages[0].text},
-                    type: 'warning'
-                }
-            })
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: error.data.messages[0].text },
+            type: 'warning'
+          }
+        })
+      });
+  }, []);
+
+  const deleteUser = useCallback((activeUsers) => {
+    userService
+      .deleteUsers(activeUsers)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('UserDeleted') },
+            type: 'positive',
+          },
         });
-}, []);
-
-const deleteUser = useCallback((activeUsers) => {
-  userService
-    .deleteUsers(activeUsers)
-    .then(() => {
-      notificationDispatch({
-        type: ADD,
-        payload: {
-          content: { success: 'OK', message: translate('UserDeleted') },
-          type: 'positive',
-        },
-      });
-    })
-    .catch((error) => {
-      notificationDispatch({
-        type: ADD,
-        payload: {
-          content: { error, message: translate('ErrorAlert') },
-          type: 'warning'
-        },
-      });
-    });
-},[]);
-
-const refreshView = () => {
-  setAssignTrainer('none')
-  setBottomSheet('none');
-  setRefresh(!refresh)
-}
-
-const assignUserToMe =  useCallback((activeUsers, activeTrainers) => {
-  
-  const data = { userIds: activeUsers, trainerIds: [user.userId] };
-  refreshView()
-
-  userService
-    .assignUsersToTrainer(data)
-    .then(() => {
-      notificationDispatch({
-        type: ADD,
-        payload: {
-          content: { success: 'OK', message: translate('TrainersAssignedToUser') },
-          type: 'positive'
-        }
       })
-
-    })
-    .catch((error) => {
-      notificationDispatch({
-        type: ADD,
-        payload: {
-            content: { error: error, message: error.data.messages[0].text},
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error, message: translate('ErrorAlert') },
             type: 'warning'
-        }
-    })
-    });
-}, []);
+          },
+        });
+      });
+  }, []);
 
-const assignUserToTrainer =  useCallback((activeUsers, activeTrainers) => {
+  const refreshView = () => {
+    setAssignTrainer('none')
+    setBottomSheet('none');
+    setRefresh(!refresh)
+  }
 
-  const data = { userIds: activeUsers, trainerIds: [activeTrainers] };
-  refreshView()
+  const assignUserToMe = useCallback((activeUsers, activeTrainers) => {
 
-  userService
-    .assignUsersToTrainer(data)
-    .then(() => {
-      notificationDispatch({
-        type: ADD,
-        payload: {
-          content: { success: 'OK', message: translate('TrainersAssignedToUser') },
-          type: 'positive'
-        }
+    const data = { userIds: activeUsers, trainerIds: [user.userId] };
+    refreshView()
+
+    userService
+      .assignUsersToTrainer(data)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('TrainersAssignedToUser') },
+            type: 'positive'
+          }
+        })
+
       })
-      setRefresh(!refresh)
-    })
-    .catch((error) => {
-      notificationDispatch({
-        type: ADD,
-        payload: {
-            content: { error: error, message: error.data.messages[0].text},
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: error.data.messages[0].text },
             type: 'warning'
-        }
-    })
-    });
-}, []);
+          }
+        })
+      });
+  }, []);
 
-useEffect(() => {
-  refreshData();
-}, [refreshData])
+  const assignUserToTrainer = useCallback((activeUsers, activeTrainers) => {
+
+    const data = { userIds: activeUsers, trainerIds: [activeTrainers] };
+    refreshView()
+
+    userService
+      .assignUsersToTrainer(data)
+      .then(() => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { success: 'OK', message: translate('TrainersAssignedToUser') },
+            type: 'positive'
+          }
+        })
+        setRefresh(!refresh)
+      })
+      .catch((error) => {
+        notificationDispatch({
+          type: ADD,
+          payload: {
+            content: { error: error, message: error.data.messages[0].text },
+            type: 'warning'
+          }
+        })
+      });
+  }, []);
+
+  useEffect(() => {
+    refreshData();
+  }, [refreshData])
 
   const submissionHandleElement = (selectedData) => {
     const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
     setActiveUsers(selectedUsers);
-    user.role.name == "Owner" ? setBottomSheet('flex') : setAssignTrainer('flex');
+    setAssignTrainer('flex');
   };
 
   let results;
-  if(data){
-   results = filterDataByTerm(searchTerm, data.users, ['firstName', 'lastName']);
+  if (data) {
+    results = filterDataByTerm(searchTerm, data.users, ['firstName', 'lastName']);
   }
-
-
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
 
   return (
     <>
       <GlobalTemplate>
+        
         <Nav>
           <Heading>{translate('Clients')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
@@ -199,7 +213,9 @@ useEffect(() => {
         <InviteUserModal role={Role.User} openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
         <Container>
           <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
-      </Container>
+        </Container>
+
+
         <Loader isLoading={isLoading}>
           {results.filter(x => x.userId != user.userId).length > 0
             ? (
@@ -213,63 +229,31 @@ useEffect(() => {
             )
             : <p>{translate('NoUsers')}</p>}
         </Loader>
+        {user.role.name}
       </GlobalTemplate>
-      {user.role && 
-      user.role.name != Role.Owner ?
+
+      {user.role && user.role.name !== Role.Owner &&
+      <>
         <ClientPanel
-        assignUserToMe={assignUserToMe}
-        assignPlan={assignPlan}
-        assignUserToTrainer={assignUserToTrainer}
-        setAssignPlan={setAssignPlan}
-        theme={theme}
-        userId={user.userId}
-        organizationId={user.organizationId}
-        assignTrainer={assignTrainer}
-        assignUserToPlan={assignUserToPlan}
-        setAssignTrainer={setAssignTrainer}
-        bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        activeUsers={activeUsers}
-      />
-        :
-        <>
-        <>
-          <UsersPanel
-            deleteUser={deleteUser}
-            theme={theme}
-            bottomSheet={bottomSheet}
-            setBottomSheet={setBottomSheet}
-            activeUsers={activeUsers}
-            setAssignPlan={setAssignPlan}
-            assignUserToPlan={assignUserToPlan}
-            setAssignTrainer={setAssignTrainer}
-          />
-          <AssignUsersToPlans
-            theme={theme}
-            organizationId={user.organizationId}
-            assignPlan={assignPlan}
-            setAssignPlan={setAssignPlan}
-            assignUserToPlan={assignUserToPlan}
-            bottomSheet={bottomSheet}
-            setBottomSheet={setBottomSheet}
-            activeUsers={activeUsers}
-            refreshView={refreshView}
-          />
-          <AssignUsersToTrainers
-            theme={theme}
-            organizationId={user.organizationId}
-            assignTrainer={assignTrainer}
-            assignUserToTrainer={assignUserToTrainer}
-            setAssignTrainer={setAssignTrainer}
-            bottomSheet={bottomSheet}
-            setBottomSheet={setBottomSheet}
-            activeUsers={activeUsers}
-            refreshView={refreshView}
-          />
-        </>
-        </>
-        
-      }
+
+          theme={theme}
+          userId={user.userId}
+          organizationId={user.organizationId}
+
+          assignPlan={assignPlan}
+          assignUserToPlan={assignUserToPlan}
+          setAssignPlan={setAssignPlan}
+
+          assignTrainer={assignTrainer}
+          assignUserToTrainer={assignUserToTrainer}
+          setAssignTrainer={setAssignTrainer}
+
+           assignUserToMe={assignUserToMe}
+
+          setBottomSheet={setBottomSheet}
+          activeUsers={activeUsers}
+        />
+        </>}
     </>
   );
 };

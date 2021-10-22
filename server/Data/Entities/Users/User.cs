@@ -26,7 +26,6 @@ namespace WebApi.Data.Entities.Users
         public string UserId { get; set; }
         public Role Role { get; set; }
         public ICollection<UsersPlans> Plans { get; set; }
-        
         public ICollection<UsersTrainers> UsersTrainers { get; set; }
         public byte[] Avatar { get; set; }
         public string FirstName { get; set; }

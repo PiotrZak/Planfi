@@ -27,14 +27,14 @@ namespace WebApi.Services.Chat
 
         public async Task<List<Message>> GetMessagesAsync()
         {
-            var messages = await _context.Messages.ToListAsync();
+            var messages = await _context.messages.ToListAsync();
 
             return messages;
         }
 
         public async Task<List<Message>> GetMessagesForChatRoomAsync(Guid roomId)
         {
-            var messagesForRoom = await _context.Messages
+            var messagesForRoom = await _context.messages
                 .Where(m => m.RoomId == roomId)
                 .ToListAsync<Message>();
 
@@ -47,7 +47,7 @@ namespace WebApi.Services.Chat
             message.RoomId = roomId;
             message.PostedAt = DateTimeOffset.Now;
 
-            _context.Messages.Add(message);
+            _context.messages.Add(message);
 
             var saveResults = await _context.SaveChangesAsync();
 

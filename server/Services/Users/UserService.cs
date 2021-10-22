@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentValidation;
@@ -15,7 +14,7 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
 
-namespace WebApi.Services.Users{
+namespace WebApi.Services.users{
 
 
     public class UserService : IUserService
@@ -33,12 +32,12 @@ namespace WebApi.Services.Users{
         
         public User Register(string Email)
         {
-            if (_context.Users.Any(x => x.Email == Email))
+            if (_context.users.Any(x => x.Email == Email))
                 throw new AppException("Email \"" + Email + "\" is already taken"); 
             
             var user = _mapper.Map<User>(Email);
 
-            _context.Users.Add(user);
+            _context.users.Add(user);
             _context.SaveChanges();
 
             return user;
@@ -67,20 +66,20 @@ namespace WebApi.Services.Users{
 
         public User GetUserWithoutPassword(string email)
         {
-            return _context.Users
+            return _context.users
                 .Include(x => x.Role)
                 .SingleOrDefault(x => x.Email == email);
         }
         
         public IEnumerable<User> GetAllUsers ()
         {
-            var users = _context.Users;
+            var users = _context.users;
             return users;
         }
         
         public async Task<UserViewModel> GetById(string id)
         {
-            var user = await _context.Users
+            var user = await _context.users
                 .Include(x => x.Role)
                 .SingleOrDefaultAsync(x => x.UserId == id);
             
@@ -104,7 +103,7 @@ namespace WebApi.Services.Users{
         
         public async Task<int> Update(string id, UpdateUserModel model)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.users.FindAsync(id);
 
             if (user == null)
                 throw new AppException("User not found");
@@ -113,7 +112,7 @@ namespace WebApi.Services.Users{
             if (!string.IsNullOrWhiteSpace(model.Email))
             {
                 // // throw error if the new username is already taken
-                if (_context.Users.Any(x => x.Email == model.Email))
+                if (_context.users.Any(x => x.Email == model.Email))
                     throw new ValidationException(
                         $"Mail {model.Email} is already assigned to another user");
                 
@@ -138,33 +137,24 @@ namespace WebApi.Services.Users{
                     throw new ValidationException(
                         $"Incorrect Password");
                 
-                user.Password = EncryptPassword(model.NewPassword);
+                user.Password = ExtensionMethods.EncryptPassword(model.NewPassword);
                 CreatePasswordHash(model.NewPassword, out var passwordHash, out var passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
             }
 
-            _context.Users.Update(user);
+            _context.users.Update(user);
             await _context.SaveChangesAsync();
             return 1;
         }
-        
-        public string EncryptPassword(string password)  
-        {  
-            var msg = "";
-            var encode = Encoding.UTF8.GetBytes(password);  
-            msg = Convert.ToBase64String(encode);  
-            return msg;  
-        }  
-        
         public async Task Delete(string[] id)
         {
             foreach (var userId in id)
             {
-                var user = await _context.Users.FindAsync(userId);
+                var user = await _context.users.FindAsync(userId);
                 if (user != null)
                 {
-                    _context.Users.Remove(user);
+                    _context.users.Remove(user);
                     await _context.SaveChangesAsync();
                 }
             }
@@ -172,7 +162,7 @@ namespace WebApi.Services.Users{
 
         public IEnumerable<User> GetByRole(string role)
         {
-            var users = _context.Users
+            var users = _context.users
                 .Where(x => x.Role.Name == role);
             
             return users;
@@ -189,18 +179,18 @@ namespace WebApi.Services.Users{
             foreach (var trainerId in trainersId)
             {
                 //finding an trainer
-                var trainer = await _context.Users.FindAsync(trainerId);
+                var trainer = await _context.users.FindAsync(trainerId);
                 foreach (var userId in userIds)
                 {
                     //finding a clients
-                    var client = await _context.Users.FindAsync(userId);
+                    var client = await _context.users.FindAsync(userId);
                     var usersTrainers = new UsersTrainers
                     {
                         TrainerId = trainer.UserId,
                         ClientId = client.UserId
                     };
 
-                    await _context.UsersTrainers.AddAsync(usersTrainers);
+                    await _context.userstrainers.AddAsync(usersTrainers);
                     try
                     { 
                         await _context.SaveChangesAsync();
@@ -236,14 +226,14 @@ namespace WebApi.Services.Users{
             foreach (var clientId in clientIds)
             {
                 //finding an client 
-                var client = await _context.Users.FindAsync(clientId);
+                var client = await _context.users.FindAsync(clientId);
                 
                 foreach (var planId in planIds)
                 {
                     //finding a plan
-                        var plan = await _context.Plans.FindAsync(planId);
+                        var plan = await _context.plans.FindAsync(planId);
                         var usersPlans = new UsersPlans {User = client, Plan = plan};
-                        await _context.UsersPlans.AddAsync(usersPlans);
+                        await _context.usersplans.AddAsync(usersPlans);
                         
                         try
                         { 
@@ -281,28 +271,28 @@ namespace WebApi.Services.Users{
 
         public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
         {
-            var clientsTrainers = await _context.UsersTrainers
+            var clientsTrainers = await _context.userstrainers
                 .Where(x => x.TrainerId == id)
                 .Select(x => x.ClientId)
                 .ToListAsync();
             
             var clientIds = clientsTrainers.ToList();
 
-            return clientIds.Select((t, i) => (User) _context.Users
+            return clientIds.Select((t, i) => (User) _context.users
                 .FirstOrDefault(x => x.UserId == clientIds[i]))
                 .ToList();
         }
 
         public async Task<IEnumerable<User>> GetTrainersByClient(string id)
         {
-            var clientsTrainers = await _context.UsersTrainers
+            var clientsTrainers = await _context.userstrainers
                 .Where(x => x.ClientId == id)
                 .Select(x => x.TrainerId)
                 .ToListAsync();
             
             var trainersIds = clientsTrainers.ToList();
 
-            return trainersIds.Select((t, i) => (User) _context.Users
+            return trainersIds.Select((t, i) => (User) _context.users
                     .FirstOrDefault(x => x.UserId == trainersIds[i]))
                     .ToList();
         }

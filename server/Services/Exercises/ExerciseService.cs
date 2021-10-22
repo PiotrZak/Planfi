@@ -12,7 +12,7 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
 
-namespace WebApi.Services.Exercises
+namespace WebApi.Services.exercises
 {
     public class ExerciseService : IExerciseService
     {
@@ -28,17 +28,17 @@ namespace WebApi.Services.Exercises
         public Exercise Create(Exercise exercise)
         {
             // throw error if the new plan is already taken
-            if (_context.Exercises.Any(x => x.Name == exercise.Name))
+            if (_context.exercises.Any(x => x.Name == exercise.Name))
                 throw new AppException("Exercise " + exercise.Name + " is already exist");
 
-            _context.Exercises.Add(exercise);
+            _context.exercises.Add(exercise);
             _context.SaveChanges();
 
             return exercise;
         }
         public Exercise CreateInstance(Exercise exercise)
         {
-            _context.Exercises.Add(exercise);
+            _context.exercises.Add(exercise);
             _context.SaveChanges();
 
             return exercise;
@@ -46,30 +46,30 @@ namespace WebApi.Services.Exercises
         
         public Task<Exercise> GetById(string id)
         {
-            return _context.Exercises.FirstOrDefaultAsync(x => x.ExerciseId == id);
+            return _context.exercises.FirstOrDefaultAsync(x => x.ExerciseId == id);
         }
 
         public IEnumerable<Exercise> GetAll()
         {
-            return _context.Exercises;
+            return _context.exercises;
         }
         
         public async Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId)
         {
-            var organizationCategories = await _context.Categories
+            var organizationCategories = await _context.categories
                 .Where(x => x.OrganizationId == organizationId)
                 .ToListAsync();
             
-            var organizationExercises = new List<ExerciseViewModel>();
+            var organizationexercises = new List<ExerciseViewModel>();
             
             foreach(var organizationCategory in organizationCategories)
             {
-                var categoryExercises = await _context.Exercises
+                var categoryexercises = await _context.exercises
                     .Where(x => x.CategoryId == organizationCategory.CategoryId)
                     .ToListAsync();
 
-                organizationExercises
-                    .AddRange(categoryExercises
+                organizationexercises
+                    .AddRange(categoryexercises
                     .Select(exercise => new ExerciseViewModel
                 {
                     ExerciseId = exercise.ExerciseId,
@@ -81,21 +81,21 @@ namespace WebApi.Services.Exercises
                     PlanId = exercise.PlanId
                 }));
             }
-            return organizationExercises;
+            return organizationexercises;
         }
         
         public IEnumerable<ExerciseViewModel> GetSerializedExercisesInstances()
         {
-            var allInstanceExercises = _context.Exercises
+            var allInstanceexercises = _context.exercises
                 .Where(x => 
                     x.Repeats == 0 &&
                     x.Series == 0 &&
                     x.Weight == 0 &&
                     x.Repeats == 0);
             
-            var transformedExercises = new List<ExerciseViewModel>();
+            var transformedexercises = new List<ExerciseViewModel>();
             
-            foreach (var exercise in allInstanceExercises)
+            foreach (var exercise in allInstanceexercises)
             {
                 var modelExercise = new ExerciseViewModel
                 {
@@ -108,15 +108,15 @@ namespace WebApi.Services.Exercises
                     PlanId = exercise.PlanId
                 };
                 
-                transformedExercises.Add(modelExercise);
+                transformedexercises.Add(modelExercise);
             }
 
-            return transformedExercises;
+            return transformedexercises;
         }
 
         public IEnumerable<ExerciseViewModel> GetSerializedExercises()
         {
-            return _context.Exercises
+            return _context.exercises
                 .Select(exercise => new ExerciseViewModel
                 {
                     ExerciseId = exercise.ExerciseId,
@@ -133,14 +133,14 @@ namespace WebApi.Services.Exercises
         }
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
-            var exercises = _context.Exercises
+            var exercises = _context.exercises
                 .Where(x => x.CategoryId == categoryId);
             return exercises;
         }
 
         public IEnumerable<Exercise> GetAllOfPlan(string planId)
         {
-            var exercises = _context.Exercises
+            var exercises = _context.exercises
                 .Where(x => x.PlanId == planId);
             
             return exercises;
@@ -152,16 +152,16 @@ namespace WebApi.Services.Exercises
             
             foreach (var exerciseId in id)
             {
-                var exercise = await _context.Exercises.FindAsync(exerciseId);
+                var exercise = await _context.exercises.FindAsync(exerciseId);
                 if (exercise != null)
                 {
-                    _context.Exercises.Remove(exercise);
-                    var exerciseInstancesIds = _context.Exercises
+                    _context.exercises.Remove(exercise);
+                    var exerciseInstancesIds = _context.exercises
                         .Where(x => x.Name == exercise.Name && x.Description == exercise.Description);
 
                     foreach(var exerciseInstanceId in exerciseInstancesIds)
                     {
-                        _context.Exercises.Remove(exerciseInstanceId);
+                        _context.exercises.Remove(exerciseInstanceId);
                     }
                 }
             }
@@ -230,7 +230,7 @@ namespace WebApi.Services.Exercises
 
         public async Task<int> Update(Exercise updateExercise, string id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
+            var exercise = await _context.exercises.FindAsync(id);
 
             if(exercise == null)
                 throw new AppException("Exercise not found!");
@@ -280,7 +280,7 @@ namespace WebApi.Services.Exercises
                 exercise.Weight = updateExercise.Weight;
             }
 
-            _context.Exercises.Update(exercise);
+            _context.exercises.Update(exercise);
             await _context.SaveChangesAsync();
 
             return 1;

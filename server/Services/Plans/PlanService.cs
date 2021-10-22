@@ -1,24 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using WebApi.Data.Entities;
-using WebApi.Data.Entities.Users;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 
-namespace WebApi.Services
+namespace WebApi.Services.Plans
 {
     public class PlanService : IPlanService
     {
         private readonly DataContext _context;
+        private IConfiguration Configuration { get; }
         private readonly IExerciseService _exerciseService;
         
-        public PlanService(DataContext context, IExerciseService exerciseService)
+        public PlanService(DataContext context, IExerciseService exerciseService, IConfiguration configuration)
         {
+            Configuration = configuration;
             _context = context;
             _exerciseService = exerciseService;
         }
@@ -26,14 +31,14 @@ namespace WebApi.Services
         public async Task<Plan> Create(Plan plan)
         {
             //check for duplication in orgaanization context
-            var duplication = _context.Plans
+            var duplication = _context.plans
                 .Where(x => x.OrganizationId == plan.OrganizationId)
                 .Any(x => x.Title == plan.Title);
             
             if (duplication)
                 throw new AppException("Category " + plan.Title + " is already exist");
             
-            await _context.Plans.AddAsync(plan);
+            await _context.plans.AddAsync(plan);
             await _context.SaveChangesAsync();
 
             return plan;
@@ -41,19 +46,29 @@ namespace WebApi.Services
 
         public async Task<Plan> GetById(string id)
         {
-            var plan = await _context.Plans
+            var plan = await _context.plans
                 .FirstOrDefaultAsync(x => x.PlanId == id);
             return plan;
         }
+
+        public async Task<List<Plan>> GetByIds(List<string> ids)
+        {
+            var plans = await _context.plans
+                .Where(x => ids.Contains(x.PlanId))
+                .ToListAsync();
+
+            return plans;
+        }
+
         public IEnumerable<Plan> GetAll()
         {
 
-            return _context.Plans;
+            return _context.plans;
         }
 
         public async Task<int> Update(string id, string title)
         {
-            var plan = await _context.Plans.FindAsync(id);
+            var plan = await _context.plans.FindAsync(id);
 
             if (plan == null)
                 throw new AppException("Plan not found");
@@ -62,7 +77,7 @@ namespace WebApi.Services
             if (!string.IsNullOrWhiteSpace(title))
                 plan.Title = title;
 
-            _context.Plans.Update(plan);
+            _context.plans.Update(plan);
             return await _context.SaveChangesAsync();
         }
         
@@ -72,17 +87,17 @@ namespace WebApi.Services
             {
                 foreach (var planId in id)
                 {
-                    var exercisesInPlan = _context.Exercises.Where(x => x.PlanId == planId);
+                    var exercisesInPlan = _context.exercises.Where(x => x.PlanId == planId);
 
                     foreach (var exerciseItem in exercisesInPlan)
                     {
                         exerciseItem.PlanId = null;
                     }
 
-                    var plan = await _context.Plans.FindAsync(planId);
+                    var plan = await _context.plans.FindAsync(planId);
                     if (plan != null)
                     {
-                        _context.Plans.Remove(plan);
+                        _context.plans.Remove(plan);
                         await _context.SaveChangesAsync();
                     }
                 }
@@ -100,7 +115,7 @@ namespace WebApi.Services
 
             foreach (var id in exerciseId)
             {
-                var element = _context.Exercises.Find(id);
+                var element = _context.exercises.Find(id);
                 
                 element.ExerciseId = Guid.NewGuid().ToString();
                 element.Times = exerciseModel.Times;
@@ -114,7 +129,7 @@ namespace WebApi.Services
                 //assigning exercise to plan
                 plan.Exercises.Add(element);
             }
-            _context.Plans.Update(plan);
+            _context.plans.Update(plan);
             _context.SaveChanges();
         }
 
@@ -124,35 +139,59 @@ namespace WebApi.Services
 
             foreach (var id in exerciseId)
             {
-                var element = _context.Exercises.Find(id);
+                var element = _context.exercises.Find(id);
                 element.PlanId = null;
-                _context.Exercises.Update(element);
+                _context.exercises.Update(element);
                 plan.Exercises.Remove(element);
             }
-            _context.Plans.Update(plan);
+            _context.plans.Update(plan);
             _context.SaveChanges();
         }
 
         public IEnumerable<Plan> GetOrganizationPlans(string organizationId)
         {
-            var organizationPlans = _context.Plans.Where(x => x.OrganizationId == organizationId);
+            var organizationPlans = _context.plans.Where(x => x.OrganizationId == organizationId);
             return organizationPlans;
 
         }
 
-        public IEnumerable<Plan> GetUserPlans(string userId)
+        public async Task<List<ResultPlan>> GetUserPlans(string userId)
         {
-            var plans = _context.Users
-                .Where(x => x.UserId == userId)
-                .Select(x => x.Plans)
-                .Cast<Plan>();
             
-            return plans.AsEnumerable();
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+
+            var userPlans = new List<ResultPlan>();
+            try
+            {
+                const string userPlansQuery = @"SELECT 
+                    p.plan_id,
+                    p.title,
+                    p.creator_id,
+                    p.creator_name
+                    FROM public.users as u
+                    JOIN public.usersplans as up
+                    ON u.user_id = up.user_id
+                    JOIN public.plans as p
+                    ON p.plan_id = up.plan_id
+                    WHERE u.user_id = @userId";
+
+                userPlans = (await connection.QueryAsync<ResultPlan>(userPlansQuery, new {userId})).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            return userPlans;
         }
 
         public IEnumerable<Plan> GetCreatorPlans(string id)
         {
-            var plans = _context.Plans.Where(x => x.CreatorId == id);
+            var plans = _context.plans.Where(x => x.CreatorId == id);
             return plans;
         }
     }

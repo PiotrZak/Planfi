@@ -4,223 +4,223 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebApi.Migrations
 {
-    public partial class Chat : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ChatRooms",
+                name: "chatrooms",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChatRooms", x => x.Id);
+                    table.PrimaryKey("PK_chatrooms", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Messages",
+                name: "messages",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    RoomId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Contents = table.Column<string>(type: "text", nullable: true),
-                    UserName = table.Column<string>(type: "text", nullable: true),
-                    PostedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    room_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    contents = table.Column<string>(type: "text", nullable: true),
+                    user_name = table.Column<string>(type: "text", nullable: true),
+                    posted_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.PrimaryKey("PK_messages", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Organizations",
+                name: "organizations",
                 columns: table => new
                 {
-                    OrganizationId = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    organization_id = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Organizations", x => x.OrganizationId);
+                    table.PrimaryKey("PK_organizations", x => x.organization_id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
+                name: "role",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: true)
+                    id = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.Id);
+                    table.PrimaryKey("PK_role", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "categories",
                 columns: table => new
                 {
-                    CategoryId = table.Column<string>(type: "text", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: true),
-                    OrganizationId = table.Column<string>(type: "text", nullable: true)
+                    category_id = table.Column<string>(type: "text", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: true),
+                    organization_id = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                    table.PrimaryKey("PK_categories", x => x.category_id);
                     table.ForeignKey(
-                        name: "FK_Categories_Organizations_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organizations",
-                        principalColumn: "OrganizationId",
+                        name: "FK_categories_organizations_organization_id",
+                        column: x => x.organization_id,
+                        principalTable: "organizations",
+                        principalColumn: "organization_id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Plans",
+                name: "plans",
                 columns: table => new
                 {
-                    PlanId = table.Column<string>(type: "text", nullable: false),
-                    Title = table.Column<string>(type: "text", nullable: true),
-                    CreatorId = table.Column<string>(type: "text", nullable: true),
-                    CreatorName = table.Column<string>(type: "text", nullable: true),
-                    OrganizationId = table.Column<string>(type: "text", nullable: true)
+                    plan_id = table.Column<string>(type: "text", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: true),
+                    creator_id = table.Column<string>(type: "text", nullable: true),
+                    creator_name = table.Column<string>(type: "text", nullable: true),
+                    organization_id = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Plans", x => x.PlanId);
+                    table.PrimaryKey("PK_plans", x => x.plan_id);
                     table.ForeignKey(
-                        name: "FK_Plans_Organizations_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organizations",
-                        principalColumn: "OrganizationId",
+                        name: "FK_plans_organizations_organization_id",
+                        column: x => x.organization_id,
+                        principalTable: "organizations",
+                        principalColumn: "organization_id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "users",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    OrganizationId = table.Column<string>(type: "text", nullable: true),
-                    RoleId = table.Column<string>(type: "text", nullable: true),
-                    Avatar = table.Column<byte[]>(type: "bytea", nullable: true),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: true),
-                    PasswordHash = table.Column<byte[]>(type: "bytea", nullable: true),
-                    PasswordSalt = table.Column<byte[]>(type: "bytea", nullable: true),
-                    Token = table.Column<string>(type: "text", nullable: true),
-                    ResetToken = table.Column<string>(type: "text", nullable: true),
-                    ResetTokenExpires = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    PasswordReset = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VerificationToken = table.Column<string>(type: "text", nullable: true),
-                    IsActivated = table.Column<bool>(type: "boolean", nullable: false)
+                    user_id = table.Column<string>(type: "text", nullable: false),
+                    organization_id = table.Column<string>(type: "text", nullable: true),
+                    role_id = table.Column<string>(type: "text", nullable: true),
+                    avatar = table.Column<byte[]>(type: "bytea", nullable: true),
+                    first_name = table.Column<string>(type: "text", nullable: true),
+                    last_name = table.Column<string>(type: "text", nullable: true),
+                    email = table.Column<string>(type: "text", nullable: true),
+                    phone_number = table.Column<string>(type: "text", nullable: true),
+                    password = table.Column<string>(type: "text", nullable: true),
+                    password_hash = table.Column<byte[]>(type: "bytea", nullable: true),
+                    password_salt = table.Column<byte[]>(type: "bytea", nullable: true),
+                    token = table.Column<string>(type: "text", nullable: true),
+                    reset_token = table.Column<string>(type: "text", nullable: true),
+                    reset_token_expires = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    password_reset = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    verification_token = table.Column<string>(type: "text", nullable: true),
+                    is_activated = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_users", x => x.user_id);
                     table.ForeignKey(
-                        name: "FK_Users_Organizations_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organizations",
-                        principalColumn: "OrganizationId",
+                        name: "FK_users_organizations_organization_id",
+                        column: x => x.organization_id,
+                        principalTable: "organizations",
+                        principalColumn: "organization_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Users_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
-                        principalColumn: "Id",
+                        name: "FK_users_role_role_id",
+                        column: x => x.role_id,
+                        principalTable: "role",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exercises",
+                name: "exercises",
                 columns: table => new
                 {
-                    ExerciseId = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
-                    Description = table.Column<string>(type: "character varying(3600000)", maxLength: 3600000, nullable: true),
-                    Times = table.Column<int>(type: "integer", nullable: false),
-                    Series = table.Column<int>(type: "integer", nullable: false),
-                    Weight = table.Column<int>(type: "integer", nullable: false),
-                    Repeats = table.Column<int>(type: "integer", nullable: false),
-                    Files = table.Column<List<byte[]>>(type: "bytea[]", nullable: true),
-                    CategoryId = table.Column<string>(type: "text", nullable: true),
-                    PlanId = table.Column<string>(type: "text", nullable: true)
+                    exercise_id = table.Column<string>(type: "text", nullable: false),
+                    name = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
+                    description = table.Column<string>(type: "character varying(3600000)", maxLength: 3600000, nullable: true),
+                    times = table.Column<int>(type: "integer", nullable: false),
+                    series = table.Column<int>(type: "integer", nullable: false),
+                    weight = table.Column<int>(type: "integer", nullable: false),
+                    repeats = table.Column<int>(type: "integer", nullable: false),
+                    files = table.Column<List<byte[]>>(type: "bytea[]", nullable: true),
+                    category_id = table.Column<string>(type: "text", nullable: true),
+                    plan_id = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Exercises", x => x.ExerciseId);
+                    table.PrimaryKey("PK_exercises", x => x.exercise_id);
                     table.ForeignKey(
-                        name: "FK_Exercises_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "CategoryId",
+                        name: "FK_exercises_categories_category_id",
+                        column: x => x.category_id,
+                        principalTable: "categories",
+                        principalColumn: "category_id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Exercises_Plans_PlanId",
-                        column: x => x.PlanId,
-                        principalTable: "Plans",
-                        principalColumn: "PlanId",
+                        name: "FK_exercises_plans_plan_id",
+                        column: x => x.plan_id,
+                        principalTable: "plans",
+                        principalColumn: "plan_id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersPlans",
+                name: "usersplans",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    PlanId = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<string>(type: "text", nullable: false),
+                    plan_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersPlans", x => new { x.UserId, x.PlanId });
+                    table.PrimaryKey("PK_usersplans", x => new { x.user_id, x.plan_id });
                     table.ForeignKey(
-                        name: "FK_UsersPlans_Plans_PlanId",
-                        column: x => x.PlanId,
-                        principalTable: "Plans",
-                        principalColumn: "PlanId",
+                        name: "FK_usersplans_plans_plan_id",
+                        column: x => x.plan_id,
+                        principalTable: "plans",
+                        principalColumn: "plan_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UsersPlans_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_usersplans_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "user_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersTrainers",
+                name: "userstrainers",
                 columns: table => new
                 {
-                    TrainerId = table.Column<string>(type: "text", nullable: false),
-                    ClientId = table.Column<string>(type: "text", nullable: false)
+                    trainer_id = table.Column<string>(type: "text", nullable: false),
+                    client_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersTrainers", x => new { x.ClientId, x.TrainerId });
+                    table.PrimaryKey("PK_userstrainers", x => new { x.client_id, x.trainer_id });
                     table.ForeignKey(
-                        name: "FK_UsersTrainers_Users_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_userstrainers_users_client_id",
+                        column: x => x.client_id,
+                        principalTable: "users",
+                        principalColumn: "user_id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UsersTrainers_Users_TrainerId",
-                        column: x => x.TrainerId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
+                        name: "FK_userstrainers_users_trainer_id",
+                        column: x => x.trainer_id,
+                        principalTable: "users",
+                        principalColumn: "user_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "CategoryId", "OrganizationId", "Title" },
+                table: "categories",
+                columns: new[] { "category_id", "organization_id", "title" },
                 values: new object[,]
                 {
                     { "1", null, "Amatorskie" },
@@ -229,8 +229,8 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Organizations",
-                columns: new[] { "OrganizationId", "Name" },
+                table: "organizations",
+                columns: new[] { "organization_id", "name" },
                 values: new object[,]
                 {
                     { "O1", "Apple" },
@@ -239,13 +239,18 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Role",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { "1", "Trainer" });
+                table: "role",
+                columns: new[] { "id", "name" },
+                values: new object[,]
+                {
+                    { "1", "Trainer" },
+                    { "2", "User" },
+                    { "3", "Owner" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Exercises",
-                columns: new[] { "ExerciseId", "CategoryId", "Description", "Files", "Name", "PlanId", "Repeats", "Series", "Times", "Weight" },
+                table: "exercises",
+                columns: new[] { "exercise_id", "category_id", "description", "files", "name", "plan_id", "repeats", "series", "times", "weight" },
                 values: new object[,]
                 {
                     { "a", "1", "W podciąganiu na drążku podchwytem, sam chwyt nie różni się od tego w innych ćwiczeniach wielostawowych z obciążeniem. Podchwyt to oczywiście ustawienie rąk w supinacji, czyli wewnętrzną częścią dłoni w naszą stronę. Drążek chwytamy jak najmocniej i oplatając go kciukiem.", null, "Podciąganie nad chwyt", null, 0, 7, 4, 0 },
@@ -266,8 +271,8 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "UserId", "Avatar", "Email", "FirstName", "IsActivated", "LastName", "OrganizationId", "Password", "PasswordHash", "PasswordReset", "PasswordSalt", "PhoneNumber", "ResetToken", "ResetTokenExpires", "RoleId", "Token", "VerificationToken" },
+                table: "users",
+                columns: new[] { "user_id", "avatar", "email", "first_name", "is_activated", "last_name", "organization_id", "password", "password_hash", "password_reset", "password_salt", "phone_number", "reset_token", "reset_token_expires", "role_id", "token", "verification_token" },
                 values: new object[,]
                 {
                     { "o2u1", null, "jmeachem0@eventbrite.com", "Jacklyn", true, "Meachem", "O2", "Jacklyn", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, null, "t-user", null },
@@ -276,77 +281,77 @@ namespace WebApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_OrganizationId",
-                table: "Categories",
-                column: "OrganizationId");
+                name: "IX_categories_organization_id",
+                table: "categories",
+                column: "organization_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercises_CategoryId",
-                table: "Exercises",
-                column: "CategoryId");
+                name: "IX_exercises_category_id",
+                table: "exercises",
+                column: "category_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Exercises_PlanId",
-                table: "Exercises",
-                column: "PlanId");
+                name: "IX_exercises_plan_id",
+                table: "exercises",
+                column: "plan_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Plans_OrganizationId",
-                table: "Plans",
-                column: "OrganizationId");
+                name: "IX_plans_organization_id",
+                table: "plans",
+                column: "organization_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_OrganizationId",
-                table: "Users",
-                column: "OrganizationId");
+                name: "IX_users_organization_id",
+                table: "users",
+                column: "organization_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_RoleId",
-                table: "Users",
-                column: "RoleId");
+                name: "IX_users_role_id",
+                table: "users",
+                column: "role_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersPlans_PlanId",
-                table: "UsersPlans",
-                column: "PlanId");
+                name: "IX_usersplans_plan_id",
+                table: "usersplans",
+                column: "plan_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersTrainers_TrainerId",
-                table: "UsersTrainers",
-                column: "TrainerId");
+                name: "IX_userstrainers_trainer_id",
+                table: "userstrainers",
+                column: "trainer_id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChatRooms");
+                name: "chatrooms");
 
             migrationBuilder.DropTable(
-                name: "Exercises");
+                name: "exercises");
 
             migrationBuilder.DropTable(
-                name: "Messages");
+                name: "messages");
 
             migrationBuilder.DropTable(
-                name: "UsersPlans");
+                name: "usersplans");
 
             migrationBuilder.DropTable(
-                name: "UsersTrainers");
+                name: "userstrainers");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "categories");
 
             migrationBuilder.DropTable(
-                name: "Plans");
+                name: "plans");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "users");
 
             migrationBuilder.DropTable(
-                name: "Organizations");
+                name: "organizations");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "role");
         }
     }
 }

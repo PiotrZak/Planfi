@@ -116,15 +116,12 @@ namespace WebApi.Controllers
         [HttpGet("usersplan/{id}")]
         public async Task<IActionResult> GetUserPlans(string id)
         {
-            var plans = _planService.GetUserPlans(id);
+            var plans = await _planService.GetUserPlans(id);
 
             if (plans == null)
                 return NotFound();
-
-            // Convert it to the DTO
-            var transformedPlans = _mapper.Map<List<Plan>, List<ResultPlan>>(plans.ToList());
-
-            return Ok(transformedPlans);
+            
+            return Ok(plans);
         }
 
         [AllowAnonymous]

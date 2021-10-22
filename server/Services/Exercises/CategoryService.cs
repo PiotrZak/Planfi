@@ -21,14 +21,14 @@ namespace WebApi.Services.Exercises
 
         public Category Create(Category category)
         {
-            var duplication = _context.Categories
+            var duplication = _context.categories
                 .Where(x => x.OrganizationId == category.OrganizationId)
                 .Any(x => x.Title == category.Title);
             
             if (duplication)
                 throw new AppException("Category " + category.Title + " is already exist");
            
-            _context.Categories.Add(category);
+            _context.categories.Add(category);
             _context.SaveChanges();
 
             return category;
@@ -37,19 +37,19 @@ namespace WebApi.Services.Exercises
         public Category GetById(string id)
         {
 
-            var category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
+            var category = _context.categories.FirstOrDefault(x => x.CategoryId == id);
             return category;
         }
         
         //check performance
         public IEnumerable<CategoryViewModel> GetAll()
         {
-            var allCategories = _context.Categories.ToList();
+            var allCategories = _context.categories.ToList();
             var transformModel = new List<CategoryViewModel>();
             
             foreach (var category in allCategories)
             {
-                var exercises = _context.Exercises
+                var exercises = _context.exercises
                     .Where(
                         x => x.CategoryId == category.CategoryId &&
                              x.Repeats == 0 &&
@@ -82,17 +82,17 @@ namespace WebApi.Services.Exercises
         {
             foreach (var categoryId in id)
             {
-                var exercisesInCategory = _context.Exercises.Where(x => x.CategoryId == categoryId);
+                var exercisesInCategory = _context.exercises.Where(x => x.CategoryId == categoryId);
 
                 foreach (var exerciseItem in exercisesInCategory)
                 {
                     exerciseItem.CategoryId = null;
                 }
 
-                var category = _context.Categories.Find(categoryId);
+                var category = _context.categories.Find(categoryId);
                 if (category != null)
                 {
-                    _context.Categories.Remove(category);
+                    _context.categories.Remove(category);
                     _context.SaveChanges();
                 }
             }
@@ -100,12 +100,12 @@ namespace WebApi.Services.Exercises
 
         public async Task<int> AssignExercise(string id, Exercise exercise)
         {
-            var category = await _context.Categories.FindAsync(id);
+            var category = await _context.categories.FindAsync(id);
             
-            var isDuplicated = _context.Exercises.Any(x => x.Name == exercise.Name);
+            var isDuplicated = _context.exercises.Any(x => x.Name == exercise.Name);
             if (isDuplicated)
             {
-                var duplicatedExercises = _context.Exercises.Where(x => x.Name == exercise.Name).ToList();
+                var duplicatedExercises = _context.exercises.Where(x => x.Name == exercise.Name).ToList();
 
                 if (duplicatedExercises.Any(duplicatedExercise => duplicatedExercise.CategoryId == exercise.CategoryId))
                 {
@@ -114,7 +114,7 @@ namespace WebApi.Services.Exercises
             }
             
             category.Exercises.Add(exercise);
-            _context.Categories.Update(category);
+            _context.categories.Update(category);
             await _context.SaveChangesAsync();
             return 1;
         }
@@ -125,10 +125,10 @@ namespace WebApi.Services.Exercises
 
             foreach (var id in exerciseId)
             {
-                var element = _context.Exercises.Find(id);
+                var element = _context.exercises.Find(id);
                 category.Exercises.Add(element);
             }
-            _context.Categories.Update(category);
+            _context.categories.Update(category);
             _context.SaveChanges();
         }
 
@@ -136,15 +136,15 @@ namespace WebApi.Services.Exercises
         {
             try
             {
-                var category = await _context.Categories.FindAsync(id);
+                var category = await _context.categories.FindAsync(id);
 
                 if (category == null)
                     throw new AppException("Category not found!");
                 
-                var isDuplicated = _context.Categories.Any(x => x.Title == model.Title);
+                var isDuplicated = _context.categories.Any(x => x.Title == model.Title);
                 if (isDuplicated)
                 {
-                    var duplicatedCategories = _context.Categories.Where(x => x.Title == model.Title).ToList();
+                    var duplicatedCategories = _context.categories.Where(x => x.Title == model.Title).ToList();
 
                     foreach (var duplicatedPlan in duplicatedCategories)
                     {
@@ -157,7 +157,7 @@ namespace WebApi.Services.Exercises
                 {
                     category.Title = model.Title;
                 }
-                _context.Categories.Update(category);
+                _context.categories.Update(category);
                 return await _context.SaveChangesAsync();
             }
             catch (ValidationException)

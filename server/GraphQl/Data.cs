@@ -38,7 +38,7 @@ namespace WebApi.GraphQl
         [UseFiltering]
         public Exercise GetExercise(
            [Service] DataContext dbContext, string id) =>
-               dbContext.Exercises.FirstOrDefault(x => x.ExerciseId == id);
+               dbContext.exercises.FirstOrDefault(x => x.ExerciseId == id);
         
         [UseFiltering]
         public List<CategoryService.CategoryViewModel> GetCategories([Service] DataContext dbContext) =>

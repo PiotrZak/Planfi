@@ -82,7 +82,7 @@ export const AssignUsersToPlans = ({
 
     const getSelectedPlanId = (plan) => {
         assignUserToPlan(activeUsers, plan.planId)
-        refreshView()
+        refreshData()
     }
 
     if (loading) return <Loader isLoading={loading} />;

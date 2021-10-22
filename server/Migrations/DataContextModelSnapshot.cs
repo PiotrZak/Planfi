@@ -23,36 +23,46 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Data.Entities.Exercise", b =>
                 {
                     b.Property<string>("ExerciseId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("exercise_id");
 
                     b.Property<string>("CategoryId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("category_id");
 
                     b.Property<string>("Description")
                         .HasMaxLength(3600000)
-                        .HasColumnType("character varying(3600000)");
+                        .HasColumnType("character varying(3600000)")
+                        .HasColumnName("description");
 
                     b.Property<List<byte[]>>("Files")
-                        .HasColumnType("bytea[]");
+                        .HasColumnType("bytea[]")
+                        .HasColumnName("files");
 
                     b.Property<string>("Name")
                         .HasMaxLength(160)
-                        .HasColumnType("character varying(160)");
+                        .HasColumnType("character varying(160)")
+                        .HasColumnName("name");
 
                     b.Property<string>("PlanId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("plan_id");
 
                     b.Property<int>("Repeats")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("repeats");
 
                     b.Property<int>("Series")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("series");
 
                     b.Property<int>("Times")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("times");
 
                     b.Property<int>("Weight")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("weight");
 
                     b.HasKey("ExerciseId");
 
@@ -60,7 +70,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("Exercises");
+                    b.ToTable("exercises");
 
                     b.HasData(
                         new
@@ -233,99 +243,133 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Data.Entities.Plan", b =>
                 {
                     b.Property<string>("PlanId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("plan_id");
 
                     b.Property<string>("CreatorId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creator_id");
 
                     b.Property<string>("CreatorName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("creator_name");
 
                     b.Property<string>("OrganizationId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("organization_id");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
                     b.HasKey("PlanId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Plans");
+                    b.ToTable("plans");
                 });
 
             modelBuilder.Entity("WebApi.Data.Entities.Users.Role", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("id");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("role");
 
                     b.HasData(
                         new
                         {
                             Id = "1",
                             Name = "Trainer"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Owner"
                         });
                 });
 
             modelBuilder.Entity("WebApi.Data.Entities.Users.User", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
 
                     b.Property<byte[]>("Avatar")
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasColumnName("avatar");
 
                     b.Property<string>("Email")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("email");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
 
                     b.Property<bool>("IsActivated")
-                        .HasColumnType("boolean");
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_activated");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
 
                     b.Property<string>("OrganizationId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("organization_id");
 
                     b.Property<string>("Password")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("password");
 
                     b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasColumnName("password_hash");
 
                     b.Property<DateTime>("PasswordReset")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("password_reset");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("bytea");
+                        .HasColumnType("bytea")
+                        .HasColumnName("password_salt");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
 
                     b.Property<string>("ResetToken")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("reset_token");
 
                     b.Property<DateTime?>("ResetTokenExpires")
-                        .HasColumnType("timestamp without time zone");
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("reset_token_expires");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("role_id");
 
                     b.Property<string>("Token")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("token");
 
                     b.Property<string>("VerificationToken")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("verification_token");
 
                     b.HasKey("UserId");
 
@@ -333,7 +377,7 @@ namespace WebApi.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users");
+                    b.ToTable("users");
 
                     b.HasData(
                         new
@@ -380,49 +424,56 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Data.Entities.UsersPlans", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("PlanId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("plan_id");
 
                     b.HasKey("UserId", "PlanId");
 
                     b.HasIndex("PlanId");
 
-                    b.ToTable("UsersPlans");
+                    b.ToTable("usersplans");
                 });
 
             modelBuilder.Entity("WebApi.Data.ViewModels.UsersTrainers", b =>
                 {
                     b.Property<string>("ClientId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("client_id");
 
                     b.Property<string>("TrainerId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("trainer_id");
 
                     b.HasKey("ClientId", "TrainerId");
 
                     b.HasIndex("TrainerId");
 
-                    b.ToTable("UsersTrainers");
+                    b.ToTable("userstrainers");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Category", b =>
                 {
                     b.Property<string>("CategoryId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("category_id");
 
                     b.Property<string>("OrganizationId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("organization_id");
 
                     b.Property<string>("Title")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("title");
 
                     b.HasKey("CategoryId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("categories");
 
                     b.HasData(
                         new
@@ -445,14 +496,16 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Entities.Organization", b =>
                 {
                     b.Property<string>("OrganizationId")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("organization_id");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.HasKey("OrganizationId");
 
-                    b.ToTable("Organizations");
+                    b.ToTable("organizations");
 
                     b.HasData(
                         new
@@ -476,37 +529,44 @@ namespace WebApi.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatRooms");
+                    b.ToTable("chatrooms");
                 });
 
             modelBuilder.Entity("WebApi.Models.Message", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("Contents")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("contents");
 
                     b.Property<DateTimeOffset>("PostedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("posted_at");
 
                     b.Property<Guid>("RoomId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("room_id");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("user_name");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Messages");
+                    b.ToTable("messages");
                 });
 
             modelBuilder.Entity("WebApi.Data.Entities.Exercise", b =>

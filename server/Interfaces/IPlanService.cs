@@ -7,11 +7,13 @@ namespace WebApi.Interfaces
 {
     public interface IPlanService
     {
+
+        Task<List<ResultPlan>> GetUserPlans(string userId);
+        Task<List<Plan>> GetByIds(List<string> ids);
         Task<Plan> GetById(string id);
         Task<Plan> Create(Plan plan);
         IEnumerable<Plan> GetAll();
         IEnumerable<Plan> GetOrganizationPlans(string id);
-        IEnumerable<Plan> GetUserPlans(string id);
         IEnumerable<Plan> GetCreatorPlans(string id);
         Task<int> Delete(string[] id);
         Task<int> Update(string id, string title);

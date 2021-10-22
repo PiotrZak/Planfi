@@ -21,6 +21,7 @@
       <change afterPath="$PROJECT_DIR$/Controllers/Chat/MessageController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/StripeController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DatabaseOperations/RemoveQuotes.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IChatService.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IPayPalProcessing.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Models/ChatMessage.cs" afterDir="false" />
@@ -34,16 +35,21 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/contentModel.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WebApi/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.WebApi/riderModule.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Exercises/ExerciseController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Organizations/OrganizationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Entities/Users/Role.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/Role.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Entities/Users/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Entities/Users/User.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GraphQl/Data.cs" beforeDir="false" afterPath="$PROJECT_DIR$/GraphQl/Data.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/AutoMapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/AutoMapper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Helpers/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/DataContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Helpers/ExtensionMethods.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Helpers/ExtensionMethods.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Interfaces/IExerciseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IExerciseService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IOrganizationService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IPlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IPlanService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Interfaces/IUserInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Interfaces/IUserInterface.cs" afterDir="false" />
@@ -55,7 +61,10 @@
       <change beforePath="$PROJECT_DIR$/Models/UpdateUserModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/UpdateModels/UpdateUserModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Models/ViewModels/UserViewModel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Account/AccountService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Account/AccountService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Exercises/CategoryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Exercises/CategoryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Plans/PlanService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Plans/PlanService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Users/UserService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Users/UserService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebApi.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/WebApi.csproj" afterDir="false" />
@@ -90,6 +99,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="false" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DisabledMethodsStorage">
+    <option name="disabledMethods">
+      <set>
+        <option value="System.Linq : System.Linq.SystemCore_EnumerableDebugView&lt;T&gt; : get_Items ()" />
+      </set>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -131,7 +147,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/1C3/StripeList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/3F4/ProductCreateOptions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E90703D9-42C6-4B50-80F6-51918748EA87/19/4faee492/SwaggerUIMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/228/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/228/ExceptionDispatchInfo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/687CD3EF-1206-406C-8B82-2CB02EE0595E/7/IConfiguration.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1F4F0914-5411-4A47-9D76-C00412957903/5d/d7a5bb00/ICollection`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b46b55b90e5949f3a86b919b059009e3128600/215/StripeResponse.cs" root0="SKIP_HIGHLIGHTING" />
@@ -159,6 +175,7 @@
     <setting file="file://$PROJECT_DIR$/GraphQl/Data.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8954B738-AC27-434B-A6EB-19C51D2F83B8/C/DbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/1af9673264b246bbb20975964c843969132580/ED/SingleQueryingEnumerable.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8c286da264244e049cd45b1f54aa465f30200/1C/HttpRequest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b1af7e98236d4c20a1537b232dc972a68d7a00/1A7/ExecutionContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/593B42DD-0B05-4EF3-A52E-4B51D992D63D/F3/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -272,6 +289,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="postgresql" />
     <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.5186972" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -282,7 +300,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.WebApi">
+  <component name="RunManager">
     <configuration name="WebApi" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/WebApi.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value=".NETCoreApp,Version=v3.1" />
@@ -386,7 +404,8 @@
       <workItem from="1634307783486" duration="11120000" />
       <workItem from="1634651348215" duration="213000" />
       <workItem from="1634652052569" duration="180000" />
-      <workItem from="1634797538599" duration="11339000" />
+      <workItem from="1634797538599" duration="13270000" />
+      <workItem from="1634890449906" duration="10723000" />
     </task>
     <servers />
   </component>
@@ -426,19 +445,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Exercises/ExerciseService.cs</url>
-          <line>48</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Exercises/ExerciseService.cs" initialLine="48">
-            <startOffsets>
-              <option value="1446" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1517" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="159" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Payment/PaypalController.cs</url>
@@ -558,58 +564,6 @@
           <option name="timeStamp" value="216" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>187</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="206" containingFunctionPresentation="method 'ConstructMessage'">
-            <startOffsets>
-              <option value="7035" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7073" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="224" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
-          <line>48</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="48" containingFunctionPresentation="method 'Send'">
-            <startOffsets>
-              <option value="1035" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1067" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="225" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
-          <line>63</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="63" containingFunctionPresentation="method 'Send'">
-            <startOffsets>
-              <option value="1679" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1718" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="226" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/EmailService.cs</url>
-          <line>77</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/EmailService.cs" initialLine="77" containingFunctionPresentation="method 'Send'">
-            <startOffsets>
-              <option value="2477" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2559" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="227" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
           <line>163</line>
           <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="172" containingFunctionPresentation="method 'ActivateAccount'">
@@ -649,69 +603,17 @@
           <option name="timeStamp" value="230" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>46</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="47" containingFunctionPresentation="method 'GmailSignUp'">
-            <startOffsets>
-              <option value="1401" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1402" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="231" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
-          <line>47</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Account/AccountController.cs" initialLine="47" containingFunctionPresentation="method 'GmailSignUp'">
-            <startOffsets>
-              <option value="1419" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1483" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="235" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
           <line>199</line>
           <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="198" containingFunctionPresentation="method 'SendVerificationEmail'">
             <startOffsets>
-              <option value="7341" />
+              <option value="7375" />
             </startOffsets>
             <endOffsets>
-              <option value="7342" />
+              <option value="7376" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="236" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>211</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="211" containingFunctionPresentation="method 'SendVerificationEmail'">
-            <startOffsets>
-              <option value="7837" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7876" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="237" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
-          <line>212</line>
-          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="212" containingFunctionPresentation="method 'SendVerificationEmail'">
-            <startOffsets>
-              <option value="7897" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7936" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="238" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Controllers/Account/AccountController.cs</url>
@@ -738,6 +640,162 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="240" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
+          <line>206</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="206" containingFunctionPresentation="method 'SendVerificationEmail'">
+            <startOffsets>
+              <option value="7637" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7672" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="241" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Helpers/ExtensionMethods.cs</url>
+          <line>28</line>
+          <properties documentPath="$PROJECT_DIR$/Helpers/ExtensionMethods.cs" initialLine="28" containingFunctionPresentation="method 'EncryptPassword'">
+            <startOffsets>
+              <option value="743" />
+            </startOffsets>
+            <endOffsets>
+              <option value="756" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="244" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Helpers/ExtensionMethods.cs</url>
+          <line>27</line>
+          <properties documentPath="$PROJECT_DIR$/Helpers/ExtensionMethods.cs" initialLine="27" containingFunctionPresentation="method 'EncryptPassword'">
+            <startOffsets>
+              <option value="727" />
+            </startOffsets>
+            <endOffsets>
+              <option value="728" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="245" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
+          <line>51</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="51" containingFunctionPresentation="method 'Activate'">
+            <startOffsets>
+              <option value="1939" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1980" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="247" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Account/AccountService.cs</url>
+          <line>50</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Account/AccountService.cs" initialLine="50" containingFunctionPresentation="method 'Activate'">
+            <startOffsets>
+              <option value="1854" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1926" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="249" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Users/UsersController.cs</url>
+          <line>175</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Users/UsersController.cs" initialLine="175" containingFunctionPresentation="method 'AssignPlanToUser'">
+            <startOffsets>
+              <option value="5599" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5670" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="250" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Users/UserService.cs</url>
+          <line>224</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Users/UserService.cs" initialLine="225" containingFunctionPresentation="method 'AssignPlanToClients'">
+            <startOffsets>
+              <option value="7526" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7579" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="251" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Controllers/Plans/PlansController.cs</url>
+          <line>118</line>
+          <properties documentPath="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" initialLine="118" containingFunctionPresentation="method 'GetUserPlans'">
+            <startOffsets>
+              <option value="3353" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3401" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="252" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Plans/PlanService.cs</url>
+          <line>163</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Plans/PlanService.cs" initialLine="163" containingFunctionPresentation="method 'GetUserPlans'">
+            <startOffsets>
+              <option value="5195" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5234" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs</url>
+          <line>96</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" initialLine="94" containingFunctionPresentation="method 'GetUsers'">
+            <startOffsets>
+              <option value="3059" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3440" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="268" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs</url>
+          <line>93</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" initialLine="91" containingFunctionPresentation="method 'GetUsers'">
+            <startOffsets>
+              <option value="2906" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2997" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="270" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Organizations/OrganizationService.cs</url>
+          <line>94</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Organizations/OrganizationService.cs" initialLine="92" containingFunctionPresentation="method 'GetUsers'">
+            <startOffsets>
+              <option value="3010" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3033" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="271" />
         </line-breakpoint>
         <breakpoint enabled="true" type="DotNet Exception Breakpoints">
           <properties exception="System.IO.FileNotFoundException" isInternal="false" displayValue="FileNotFoundException" namespaceName="System.IO">

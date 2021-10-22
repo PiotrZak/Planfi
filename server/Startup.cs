@@ -17,16 +17,17 @@ using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
 using HotChocolate.AspNetCore;
 using HotChocolate;
-using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 using WebApi.Services.Account;
 using WebApi.Services.Chat;
+using WebApi.Services.exercises;
 using WebApi.Services.Exercises;
+using WebApi.Services.Organizations;
 using WebApi.Services.Payment.PaypalIntegration;
-using WebApi.Services.Users;
+using WebApi.Services.users;
 using AccountService = WebApi.Services.Account.AccountService;
-using PlanService = WebApi.Services.PlanService;
+using PlanService = WebApi.Services.Plans.PlanService;
 
 namespace WebApi
 {

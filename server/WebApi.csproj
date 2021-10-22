@@ -52,7 +52,6 @@
   <ItemGroup>
     <Folder Include="CrossCutting" />
     <Folder Include="Data\Infrastructure" />
-    <Folder Include="Data\SQLScripts" />
     <Folder Include="Migrations" />
     <Folder Include="wwwroot\" />
     <Folder Include="GraphQl\" />

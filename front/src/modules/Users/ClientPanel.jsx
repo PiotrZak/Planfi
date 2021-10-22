@@ -1,10 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 import { isMobile } from "react-device-detect";
 import { translate } from 'utils/Translation';
 import StyledReactBottomSheet, { PanelContainer, PanelItem, } from 'components/organisms/BottomSheet'
 import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 import { useUserContext } from 'support/context/UserContext';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
 export const BottomNavTitle = styled.div`
     display:flex;
@@ -19,16 +20,18 @@ export const ClientPanel = ({
   setAssignTrainer,
   activeUsers,
   assignUserToPlan,
-  setBottomSheet,
   setAssignPlan,
   assignPlan,
+  setBottomSheet
 }) => {
 
   const { user } = useUserContext();
 
+    //bottom logic
+    const [open, setOpen] = useState(true)
 
   useEffect(() => {
-    if (activeUsers == 0) {
+    if (activeUsers.length == 0) {
       setAssignTrainer('none')
     }
 }, [activeUsers]);
@@ -38,13 +41,17 @@ export const ClientPanel = ({
     setAssignTrainer("none");
 };
 
+const ref = (useRef(null));
+useOnClickOutside(ref, () => setAssignTrainer('none'));
+
   return (
-      <>
+      <div ref ={ref}>
+      <React.Fragment>
     <StyledReactBottomSheet
       showBlockLayer={false}
       visible={assignTrainer}
       className={""}
-      onClose={() => setBottomSheet('none')}
+      onClose={() => setOpen(false)}
       appendCancelBtn={false}
     >
             {isMobile ?
@@ -70,14 +77,15 @@ export const ClientPanel = ({
             }
     </StyledReactBottomSheet>
             <AssignUsersToPlans
-            assignUserToPlan={assignUserToPlan}
-            theme={theme}
-            organizationId={user.organizationId}
-            assignPlan={assignPlan}
-            setAssignPlan={setAssignPlan}
-            activeUsers={activeUsers}
-            setBottomSheet ={setBottomSheet}            
+                assignUserToPlan={assignUserToPlan}
+                theme={theme}
+                organizationId={user.organizationId}
+                assignPlan={assignPlan}
+                setAssignPlan={setAssignPlan}
+                activeUsers={activeUsers}
+                setBottomSheet ={setBottomSheet}            
           />
-          </>
+        </React.Fragment>
+        </div>
   );
 };
