@@ -19,7 +19,8 @@ jobs:
           export_default_credentials: true
 
       - uses: actions/checkout@v2
-
+      
+      - name: Build and deploy frontend to static GCP Cloud Storage
         run: |
           cd ./Planfi.Front/
           npm install
