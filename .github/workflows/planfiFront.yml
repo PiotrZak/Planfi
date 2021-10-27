@@ -28,6 +28,7 @@ jobs:
           npm i
       - name: Run Npm + Deploy
         run: |
+          cd ./Planfi.Front/
           npm start
           gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
       # gcloud compute url-maps invalidate-cdn-cache myshare-prod-lb --path '/app.myshare.today/*'
