@@ -35,8 +35,8 @@ jobs:
 
       - name: Tag image 
         run:
-          docker tag sample/my-page 
-          registry.digitalocean.com/my-sample-registry/my-sample-page:${{github.event.inputs.version }}
+          docker tag planfi-api-production
+          registry.digitalocean.com/planfi/planfi-api-production/:${{github.event.inputs.version }}
 
   push:
     runs-on: ubuntu-latest
