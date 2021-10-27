@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build and tag image 
-        run: docker build -f Planfi.Api/Dockerfile -t planfi-api-production .
+        run: docker build -f Planfi.Api/Dockerfile -t registry.digitalocean.com/planfi/planfi-api-production .
 
       - name: Read PlanfiApi -> appsettings.json
         run: "cat Planfi.Api/appsettings.json"
