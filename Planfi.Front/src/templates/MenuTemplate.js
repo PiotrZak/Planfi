@@ -16,10 +16,11 @@ const Wrapper = styled.div`
 const MenuTemplate = ({ children }) => {
 
 const { position } = useScrollData();
+const currentUser = JSON.parse((localStorage.getItem('user')));
 
 return(
   <Wrapper id ="scroll">
-    <Menu />
+    {currentUser && <Menu />}
     <ScrollContext.Provider value = {{ position}} >
     <div className ="scroll">
     {children}
