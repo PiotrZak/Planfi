@@ -41,6 +41,7 @@ jobs:
   push:
     runs-on: ubuntu-latest
     needs: build
+    steps:
 
       - name: Push image to DO Container Registry 
         run: docker push registry.digitalocean.com/my-sample-registry/my-sample-page:${{ github.event.inputs.version }}
