@@ -37,7 +37,7 @@ jobs:
     
     steps:
       - name: Cloud run deploy
-        run: gcloud run deploy planfi-api --image eu.gcr.io/${{dev.GCP_PROJECT}}/planfi-api --region=europe-west1 --project=${{dev.GCP_PROJECT}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5005
+        run: gcloud run deploy planfi-api --image eu.gcr.io/${{env.GCP_PROJECT}}/planfi-api --region=europe-west1 --project=${{env.GCP_PROJECT}} --memory=1024M --max-instances=10 --cpu=2 --timeout=120 --port=5005
   
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic planfi-api --to-latest --platform=managed --region=europe-west1
