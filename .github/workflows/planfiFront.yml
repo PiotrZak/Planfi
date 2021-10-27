@@ -24,5 +24,5 @@ jobs:
         run: |
           cd ./Planfi.Front/
           npm install
-          npm run-script build
+          CI=false npm run-script build
           gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
