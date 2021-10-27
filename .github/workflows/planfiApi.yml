@@ -20,10 +20,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build image 
-        run: docker build Planfi.Api/Dockerfile -t .
+        run: docker build -f Planfi.Api/Dockerfile -t planfi-api-production .
 
-      - name: Read MyShare.Core.Api -> appsettings.json
-        run: "cat MyShare.Core.Api/appsettings.json"
+      - name: Read PlanfiApi -> appsettings.json
+        run: "cat Planfi.Api/appsettings.json"
 
       - name: Install doctl 
         uses: digitalocean/action-doctl@v2
