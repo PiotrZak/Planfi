@@ -17,18 +17,11 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-          
+
       - uses: actions/checkout@v2
 
-      - name: Install Npm
         run: |
           cd ./Planfi.Front/
-          npm i
-      - name: Run Npm
-        run: |
-          cd ./Planfi.Front/
+          npm install
           npm start
-      - name: Deploy
-        run: |
           gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
-      # gcloud compute url-maps invalidate-cdn-cache myshare-prod-lb --path '/app.myshare.today/*'
