@@ -1,14 +1,21 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 
 COPY . /app
 WORKDIR /app
+FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build
 
 RUN dotnet tool install --global dotnet-ef
 
-RUN dotnet restore "Planfi.Api.csproj"
+COPY ["/Planfi.Api/.", "./Planfi.Api/"]
 
-RUN dotnet build
-RUN chmod +x ./dbMigration.sh
-CMD /bin/bash ./dbMigration.sh
+RUN dotnet restore "Planfi.Api/WebApi.csproj"
+RUN dotnet build "Planfi.Api/WebApi.csproj" -c Release -o /app/build
 
+FROM build AS publish
+RUN dotnet publish "Planfi.Api/WebApi.csproj" -c Release -o /app/publish
 
+RUN chmod +x Planfi.Api/dbMigration.sh
+CMD /bin/bash Planfi.Api/dbMigration.sh
+
+# COPY --from=publish /app/publish . *host.json ./
+# ENTRYPOINT ["dotnet", "WebApi.dll"]
