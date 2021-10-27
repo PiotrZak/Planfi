@@ -1,0 +1,38 @@
+name: Planfi Api
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Image version'
+        required: true
+
+env:
+  DIGITALOCEAN_ACCESS_TOKEN: "faa1634b6ea17366f3c38435c9f3a2cc95fc721db60aa6034c6d992e19b2f2bc"
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout the repo 
+        uses: actions/checkout@v2
+
+      - name: Build image 
+        run: docker build -t server/ .
+
+      - name: Install doctl 
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ env.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DO Container Registry 
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Tag image 
+        run:
+          docker tag sample/my-page 
+          registry.digitalocean.com/my-sample-registry/my-sample-page:${{github.event.inputs.version }}
+
+      - name: Push image to DO Container Registry 
+        run: docker push registry.digitalocean.com/my-sample-registry/my-sample-page:${{ github.event.inputs.version }}
