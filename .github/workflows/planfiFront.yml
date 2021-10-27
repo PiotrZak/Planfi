@@ -1,0 +1,34 @@
+name: PROD - planfi App
+
+on:
+  workflow_dispatch:
+
+env:
+  CloudStorageBucket: "planfi-bucket"
+  GCP_PROJECT: "focus-pottery-330316"
+  GCP_SA_KEY: "key"
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ env.PROD_GCP_PROJECT }}
+          service_account_key: ${{ env.PROD_GCP_SA_KEY }}
+          export_default_credentials: true
+      - uses: actions/checkout@v2
+
+      - name: Read config.json from Planfi.Front
+        run: "cat Planfi.Front/src/config.json"
+
+      - name: Build and deploy frontend to static GCP Cloud Storage
+        run: |
+          cd ./Planfi.Front/
+          npm install
+          npm run 
+          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
+          gcloud compute url-maps invalidate-cdn-cache planfi-prod-lb --path '/app.planfi.today/*'
