@@ -19,7 +19,7 @@ jobs:
       - name: Checkout the repo 
         uses: actions/checkout@v2
 
-      - name: Build image 
+      - name: Build and tag image 
         run: docker build -f Planfi.Api/Dockerfile -t planfi-api-production .
 
       - name: Read PlanfiApi -> appsettings.json
@@ -37,6 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+
+      - name: Show all docker images available
+        run: 
+          docker images
 
       - name: Push image to DO Container Registry 
         run: 
