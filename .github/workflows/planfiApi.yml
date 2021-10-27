@@ -23,12 +23,12 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Use gcloud CLI
-        run: gcloud info
+      # - name: Use gcloud CLI
+      #   run: gcloud info
 
       - name: Read PlanfiApi -> appsettings.json
         run: "cat Planfi.Api/appsettings.json"
-        
+
       - name: Build and tag image 
         run: docker build -f Planfi.Api/Dockerfile -t eu.gcr.io/${{env.GCP_PROJECT}}/planfi-api .
 
