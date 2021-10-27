@@ -5,7 +5,7 @@ on:
     inputs:
       version:
         description: 'Image version'
-        required: true
+        required: false
 
 env:
   DIGITALOCEAN_ACCESS_TOKEN: "faa1634b6ea17366f3c38435c9f3a2cc95fc721db60aa6034c6d992e19b2f2bc"
@@ -33,10 +33,10 @@ jobs:
       - name: Log in to DO Container Registry 
         run: doctl registry login --expiry-seconds 600
 
-  push:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
+  # push:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
 
       - name: Show all docker images available
         run: 
