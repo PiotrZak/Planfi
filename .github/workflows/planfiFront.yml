@@ -26,3 +26,9 @@ jobs:
           npm install
           CI=false npm run-script build
           gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
+
+      # allow everyone to see your website
+      # gsutil -m acl ch -R -u AllUsers:R gs://example.ack.ee
+
+      # set the webserver index and error page
+      # gsutil -m web set -m index.html -e index.html gs://example.ack.ee 

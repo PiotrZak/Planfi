@@ -1,5 +1,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 
+ENV ASPNETCORE_URLS=http://+:8081
+
 COPY . /app
 WORKDIR /app
 
