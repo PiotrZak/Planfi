@@ -152,7 +152,7 @@ const Slide = ({ videoName, index, img }) => {
     :
     //TODO - MOVIES
     // need to refactor that folder - to exclude from backend
-      <ReactPlayer  controls = {true}  url={require(`../../../../../server/wwwroot/Movies/${videoName}${index}${atob(img)}`)}/>
+      <ReactPlayer  controls = {true}  url={require(`../../../../../Planfi.Api/wwwroot/Movies/${videoName}${index}${atob(img)}`)}/>
   );
 };
 
