@@ -43,4 +43,4 @@ jobs:
     steps:
 
       - name: Push image to DO Container Registry 
-        run: docker push registry.digitalocean.com/planfi/planfi-api-production/:${{github.event.inputs.version }}
+        run: docker push registry.digitalocean.com/planfi/planfi-api-production/${{github.event.inputs.version }}
