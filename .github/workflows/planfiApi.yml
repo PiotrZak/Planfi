@@ -27,7 +27,7 @@ jobs:
         with:
           files: "Planfi.Api/appsettings.json"
         env:
-          ConnectionStrings.SqlDataContext: ${{ env.CONNECTION_STRING }}
+          ConnectionStrings.WebApiDatabase: ${{ env.CONNECTION_STRING }}
 
       - name: Read PlanfiApi -> appsettings.json
         run: "cat Planfi.Api/appsettings.json"
