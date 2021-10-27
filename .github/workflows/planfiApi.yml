@@ -36,7 +36,7 @@ jobs:
       - name: Tag image 
         run:
           docker tag planfi-api-production
-          registry.digitalocean.com/planfi/planfi-api-production/:${{github.event.inputs.version }}
+          registry.digitalocean.com/planfi/planfiapiproduction/:${{github.event.inputs.version }}
 
   push:
     runs-on: ubuntu-latest
@@ -44,4 +44,4 @@ jobs:
     steps:
 
       - name: Push image to DO Container Registry 
-        run: docker push registry.digitalocean.com/my-sample-registry/my-sample-page:${{ github.event.inputs.version }}
+        run: docker push registry.digitalocean.com/planfi/planfi-api-production/:${{github.event.inputs.version }}
