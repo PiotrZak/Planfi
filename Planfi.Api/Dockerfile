@@ -8,7 +8,9 @@ RUN dotnet tool install --global dotnet-ef
 
 COPY ["/Planfi.Api/.", "./Planfi.Api/"]
 
-RUN dotnet restore "Planfi.Api/WebApi.csproj"
+# too heavy - 576 mb
+
+#RUN dotnet restore "Planfi.Api/WebApi.csproj"
 RUN dotnet build "Planfi.Api/WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
