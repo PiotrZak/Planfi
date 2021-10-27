@@ -1,0 +1,206 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/admin/Desktop/Planfi/server/WebApi.csproj": {}
+  },
+  "projects": {
+    "/Users/admin/Desktop/Planfi/server/WebApi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/admin/Desktop/Planfi/server/WebApi.csproj",
+        "projectName": "WebApi",
+        "projectPath": "/Users/admin/Desktop/Planfi/server/WebApi.csproj",
+        "packagesPath": "/Users/admin/.nuget/packages/",
+        "outputPath": "/Users/admin/Desktop/Planfi/server/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/admin/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.78, )"
+            },
+            "Dapper.Extensions.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[9.5.1, )"
+            },
+            "HotChocolate": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
+            },
+            "HotChocolate.AspNetCore": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
+            },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
+            },
+            "HotChocolate.AspNetCore.Playground": {
+              "target": "Package",
+              "version": "[10.5.5, )"
+            },
+            "HotChocolate.Language": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
+            },
+            "HotChocolate.Types.Filters": {
+              "target": "Package",
+              "version": "[11.1.0-preview.8, )"
+            },
+            "IdentityServer4": {
+              "target": "Package",
+              "version": "[4.1.2, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[2.8.0, )"
+            },
+            "Microsoft.AspNet.SignalR": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.18, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.AspNetCore.SignalR": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.8.3, )"
+            },
+            "MimeKit": {
+              "target": "Package",
+              "version": "[2.9.1, )"
+            },
+            "NUnit": {
+              "target": "Package",
+              "version": "[3.13.0, )"
+            },
+            "NpgSql.EntityFrameworkCore.PostgreSQL.Design": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
+            "PayPal": {
+              "target": "Package",
+              "version": "[1.9.1, )"
+            },
+            "PayPal.Api": {
+              "target": "Package",
+              "version": "[1.0.6, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[39.71.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0-rc4, )"
+            },
+            "System.Configuration.ConfigurationManager": {
+              "target": "Package",
+              "version": "[6.0.0-rc.1.21451.13, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.6.0, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "System.Net.Requests": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.102/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

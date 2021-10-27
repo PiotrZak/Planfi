@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{B26ABBBD-FF28-429C-8E55-166F9C757E8B}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Startup.cs">
+    <Files>
+      <File FileName="GraphQl/Book.cs" Line="21" Column="37" />
+      <File FileName="Startup.cs" Line="130" Column="44" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="WebApi" expanded="True">
+            <Node name="WebApi" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Entities" expanded="True" />
+              <Node name="GraphQl" expanded="True" />
+              <Node name="Helpers" expanded="True" />
+              <Node name="Services" expanded="True" />
+              <Node name="Startup.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.WebApi PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/FileModel.cs" relfile="Controllers/ViewModels/FileModel.cs" line="11" column="1" />
+      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Controllers/ViewModels/ForgotPassword.cs" relfile="Controllers/ViewModels/ForgotPassword.cs" line="13" column="1" />
+      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Models/Message.cs" relfile="Models/Message.cs" line="19" column="1" />
+      <Breakpoint file="/Users/admin/Desktop/FitApp/server/Entities/Query/ICategoryQLService.cs" relfile="Entities/Query/ICategoryQLService.cs" line="9" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

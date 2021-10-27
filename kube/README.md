@@ -7,5 +7,3 @@ Containers > Pods
 ![image description](screens/pods.png)
 
 ![image description](microwithcache/pods.png)
-
-![image description](microwithcache/kubearch.png)

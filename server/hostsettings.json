@@ -1,0 +1,10 @@
+﻿{
+  "urls": "http://*:5005",
+  "EmailConfiguration": {
+    "From": "planfi.contact@gmail.com",
+    "SmtpServer": "smtp.gmail.com",
+    "Port": 587,
+    "Username": "planfi.contact@gmail.com",
+    "Password": "Dupadupa1"
+  }
+}
