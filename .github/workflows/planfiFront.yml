@@ -22,13 +22,12 @@ jobs:
           export_default_credentials: true
       - uses: actions/checkout@v2
 
-      # - name: Read config.json from Planfi.Front
-      #   run: "cat Planfi.Front/src/config.json"
-
-      - name: Build and deploy frontend to static GCP Cloud Storage
+      - name: Install Npm
         run: |
           cd ./Planfi.Front/
           npm i
+      - name: Run Npm + Deploy
+        run: |
           npm run start
           gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
       # gcloud compute url-maps invalidate-cdn-cache myshare-prod-lb --path '/app.myshare.today/*'

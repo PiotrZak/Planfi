@@ -26,11 +26,11 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info
 
-      - name: Build and tag image 
-        run: docker build -f Planfi.Api/Dockerfile -t eu.gcr.io/${{env.GCP_PROJECT}}/planfi-api .
-
       - name: Read PlanfiApi -> appsettings.json
         run: "cat Planfi.Api/appsettings.json"
+        
+      - name: Build and tag image 
+        run: docker build -f Planfi.Api/Dockerfile -t eu.gcr.io/${{env.GCP_PROJECT}}/planfi-api .
 
       - name: Configure Docker to use Google Cloud Platform
         run: gcloud auth configure-docker --quiet
