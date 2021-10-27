@@ -10,11 +10,20 @@ on:
 env:
   CONNECTION_STRING: "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
   GCP_PROJECT: "focus-pottery-330316"
+  GCP_SA_KEY: "bb576e5141cf904e0c59e8bec3d4385f1e5ab907"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
+        - name: Set up Cloud SDK
+          uses: google-github-actions/setup-gcloud@master
+          with:
+            project_id: ${{ env.GCP_PROJECT }}
+            service_account_key: ${{ env.GCP_SA_KEY }}
+            export_default_credentials: true
+        - uses: actions/checkout@v2
 
       - name: Checkout the repo 
         uses: actions/checkout@v2

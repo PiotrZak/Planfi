@@ -1,4 +1,4 @@
-name: PROD - planfi App
+name: Planfi Front
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: Build and deploy frontend to static GCP Cloud Storage
         run: |
           cd ./Planfi.Front/
-          npm install
-          npm run 
+          npm i
+          npm run start
           gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.CloudStorageBucket}}/
-          gcloud compute url-maps invalidate-cdn-cache planfi-prod-lb --path '/app.planfi.today/*'
+      # gcloud compute url-maps invalidate-cdn-cache myshare-prod-lb --path '/app.myshare.today/*'
