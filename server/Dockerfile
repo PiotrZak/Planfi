@@ -4,7 +4,7 @@ WORKDIR /app
 RUN dotnet tool install --global dotnet-ef
 RUN dotnet restore
 RUN dotnet build
-RUN chmod +x ./entrypoint.sh
-CMD /bin/bash ./entrypoint.sh
+RUN chmod +x ./dbMigration.sh
+CMD /bin/bash ./dbMigration.sh
 
 

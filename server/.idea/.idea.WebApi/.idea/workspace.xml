@@ -21,7 +21,6 @@
       <change afterPath="$PROJECT_DIR$/Controllers/Chat/MessageController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/PaypalController.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Controllers/Payment/StripeController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DatabaseOperations/RemoveQuotes.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IChatService.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Interfaces/IPayPalProcessing.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Models/ChatMessage.cs" afterDir="false" />
@@ -290,7 +289,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="postgresql" />
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.5186972" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.6984299" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -405,7 +404,7 @@
       <workItem from="1634651348215" duration="213000" />
       <workItem from="1634652052569" duration="180000" />
       <workItem from="1634797538599" duration="13270000" />
-      <workItem from="1634890449906" duration="10723000" />
+      <workItem from="1634890449906" duration="11963000" />
     </task>
     <servers />
   </component>
@@ -731,19 +730,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="251" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Controllers/Plans/PlansController.cs</url>
-          <line>118</line>
-          <properties documentPath="$PROJECT_DIR$/Controllers/Plans/PlansController.cs" initialLine="118" containingFunctionPresentation="method 'GetUserPlans'">
-            <startOffsets>
-              <option value="3353" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3401" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="252" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Services/Plans/PlanService.cs</url>
