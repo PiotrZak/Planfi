@@ -37,7 +37,7 @@ jobs:
         run: "cat Planfi.Api/appsettings.json"
 
       - name: Build and tag image 
-        run: docker build -f Planfi.Api/Dockerfile -t eu.gcr.io/${{secrets.GCP_PROJECT}}/planfi-api .
+        run: docker build -f Planfi.Api/Dockerfile -t eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api .
 
       - name: Configure Docker to use Google Cloud Platform
         run: gcloud auth configure-docker --quiet
