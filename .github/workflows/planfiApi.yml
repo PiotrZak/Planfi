@@ -53,11 +53,9 @@ jobs:
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v0.2.0
         with:
-          service: ${{ secrets.GCP_PROJECT_ID }}
+          service: planfi-api
           image: eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api 
-          region: europe-west1
           credentials: ${{ secrets.GCP_SA_KEY }}
-          env_vars: NAME="Hello World"
-          
+
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic planfi-api --to-latest --platform=managed --region=europe-west1
