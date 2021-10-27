@@ -9,7 +9,7 @@ on:
 
 env:
   CONNECTION_STRING: "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
-  GCP_PROJECT: "focus-pottery-330316"
+  GCP_PROJECT: "prefab-rampart-231613"
   GCP_SA_KEY: "bb576e5141cf904e0c59e8bec3d4385f1e5ab907"
 
 jobs:
