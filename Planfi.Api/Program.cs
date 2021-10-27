@@ -21,11 +21,11 @@ namespace WebApi
                 .AddCommandLine(args)
                 .Build();
 
-            var port = Environment.GetEnvironmentVariable("PORT") ?? "8081";
+            //var port = Environment.GetEnvironmentVariable("PORT") ?? "8081";
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls($"http://0.0.0.0:{port}")
+                .UseUrls($"http://0.0.0.0:8081")
                 .UseConfiguration(config)
                 .UseStartup<Startup>();
         }
