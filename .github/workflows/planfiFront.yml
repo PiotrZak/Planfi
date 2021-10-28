@@ -36,12 +36,7 @@ jobs:
           CI=false npm run-script build
           gsutil web set -m index.html -e index.html gs://${{ env.Domain }}
           gsutil iam ch allUsers:legacyObjectReader gs://${{ env.Domain }}
-          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -R -d build gs://${{env.Domain}}
+          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.Domain}}
 
       #create bucket - aready exist already after 1 execution
       #gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
-      # allow everyone to see your website
-      # gsutil -m acl ch -R -u AllUsers:R gs://example.ack.ee
-
-      # set the webserver index and error page
-      # gsutil -m web set -m index.html -e index.html gs://example.ack.ee 
