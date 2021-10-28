@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { BrowserRouter, Switch, Route, IndexRoute } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import { darkTheme } from 'theme/darkTheme';
 import { lightTheme } from 'theme/lightTheme';
@@ -85,7 +85,7 @@ const Root = () => {
               <MainTemplate>
                 <Switch>
                   <Redirect to="/" />
-                  <IndexRoute path exact ="/" component={LoginPage} />
+                  <Route path exact ="/" component={LoginPage} />
 
       
                   {/* <Route path ="/stripe" component={StripeContainer} />
