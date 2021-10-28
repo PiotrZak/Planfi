@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, IndexRoute } from 'react-router-dom';
 
 import { darkTheme } from 'theme/darkTheme';
 import { lightTheme } from 'theme/lightTheme';
@@ -84,15 +84,14 @@ const Root = () => {
             <BrowserRouter history={history}>
               <MainTemplate>
                 <Switch>
-                  <Route path exact ="/" component={LoginPage} />
+                  <Redirect to="/" />
+                  <IndexRoute path exact ="/" component={LoginPage} />
 
-                  
+      
                   {/* <Route path ="/stripe" component={StripeContainer} />
                   <Route path ="/stripeSuccess" component={StripeSuccess} />
                   <Route path ="/stripeCancel" component={StripeCancel} />
                   <Route path ="/chat" component={ChatContainer} /> */}
-
-
 
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />

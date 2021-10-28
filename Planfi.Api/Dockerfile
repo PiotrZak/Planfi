@@ -4,12 +4,14 @@ ENV PORT 8081
 ENV ASPNETCORE_URLS=http://+:8081
 
 COPY . /app
-WORKDIR /app
+WORKDIR /src
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build
 
 COPY ["/Planfi.Api/.", "./Planfi.Api/"]
 RUN dotnet restore "Planfi.Api/WebApi.csproj"
+
+WORKDIR "/src/."
 RUN dotnet build "Planfi.Api/WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
