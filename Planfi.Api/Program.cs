@@ -27,21 +27,21 @@ namespace WebApi
                 });
         
         
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("hostsettings.json", optional: true)
-                .AddCommandLine(args)
-                .Build();
-
-            //var port = Environment.GetEnvironmentVariable("PORT") ?? "8081";
-
-            return WebHost.CreateDefaultBuilder(args)
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseUrls($"http://0.0.0.0:8081")
-                .UseConfiguration(config)
-                .UseStartup<Startup>();
-        }
+        // private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        // {
+        //     var config = new ConfigurationBuilder()
+        //         .SetBasePath(Directory.GetCurrentDirectory())
+        //         .AddJsonFile("hostsettings.json", optional: true)
+        //         .AddCommandLine(args)
+        //         .Build();
+        //
+        //     //var port = Environment.GetEnvironmentVariable("PORT") ?? "8081";
+        //
+        //     return WebHost.CreateDefaultBuilder(args)
+        //         .UseContentRoot(Directory.GetCurrentDirectory())
+        //         .UseUrls($"http://0.0.0.0:8081")
+        //         .UseConfiguration(config)
+        //         .UseStartup<Startup>();
+        // }
     }
 }

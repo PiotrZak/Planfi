@@ -17,12 +17,10 @@ import ResetPasswordPage from 'modules/Auth/ResetPasswordPage';
 import ActivateAccountPage from 'modules/Auth/ActivateAccountPage';
 import ConfirmationPage from 'modules/Auth/ConfirmationPage';
 
-//payment
+//payment & chat
 import { StripeContainer } from './Payment/Stripe';
 import { StripeSuccess } from './Payment/Success';
 import { StripeCancel } from './Payment/Cancel';
-
-//chat
 import ChatContainer from './Chat/Chat';
 
 // exercises
@@ -84,7 +82,7 @@ const Root = () => {
             <BrowserRouter history={history}>
               <MainTemplate>
                 <Switch>
-                  <Redirect to="/" />
+                  <Redirect path={routes.login}/>
                   <Route path exact ="/" component={LoginPage} />
 
       
