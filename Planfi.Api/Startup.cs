@@ -44,7 +44,6 @@ namespace WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddCors();
             services.AddControllers().AddNewtonsoftJson();
 
             services.AddCors(options => 
@@ -63,13 +62,11 @@ namespace WebApi
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
             
             
-
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
 
             services.Configure<FormOptions>(options => options.ValueCountLimit = 20000); 
-
-            // todo
+            
             services.AddIdentityCore<IdentityUser>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<DataContext>();
@@ -173,7 +170,6 @@ namespace WebApi
                     routes.MapHub<ChatHub>("chat");
                     routes.MapControllers();
                 });
-                
             
                 app.UseGraphQL("/graphql");
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
