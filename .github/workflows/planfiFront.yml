@@ -34,12 +34,12 @@ jobs:
           cd ./Planfi.Front/
           npm install
           CI=false npm run-script build
-        #create bucket - aready exist already after 1 execution
-        #gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
           gsutil web set -m index.html -e index.html gs://${{ env.Domain }}
           gsutil iam ch allUsers:legacyObjectReader gs://${{ env.Domain }}
           gsutil -m rsync -d -r Planfi.Front/build gs://$DOMAIN
 
+      #create bucket - aready exist already after 1 execution
+      #gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
       # allow everyone to see your website
       # gsutil -m acl ch -R -u AllUsers:R gs://example.ack.ee
 
