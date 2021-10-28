@@ -20,9 +20,10 @@ import { NotificationProvider } from "./support/context/NotificationContext";
 import { isDevelopment } from "environment";
 
 import "style.css";
+import config from '../config.json';
 
-const developmentApiUrl = "http://145.239.86.206:5005/graphql";
-const localHostApiUrl = "http://localhost:5005/graphql";
+const developmentApiUrl = "http://145.239.86.206:8081/graphql";
+const localHostApiUrl = config.apps.PlanfiApi.url
 
 const httpLink = createHttpLink({
   uri: isDevelopment ? developmentApiUrl : localHostApiUrl,

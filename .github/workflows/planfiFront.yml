@@ -5,6 +5,7 @@ on:
 
 env:
   CloudStorageBucket: "planfi-bucket"
+  API_URL: "http://localhost:8081"
 
 jobs:
   build:
@@ -17,6 +18,12 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
+
+    - uses: microsoft/variable-substitution@v1
+        with:
+          files: "ActivityWeb.SPA/src/config.json"
+        env:
+          apps.PlanfiApi.url: ${{ env.API_URL }}
 
       - uses: actions/checkout@v2
 
