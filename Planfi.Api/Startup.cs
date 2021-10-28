@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Helpers;
-using WebApi.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -137,9 +136,6 @@ namespace WebApi
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
             //services.AddScoped<IStripeProcessing, StripeProcessing>();
-
-
-
             
             services.AddMvc().AddJsonOptions(options =>
             {
@@ -157,10 +153,7 @@ namespace WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
                 dataContext.Database.Migrate();
-            
                 app.UseCors("AllowSetOrigins");
-                
-                
                 app.UseRouting();
                 app.UseSwagger();
                 app.UseSession();
@@ -169,7 +162,6 @@ namespace WebApi
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Planfi");
                 });
-                
             
                 //chat module
                 app.UseIdentityServer();
@@ -183,7 +175,6 @@ namespace WebApi
             
                 app.UseGraphQL("/graphql");
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
-
                 app.UseAuthentication();
         }
     }

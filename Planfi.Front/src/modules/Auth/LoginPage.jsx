@@ -144,7 +144,7 @@ const LoginPage = () => {
           </Form>
         )}
       </Formik>
-      <LoginHooks />
+      {/* <LoginHooks /> */}
       <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   );

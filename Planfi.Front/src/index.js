@@ -21,6 +21,7 @@ import { isDevelopment } from "environment";
 
 import "style.css";
 import config from '../config.json';
+import LoginPage from './modules/Auth/LoginPage';
 
 const developmentApiUrl = "http://145.239.86.206:8081/graphql";
 const localHostApiUrl = config.apps.PlanfiApi.url

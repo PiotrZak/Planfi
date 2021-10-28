@@ -8,7 +8,8 @@ on:
         required: false
 
 env:
-  CONNECTION_STRING: "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+  CONNECTION_STRING: "Host=planfi-db;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+    # CONNECTION_STRING: "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
 jobs:
   build:
     runs-on: ubuntu-latest

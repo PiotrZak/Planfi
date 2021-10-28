@@ -62,6 +62,11 @@ const Root = () => {
     if (currentLanguage == null) {
       localStorage.setItem('language', 'en-GB');
     }
+    if(user != null ){
+      history.push(routes.myProfile);
+    }else{
+      history.push(routes.login);
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -82,28 +87,21 @@ const Root = () => {
             <BrowserRouter history={history}>
               <MainTemplate>
                 <Switch>
-                  <Redirect path={routes.login}/>
-                  <Route path exact ="/" component={LoginPage} />
-
-      
                   {/* <Route path ="/stripe" component={StripeContainer} />
                   <Route path ="/stripeSuccess" component={StripeSuccess} />
                   <Route path ="/stripeCancel" component={StripeCancel} />
                   <Route path ="/chat" component={ChatContainer} /> */}
-
+                  
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
-
                   <Route path="/test" component={TestPage} />
                  <MenuTemplate>
                   <PrivateRoute path="/user/:id" component={User} />
-
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationTrainers} component={OrganizationTrainers} />
                     <PrivateRoute roles ={[Role.Owner, Role.Trainer]} path={routes.clients} component={Clients} />
-
                     <PrivateRoute path={routes.addExercise} component={AddExercise} />
                     <PrivateRoute path={routes.editExercise} component={EditExercise} />
                     <PrivateRoute path={routes.exercise} component={Exercise} />
@@ -112,10 +110,7 @@ const Root = () => {
                     <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
-                  </MenuTemplate>
-
-
-                  
+                  </MenuTemplate>            
                 </Switch>
               </MainTemplate>
             </BrowserRouter>
