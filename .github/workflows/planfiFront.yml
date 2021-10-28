@@ -19,11 +19,11 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-    - uses: microsoft/variable-substitution@v1
-        with:
-          files: "ActivityWeb.SPA/src/config.json"
-        env:
-          apps.PlanfiApi.url: ${{ env.API_URL }}
+      - uses: microsoft/variable-substitution@v1
+          with:
+            files: "ActivityWeb.SPA/src/config.json"
+          env:
+            apps.PlanfiApi.url: ${{ env.API_URL }}
 
       - uses: actions/checkout@v2
 
