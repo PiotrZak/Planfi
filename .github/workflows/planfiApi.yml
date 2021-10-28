@@ -26,7 +26,6 @@ jobs:
       - name: Use gcloud CLI
         run: gcloud info
 
-
       - uses: microsoft/variable-substitution@v1 
         with:
           files: "Planfi.Api/appsettings.json"
