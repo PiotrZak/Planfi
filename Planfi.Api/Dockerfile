@@ -22,8 +22,8 @@ EXPOSE 8081
 COPY --from=publish /app/publish . *host.json ./
 ENTRYPOINT ["dotnet", "WebApi.dll"]
 
-RUN dotnet tool install --global dotnet-ef
-RUN chmod +x Planfi.Api/dbMigration.sh
-CMD /bin/bash Planfi.Api/dbMigration.sh
+# RUN dotnet tool install --global dotnet-ef
+# RUN chmod +x Planfi.Api/dbMigration.sh
+# CMD /bin/bash Planfi.Api/dbMigration.sh
 
 

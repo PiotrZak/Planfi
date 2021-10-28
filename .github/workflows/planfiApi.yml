@@ -8,8 +8,9 @@ on:
         required: false
 
 env:
-  CONNECTION_STRING: "Host=planfi-db;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
-    # CONNECTION_STRING: "Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+  # SSL encryption is recommended when using Public IP to connect to the instance.
+  CONNECTION_STRING: "Host=34.67.163.35;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+
 jobs:
   build:
     runs-on: ubuntu-latest
