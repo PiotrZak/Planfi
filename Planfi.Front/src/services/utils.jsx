@@ -1,5 +1,5 @@
 import { isDevelopment } from 'environment';
-import config from '../config.json';
+import config from '../../config.json'
 
 const localHostApiUrl = 'http://localhost:9001';
 const developmentApiUrl = config.apps.PlanfiApi.url;
