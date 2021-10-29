@@ -158,6 +158,7 @@ namespace WebApi
                 app.UseRouting();
                 app.UseSwagger();
                 app.UseSession();
+                app.UseHttpsRedirection();
 
                 app.UseSwaggerUI(c =>
                 {
