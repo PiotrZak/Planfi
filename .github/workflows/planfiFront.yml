@@ -34,7 +34,10 @@ jobs:
           cd ./Planfi.Front/
           npm install
           CI=false npm run-script build
-          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.Domain}}/
+          gsutil web set -m index.html -e index.html gs://${{ env.Domain }}
+          gsutil iam ch allUsers:legacyObjectReader gs://${{ env.Domain }}
+          gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
+          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.Domain}}
 
 
       # gsutil web set -m index.html -e index.html gs://${{ env.Domain }}
