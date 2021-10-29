@@ -56,6 +56,7 @@ jobs:
             --image "eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api" \
             --platform "managed" \
             --allow-unauthenticated
+            --port 9001
 
       - name: Cloud run serve traffic
         run: gcloud run services update-traffic planfi-api --to-latest --platform=managed --region=europe-west1

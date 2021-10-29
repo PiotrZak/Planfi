@@ -16,7 +16,7 @@ namespace WebApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+                    var port = Environment.GetEnvironmentVariable("PORT") ?? "9001";
                     var url = $"http://0.0.0.0:{port}";
                     
                     webBuilder
