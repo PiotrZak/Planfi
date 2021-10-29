@@ -19,6 +19,7 @@ namespace WebApi
                 {
                     webBuilder
                         .UseStartup<Startup>()
+                        .UseUrls("http://*:9001","https://*:9001")
                         .UseKestrel()
                         .ConfigureKestrel((context, options) =>
                         {
