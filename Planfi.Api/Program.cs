@@ -26,7 +26,8 @@ namespace WebApi
                             var port = Convert.ToInt32(Environment.GetEnvironmentVariable("PORT") ?? "9001");
                             options.Listen(IPAddress.Any, port);
                         })
-                        .UseContentRoot(Directory.GetCurrentDirectory());
+                        .UseContentRoot(Directory.GetCurrentDirectory())
+                        .Build();
                 });
         
         }

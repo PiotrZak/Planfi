@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
 
 env:
-  API_URL: "http://localhost:8081"
+  API_URL: "https://planfi-api-g3lfmgrpmq-uc.a.run.app"
   Domain: "plan-fi.pl"
+  BUCKET: "planfi"
 
 jobs:
   build:
@@ -34,10 +35,10 @@ jobs:
           cd ./Planfi.Front/
           npm install
           CI=false npm run-script build
-          gsutil web set -m index.html -e index.html gs://${{ env.Domain }}
-          gsutil iam ch allUsers:legacyObjectReader gs://${{ env.Domain }}
-          gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
-          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.Domain}}
+          gsutil web set -m index.html -e index.html gs://${{ env.BUCKET }}
+          gsutil iam ch allUsers:legacyObjectReader gs://${{ env.BUCKET }}
+          gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.BUCKET }}
+          gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.BUCKET}}
 
 
       # gsutil web set -m index.html -e index.html gs://${{ env.Domain }}

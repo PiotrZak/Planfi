@@ -1,7 +1,8 @@
 import { isDevelopment } from 'environment';
+import config from '../config.json';
 
-const localHostApiUrl = 'http://localhost:5005';
-const developmentApiUrl = 'http://188.165.16.160:5005';
+const localHostApiUrl = 'http://localhost:9001';
+const developmentApiUrl = config.apps.PlanfiApi.url;
 
 const apiUrl = isDevelopment ? developmentApiUrl : localHostApiUrl;
 

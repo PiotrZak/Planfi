@@ -9,7 +9,7 @@ on:
 
 env:
   # SSL encryption is recommended when using Public IP to connect to the instance.
-  CONNECTION_STRING: "Host=34.67.163.35;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+  CONNECTION_STRING: "Host=34.135.254.64;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
   RUN_REGION: us-central1
   SERVICE_NAME: planfi-api
 
@@ -58,4 +58,4 @@ jobs:
             --port 9001
 
       - name: Cloud run serve traffic
-        run: gcloud run services update-traffic planfi-api --to-latest --platform=managed --region=europe-west1
+        run: gcloud run services update-traffic planfi-api --to-latest --platform=managed --region=${{env.RUN_REGION}}
