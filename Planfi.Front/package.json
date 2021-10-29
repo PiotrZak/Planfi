@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "homepage": "https://storage.googleapis.com/planfi-bucket",
+  "homepage": "https://plan-fi.pl/planfi",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
