@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
 using HotChocolate.AspNetCore;
 using HotChocolate;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 using WebApi.Services.Account;
@@ -169,6 +171,11 @@ namespace WebApi
                 {
                     routes.MapHub<ChatHub>("chat");
                     routes.MapControllers();
+                    routes.MapGet("/", async context =>
+                    {
+                        var target = Environment.GetEnvironmentVariable("TARGET") ?? "World";
+                        await context.Response.WriteAsync($"Hello {target}!\n");
+                    });
                 });
             
                 app.UseGraphQL("/graphql");
