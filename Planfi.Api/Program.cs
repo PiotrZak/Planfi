@@ -19,15 +19,14 @@ namespace WebApi
                 {
                     webBuilder
                         .UseStartup<Startup>()
-                        .UseUrls("http://*:9001","https://*:9001")
+                        .UseUrls("http://*:9001", "https://*:9001")
                         .UseKestrel()
                         .ConfigureKestrel((context, options) =>
                         {
                             var port = Convert.ToInt32(Environment.GetEnvironmentVariable("PORT") ?? "9001");
                             options.Listen(IPAddress.Any, port);
                         })
-                        .UseContentRoot(Directory.GetCurrentDirectory())
-                        .Build();
+                        .UseContentRoot(Directory.GetCurrentDirectory());
                 });
         
         }
