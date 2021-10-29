@@ -10,7 +10,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://0.0.0.0:8081/swagger"
+      "applicationUrl": "http://0.0.0.0:9001/swagger"
     }
   },
   "WebApi": {
@@ -19,6 +19,6 @@
     "environmentVariables": {
       "ASPNETCORE_ENVIRONMENT": "Development"
     },
-    "applicationUrl": "http://0.0.0.0:8081/swagger"
+    "applicationUrl": "http://0.0.0.0:9001/swagger"
   }
 }
