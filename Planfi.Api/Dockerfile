@@ -1,13 +1,25 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
+FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 9001
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine as build
+WORKDIR /src
 
 COPY ["/Planfi.Api/.", "./Planfi.Api/"]
 RUN dotnet restore "Planfi.Api/PlanfiApi.csproj"
-RUN dotnet publish "Planfi.Api/PlanfiApi.csproj" -o /app/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as final
+WORKDIR "/src/Planfi.Api}"
+COPY . .
+
+RUN dotnet build "Planfi.Api/PlanfiApi.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Planfi.Api/PlanfiApi.csproj" -c Release -o /app/publish
+
+
+FROM base AS final
 ENV ASPNETCORE_URLS=http://*:${PORT}
 WORKDIR /app
-COPY --from=build /app/publish /app
-
-ENTRYPOINT [ "dotnet", "/app/PlanfiApi.dll" ]
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "PlanfiApi.dll"]

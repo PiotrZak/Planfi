@@ -17,16 +17,17 @@ namespace WebApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    var port = Environment.GetEnvironmentVariable("PORT") ?? "9001";
                     webBuilder
                         .UseStartup<Startup>()
                         .UseKestrel()
                         .ConfigureKestrel((context, options) =>
                         {
-                            options.Listen(IPAddress.IPv6Any, Convert.ToInt32(port));
+                            var port = Convert.ToInt32(Environment.GetEnvironmentVariable("PORT") ?? "9001");
+                            options.Listen(IPAddress.Any, port);
                         })
                         .UseContentRoot(Directory.GetCurrentDirectory());
                 });
         
+        }
     }
-}
+
