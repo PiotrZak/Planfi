@@ -55,7 +55,6 @@ jobs:
             --region "$RUN_REGION" \
             --image "eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api" \
             --platform "managed" \
-            --port "8081" \
             --allow-unauthenticated
 
       - name: Cloud run serve traffic

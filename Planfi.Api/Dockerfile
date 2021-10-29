@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
-ENV PORT 8081
-ENV ASPNETCORE_URLS=http://+:8081
+#ENV ASPNETCORE_URLS=http://+:8081
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim AS build
 
