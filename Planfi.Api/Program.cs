@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -17,11 +18,13 @@ namespace WebApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     var port = Environment.GetEnvironmentVariable("PORT") ?? "9001";
-                    var url = $"http://0.0.0.0:{port}";
-                    
                     webBuilder
                         .UseStartup<Startup>()
-                        .UseUrls(url)
+                        .UseKestrel()
+                        .ConfigureKestrel((context, options) =>
+                        {
+                            options.Listen(IPAddress.IPv6Any, Convert.ToInt32(port));
+                        })
                         .UseContentRoot(Directory.GetCurrentDirectory());
                 });
         

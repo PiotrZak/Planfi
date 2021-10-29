@@ -171,11 +171,7 @@ namespace WebApi
                 {
                     routes.MapHub<ChatHub>("chat");
                     routes.MapControllers();
-                    routes.MapGet("/", async context =>
-                    {
-                        var target = Environment.GetEnvironmentVariable("TARGET") ?? "World";
-                        await context.Response.WriteAsync($"Hello {target}!\n");
-                    });
+                    routes.MapControllerRoute("default", "{controller=Health}/{action=Get}");
                 });
             
                 app.UseGraphQL("/graphql");
