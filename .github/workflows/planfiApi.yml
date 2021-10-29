@@ -10,6 +10,8 @@ on:
 env:
   # SSL encryption is recommended when using Public IP to connect to the instance.
   CONNECTION_STRING: "Host=34.67.163.35;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+  RUN_REGION: us-central1
+  SERVICE_NAME: planfi-api
 
 jobs:
   build:
@@ -48,7 +50,7 @@ jobs:
 
       - name: Cloud run deploy
         run: |-
-          gcloud run deploy planfi-api
+          gcloud run deploy "$SERVICE_NAME" \
             --quiet \
             --region "$RUN_REGION" \
             --image "eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api" \
