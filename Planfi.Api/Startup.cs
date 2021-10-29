@@ -25,7 +25,7 @@ using WebApi.Services.Chat;
 using WebApi.Services.exercises;
 using WebApi.Services.Exercises;
 using WebApi.Services.Organizations;
-using WebApi.Services.Payment.PaypalIntegration;
+// using WebApi.Services.Payment.PaypalIntegration;
 using WebApi.Services.users;
 using AccountService = WebApi.Services.Account.AccountService;
 using PlanService = WebApi.Services.Plans.PlanService;
@@ -135,7 +135,7 @@ namespace WebApi
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
+            //services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
             //services.AddScoped<IStripeProcessing, StripeProcessing>();
             
             services.AddMvc().AddJsonOptions(options =>
@@ -173,8 +173,8 @@ namespace WebApi
                     routes.MapControllers();
                     routes.MapControllerRoute("default", "{controller=Health}/{action=Get}");
                 });
-            
-                app.UseGraphQL("/graphql");
+
+                //app.UseGraphQl;
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
                 app.UseAuthentication();
         }

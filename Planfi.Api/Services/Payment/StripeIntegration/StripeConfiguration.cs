@@ -7,7 +7,7 @@
 // using Stripe;
 // using File = Stripe.File;
 //
-// namespace WebApi.Services.Payment.StripeIntegration
+// namespace PlanfiApi.Services.Payment.StripeIntegration
 // {
 //     public class StripeConfiguration
 //     {

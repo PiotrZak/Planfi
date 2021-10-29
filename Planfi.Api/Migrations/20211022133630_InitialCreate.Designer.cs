@@ -22,7 +22,7 @@ namespace WebApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("WebApi.Data.Entities.Exercise", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Exercise", b =>
                 {
                     b.Property<string>("ExerciseId")
                         .HasColumnType("text")
@@ -242,7 +242,7 @@ namespace WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Plan", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Plan", b =>
                 {
                     b.Property<string>("PlanId")
                         .HasColumnType("text")
@@ -271,7 +271,7 @@ namespace WebApi.Migrations
                     b.ToTable("plans");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Users.Role", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -303,7 +303,7 @@ namespace WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Users.User", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.User", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text")
@@ -423,7 +423,7 @@ namespace WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.UsersPlans", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.UsersPlans", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("text")
@@ -440,7 +440,7 @@ namespace WebApi.Migrations
                     b.ToTable("usersplans");
                 });
 
-            modelBuilder.Entity("WebApi.Data.ViewModels.UsersTrainers", b =>
+            modelBuilder.Entity("PlanfiApi.Data.ViewModels.UsersTrainers", b =>
                 {
                     b.Property<string>("ClientId")
                         .HasColumnType("text")
@@ -457,7 +457,7 @@ namespace WebApi.Migrations
                     b.ToTable("userstrainers");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Category", b =>
+            modelBuilder.Entity("PlanfiApi.Entities.Category", b =>
                 {
                     b.Property<string>("CategoryId")
                         .HasColumnType("text")
@@ -495,7 +495,7 @@ namespace WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Organization", b =>
+            modelBuilder.Entity("PlanfiApi.Entities.Organization", b =>
                 {
                     b.Property<string>("OrganizationId")
                         .HasColumnType("text")
@@ -527,7 +527,7 @@ namespace WebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("WebApi.Models.ChatRoom", b =>
+            modelBuilder.Entity("PlanfiApi.Models.ChatRoom", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -543,7 +543,7 @@ namespace WebApi.Migrations
                     b.ToTable("chatrooms");
                 });
 
-            modelBuilder.Entity("WebApi.Models.Message", b =>
+            modelBuilder.Entity("PlanfiApi.Models.Message", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -571,46 +571,46 @@ namespace WebApi.Migrations
                     b.ToTable("messages");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Exercise", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Exercise", b =>
                 {
-                    b.HasOne("WebApi.Entities.Category", null)
+                    b.HasOne("PlanfiApi.Entities.Category", null)
                         .WithMany("Exercises")
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("WebApi.Data.Entities.Plan", null)
+                    b.HasOne("PlanfiApi.Data.Entities.Plan", null)
                         .WithMany("Exercises")
                         .HasForeignKey("PlanId");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Plan", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Plan", b =>
                 {
-                    b.HasOne("WebApi.Entities.Organization", null)
+                    b.HasOne("PlanfiApi.Entities.Organization", null)
                         .WithMany("Plans")
                         .HasForeignKey("OrganizationId");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Users.User", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.User", b =>
                 {
-                    b.HasOne("WebApi.Entities.Organization", null)
+                    b.HasOne("PlanfiApi.Entities.Organization", null)
                         .WithMany("Users")
                         .HasForeignKey("OrganizationId");
 
-                    b.HasOne("WebApi.Data.Entities.Users.Role", "Role")
+                    b.HasOne("PlanfiApi.Data.Entities.Users.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId");
 
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.UsersPlans", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.UsersPlans", b =>
                 {
-                    b.HasOne("WebApi.Data.Entities.Plan", "Plan")
+                    b.HasOne("PlanfiApi.Data.Entities.Plan", "Plan")
                         .WithMany("Users")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Data.Entities.Users.User", "User")
+                    b.HasOne("PlanfiApi.Data.Entities.Users.User", "User")
                         .WithMany("Plans")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -621,15 +621,15 @@ namespace WebApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebApi.Data.ViewModels.UsersTrainers", b =>
+            modelBuilder.Entity("PlanfiApi.Data.ViewModels.UsersTrainers", b =>
                 {
-                    b.HasOne("WebApi.Data.Entities.Users.User", "Client")
+                    b.HasOne("PlanfiApi.Data.Entities.Users.User", "Client")
                         .WithMany("UsersTrainers")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebApi.Data.Entities.Users.User", "Trainer")
+                    b.HasOne("PlanfiApi.Data.Entities.Users.User", "Trainer")
                         .WithMany()
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -640,38 +640,38 @@ namespace WebApi.Migrations
                     b.Navigation("Trainer");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Category", b =>
+            modelBuilder.Entity("PlanfiApi.Entities.Category", b =>
                 {
-                    b.HasOne("WebApi.Entities.Organization", null)
+                    b.HasOne("PlanfiApi.Entities.Organization", null)
                         .WithMany("Categories")
                         .HasForeignKey("OrganizationId");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Plan", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Plan", b =>
                 {
                     b.Navigation("Exercises");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Users.Role", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.Role", b =>
                 {
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Users.User", b =>
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.User", b =>
                 {
                     b.Navigation("Plans");
 
                     b.Navigation("UsersTrainers");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Category", b =>
+            modelBuilder.Entity("PlanfiApi.Entities.Category", b =>
                 {
                     b.Navigation("Exercises");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.Organization", b =>
+            modelBuilder.Entity("PlanfiApi.Entities.Organization", b =>
                 {
                     b.Navigation("Categories");
 

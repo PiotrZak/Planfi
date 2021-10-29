@@ -1,9 +1,9 @@
 // using System.Collections.Generic;
 // using System.Threading.Tasks;
 // using Stripe;
-// using WebApi.Helpers;
+// using PlanfiApi.Helpers;
 //
-// namespace WebApi.Services.Payment.StripeIntegration
+// namespace PlanfiApi.Services.Payment.StripeIntegration
 // {
 //     public interface IStripeProcessing
 //     {
