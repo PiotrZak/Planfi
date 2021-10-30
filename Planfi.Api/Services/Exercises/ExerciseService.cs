@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data.Entities;
 using WebApi.Helpers;
@@ -178,31 +180,19 @@ namespace WebApi.Services.exercises
                 var filesList = new List<byte[]>();
                 foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
-                    if (formFile.ContentType =="video/mp4" 
-                        || formFile.ContentType == "video/mov" 
-                        || formFile.ContentType == "video/avi" 
-                        || formFile.ContentType == "video/quicktime")
+                    if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
                     {
                         
                         //TODO - save that file not to CurrentDirectory but to frontend directory
                         _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-                        var path = Path.Combine(_environment.WebRootPath, "Movies");
-                            
-                        if (!Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        var fileName = Path.GetFileName(model.Name+i);
-                        var ext = Path.GetExtension(formFile.FileName);
-                        await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
-                        {
-                            await formFile.CopyToAsync(stream);
-                        }
+
+                        //SaveMovieToGoogleStorage();
+                        SaveMovieToDirectory(formFile, model.Name, i);
                         
-                        var bytes = Encoding.ASCII.GetBytes(ext);
-                        await using var memoryStream = new MemoryStream();
-                        await formFile.CopyToAsync(memoryStream);
-                        filesList.Add(bytes);
+                        // var bytes = Encoding.ASCII.GetBytes(ext);
+                        // await using var memoryStream = new MemoryStream();
+                        // await formFile.CopyToAsync(memoryStream);
+                        // filesList.Add(bytes);
                     }
                     else
                     {
@@ -228,6 +218,35 @@ namespace WebApi.Services.exercises
             return transformModel;
         }
 
+        private async Task SaveMovieToDirectory(IFormFile formFile,string name, int i)
+        {
+            var path = Path.Combine(_environment.WebRootPath, "Movies");
+            
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            var fileName = Path.GetFileName(name+i);
+            var ext = Path.GetExtension(formFile.FileName);
+            await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
+            {
+                await formFile.CopyToAsync(stream);
+            }
+            SaveMovieToGoogleStorage(path, fileName, ext);
+        }
+
+        private void SaveMovieToGoogleStorage(string path, string? fileName, string ext)
+        {
+            const string bucketName = "planfi-movies";
+            var filePath = Path.Combine(path, fileName + ext);
+            
+            var gcsStorage = StorageClient.Create();
+            using var f = File.OpenRead(filePath);
+            var objectName = Path.GetFileName(filePath);
+            gcsStorage.UploadObject(bucketName, objectName, null, f);
+            Console.WriteLine($"Uploaded {objectName}.");
+        }
+        
         public async Task<int> Update(Exercise updateExercise, string id)
         {
             var exercise = await _context.exercises.FindAsync(id);
