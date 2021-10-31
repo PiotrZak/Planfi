@@ -59,16 +59,7 @@ namespace WebApi
                             .AllowAnyMethod();
                     });
             });
-            services.AddCors(options => 
-                options.AddPolicy(name: "AllowSetOrigins",
-                    builder =>
-                    {
-                        builder.AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            .AllowCredentials()
-                            .WithOrigins("http://localhost:3000");
-                    }));
+            
             services.AddSignalR();
 
             // Use a PostgreSQL database
