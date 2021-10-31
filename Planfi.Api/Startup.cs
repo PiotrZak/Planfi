@@ -158,7 +158,8 @@ namespace WebApi
                 //dataContext.Database.Migrate();
 
             
-                app.UseCors("AllowSetOrigins");
+                app.UseCors(_myAllowSpecificOrigins);
+                
                 app.UseRouting();
                 app.UseSwagger();
                 app.UseSession();
