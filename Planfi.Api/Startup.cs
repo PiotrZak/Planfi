@@ -1,33 +1,32 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Text;
+using System.Text.Json.Serialization;
+using HotChocolate;
+using HotChocolate.AspNetCore;
+using HotChocolate.AspNetCore.Playground;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WebApi.Helpers;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using WebApi.Models;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Identity;
-using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
-using HotChocolate.AspNetCore;
-using HotChocolate;
-using Microsoft.AspNetCore.Http.Features;
+using WebApi.Helpers;
 using WebApi.Interfaces;
+using WebApi.Models;
 using WebApi.Services.Account;
 using WebApi.Services.Chat;
 using WebApi.Services.exercises;
 using WebApi.Services.Exercises;
 using WebApi.Services.Organizations;
-// using WebApi.Services.Payment.PaypalIntegration;
 using WebApi.Services.users;
 using AccountService = WebApi.Services.Account.AccountService;
 using PlanService = WebApi.Services.Plans.PlanService;
 
-namespace WebApi
+namespace PlanfiApi
 {
     public class Startup
     {
@@ -146,6 +145,10 @@ namespace WebApi
             });
 
             services.AddScoped<Query>();
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>();
+
             services.AddGraphQL(SchemaBuilder.New()
                 .AddQueryType<Query>()
                 //.AddMutationType<Mutation>()
@@ -177,10 +180,10 @@ namespace WebApi
                 {
                     routes.MapHub<ChatHub>("chat");
                     routes.MapControllers();
+                    routes.MapGraphQL();
                     routes.MapControllerRoute("default", "{controller=Health}/{action=Get}");
                 });
-
-                //app.UseGraphQl;
+                
                 app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
                 app.UseAuthentication();
         }

@@ -18,7 +18,6 @@ const MenuTemplate = ({ children }) => {
 const { position } = useScrollData();
 const currentUser = JSON.parse((localStorage.getItem('user')));
 
-console.log(currentUser)
 return(
   <Wrapper id ="scroll">
     {currentUser && <Menu />}

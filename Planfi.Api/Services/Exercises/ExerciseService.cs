@@ -231,15 +231,17 @@ namespace WebApi.Services.exercises
             await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
             {
                 await formFile.CopyToAsync(stream);
+                SaveMovieToGoogleStorage(path, fileName, ext);
             }
-            SaveMovieToGoogleStorage(path, fileName, ext);
         }
 
         private void SaveMovieToGoogleStorage(string path, string? fileName, string ext)
         {
             const string bucketName = "planfi-movies";
             var filePath = Path.Combine(path, fileName + ext);
+            var gcCredentialsPath = Path.Combine(Environment.CurrentDirectory, "gc_sa_key");
             
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", gcCredentialsPath);
             var gcsStorage = StorageClient.Create();
             using var f = File.OpenRead(filePath);
             var objectName = Path.GetFileName(filePath);

@@ -24,7 +24,7 @@ import config from '../config.json';
 import LoginPage from './modules/Auth/LoginPage';
 
 const developmentApiUrl = config.apps.PlanfiApi.url
-const localHostApiUrl = config.apps.PlanfiApi.url
+const localHostApiUrl = "http://localhost:9001/graphql"
 
 const httpLink = createHttpLink({
   uri: isDevelopment ? developmentApiUrl : localHostApiUrl,
