@@ -12,6 +12,7 @@ env:
   CONNECTION_STRING: "Host=34.135.254.64;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
   RUN_REGION: us-central1
   SERVICE_NAME: planfi-api
+  Origins: "https://plan-fi.pl,http://plan-fi.pl"
 
 jobs:
   build:
@@ -35,6 +36,7 @@ jobs:
           files: "Planfi.Api/appsettings.json"
         env:
           ConnectionStrings.WebApiDatabase: ${{ env.CONNECTION_STRING }}
+          Origins: ${{ env.Origins }}
 
       - name: Read PlanfiApi -> appsettings.json
         run: "cat Planfi.Api/appsettings.json"

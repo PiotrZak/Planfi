@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Models;
 using Microsoft.OpenApi.Models;
@@ -17,7 +15,6 @@ using HotChocolate.AspNetCore.Playground;
 using WebApi.GraphQl;
 using HotChocolate.AspNetCore;
 using HotChocolate;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using WebApi.Interfaces;
 using WebApi.Services.Account;
@@ -36,6 +33,8 @@ namespace WebApi
     {
         private readonly IWebHostEnvironment _env;
         private IConfiguration Configuration { get; }
+        
+        private readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
@@ -48,6 +47,18 @@ namespace WebApi
         {
             services.AddControllers().AddNewtonsoftJson();
 
+            var origins = Configuration["Origins"];
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_myAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder
+                            .WithOrigins(origins?.Split(','))
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
             services.AddCors(options => 
                 options.AddPolicy(name: "AllowSetOrigins",
                     builder =>
@@ -154,6 +165,8 @@ namespace WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
                 //dataContext.Database.Migrate();
+
+            
                 app.UseCors("AllowSetOrigins");
                 app.UseRouting();
                 app.UseSwagger();
