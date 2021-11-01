@@ -10,8 +10,8 @@ import Input from "components/molecules/Input";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { exerciseService } from "services/exerciseService";
-import { routes } from 'utils/routes';
-import Nav from 'components/atoms/Nav'
+import { routes } from "utils/routes";
+import Nav from "components/atoms/Nav";
 import TextArea from "components/molecules/TextArea";
 import AttachmentPreview, {
   TYPE,
@@ -24,6 +24,7 @@ import {
 import GlobalTemplate from "templates/GlobalTemplate";
 import { useHistory } from "react-router-dom";
 import { withLazyComponent } from "utils/lazyComponent";
+import Loader from 'components/atoms/Loader';
 
 const Checkbox = withLazyComponent(
   React.lazy(() => import("components/atoms/Checkbox"))
@@ -42,7 +43,7 @@ const ContainerDescription = styled.div`
 
 const CheckboxContainer = styled.div`
   display: flex;
-  margin-top:2rem;
+  margin-top: 2rem;
   align-items: center;
 `;
 
@@ -72,10 +73,11 @@ const validationSchema = Yup.object({
 const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewFiles, setPreviewFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { notificationDispatch } = useNotificationContext();
 
-  console.log(props)
-  const  categoryTitle  = props.location.state.categoryTitle;
+  console.log(props);
+  const categoryTitle = props.location.state.categoryTitle;
 
   const fileNotification = (message) => {
     notificationDispatch({
@@ -103,6 +105,8 @@ const AddExerciseRefactor = (props) => {
     const { id } = props.history.location.state;
     formData.append("CategoryId", id);
 
+    setLoading(true)
+
     exerciseService
       .addExercise(formData)
       .then(() => {
@@ -113,6 +117,9 @@ const AddExerciseRefactor = (props) => {
             type: "positive",
           },
         });
+
+        setLoading(false)
+
         if (values.addNextExercise) {
           values.exerciseName = "";
           values.exerciseDescription = "";
@@ -121,18 +128,17 @@ const AddExerciseRefactor = (props) => {
           setPreviewFiles([]);
           history.push({
             pathname: routes.addExercise,
-            state: { id:id, title:categoryTitle},
+            state: { id: id, title: categoryTitle },
           });
-        }
-        else{
+        } else {
           history.push({
             pathname: `/category/${id}`,
-            state: { id:id, title:categoryTitle},
+            state: { id: id, title: categoryTitle },
           });
         }
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
         notificationDispatch({
           type: ADD,
           payload: {
@@ -155,7 +161,7 @@ const AddExerciseRefactor = (props) => {
       "video/mp4",
       "video/mov",
       "video/avi",
-      "video/quicktime"
+      "video/quicktime",
     ];
 
     // 10 mb
@@ -239,10 +245,8 @@ const AddExerciseRefactor = (props) => {
   };
 
   function removeFile(currentPhoto) {
-
     for (let i = 0; i <= selectedFiles.length; ++i) {
       if (currentPhoto === selectedFiles[i].ID) {
-
         const selectedList = [...selectedFiles];
         const previewList = [...previewFiles];
 
@@ -283,65 +287,69 @@ const AddExerciseRefactor = (props) => {
 
   return (
     <GlobalTemplate>
-      <ExerciseTemplate>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          validateOnChange={false}
-        >
-          {({ errors, touched, isValid }) => (
-            <Form>
-              <Nav>
-                <BackTopNav text={translate("AddExercise")} />
-                <Button
-                  size="sm"
-                  buttonType="primary"
-                  type="submit"
-                  disabled={!isValid}
-                >
-                  {translate("Save")}
-                </Button>
-              </Nav>
-              <Paragraph type="body-3-regular">
-                {translate("AddExerciseInfo")}
-              </Paragraph>
-              <Label text={translate("ExerciseName")}>
-                <Field
-                  type="text"
-                  name="exerciseName"
-                  as={Input}
-                  error={errors.exerciseName && touched.exerciseName}
-                />
-              </Label>
-              <AddFiles
-                triggerFileUploadButton={triggerFileUploadButton}
-                handleImageChange={handleImageChange}
-              />
-              {renderAttachmentsPreview(previewFiles)}
-              <ContainerDescription>
-                <Label text={translate("AddExerciseDescription")}>
+      {loading ? (
+        <Loader isLoading={loading} />
+      ) : (
+        <ExerciseTemplate>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+            validateOnChange={false}
+          >
+            {({ errors, touched, isValid }) => (
+              <Form>
+                <Nav>
+                  <BackTopNav text={translate("AddExercise")} />
+                  <Button
+                    size="sm"
+                    buttonType="primary"
+                    type="submit"
+                    disabled={!isValid}
+                  >
+                    {translate("Save")}
+                  </Button>
+                </Nav>
+                <Paragraph type="body-3-regular">
+                  {translate("AddExerciseInfo")}
+                </Paragraph>
+                <Label text={translate("ExerciseName")}>
                   <Field
                     type="text"
-                    name="exerciseDescription"
-                    as={StyledTextArea}
+                    name="exerciseName"
+                    as={Input}
+                    error={errors.exerciseName && touched.exerciseName}
                   />
                 </Label>
-              </ContainerDescription>
-              <CheckboxContainer>
-              <Checkbox
-                checkboxType ="formik"
-                type="checkbox"
-                name="addNextExercise"
-              />
-              <Paragraph type="body-2-medium">
-              {translate("AddNextExercise")}
-              </Paragraph>
-              </CheckboxContainer>
-            </Form>
-          )}
-        </Formik>
-      </ExerciseTemplate>
+                <AddFiles
+                  triggerFileUploadButton={triggerFileUploadButton}
+                  handleImageChange={handleImageChange}
+                />
+                {renderAttachmentsPreview(previewFiles)}
+                <ContainerDescription>
+                  <Label text={translate("AddExerciseDescription")}>
+                    <Field
+                      type="text"
+                      name="exerciseDescription"
+                      as={StyledTextArea}
+                    />
+                  </Label>
+                </ContainerDescription>
+                <CheckboxContainer>
+                  <Checkbox
+                    checkboxType="formik"
+                    type="checkbox"
+                    name="addNextExercise"
+                  />
+                  <Paragraph type="body-2-medium">
+                    {translate("AddNextExercise")}
+                  </Paragraph>
+                </CheckboxContainer>
+              </Form>
+            )}
+          </Formik>
+        </ExerciseTemplate>
+      )}
     </GlobalTemplate>
   );
 };

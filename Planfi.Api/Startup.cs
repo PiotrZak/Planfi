@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
+using System.IO;
 using System.Text.Json.Serialization;
 using HotChocolate;
 using HotChocolate.AspNetCore;
@@ -13,17 +15,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Services.Exercises;
 using WebApi.GraphQl;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Services.Account;
 using WebApi.Services.Chat;
-using WebApi.Services.exercises;
-using WebApi.Services.Exercises;
 using WebApi.Services.Organizations;
 using WebApi.Services.users;
 using AccountService = WebApi.Services.Account.AccountService;
+using Path = System.IO.Path;
 using PlanService = WebApi.Services.Plans.PlanService;
 
 namespace PlanfiApi
@@ -107,7 +110,9 @@ namespace PlanfiApi
                     ValidateAudience = false
                 };
             });
-
+            
+            var gcCredentialsPath = Path.Combine(Environment.CurrentDirectory, "gc_sa_key.json");
+            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", gcCredentialsPath);
 
             // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
@@ -148,11 +153,7 @@ namespace PlanfiApi
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>();
-
-            services.AddGraphQL(SchemaBuilder.New()
-                .AddQueryType<Query>()
-                //.AddMutationType<Mutation>()
-                .Create());
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

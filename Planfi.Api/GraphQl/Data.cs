@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using HotChocolate;
 using HotChocolate.Types;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Services.Exercises;
 using WebApi.Data.Entities;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -10,7 +12,6 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
 using WebApi.Services;
-using WebApi.Services.Exercises;
 
 namespace WebApi.GraphQl
 {

@@ -1,17 +1,18 @@
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using PlanfiApi.Interfaces;
+using WebApi.Common;
+using WebApi.Controllers.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
-using WebApi.Common;
-using WebApi.Models;
-using WebApi.Controllers.ViewModels;
 using WebApi.Interfaces;
+using WebApi.Models;
 
-namespace WebApi.Controllers
+namespace PlanfiApi.Controllers.Exercises
 {
     [Authorize]
     [ApiController]
@@ -77,9 +78,9 @@ namespace WebApi.Controllers
         
         [AllowAnonymous]
         [HttpPost("delete")]
-        public IActionResult Delete([FromBody] string[] id)
+        public async Task<IActionResult> Delete([FromBody] string[] id)
         {
-            _categoryService.Delete(id);
+            await _categoryService.Delete(id);
             return Ok();
         }
         

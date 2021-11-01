@@ -4,16 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 
-namespace WebApi.Controllers.Exercises
+namespace PlanfiApi.Controllers.Exercises
 {
     [Authorize]
     [ApiController]

@@ -14,14 +14,15 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
 
-namespace WebApi.Services.exercises
+namespace PlanfiApi.Services.Exercises
 {
     public class ExerciseService : IExerciseService
     {
         private readonly DataContext _context;
-        private readonly IHostingEnvironment _environment;
+        private readonly IWebHostEnvironment _environment;
+        private readonly string _bucketName = "planfi-movies";
 
-        public ExerciseService(DataContext context, IHostingEnvironment environment)
+        public ExerciseService(DataContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
@@ -149,24 +150,36 @@ namespace WebApi.Services.exercises
         }
 
 
-        public async Task<int> Delete(string[] id)
+        public async Task<int> Delete(string[] ids)
         {
+            var exercises = await _context.exercises
+                .Where(x => ids.Contains(x.ExerciseId))
+                .OrderBy(x => x.ExerciseId)
+                .ToListAsync();
             
-            foreach (var exerciseId in id)
+            var exerciseInstances = _context.exercises
+                .Where(x => exercises
+                    .Select(y => y.Description)
+                        .Contains(x.Description) && exercises
+                    .Select(z => z.Name)
+                        .Contains(x.Name));
+            
+            for (var i = 0; i < exercises.Count; i++)
             {
-                var exercise = await _context.exercises.FindAsync(exerciseId);
-                if (exercise != null)
+                var files = exercises[i].Files;
+                if (files == null) continue;
+                
+                foreach (var ext in files
+                    .Select(file => Encoding.Default.GetString(file))
+                    .Where(ext => ext is ".mp4" or ".mov" or ".avi" or "quicktime"))
                 {
-                    _context.exercises.Remove(exercise);
-                    var exerciseInstancesIds = _context.exercises
-                        .Where(x => x.Name == exercise.Name && x.Description == exercise.Description);
-
-                    foreach(var exerciseInstanceId in exerciseInstancesIds)
-                    {
-                        _context.exercises.Remove(exerciseInstanceId);
-                    }
+                    await DeleteMovieFromGoogleStorage(exercises[i].Name + i + ext);
                 }
             }
+
+            _context.exercises.RemoveRange(exercises);
+            _context.exercises.RemoveRange(exerciseInstances);
+
             var count = await _context.SaveChangesAsync();
             return count;
         }
@@ -174,25 +187,23 @@ namespace WebApi.Services.exercises
         public async Task<ExerciseModel> TransformData(CreateExercise model)
         {
             var transformModel = new ExerciseModel();
+            var filesList = new List<byte[]>();
+
             if (model.Files != null)
             {
-                var i = 0;
-                var filesList = new List<byte[]>();
-                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
+                foreach (var (formFile, iterator) in model.Files.Select((c, i) => (c, i)))
                 {
                     if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
                     {
-                        
-                        //TODO - save that file not to CurrentDirectory but to frontend directory
-                        _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                        var ext = Path.GetExtension(formFile.FileName);
+                        await using var memoryStream = new MemoryStream();
+                        await formFile.CopyToAsync(memoryStream);
+                        var fileNameWithExtensionAndNumber = model.Name+iterator+ext;
 
-                        //SaveMovieToGoogleStorage();
-                        SaveMovieToDirectory(formFile, model.Name, i);
+                        var path = await SaveMovieToDirectory(formFile, fileNameWithExtensionAndNumber);
+                        await SaveMovieToGoogleStorage(fileNameWithExtensionAndNumber, path);
                         
-                        // var bytes = Encoding.ASCII.GetBytes(ext);
-                        // await using var memoryStream = new MemoryStream();
-                        // await formFile.CopyToAsync(memoryStream);
-                        // filesList.Add(bytes);
+                        filesList.Add(Encoding.ASCII.GetBytes(ext));
                     }
                     else
                     {
@@ -200,55 +211,48 @@ namespace WebApi.Services.exercises
                         await formFile.CopyToAsync(memoryStream);
                         filesList.Add(memoryStream.ToArray());
                     }
-                    i++;
                 }
-                transformModel.Name = model.Name;
-                transformModel.Description = model.Description;
-                transformModel.Files = filesList;
-                transformModel.CategoryId = model.CategoryId;
+                
+                // save movies to directory here outside loop
             }
-            else
-            {
-                transformModel.Name = model.Name;
-                transformModel.Description = model.Description;
-                transformModel.Files = null;
-                transformModel.CategoryId = model.CategoryId;
-            }
+
+            transformModel.Name = model.Name;
+            transformModel.Description = model.Description;
+            transformModel.Files = filesList.Any() 
+                ? filesList
+                : null;
+            transformModel.CategoryId = model.CategoryId;
 
             return transformModel;
         }
 
-        private async Task SaveMovieToDirectory(IFormFile formFile,string name, int i)
+        private async Task<string> SaveMovieToDirectory(IFormFile formFile, string name)
         {
             var path = Path.Combine(_environment.WebRootPath, "Movies");
-            
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            var fileName = Path.GetFileName(name+i);
-            var ext = Path.GetExtension(formFile.FileName);
-            await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
-            {
-                await formFile.CopyToAsync(stream);
-                SaveMovieToGoogleStorage(path, fileName, ext);
-            }
+            var fileName = Path.GetFileName(name);
+            await using var stream = new FileStream(Path.Combine(path, fileName), FileMode.Create);
+            await formFile.CopyToAsync(stream);
+            return Path.Combine(path, fileName);
+            
         }
 
-        private void SaveMovieToGoogleStorage(string path, string? fileName, string ext)
+        private async Task SaveMovieToGoogleStorage(string fileName, string path)
         {
-            const string bucketName = "planfi-movies";
-            var filePath = Path.Combine(path, fileName + ext);
-            var gcCredentialsPath = Path.Combine(Environment.CurrentDirectory, "gc_sa_key");
-            
-            Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", gcCredentialsPath);
-            var gcsStorage = StorageClient.Create();
-            using var f = File.OpenRead(filePath);
-            var objectName = Path.GetFileName(filePath);
-            gcsStorage.UploadObject(bucketName, objectName, null, f);
-            Console.WriteLine($"Uploaded {objectName}.");
+            var gcsStorage = await StorageClient.CreateAsync();
+            Stream stream = new FileStream(path, FileMode.Open);
+            await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, stream);
         }
-        
+
+        private async Task DeleteMovieFromGoogleStorage(string fileName)
+        {
+            var storage = await StorageClient.CreateAsync();
+            await storage.DeleteObjectAsync(_bucketName, fileName);
+        }
+
         public async Task<int> Update(Exercise updateExercise, string id)
         {
             var exercise = await _context.exercises.FindAsync(id);

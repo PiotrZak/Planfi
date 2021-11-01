@@ -2,21 +2,25 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 
-namespace WebApi.Services.Exercises
+namespace PlanfiApi.Services.Exercises
 {
     public class CategoryService : ICategoryService
     {
         private readonly DataContext _context;
+        private readonly IExerciseService _exerciseService;
 
-        public CategoryService(DataContext context)
+        public CategoryService(DataContext context, IExerciseService exerciseService)
         {
             _context = context;
+            _exerciseService = exerciseService;
         }
 
         public Category Create(Category category)
@@ -78,24 +82,24 @@ namespace WebApi.Services.Exercises
         public string OrganizationId { get; set; }
     }
     
-        public void Delete(string[] id)
+        public async Task<int> Delete(string[] ids)
         {
-            foreach (var categoryId in id)
-            {
-                var exercisesInCategory = _context.exercises.Where(x => x.CategoryId == categoryId);
-
-                foreach (var exerciseItem in exercisesInCategory)
-                {
-                    exerciseItem.CategoryId = null;
-                }
-
-                var category = _context.categories.Find(categoryId);
-                if (category != null)
-                {
-                    _context.categories.Remove(category);
-                    _context.SaveChanges();
-                }
-            }
+            var categories = await _context.categories
+                .Where(x => ids.Contains(x.CategoryId))
+                .OrderBy(x => x.CategoryId)
+                .ToListAsync();
+            
+            var exercisesInCategory = _context.exercises
+                .Where(x => ids.Contains(x.CategoryId))
+                .ToList();
+            
+            var idsOfExercises = exercisesInCategory.Select(x => x.ExerciseId).ToArray();;
+            var deletedExercises = await _exerciseService.Delete(idsOfExercises);
+            _context.categories.RemoveRange(categories);
+            
+            var count = await _context.SaveChangesAsync();
+            return count + deletedExercises;
+            
         }
 
         public async Task<int> AssignExercise(string id, Exercise exercise)
@@ -109,7 +113,7 @@ namespace WebApi.Services.Exercises
 
                 if (duplicatedExercises.Any(duplicatedExercise => duplicatedExercise.CategoryId == exercise.CategoryId))
                 {
-                    throw new AppException("Plan " + exercise.Name + " is already exist in this organization");
+                    throw new AppException(exercise.Name + " is already in this catgory");
                 }
             }
             
