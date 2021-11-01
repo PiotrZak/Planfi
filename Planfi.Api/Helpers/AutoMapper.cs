@@ -1,12 +1,13 @@
 using AutoMapper;
-using WebApi.Controllers.ViewModels;
-using WebApi.Data.Entities;
-using WebApi.Data.Entities.Users;
-using WebApi.Entities;
-using WebApi.Models;
-using WebApi.Models.ViewModels;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Models;
+using PlanfiApi.Models.ViewModels;
+using PlanfiApi.Controllers.ViewModels;
+using PlanfiApi.Entities;
 
-namespace WebApi.Helpers
+namespace PlanfiApi.Helpers
 {
     public class AutoMapperProfile : Profile
     {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Helpers;
-using WebApi.Models;
+using PlanfiApi.Helpers;
+using PlanfiApi.Models;
 
-namespace WebApi.Services.Chat
+namespace PlanfiApi.Services.Chat
 {
 
     public interface IMessageService

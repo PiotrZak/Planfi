@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Data.Entities;
-using WebApi.Models;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Models;
 
-namespace WebApi.Interfaces
+namespace PlanfiApi.Interfaces
 {
     public interface IPlanService
     {

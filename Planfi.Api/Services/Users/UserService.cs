@@ -6,15 +6,15 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using WebApi.Data.Entities;
-using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
-using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models;
-using WebApi.Models.ViewModels;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Helpers;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
+using PlanfiApi.Models.ViewModels;
 
-namespace WebApi.Services.users{
+namespace PlanfiApi.Services.users{
 
 
     public class UserService : IUserService

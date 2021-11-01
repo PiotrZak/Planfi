@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi.Entities
+namespace PlanfiApi.Entities
 {
     public class RefreshToken
     {

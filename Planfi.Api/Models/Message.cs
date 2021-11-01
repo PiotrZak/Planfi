@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models
 {
 	public class EmailMessage
 	{

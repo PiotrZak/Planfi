@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
-using WebApi.Data.Entities;
-using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
-using WebApi.Entities;
-using WebApi.Models;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Models;
+using PlanfiApi.Entities;
 
-namespace WebApi.Helpers
+namespace PlanfiApi.Helpers
 {
     public class DataContext : DbContext
     {

@@ -1,5 +1,4 @@
-﻿using System;
-namespace WebApi.Controllers.ViewModels
+﻿namespace PlanfiApi.Data.ViewModels
 {
     public class AssignUsersToOrganization
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models
 {
     
     public class ChatRoom

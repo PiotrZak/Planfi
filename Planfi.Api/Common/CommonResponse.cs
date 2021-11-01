@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Common
+namespace PlanfiApi.Common
 {
     [Authorize, ApiController, Produces("application/json"), Route("api/[controller]")]
     public abstract class ApiControllerBase : Controller

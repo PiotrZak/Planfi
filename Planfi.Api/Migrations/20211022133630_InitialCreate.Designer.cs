@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WebApi.Helpers;
+using PlanfiApi.Helpers;
 
-namespace WebApi.Migrations
+namespace PlanfiApi.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20211022133630_InitialCreate")]

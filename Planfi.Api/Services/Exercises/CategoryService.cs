@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.Data.Entities;
-using WebApi.Entities;
-using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Helpers;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
+using PlanfiApi.Entities;
 
-namespace WebApi.Services.Exercises
+namespace PlanfiApi.Services.Exercises
 {
     public class CategoryService : ICategoryService
     {

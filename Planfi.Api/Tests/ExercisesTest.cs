@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using WebApi.Data.Entities;
-using WebApi.Entities;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Entities;
 
-namespace WebApi.Tests
+namespace PlanfiApi.Tests
 {
     public class ExercisesTest
     {

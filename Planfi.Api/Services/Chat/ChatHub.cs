@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.SignalR;
-using WebApi.Models;
+using PlanfiApi.Models;
 
-namespace WebApi.Services.Chat
+namespace PlanfiApi.Services.Chat
 {
     [EnableCors("AllowAll")] 
     [AllowAnonymous]

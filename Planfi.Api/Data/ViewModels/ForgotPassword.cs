@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Controllers.ViewModels
+namespace PlanfiApi.Controllers.ViewModels
 {
     public class ForgotPassword
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models
 {
     public class UpdateExerciseModel
     {

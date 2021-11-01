@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using WebApi.Data.Entities.Users;
-using WebApi.Entities;
-using WebApi.Models;
-using WebApi.Models.ViewModels;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Models.ViewModels;
+using PlanfiApi.Entities;
+using PlanfiApi.Models;
 
-namespace WebApi.Interfaces
+namespace PlanfiApi.Interfaces
 {
     public interface IOrganizationService
     {

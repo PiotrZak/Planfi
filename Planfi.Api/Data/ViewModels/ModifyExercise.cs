@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models
 {
     public partial class ModifyExercise
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Data.Entities
+namespace PlanfiApi.Data.Entities
 {
     public class Exercise
     {

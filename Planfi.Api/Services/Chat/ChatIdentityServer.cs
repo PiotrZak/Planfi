@@ -4,7 +4,7 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
-namespace WebApi.Services.Chat
+namespace PlanfiApi.Services.Chat
 {
     public class ChatIdentityServer
     {

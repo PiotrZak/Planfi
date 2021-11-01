@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Controllers
+namespace PlanfiApi.Controllers
 {
     //todo install tests
     /*public class ExercisesTests

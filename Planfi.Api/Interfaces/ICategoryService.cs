@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Data.Entities;
-using WebApi.Entities;
-using WebApi.Models;
-using WebApi.Services;
-using WebApi.Services.Exercises;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Models;
+using PlanfiApi.Services.Exercises;
+using PlanfiApi.Entities;
+using PlanfiApi.Services;
 
-namespace WebApi.Interfaces
+namespace PlanfiApi.Interfaces
 {
     public interface ICategoryService
     {

@@ -5,9 +5,9 @@ using MailKit.Net.Smtp;
 using MailKit.Security;
 using MimeKit;
 using MimeKit.Text;
-using WebApi.Models;
+using PlanfiApi.Models;
 
-namespace WebApi.Services.Account
+namespace PlanfiApi.Services.Account
 {
 
     public interface IEmailService

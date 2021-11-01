@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Data.Entities.Users
+namespace PlanfiApi.Data.Entities.Users
 {
     public class Role
     {

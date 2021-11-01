@@ -1,4 +1,4 @@
-namespace WebApi.Helpers
+namespace PlanfiApi.Helpers
 {
     public class AppSettings
     {

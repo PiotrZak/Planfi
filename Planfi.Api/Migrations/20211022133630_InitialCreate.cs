@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApi.Migrations
+namespace PlanfiApi.Migrations
 {
     public partial class InitialCreate : Migration
     {

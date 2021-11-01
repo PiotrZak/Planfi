@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
 
-namespace WebApi.Controllers.Payment
+namespace PlanfiApi.Controllers.Payment
 {
     public class StripeController : ControllerBase
     {

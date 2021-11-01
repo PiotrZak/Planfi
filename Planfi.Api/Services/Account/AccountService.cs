@@ -6,14 +6,14 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using WebApi.Controllers.ViewModels;
-using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
-using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models;
+using PlanfiApi.Controllers.ViewModels;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Helpers;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
 
-namespace WebApi.Services.Account
+namespace PlanfiApi.Services.Account
 {
     public class AccountService : IAccountService
     {

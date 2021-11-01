@@ -2,11 +2,11 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Common;
-using WebApi.Models;
-using WebApi.Services.Chat;
+using PlanfiApi.Common;
+using PlanfiApi.Models;
+using PlanfiApi.Services.Chat;
 
-namespace WebApi.Controllers.Chat
+namespace PlanfiApi.Controllers.Chat
 {
     [Route("api/[controller]")]
     public class MessageController : ApiControllerBase

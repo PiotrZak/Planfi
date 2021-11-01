@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using WebApi.Data.ViewModels;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.ViewModels;
 
-namespace WebApi.Data.Entities.Users
+namespace PlanfiApi.Data.Entities.Users
 {
 
     public class User
