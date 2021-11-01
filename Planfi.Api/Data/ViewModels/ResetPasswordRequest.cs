@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PlanfiApi.Data.ViewModels
+namespace WebApi.Data.ViewModels
 {
     public class ResetPasswordRequest
     {

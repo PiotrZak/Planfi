@@ -4,14 +4,13 @@ using System.Linq;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using PlanfiApi.Data.Entities;
-using PlanfiApi.Data.Entities.Users;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models.ViewModels;
-using PlanfiApi.Entities;
+using WebApi.Data.Entities.Users;
+using WebApi.Entities;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models.ViewModels;
 
-namespace PlanfiApi.Services.Organizations
+namespace WebApi.Services.Organizations
 {
     public class OrganizationService : IOrganizationService
     {

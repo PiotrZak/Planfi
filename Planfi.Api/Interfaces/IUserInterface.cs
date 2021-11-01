@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlanfiApi.Data.Entities.Users;
-using PlanfiApi.Models;
-using PlanfiApi.Models.ViewModels;
+using WebApi.Data.Entities.Users;
+using WebApi.Models;
+using WebApi.Models.ViewModels;
 
-namespace PlanfiApi.Interfaces
+namespace WebApi.Interfaces
 {
     public interface IUserService
     {

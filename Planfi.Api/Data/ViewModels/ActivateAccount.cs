@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PlanfiApi.Data.ViewModels
+namespace WebApi.Controllers.ViewModels
 {
     public class ActivateAccount
     {

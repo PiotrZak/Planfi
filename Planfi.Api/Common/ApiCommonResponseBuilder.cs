@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace PlanfiApi.Common
+namespace WebApi.Common
 {
     
     public interface IBuilder<TBuildingType>

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PlanfiApi.Data.Entities.Users;
-using PlanfiApi.Entities;
+using WebApi.Data.Entities.Users;
+using WebApi.Entities;
 
-namespace PlanfiApi.Helpers
+namespace WebApi.Helpers
 {
     public static class ExtensionMethods
     {

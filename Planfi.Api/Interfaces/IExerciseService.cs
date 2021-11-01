@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlanfiApi.Data.Entities;
-using PlanfiApi.Data.ViewModels;
-using PlanfiApi.Models;
-using PlanfiApi.Models.ViewModels;
+using WebApi.Data.Entities;
+using WebApi.Models;
+using WebApi.Models.ViewModels;
 
-namespace PlanfiApi.Interfaces
+namespace WebApi.Interfaces
 {
     public interface IExerciseService
     {

@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using PlanfiApi.Interfaces;
+using WebApi.Interfaces;
 
-namespace PlanfiApi.Tests
+namespace WebApi.Tests
 {
     [TestFixture]
     public class AssignUsersToPlansTest

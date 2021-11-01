@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using PlanfiApi.Helpers;
-using PlanfiApi.Models;
+using WebApi.Helpers;
+using WebApi.Models;
 
-namespace PlanfiApi.Services.Chat
+namespace WebApi.Services.Chat
 {
     public interface IChatRoomService
     {

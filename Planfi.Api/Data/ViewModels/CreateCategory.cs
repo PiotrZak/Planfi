@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PlanfiApi.Models
+namespace WebApi.Models
 {
     public class CreateCategory
     {

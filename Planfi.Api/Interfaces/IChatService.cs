@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlanfiApi.Models;
+using WebApi.Models;
 
-namespace PlanfiApi.Interfaces
+namespace WebApi.Interfaces
 {
     public interface IChatService
     {

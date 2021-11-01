@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using PlanfiApi.Controllers.ViewModels;
-using PlanfiApi.Data.Entities.Users;
-using PlanfiApi.Data.ViewModels;
-using PlanfiApi.Models;
-using PlanfiApi.Entities;
+using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
+using WebApi.Data.ViewModels;
+using WebApi.Entities;
+using WebApi.Models;
 
-namespace PlanfiApi.Interfaces
+namespace WebApi.Interfaces
 {
     public interface IAccountService
     {

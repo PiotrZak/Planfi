@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PlanfiApi.Models
+namespace WebApi.Models
 {
     public class CreateOrganization
     {

@@ -1,4 +1,4 @@
-namespace PlanfiApi.Models.ViewModels
+namespace WebApi.Models.ViewModels
 {
     public class ExerciseViewModel
     {

@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 
-namespace PlanfiApi.Models
+namespace WebApi.Models
 {
     public class UpdateUserModel
     {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using PlanfiApi.Data.Entities.Users;
+using WebApi.Data.Entities.Users;
 
-namespace PlanfiApi.Models.ViewModels
+namespace WebApi.Models.ViewModels
 {
     public class UserViewModel
     {

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlanfiApi.Data.Entities;
 
-namespace PlanfiApi.Data.Entities
+namespace WebApi.Data.Entities
 {
     public sealed class Plan
     {

@@ -1,19 +1,17 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Helpers;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
-using PlanfiApi.Data.Entities;
-using PlanfiApi.Data.Entities.Users;
-using PlanfiApi.Data.ViewModels;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
-using PlanfiApi.Models.ViewModels;
-using PlanfiApi.Controllers.ViewModels;
-using PlanfiApi.Entities;
+using WebApi.Models;
+using WebApi.Controllers.ViewModels;
+using WebApi.Data.Entities.Users;
+using WebApi.Entities;
+using WebApi.Interfaces;
+using WebApi.Models.ViewModels;
 
-namespace PlanfiApi.Controllers
+namespace WebApi.Controllers
 {
     [Authorize]
     [ApiController]

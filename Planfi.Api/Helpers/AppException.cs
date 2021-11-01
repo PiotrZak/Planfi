@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 
-namespace PlanfiApi.Helpers
+namespace WebApi.Helpers
 {
     public class AppException : Exception
     {

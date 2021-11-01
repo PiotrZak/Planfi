@@ -8,15 +8,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using PlanfiApi.Common;
-using PlanfiApi.Data.Entities.Users;
-using PlanfiApi.Data.ViewModels;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
-using PlanfiApi.Models.ViewModels;
+using WebApi.Common;
+using WebApi.Data.Entities.Users;
+using WebApi.Data.ViewModels;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
+using WebApi.Models.ViewModels;
 
-namespace PlanfiApi.Controllers.Users
+namespace WebApi.Controllers.Users
 {
     [Authorize]
     [ApiController]

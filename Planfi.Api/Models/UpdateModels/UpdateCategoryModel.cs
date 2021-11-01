@@ -1,5 +1,5 @@
 ﻿
-namespace PlanfiApi.Models
+namespace WebApi.Models
 {
     public class UpdateCategoryModel
     {

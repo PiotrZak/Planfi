@@ -1,4 +1,4 @@
-namespace PlanfiApi.Helpers.MockDeveloperData
+namespace WebApi.Helpers.MockDeveloperData
 {
     public class MockExercises
     {

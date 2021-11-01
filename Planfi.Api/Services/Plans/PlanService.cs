@@ -8,12 +8,12 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
-using PlanfiApi.Data.Entities;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
+using WebApi.Data.Entities;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
 
-namespace PlanfiApi.Services.Plans
+namespace WebApi.Services.Plans
 {
     public class PlanService : IPlanService
     {

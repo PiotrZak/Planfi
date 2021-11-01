@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace PlanfiApi.Controllers
+namespace WebApi.Controllers
 {
     [Route("/")]
     [ApiController]

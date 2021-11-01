@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System.Text.Json.Serialization;
 using HotChocolate;
+using HotChocolate.AspNetCore;
+using HotChocolate.AspNetCore.Playground;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,17 +13,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using PlanfiApi.GraphQl;
-using PlanfiApi.Services.Chat;
-using PlanfiApi.Services.Exercises;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
-using PlanfiApi.Services.Account;
-using PlanfiApi.Services.Organizations;
-using PlanfiApi.Services.users;
-using AccountService = PlanfiApi.Services.Account.AccountService;
-using PlanService = PlanfiApi.Services.Plans.PlanService;
+using WebApi.GraphQl;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
+using WebApi.Services.Account;
+using WebApi.Services.Chat;
+using WebApi.Services.exercises;
+using WebApi.Services.Exercises;
+using WebApi.Services.Organizations;
+using WebApi.Services.users;
+using AccountService = WebApi.Services.Account.AccountService;
+using PlanService = WebApi.Services.Plans.PlanService;
 
 namespace PlanfiApi
 {
@@ -42,6 +45,7 @@ namespace PlanfiApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson();
+
             var origins = Configuration["Origins"];
             services.AddCors(options =>
             {
@@ -54,10 +58,13 @@ namespace PlanfiApi
                             .AllowAnyMethod();
                     });
             });
+            
             services.AddSignalR();
 
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
+            
+            
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
 
@@ -66,12 +73,17 @@ namespace PlanfiApi
             services.AddIdentityCore<IdentityUser>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<DataContext>();
-            
+
+            // AutoMapper
             services.AddAutoMapper(typeof(Startup));
+
+            // Swagger
             services.AddSwaggerGen(c =>
             {
                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PlanFi", Version = "v1" });
             });
+
+            // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
@@ -95,7 +107,9 @@ namespace PlanfiApi
                     ValidateAudience = false
                 };
             });
-            
+
+
+            // email configuration
             services.AddSingleton(Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>());
             services.AddTransient<IEmailService, EmailService>();
             services.AddSession();
@@ -106,9 +120,6 @@ namespace PlanfiApi
             //StripeConfiguration.SetApiKey(Configuration["Stripe:SecretKey"]);
             
             //chat module
-            
-            //identity - and roles it's necessary or not?
-            
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddInMemoryIdentityResources(ChatIdentityServer.GetIdentityResources())
@@ -125,18 +136,6 @@ namespace PlanfiApi
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
-            
-            services
-                .AddGraphQLServer()
-                .AddQueryType<Query>()
-                .AddFiltering();
-            
-            services.AddGraphQL(SchemaBuilder.New()
-                .AddQueryType<Query>()
-                .AddFiltering()
-                .Create());
-            
-            
             //services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
             //services.AddScoped<IStripeProcessing, StripeProcessing>();
             
@@ -144,15 +143,26 @@ namespace PlanfiApi
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             });
-            
 
+            services.AddScoped<Query>();
+            services
+                .AddGraphQLServer()
+                .AddQueryType<Query>();
+
+            services.AddGraphQL(SchemaBuilder.New()
+                .AddQueryType<Query>()
+                //.AddMutationType<Mutation>()
+                .Create());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
                 //dataContext.Database.Migrate();
+
+            
                 app.UseCors(_myAllowSpecificOrigins);
+                
                 app.UseRouting();
                 app.UseSwagger();
                 app.UseSession();
@@ -163,6 +173,7 @@ namespace PlanfiApi
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Planfi");
                 });
             
+                //chat module
                 app.UseIdentityServer();
                 app.UseAuthorization();
                 app.UseEndpoints(routes =>
@@ -173,6 +184,7 @@ namespace PlanfiApi
                     routes.MapControllerRoute("default", "{controller=Health}/{action=Get}");
                 });
                 
+                app.UsePlayground(new PlaygroundOptions { QueryPath = "/graphql", Path = "/playground" });
                 app.UseAuthentication();
         }
     }

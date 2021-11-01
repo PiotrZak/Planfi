@@ -8,24 +8,20 @@ using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using PlanfiApi.Data.Entities;
-using PlanfiApi.Data.ViewModels;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
-using PlanfiApi.Models.ViewModels;
+using WebApi.Data.Entities;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
+using WebApi.Models.ViewModels;
 
-namespace PlanfiApi.Services.Exercises
+namespace WebApi.Services.exercises
 {
     public class ExerciseService : IExerciseService
     {
         private readonly DataContext _context;
-        private static IWebHostEnvironment _environment;
-        private readonly string _bucketName = "planfi-movies";
-        private readonly string _path = Path.Combine(_environment.WebRootPath, "Movies");
-        
-        
-        public ExerciseService(DataContext context, IWebHostEnvironment environment)
+        private readonly IHostingEnvironment _environment;
+
+        public ExerciseService(DataContext context, IHostingEnvironment environment)
         {
             _context = context;
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
@@ -162,31 +158,15 @@ namespace PlanfiApi.Services.Exercises
                 if (exercise != null)
                 {
                     _context.exercises.Remove(exercise);
-                    
-                    // remove all instances of exercise
                     var exerciseInstancesIds = _context.exercises
                         .Where(x => x.Name == exercise.Name && x.Description == exercise.Description);
 
-                    //delete from bucket
-                    if (exercise.Files != null && exercise.Files.Any())
-                    {
-                        for (var i = 0; i <= exercise.Files.Count; i++)
-                        {
-                            var ext = Encoding.Default.GetString(exercise.Files[i]);
-                            await DeleteMovieFromGoogleStorage(_path, exercise.Name, ext);
-                        }
-                    }
-
-                        
                     foreach(var exerciseInstanceId in exerciseInstancesIds)
                     {
                         _context.exercises.Remove(exerciseInstanceId);
                     }
                 }
             }
-            
-
-            
             var count = await _context.SaveChangesAsync();
             return count;
         }
@@ -194,22 +174,25 @@ namespace PlanfiApi.Services.Exercises
         public async Task<ExerciseModel> TransformData(CreateExercise model)
         {
             var transformModel = new ExerciseModel();
-            var filesList = new List<byte[]>();
-
             if (model.Files != null)
             {
-                foreach (var (formFile, iterator) in model.Files.Select((c, i) => (c, i)))
+                var i = 0;
+                var filesList = new List<byte[]>();
+                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
                 {
                     if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
                     {
+                        
+                        //TODO - save that file not to CurrentDirectory but to frontend directory
+                        _environment.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 
-                        var ext = Path.GetExtension(formFile.FileName);
-                        await SaveMovieToDirectory(formFile, model.Name, iterator);
-                        var bytes = Encoding.ASCII.GetBytes(ext);
-                        await using var memoryStream = new MemoryStream();
-                        await formFile.CopyToAsync(memoryStream);
-
-                        filesList.Add(bytes);
+                        //SaveMovieToGoogleStorage();
+                        SaveMovieToDirectory(formFile, model.Name, i);
+                        
+                        // var bytes = Encoding.ASCII.GetBytes(ext);
+                        // await using var memoryStream = new MemoryStream();
+                        // await formFile.CopyToAsync(memoryStream);
+                        // filesList.Add(bytes);
                     }
                     else
                     {
@@ -217,53 +200,53 @@ namespace PlanfiApi.Services.Exercises
                         await formFile.CopyToAsync(memoryStream);
                         filesList.Add(memoryStream.ToArray());
                     }
+                    i++;
                 }
+                transformModel.Name = model.Name;
+                transformModel.Description = model.Description;
+                transformModel.Files = filesList;
+                transformModel.CategoryId = model.CategoryId;
             }
-
-            transformModel.Name = model.Name;
-            transformModel.Description = model.Description;
-            transformModel.Files = filesList.Any() 
-                ? filesList
-                : null;
-            transformModel.CategoryId = model.CategoryId;
+            else
+            {
+                transformModel.Name = model.Name;
+                transformModel.Description = model.Description;
+                transformModel.Files = null;
+                transformModel.CategoryId = model.CategoryId;
+            }
 
             return transformModel;
         }
 
         private async Task SaveMovieToDirectory(IFormFile formFile,string name, int i)
         {
-            //todo - is it needed to add the file to docker directory and from this to the google cloud storage? or there is nother posisiblity?
-            if (!Directory.Exists(_path))
+            var path = Path.Combine(_environment.WebRootPath, "Movies");
+            
+            if (!Directory.Exists(path))
             {
-                Directory.CreateDirectory(_path);
+                Directory.CreateDirectory(path);
             }
             var fileName = Path.GetFileName(name+i);
             var ext = Path.GetExtension(formFile.FileName);
-            await using var stream = new FileStream(Path.Combine(_path, fileName+ext), FileMode.Create);
-            await formFile.CopyToAsync(stream);
-            await SaveMovieToGoogleStorage(_path, fileName, ext);
+            await using (var stream = new FileStream(Path.Combine(path, fileName+ext), FileMode.Create))
+            {
+                await formFile.CopyToAsync(stream);
+                SaveMovieToGoogleStorage(path, fileName, ext);
+            }
         }
 
-        private async Task SaveMovieToGoogleStorage(string path, string? fileName, string ext)
+        private void SaveMovieToGoogleStorage(string path, string? fileName, string ext)
         {
+            const string bucketName = "planfi-movies";
             var filePath = Path.Combine(path, fileName + ext);
             var gcCredentialsPath = Path.Combine(Environment.CurrentDirectory, "gc_sa_key");
             
             Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", gcCredentialsPath);
-            var gcsStorage = await StorageClient.CreateAsync();
-            await using var f = File.OpenRead(filePath);
+            var gcsStorage = StorageClient.Create();
+            using var f = File.OpenRead(filePath);
             var objectName = Path.GetFileName(filePath);
-            gcsStorage.UploadObject(_bucketName, objectName, null, f);
-        }
-        
-        private async Task DeleteMovieFromGoogleStorage(string path, string? fileName, string ext)
-        {
-            var filePath = Path.Combine(path, fileName + ext);
-            var storage = StorageClient.Create();
-            
-            var objectName = Path.GetFileName(filePath);
-            storage.DeleteObject(_bucketName, objectName);
-
+            gcsStorage.UploadObject(bucketName, objectName, null, f);
+            Console.WriteLine($"Uploaded {objectName}.");
         }
         
         public async Task<int> Update(Exercise updateExercise, string id)
@@ -324,6 +307,7 @@ namespace PlanfiApi.Services.Exercises
             return 1;
         }
     }
+    
 }
 
 

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlanfiApi.Data.Entities.Users;
+using WebApi.Data.Entities;
+using WebApi.Data.Entities.Users;
 
-namespace PlanfiApi.Data.Entities
+namespace WebApi.Entities
 {
     public class Organization
     {

@@ -1,13 +1,18 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.Linq;
 using HotChocolate;
-using PlanfiApi.Data.Entities;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models.ViewModels;
-using PlanfiApi.Services.Exercises;
+using HotChocolate.Types;
+using WebApi.Data.Entities;
+using WebApi.Entities;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
+using WebApi.Models.ViewModels;
+using WebApi.Services;
+using WebApi.Services.Exercises;
 
-namespace PlanfiApi.GraphQl
+namespace WebApi.GraphQl
 {
 
     public class Query
@@ -30,28 +35,28 @@ namespace PlanfiApi.GraphQl
             _organizationService = organizationService;
         }
         
-        [HotChocolate.Data.UseFiltering]
+        [UseFiltering]
         public Exercise GetExercise(
            [Service] DataContext dbContext, string id) =>
                dbContext.exercises.FirstOrDefault(x => x.ExerciseId == id);
         
-        [HotChocolate.Data.UseFiltering]
+        [UseFiltering]
         public List<CategoryService.CategoryViewModel> GetCategories([Service] DataContext dbContext) =>
             _categoryService.GetAll().ToList();
         
-        [HotChocolate.Data.UseFiltering]
+        [UseFiltering]
         public List<Plan> GetPlans([Service] DataContext dbContext) =>
             _planService.GetAll().ToList();
         
-        [HotChocolate.Data.UseFiltering]
+        [UseFiltering]
         public List<ExerciseViewModel> GetSerializedExercises([Service] DataContext dbContext) => 
             _exerciseService.GetSerializedExercises().ToList();
         
-        [HotChocolate.Data.UseFiltering]
+        [UseFiltering]
         public List<ExerciseViewModel> GetSerializedExercisesInstances([Service] DataContext dbContext) => 
             _exerciseService.GetSerializedExercisesInstances().ToList();
         
-        [HotChocolate.Data.UseFiltering]
+        [UseFiltering]
         public List<UserViewModel> GetUsers([Service] DataContext dbContext) => 
             _organizationService.GetUsers().ToList();
     }

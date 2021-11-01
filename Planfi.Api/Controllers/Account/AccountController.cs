@@ -4,15 +4,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PlanfiApi.Common;
-using PlanfiApi.Controllers.ViewModels;
-using PlanfiApi.Data.ViewModels;
-using PlanfiApi.Helpers;
-using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
-using PlanfiApi.Services.Account;
+using WebApi.Common;
+using WebApi.Controllers.ViewModels;
+using WebApi.Data.ViewModels;
+using WebApi.Helpers;
+using WebApi.Interfaces;
+using WebApi.Models;
+using WebApi.Services.Account;
 
-namespace PlanfiApi.Controllers.Account
+namespace WebApi.Controllers.Account
 {
     [ApiController]
     [Route("[controller]")]

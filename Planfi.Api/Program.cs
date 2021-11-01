@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using PlanfiApi;
 
-namespace PlanfiApi
+namespace WebApi
 {
     public static class Program
     {

@@ -171,9 +171,6 @@ const ExerciseImageContainer = styled.img`
 `;
 
 const Slide = ({ videoName, index, img }) => {
-
-  console.log(img)
-  
   return img.length > 100 ? (
     <ExerciseImageContainer
       key={index}
