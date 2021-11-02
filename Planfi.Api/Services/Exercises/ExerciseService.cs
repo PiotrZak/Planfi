@@ -190,7 +190,7 @@ namespace PlanfiApi.Services.Exercises
             
             var updatedFilesListBytes = new List<byte[]>();
 
-            
+           
             if (updateExercise.Files != null && updateExercise.Files.Any())
             {
                 foreach (var updatedFile in updateExercise.Files)

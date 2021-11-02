@@ -181,8 +181,8 @@ const Slide = ({ videoName, index, img }) => {
     <ReactPlayer
       controls={true}
       url={`https://storage.cloud.google.com/planfi-movies/${
-        videoName + index
-      }.mov?authuser=1`}
+        videoName + index + atob(img)
+      }?authuser=1`}
     />
   );
 };

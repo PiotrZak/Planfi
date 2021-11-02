@@ -55,7 +55,6 @@ async function handleResponseError(response) {
     }
     return response.data;
   }
-
   if (response.status === 409)
     throw ("The data was modified in the meantime. Please refresh the page.");
 

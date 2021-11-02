@@ -17,7 +17,16 @@ import {
   useNotificationContext,
   ADD,
 } from "support/context/NotificationContext";
-import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
+import {
+  weightToChange,
+  timesToChange,
+  seriesToChange,
+  repeatsToChange,
+  acceptedImageFileType,
+  maxPhotoSize,
+  maxVideoSize,
+  acceptedVideoFileType,
+} from "support/magicVariables";
 
 const Nav = withLazyComponent(React.lazy(() => import("components/atoms/Nav")));
 const GlobalTemplate = withLazyComponent(
@@ -88,16 +97,16 @@ const validationSchema = Yup.object({
 });
 
 const EditExercise = (props) => {
-
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewFiles, setPreviewFiles] = useState([]);
-  const {notificationDispatch} = useNotificationContext();
-  const [ifPlanEdited, setIfPlanEdited] = useState(false)
+  const { notificationDispatch } = useNotificationContext();
+  const [ifPlanEdited, setIfPlanEdited] = useState(false);
 
   let id;
-  props.location.state.exercise !== undefined 
-  ? id = props.location.state.exercise.exerciseId 
-  : id = props.location.state.selectedExercise;
+
+  props.location.state.exercise !== undefined
+    ? (id = props.location.state.exercise.exerciseId)
+    : (id = props.location.state.selectedExercise);
 
   const fileNotification = (message) => {
     notificationDispatch({
@@ -114,29 +123,27 @@ const EditExercise = (props) => {
       .getExerciseById(id)
       .then((data) => {
         setExerciseData(data);
-        setSelectedFiles(data.files)
-        setPreviewFiles(data.files)
+        setSelectedFiles(data.files);
+        setPreviewFiles(data.files);
       })
-      .catch((error) => { });
+      .catch((error) => {});
   }, []);
 
   useEffect(() => {
-    if(props.location.state.ifPlanEdited){
-      setIfPlanEdited(true)
+    if (props.location.state.ifPlanEdited) {
+      setIfPlanEdited(true);
     }
     getExercise(id);
   }, []);
 
-
-
   const resetFileInput = () => {
     document.getElementById("choose-file-button").value = "";
   };
+
   const [exerciseData, setExerciseData] = useState([]);
   const history = useHistory();
 
   const onSubmit = (values) => {
-
     const formData = new FormData();
     formData.append(
       "Name",
@@ -150,39 +157,30 @@ const EditExercise = (props) => {
     );
     formData.append(
       "Repeats",
-      values.repeats === undefined
-        ? exerciseData.repeats
-        : values.repeats
+      values.repeats === undefined ? exerciseData.repeats : values.repeats
     );
     formData.append(
       "Times",
-      values.times === undefined
-        ? exerciseData.times
-        : values.times
+      values.times === undefined ? exerciseData.times : values.times
     );
     formData.append(
       "Series",
-      values.series === undefined
-        ? exerciseData.series
-        : values.series
+      values.series === undefined ? exerciseData.series : values.series
     );
     formData.append(
       "Weight",
-      values.weight === undefined
-        ? exerciseData.weight
-        : values.weight
+      values.weight === undefined ? exerciseData.weight : values.weight
     );
 
     if (values.files !== undefined) {
       for (let i = 0; i < exerciseData.files.length; i++) {
         formData.append("Files", exerciseData.files[i].File);
       }
-    }
-    else {
-      if(selectedFiles)
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("Files", selectedFiles[i].File);
-      }
+    } else {
+      if (selectedFiles)
+        for (let i = 0; i < selectedFiles.length; i++) {
+          formData.append("Files", selectedFiles[i].File);
+        }
     }
 
     formData.append("CategoryId", props.location.state.id);
@@ -210,7 +208,7 @@ const EditExercise = (props) => {
             type: "error",
           },
         });
-      })
+      });
   };
 
   const handleSeries = (data) => {
@@ -218,17 +216,16 @@ const EditExercise = (props) => {
   };
 
   const handleTime = (data) => {
-    setExerciseData({ ...exerciseData, times: data  });
+    setExerciseData({ ...exerciseData, times: data });
   };
 
   const handleWeight = (data) => {
-    setExerciseData({ ...exerciseData, weight: data  });
+    setExerciseData({ ...exerciseData, weight: data });
   };
 
   const handleRepeat = (data) => {
     setExerciseData({ ...exerciseData, repeats: data });
   };
-
 
   const triggerFileUploadButton = () => {
     document.getElementById("choose-file-button").click();
@@ -236,18 +233,6 @@ const EditExercise = (props) => {
 
   const handleImageChange = (e) => {
     // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
-    const acceptedImageFileType = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/gif",
-    ];
-    const acceptedVideoFileType = ["video/mp4"];
-
-    // 10 mb
-    const maxPhotoSize = 10000000;
-    // 30 mb
-    const maxVideoSize = 30000000;
 
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
@@ -324,25 +309,12 @@ const EditExercise = (props) => {
   };
 
   function removeFile(currentPhoto) {
-
-    for (let i = 0; i <= selectedFiles.length; ++i) {
-      if (currentPhoto === selectedFiles[i].ID) {
-
-        const selectedList = [...selectedFiles];
-        const previewList = [...previewFiles];
-
-        const updatedSelectedList = selectedList.filter(
-          (item) => item.ID !== selectedFiles[i].ID
-        );
-        const updatedPreviewList = previewList.filter(
-          (item) => item.ID !== previewFiles[i].ID
-        );
-        setSelectedFiles(updatedSelectedList);
-        setPreviewFiles(updatedPreviewList);
-        resetFileInput();
-        break;
-      }
-    }
+    const listWithRemovedElement = selectedFiles.filter(
+      (file) => file !== currentPhoto
+    );
+    setSelectedFiles(listWithRemovedElement);
+    setPreviewFiles(listWithRemovedElement);
+    resetFileInput();
   }
 
   const renderAttachmentsPreview = (source) => {
@@ -356,9 +328,8 @@ const EditExercise = (props) => {
                 type={photo.Type}
                 videoType={photo.videoType}
                 alt=""
-                key={photo.ID}
-                setID={photo.ID}
-                remove={() => removeFile(photo.ID)}
+                key={photo}
+                remove={() => removeFile(photo)}
                 complete
               />
             ))}
@@ -367,8 +338,6 @@ const EditExercise = (props) => {
       }
     }
   };
-
-console.log(exerciseData)
 
   return (
     <>
@@ -421,53 +390,53 @@ console.log(exerciseData)
                   />
                 </Label>
               </ContainerDescription>
-              {ifPlanEdited &&
-              <>
-              <ExerciseEditItem>
-                <Headline>{translate("Repeat")}</Headline>
-                <Counter
-                  fill={"#FFFFFF"}
-                  defaultValue={exerciseData.repeats}
-                  initialValueToChange={repeatsToChange}
-                  handleData={handleRepeat}
-                  initialUnit={""}
-                />
-              </ExerciseEditItem>
+              {ifPlanEdited && (
+                <>
+                  <ExerciseEditItem>
+                    <Headline>{translate("Repeat")}</Headline>
+                    <Counter
+                      fill={"#FFFFFF"}
+                      defaultValue={exerciseData.repeats}
+                      initialValueToChange={repeatsToChange}
+                      handleData={handleRepeat}
+                      initialUnit={""}
+                    />
+                  </ExerciseEditItem>
 
-              <ExerciseEditItem>
-                <Headline>{translate("ExerciseTime")}</Headline>
-                <Counter
-                  fill={"#FFFFFF"}
-                  defaultValue={exerciseData.times}
-                  initialValueToChange={timesToChange}
-                  handleData={handleTime}
-                  initialUnit={"s"}
-                />
-              </ExerciseEditItem>
+                  <ExerciseEditItem>
+                    <Headline>{translate("ExerciseTime")}</Headline>
+                    <Counter
+                      fill={"#FFFFFF"}
+                      defaultValue={exerciseData.times}
+                      initialValueToChange={timesToChange}
+                      handleData={handleTime}
+                      initialUnit={"s"}
+                    />
+                  </ExerciseEditItem>
 
-              <ExerciseEditItem>
-                <Headline>{translate("Series")}</Headline>
-                <Counter
-                  fill={"#FFFFFF"}
-                  defaultValue={exerciseData.series}
-                  initialValueToChange={seriesToChange}
-                  handleData={handleSeries}
-                  initialUnit={""}
-                />
-              </ExerciseEditItem>
+                  <ExerciseEditItem>
+                    <Headline>{translate("Series")}</Headline>
+                    <Counter
+                      fill={"#FFFFFF"}
+                      defaultValue={exerciseData.series}
+                      initialValueToChange={seriesToChange}
+                      handleData={handleSeries}
+                      initialUnit={""}
+                    />
+                  </ExerciseEditItem>
 
-              <ExerciseEditItem>
-                <Headline>{translate("Weight")}</Headline>
-                <Counter
-                  fill={"#FFFFFF"}
-                  defaultValue={exerciseData.weight}
-                  initialValueToChange={weightToChange}
-                  handleData={handleWeight}
-                  initialUnit={"kg"}
-                />
-              </ExerciseEditItem>
-              </>
-              }
+                  <ExerciseEditItem>
+                    <Headline>{translate("Weight")}</Headline>
+                    <Counter
+                      fill={"#FFFFFF"}
+                      defaultValue={exerciseData.weight}
+                      initialValueToChange={weightToChange}
+                      handleData={handleWeight}
+                      initialUnit={"kg"}
+                    />
+                  </ExerciseEditItem>
+                </>
+              )}
             </Form>
           )}
         </Formik>

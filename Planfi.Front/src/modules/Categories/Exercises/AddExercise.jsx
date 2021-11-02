@@ -25,6 +25,12 @@ import GlobalTemplate from "templates/GlobalTemplate";
 import { useHistory } from "react-router-dom";
 import { withLazyComponent } from "utils/lazyComponent";
 import Loader from 'components/atoms/Loader';
+import {
+  acceptedImageFileType,
+  maxPhotoSize,
+  maxVideoSize,
+  acceptedVideoFileType,
+} from "support/magicVariables";
 
 const Checkbox = withLazyComponent(
   React.lazy(() => import("components/atoms/Checkbox"))
@@ -151,23 +157,6 @@ const AddExerciseRefactor = (props) => {
 
   const handleImageChange = (e) => {
     // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
-    const acceptedImageFileType = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "image/gif",
-    ];
-    const acceptedVideoFileType = [
-      "video/mp4",
-      "video/mov",
-      "video/avi",
-      "video/quicktime",
-    ];
-
-    // 10 mb
-    const maxPhotoSize = 10000000;
-    // 30 mb
-    const maxVideoSize = 30000000;
 
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
@@ -245,6 +234,7 @@ const AddExerciseRefactor = (props) => {
   };
 
   function removeFile(currentPhoto) {
+
     for (let i = 0; i <= selectedFiles.length; ++i) {
       if (currentPhoto === selectedFiles[i].ID) {
         const selectedList = [...selectedFiles];

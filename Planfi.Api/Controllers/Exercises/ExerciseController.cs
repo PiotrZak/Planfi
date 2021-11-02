@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -35,14 +37,18 @@ namespace PlanfiApi.Controllers.Exercises
         [HttpPost("create")]
         public async Task<IActionResult> CreateExercise([FromForm] CreateExercise model)
         {
-            var files = await _fileService.ProcessFileExercise(model.Files, model.Name);
+            var files = new List<byte[]>();
+            if (model.Files != null)
+            {
+                files = await _fileService.ProcessFileExercise(model.Files, model.Name);
+            }
 
             var exercise = new Exercise()
             {
                 ExerciseId = Guid.NewGuid().ToString(),
                 Name = model.Name,
                 Description = model.Description,
-                Files = files,
+                Files = files.Any() ? files : null,
                 CategoryId = model.CategoryId,
             };
                 

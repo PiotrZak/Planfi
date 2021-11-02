@@ -77,7 +77,26 @@ namespace PlanfiApi.Services.Files
         public async Task DeleteMovieFromGoogleStorage(string fileName)
         {
             var storage = await StorageClient.CreateAsync();
-            await storage.DeleteObjectAsync(_bucketName, fileName);
+
+            var isExist = IsObjectExist(fileName);
+            if (isExist)
+            {
+                await storage.DeleteObjectAsync(_bucketName, fileName);
+            }
+        }
+
+        private bool IsObjectExist(string objectName)
+        {
+            try
+            {
+                var client = StorageClient.Create();
+                client.GetObject(_bucketName, objectName);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 

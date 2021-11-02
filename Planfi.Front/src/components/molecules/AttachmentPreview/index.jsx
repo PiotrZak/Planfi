@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Icon from 'components/atoms/Icon';
-import ReactPlayer from 'react-player';
 
 const Container = styled.div`
   height: 4.8rem;
@@ -39,34 +37,6 @@ const Image = styled.img`
   border-radius: 2px;
 `;
 
-const StyledOverlay = styled.div`
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  background: ${({ theme }) => theme.colorGray70};
-`;
-
-const CloseIconContainer = styled.div`
-
-`;
-
-const VideoPlayer = (attachmentSrc) => (
-  <StyledOverlay>
-    <CloseIconContainer>
-      <Icon name="union" size="2rem" cursorType="pointer" />
-    </CloseIconContainer>
-    <ReactPlayer
-      url={attachmentSrc}
-      controls
-      light
-      width="100%"
-      height="80vh"
-    />
-  </StyledOverlay>
-);
 
 export const TYPE = {
   IMAGE: 'image',
@@ -77,8 +47,6 @@ const AttachmentPreview = ({
   attachmentSrc, complete, setID, remove, type, videoType,
 }) => {
   const [attachment, setAttachment] = useState('img/blankImage.png');
-
-  const setFullScreen = (attachmentSrc) => createPortal(<VideoPlayer attachmentSrc={attachmentSrc} />, document.body);
 
   if (complete && attachment !== attachmentSrc) {
     setAttachment(attachmentSrc);
