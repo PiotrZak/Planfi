@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using PlanfiApi.Data.Entities;
 using WebApi.Data.Entities;
 using WebApi.Entities;
 

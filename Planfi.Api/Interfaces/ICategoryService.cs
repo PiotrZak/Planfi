@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PlanfiApi.Services.Exercises;
-using WebApi.Data.Entities;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Entities;
 using WebApi.Models;
 
@@ -11,7 +11,7 @@ namespace PlanfiApi.Interfaces
     {
         Category GetById(string id);
         Category Create(Category category);
-        IEnumerable<CategoryService.CategoryViewModel> GetAll();
+        IEnumerable<CategoryViewModel> GetAll();
         Task<int> Delete(string[] id);
         Task<int> AssignExercise(string id, Exercise exercise);
         void AssignExercisesToCategory(string categoryId, IEnumerable<string> id);

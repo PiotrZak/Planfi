@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
-using WebApi.Data.Entities;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
-using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace PlanfiApi.Services.Exercises
@@ -74,13 +74,7 @@ namespace PlanfiApi.Services.Exercises
             return transformModel;
         }
         
-    public class CategoryViewModel
-    {
-        public string CategoryId { get; set; }
-        public string Title { get; set; }
-        public int Exercises { get; set; }
-        public string OrganizationId { get; set; }
-    }
+
     
         public async Task<int> Delete(string[] ids)
         {
@@ -113,12 +107,16 @@ namespace PlanfiApi.Services.Exercises
 
                 if (duplicatedExercises.Any(duplicatedExercise => duplicatedExercise.CategoryId == exercise.CategoryId))
                 {
-                    throw new AppException(exercise.Name + " is already in this catgory");
+                    throw new AppException(exercise.Name + " is already in this category");
                 }
             }
-            
-            category.Exercises.Add(exercise);
-            _context.categories.Update(category);
+
+            if (category != null)
+            {
+                category.Exercises.Add(exercise);
+                _context.categories.Update(category);
+            }
+
             await _context.SaveChangesAsync();
             return 1;
         }

@@ -1,19 +1,17 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HotChocolate;
 using HotChocolate.Types;
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Exercises;
 using WebApi.Data.Entities;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
-using WebApi.Models;
 using WebApi.Models.ViewModels;
-using WebApi.Services;
 
-namespace WebApi.GraphQl
+namespace PlanfiApi.GraphQl
 {
 
     public class Query
@@ -42,7 +40,7 @@ namespace WebApi.GraphQl
                dbContext.exercises.FirstOrDefault(x => x.ExerciseId == id);
         
         [UseFiltering]
-        public List<CategoryService.CategoryViewModel> GetCategories([Service] DataContext dbContext) =>
+        public List<CategoryViewModel> GetCategories([Service] DataContext dbContext) =>
             _categoryService.GetAll().ToList();
         
         [UseFiltering]

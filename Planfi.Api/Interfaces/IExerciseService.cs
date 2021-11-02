@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Data.Entities;
-using WebApi.Models;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Models.UpdateModels;
 using WebApi.Models.ViewModels;
 
-namespace WebApi.Interfaces
+namespace PlanfiApi.Interfaces
 {
     public interface IExerciseService
     {
@@ -18,8 +18,7 @@ namespace WebApi.Interfaces
         IEnumerable<ExerciseViewModel> GetSerializedExercisesInstances();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);
-        Task<int> Update(Exercise exercise, string id);
+        Task<int> Update(UpdateExerciseModel exercise, string id);
         Task<int> Delete(string[] id);
-        Task<ExerciseModel> TransformData(CreateExercise model);
     }
 }

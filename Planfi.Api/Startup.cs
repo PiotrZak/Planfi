@@ -15,9 +15,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PlanfiApi.GraphQl;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Services.Exercises;
-using WebApi.GraphQl;
+using PlanfiApi.Services.Files;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
@@ -141,6 +142,7 @@ namespace PlanfiApi
             services.AddScoped<IPlanService, PlanService>();
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IFileService, FileService>();
             //services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
             //services.AddScoped<IStripeProcessing, StripeProcessing>();
             
@@ -160,10 +162,7 @@ namespace PlanfiApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
                 //dataContext.Database.Migrate();
-
-            
                 app.UseCors(_myAllowSpecificOrigins);
-                
                 app.UseRouting();
                 app.UseSwagger();
                 app.UseSession();

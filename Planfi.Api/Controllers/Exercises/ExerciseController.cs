@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
-using WebApi.Data.Entities;
+using PlanfiApi.Models.UpdateModels;
+using PlanfiApi.Services.Files;
 using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models;
 
 namespace PlanfiApi.Controllers.Exercises
 {
@@ -19,26 +18,34 @@ namespace PlanfiApi.Controllers.Exercises
     public class ExercisesController : ControllerBase
     {
         private readonly IExerciseService _exerciseService;
+        private readonly IFileService _fileService;
         private readonly ICategoryService _categoryService;
-        private readonly IMapper _mapper;
 
         public ExercisesController(
             ICategoryService categoryService,
             IExerciseService exerciseService,
-            IMapper mapper
-            )
+            IFileService fileService)
         {
             _categoryService = categoryService;
             _exerciseService = exerciseService;
-            _mapper = mapper;
+            _fileService = fileService;
         }
         
         [AllowAnonymous]
         [HttpPost("create")]
         public async Task<IActionResult> CreateExercise([FromForm] CreateExercise model)
         {
-            var convertedModel = await _exerciseService.TransformData(model);
-            var exercise = _mapper.Map<Exercise>(convertedModel);
+            var files = await _fileService.ProcessFileExercise(model.Files, model.Name);
+
+            var exercise = new Exercise()
+            {
+                ExerciseId = Guid.NewGuid().ToString(),
+                Name = model.Name,
+                Description = model.Description,
+                Files = files,
+                CategoryId = model.CategoryId,
+            };
+                
             try
             {
                 await _categoryService.AssignExercise(model.CategoryId, exercise);
@@ -107,35 +114,9 @@ namespace PlanfiApi.Controllers.Exercises
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromForm] UpdateExerciseModel model)
         {
-            
-            var filesList = new List<byte[]>();
-            if (model.Files != null)
-            {
-                foreach (var formFile in model.Files.Where(formFile => formFile.Length > 0))
-                {
-                    await using var memoryStream = new MemoryStream();
-                    await formFile.CopyToAsync(memoryStream);
-                    filesList.Add(memoryStream.ToArray());
-                }
-            }
-            
-            var transformModel = new ExerciseModel
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Repeats = model.Repeats,
-                Times = model.Times,
-                Series = model.Series,
-                Weight = model.Weight,
-                Files = filesList,
-            };
-
-            var exercise = _mapper.Map<Exercise>(transformModel);
-            exercise.ExerciseId = id;
-
             try
             {
-                await _exerciseService.Update(exercise, id);
+                await _exerciseService.Update(model, id);
                 return Ok();
             }
             catch (AppException ex)

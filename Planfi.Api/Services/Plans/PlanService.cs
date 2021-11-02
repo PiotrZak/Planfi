@@ -8,6 +8,7 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;

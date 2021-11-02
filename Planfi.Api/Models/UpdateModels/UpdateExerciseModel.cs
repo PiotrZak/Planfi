@@ -1,8 +1,7 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models.UpdateModels
 {
     public class UpdateExerciseModel
     {
@@ -17,6 +16,6 @@ namespace WebApi.Models
         public int Times { get; set; }
         public int Series { get; set; }
         public int Weight { get; set; }
-        public List<IFormFile> Files { get; set; }
+        public List<IFormFile>? Files { get; set; }
     }
 }

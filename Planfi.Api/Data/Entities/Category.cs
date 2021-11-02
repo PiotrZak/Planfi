@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PlanfiApi.Data.Entities;
 using WebApi.Data.Entities;
-using WebApi.GraphQl;
 
 namespace WebApi.Entities
 {
