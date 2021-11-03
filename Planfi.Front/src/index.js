@@ -23,7 +23,7 @@ import "style.css";
 import config from '../config.json';
 import LoginPage from './modules/Auth/LoginPage';
 
-const developmentApiUrl = config.apps.PlanfiApi.url
+const developmentApiUrl = config.apps.PlanfiApi.url + "/graphql"
 const localHostApiUrl = "http://localhost:9001/graphql"
 
 const httpLink = createHttpLink({
