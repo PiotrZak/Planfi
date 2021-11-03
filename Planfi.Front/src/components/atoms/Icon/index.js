@@ -28,6 +28,7 @@ const IconsCode = {
   'user-circle': 'e90c',
   cog: 'e918',
   'image-slash': 'e919',
+  'youtube': 'e920',
 };
 
 const FontIcon = styled.span`

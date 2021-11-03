@@ -99,6 +99,7 @@ const validationSchema = Yup.object({
 const EditExercise = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewFiles, setPreviewFiles] = useState([]);
+  const [filesToDelete, setFilesToDelete] = useState([]);
   const { notificationDispatch } = useNotificationContext();
   const [ifPlanEdited, setIfPlanEdited] = useState(false);
 
@@ -172,18 +173,16 @@ const EditExercise = (props) => {
       values.weight === undefined ? exerciseData.weight : values.weight
     );
 
-    if (values.files !== undefined) {
-      for (let i = 0; i < exerciseData.files.length; i++) {
-        formData.append("Files", exerciseData.files[i].File);
-      }
-    } else {
-      if (selectedFiles)
-        for (let i = 0; i < selectedFiles.length; i++) {
-          formData.append("Files", selectedFiles[i].File);
-        }
+    for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("Files", selectedFiles[i].File)
+    }
+
+    for (let i = 0; i < filesToDelete.length; i++) {
+      formData.append("FilesToDelete", filesToDelete[i]);
     }
 
     formData.append("CategoryId", props.location.state.id);
+    console.log(formData);
 
     exerciseService
       .editExercise(id, formData)
@@ -232,73 +231,29 @@ const EditExercise = (props) => {
   };
 
   const handleImageChange = (e) => {
-    // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
-
     if (e.target.files) {
       Array.from(e.target.files).map((File) => {
-        const fileType = File.type;
-        const fileSize = File.size;
-
-        // checking if the photo file type is correct
-        if (acceptedImageFileType.includes(fileType)) {
-          // checking photo file size
-          if (fileSize <= maxPhotoSize) {
-            // creating file object with unique ID
-            const ID = Random(1, 10000);
-            const fileData = {
-              ID,
-              File: File,
-              Type: TYPE.IMAGE,
-              VideoType: null,
-            };
-
-            const previewFileData = {
-              ID,
-              File: URL.createObjectURL(File),
-              Type: TYPE.IMAGE,
-              VideoType: null,
-            };
-            // append file object to state
-            setSelectedFiles((prevState) => prevState.concat(fileData));
-            setPreviewFiles((prevState) => prevState.concat(previewFileData));
+        if (acceptedImageFileType.includes(File.type)) {
+          if (File.size <= maxPhotoSize) {
+            setSelectedFiles((prevState) => prevState.concat(File));
+            setPreviewFiles((prevState) => prevState.concat(File));
           } else {
-            // file size if too big alert
             fileNotification(
               `File size is too big ${File.name}. Photo size limit is 10 MB`
             );
             resetFileInput();
           }
-          // checking if the video file type is correct
-        } else if (acceptedVideoFileType.includes(fileType)) {
-          // checking video file size
-          if (fileSize <= maxVideoSize) {
-            // creating file object with unique ID
-            const ID = Random(1, 10000);
-            const fileData = {
-              ID,
-              File: File,
-              Type: TYPE.VIDEO,
-              VideoType: fileType,
-            };
-
-            const previewFileData = {
-              ID,
-              File: URL.createObjectURL(File),
-              Type: TYPE.IMAGE,
-              VideoType: null,
-            };
-            // append file object to state
-            setSelectedFiles((prevState) => prevState.concat(fileData));
-            setPreviewFiles((prevState) => prevState.concat(previewFileData));
+        } else if (acceptedVideoFileType.includes(File.type)) {
+          if (File.size <= maxVideoSize) {
+            setSelectedFiles((prevState) => prevState.concat(File));
+            setPreviewFiles((prevState) => prevState.concat(File));
           } else {
-            // file size if too big alert
             fileNotification(
               `File size is too big ${File.name}. Video size limit is 30 MB`
             );
             resetFileInput();
           }
         } else {
-          // invalid file type alert
           fileNotification(
             "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
           );
@@ -312,6 +267,7 @@ const EditExercise = (props) => {
     const listWithRemovedElement = selectedFiles.filter(
       (file) => file !== currentPhoto
     );
+    setFilesToDelete([...filesToDelete, currentPhoto])
     setSelectedFiles(listWithRemovedElement);
     setPreviewFiles(listWithRemovedElement);
     resetFileInput();
@@ -322,9 +278,9 @@ const EditExercise = (props) => {
       if (source.length > 0) {
         return (
           <ImagePreviewContainer id="image-preview-container">
-            {source.map((photo) => (
+            {source.map((photo, i) => (
               <AttachmentPreview
-                attachmentSrc={photo.File}
+                attachmentSrc={photo}
                 type={photo.Type}
                 videoType={photo.videoType}
                 alt=""

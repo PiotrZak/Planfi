@@ -154,13 +154,6 @@ namespace PlanfiApi.Services.Exercises
                 .OrderBy(x => x.ExerciseId)
                 .ToListAsync();
             
-            var exerciseInstances = _context.exercises
-                .Where(x => exercises
-                    .Select(y => y.Description)
-                        .Contains(x.Description) && exercises
-                    .Select(z => z.Name)
-                        .Contains(x.Name));
-            
             for (var i = 0; i < exercises.Count; i++)
             {
                 var files = exercises[i].Files;
@@ -175,7 +168,6 @@ namespace PlanfiApi.Services.Exercises
             }
 
             _context.exercises.RemoveRange(exercises);
-            _context.exercises.RemoveRange(exerciseInstances);
 
             var count = await _context.SaveChangesAsync();
             return count;
@@ -188,33 +180,7 @@ namespace PlanfiApi.Services.Exercises
             if (exercise == null)
                 throw new AppException("Exercise not found!");
             
-            var updatedFilesListBytes = new List<byte[]>();
-
-           
-            if (updateExercise.Files != null && updateExercise.Files.Any())
-            {
-                foreach (var updatedFile in updateExercise.Files)
-                {
-                    await using var updatedFileBytes = new MemoryStream();
-                    await updatedFile.CopyToAsync(updatedFileBytes);
-                    updatedFilesListBytes.Add(updatedFileBytes.ToArray());
-                }
-
-                if (exercise.Files != null)
-                {
-                    for (var i = 0; i < exercise.Files.Count; i++)
-                    {
-                        if (!updatedFilesListBytes.Contains(exercise.Files[i]))
-                        {
-                            var result = Encoding.UTF8.GetString(exercise.Files[i]);
-                            if (result.Length < 10)
-                            {
-                                await _fileService.DeleteMovieFromGoogleStorage(exercise.Name + i + result);
-                            }
-                        }
-                    }
-                }
-            }
+            exercise.Files = await _fileService.DeleteFilesFromExercise(exercise.Name, updateExercise.FilesToDelete, exercise.Files);
             
             if (updateExercise.Files != null && updateExercise.Files.Any())
             {

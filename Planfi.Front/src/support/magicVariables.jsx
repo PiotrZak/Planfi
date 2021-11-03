@@ -14,4 +14,9 @@ export const acceptedImageFileType = [
   "image/png",
   "image/gif",
 ];
-export const acceptedVideoFileType = ["video/mp4"];
+export const acceptedVideoFileType = [
+  "video/mp4",
+  "video/mov",
+  "video/avi",
+  "video/quicktime",
+];

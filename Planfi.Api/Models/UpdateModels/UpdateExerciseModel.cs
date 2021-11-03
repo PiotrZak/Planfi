@@ -17,5 +17,6 @@ namespace PlanfiApi.Models.UpdateModels
         public int Series { get; set; }
         public int Weight { get; set; }
         public List<IFormFile>? Files { get; set; }
+        public List<byte[]>? FilesToDelete { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using PlanfiApi.Data.Entities;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -85,6 +86,26 @@ namespace PlanfiApi.Services.Files
             }
         }
 
+        public async Task<List<byte[]>> DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles)
+        {
+            for (var i = 0; i < filesToDelete.Count; i++)
+            {
+                var result = Encoding.UTF8.GetString(filesToDelete[i]);
+                if (result.Length < 10)
+                {
+                    await DeleteMovieFromGoogleStorage(exerciseName + i + result);
+                }
+                else
+                {
+                    var countOfArrayBytes = filesToDelete[i].Length;
+                    var fileToRemove = exerciseFiles.Find(x => x.Length == countOfArrayBytes);
+                    exerciseFiles.Remove(fileToRemove);
+                }
+            }
+
+            return exerciseFiles;
+        }
+
         private bool IsObjectExist(string objectName)
         {
             try
@@ -106,5 +127,6 @@ namespace PlanfiApi.Services.Files
         Task<string> SaveMovieToDirectory(IFormFile formFile, string name);
         Task SaveMovieToGoogleStorage(string fileName, string path);
         Task DeleteMovieFromGoogleStorage(string fileName);
+        Task<List<byte[]>> DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles);
     }
 }

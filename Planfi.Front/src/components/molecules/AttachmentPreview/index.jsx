@@ -1,23 +1,19 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import Icon from 'components/atoms/Icon';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import PropTypes from "prop-types";
+import Icon from "components/atoms/Icon";
 
 const Container = styled.div`
   height: 4.8rem;
   width: 4.8rem;
   border-radius: 2px;
-
   background: ${({ theme }) => theme.colorGray70};
-
   position: relative;
 `;
 
 const Circle = styled.div`
   height: 1.6rem;
   width: 1.6rem;
-
-  //center X icon in Circle
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,8 +23,8 @@ const Circle = styled.div`
   border-radius: 50%;
 
   position: absolute;
-  top: -.5rem;
-  right: -.5rem;
+  top: -0.5rem;
+  right: -0.5rem;
 `;
 
 const Image = styled.img`
@@ -37,29 +33,33 @@ const Image = styled.img`
   border-radius: 2px;
 `;
 
-
 export const TYPE = {
-  IMAGE: 'image',
-  VIDEO: 'video',
+  IMAGE: "image",
+  VIDEO: "video",
 };
 
-const AttachmentPreview = ({
-  attachmentSrc, complete, setID, remove, type, videoType,
-}) => {
-  const [attachment, setAttachment] = useState('img/blankImage.png');
-
-  if (complete && attachment !== attachmentSrc) {
-    setAttachment(attachmentSrc);
-  }
-
+const AttachmentPreview = ({ attachmentSrc, setID, remove, type }) => {
   // render image preview
-  if (type === TYPE.IMAGE) {
+  if (
+    type === TYPE.IMAGE ||
+    attachmentSrc.length > 100 ||
+    attachmentSrc.type == TYPE.IMAGE
+  ) {
     return (
       <Container id={setID}>
         <Circle onClick={remove} id={`img-prev-${setID}`}>
-          <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
+          <Icon
+            name="union"
+            size=".7rem"
+            onClick={remove}
+            id={`img-prev-${setID}`}
+          />
         </Circle>
-        <Image src={attachment} />
+        {attachmentSrc.length > 100 ? (
+          <Image src={`data:image/jpeg;base64,${attachmentSrc}`} />
+        ) : (
+          <Image src={attachmentSrc} />
+        )}
       </Container>
     );
   }
@@ -67,9 +67,18 @@ const AttachmentPreview = ({
   return (
     <Container id={setID}>
       <Circle onClick={remove} id={`img-prev-${setID}`}>
-        <Icon name="union" size=".7rem" onClick={remove} id={`img-prev-${setID}`} />
+        <Icon
+          name="union"
+          size=".7rem"
+          onClick={remove}
+          id={`img-prev-${setID}`}
+        />
       </Circle>
-      {/* // todo - add movie icon */}
+      <img
+        width="18px"
+        height="18px"
+        src={require("../../../../public/icons/library/youtube.svg")}
+      />
     </Container>
   );
 };
@@ -83,7 +92,7 @@ AttachmentPreview.propTypes = {
 };
 
 AttachmentPreview.defaultProps = {
-  videoType: 'null',
+  videoType: "null",
 };
 
 export default AttachmentPreview;
