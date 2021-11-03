@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
 using PlanfiApi.Data.Entities;
@@ -10,6 +11,7 @@ using WebApi.Data.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models.ViewModels;
+using WebApi.Services.Organizations;
 
 namespace PlanfiApi.GraphQl
 {
@@ -56,8 +58,8 @@ namespace PlanfiApi.GraphQl
             _exerciseService.GetSerializedExercisesInstances().ToList();
         
         [UseFiltering]
-        public List<UserViewModel> GetUsers([Service] DataContext dbContext) => 
-            _organizationService.GetUsers().ToList();
+        public async Task<List<OrganizationService.UserSqlProjection>> GetUsers([Service] DataContext dbContext) => 
+            await _organizationService.GetUsers();
     }
     
     public static class ExtensionMethods

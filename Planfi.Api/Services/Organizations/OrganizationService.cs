@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -88,26 +91,44 @@ namespace WebApi.Services.Organizations
             return clients;
         }
 
-        public IEnumerable<UserViewModel> GetUsers()
+        public class UserSqlProjection
+        {
+            public string User_Id { get; set; }
+            public string Role { get; set; }
+            public byte[]? Avatar { get; set; }
+            public string First_Name { get; set; }
+            public string Last_Name { get; set; }
+            public string Email { get; set; }
+            public string Phone_Number { get; set; }
+            public string Organization_Id { get; set; }
+            public bool Is_Activated { get; set; }
+        }
+
+        public async Task<List<UserSqlProjection>> GetUsers()
         {
             //dapper query
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
-            connection.OpenAsync();
+            await connection.OpenAsync();
             
-            var users = connection.Query<UserViewModel>(
+            var users = await connection.QueryAsync<UserSqlProjection>(
                 @"SELECT 
                 u.user_id, 
                 u.avatar, 
+				r.name as role,
                 u.first_name, 
                 u.last_name, 
                 u.email, 
                 u.phone_number, 
-                u.organization_id 
+                u.organization_id,
+				u.is_activated
                 FROM public.users as u
-                WHERE is_activated = true"
+				JOIN public.role as r
+				ON u.role_id = r.id
+                WHERE is_activated = true
+                "
                 );
-
-            return (List<UserViewModel>) users;
+            
+            return users.ToList();
         }
 
         public IEnumerable<User> GetOrganizationTrainers(string organizationId)

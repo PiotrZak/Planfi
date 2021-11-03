@@ -67,13 +67,13 @@ export const RenderType = ({
         return (
           <StyledGenericElement
             key={i}
-            onClick={() => interaction && redirectToItem(possibleTypes.user, element.userId)}
+            onClick={() => interaction && redirectToItem(possibleTypes.user, element.user_Id)}
             version={theme}
             avatarType="circle"
             avatarUrl={element.avatar && element.avatar}
-            headline={`${element.firstName}  ${element.lastName}`}
+            headline={`${element.first_Name}  ${element.last_Name}`}
             user={element}
-            subline={element.role}
+            subline={element.is_Activated ? element.role : 'Pending'}
           />
         );
       case 'plans':

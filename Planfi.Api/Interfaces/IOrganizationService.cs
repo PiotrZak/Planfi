@@ -1,10 +1,10 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
-using WebApi.Models;
-using WebApi.Models.ViewModels;
+using WebApi.Services.Organizations;
 
-namespace WebApi.Interfaces
+namespace PlanfiApi.Interfaces
 {
     public interface IOrganizationService
     {
@@ -14,7 +14,7 @@ namespace WebApi.Interfaces
         IEnumerable<User> GetOrganizationUsers(string organizationId);
         IEnumerable<User> GetOrganizationTrainers(string organizationId);
         IEnumerable<User> GetOrganizationClients(string organizationId);
-        IEnumerable<UserViewModel> GetUsers();
+        Task<List<OrganizationService.UserSqlProjection>> GetUsers();
         User GetUserById(string organizationId, string userId);
         void Delete(string[] id);
         void AssignUsersToOrganization(string organizationId, string[] userIds);

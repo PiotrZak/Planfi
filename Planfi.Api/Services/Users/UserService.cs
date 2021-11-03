@@ -6,6 +6,7 @@ using AutoMapper;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;

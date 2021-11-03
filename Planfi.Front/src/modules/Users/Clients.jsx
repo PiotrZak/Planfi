@@ -17,35 +17,21 @@ import { commonUtil } from 'utils/common.util';
 import InviteUserModal from './InviteUsersModal';
 import SmallButton from 'components/atoms/SmallButton';
 import { ClientPanel } from './ClientPanel';
-import { UsersPanel } from './micromodules/UsersPanel';
-import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
-import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
 import { filterDataByTerm } from '../../utils/common.util';
 
 const Container = styled.div`
   text-align: center;
 `;
 
-
-
 const Clients = () => {
 
-
-  // 
   const user = JSON.parse((localStorage.getItem('user')));
   const { theme } = useThemeContext();
   const { notificationDispatch } = useNotificationContext();
-
-
-
-
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
-
-
-  //bottom panel logic
 
   const invisible = 'none';
   const visible = 'flex';
@@ -59,12 +45,14 @@ const Clients = () => {
   const [refresh, setRefresh] = useState(false)
 
   const Clients = gql`{
-    users(where: {organizationId: "${user.organizationId}"})
+    users(where: {organization_Id: "${user.organizationId}", user_Id_not: "${user.userId}"})
     {
-        userId
-        avatar
-        firstName
-        lastName
+      user_Id
+      role
+      avatar
+      first_Name
+      last_Name
+      is_Activated
      }
     }
   `;

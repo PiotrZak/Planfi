@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Common;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;

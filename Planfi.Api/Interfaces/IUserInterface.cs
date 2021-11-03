@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
