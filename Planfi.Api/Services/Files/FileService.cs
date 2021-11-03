@@ -29,6 +29,7 @@ namespace PlanfiApi.Services.Files
 
             if (files != null)
             {
+                //todo - only one movie per exercise for now.
                 foreach (var (formFile, iterator) in files.Select((c, i) => (c, i)))
                 {
                     if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
@@ -36,11 +37,10 @@ namespace PlanfiApi.Services.Files
                         var ext = Path.GetExtension(formFile.FileName);
                         await using var memoryStream = new MemoryStream();
                         await formFile.CopyToAsync(memoryStream);
-                        var fileNameWithExtensionAndNumber = fileName+iterator+ext;
+                        var fileNameWithExtensionAndNumber = fileName+1+ext;
 
                         var path = await SaveMovieToDirectory(formFile, fileNameWithExtensionAndNumber);
                         await SaveMovieToGoogleStorage(fileNameWithExtensionAndNumber, path);
-                        
                         filesList.Add(Encoding.ASCII.GetBytes(ext));
                     }
                     else
@@ -72,7 +72,11 @@ namespace PlanfiApi.Services.Files
         {
             var gcsStorage = await StorageClient.CreateAsync();
             Stream stream = new FileStream(path, FileMode.Open);
-            await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, stream);
+            var isExist = IsObjectExist(fileName);
+            if (!isExist)
+            {
+                await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, stream);
+            }
         }
 
         public async Task DeleteMovieFromGoogleStorage(string fileName)
@@ -86,24 +90,15 @@ namespace PlanfiApi.Services.Files
             }
         }
 
-        public async Task<List<byte[]>> DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles)
+        public async Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles)
         {
             for (var i = 0; i < filesToDelete.Count; i++)
             {
                 var result = Encoding.UTF8.GetString(filesToDelete[i]);
-                if (result.Length < 10)
-                {
-                    await DeleteMovieFromGoogleStorage(exerciseName + i + result);
-                }
-                else
-                {
-                    var countOfArrayBytes = filesToDelete[i].Length;
-                    var fileToRemove = exerciseFiles.Find(x => x.Length == countOfArrayBytes);
-                    exerciseFiles.Remove(fileToRemove);
-                }
+                if (result.Length >= 10) continue;
+                
+                await DeleteMovieFromGoogleStorage(exerciseName + i + result);
             }
-
-            return exerciseFiles;
         }
 
         private bool IsObjectExist(string objectName)
@@ -127,6 +122,6 @@ namespace PlanfiApi.Services.Files
         Task<string> SaveMovieToDirectory(IFormFile formFile, string name);
         Task SaveMovieToGoogleStorage(string fileName, string path);
         Task DeleteMovieFromGoogleStorage(string fileName);
-        Task<List<byte[]>> DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles);
+        Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles);
     }
 }

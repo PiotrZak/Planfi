@@ -20,3 +20,5 @@ export const acceptedVideoFileType = [
   "video/avi",
   "video/quicktime",
 ];
+
+export const acceptedFiles =acceptedImageFileType.concat(acceptedVideoFileType)

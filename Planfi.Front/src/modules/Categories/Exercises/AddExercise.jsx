@@ -26,6 +26,7 @@ import { useHistory } from "react-router-dom";
 import { withLazyComponent } from "utils/lazyComponent";
 import Loader from 'components/atoms/Loader';
 import {
+  acceptedFiles,
   acceptedImageFileType,
   maxPhotoSize,
   maxVideoSize,
@@ -106,7 +107,7 @@ const AddExerciseRefactor = (props) => {
     formData.append("Name", values.exerciseName);
     formData.append("Description", values.exerciseDescription);
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append("Files", selectedFiles[i].File);
+      formData.append("Files", selectedFiles[i]);
     }
     const { id } = props.history.location.state;
     formData.append("CategoryId", id);
@@ -156,118 +157,61 @@ const AddExerciseRefactor = (props) => {
   };
 
   const handleImageChange = (e) => {
-    // 'video/mov', 'video/wmv', 'video/fly', 'video/avi', 'video/avchd', 'webm', 'mkv'
+    const files = Array.from(e.target.files).map((File) => {
 
-    if (e.target.files) {
-      Array.from(e.target.files).map((File) => {
-        const fileType = File.type;
-        const fileSize = File.size;
-
-        // checking if the photo file type is correct
-        if (acceptedImageFileType.includes(fileType)) {
-          // checking photo file size
-          if (fileSize <= maxPhotoSize) {
-            // creating file object with unique ID
-            const ID = Random(1, 10000);
-            const fileData = {
-              ID,
-              File: File,
-              Type: TYPE.IMAGE,
-              VideoType: null,
-            };
-
-            const previewFileData = {
-              ID,
-              File: URL.createObjectURL(File),
-              Type: TYPE.IMAGE,
-              VideoType: null,
-            };
-            // append file object to state
-            setSelectedFiles((prevState) => prevState.concat(fileData));
-            setPreviewFiles((prevState) => prevState.concat(previewFileData));
-          } else {
-            // file size if too big alert
-            fileNotification(
-              `File size is too big ${File.name}. Photo size limit is 10 MB`
-            );
-            resetFileInput();
-          }
-          // checking if the video file type is correct
-        } else if (acceptedVideoFileType.includes(fileType)) {
-          // checking video file size
-          if (fileSize <= maxVideoSize) {
-            // creating file object with unique ID
-            const ID = Random(1, 10000);
-            const fileData = {
-              ID,
-              File: File,
-              Type: TYPE.VIDEO,
-              VideoType: fileType,
-            };
-
-            const previewFileData = {
-              ID,
-              File: null,
-              Type: TYPE.VIDEO,
-              VideoType: null,
-            };
-            // append file object to state
-            setSelectedFiles((prevState) => prevState.concat(fileData));
-            setPreviewFiles((prevState) => prevState.concat(previewFileData));
-          } else {
-            // file size if too big alert
-            fileNotification(
-              `File size is too big ${File.name}. Video size limit is 30 MB`
-            );
-            resetFileInput();
-          }
-        } else {
-          // invalid file type alert
+      if (File.size > maxPhotoSize) {
+        if (acceptedImageFileType.includes(File.type)) {
           fileNotification(
-            "Invalid file type. allowed files mp4,mov,avi, jpeg, jpg, png, gif"
+            `File size is too big ${File.name}. Photo size limit is 10 MB`
           );
           resetFileInput();
+          return;
         }
-        return null;
-      });
-    }
-  };
+      }
+
+      if (File.size > maxVideoSize) {
+        if (acceptedVideoFileType.includes(File.type)) {
+          fileNotification(
+            `File size is too big ${File.name}. Video size limit is 30 MB`
+          );
+          resetFileInput();
+          return;
+        }
+      }
+
+
+      if(!acceptedFiles.includes(File.type)){
+        fileNotification(
+          "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
+        );
+        resetFileInput();
+        return;
+      }
+
+      setSelectedFiles((prevState) => prevState.concat(File));
+      setPreviewFiles((prevState) => prevState.concat(File));
+  });
+}
 
   function removeFile(currentPhoto) {
-
-    for (let i = 0; i <= selectedFiles.length; ++i) {
-      if (currentPhoto === selectedFiles[i].ID) {
-        const selectedList = [...selectedFiles];
-        const previewList = [...previewFiles];
-
-        const updatedSelectedList = selectedList.filter(
-          (item) => item.ID !== selectedFiles[i].ID
-        );
-        const updatedPreviewList = previewList.filter(
-          (item) => item.ID !== previewFiles[i].ID
-        );
-        setSelectedFiles(updatedSelectedList);
-        setPreviewFiles(updatedPreviewList);
-        resetFileInput();
-        break;
-      }
-    }
+    const listWithRemovedElement = selectedFiles.filter(
+      (file) => file !== currentPhoto
+    );
+    setSelectedFiles(listWithRemovedElement);
+    setPreviewFiles(listWithRemovedElement);
+    resetFileInput();
   }
 
-  const renderAttachmentsPreview = (source) => {
-    if (source.length > 0) {
+  const renderAttachmentsPreview = (previewFiles) => {
+    if (previewFiles.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          {source.map((photo) => (
+          {previewFiles.map((photo) => (
             <AttachmentPreview
-              attachmentSrc={photo.File}
-              type={photo.Type}
-              videoType={photo.videoType}
+              attachmentSrc={photo}
               alt=""
               key={photo.ID}
-              setID={photo.ID}
-              remove={() => removeFile(photo.ID)}
-              complete
+              remove={() => removeFile(photo)}
             />
           ))}
         </ImagePreviewContainer>

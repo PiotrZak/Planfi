@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Icon from "components/atoms/Icon";
+import {
+  acceptedImageFileType,
+  acceptedVideoFileType,
+} from "support/magicVariables";
 
 const Container = styled.div`
   height: 4.8rem;
@@ -33,37 +37,14 @@ const Image = styled.img`
   border-radius: 2px;
 `;
 
-export const TYPE = {
-  IMAGE: "image",
-  VIDEO: "video",
-};
+function isObject(val) {
+  if (val === null) { return false;}
+  return ( (typeof val === 'function') || (typeof val === 'object') );
+}
 
-const AttachmentPreview = ({ attachmentSrc, setID, remove, type }) => {
-  // render image preview
-  if (
-    type === TYPE.IMAGE ||
-    attachmentSrc.length > 100 ||
-    attachmentSrc.type == TYPE.IMAGE
-  ) {
-    return (
-      <Container id={setID}>
-        <Circle onClick={remove} id={`img-prev-${setID}`}>
-          <Icon
-            name="union"
-            size=".7rem"
-            onClick={remove}
-            id={`img-prev-${setID}`}
-          />
-        </Circle>
-        {attachmentSrc.length > 100 ? (
-          <Image src={`data:image/jpeg;base64,${attachmentSrc}`} />
-        ) : (
-          <Image src={attachmentSrc} />
-        )}
-      </Container>
-    );
-  }
-  // render video player preview
+const AttachmentPreview = ({ attachmentSrc, remove }) => {
+  const setID = 5;
+
   return (
     <Container id={setID}>
       <Circle onClick={remove} id={`img-prev-${setID}`}>
@@ -74,25 +55,23 @@ const AttachmentPreview = ({ attachmentSrc, setID, remove, type }) => {
           id={`img-prev-${setID}`}
         />
       </Circle>
-      <img
-        width="18px"
-        height="18px"
-        src={require("../../../../public/icons/library/youtube.svg")}
-      />
+      {acceptedVideoFileType.includes(attachmentSrc.type) ? (
+        <img
+          width="18px"
+          height="18px"
+          src={require("../../../../public/icons/library/youtube.svg")}
+        />
+      ) : (
+        <>
+          {isObject(attachmentSrc) ? (
+            <Image src={URL.createObjectURL(attachmentSrc)} />
+          ) : (
+            <Image src={`data:image/jpeg;base64,${attachmentSrc}`} />
+          )}
+        </>
+      )}
     </Container>
   );
-};
-
-AttachmentPreview.propTypes = {
-  attachmentSrc: PropTypes.string.isRequired,
-  complete: PropTypes.bool.isRequired,
-  type: PropTypes.oneOf([TYPE.VIDEO, TYPE.IMAGE]).isRequired,
-  videoType: PropTypes.string,
-  // setID: PropTypes.string.isRequired,
-};
-
-AttachmentPreview.defaultProps = {
-  videoType: "null",
 };
 
 export default AttachmentPreview;

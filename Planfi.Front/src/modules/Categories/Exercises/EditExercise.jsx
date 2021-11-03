@@ -23,6 +23,7 @@ import {
   seriesToChange,
   repeatsToChange,
   acceptedImageFileType,
+  acceptedFiles,
   maxPhotoSize,
   maxVideoSize,
   acceptedVideoFileType,
@@ -124,7 +125,12 @@ const EditExercise = (props) => {
       .getExerciseById(id)
       .then((data) => {
         setExerciseData(data);
-        setSelectedFiles(data.files);
+        if(data.files.length == 0) {
+          setSelectedFiles([]);
+        }
+        else{
+          setSelectedFiles(data.files);
+        }
         setPreviewFiles(data.files);
       })
       .catch((error) => {});
@@ -174,7 +180,7 @@ const EditExercise = (props) => {
     );
 
     for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("Files", selectedFiles[i].File)
+      formData.append("Files", selectedFiles[i]);
     }
 
     for (let i = 0; i < filesToDelete.length; i++) {
@@ -231,45 +237,47 @@ const EditExercise = (props) => {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files) {
-      Array.from(e.target.files).map((File) => {
+
+    const files =[];
+
+    Array.from(e.target.files).map((File) => {
+      if (File.size > maxPhotoSize) {
         if (acceptedImageFileType.includes(File.type)) {
-          if (File.size <= maxPhotoSize) {
-            setSelectedFiles((prevState) => prevState.concat(File));
-            setPreviewFiles((prevState) => prevState.concat(File));
-          } else {
-            fileNotification(
-              `File size is too big ${File.name}. Photo size limit is 10 MB`
-            );
-            resetFileInput();
-          }
-        } else if (acceptedVideoFileType.includes(File.type)) {
-          if (File.size <= maxVideoSize) {
-            setSelectedFiles((prevState) => prevState.concat(File));
-            setPreviewFiles((prevState) => prevState.concat(File));
-          } else {
-            fileNotification(
-              `File size is too big ${File.name}. Video size limit is 30 MB`
-            );
-            resetFileInput();
-          }
-        } else {
           fileNotification(
-            "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
+            `File size is too big ${File.name}. Photo size limit is 10 MB`
           );
           resetFileInput();
+          return;
         }
-      });
-    }
+      }
+
+      if (File.size > maxVideoSize) {
+        if (acceptedVideoFileType.includes(File.type)) {
+          fileNotification(
+            `File size is too big ${File.name}. Video size limit is 30 MB`
+          );
+          resetFileInput();
+          return;
+        }
+      }
+
+      if (!acceptedFiles.includes(File.type)) {
+        fileNotification(
+          "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
+        );
+        resetFileInput();
+        return;
+      }
+      setSelectedFiles((x) => x.concat(File));
+    });
   };
 
   function removeFile(currentPhoto) {
     const listWithRemovedElement = selectedFiles.filter(
       (file) => file !== currentPhoto
     );
-    setFilesToDelete([...filesToDelete, currentPhoto])
+    setFilesToDelete([...filesToDelete, currentPhoto]);
     setSelectedFiles(listWithRemovedElement);
-    setPreviewFiles(listWithRemovedElement);
     resetFileInput();
   }
 
@@ -335,7 +343,7 @@ const EditExercise = (props) => {
                 triggerFileUploadButton={triggerFileUploadButton}
                 handleImageChange={handleImageChange}
               />
-              {renderAttachmentsPreview(previewFiles)}
+              {renderAttachmentsPreview(selectedFiles)}
               <ContainerDescription>
                 <Label text={translate("AddExerciseDescription")}>
                   <Field

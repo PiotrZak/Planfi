@@ -179,22 +179,40 @@ namespace PlanfiApi.Services.Exercises
             
             if (exercise == null)
                 throw new AppException("Exercise not found!");
-            
-            exercise.Files = await _fileService.DeleteFilesFromExercise(exercise.Name, updateExercise.FilesToDelete, exercise.Files);
+
+            var files = exercise.Files;
+
+            if (files != null)
+            {
+                if (updateExercise.FilesToDelete != null && updateExercise.FilesToDelete.Any())
+                {
+                    await _fileService.DeleteFilesFromExercise(exercise.Name, updateExercise.FilesToDelete,exercise.Files);
+
+                    foreach (var fileToRemove in updateExercise.FilesToDelete
+                        .Select(file => files
+                        .Find(x => x.Length == file.Length)))
+                    {
+                        files.Remove(fileToRemove);
+                    }
+                }
+            }
             
             if (updateExercise.Files != null && updateExercise.Files.Any())
             {
-                var files = await _fileService.ProcessFileExercise(updateExercise.Files, updateExercise.Name);
-                if (exercise.Files != null)
+                var addedFiles = await _fileService.ProcessFileExercise(updateExercise.Files, updateExercise.Name);
+
+                if (files != null)
                 {
-                    var addedExercises = files.Concat(exercise.Files).ToList();
-                    exercise.Files = addedExercises;
+                    files = files.Concat(addedFiles).ToList();
                 }
                 else
                 {
-                    exercise.Files = files;
+                    files = addedFiles;
                 }
+
             }
+
+            exercise.Files = files;
             
             if (!string.IsNullOrWhiteSpace(updateExercise.Name))
             {
