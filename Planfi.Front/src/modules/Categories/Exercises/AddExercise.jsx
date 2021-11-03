@@ -10,13 +10,11 @@ import Input from "components/molecules/Input";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
 import { exerciseService } from "services/exerciseService";
+import { useThemeContext } from "support/context/ThemeContext";
 import { routes } from "utils/routes";
+import AttachmentPreview from "components/molecules/AttachmentPreview";
 import Nav from "components/atoms/Nav";
 import TextArea from "components/molecules/TextArea";
-import AttachmentPreview, {
-  TYPE,
-} from "components/molecules/AttachmentPreview";
-import Random from "utils/Random";
 import {
   useNotificationContext,
   ADD,
@@ -24,7 +22,7 @@ import {
 import GlobalTemplate from "templates/GlobalTemplate";
 import { useHistory } from "react-router-dom";
 import { withLazyComponent } from "utils/lazyComponent";
-import Loader from 'components/atoms/Loader';
+import Loader from "components/atoms/Loader";
 import {
   acceptedFiles,
   acceptedImageFileType,
@@ -32,6 +30,8 @@ import {
   maxVideoSize,
   acceptedVideoFileType,
 } from "support/magicVariables";
+import axios from "axios";
+import { EXERCISES_URL } from "../../../services/utils";
 
 const Checkbox = withLazyComponent(
   React.lazy(() => import("components/atoms/Checkbox"))
@@ -77,13 +77,51 @@ const validationSchema = Yup.object({
   exerciseDescription: Yup.string(),
 });
 
+const ProgressBar = ({ bgcolor, progress, height }) => {
+  const Parentdiv = {
+    height: height,
+    width: "100%",
+    backgroundColor: "whitesmoke",
+  };
+
+  const Childdiv = {
+    height: "100%",
+    width: `${progress}%`,
+    backgroundColor: bgcolor,
+  };
+
+  const Center = {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+    fontSize: "1.6rem",
+  };
+
+  return (
+    <div style={Parentdiv}>
+      <div style={Childdiv}>
+        {progress < 90 ? (
+          <div style={Center}>Sending to cloud</div>
+        ) : (
+          <div style={Center}>
+            <Loader isLoading={true}></Loader>Processing in cloud 
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const [previewFiles, setPreviewFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const { notificationDispatch } = useNotificationContext();
+  const { theme } = useThemeContext();
 
-  console.log(props);
+  console.log(theme.colorPrimary);
+
+  const [uploadPercentage, setUploadPercentage] = useState(0);
   const categoryTitle = props.location.state.categoryTitle;
 
   const fileNotification = (message) => {
@@ -112,11 +150,28 @@ const AddExerciseRefactor = (props) => {
     const { id } = props.history.location.state;
     formData.append("CategoryId", id);
 
-    setLoading(true)
+    setLoading(true);
 
-    exerciseService
-      .addExercise(formData)
-      .then(() => {
+    const options = {
+      onUploadProgress: (progressEvent) => {
+        const { loaded, total } = progressEvent;
+        let percent = Math.floor((loaded * 100) / total);
+        console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+        if (percent < 100) {
+          setUploadPercentage(percent);
+        }
+      },
+    };
+
+    axios
+      .post(`${EXERCISES_URL}/create`, formData, options)
+      .then((res) => {
+        setUploadPercentage(100, () => {
+          setTimeout(() => {
+            setUploadPercentage(0);
+          }, 1000);
+        });
         notificationDispatch({
           type: ADD,
           payload: {
@@ -125,14 +180,13 @@ const AddExerciseRefactor = (props) => {
           },
         });
 
-        setLoading(false)
+        setLoading(false);
 
         if (values.addNextExercise) {
           values.exerciseName = "";
           values.exerciseDescription = "";
           values.addNextExercise = "";
           setSelectedFiles([]);
-          setPreviewFiles([]);
           history.push({
             pathname: routes.addExercise,
             state: { id: id, title: categoryTitle },
@@ -158,7 +212,6 @@ const AddExerciseRefactor = (props) => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files).map((File) => {
-
       if (File.size > maxPhotoSize) {
         if (acceptedImageFileType.includes(File.type)) {
           fileNotification(
@@ -179,8 +232,7 @@ const AddExerciseRefactor = (props) => {
         }
       }
 
-
-      if(!acceptedFiles.includes(File.type)){
+      if (!acceptedFiles.includes(File.type)) {
         fileNotification(
           "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
         );
@@ -189,25 +241,24 @@ const AddExerciseRefactor = (props) => {
       }
 
       setSelectedFiles((prevState) => prevState.concat(File));
-      setPreviewFiles((prevState) => prevState.concat(File));
-  });
-}
+    });
+  };
 
   function removeFile(currentPhoto) {
     const listWithRemovedElement = selectedFiles.filter(
       (file) => file !== currentPhoto
     );
     setSelectedFiles(listWithRemovedElement);
-    setPreviewFiles(listWithRemovedElement);
     resetFileInput();
   }
 
-  const renderAttachmentsPreview = (previewFiles) => {
-    if (previewFiles.length > 0) {
+  const renderAttachmentsPreview = (selectedFiles) => {
+    if (selectedFiles.length > 0) {
       return (
         <ImagePreviewContainer id="image-preview-container">
-          {previewFiles.map((photo) => (
+          {selectedFiles.map((photo, i) => (
             <AttachmentPreview
+              key={i}
               attachmentSrc={photo}
               alt=""
               key={photo.ID}
@@ -222,9 +273,12 @@ const AddExerciseRefactor = (props) => {
   return (
     <GlobalTemplate>
       {loading ? (
-        <Loader isLoading={loading} />
+        <ProgressBar
+          bgcolor={theme.colorPrimaryDefault}
+          progress={uploadPercentage}
+          height={4}
+        />
       ) : (
-        <ExerciseTemplate>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -259,7 +313,7 @@ const AddExerciseRefactor = (props) => {
                   triggerFileUploadButton={triggerFileUploadButton}
                   handleImageChange={handleImageChange}
                 />
-                {renderAttachmentsPreview(previewFiles)}
+                {renderAttachmentsPreview(selectedFiles)}
                 <ContainerDescription>
                   <Label text={translate("AddExerciseDescription")}>
                     <Field
@@ -282,7 +336,6 @@ const AddExerciseRefactor = (props) => {
               </Form>
             )}
           </Formik>
-        </ExerciseTemplate>
       )}
     </GlobalTemplate>
   );

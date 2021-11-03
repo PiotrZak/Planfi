@@ -22,10 +22,8 @@ const Circle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   background: ${({ theme }) => theme.colorErrorDefault};
   border-radius: 50%;
-
   position: absolute;
   top: -0.5rem;
   right: -0.5rem;
@@ -42,17 +40,16 @@ function isObject(val) {
   return ( (typeof val === 'function') || (typeof val === 'object') );
 }
 
-const AttachmentPreview = ({ attachmentSrc, remove }) => {
-  const setID = 5;
+const AttachmentPreview = ({ attachmentSrc, remove, key}) => {
 
   return (
-    <Container id={setID}>
-      <Circle onClick={remove} id={`img-prev-${setID}`}>
+    <Container id={key}>
+      <Circle onClick={remove} id={`img-prev-${key}`}>
         <Icon
           name="union"
           size=".7rem"
           onClick={remove}
-          id={`img-prev-${setID}`}
+          id={`img-prev-${key}`}
         />
       </Circle>
       {acceptedVideoFileType.includes(attachmentSrc.type) ? (

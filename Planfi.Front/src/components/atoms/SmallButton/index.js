@@ -60,22 +60,5 @@ const SmallButton = ({
   );
 };
 
-SmallButton.propTypes = {
-  iconName: PropTypes.string.isRequired,
-  fill: PropTypes.oneOf([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
-  size: PropTypes.string,
-  buttonType: PropTypes.oneOf(['primary', 'secondary', 'dangerous', 'regular']),
-  buttonShape: PropTypes.oneOf(['square', 'circle']),
-};
-
-SmallButton.defaultProps = {
-  fill: ({ theme }) => theme.colorPrimary,
-  size: '1.5rem',
-  buttonType: 'primary',
-  buttonShape: 'circle',
-};
 
 export default SmallButton;

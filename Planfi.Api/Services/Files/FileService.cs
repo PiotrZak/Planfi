@@ -97,7 +97,7 @@ namespace PlanfiApi.Services.Files
                 var result = Encoding.UTF8.GetString(filesToDelete[i]);
                 if (result.Length >= 10) continue;
                 
-                await DeleteMovieFromGoogleStorage(exerciseName + i + result);
+                await DeleteMovieFromGoogleStorage(exerciseName + 1 + result);
             }
         }
 
