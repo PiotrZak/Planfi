@@ -29,7 +29,7 @@ export const UserInfo = ({ user }) => {
   return (
     <UserInfoContainer>
       <Container>
-        <Avatar user={user} size="lg" />
+        <Avatar avatar={user.avatar} firstName={user.firstName} lastName={user.lastName} size="lg" />
         <StyledParagraph type="Label-Button">
           {`${firstName} ${lastName}`}
         </StyledParagraph>

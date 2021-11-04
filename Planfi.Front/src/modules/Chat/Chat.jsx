@@ -24,7 +24,7 @@ const ChatContainer = () => {
   }, [currentRoom]);
 
   return (
-    <div className="panel panel-default">
+    <div className="panel">
       {connection && (
         <ChatRoomList openRoom={() => 1} connection={connection} />
       )}

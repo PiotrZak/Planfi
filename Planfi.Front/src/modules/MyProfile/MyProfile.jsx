@@ -21,6 +21,9 @@ import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
+import { Tabs } from 'antd';
+
+const { TabPane } = Tabs;
 
 const Container = styled.div`
   margin: auto;
@@ -33,7 +36,7 @@ const Container = styled.div`
       width: calc(100% - 3.2rem);
       margin: 0 1.6rem;
     `
-}
+  }
   }
 `;
 
@@ -49,7 +52,7 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
 
   const user = JSON.parse((localStorage.getItem('user')));
   const [updatedUser, setUpdatedUser] = useState(user);
-  
+
   useEffect(() => {
     setUpdatedUser(user);
     getUserById();
@@ -86,14 +89,14 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       }
     }
 
-    if(role  === Role.User){
+    if (role === Role.User) {
       if (tab === 'first') {
         setToRender(<UserPlans id={userId} />);
       }
       if (tab === 'second') {
         setToRender(<ClientTrainers id={userId} />);
       }
-    }  
+    }
   };
 
 
@@ -134,19 +137,27 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       <MyProfileTemplate>
         <UserInfoBackground>
           <Container>
-          <Nav>
-            <Wrapper>
-          <Icon fill = {theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} />
-          </Wrapper>
+            <Nav>
+              <Wrapper>
+                <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} />
+              </Wrapper>
             </Nav>
             <ContainerCentred>
               <UserInfo user={updatedUser} />
             </ContainerCentred>
+            {/* <Tabs defaultActiveKey="1" centered>
+              <TabPane tab="Tab 1" key="1">
+                Content of Tab Pane 1
+              </TabPane>
+              <TabPane tab="Tab 2" key="2">
+                Content of Tab Pane 2
+              </TabPane>
+            </Tabs> */}
             {renderSwitchedButton()}
           </Container>
         </UserInfoBackground>
         <Container type="entry">
-          {toRender} 
+          {toRender}
         </Container>
       </MyProfileTemplate>
       <EditUserDataModal
@@ -165,8 +176,8 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
         onClose={() => setOpenEditUserPasswordModal(false)}
       />
       <MyProfilePanel
-        toggleTheme = {toggleTheme}
-        toggleLanguage = {toggleLanguage}
+        toggleTheme={toggleTheme}
+        toggleLanguage={toggleLanguage}
         userId={user.userId}
         setOpenEditUserData={setOpenEditUserData}
         setOpenEditMailModal={setOpenEditMailModal}

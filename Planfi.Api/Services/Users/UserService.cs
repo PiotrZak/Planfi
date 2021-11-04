@@ -19,9 +19,8 @@ using WebApi.Data.ViewModels;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
-using WebApi.Models.ViewModels;
 
-namespace WebApi.Services.users{
+namespace PlanfiApi.Services.Users{
 
 
     public class UserService : IUserService
@@ -75,7 +74,7 @@ namespace WebApi.Services.users{
         {
             return _context.users
                 .Include(x => x.Role)
-                .SingleOrDefault(x => x.Email == email);
+                .SingleOrDefault(x => string.Equals(x.Email, email, StringComparison.CurrentCultureIgnoreCase));
         }
         
         public IEnumerable<User> GetAllUsers ()

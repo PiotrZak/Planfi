@@ -1,6 +1,6 @@
 using System;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models
 {
     
     public class ChatRoom
@@ -8,7 +8,7 @@ namespace WebApi.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
-    
+
     public class Message
     {
         public Guid Id { get; set; }
@@ -16,6 +16,17 @@ namespace WebApi.Models
         public string Contents { get; set; }
         public string UserName { get; set; }
         public DateTimeOffset PostedAt { get; set; }
+    }
+    
+    public class MessageViewModel
+    {
+        public Guid Id { get; set; }
+        public Guid Room_Id { get; set; }
+        public byte[] Avatar { get; set; }
+        public string Contents { get; set; }
+        public string User_Name { get; set; }
+        public string User_Id { get; set; }
+        public DateTimeOffset Posted_At { get; set; }
     }
     
     public class ChatMessage

@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddMessageForm = ({ connection, room, setMessage, message, handleSubmit}) => {
+const AddMessageForm = ({ room, setMessage, message, handleSubmit}) => {
 
 
   return (

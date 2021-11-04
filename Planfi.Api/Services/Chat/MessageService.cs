@@ -2,43 +2,77 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper.Configuration;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using PlanfiApi.Models;
 using WebApi.Helpers;
-using WebApi.Models;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace WebApi.Services.Chat
+namespace PlanfiApi.Services.Chat
 {
 
     public interface IMessageService
     {
-        Task<List<Message>> GetMessagesAsync();
-        Task<List<Message>> GetMessagesForChatRoomAsync(Guid roomId);
+        Task<List<MessageViewModel>> GetMessagesAsync();
+        Task<List<MessageViewModel>> GetMessagesForChatRoomAsync(Guid roomId);
         Task<bool> AddMessageToRoomAsync(Guid roomId, Message message);
     }
 
     public class MessageService : IMessageService
     {
         private readonly DataContext _context;
-
-        public MessageService(DataContext context)
+        private IConfiguration Configuration { get; }
+        
+        public MessageService(DataContext context, IConfiguration configuration)
         {
-            _context = context;
+	        _context = context;
+	        Configuration = configuration;
         }
 
-        public async Task<List<Message>> GetMessagesAsync()
+        public async Task<List<MessageViewModel>> GetMessagesAsync()
         {
-            var messages = await _context.messages.ToListAsync();
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+            
+            const string messagesQuery = @"SELECT 
+	            m.id,
+	            CONCAT(u.first_name, u.last_name) as user_name,
+	            u.avatar,
+	            m.contents,
+	            m.room_id,
+	            m.user_name,
+	            m.posted_at
+	            FROM public.messages as m
+	            JOIN public.users as u
+	            ON u.user_id = m.user_name";
 
+            var messages = (await connection.QueryAsync<MessageViewModel>(messagesQuery)).ToList();
             return messages;
         }
 
-        public async Task<List<Message>> GetMessagesForChatRoomAsync(Guid roomId)
+        public async Task<List<MessageViewModel>> GetMessagesForChatRoomAsync(Guid roomId)
         {
-            var messagesForRoom = await _context.messages
-                .Where(m => m.RoomId == roomId)
-                .ToListAsync<Message>();
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+            
+            const string messagesQuery = @"SELECT 
+	            m.id,
+	            CONCAT(u.first_name, ' ', u.last_name) as user_name,
+	            u.avatar,
+	            m.contents,
+	            m.room_id,
+	            m.user_name as user_id,
+	            m.posted_at
+	            FROM public.messages as m
+	            JOIN public.users as u
+	            ON u.user_id = m.user_name
+	            WHERE m.room_id = @roomId";
 
-            return messagesForRoom;
+            var messages = (await connection.QueryAsync<MessageViewModel>(messagesQuery, new {roomId})).ToList();
+            return messages;
         }
 
         public async Task<bool> AddMessageToRoomAsync(Guid roomId, Message message)

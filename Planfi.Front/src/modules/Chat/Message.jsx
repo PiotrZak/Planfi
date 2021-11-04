@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Comment, Tooltip, Avatar } from 'antd';
+import { Comment, Tooltip } from 'antd';
+import Avatar from "components/molecules/Avatar";
+import moment from "moment";
+import {formatDistance,parseISO} from 'date-fns'
 
 const getDateString = dateVal => {
   const date = new Date(dateVal);
@@ -7,33 +10,33 @@ const getDateString = dateVal => {
     date.toLocaleTimeString();
 }
 
+const lastWord =(words) =>{
+  var n = words.split(/[\s,]+/) ;
+  return n[n.length - 1];
+}
 
 const Message = (props) => {
+  const firstName = props.userName.split(" ")[0];
+  const lastName = lastWord(props.userName);
+
   return (
     <>
       <Comment
         author={<a>{props.userName}</a>}
         //todo - add user avatar
-        // avatar={<Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />}
+        avatar={<Avatar avatar={props.avatar} firstName={firstName} lastName={lastName} />}
         content={
           <p>
-          {props.content}
+            {props.contents}
           </p>
         }
-        // datetime={
-        //   <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-        //     <span>{getDateString(props.postedAt).fromNow()}</span>
-        //   </Tooltip>
-        // }
+        datetime={
+          <Tooltip title={getDateString(props.postedAt)}>
+            <span>{formatDistance(parseISO(props.postedAt), new Date())}</span>
+          </Tooltip>
+        }
       />
     </>
-    // <div className="message">
-    //   <div className="message-username">
-    //     {props.userName} ~ 
-    //     <b>{getDateString(props.postedAt)}</b>
-    //   </div>
-    //   <div className="message-text">{props.contents}</div>
-    // </div>
   );
 };
 

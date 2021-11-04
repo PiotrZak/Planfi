@@ -60,8 +60,7 @@ const StyledParagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.colorPrimary};
 `;
 
-const renderAvatar = (user, size) => {
-  const { avatar, firstName, lastName } = user;
+const renderAvatar = (avatar, firstName, lastName, size) => {
 
   if (avatar === null) {
     const initials = firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
@@ -74,7 +73,7 @@ const renderAvatar = (user, size) => {
   return <StyledAvatar src={`data:image/jpeg;base64,${avatar}`} size={size} />;
 };
 
-const Avatar = ({ user, size }) => <>{renderAvatar(user, size)}</>;
+const Avatar = ({ avatar, firstName, lastName, size }) => <>{renderAvatar(avatar, firstName, lastName, size)}</>;
 
 Avatar.propTypes = {
   user: PropTypes.object.isRequired,
