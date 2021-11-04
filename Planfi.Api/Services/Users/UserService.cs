@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
+using Dapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Npgsql;
+using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Models.ViewModels;
+using PlanfiApi.Services.Organizations;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
@@ -270,18 +276,34 @@ namespace WebApi.Services.users{
         }
 
 
-        public async Task<IEnumerable<User>>GetClientsByTrainer(string id)
+        public async Task<IEnumerable<OrganizationService.UserSqlProjection>>GetClientsByTrainer()
         {
-            var clientsTrainers = await _context.userstrainers
-                .Where(x => x.TrainerId == id)
-                .Select(x => x.ClientId)
-                .ToListAsync();
+            var httpContext = new HttpContextAccessor().HttpContext;
+            var userId = httpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
             
-            var clientIds = clientsTrainers.ToList();
+            const string trainerClientsQuery = @"SELECT 
+	            u.user_id, 
+	            ut.client_id,
+	            u.avatar, 
+	            r.name as role,
+	            u.first_name, 
+	            u.last_name, 
+	            u.email, 
+	            u.phone_number, 
+	            u.organization_id,
+	            u.is_activated
+	            FROM public.users as u
+	            JOIN public.role as r
+	            ON u.role_id = r.id
+	            FULL JOIN public.userstrainers as ut
+	            ON ut.client_id = u.user_id
+	            WHERE ut.trainer_id = @userId";
 
-            return clientIds.Select((t, i) => (User) _context.users
-                .FirstOrDefault(x => x.UserId == clientIds[i]))
-                .ToList();
+            var trainerClients = (await connection.QueryAsync<OrganizationService.UserSqlProjection>(trainerClientsQuery, new {userId})).ToList();
+
+            return trainerClients.ToList();
         }
 
         public async Task<IEnumerable<User>> GetTrainersByClient(string id)

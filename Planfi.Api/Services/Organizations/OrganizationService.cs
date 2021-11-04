@@ -5,15 +5,13 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Interfaces;
-using PlanfiApi.Models.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models.ViewModels;
 
-namespace WebApi.Services.Organizations
+namespace PlanfiApi.Services.Organizations
 {
     public class OrganizationService : IOrganizationService
     {

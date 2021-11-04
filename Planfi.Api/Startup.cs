@@ -17,14 +17,15 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlanfiApi.GraphQl;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Middlewares;
 using PlanfiApi.Services.Exercises;
 using PlanfiApi.Services.Files;
+using PlanfiApi.Services.Organizations;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Services.Account;
 using WebApi.Services.Chat;
-using WebApi.Services.Organizations;
 using WebApi.Services.users;
 using AccountService = WebApi.Services.Account.AccountService;
 using Path = System.IO.Path;
@@ -67,8 +68,6 @@ namespace PlanfiApi
 
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
-            
-            
             services.AddDbContext<DataContext>(options =>
                 options.UseNpgsql(sqlConnectionString));
 
@@ -143,6 +142,7 @@ namespace PlanfiApi
             services.AddScoped<IExerciseService, ExerciseService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddHttpContextAccessor();
             //services.AddScoped<IPayPalProcesesing, PayPalProcessing>();
             //services.AddScoped<IStripeProcessing, StripeProcessing>();
             
@@ -174,6 +174,11 @@ namespace PlanfiApi
                 });
             
                 //chat module
+                
+                //Middlewares
+                //var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
+                //app.UseMiddleware<GetUserContextMiddleware>(sqlConnectionString);
+                
                 app.UseIdentityServer();
                 app.UseAuthorization();
                 app.UseEndpoints(routes =>

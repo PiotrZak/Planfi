@@ -3,6 +3,7 @@ using WebApi.Data.Entities.Users;
 
 namespace PlanfiApi.Models.ViewModels
 {
+    //todo - realize what is really needed here
     public class UserViewModel
     {
         [Key]

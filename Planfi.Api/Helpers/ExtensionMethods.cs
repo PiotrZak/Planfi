@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PlanfiApi.Data.Entities.Users;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 

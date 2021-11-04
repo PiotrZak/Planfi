@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Models.ViewModels;
+using PlanfiApi.Services.Organizations;
 using WebApi.Data.Entities.Users;
 using WebApi.Models;
 using WebApi.Models.ViewModels;
@@ -21,7 +23,7 @@ namespace WebApi.Interfaces
         Task<int> AssignPlanToClients(string[] userIds, string[] planIds);
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
-        Task<IEnumerable<User>> GetClientsByTrainer(string trainerId);
+        Task<IEnumerable<OrganizationService.UserSqlProjection>> GetClientsByTrainer();
         Task<IEnumerable<User>> GetTrainersByClient(string clientId);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }

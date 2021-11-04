@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'formik';
-import PropTypes from 'prop-types';
 import breakPointSize from 'utils/rwd';
 
 export const CHECKBOX_TYPE = {
@@ -60,9 +59,5 @@ const StyledCheckboxGenericElement = styled.input.attrs({ type: 'checkbox' })`
 `;
 
 
-
-Checkbox.propTypes = {
-  checkboxType: PropTypes.oneOf([CHECKBOX_TYPE.FORMIK, CHECKBOX_TYPE.GENERIC_ELEMENT]).isRequired,
-};
 
 export default Checkbox;

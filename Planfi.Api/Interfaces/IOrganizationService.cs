@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Services.Organizations;
 using WebApi.Data.Entities.Users;
 using WebApi.Entities;
-using WebApi.Services.Organizations;
 
 namespace PlanfiApi.Interfaces
 {

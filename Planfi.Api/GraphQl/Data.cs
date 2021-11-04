@@ -7,11 +7,11 @@ using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Exercises;
+using PlanfiApi.Services.Organizations;
 using WebApi.Data.Entities;
 using WebApi.Helpers;
 using WebApi.Interfaces;
 using WebApi.Models.ViewModels;
-using WebApi.Services.Organizations;
 
 namespace PlanfiApi.GraphQl
 {

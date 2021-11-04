@@ -180,6 +180,7 @@ const Slide = ({ videoName, index, img }) => {
   ) : (
     <ReactPlayer
       controls={true}
+      playsinline
       url={`https://storage.cloud.google.com/planfi-movies/${
         videoName + 1 + atob(img)
       }?authuser=1`}

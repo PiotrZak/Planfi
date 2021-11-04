@@ -11,6 +11,7 @@ function filteringArraysScopes(allElements, removeElementsFromList) {
 }
 
 function getCheckedData(selectedData, type) {
+  
   const selectedItems = selectedData
     .filter((el) => el.value === true)
     .map((a) => a[type]);

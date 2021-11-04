@@ -1,5 +1,6 @@
 using AutoMapper;
 using PlanfiApi.Data.Entities;
+using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Models.UpdateModels;
 using PlanfiApi.Models.ViewModels;

@@ -60,7 +60,7 @@ export const userService = {
   }
 
   function allClientsByTrainer(id) {
-    return http.get(`${USER_URL}trainerClients/${id}`);
+    return http.get(`${USER_URL}trainerClients`);
   }
 
   function allTrainersByClient(id) {

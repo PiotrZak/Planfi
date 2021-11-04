@@ -94,7 +94,7 @@ const handleavatarType = (type) => {
     case 'circle':
       return css`
         height: 4rem;
-        width: 4rem;
+        width: 4rem;s
         border-radius: 50%;
       `;
     case 'square':
@@ -205,19 +205,6 @@ const GenericElement = ({
 }
 </>
   );
-};
-
-GenericElement.propTypes = {
-  headline: PropTypes.string.isRequired,
-  subline: PropTypes.string,
-  avatarType: PropTypes.oneOf(['circle', 'square', 'noAvatar']),
-  avatarUrl: PropTypes.string,
-  onMenuClick: PropTypes.func,
-};
-
-GenericElement.defaultProps = {
-  avatarType: 'noAvatar',
-  avatarUrl: 'null',
 };
 
 export default GenericElement;

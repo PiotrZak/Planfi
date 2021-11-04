@@ -19,6 +19,11 @@ import SmallButton from 'components/atoms/SmallButton';
 import { ClientPanel } from './ClientPanel';
 import { filterDataByTerm } from '../../utils/common.util';
 
+
+
+const invisible = 'none';
+const visible = 'flex';
+
 const Container = styled.div`
   text-align: center;
 `;
@@ -32,10 +37,6 @@ const Clients = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
   const [activeUsers, setActiveUsers] = useState([]);
-
-  const invisible = 'none';
-  const visible = 'flex';
-
   const [bottomSheet, setBottomSheet] = useState(invisible);
   const [assignPlan, setAssignPlan] = useState(invisible);
   const [assignTrainer, setAssignTrainer] = useState(invisible);
@@ -178,9 +179,11 @@ const Clients = () => {
   }, [refreshData])
 
   const submissionHandleElement = (selectedData) => {
-    const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
+    console.log(selectedData)
+    const selectedUsers = commonUtil.getCheckedData(selectedData, 'user_Id');
+    console.log(selectedUsers)
     setActiveUsers(selectedUsers);
-    setAssignTrainer('flex');
+    setAssignTrainer(visible);
   };
 
   let results;
@@ -193,7 +196,6 @@ const Clients = () => {
   return (
     <>
       <GlobalTemplate>
-        
         <Nav>
           <Heading>{translate('Clients')}</Heading>
           <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
@@ -202,46 +204,36 @@ const Clients = () => {
         <Container>
           <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
         </Container>
-
-
         <Loader isLoading={isLoading}>
-          {results.filter(x => x.userId != user.userId).length > 0
+          {results.length > 0
             ? (
               <CheckboxGenericComponent
                 dataType="users"
-                displayedValue="firstName"
-                dataList={results.filter(x => x.userId != user.userId)}
+                displayedValue="first_Name"
+                dataList={results}
                 onSelect={submissionHandleElement}
-                refresh={refresh}
               />
             )
             : <p>{translate('NoUsers')}</p>}
         </Loader>
-        {user.role.name}
       </GlobalTemplate>
 
-      {user.role && user.role.name !== Role.Owner &&
       <>
         <ClientPanel
-
           theme={theme}
-          userId={user.userId}
+          user_Id={user.userId}
           organizationId={user.organizationId}
-
           assignPlan={assignPlan}
           assignUserToPlan={assignUserToPlan}
           setAssignPlan={setAssignPlan}
-
           assignTrainer={assignTrainer}
           assignUserToTrainer={assignUserToTrainer}
           setAssignTrainer={setAssignTrainer}
-
            assignUserToMe={assignUserToMe}
-
           setBottomSheet={setBottomSheet}
           activeUsers={activeUsers}
         />
-        </>}
+        </>
     </>
   );
 };

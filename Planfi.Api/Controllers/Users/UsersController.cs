@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -225,27 +226,15 @@ namespace WebApi.Controllers.Users
         }
 
         [AllowAnonymous]
-        [HttpGet("trainerClients/{id}")]
-        public async Task<IActionResult>  GetClientsByTrainer(string id)
+        [HttpGet("trainerClients")]
+        public async Task<IActionResult>  GetClientsByTrainer()
         {
-            var clients = await _userService.GetClientsByTrainer(id);
-
+            var clients = await _userService.GetClientsByTrainer();
+            
             if (clients == null)
                 return NotFound();
-            
-            var mappedUsers = clients.Select(i => new UserViewModel
-                {
-                    UserId = i.UserId,
-                    Avatar = i.Avatar,
-                    FirstName = i.FirstName,
-                    LastName = i.LastName,
-                    //RoleId = i.RoleId,
-                    Email = i.Email,
-                    PhoneNumber = i.PhoneNumber,
-                })
-                .ToList();
 
-            return Ok(mappedUsers);
+            return Ok(clients);
         }
 
         [AllowAnonymous]

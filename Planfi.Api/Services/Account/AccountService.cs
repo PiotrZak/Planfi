@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PlanfiApi.Data.Entities.Users;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
