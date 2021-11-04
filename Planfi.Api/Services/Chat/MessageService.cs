@@ -45,7 +45,7 @@ namespace WebApi.Services.Chat
         {
             message.Id = Guid.NewGuid();
             message.RoomId = roomId;
-            message.PostedAt = DateTimeOffset.Now;
+            message.PostedAt = DateTime.UtcNow;
 
             _context.messages.Add(message);
 

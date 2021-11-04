@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Text;
-using System.IO;
 using System.Text.Json.Serialization;
-using HotChocolate;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlanfiApi.GraphQl;
 using PlanfiApi.Interfaces;
-using PlanfiApi.Middlewares;
 using PlanfiApi.Services.Exercises;
 using PlanfiApi.Services.Files;
 using PlanfiApi.Services.Organizations;
@@ -60,7 +57,8 @@ namespace PlanfiApi
                         builder
                             .WithOrigins(origins?.Split(','))
                             .AllowAnyHeader()
-                            .AllowAnyMethod();
+                            .AllowAnyMethod()
+                            .AllowCredentials();
                     });
             });
             
@@ -132,6 +130,7 @@ namespace PlanfiApi
                 .AddInMemoryClients(ChatIdentityServer.GetClients())
                 .AddTestUsers(ChatIdentityServer.GetUsers());
             
+
             services.AddScoped<IChatRoomService, ChatRoomService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IOrganizationService, OrganizationService>();

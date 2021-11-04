@@ -13,7 +13,8 @@ const MessageList = ({roomId, connection}) => {
     const [message, setMessage] = useState("");
     const [rerender, setRerender] = useState(false);
 
-      const handleSubmit = () => {
+      const handleSubmit = (event) => {
+        event.preventDefault();
         connection
           .invoke("SendMessage", currentRoom.id, 'user', message)
           .catch((err) => console.error(err.toString()));
@@ -75,7 +76,7 @@ const MessageList = ({roomId, connection}) => {
           room={currentRoom}
           userName={"userName"}
           connection={connection}
-          handleSubmit={handleSubmit}
+          handleSubmit={(e) => handleSubmit(e)}
         />
       )}
     </div>

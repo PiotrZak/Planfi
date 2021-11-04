@@ -11,7 +11,7 @@ const ChatRoomList = ({ openRoom, connection }) => {
     data,
     loading,
     error,
-  } = useFetch("http://localhost:5005/api/ChatRoom");
+  } = useFetch("http://localhost:9001/api/ChatRoom");
 
   const dispatch = useDispatch()
 
@@ -30,9 +30,9 @@ const ChatRoomList = ({ openRoom, connection }) => {
         {rooms && rooms.map((room) => {
           return (
             <li key={room.id} className={"room"}>
-              <a onClick={() => dispatch(setRoom(room))} href="#active">
+              <div onClick={() => dispatch(setRoom(room))} href="#active">
                 {room.name}
-              </a>
+              </div>
             </li>
           );
         })}

@@ -4,7 +4,7 @@ const AddMessageForm = ({ connection, room, setMessage, message, handleSubmit}) 
 
 
   return (
-   <form className="commentForm" onSubmit={() => handleSubmit()}>
+   <form className="commentForm" onSubmit={(e) => handleSubmit(e)}>
       {room &&
       <>
       <p>{room.id}</p>

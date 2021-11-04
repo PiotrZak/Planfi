@@ -89,8 +89,8 @@ const Root = () => {
                 <Switch>
                   {/* <Route path ="/stripe" component={StripeContainer} />
                   <Route path ="/stripeSuccess" component={StripeSuccess} />
-                  <Route path ="/stripeCancel" component={StripeCancel} />
-                  <Route path ="/chat" component={ChatContainer} /> */}
+                  <Route path ="/stripeCancel" component={StripeCancel} />*/}
+                  <Route path ="/chat" component={ChatContainer} /> 
                   
                   <Route path={routes.login} component={LoginPage} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />

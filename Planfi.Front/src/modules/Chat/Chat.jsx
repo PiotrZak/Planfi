@@ -8,7 +8,7 @@ import MessageList from "./ChatMessages";
 import { useSelector } from "react-redux";
 import AddMessageForm from "./AddMessageForm";
 
-const hubUrl = "http://localhost:5005/chat";
+const hubUrl = "http://localhost:9001/chat";
 
 const ChatContainer = () => {
   const [connection, setConnection] = useState();
@@ -34,15 +34,6 @@ const ChatContainer = () => {
       ) : (
         <p>No room selected</p>
       )}
-
-      {/* {userName ? (
-
-      ) : currentRoom ? (
-        <UserNameForm onSetUserName={onSetUserName} />
-      ) : (
-        <div> Pick a room.</div>
-      )}
-      <AddChatRoomForm connection={this.connection} />  */}
     </div>
   );
 };
