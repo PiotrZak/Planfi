@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Comment, Tooltip } from 'antd';
 import Avatar from "components/molecules/Avatar";
-import moment from "moment";
 import {formatDistance,parseISO} from 'date-fns'
 
 const getDateString = dateVal => {
