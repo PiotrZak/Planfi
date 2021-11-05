@@ -2,7 +2,7 @@
     "apps":{
         "PlanfiApi": {
             "url": "https://planfi-api-g3lfmgrpmq-uc.a.run.app",
-            "isProduction": false
+            "isProduction": "false"
         }
     }
 }

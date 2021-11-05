@@ -16,17 +16,16 @@ import { ModalProvider } from "styled-react-modal";
 import { SpecialModalBackground } from "components/molecules/Modal";
 import { NotificationProvider } from "./support/context/NotificationContext";
 import "style.css";
-import config from '../config.json';
+import config from "../config.json";
 
-const developmentApiUrl = config.apps.PlanfiApi.url + "/graphql"
-const localHostApiUrl = "http://localhost:9001/graphql"
+const developmentApiUrl = config.apps.PlanfiApi.url + "/graphql";
+const localHostApiUrl = "http://localhost:9001/graphql";
 
 const httpLink = createHttpLink({
-  uri: config.apps.PlanfiApi.isProduction  ? developmentApiUrl : localHostApiUrl,
+  uri: JSON.parse(config.apps.PlanfiApi.isProduction)
+    ? developmentApiUrl
+    : localHostApiUrl,
 });
-
-console.log(config)
-console.log(config.apps.PlanfiApi.isProduction)
 
 const client = new ApolloClient({
   link: httpLink,
