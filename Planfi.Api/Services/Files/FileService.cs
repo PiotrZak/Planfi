@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,32 @@ namespace PlanfiApi.Services.Files
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
 
+        
+        public static void Compress(FileInfo fi)
+        {
+            // Get the stream of the source file.
+            using var inFile = fi.OpenRead();
+            // Prevent compressing hidden and 
+            // already compressed files.
+            if ((File.GetAttributes(fi.FullName)
+                 & FileAttributes.Hidden)
+                != FileAttributes.Hidden & fi.Extension != ".gz")
+            {
+                // Create the compressed file.
+                using var outFile =
+                    File.Create(fi.FullName + ".gz");
+                using var Compress =
+                    new GZipStream(outFile,
+                        CompressionMode.Compress);
+                // Copy the source file into 
+                // the compression stream.
+                inFile.CopyTo(Compress);
+
+                Console.WriteLine("Compressed {0} from {1} to {2} bytes.",
+                    fi.Name, fi.Length.ToString(), outFile.Length.ToString());
+            }
+        }
+
         public async Task<List<byte[]>> ProcessFileExercise(List<IFormFile> files, string fileName)
         {
             var filesList = new List<byte[]>();
@@ -38,7 +65,7 @@ namespace PlanfiApi.Services.Files
                         await using var memoryStream = new MemoryStream();
                         await formFile.CopyToAsync(memoryStream);
                         var fileNameWithExtensionAndNumber = fileName+1+ext;
-
+                        
                         var path = await SaveMovieToDirectory(formFile, fileNameWithExtensionAndNumber);
                         await SaveMovieToGoogleStorage(fileNameWithExtensionAndNumber, path);
                         filesList.Add(Encoding.ASCII.GetBytes(ext));
@@ -68,14 +95,29 @@ namespace PlanfiApi.Services.Files
             return Path.Combine(path, fileName);
         }
 
+        private FileStream CompressThis (string path, string fileName)
+        {
+            using var sourceFile = File.OpenRead(path);
+            using var destinationFile = File.Create(fileName);
+            using var output = new GZipStream(destinationFile, CompressionMode.Compress);
+            sourceFile.CopyTo(output);
+            return sourceFile;
+        }
+
         public async Task SaveMovieToGoogleStorage(string fileName, string path)
         {
             var gcsStorage = await StorageClient.CreateAsync();
-            Stream stream = new FileStream(path, FileMode.Open);
+            var stream = new FileStream(path, FileMode.Open);
             var isExist = IsObjectExist(fileName);
+
+            var compressedFile = CompressThis(path, fileName);
+            
+            Console.WriteLine("Compressed {0} from {1} to {2} bytes.",
+                stream.Name, stream.Length.ToString(), compressedFile.Length.ToString());
+            
             if (!isExist)
             {
-                await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, stream);
+                await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, compressedFile);
             }
         }
 

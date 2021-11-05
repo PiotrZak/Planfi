@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PlanfiApi.Models;
 using WebApi.Helpers;
-using WebApi.Models;
 
-namespace WebApi.Services.Chat
+namespace PlanfiApi.Services.Chat
 {
     public interface IChatRoomService
     {

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanfiApi.Models;
+using PlanfiApi.Services.Chat;
 using WebApi.Common;
 using WebApi.Models;
 using WebApi.Services.Chat;
