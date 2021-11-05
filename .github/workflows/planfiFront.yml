@@ -7,6 +7,7 @@ env:
   API_URL: "https://planfi-api-g3lfmgrpmq-uc.a.run.app"
   Domain: "plan-fi.pl"
   BUCKET: "planfi"
+  ENVIRONMENT: true
 
 jobs:
   build:
@@ -27,7 +28,7 @@ jobs:
           files: "Planfi.Front/config.json"
         env:
           apps.PlanfiApi.url: ${{ env.API_URL }}
-          apps.PlanfiApi.isProduction: true
+          apps.PlanfiApi.isProduction: ${{ env.ENVIRONMENT }}
 
       - uses: actions/checkout@v2
 

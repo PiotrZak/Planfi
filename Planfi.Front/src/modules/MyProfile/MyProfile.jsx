@@ -45,6 +45,35 @@ const ContainerCentred = styled.div`
   margin-bottom: 1.2rem;
 `;
 
+const TabItemComponent = ({
+  icon = '',
+  title = '',
+  onItemClicked = () => console.error('You passed no action to the component'),
+  isActive = false,
+}) => {
+  return (
+    <div className={isActive ? 'tabitem' : 'tabitem tabitem--inactive'} onClick={onItemClicked}>
+      <i className={icon}></i>
+      <p className="tabitem__title">{title}</p>
+    </div>
+  )
+};
+
+
+const trainerTabs = [{
+  id: 1,
+  title: 'STEP 1',
+  icon: 'tabitem__icon fas fa-child',
+  content: <TrainerPlans />,
+},
+{
+  id: 1,
+  title: 'STEP 1',
+  icon: 'tabitem__icon fas fa-child',
+  content: <TrainerPlans />,
+},
+];
+
 
 const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   const { theme } = useThemeContext();
@@ -80,6 +109,9 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
     const role = user.role.name;
 
 
+
+    const clientTabs = [];
+
     if (role === Role.Trainer || role === Role.Owner) {
       if (tab === 'first') {
         setToRender(<TrainerPlans id={userId} />);
@@ -100,26 +132,26 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   };
 
 
-  const renderSwitchedButton = () => {
-    if (user.role.name === Role.Trainer) {
-      return (
-        <SwitchedButton
-          firstButtonText={translate('MyPlans')}
-          firstButtonFunc={() => renderGenericElement('first')}
-          secondButtonText={translate('MyClients')}
-          secondButtonFunc={() => renderGenericElement('second')}
-        />
-      );
-    }
-    return (
-      <SwitchedButton
-        firstButtonText={translate('MyPlans')}
-        firstButtonFunc={() => renderGenericElement('first')}
-        secondButtonText={translate('MyTrainers')}
-        secondButtonFunc={() => renderGenericElement('second')}
-      />
-    );
-  };
+  // const renderSwitchedButton = () => {
+  //   if (user.role.name === Role.Trainer) {
+  //     return (
+  //       <SwitchedButton
+  //         firstButtonText={translate('MyPlans')}
+  //         firstButtonFunc={() => renderGenericElement('first')}
+  //         secondButtonText={translate('MyClients')}
+  //         secondButtonFunc={() => renderGenericElement('second')}
+  //       />
+  //     );
+  //   }
+  //   return (
+  //     <SwitchedButton
+  //       firstButtonText={translate('MyPlans')}
+  //       firstButtonFunc={() => renderGenericElement('first')}
+  //       secondButtonText={translate('MyTrainers')}
+  //       secondButtonFunc={() => renderGenericElement('second')}
+  //     />
+  //   );
+  // };
 
   const Wrapper = styled.div`
   display: flex;
@@ -131,6 +163,8 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       cursor: pointer;
   }
 `;
+
+  const [active, setActive] = useState(0);
 
   return (
     <>
@@ -145,15 +179,27 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
             <ContainerCentred>
               <UserInfo user={updatedUser} />
             </ContainerCentred>
-            {/* <Tabs defaultActiveKey="1" centered>
-              <TabPane tab="Tab 1" key="1">
-                Content of Tab Pane 1
-              </TabPane>
-              <TabPane tab="Tab 2" key="2">
-                Content of Tab Pane 2
-              </TabPane>
-            </Tabs> */}
-            {renderSwitchedButton()}
+
+
+            <div className="tabs">
+              {trainerTabs.map(({ id, icon, title }) => <TabItemComponent
+                key={title}
+                icon={icon}
+                title={title}
+                onItemClicked={() => setActive(id)}
+                isActive={active === id}
+              />
+              )}
+            </div>
+            <div className="content">
+              {trainerTabs.map(({ id, content }) => {
+                return active === id ? content : ''
+              })}
+            </div>
+
+
+
+            {/* {renderSwitchedButton()} */}
           </Container>
         </UserInfoBackground>
         <Container type="entry">
