@@ -12,7 +12,7 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Services.Account;
 
-namespace WebApi.Controllers.Account
+namespace PlanfiApi.Controllers.Account
 {
     [ApiController]
     [Route("[controller]")]
@@ -70,16 +70,16 @@ namespace WebApi.Controllers.Account
 
         [AllowAnonymous]
         [HttpPost("uploadAvatar")]
-        public async Task<IActionResult> UploadAvatar([FromForm]string userId, IFormFile avatarFile)
+        public async Task<IActionResult> UploadAvatar([FromForm]string userId, IFormFile avatar)
         {
             await using var memoryStream = new MemoryStream();
-            await avatarFile.CopyToAsync(memoryStream);
+            await avatar.CopyToAsync(memoryStream);
             memoryStream.ToArray();
-            var avatar = memoryStream.ToArray();
+            var avatarBytes = memoryStream.ToArray();
 
             try
             {
-                await _accountService.UploadAvatar(userId, avatar);
+                await _accountService.UploadAvatar(userId, avatarBytes);
                 return Ok();
             }
             catch (AppException ex)
