@@ -5,20 +5,20 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Common;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Helpers;
-using WebApi.Interfaces;
 using WebApi.Models;
-using WebApi.Models.ViewModels;
 
-namespace WebApi.Controllers.Users
+namespace PlanfiApi.Controllers.Users
 {
     [Authorize]
     [ApiController]
@@ -38,11 +38,11 @@ namespace WebApi.Controllers.Users
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody]AuthenticateModel model)
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateModel model)
         {
             try
             {
-                var user = _userService.Authenticate(model.Email, model.Password);
+                var user = await _userService.Authenticate(model.Email, model.Password);
                 
                 // authentication successful so generate jwt token
                 var tokenHandler = new JwtSecurityTokenHandler();

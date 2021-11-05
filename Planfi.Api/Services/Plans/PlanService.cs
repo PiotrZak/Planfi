@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -11,10 +10,9 @@ using Npgsql;
 using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
 using WebApi.Helpers;
-using WebApi.Interfaces;
 using WebApi.Models;
 
-namespace WebApi.Services.Plans
+namespace PlanfiApi.Services.Plans
 {
     public class PlanService : IPlanService
     {
@@ -37,7 +35,7 @@ namespace WebApi.Services.Plans
                 .Any(x => x.Title == plan.Title);
             
             if (duplication)
-                throw new AppException("Category " + plan.Title + " is already exist");
+                throw new AppException("Plan " + plan.Title + " is already exist in this organization");
             
             await _context.plans.AddAsync(plan);
             await _context.SaveChangesAsync();
@@ -49,6 +47,7 @@ namespace WebApi.Services.Plans
         {
             var plan = await _context.plans
                 .FirstOrDefaultAsync(x => x.PlanId == id);
+            
             return plan;
         }
 
@@ -61,10 +60,10 @@ namespace WebApi.Services.Plans
             return plans;
         }
 
-        public IEnumerable<Plan> GetAll()
+        public async Task<List<Plan>> GetAll()
         {
-
-            return _context.plans;
+            var plans = await _context.plans.ToListAsync();
+            return plans;
         }
 
         public async Task<int> Update(string id, string title)
@@ -110,13 +109,13 @@ namespace WebApi.Services.Plans
             return 1;
         }
 
-        public void AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)
+        public async Task AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)
         {
             var plan = GetById(planId).Result;
 
             foreach (var id in exerciseId)
             {
-                var element = _context.exercises.Find(id);
+                var element = await _context.exercises.FindAsync(id);
                 
                 element.ExerciseId = Guid.NewGuid().ToString();
                 element.Times = exerciseModel.Times;
@@ -131,7 +130,7 @@ namespace WebApi.Services.Plans
                 plan.Exercises.Add(element);
             }
             _context.plans.Update(plan);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public void UnassignExercisesToPlan(string planId, string[] exerciseId)

@@ -3,17 +3,15 @@ using System.Threading.Tasks;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Organizations;
-using WebApi.Data.Entities.Users;
 using WebApi.Models;
-using WebApi.Models.ViewModels;
 
-namespace WebApi.Interfaces
+namespace PlanfiApi.Interfaces
 {
     public interface IUserService
     {
-        User Authenticate(string email, string? password);
+        Task<User> Authenticate(string email, string? password);
         User Register(string email);
-        User GetUserWithoutPassword(string email);
+        Task<User> GetUserWithoutPassword(string email);
         IEnumerable<User> GetAllUsers();
         Task<UserViewModel> GetById(string id);
         Task<int> Update(string id, UpdateUserModel model);

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PlanfiApi.Interfaces;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.ViewModels;
@@ -45,7 +46,7 @@ namespace PlanfiApi.Controllers.Account
         {
             try
             {
-                var user = _userService.GetUserWithoutPassword(model.Emails[0]);
+                var user = await _userService.GetUserWithoutPassword(model.Emails[0]);
                 if (user != null)
                 {
                     var success = ApiCommonResponse.Create()

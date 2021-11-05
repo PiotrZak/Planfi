@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using PlanfiApi.Models;
 using PlanfiApi.Services.Chat;
 using WebApi.Common;
-using WebApi.Models;
-using WebApi.Services.Chat;
 
-namespace WebApi.Controllers.Chat
+namespace PlanfiApi.Controllers.Chat
 {
     public class ChatRoomController : ApiControllerBase
     {

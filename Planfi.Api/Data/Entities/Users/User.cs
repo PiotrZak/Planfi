@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PlanfiApi.Data.ViewModels;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;

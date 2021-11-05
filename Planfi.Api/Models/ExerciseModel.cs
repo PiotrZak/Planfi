@@ -1,9 +1,8 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using WebApi.Entities;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models
 {
     public class ExerciseModel
     {

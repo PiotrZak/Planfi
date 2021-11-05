@@ -7,6 +7,8 @@ using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
 using WebApi.Interfaces;
 

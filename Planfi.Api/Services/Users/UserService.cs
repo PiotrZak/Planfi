@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Interfaces;
 using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Organizations;
 using WebApi.Data.Entities;
@@ -49,9 +51,9 @@ namespace PlanfiApi.Services.Users{
             return user;
         }
         
-        public User Authenticate(string email, string? password)
+        public async Task<User> Authenticate(string email, string? password)
         {
-            var user = GetUserWithoutPassword(email);
+            var user = await GetUserWithoutPassword(email);
             
             // check if email exists
             if (user == null)
@@ -70,11 +72,11 @@ namespace PlanfiApi.Services.Users{
             return user.WithoutPassword(); ;
         }
 
-        public User GetUserWithoutPassword(string email)
+        public async Task<User> GetUserWithoutPassword(string email)
         {
-            return _context.users
+            return await _context.users
                 .Include(x => x.Role)
-                .SingleOrDefault(x => string.Equals(x.Email, email, StringComparison.CurrentCultureIgnoreCase));
+                .SingleOrDefaultAsync(x => string.Equals(x.Email, email, StringComparison.CurrentCultureIgnoreCase));
         }
         
         public IEnumerable<User> GetAllUsers ()

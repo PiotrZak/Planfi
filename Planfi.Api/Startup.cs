@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlanfiApi.GraphQl;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
 using PlanfiApi.Services.Chat;
 using PlanfiApi.Services.Exercises;
 using PlanfiApi.Services.Files;
@@ -27,7 +28,7 @@ using WebApi.Services.Account;
 using WebApi.Services.Chat;
 using AccountService = WebApi.Services.Account.AccountService;
 using Path = System.IO.Path;
-using PlanService = WebApi.Services.Plans.PlanService;
+using PlanService = PlanfiApi.Services.Plans.PlanService;
 
 namespace PlanfiApi
 {

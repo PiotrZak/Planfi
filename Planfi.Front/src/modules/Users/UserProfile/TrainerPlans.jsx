@@ -7,12 +7,15 @@ import { translate } from 'utils/Translation';
 import Loader from 'components/atoms/Loader';
 import { filterDataByTerm } from '../../../utils/common.util';
 
-export const TrainerPlans = ({ id }) => {
+export const TrainerPlans = () => {
+
+  // what if owner go to trainer page?
+  const user = JSON.parse((localStorage.getItem('user')));
   const { theme } = useThemeContext();
   const [searchTerm, setSearchTerm] = React.useState('');
 
   const PLANS = gql`{
-    plans(where: {creatorId: "${id}"})
+    plans(where: {creatorId: "${user.userId}"})
     {
       creatorId
       creatorName
@@ -29,8 +32,7 @@ export const TrainerPlans = ({ id }) => {
 
   useEffect(() => {
     refreshData()
-    console.log(id)
-}, [id]);
+}, []);
 
 const filterPlans = (event) => {
   setSearchTerm(event.target.value);

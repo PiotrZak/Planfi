@@ -1,7 +1,6 @@
 ﻿using PlanfiApi.Data.Entities.Users;
-using WebApi.Data.Entities.Users;
 
-namespace WebApi.Data.ViewModels
+namespace PlanfiApi.Data.ViewModels
 {
     public class AssignUsersToTrainer
     {

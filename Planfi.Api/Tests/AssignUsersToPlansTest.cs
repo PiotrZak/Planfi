@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using PlanfiApi.Interfaces;
 using WebApi.Interfaces;
 
 namespace WebApi.Tests

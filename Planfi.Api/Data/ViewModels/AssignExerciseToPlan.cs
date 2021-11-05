@@ -1,4 +1,6 @@
-﻿namespace WebApi.Models
+﻿using WebApi.Models;
+
+namespace PlanfiApi.Data.ViewModels
 {
     public class AssignExerciseToPlan
     {

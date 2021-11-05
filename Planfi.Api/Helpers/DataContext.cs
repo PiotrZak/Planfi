@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Models;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
