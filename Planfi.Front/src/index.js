@@ -9,7 +9,6 @@ import { createLogger } from "redux-logger";
 import { ApolloProvider } from "@apollo/client";
 import { requestRooms } from "./store/reducers/roomReducer";
 import { requestMessages } from "./store/reducers/messageReducer";
-
 import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from "apollo-cache-inmemory";
@@ -25,6 +24,9 @@ const localHostApiUrl = "http://localhost:9001/graphql"
 const httpLink = createHttpLink({
   uri: config.apps.PlanfiApi.isProduction  ? developmentApiUrl : localHostApiUrl,
 });
+
+console.log(config)
+console.log(config.apps.PlanfiApi.isProduction)
 
 const client = new ApolloClient({
   link: httpLink,
