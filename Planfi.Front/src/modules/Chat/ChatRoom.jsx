@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { receiveRoom, setRoom } from "store/actions/roomActions";
 import useFetch from "../../hooks/useFetch";
 import { useDispatch } from 'react-redux'
-
+import { apiUrl } from "services/utils";
+import Loader from 'components/atoms/Loader';
 
 const ChatRoomList = ({ openRoom, connection }) => {
   const [rooms, setRooms] = useState([]);
@@ -11,7 +12,7 @@ const ChatRoomList = ({ openRoom, connection }) => {
     data,
     loading,
     error,
-  } = useFetch("http://localhost:9001/api/ChatRoom");
+  } = useFetch(`${apiUrl}/api/ChatRoom`);
 
   const dispatch = useDispatch()
 
@@ -22,6 +23,9 @@ const ChatRoomList = ({ openRoom, connection }) => {
       receiveRoom(roomName, roomId);
     });
   }, [data]);
+
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
 
   return (
     <div className="rooms-list">

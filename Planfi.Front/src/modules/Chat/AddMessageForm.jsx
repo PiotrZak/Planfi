@@ -2,7 +2,6 @@ import React from "react";
 
 const AddMessageForm = ({ room, setMessage, message, handleSubmit}) => {
 
-
   return (
    <form className="commentForm" onSubmit={(e) => handleSubmit(e)}>
       {room &&

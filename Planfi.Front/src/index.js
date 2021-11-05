@@ -16,18 +16,14 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ModalProvider } from "styled-react-modal";
 import { SpecialModalBackground } from "components/molecules/Modal";
 import { NotificationProvider } from "./support/context/NotificationContext";
-
-import { isDevelopment } from "environment";
-
 import "style.css";
 import config from '../config.json';
-import LoginPage from './modules/Auth/LoginPage';
 
 const developmentApiUrl = config.apps.PlanfiApi.url + "/graphql"
 const localHostApiUrl = "http://localhost:9001/graphql"
 
 const httpLink = createHttpLink({
-  uri: isDevelopment ? developmentApiUrl : localHostApiUrl,
+  uri: config.apps.PlanfiApi.isProduction  ? developmentApiUrl : localHostApiUrl,
 });
 
 const client = new ApolloClient({

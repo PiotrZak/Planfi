@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import ChatRoomList from "./ChatRoom";
-import { setUserName } from "../../store/actions/userActions";
-import { receiveMessage } from "../../store/actions/messageActions";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import MessageList from "./ChatMessages";
 import { useSelector } from "react-redux";
-import AddMessageForm from "./AddMessageForm";
-
-const hubUrl = "http://localhost:9001/chat";
+import { CHAT_URL } from "services/utils";
 
 const ChatContainer = () => {
   const [connection, setConnection] = useState();
   const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
   
   useEffect(() => {
-    const connection = new HubConnectionBuilder().withUrl(hubUrl).build();
+    const connection = new HubConnectionBuilder().withUrl(CHAT_URL).build();
     setConnection(connection);
 
     connection

@@ -22,7 +22,6 @@ const Message = (props) => {
     <>
       <Comment
         author={<a>{props.userName}</a>}
-        //todo - add user avatar
         avatar={<Avatar avatar={props.avatar} firstName={firstName} lastName={lastName} />}
         content={
           <p>

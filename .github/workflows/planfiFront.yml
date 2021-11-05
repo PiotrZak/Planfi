@@ -27,6 +27,7 @@ jobs:
           files: "Planfi.Front/config.json"
         env:
           apps.PlanfiApi.url: ${{ env.API_URL }}
+          apps.PlanfiApi.isProduction: true
 
       - uses: actions/checkout@v2
 
