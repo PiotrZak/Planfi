@@ -20,7 +20,6 @@ const FileUploadButton = styled.input.attrs({ type: "file" })`
 export const MyProfilePanel = ({
   toggleTheme,
   toggleLanguage,
-  userId,
   setOpenEditUserData,
   setOpenEditMailModal,
   setOpenEditUserPasswordModal,
@@ -54,9 +53,7 @@ export const MyProfilePanel = ({
 
   const uploadAvatar = (selectedFiles) => {
 
-    console.log(selectedFiles)
     const formData = new FormData();
-    formData.append('userId', userId);
     formData.append('avatar', selectedFiles);
 
     accountService

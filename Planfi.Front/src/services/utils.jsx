@@ -3,7 +3,7 @@ import config from '../../config.json'
 const localHostApiUrl = 'http://localhost:9001';
 const developmentApiUrl = config.apps.PlanfiApi.url;
 
-export const apiUrl = JSON.parse(config.apps.PlanfiApi.isProduction) ? developmentApiUrl : localHostApiUrl;
+export const apiUrl = config.apps.PlanfiApi.isProduction ? developmentApiUrl : localHostApiUrl;
 
 export const ORGANIZATION_URL = `${apiUrl}/Organization/`;
 export const ACCOUNT_URL = `${apiUrl}/Account/`;

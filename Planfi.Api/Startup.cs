@@ -26,7 +26,7 @@ using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Services.Account;
 using WebApi.Services.Chat;
-using AccountService = WebApi.Services.Account.AccountService;
+using AccountService = PlanfiApi.Services.Account.AccountService;
 using Path = System.IO.Path;
 using PlanService = PlanfiApi.Services.Plans.PlanService;
 

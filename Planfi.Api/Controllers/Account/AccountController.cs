@@ -71,7 +71,7 @@ namespace PlanfiApi.Controllers.Account
 
         [AllowAnonymous]
         [HttpPost("uploadAvatar")]
-        public async Task<IActionResult> UploadAvatar([FromForm]string userId, IFormFile avatar)
+        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile avatar)
         {
             await using var memoryStream = new MemoryStream();
             await avatar.CopyToAsync(memoryStream);
@@ -80,7 +80,7 @@ namespace PlanfiApi.Controllers.Account
 
             try
             {
-                await _accountService.UploadAvatar(userId, avatarBytes);
+                await _accountService.UploadAvatar(avatarBytes);
                 return Ok();
             }
             catch (AppException ex)

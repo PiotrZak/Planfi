@@ -76,7 +76,7 @@ namespace PlanfiApi.Services.Users{
         {
             return await _context.users
                 .Include(x => x.Role)
-                .SingleOrDefaultAsync(x => string.Equals(x.Email, email, StringComparison.CurrentCultureIgnoreCase));
+                .SingleOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
         }
         
         public IEnumerable<User> GetAllUsers ()

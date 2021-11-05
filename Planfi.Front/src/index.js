@@ -22,7 +22,7 @@ const developmentApiUrl = config.apps.PlanfiApi.url + "/graphql";
 const localHostApiUrl = "http://localhost:9001/graphql";
 
 const httpLink = createHttpLink({
-  uri: JSON.parse(config.apps.PlanfiApi.isProduction)
+  uri: config.apps.PlanfiApi.isProduction
     ? developmentApiUrl
     : localHostApiUrl,
 });

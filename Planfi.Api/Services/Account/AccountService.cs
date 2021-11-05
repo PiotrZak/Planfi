@@ -2,36 +2,44 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
+using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Interfaces;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models;
 
-namespace WebApi.Services.Account
+using WebApi.Models;
+using WebApi.Services.Account;
+
+namespace PlanfiApi.Services.Account
 {
     public class AccountService : IAccountService
     {
         private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
         private readonly DataContext _context;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
         private const string SenderName = "Planfi";
         private const string SenderEmail = "planfi.contact@gmail.com";
 
-        public AccountService(IEmailService emailService, DataContext context, IUserService userService, IMapper mapper)
+        public AccountService(IEmailService emailService, DataContext context, IUserService userService, IMapper mapper, IConfiguration configuration)
         {
             _emailService = emailService;
             _context = context;
             _userService = userService;
             _mapper = mapper;
+            _configuration = configuration;
         }
         
         public async Task<User> Activate(ActivateAccount user)
@@ -59,10 +67,10 @@ namespace WebApi.Services.Account
             await _context.SaveChangesAsync();
             return selectedUser;
         }
-        
+
         public async Task<bool> ForgotPassword(ForgotPassword model, string origin)
         {
-            var user = _context.users.FirstOrDefault(x => x.Email == model.Email).WithoutPassword();
+            var user = _context.users.FirstOrDefault(x => x.Email.ToLower() == model.Email.ToLower()).WithoutPassword();
 
             if (user == null)
                 throw new ValidationException(
@@ -79,13 +87,26 @@ namespace WebApi.Services.Account
             return true;
         }
 
-        public async Task<int>  UploadAvatar(string userId, byte[] avatar)
+        public async Task<int>  UploadAvatar(byte[] avatar)
         {
-            var user = await _context.users.FindAsync(userId);
+            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var connection = new NpgsqlConnection(_configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+            
+            try
+            {
+                const string avatarQuery = @"UPDATE public.users SET avatar = @avatar WHERE user_id = @userId";
 
-            user.Avatar = avatar;
-            _context.users.Update(user);
-            await _context.SaveChangesAsync();
+                (await connection.QueryAsync<int>(avatarQuery, new {userId, avatar})).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
             return 1;
         }
         
@@ -200,7 +221,6 @@ namespace WebApi.Services.Account
         
         public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
         {
-            
             var userRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "User");
             var trainerRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "Trainer");
             
