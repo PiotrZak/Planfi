@@ -4,12 +4,14 @@ import { useSelector } from "react-redux";
 import axios from 'axios';
 import AddMessageForm from './AddMessageForm';
 import Message from './Message';
+import { MESSAGE_URL } from "services/utils";
 
 const MessageList = ({ roomId, connection }) => {
 
   const user = JSON.parse((localStorage.getItem('user')));
   const currentRoom = useSelector((state) => state.requestRooms.currentRoom);
-  const url = roomId ? `${baseUrl}/${currentRoom.id}` : baseUrl;
+
+  const url = roomId ? `${MESSAGE_URL}${currentRoom.id}` : MESSAGE_URL;
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState("");
   const [rerender, setRerender] = useState(false);

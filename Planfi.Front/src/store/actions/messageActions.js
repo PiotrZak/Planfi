@@ -2,9 +2,6 @@ import {
   RECEIVE_MESSAGE
 } from "./actionTypes";
 
-//url
-export const baseUrl = "http://localhost:9001/api/message";
-
 export function receiveMessage(
   userName = "",
   message = "",

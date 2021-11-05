@@ -15,7 +15,6 @@ import MyProfileTemplate from 'templates/MyProfileTemplate';
 import Icon from 'components/atoms/Icon';
 import { translate } from 'utils/Translation';
 import UserInfoBackground from 'components/molecules/UserInfoBackground';
-import SwitchedButton from 'components/molecules/SwitchedButton';
 import { Role } from 'utils/role';
 import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
 import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';

@@ -14,3 +14,5 @@ export const PAYMENTS_URL = `${apiUrl}/Payments`;
 export const USER_URL = `${apiUrl}/Users/`;
 
 export const CHAT_URL = `${apiUrl}/chat/`;
+export const MESSAGE_URL = `${apiUrl}/api/message/`;
+
