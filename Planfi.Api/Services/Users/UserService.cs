@@ -279,8 +279,7 @@ namespace PlanfiApi.Services.Users{
 
         public async Task<IEnumerable<OrganizationService.UserSqlProjection>>GetClientsByTrainer()
         {
-            var httpContext = new HttpContextAccessor().HttpContext;
-            var userId = httpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
             
@@ -307,18 +306,33 @@ namespace PlanfiApi.Services.Users{
             return trainerClients.ToList();
         }
 
-        public async Task<IEnumerable<User>> GetTrainersByClient(string id)
+        public async Task<List<OrganizationService.UserSqlProjection>> GetTrainersByClient(string id)
         {
-            var clientsTrainers = await _context.userstrainers
-                .Where(x => x.ClientId == id)
-                .Select(x => x.TrainerId)
-                .ToListAsync();
+            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
             
-            var trainersIds = clientsTrainers.ToList();
+            const string clientTrainersQuery = @"SELECT 
+	            u.user_id, 
+	            ut.client_id,
+	            u.avatar, 
+	            r.name as role,
+	            u.first_name, 
+	            u.last_name, 
+	            u.email, 
+	            u.phone_number, 
+	            u.organization_id,
+	            u.is_activated
+	            FROM public.users as u
+	            JOIN public.role as r
+	            ON u.role_id = r.id
+	            FULL JOIN public.userstrainers as ut
+	            ON ut.client_id = u.user_id
+	            WHERE ut.client_id = @userId";
 
-            return trainersIds.Select((t, i) => (User) _context.users
-                    .FirstOrDefault(x => x.UserId == trainersIds[i]))
-                    .ToList();
+            var clientTrainers = (await connection.QueryAsync<OrganizationService.UserSqlProjection>(clientTrainersQuery, new {userId})).ToList();
+
+            return clientTrainers.ToList();
         }
         
         private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)

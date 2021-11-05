@@ -7,6 +7,7 @@ using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
@@ -115,30 +116,17 @@ namespace WebApi.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("usersplan/{id}")]
-        public async Task<IActionResult> GetUserPlans(string id)
+        [HttpGet("usersplan")]
+        public async Task<IActionResult> GetUserPlans()
         {
-            var plans = await _planService.GetUserPlans(id);
+            var plans = await _planService.GetUserPlans();
 
             if (plans == null)
                 return NotFound();
             
             return Ok(plans);
         }
-
-        [AllowAnonymous]
-        [HttpGet("trainerplans/{id}")]
-        public IActionResult GetCreatorPlans(string id)
-        {
-            var plans = _planService.GetCreatorPlans(id);
-
-            if (plans == null)
-                return NotFound();
-
-            return Ok(plans);
-        }
-
-
+        
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()

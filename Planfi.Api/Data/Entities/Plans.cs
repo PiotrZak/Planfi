@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlanfiApi.Data.Entities;
+using WebApi.Data.Entities;
 
-namespace WebApi.Data.Entities
+namespace PlanfiApi.Data.Entities
 {
     public sealed class Plan
     {
@@ -18,6 +18,8 @@ namespace WebApi.Data.Entities
         public string PlanId { get; set; }
         public string Title { get; set; }
         public string CreatorId { get; set; }
+        
+        //todo - creator Name is bugged
         public string CreatorName { get; set; }
         public string OrganizationId { get; set; }
         public List<Exercise> Exercises { get; set; }

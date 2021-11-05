@@ -246,19 +246,7 @@ namespace PlanfiApi.Controllers.Users
             if (trainers == null)
                 return NotFound();
 
-            var mappedUsers = trainers.Select(i => new UserViewModel
-                {
-                    UserId = i.UserId,
-                    Avatar = i.Avatar,
-                    FirstName = i.FirstName,
-                    LastName = i.LastName,
-                    //RoleId = i.RoleId,
-                    Email = i.Email,
-                    PhoneNumber = i.PhoneNumber,
-                })
-                .ToList();
-
-            return Ok(mappedUsers);
+            return Ok(trainers);
         }
 
     }

@@ -22,7 +22,7 @@ namespace PlanfiApi.Interfaces
         //void UnAssignClientsToTrainers(string trainerId, string[] usersId);
         //void UnAssignPlanToClients(string[] userIds, string[] planIds);
         Task<IEnumerable<OrganizationService.UserSqlProjection>> GetClientsByTrainer();
-        Task<IEnumerable<User>> GetTrainersByClient(string clientId);
+        Task<List<OrganizationService.UserSqlProjection>> GetTrainersByClient(string clientId);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);
     }
 }

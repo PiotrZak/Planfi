@@ -27,7 +27,6 @@ const Plan = (props) => {
   const PLANS = gql`{
     plans(where: {organizationId: "${user.organizationId}"})
     {
-      creatorId
       creatorName
       planId
       title
@@ -95,6 +94,7 @@ const Plan = (props) => {
   
   let results;
   if(data){
+    console.log(data)
    results = filterDataByTerm(searchTerm, data.plans, ['name']);
   }
 

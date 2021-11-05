@@ -1,3 +1,4 @@
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
 using WebApi.Data.Entities.Users;
 

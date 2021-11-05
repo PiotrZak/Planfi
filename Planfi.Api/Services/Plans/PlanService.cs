@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
 using WebApi.Data.Entities;
 using WebApi.Helpers;
@@ -62,7 +65,32 @@ namespace PlanfiApi.Services.Plans
 
         public async Task<List<Plan>> GetAll()
         {
-            var plans = await _context.plans.ToListAsync();
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+
+            var plans = new List<Plan>();
+            try
+            {
+                const string plansQuery = @"SELECT 
+                    p.plan_id as PlanId,
+                    p.title,
+                    p.creator_id as CreatorId,
+                    p.organization_id as OrganizationId,
+                    CONCAT(u.first_name, ' ', u.last_name) as CreatorName
+                    FROM public.plans as p
+                    JOIN public.users as u
+                    ON u.user_id = p.creator_id";
+
+                plans = (await connection.QueryAsync<Plan>(plansQuery)).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
             return plans;
         }
 
@@ -155,9 +183,9 @@ namespace PlanfiApi.Services.Plans
 
         }
 
-        public async Task<List<ResultPlan>> GetUserPlans(string userId)
+        public async Task<List<ResultPlan>> GetUserPlans()
         {
-            
+            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
 
@@ -167,8 +195,9 @@ namespace PlanfiApi.Services.Plans
                 const string userPlansQuery = @"SELECT 
                     p.plan_id,
                     p.title,
-                    p.creator_id,
-                    p.creator_name
+                    p.creator_id AS CreatorId,
+                    p.organization_id as OrganizationId,
+                    CONCAT(u.first_name, + ' ' + u.last_name) as CreatorName
                     FROM public.users as u
                     JOIN public.usersplans as up
                     ON u.user_id = up.user_id
@@ -187,12 +216,6 @@ namespace PlanfiApi.Services.Plans
             }
             
             return userPlans;
-        }
-
-        public IEnumerable<Plan> GetCreatorPlans(string id)
-        {
-            var plans = _context.plans.Where(x => x.CreatorId == id);
-            return plans;
         }
     }
 }

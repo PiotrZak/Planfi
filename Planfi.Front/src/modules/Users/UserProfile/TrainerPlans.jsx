@@ -17,7 +17,6 @@ export const TrainerPlans = () => {
   const PLANS = gql`{
     plans(where: {creatorId: "${user.userId}"})
     {
-      creatorId
       creatorName
       planId
       title

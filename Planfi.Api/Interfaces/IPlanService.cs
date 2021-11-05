@@ -1,20 +1,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Data.Entities;
+using PlanfiApi.Data.Entities;
 using WebApi.Models;
 
 namespace PlanfiApi.Interfaces
 {
     public interface IPlanService
     {
-
-        Task<List<ResultPlan>> GetUserPlans(string userId);
+        Task<List<ResultPlan>> GetUserPlans();
         Task<List<Plan>> GetByIds(List<string> ids);
         Task<Plan> GetById(string id);
         Task<Plan> Create(Plan plan);
         Task<List<Plan>> GetAll();
         IEnumerable<Plan> GetOrganizationPlans(string id);
-        IEnumerable<Plan> GetCreatorPlans(string id);
         Task<int> Delete(string[] id);
         Task<int> Update(string id, string title);
         Task AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel ExerciseModel);
