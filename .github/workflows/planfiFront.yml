@@ -30,7 +30,8 @@ jobs:
           apps.PlanfiApi.url: ${{ env.API_URL }}
           apps.PlanfiApi.isProduction: ${{ env.ENVIRONMENT }}
 
-      - uses: actions/checkout@v2
+      - name: Read config.json from Planfi.Front
+        run: "cat Planfi.Front/src/config.json"
 
       - name: Build and deploy frontend to static GCP Cloud Storage
         run: |

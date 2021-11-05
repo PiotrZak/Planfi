@@ -95,13 +95,13 @@ namespace PlanfiApi.Services.Files
             return Path.Combine(path, fileName);
         }
 
-        private FileStream CompressThis (string path, string fileName)
+        private GZipStream CompressThis (string path, string fileName)
         {
             using var sourceFile = File.OpenRead(path);
             using var destinationFile = File.Create(fileName);
             using var output = new GZipStream(destinationFile, CompressionMode.Compress);
             sourceFile.CopyTo(output);
-            return sourceFile;
+            return output;
         }
 
         public async Task SaveMovieToGoogleStorage(string fileName, string path)
@@ -109,15 +109,10 @@ namespace PlanfiApi.Services.Files
             var gcsStorage = await StorageClient.CreateAsync();
             var stream = new FileStream(path, FileMode.Open);
             var isExist = IsObjectExist(fileName);
-
-            var compressedFile = CompressThis(path, fileName);
-            
-            Console.WriteLine("Compressed {0} from {1} to {2} bytes.",
-                stream.Name, stream.Length.ToString(), compressedFile.Length.ToString());
             
             if (!isExist)
             {
-                await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, compressedFile);
+                await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, stream);
             }
         }
 
