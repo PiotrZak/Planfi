@@ -27,6 +27,8 @@ const httpLink = createHttpLink({
     : localHostApiUrl,
 });
 
+console.log(config)
+
 const client = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache({

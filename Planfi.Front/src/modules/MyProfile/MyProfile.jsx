@@ -112,16 +112,15 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   };
 
   const [bottomSheet, setBottomSheet] = useState('none');
-
   const [openEditUserData, setOpenEditUserData] = useState(false);
   const [openEditMailModal, setOpenEditMailModal] = useState(false);
   const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
 
 
-    const userId = user.userId;
-    const role = user.role.name;
+  const userId = user.userId;
+  const role = user.role.name;
 
-    const Wrapper = styled.div`
+  const Wrapper = styled.div`
       display: flex;
       justify-content: flex-start;
       padding: 1rem 0;
@@ -132,78 +131,78 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
       }
     `;
 
-    const selectRole = () => {
-      return role === Role.User ? clientTabs : trainerTabs;
-    }
+  const selectRole = () => {
+    return role === Role.User ? clientTabs : trainerTabs;
+  }
 
-    const [active, setActive] = useState(0);
+  const [active, setActive] = useState(0);
 
-    return (
-      <>
-        <MyProfileTemplate>
-          <UserInfoBackground>
-            <Container>
-              <Nav>
-                <Wrapper>
-                  <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} />
-                </Wrapper>
-              </Nav>
-              <ContainerCentred>
-                <UserInfo user={updatedUser} />
-              </ContainerCentred>
-
-
-              <div className="tabs">
-                {selectRole().map(({ id, icon, title }) => <TabItemComponent
-                  key={title}
-                  icon={icon}
-                  title={title}
-                  onItemClicked={() => setActive(id)}
-                  isActive={active === id}
-                />
-                )}
-              </div>
-              <div className="content">
-                {trainerTabs.map(({ id, content }) => {
-                  return active === id ? content : ''
-                })}
-              </div>
+  return (
+    <>
+      <MyProfileTemplate>
+        <UserInfoBackground>
+          <Container>
+            <Nav>
+              <Wrapper>
+                <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} />
+              </Wrapper>
+            </Nav>
+            <ContainerCentred>
+              <UserInfo user={updatedUser} />
+            </ContainerCentred>
 
 
-            </Container>
-          </UserInfoBackground>
-          <Container type="entry">
-            {toRender}
+            <div className="tabs">
+              {selectRole().map(({ id, icon, title }) => <TabItemComponent
+                key={title}
+                icon={icon}
+                title={title}
+                onItemClicked={() => setActive(id)}
+                isActive={active === id}
+              />
+              )}
+            </div>
+            <div className="content">
+              {trainerTabs.map(({ id, content }) => {
+                return active === id ? content : ''
+              })}
+            </div>
+
+
           </Container>
-        </MyProfileTemplate>
-        <EditUserDataModal
-          id={user.userId}
-          openModal={openEditUserData}
-          onClose={() => setOpenEditUserData(false)}
-        />
-        <EditUserEmailModal
-          id={user.userId}
-          openModal={openEditMailModal}
-          onClose={() => setOpenEditMailModal(false)}
-        />
-        <EditUserPasswordModal
-          id={user.userId}
-          openModal={openEditUserPasswordModal}
-          onClose={() => setOpenEditUserPasswordModal(false)}
-        />
-        <MyProfilePanel
-          toggleTheme={toggleTheme}
-          toggleLanguage={toggleLanguage}
-          userId={user.userId}
-          setOpenEditUserData={setOpenEditUserData}
-          setOpenEditMailModal={setOpenEditMailModal}
-          setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}
-          theme={theme}
-          bottomSheet={bottomSheet}
-          setBottomSheet={setBottomSheet}
-        />
-      </>
-    );
-  };
+        </UserInfoBackground>
+        <Container type="entry">
+          {toRender}
+        </Container>
+      </MyProfileTemplate>
+      <EditUserDataModal
+        id={user.userId}
+        openModal={openEditUserData}
+        onClose={() => setOpenEditUserData(false)}
+      />
+      <EditUserEmailModal
+        id={user.userId}
+        openModal={openEditMailModal}
+        onClose={() => setOpenEditMailModal(false)}
+      />
+      <EditUserPasswordModal
+        id={user.userId}
+        openModal={openEditUserPasswordModal}
+        onClose={() => setOpenEditUserPasswordModal(false)}
+      />
+      <MyProfilePanel
+        toggleTheme={toggleTheme}
+        toggleLanguage={toggleLanguage}
+        userId={user.userId}
+        setOpenEditUserData={setOpenEditUserData}
+        setOpenEditMailModal={setOpenEditMailModal}
+        setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}
+        theme={theme}
+        bottomSheet={bottomSheet}
+        setBottomSheet={setBottomSheet}
+      />
+    </>
+  );
+};
 
-  export default MyProfile;
+export default MyProfile;
