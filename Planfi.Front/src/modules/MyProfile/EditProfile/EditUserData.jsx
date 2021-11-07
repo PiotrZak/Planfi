@@ -26,9 +26,8 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
     firstName: Yup.string().required(translate('EnterFirstName')),
     lastName: Yup.string().required(translate('EnterLastName')),
-    // phone: Yup.string()
-    //     .required(translate('EnterPhone'))
-    //     .matches(/^\d{9}$/, translate('phoneValidation')),
+    phone: Yup.string()
+        .matches(/^\d{9}$/, translate('phoneValidation')),
 });
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
@@ -40,6 +39,13 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
         userService
             .editUser(id, transformedUserData)
             .then(() => {
+
+                const currentUser = JSON.parse(localStorage.getItem("user"));
+                currentUser.firstName = values.firstName;
+                currentUser.lastName = values.lastName;
+                currentUser.phoneNumber = phoneNumber;
+                localStorage.setItem('user', JSON.stringify(currentUser));
+
                 notificationDispatch({
                     type: ADD,
                     payload: {
@@ -106,7 +112,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                             enableSearch = {true}
                             typeInput="light"
                             country={'pl'}
-                            name="phone"
+                            type="text" name="phone"
                             value={'test'}
                             as={Input}
                             error={errors.name && touched.name}

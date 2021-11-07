@@ -53,7 +53,7 @@ const Root = () => {
   const [user] = useState(JSON.parse((localStorage.getItem('user'))));
 
   const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [theme, setTheme] = useState(darkTheme);
+  const [theme, setTheme] = useState(lightTheme);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {

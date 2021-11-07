@@ -44,6 +44,9 @@ export const lightTheme = {
     colorGray90: 'white',
     colorGray80: '#FFFFFF',
 
+    //edited
+    fontColor:  '#101013',
+
     //ediited
     colorGray70: '#DDDDE6',
 

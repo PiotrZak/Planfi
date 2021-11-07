@@ -64,6 +64,7 @@ const renderAvatar = (avatar, firstName, lastName, size) => {
 
   if (avatar === null) {
     const initials = firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase();
+    
     return (
       <EmptyAvatar size={size}>
         <StyledParagraph type={handleTextSize(size)}>{initials}</StyledParagraph>

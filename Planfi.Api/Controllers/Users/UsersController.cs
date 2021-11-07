@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -60,8 +63,8 @@ namespace PlanfiApi.Controllers.Users
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
-            
-                return Ok(new UserViewModel
+                
+                var result = new ObjectResult(new UserViewModel
                 {
                     UserId = user.UserId,
                     OrganizationId = user.OrganizationId,
@@ -75,7 +78,13 @@ namespace PlanfiApi.Controllers.Users
                         Name = user.Role.Name,
                     },
                     Token = tokenString
-                });
+                })
+                {
+                    StatusCode = (int)HttpStatusCode.OK
+                };
+                
+                Response.Headers.Add("JWT", tokenString);
+                return result;
             }
             catch (Exception ex)
             {

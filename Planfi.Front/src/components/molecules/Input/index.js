@@ -22,14 +22,15 @@ const StyledInput = styled.input`
   border-radius: 3px;
 
   ${() => handleTextType('body-3-regular')};
-
-  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
+  color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
+  /* color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)}; */
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
   border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
 
   :focus{
     border: 1px solid ${({ theme }) => theme.colorNeutralDark};
     background: ${({ theme }) => theme.colorGray70};
+    color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
   }
 `;
 
@@ -40,11 +41,12 @@ const StyledLightInput = styled.input`
   
   ${() => handleTextType('body-3-regular')};
 
-  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorGray80)};
+  color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
   background: ${({ disabled, theme }) => ((disabled) ? theme.colorWhite : theme.colorWhite)};
   border: 1px solid ${({ theme }) => theme.colorGray30};
   
   :focus{
+    color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
     border: 1px solid ${({ theme }) => theme.colorNeutralDark};
     background: ${({ theme }) => theme.colorGray10};
   }

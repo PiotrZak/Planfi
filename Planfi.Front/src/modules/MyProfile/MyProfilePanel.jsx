@@ -55,6 +55,7 @@ export const MyProfilePanel = ({
 
     const formData = new FormData();
     formData.append('avatar', selectedFiles);
+    console.log(selectedFiles)
 
     accountService
       .uploadAvatar(formData)
@@ -66,6 +67,11 @@ export const MyProfilePanel = ({
             type: "positive",
           },
         });
+
+        //todo - transform it into bytes
+        const currentUser = JSON.parse(localStorage.getItem("user"));
+        currentUser.avatar = null;
+        localStorage.setItem('user', JSON.stringify(currentUser));
         setBottomSheet('none');
       })
       .catch((error) => {

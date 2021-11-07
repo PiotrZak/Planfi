@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { routes } from 'routes';
 import Label from 'components/atoms/Label';
@@ -59,95 +59,93 @@ const LoginPage = () => {
   };
 
   const redirectToPage = (data) => {
-
-    console.log(data)
-
-    if (data.role.name === Role.User) {
-      setTimeout(() => {
-        history.push(routes.myProfile);
-      }, timeToRedirectLogin);
-    }
-    if (data.role.name === Role.Trainer || data.role.name === Role.Owner) {
-      console.log('test')
-      setTimeout(() => {
-        history.push(routes.clients);
-      }, timeToRedirectLogin);
-    }
-    if (data.role.name === Role.Admin) {
-      setTimeout(() => {
-        history.push(routes.organizationTrainer);
-      }, timeToRedirectLogin);
-    }
-  };
-
-  const detectBrowser = () => {
-    const isFirefox = typeof InstallTrigger !== 'undefined';
-    const isIE = /* @cc_on!@ */false || !!document.documentMode;
-    const isEdge = !isIE && !!window.StyleMedia;
-    const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
-    if(isFirefox){
-      localStorage.setItem('browser', 'Firefox');
-    }
-    if(isIE){
-      localStorage.setItem('browser', 'IE');
-    }
-    if(isEdge){
-      localStorage.setItem('browser', 'Edge');
-    }
-    if(isChrome){
-      localStorage.setItem('browser', 'Chrome');
-    }
+    setTimeout(() => {
+      history.push(routes.myProfile);
+    }, timeToRedirectLogin);
   }
 
+const detectBrowser = () => {
+  const isFirefox = typeof InstallTrigger !== 'undefined';
+  const isIE = /* @cc_on!@ */false || !!document.documentMode;
+  const isEdge = !isIE && !!window.StyleMedia;
+  const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
 
-  const authenticateUser = (loginModelData) => {
-    userService
-      .login(loginModelData)
-      .then((data) => {
-        console.log(data)
-        redirectToPage(data);
-        localStorage.removeItem('user');
-        localStorage.setItem('user', JSON.stringify(data));
-      })
-      .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: error, message: error.data.messages[0].text},
-            type: 'error',
-          },
-        });
+  if (isFirefox) {
+    localStorage.setItem('browser', 'Firefox');
+  }
+  if (isIE) {
+    localStorage.setItem('browser', 'IE');
+  }
+  if (isEdge) {
+    localStorage.setItem('browser', 'Edge');
+  }
+  if (isChrome) {
+    localStorage.setItem('browser', 'Chrome');
+  }
+}
+
+
+// const saveJWTInCookies = () => {
+//   setCookie('jwt_token', response.headers.authorization,
+//     {
+//       path: '/',
+//     })
+// }
+
+// const getJWTFromCookie = (headers) => {
+//   return headers['Authorization'] = cookies.get('jwt_token')
+// }
+
+const authenticateUser = (loginModelData) => {
+  userService
+    .login(loginModelData)
+    .then((data) => {
+      console.log(data)
+      redirectToPage(data);
+      localStorage.removeItem('user');
+
+
+      // store token here
+      localStorage.setItem('user', JSON.stringify(data));
+    })
+    .catch((error) => {
+      notificationDispatch({
+        type: ADD,
+        payload: {
+          content: { success: error, message: error.data.messages[0].text },
+          type: 'error',
+        },
       });
-  };
+    });
+};
 
-  return (
-    <AuthTemplate>
-      <Logo src="logo.png" />
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
-        {({ errors, touched, isValid }) => (
-          <Form>
-            <InputContainer>
-              <Label type="top" text={translate('YourMail')}>
-                <Field type="email" name="email" placeholder={translate('EmailAddress')} as={Input} error={errors.email && touched.email} />
-              </Label>
-              <ValidationHint name="pUemail" />
-            </InputContainer>
-
-            <InputContainer>
-              <Label type="top" text={translate('Password')}>
-                <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} error={errors.password && touched.password} />
+return (
+  <AuthTemplate>
+    <Logo src="logo.png" />
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+      {({ errors, touched, isValid }) => (
+        <Form>
+          <InputContainer>
+            <Label type="top" text={translate('YourMail')}>
+              <Field type="email" name="email" placeholder={translate('EmailAddress')} as={Input} error={errors.email && touched.email} />
             </Label>
-              <ValidationHint name="password" />
-            </InputContainer>
-            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
-          </Form>
-        )}
-      </Formik>
-      {/* <LoginHooks /> */}
-      <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
-    </AuthTemplate>
-  );
+            <ValidationHint name="pUemail" />
+          </InputContainer>
+
+          <InputContainer>
+            <Label type="top" text={translate('Password')}>
+              <Field type="password" name="password" placeholder={translate('EnterPassword')} as={Input} error={errors.password && touched.password} />
+            </Label>
+            <ValidationHint name="password" />
+          </InputContainer>
+          <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('SignIn')}</Button>
+        </Form>
+      )}
+    </Formik>
+    {/* <LoginHooks /> */}
+    <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
+  </AuthTemplate>
+);
 };
 
 export default LoginPage;
