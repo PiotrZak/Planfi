@@ -123,11 +123,10 @@ namespace PlanfiApi.Services.Plans
                     }
 
                     var plan = await _context.plans.FindAsync(planId);
-                    if (plan != null)
-                    {
-                        _context.plans.Remove(plan);
-                        await _context.SaveChangesAsync();
-                    }
+                    if (plan == null) continue;
+                    
+                    _context.plans.Remove(plan);
+                    await _context.SaveChangesAsync();
                 }
             }
             catch (ValidationException)
@@ -144,16 +143,18 @@ namespace PlanfiApi.Services.Plans
             foreach (var id in exerciseId)
             {
                 var element = await _context.exercises.FindAsync(id);
+
+                if (element == null) continue;
                 
                 element.ExerciseId = Guid.NewGuid().ToString();
                 element.Times = exerciseModel.Times;
                 element.Weight = exerciseModel.Weight;
                 element.Series = exerciseModel.Series;
                 element.Repeats = exerciseModel.Repeats;
-                
+
                 //creating exercise instance
                 _exerciseService.CreateInstance(element);
-                
+
                 //assigning exercise to plan
                 plan.Exercises.Add(element);
             }
@@ -161,19 +162,21 @@ namespace PlanfiApi.Services.Plans
             await _context.SaveChangesAsync();
         }
 
-        public void UnassignExercisesToPlan(string planId, string[] exerciseId)
+        public async Task UnassignExercisesToPlan(string planId, string[] exerciseId)
         {
             var plan = GetById(planId).Result;
 
             foreach (var id in exerciseId)
             {
-                var element = _context.exercises.Find(id);
+                var element = await _context.exercises.FindAsync(id);
+                if (element == null) continue;
+                
                 element.PlanId = null;
                 _context.exercises.Update(element);
                 plan.Exercises.Remove(element);
             }
             _context.plans.Update(plan);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public IEnumerable<Plan> GetOrganizationPlans(string organizationId)

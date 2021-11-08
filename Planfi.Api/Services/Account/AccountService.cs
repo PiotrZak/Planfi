@@ -73,8 +73,7 @@ namespace PlanfiApi.Services.Account
             var user = _context.users.FirstOrDefault(x => x.Email.ToLower() == model.Email.ToLower()).WithoutPassword();
 
             if (user == null)
-                throw new ValidationException(
-                    $"Invalid mail");
+                return false;
 
             // create reset token that expires after 1 day
             user.ResetToken = RandomTokenString();

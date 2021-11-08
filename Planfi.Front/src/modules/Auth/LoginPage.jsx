@@ -18,6 +18,7 @@ import Logo from 'components/atoms/Logo';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import { Role } from 'utils/PrivateRoute';
 import LoginHooks from './Google/LoginHooks';
+import { useCookies } from 'react-cookie';
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -44,6 +45,7 @@ const validationSchema = Yup.object({
 
 const LoginPage = () => {
   const { notificationDispatch } = useNotificationContext();
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
   const history = useHistory();
 
   useEffect(() => {
@@ -84,28 +86,21 @@ const detectBrowser = () => {
   }
 }
 
-
-// const saveJWTInCookies = () => {
-//   setCookie('jwt_token', response.headers.authorization,
-//     {
-//       path: '/',
-//     })
-// }
-
-// const getJWTFromCookie = (headers) => {
-//   return headers['Authorization'] = cookies.get('jwt_token')
-// }
+const saveJWTInCookies = (data) => {
+  setCookie('JWT', data.token,
+    {
+      path: '/',
+    })
+}
 
 const authenticateUser = (loginModelData) => {
   userService
     .login(loginModelData)
     .then((data) => {
-      console.log(data)
+      saveJWTInCookies(data)
       redirectToPage(data);
       localStorage.removeItem('user');
-
-
-      // store token here
+      delete data.token;
       localStorage.setItem('user', JSON.stringify(data));
     })
     .catch((error) => {

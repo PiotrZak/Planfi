@@ -2,22 +2,22 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using PlanfiApi.Data;
+using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Middlewares;
 using PlanfiApi.Models;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Common;
 using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -46,23 +46,7 @@ namespace PlanfiApi.Controllers.Users
             try
             {
                 var user = await _userService.Authenticate(model.Email, model.Password);
-                
-                // authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                        new Claim(ClaimTypes.Name, user.UserId),
-                        new Claim(ClaimTypes.Role, user.Role.Name)
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(7),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-                var tokenString = tokenHandler.WriteToken(token);
+                var token = await GenerateJwt(user);
                 
                 var result = new ObjectResult(new UserViewModel
                 {
@@ -77,13 +61,13 @@ namespace PlanfiApi.Controllers.Users
                         Id = user.Role.Id,
                         Name = user.Role.Name,
                     },
-                    Token = tokenString
+                    Token = token
                 })
                 {
                     StatusCode = (int)HttpStatusCode.OK
                 };
                 
-                Response.Headers.Add("JWT", tokenString);
+                Response.Headers.Add("JWT", token);
                 return result;
             }
             catch (Exception ex)
@@ -166,18 +150,6 @@ namespace PlanfiApi.Controllers.Users
             return CommonResponse(success);
         }
         
-        public class AssignPlansToClient
-        {
-            public AssignPlansToClient()
-            {
-                ClientIds = new string[] { };
-                PlanIds = new string[] { };
-            }
-
-            public string[] ClientIds { get; set; }
-            public string[] PlanIds { get; set; }
-        }
-
         [AllowAnonymous]
         [HttpPost("assignPlans")]
         public async Task<IActionResult> AssignPlanToUser([FromBody] AssignPlansToClient model)
@@ -256,6 +228,27 @@ namespace PlanfiApi.Controllers.Users
                 return NotFound();
 
             return Ok(trainers);
+        }
+        
+        public async Task<string> GenerateJwt(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserId),
+                    new Claim(ClaimTypes.Role, user.Role.Name)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return tokenString;
         }
 
     }

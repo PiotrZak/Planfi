@@ -16,6 +16,6 @@ namespace PlanfiApi.Interfaces
         Task<int> Delete(string[] id);
         Task<int> Update(string id, string title);
         Task AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel ExerciseModel);
-        void UnassignExercisesToPlan(string planId, string[] exerciseId);
+        Task UnassignExercisesToPlan(string planId, string[] exerciseId);
     }
 }

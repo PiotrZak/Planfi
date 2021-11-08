@@ -3,6 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Controllers.ViewModels;

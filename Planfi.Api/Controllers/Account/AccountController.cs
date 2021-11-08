@@ -96,7 +96,12 @@ namespace PlanfiApi.Controllers.Account
             try
             {
                 var result = await _accountService.ForgotPassword(model, Request.Headers["origin"]);
-                return Ok(new { message = "Please check your email for password reset instructions" });
+                if (result)
+                {
+                    return Ok(new { message = "Please check your email for password reset instructions" });     
+                }
+
+                return BadRequest(new {message = "This User dont exist"});
             }
             catch
             {
