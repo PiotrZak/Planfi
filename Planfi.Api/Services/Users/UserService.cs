@@ -192,8 +192,8 @@ namespace PlanfiApi.Services.Users{
                     var client = await _context.users.FindAsync(userId);
                     var usersTrainers = new UsersTrainers
                     {
-                        TrainerId = trainer.UserId,
-                        ClientId = client.UserId
+                        TrainerId = trainer?.UserId,
+                        ClientId = client?.UserId
                     };
 
                     await _context.userstrainers.AddAsync(usersTrainers);
@@ -207,7 +207,7 @@ namespace PlanfiApi.Services.Users{
                         var validation = new ValidationInfo()
                         {
                             UserId = userId,
-                            TrainerId = trainer.UserId
+                            TrainerId = trainer?.UserId
                         };
                         elementsNotAssigned.Add(validation);
                     }
@@ -277,7 +277,9 @@ namespace PlanfiApi.Services.Users{
 
         public async Task<IEnumerable<OrganizationService.UserSqlProjection>>GetClientsByTrainer()
         {
-            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+
+            var context = new HttpContextAccessor().HttpContext;
+            var userId = context?.User.FindFirst(ClaimTypes.Name)?.Value;
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
             

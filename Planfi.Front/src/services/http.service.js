@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 export const http = {
   get,
@@ -8,11 +9,8 @@ export const http = {
   put
 };
 
-const currentUser = JSON.parse((localStorage.getItem('user')));   
-
-
 const config = {
-  headers: { Authorization: `Bearer ${currentUser && currentUser.token}` }
+  headers: { Authorization: `Bearer ${Cookies.get('JWT')}` }
 };
 
 function get(url) {

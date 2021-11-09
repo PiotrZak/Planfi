@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlanfiApi.GraphQl;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Middlewares;
 using PlanfiApi.Models;
 using PlanfiApi.Services.Chat;
 using PlanfiApi.Services.Exercises;
@@ -178,7 +179,7 @@ namespace PlanfiApi
                 
                 //Middlewares
                 //var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
-                //app.UseMiddleware<GetUserContextMiddleware>(sqlConnectionString);
+                //app.UseMiddleware<GetUserContextMiddleware>();
                 
                 app.UseIdentityServer();
                 app.UseAuthorization();

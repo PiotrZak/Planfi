@@ -122,7 +122,7 @@ const AddExerciseRefactor = (props) => {
   console.log(theme.colorPrimary);
 
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const categoryTitle = props.location.state.categoryTitle;
+  const categoryTitle = 'not selected category yet'
 
   const fileNotification = (message) => {
     notificationDispatch({
@@ -134,7 +134,7 @@ const AddExerciseRefactor = (props) => {
     });
   };
 
-  const history = useHistory();
+const history = useHistory();
 
   const resetFileInput = () => {
     document.getElementById("choose-file-button").value = "";

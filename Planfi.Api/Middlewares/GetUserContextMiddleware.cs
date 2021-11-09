@@ -16,7 +16,7 @@ namespace PlanfiApi.Middlewares
     {
         private readonly RequestDelegate _next;
 
-        public GetUserContextMiddleware(RequestDelegate next, string connectionString)
+        public GetUserContextMiddleware(RequestDelegate next)
         {
             _next = next;
         }
