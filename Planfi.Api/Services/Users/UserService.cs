@@ -17,9 +17,7 @@ using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Organizations;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
 using WebApi.Helpers;
-using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace PlanfiApi.Services.Users{

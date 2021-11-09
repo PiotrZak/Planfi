@@ -6,12 +6,8 @@ using HotChocolate.Types;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.ViewModels;
-using PlanfiApi.Services.Exercises;
 using PlanfiApi.Services.Organizations;
-using WebApi.Data.Entities;
 using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models.ViewModels;
 
 namespace PlanfiApi.GraphQl
 {
@@ -50,12 +46,12 @@ namespace PlanfiApi.GraphQl
             await _planService.GetAll();
         
         [UseFiltering]
-        public List<ExerciseViewModel> GetSerializedExercises([Service] DataContext dbContext) => 
-            _exerciseService.GetSerializedExercises().ToList();
-        
+        public async Task<List<ExerciseViewModel>> GetAllBaseExercises([Service] DataContext dbContext) => 
+            await _exerciseService.GetAllBaseExercises();
+
         [UseFiltering]
-        public List<ExerciseViewModel> GetSerializedExercisesInstances([Service] DataContext dbContext) => 
-            _exerciseService.GetSerializedExercisesInstances().ToList();
+        public async Task<List<ExerciseViewModel>> GetSerializedExercisesInstances([Service] DataContext dbContext) => 
+            await _exerciseService.GetSerializedExercisesInstances();
         
         [UseFiltering]
         public async Task<List<OrganizationService.UserSqlProjection>> GetUsers([Service] DataContext dbContext) => 

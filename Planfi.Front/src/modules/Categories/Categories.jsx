@@ -1,189 +1,141 @@
-import React, { useState, useEffect, useCallback } from "react";
-import Loader from "components/atoms/Loader";
-import { categoryService } from "services/categoryService";
-import { commonUtil } from "utils/common.util";
-import { useQuery, gql } from "@apollo/client";
-import { translate } from "utils/Translation";
-import Heading from "components/atoms/Heading";
-import { useThemeContext } from "support/context/ThemeContext";
-import {
-  useNotificationContext,
-  ADD,
-} from "support/context/NotificationContext";
-import SmallButton from "components/atoms/SmallButton";
-import GlobalTemplate from "templates/GlobalTemplate";
-import CategoriesPanel from "modules/Categories/CategoriesPanel";
-import AddCategoryModal from "modules/Categories/AddCategoryModal";
-import { isMobile } from "react-device-detect";
-import { CheckboxGenericComponent } from "components/organisms/CheckboxGeneric";
-import Nav from "components/atoms/Nav";
-import { useUserContext } from "support/context/UserContext";
-import { useScrollContext } from "support/context/ScrollContext";
-import Search from "components/molecules/Search";
-import { filterDataByTerm } from "../../utils/common.util";
+import React, { useState, useEffect, useCallback } from 'react';
+import { categoryService } from 'services/categoryService';
+import { exerciseService } from 'services/exerciseService';
+import { routes } from 'utils/routes';
+import { useHistory, withRouter } from 'react-router-dom';
+import { commonUtil } from 'utils/common.util';
+import 'react-multi-carousel/lib/styles.css';
+import Search from 'components/molecules/Search';
+import { useQuery, gql } from '@apollo/client';
+import { translate } from 'utils/Translation';
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
+import GlobalTemplate from 'templates/GlobalTemplate';
+import { useThemeContext } from 'support/context/ThemeContext';
+import SmallButton from 'components/atoms/SmallButton';
+import Nav from 'components/atoms/Nav';
+import { useNotificationContext, ADD } from 'support/context/NotificationContext';
+import { PlanPanelExercises } from './PlanPanelExercises';
+import Loader from 'components/atoms/Loader';
+import Heading from 'components/atoms/Heading';
 
 const Categories = (props) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedCategoryName, setSelectedCategoryName] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const { user } = useUserContext();
-  const { scrollPosition } = useScrollContext();
-  const [bottomSheet, setBottomSheet] = useState("none");
-  const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = React.useState('');
 
-  const CATEGORY = gql`{
-    categories(where: {organizationId: "${user.organizationId}"})
+  const [selectedExercise, setselectedExercise] = useState([]);
+  const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
+  const [bottomSheet, setBottomSheet] = useState('none');
+
+
+  // const  id  = props.match.params.id;
+  // const  title  = props.location.state.title;
+
+  const CATEGORYEXERCISES = gql`{
+    allBaseExercises
     {
-           title
-           categoryId
-           exercises
+        exerciseId
+        categoryName
+        name
+        files
      }
     }
   `;
 
-  const { loading, error, data, refetch: _refetch } = useQuery(CATEGORY);
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(CATEGORYEXERCISES);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+  const history = useHistory();
+  const { notificationDispatch } = useNotificationContext();
 
-  const refreshData = useCallback(() => {
-    setTimeout(() => _refetch(), 200);
-  }, [_refetch]);
-
-  const closeModal = () => {
-    setOpenModal(false);
-  };
-
-  const submissionHandleElement = (selectedData) => {
-    const selectedCategoriesId = commonUtil.getCheckedData(
-      selectedData,
-      "categoryId"
-    );
-    const selectedCategoriesName = commonUtil.getCheckedData(
-      selectedData,
-      "title"
-    );
-    setSelectedCategories(selectedCategoriesId);
-    setSelectedCategoryName(selectedCategoriesName);
-
-    if (selectedCategoriesId.length > 0) {
-      isMobile ? setBottomSheet("inline") : setBottomSheet("flex");
-    } else {
-      setBottomSheet("none");
-    }
-    
-  };
-
-  const deleteCategories = useCallback(() => {
-    categoryService
-      .deleteCategories(selectedCategories)
-      .then(() => {
-        setBottomSheet("none");
+  const deleteExercise = () => {
+    exerciseService
+      .deleteExerciseById(selectedExercise)
+      .then((data) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: "OK", message: translate("CategoriesDeleted") },
-            type: "positive",
-          },
-        });
-        refreshData();
+            content: { success: 'OK', message: translate('ExercisesDeleted') },
+            type: 'positive'
+          }
+        })
+        refreshData()
+        setBottomSheet('none');
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error, message: translate("ErrorAlert") },
-            type: "error",
-          },
-        });
-      });
-  }, [selectedCategories]);
-
-  const editCategory = useCallback(
-    (addCategoryData) => {
-      categoryService
-        .editCategory(selectedCategories, addCategoryData)
-        .then(() => {
-          notificationDispatch({
-            type: ADD,
-            payload: {
-              content: { success: "OK", message: translate("CategoryEdited") },
-              type: "positive",
-            },
-          });
-          refreshData();
+            content: { error: error, message: translate('ErrorAlert') },
+            type: 'error'
+          }
         })
-        .catch((error) => {
-          notificationDispatch({
-            type: ADD,
-            payload: {
-              content: { error, message: translate("ErrorAlert") },
-              type: "error",
-            },
-          });
-        });
-    },
-    [selectedCategories]
-  );
+      });
+  }
+
 
   useEffect(() => {
     refreshData();
-    setSelectedCategoryName([]);
-  }, [openModal, openEditModal, refreshData]);
+  }, []);
 
-  const filterCategories = (event) => {
+  const filterExercises = (event) => {
     setSearchTerm(event.target.value);
   };
 
   let results;
   if (data) {
-    results = filterDataByTerm(searchTerm, data.categories, ["title"]);
+    results = !searchTerm
+      ? data.allBaseExercises
+      : data.allBaseExercises.filter((exercise) => exercise.name
+          .toLowerCase()
+          .includes(searchTerm.toLocaleLowerCase()));
   }
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
 
+  const redirectToAddExercise = () => {
+    history.push({
+      pathname: routes.addExercise,
+    });
+  }
+
+
+  const submissionHandleElement = (selectedData) => {
+    const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
+    setselectedExercise(selectedExercises);
+    selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+  };
+
   return (
     <>
       <GlobalTemplate>
         <Nav>
-          <Heading>{translate("CategoriesTitle")}</Heading>
-          <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
+           <Heading>{translate('ExercisesTitle')}</Heading>
+          <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />
         </Nav>
-        <Search
-          callBack={filterCategories}
-          placeholder={translate("CategorySearch")}
-        />
-        {data.categories.length >= 1 ? (
-          <CheckboxGenericComponent
-            dataType="categories"
-            displayedValue="title"
-            dataList={results}
-            onSelect={submissionHandleElement}
-          />
-        ) : (
-          <p>{translate("NoCategories")}</p>
-        )}
+        {results && results.length > 0
+          ?
+          <>
+            <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+            <CheckboxGenericComponent
+              dataType="exercises"
+              displayedValue="name"
+              dataList={results}
+              onSelect={submissionHandleElement}
+            />
+          </>
+          : <p>{translate('NoExercises')}</p>}
       </GlobalTemplate>
-      <AddCategoryModal
-        theme={theme}
-        openModal={openModal}
-        onClose={closeModal}
-      />
-      <CategoriesPanel
-        editCategory={editCategory}
-        refreshData={refreshData}
-        selectedCategoryName={selectedCategoryName}
-        deleteCategories={deleteCategories}
-        theme={theme}
+      <PlanPanelExercises
+        deleteExercise={deleteExercise}
+        selectedExercise={selectedExercise}
         bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        selectedCategories={selectedCategories}
-        setOpenEditModal={setOpenEditModal}
-        openEditModal={openEditModal}
+        setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}
+        selectedElementsBottomSheet={selectedElementsBottomSheet}
+        theme={theme}
       />
     </>
   );
 };
-
-export default Categories;
+export default withRouter(Categories);

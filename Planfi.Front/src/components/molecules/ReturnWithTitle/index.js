@@ -17,7 +17,7 @@ const StyledParagraph = styled(Paragraph)`
 
 const ReturnWithTitle = ({ text, theme }) => (
   <Container>
-    <Return fill={theme.colorPrimary} />
+    <Return fill={theme.colorGray100}/>
     <StyledParagraph type="Label-Button">{text}</StyledParagraph>
   </Container>
 );

@@ -27,13 +27,15 @@ const Plan = (props) => {
   const  title  = props.location.state.title;
 
   const PLANSEXERCISES = gql`{
-    serializedExercises(where: {planId: "${id}"})
+    serializedExercisesInstances(where: {planId: "${id}"})
     {
-        exerciseId
-        name
-        file
-        series
-        repeats
+      exerciseId
+      name
+      files
+      series
+      repeats
+      times
+      weight
      }
     }
   `;
@@ -52,7 +54,6 @@ const Plan = (props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState();
-
 
 
   useEffect(() => {
@@ -100,8 +101,11 @@ const Plan = (props) => {
   let results;
   if(data){
   results = !searchTerm
-    ? data.serializedExercises
-    : data.serializedExercises.filter((exercise) => exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase()));
+    ? data.serializedExercisesInstances
+    : data.serializedExercisesInstances
+      .filter((exercise) => exercise.name
+      .toLowerCase()
+      .includes(searchTerm.toLocaleLowerCase()));
   }
 
   return (
@@ -112,7 +116,7 @@ const Plan = (props) => {
           {user && user.role != Role.User && <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />}
         </Nav>
         <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
-        {results.length > 0
+        {results && results.length > 0
           ? (
             <CheckboxGenericComponent
               dataType="exercises"

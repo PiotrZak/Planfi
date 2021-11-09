@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanfiApi.Data.Entities;
@@ -71,13 +70,15 @@ namespace PlanfiApi.Controllers.Exercises
             return Ok(exercises);
         }
         
-        [AllowAnonymous]
-        [HttpGet("organization/{organizationId}")]
-        public async Task<IActionResult> GetAllByOrganization(string organizationId)
-        {
-            var exercises = await _exerciseService.GetAllByOrganization(organizationId);
-            return Ok(exercises);
-        }
+        // get organization clients testers
+        
+        // [AllowAnonymous]
+        // [HttpGet("organization/{organizationId}")]
+        // public async Task<IActionResult> GetAllByOrganization(string organizationId)
+        // {
+        //     var exercises = await _exerciseService.GetAllByOrganization(organizationId);
+        //     return Ok(exercises);
+        // }
 
         [AllowAnonymous]
         [HttpGet("category/{categoryId}")]

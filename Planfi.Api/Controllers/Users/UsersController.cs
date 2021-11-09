@@ -13,7 +13,6 @@ using PlanfiApi.Data;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
-using PlanfiApi.Middlewares;
 using PlanfiApi.Models;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Common;
@@ -46,7 +45,7 @@ namespace PlanfiApi.Controllers.Users
             try
             {
                 var user = await _userService.Authenticate(model.Email, model.Password);
-                var token = await GenerateJwt(user);
+                var token = GenerateJwt(user);
                 
                 var result = new ObjectResult(new UserViewModel
                 {
@@ -230,7 +229,9 @@ namespace PlanfiApi.Controllers.Users
             return Ok(trainers);
         }
         
-        public async Task<string> GenerateJwt(User user)
+        [AllowAnonymous]
+        [HttpGet("jwt")]
+        public string GenerateJwt(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);

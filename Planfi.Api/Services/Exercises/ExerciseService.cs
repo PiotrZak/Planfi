@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using PlanfiApi.Data.Entities;
-using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.UpdateModels;
+using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Files;
 using WebApi.Helpers;
-using WebApi.Models.ViewModels;
 
 namespace PlanfiApi.Services.Exercises
 {
@@ -20,11 +20,13 @@ namespace PlanfiApi.Services.Exercises
     {
         private readonly DataContext _context;
         private readonly IFileService _fileService;
+        private IConfiguration Configuration { get; }
 
-        public ExerciseService(DataContext context, IFileService fileService)
+        public ExerciseService(DataContext context, IFileService fileService, IConfiguration configuration)
         {
             _context = context;
             _fileService = fileService;
+            Configuration = configuration;
         }
 
         public Exercise Create(Exercise exercise)
@@ -45,6 +47,75 @@ namespace PlanfiApi.Services.Exercises
 
             return exercise;
         }
+
+        public async Task<List<ExerciseViewModel>> GetAllBaseExercises()
+        {
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+            var exercisesBase = new List<ExerciseViewModel>();
+            
+            try
+            {
+                const string baseExerciseQuery = @"SELECT
+                    e.exercise_Id as ExerciseId,
+                    e.name,
+                    c.title as CategoryName,
+                    c.category_id as CategoryId,
+                    e.description,
+                    e.files
+                    FROM public.exercises as e
+                    JOIN public.categories as c
+                    ON e.category_id = c.category_id
+                    WHERE e.series = 0 AND repeats = 0 AND weight = 0 and times = 0";
+            
+                exercisesBase = (await connection.QueryAsync<ExerciseViewModel>(baseExerciseQuery)).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            return exercisesBase;
+        }
+        
+        public async Task<List<ExerciseViewModel>> GetBaseExercise()
+        {
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+            var exercisesBase = new List<ExerciseViewModel>();
+            
+            try
+            {
+                const string baseExerciseQuery = @"SELECT
+                    e.name,
+                    c.title as CategoryName,
+                    e.description,
+                    e.files
+                    FROM public.exercises as e
+                    JOIN (SELECT name, COUNT(*)
+		                    FROM public.exercises
+		                    GROUP BY name
+		                    HAVING count(*) > 1 ) as b
+		                    ON e.name = b.name
+                    JOIN public.categories as c
+                    ON e.category_id = c.category_id
+                    WHERE e.series = 0 AND repeats = 0 AND weight = 0 and times = 0";
+            
+                exercisesBase = (await connection.QueryAsync<ExerciseViewModel>(baseExerciseQuery)).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            return exercisesBase;
+        }
         
         public Task<Exercise> GetById(string id)
         {
@@ -56,82 +127,73 @@ namespace PlanfiApi.Services.Exercises
             return _context.exercises;
         }
         
-        public async Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId)
-        {
-            var organizationCategories = await _context.categories
-                .Where(x => x.OrganizationId == organizationId)
-                .ToListAsync();
-            
-            var organizationexercises = new List<ExerciseViewModel>();
-            
-            foreach(var organizationCategory in organizationCategories)
-            {
-                var categoryexercises = await _context.exercises
-                    .Where(x => x.CategoryId == organizationCategory.CategoryId)
-                    .ToListAsync();
 
-                organizationexercises
-                    .AddRange(categoryexercises
-                    .Select(exercise => new ExerciseViewModel
-                {
-                    ExerciseId = exercise.ExerciseId,
-                    Name = exercise.Name,
-                    File = exercise.Files != null && exercise.Files.Any()
-                        ? Convert.ToBase64String(exercise.Files[0])
-                        : null,
-                    CategoryId = exercise.CategoryId,
-                    PlanId = exercise.PlanId
-                }));
-            }
-            return organizationexercises;
-        }
-        
-        public IEnumerable<ExerciseViewModel> GetSerializedExercisesInstances()
+        public async Task<List<ExerciseViewModel>> GetSerializedExercisesInstances()
         {
-            var allInstanceexercises = _context.exercises
-                .Where(x => 
-                    x.Repeats == 0 &&
-                    x.Series == 0 &&
-                    x.Weight == 0 &&
-                    x.Repeats == 0);
-            
-            var transformedexercises = new List<ExerciseViewModel>();
-            
-            foreach (var exercise in allInstanceexercises)
-            {
-                var modelExercise = new ExerciseViewModel
-                {
-                    ExerciseId = exercise.ExerciseId,
-                    Name = exercise.Name,
-                    File = exercise.Files != null && exercise.Files.Any()
-                        ? Convert.ToBase64String(exercise.Files[0])
-                        : null,
-                    CategoryId = exercise.CategoryId,
-                    PlanId = exercise.PlanId
-                };
-                
-                transformedexercises.Add(modelExercise);
-            }
-            return transformedexercises;
-        }
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
 
-        public IEnumerable<ExerciseViewModel> GetSerializedExercises()
-        {
-            return _context.exercises
-                .Select(exercise => new ExerciseViewModel
+            var baseExercises = await GetBaseExercise();
+            
+            var exercisesInstances = new List<ExerciseViewModel>();
+            try
+            {
+                const string exerciseInstancesQuery = @"SELECT
+                    e.name,
+                    e.exercise_id as ExerciseId,
+                    e.category_id as CategoryId,
+                    e.plan_id as PlanId,
+                    e.series,
+                    e.repeats,
+                    e.weight,
+                    e.times
+                    FROM public.exercises as e
+                    JOIN (SELECT name, COUNT(*)
+		                    FROM public.exercises
+		                    GROUP BY name
+		                    HAVING count(*) > 1 ) as b
+		                    ON e.name = b.name
+                    WHERE plan_id IS NOT NULL";
+            
+                exercisesInstances = (await connection.QueryAsync<ExerciseViewModel>(exerciseInstancesQuery)).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+
+
+            var exercisesViewModels = new List<ExerciseViewModel>();
+            
+            foreach(var exercise in exercisesInstances)
+            {
+                var exerciseBaseOfThisExercise = baseExercises
+                    .SingleOrDefault(x => x.Name == exercise.Name);
+
+                var exerciseViewModel = new ExerciseViewModel()
                 {
                     ExerciseId = exercise.ExerciseId,
-                    Name = exercise.Name,
-                    File = exercise.Files != null && exercise.Files.Any()
-                        ? Convert.ToBase64String(exercise.Files[0])
-                        : null,
+                    Name = exerciseBaseOfThisExercise.Name,
+                    Files = exerciseBaseOfThisExercise.Files,
                     CategoryId = exercise.CategoryId,
+                    CategoryName = exerciseBaseOfThisExercise.CategoryName,
                     PlanId = exercise.PlanId,
                     Series = exercise.Series,
-                    Repeats = exercise.Repeats
-                })
-                .ToList();
+                    Repeats = exercise.Repeats,
+                    Times = exercise.Times,
+                    Weight = exercise.Weight,
+                };
+                    
+                exercisesViewModels.Add(exerciseViewModel);
+            }
+            
+            
+            return exercisesViewModels;
         }
+        
         public IEnumerable<Exercise> GetAllOfCategory(string categoryId)
         {
             var exercises = _context.exercises
@@ -200,16 +262,9 @@ namespace PlanfiApi.Services.Exercises
             if (updateExercise.Files != null && updateExercise.Files.Any())
             {
                 var addedFiles = await _fileService.ProcessFileExercise(updateExercise.Files, updateExercise.Name);
-
-                if (files != null)
-                {
-                    files = files.Concat(addedFiles).ToList();
-                }
-                else
-                {
-                    files = addedFiles;
-                }
-
+                files = files != null 
+                    ? files.Concat(addedFiles).ToList() 
+                    : addedFiles;
             }
 
             exercise.Files = files;
@@ -250,6 +305,36 @@ namespace PlanfiApi.Services.Exercises
             return 1;
         }
     }
+    
+    // public async Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId)
+    // {
+    //     var organizationCategories = await _context.categories
+    //         .Where(x => x.OrganizationId == organizationId)
+    //         .ToListAsync();
+    //     
+    //     var organizationexercises = new List<ExerciseViewModel>();
+    //     
+    //     foreach(var organizationCategory in organizationCategories)
+    //     {
+    //         var categoryexercises = await _context.exercises
+    //             .Where(x => x.CategoryId == organizationCategory.CategoryId)
+    //             .ToListAsync();
+    //
+    //         organizationexercises
+    //             .AddRange(categoryexercises
+    //             .Select(exercise => new ExerciseViewModel
+    //         {
+    //             ExerciseId = exercise.ExerciseId,
+    //             Name = exercise.Name,
+    //             Files = exercise.Files != null && exercise.Files.Any()
+    //                 ? exercise.Files[0]
+    //                 : null,
+    //             CategoryId = exercise.CategoryId,
+    //             PlanId = exercise.PlanId
+    //         }));
+    //     }
+    //     return organizationexercises;
+    // }
     
 }
 

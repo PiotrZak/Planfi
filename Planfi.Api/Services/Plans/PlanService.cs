@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
-using WebApi.Data.Entities;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -109,55 +108,47 @@ namespace PlanfiApi.Services.Plans
             return await _context.SaveChangesAsync();
         }
         
-        public async Task<int> Delete(string[] id)
+        public async Task<int> Delete(string[] ids)
         {
-            try
-            {
-                foreach (var planId in id)
-                {
-                    var exercisesInPlan = _context.exercises.Where(x => x.PlanId == planId);
+            var exercises = await _context.exercises
+                .Where(x => ids.Contains(x.PlanId))
+                .OrderBy(x => x.PlanId)
+                .ToListAsync();
+            
+            var plans = await _context.plans
+                .Where(x => ids.Contains(x.PlanId))
+                .OrderBy(x => x.PlanId)
+                .ToListAsync();
+            
+            _context.exercises.RemoveRange(exercises);
+            _context.plans.RemoveRange(plans);
+            
+            await _context.SaveChangesAsync();
 
-                    foreach (var exerciseItem in exercisesInPlan)
-                    {
-                        exerciseItem.PlanId = null;
-                    }
-
-                    var plan = await _context.plans.FindAsync(planId);
-                    if (plan == null) continue;
-                    
-                    _context.plans.Remove(plan);
-                    await _context.SaveChangesAsync();
-                }
-            }
-            catch (ValidationException)
-            {
-                return 0;
-            }
             return 1;
         }
 
         public async Task AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)
         {
-            var plan = GetById(planId).Result;
+            var plan = await GetById(planId);
+            
+            // there is only one exercise per every plan -> but if there is option for multiple assign
+            // then change SingleOrDefault into Where 
+            
+            var exercise = await _context.exercises
+                .SingleOrDefaultAsync(x => exerciseId.Contains(x.ExerciseId));
 
-            foreach (var id in exerciseId)
+            if (exercise != null)
             {
-                var element = await _context.exercises.FindAsync(id);
-
-                if (element == null) continue;
-                
-                element.ExerciseId = Guid.NewGuid().ToString();
-                element.Times = exerciseModel.Times;
-                element.Weight = exerciseModel.Weight;
-                element.Series = exerciseModel.Series;
-                element.Repeats = exerciseModel.Repeats;
-
-                //creating exercise instance
-                _exerciseService.CreateInstance(element);
-
-                //assigning exercise to plan
-                plan.Exercises.Add(element);
+                exercise.ExerciseId = Guid.NewGuid().ToString();
+                exercise.Times = exerciseModel.Times;
+                exercise.Weight = exerciseModel.Weight;
+                exercise.Series = exerciseModel.Series;
+                exercise.Repeats = exerciseModel.Repeats;
             }
+
+            _exerciseService.CreateInstance(exercise);
+            plan.Exercises.Add(exercise);
             _context.plans.Update(plan);
             await _context.SaveChangesAsync();
         }

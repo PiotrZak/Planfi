@@ -59,9 +59,9 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var plan = _planService.GetById(id);
+            var plan = await _planService.GetById(id);
 
             if (plan == null)
                 return NotFound();
@@ -86,10 +86,17 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("assignExercises")]
-        public IActionResult AssignToPlan([FromBody]AssignExerciseToPlan model)
+        public async Task<IActionResult> AssignToPlan([FromBody]AssignExerciseToPlan model)
         {
-            _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId, model.ExerciseModel);
-            return Ok();
+            try
+            {
+                await _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId, model.ExerciseModel);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [AllowAnonymous]

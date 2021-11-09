@@ -11,7 +11,6 @@ using WebApi.Data.Entities.Users;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Models;
-using WebApi.Models.ViewModels;
 
 namespace PlanfiApi.Controllers.Organizations
 {
