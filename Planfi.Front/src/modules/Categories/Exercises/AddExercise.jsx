@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import BackTopNav from "components/molecules/BackTopNav";
 import { translate } from "utils/Translation";
-import ExerciseTemplate from "templates/ExerciseTemplate";
+import AddCategoryModal from "modules/Categories/AddCategoryModal";
 import Button from "components/atoms/Button";
 import Paragraph from "components/atoms/Paragraph";
 import Label from "components/atoms/Label";
 import Input from "components/molecules/Input";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { exerciseService } from "services/exerciseService";
+import { useQuery, gql } from '@apollo/client';
 import { useThemeContext } from "support/context/ThemeContext";
 import { routes } from "utils/routes";
 import AttachmentPreview from "components/molecules/AttachmentPreview";
@@ -32,6 +32,8 @@ import {
 } from "support/magicVariables";
 import axios from "axios";
 import { EXERCISES_URL } from "../../../services/utils";
+import { DropdownInput } from 'components/atoms/Dropdown'
+import SmallButton from "components/atoms/SmallButton";
 
 const Checkbox = withLazyComponent(
   React.lazy(() => import("components/atoms/Checkbox"))
@@ -74,7 +76,7 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   exerciseName: Yup.string().required(translate("ThisFieldIsRequired")),
-  exerciseDescription: Yup.string(),
+  exerciseDescription: Yup.string()
 });
 
 const ProgressBar = ({ bgcolor, progress, height }) => {
@@ -105,7 +107,7 @@ const ProgressBar = ({ bgcolor, progress, height }) => {
           <div style={Center}>Sending to cloud</div>
         ) : (
           <div style={Center}>
-            <Loader isLoading={true}></Loader>Processing in cloud 
+            <Loader isLoading={true}></Loader>Processing in cloud
           </div>
         )}
       </div>
@@ -118,11 +120,29 @@ const AddExerciseRefactor = (props) => {
   const [loading, setLoading] = useState(false);
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
-
-  console.log(theme.colorPrimary);
-
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const categoryTitle = 'not selected category yet'
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState([])
+  const [openModal, setOpenModal] = useState(false);
+
+  const user = JSON.parse((localStorage.getItem('user')));
+
+  const CATEGORY = gql`{
+    categories(where: {organizationId: "${user.organizationId}"})
+    {
+        title
+        categoryId
+        exercises
+    }
+  }
+`;
+
+  const { loadingCategory, error, data, refetch: _refetch } = useQuery(CATEGORY);
+
+  const refreshData = useCallback(() => {
+    setTimeout(() => _refetch(), 200);
+  }, [_refetch]);
+
 
   const fileNotification = (message) => {
     notificationDispatch({
@@ -134,7 +154,7 @@ const AddExerciseRefactor = (props) => {
     });
   };
 
-const history = useHistory();
+  const history = useHistory();
 
   const resetFileInput = () => {
     document.getElementById("choose-file-button").value = "";
@@ -147,8 +167,7 @@ const history = useHistory();
     for (let i = 0; i < selectedFiles.length; i++) {
       formData.append("Files", selectedFiles[i]);
     }
-    const { id } = props.history.location.state;
-    formData.append("CategoryId", id);
+    formData.append("CategoryId", selectedCategoryId);
 
     setLoading(true);
 
@@ -189,12 +208,10 @@ const history = useHistory();
           setSelectedFiles([]);
           history.push({
             pathname: routes.addExercise,
-            state: { id: id, title: categoryTitle },
           });
         } else {
           history.push({
-            pathname: `/category/${id}`,
-            state: { id: id, title: categoryTitle },
+            pathname: routes.categories
           });
         }
       })
@@ -270,6 +287,30 @@ const history = useHistory();
     }
   };
 
+
+
+  const closeModal = () => {
+    setOpenModal(false);
+  };
+
+  let results;
+  if (data) {
+    results = data.categories;
+  }
+
+  const handleInputChange = (e) => {
+    setSelectedCategoryId(e.target.value);
+  }
+
+  const validate = (values) => {
+    const errors = {};
+    if (selectedCategoryId.length === 0) {
+      errors.category = 'Required';
+    }
+    return errors;
+  };
+
+
   return (
     <GlobalTemplate>
       {loading ? (
@@ -279,63 +320,87 @@ const history = useHistory();
           height={4}
         />
       ) : (
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-            validateOnChange={false}
-          >
-            {({ errors, touched, isValid }) => (
-              <Form>
-                <Nav>
-                  <BackTopNav text={translate("AddExercise")} />
-                  <Button
-                    size="sm"
-                    buttonType="primary"
-                    type="submit"
-                    disabled={!isValid}
-                  >
-                    {translate("Save")}
-                  </Button>
-                </Nav>
-                <Paragraph type="body-3-regular">
-                  {translate("AddExerciseInfo")}
-                </Paragraph>
-                <Label text={translate("ExerciseName")}>
+        <Formik
+          validate={validate}
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+          validateOnChange={false}
+        >
+          {({ errors, touched, isValid }) => (
+            <Form>
+              <Nav>
+                <BackTopNav text={translate("AddExercise")} />
+                <Button
+                  size="sm"
+                  buttonType="primary"
+                  type="submit"
+                >
+                  {translate("Save")}
+                </Button>
+              </Nav>
+              <Paragraph type="body-3-regular">
+                {translate("AddExerciseInfo")}
+              </Paragraph>
+              <Label text={translate("ExerciseName")}>
+                <Field
+                  type="text"
+                  name="exerciseName"
+                  as={Input}
+                  error={errors.exerciseName && touched.exerciseName}
+                />
+              </Label>
+              <AddFiles
+                triggerFileUploadButton={triggerFileUploadButton}
+                handleImageChange={handleImageChange}
+              />
+              {renderAttachmentsPreview(selectedFiles)}
+              {results && results.length > 1 &&
+              <>
+                <DropdownInput
+                  required={true}
+                  id="category"
+                  name="category"
+                  list={results}
+                  defaultValue={results.title}
+                  placeholder={results.title}
+                  displayValue="title"
+                  optionValue="categoryId"
+                  label="Category"
+                  isLoading={loadingCategory}
+                  onChange={handleInputChange}
+                />
+                <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
+                <AddCategoryModal
+                theme={theme}
+                openModal={openModal}
+                onClose={closeModal}
+              />
+              {errors.category && <div>{errors.category}</div>}
+              </>
+              }
+              <ContainerDescription>
+                <Label text={translate("AddExerciseDescription")}>
                   <Field
                     type="text"
-                    name="exerciseName"
-                    as={Input}
-                    error={errors.exerciseName && touched.exerciseName}
+                    name="exerciseDescription"
+                    as={StyledTextArea}
                   />
                 </Label>
-                <AddFiles
-                  triggerFileUploadButton={triggerFileUploadButton}
-                  handleImageChange={handleImageChange}
+              </ContainerDescription>
+              <CheckboxContainer>
+                <Checkbox
+                  checkboxType="formik"
+                  type="checkbox"
+                  name="addNextExercise"
                 />
-                {renderAttachmentsPreview(selectedFiles)}
-                <ContainerDescription>
-                  <Label text={translate("AddExerciseDescription")}>
-                    <Field
-                      type="text"
-                      name="exerciseDescription"
-                      as={StyledTextArea}
-                    />
-                  </Label>
-                </ContainerDescription>
-                <CheckboxContainer>
-                  <Checkbox
-                    checkboxType="formik"
-                    type="checkbox"
-                    name="addNextExercise"
-                  />
-                  <Paragraph type="body-2-medium">
-                    {translate("AddNextExercise")}
-                  </Paragraph>
-                </CheckboxContainer>
-              </Form>
-            )}
-          </Formik>
+                <Paragraph type="body-2-medium">
+                  {translate("AddNextExercise")}
+                </Paragraph>
+              </CheckboxContainer>
+            </Form>
+          )}
+        </Formik>
       )}
     </GlobalTemplate>
   );

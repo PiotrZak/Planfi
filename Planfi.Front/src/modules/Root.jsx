@@ -25,7 +25,6 @@ import ChatContainer from './Chat/Chat';
 
 // exercises
 import Categories from 'modules/Categories/Categories';
-import Category from 'modules/Categories/Category/Category';
 import AddExercise from 'modules/Categories/Exercises/AddExercise';
 import EditExercise from 'modules/Categories/Exercises/EditExercise';
 
@@ -107,7 +106,6 @@ const Root = () => {
                     <PrivateRoute path={routes.exercise} component={Exercise} />
                     <PrivateRoute path={routes.categories} component={Categories} />
                     <PrivateRoute path={routes.myProfile} component={() => <MyProfile toggleLanguage ={toggleLanguage} toggleTheme ={toggleTheme}/>} />
-                    <PrivateRoute path={routes.category} component={Category} />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
                   </MenuTemplate>            

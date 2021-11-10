@@ -17,11 +17,8 @@ export const DropdownInput = ({
   isLoading,
   onChange,
 }) => (
-  <Row>
-    <Col sm="6">
+    <>
       {label}
-    </Col>
-    <Col sm="6">
       <DropdownWithSpinner
         className={hasError ? "form-control input-error" : "form-control"}
         id={id}
@@ -35,8 +32,7 @@ export const DropdownInput = ({
         onChange={onChange}
         hasError={hasError}
       />
-    </Col>
-  </Row>
+  </>
 );
 
 

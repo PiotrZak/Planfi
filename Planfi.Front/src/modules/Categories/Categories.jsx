@@ -26,6 +26,7 @@ const Categories = (props) => {
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
 
+  const [filteredData, setFilteredData] = useState([])
 
   // const  id  = props.match.params.id;
   // const  title  = props.location.state.title;
@@ -73,10 +74,14 @@ const Categories = (props) => {
       });
   }
 
+  const filterByCategoryName = (categoryName) => {
+      setFilteredData(data.allBaseExercises.filter((exercise) => exercise.categoryName == categoryName))
+  }
+
 
   useEffect(() => {
     refreshData();
-  }, []);
+  }, [filterByCategoryName]);
 
   const filterExercises = (event) => {
     setSearchTerm(event.target.value);
@@ -84,11 +89,21 @@ const Categories = (props) => {
 
   let results;
   if (data) {
-    results = !searchTerm
-      ? data.allBaseExercises
-      : data.allBaseExercises.filter((exercise) => exercise.name
+
+    if (filteredData.length > 0) {
+      results = !searchTerm
+        ? filteredData
+        : filteredData.filter((exercise) => exercise.name
           .toLowerCase()
           .includes(searchTerm.toLocaleLowerCase()));
+    }
+    else {
+      results = !searchTerm
+        ? data.allBaseExercises
+        : data.allBaseExercises.filter((exercise) => exercise.name
+          .toLowerCase()
+          .includes(searchTerm.toLocaleLowerCase()));
+    }
   }
 
   if (loading) return <Loader isLoading={loading} />;
@@ -107,17 +122,26 @@ const Categories = (props) => {
     selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
   };
 
+
+  const getUniqueListBy = (arr, key) => {
+    return [...new Map(arr.map(item => [item[key], item])).values()]
+  }
+
+
+
   return (
     <>
       <GlobalTemplate>
         <Nav>
-           <Heading>{translate('ExercisesTitle')}</Heading>
+          <Heading>{translate('ExercisesTitle')}</Heading>
           <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />
         </Nav>
         {results && results.length > 0
           ?
           <>
             <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+            {getUniqueListBy(data.allBaseExercises, "categoryName")
+              .map(x => <p onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
             <CheckboxGenericComponent
               dataType="exercises"
               displayedValue="name"

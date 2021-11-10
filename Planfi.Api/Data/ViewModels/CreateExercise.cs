@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PlanfiApi.Data.ViewModels
 {
-    public class 
-        CreateExercise
+    public class CreateExercise
     {
 
         [Required]

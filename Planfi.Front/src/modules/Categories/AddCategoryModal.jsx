@@ -38,7 +38,6 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
     categoryService
       .addCategory(transformedData)
       .then((data) => {
-        console.log(data)
         notificationDispatch({
           type: ADD,
           payload: {
@@ -47,10 +46,6 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
           },
         });
 
-        history.push({
-          pathname: `/category/${data.categoryId}`,
-          state: { title: values.title },
-        });
       })
       .catch((error) => {
         notificationDispatch({
@@ -61,6 +56,8 @@ const AddCategoryModal = ({ openModal, onClose, theme }) => {
           },
         });
       });
+
+      onClose()
   };
 
   return (
