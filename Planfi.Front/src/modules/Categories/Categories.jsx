@@ -27,6 +27,7 @@ const Categories = (props) => {
   const [bottomSheet, setBottomSheet] = useState('none');
 
   const [filteredData, setFilteredData] = useState([])
+  const [filters, setFilters] = useState([])
 
   // const  id  = props.match.params.id;
   // const  title  = props.location.state.title;
@@ -75,7 +76,14 @@ const Categories = (props) => {
   }
 
   const filterByCategoryName = (categoryName) => {
-      setFilteredData(data.allBaseExercises.filter((exercise) => exercise.categoryName == categoryName))
+    const isMatch = filters.includes(categoryName);
+    let updatedFilters;
+    isMatch
+      ? updatedFilters = filters.filter((item) => item != categoryName)
+      : updatedFilters = filters.concat([categoryName])
+
+    setFilters(updatedFilters)
+    setFilteredData(data.allBaseExercises.filter((exercise) => updatedFilters.includes(exercise.categoryName)))
   }
 
 
@@ -141,7 +149,7 @@ const Categories = (props) => {
           <>
             <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
             {getUniqueListBy(data.allBaseExercises, "categoryName")
-              .map(x => <p onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
+              .map(x => <p className={filters.includes(x.categoryName) ? "bold" : ""} onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
             <CheckboxGenericComponent
               dataType="exercises"
               displayedValue="name"

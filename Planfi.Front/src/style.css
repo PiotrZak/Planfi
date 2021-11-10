@@ -11,3 +11,7 @@
     width:100%;
     position:absolute;
 }
+
+.bold{
+    font-weight:800;
+}
