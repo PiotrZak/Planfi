@@ -90,16 +90,12 @@ namespace PlanfiApi.Services.Exercises
             try
             {
                 const string baseExerciseQuery = @"SELECT
+                    e.exercise_Id as ExerciseId,
                     e.name,
                     c.title as CategoryName,
                     e.description,
                     e.files
                     FROM public.exercises as e
-                    JOIN (SELECT name, COUNT(*)
-		                    FROM public.exercises
-		                    GROUP BY name
-		                    HAVING count(*) > 1 ) as b
-		                    ON e.name = b.name
                     JOIN public.categories as c
                     ON e.category_id = c.category_id
                     WHERE e.series = 0 AND repeats = 0 AND weight = 0 and times = 0";
@@ -171,7 +167,7 @@ namespace PlanfiApi.Services.Exercises
             foreach(var exercise in exercisesInstances)
             {
                 var exerciseBaseOfThisExercise = baseExercises
-                    .SingleOrDefault(x => x.Name == exercise.Name);
+                    .SingleOrDefault(x => x.ExerciseId == exercise.Name);
 
                 var exerciseViewModel = new ExerciseViewModel()
                 {

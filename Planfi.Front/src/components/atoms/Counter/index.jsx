@@ -24,12 +24,7 @@ const Counter = ({defaultValue, resetCounter, setResetCounter, fill, initialValu
   const [value, setValue] = useState(defaultValue ? defaultValue : 0);
   const [unit, setUnit] = useState(initialUnit)
   const [valueToChange, setValueToChange] = useState(initialValueToChange)
-
-  console.log('default value', defaultValue)
-  console.log('value', value)
-
   useEffect(() => {
-
     setValue(defaultValue)
 
     if(resetCounter){

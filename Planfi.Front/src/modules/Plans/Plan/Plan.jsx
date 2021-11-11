@@ -19,12 +19,12 @@ import Loader from 'components/atoms/Loader';
 import { useUserContext } from 'support/context/UserContext';
 
 const Plan = (props) => {
-  const { theme } = useThemeContext();
 
+  const { theme } = useThemeContext();
   const user = JSON.parse((localStorage.getItem('user')));
   const [addExercisePanel] = useState('none');
-  const  id  = props.match.params.id;
-  const  title  = props.location.state.title;
+  const id = props.match.params.id;
+  const title = props.location.state.title;
 
   const PLANSEXERCISES = gql`{
     serializedExercisesInstances(where: {planId: "${id}"})
@@ -40,10 +40,14 @@ const Plan = (props) => {
     }
   `;
 
+
+
   const {
     loading, error, data, refetch: _refetch,
   } = useQuery(PLANSEXERCISES);
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+  const refreshPlanExerciseData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
+
 
   const [allExercises, setAllExercises] = useState([])
   const [activeSelectedExercise, setActiveSelectedExercise] = useState([]);
@@ -57,33 +61,9 @@ const Plan = (props) => {
 
 
   useEffect(() => {
-    refreshData();
-    getAllCategories();
-    getAllExercises();
+    refreshPlanExerciseData();
   }, [id]);
 
-
-  const getAllCategories = useCallback(() => {
-    categoryService
-      .getAllCategories()
-      .then((data) => {
-        setCategories(data);
-        setIsLoading(false);
-      })
-      .catch(() => {
-      });
-  }, []);
-
-
-  const getAllExercises = () => {
-    exerciseService.getExercisesByOrganization(user.organizationId)
-      .then((data) => {
-        setAllExercises(commonUtil.getUnique(data, 'name'));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
   if (loading) return <Loader isLoading={loading} />;
   if (error) return <p>Error :(</p>;
@@ -99,20 +79,20 @@ const Plan = (props) => {
   };
 
   let results;
-  if(data){
-  results = !searchTerm
-    ? data.serializedExercisesInstances
-    : data.serializedExercisesInstances
-      .filter((exercise) => exercise.name
-      .toLowerCase()
-      .includes(searchTerm.toLocaleLowerCase()));
+  if (data) {
+    results = !searchTerm
+      ? data.serializedExercisesInstances
+      : data.serializedExercisesInstances
+        .filter((exercise) => exercise.name
+          .toLowerCase()
+          .includes(searchTerm.toLocaleLowerCase()));
   }
 
   return (
     <>
       <GlobalTemplate>
         <Nav>
-        <BackTopNav text={title} />
+          <BackTopNav text={title} />
           {user && user.role != Role.User && <SmallButton iconName="plus" onClick={() => setBottomSheet('flex')} />}
         </Nav>
         <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
@@ -127,29 +107,17 @@ const Plan = (props) => {
           )
           : <p>{translate('NoExercisesPlan')}</p>}
       </GlobalTemplate>
-      <PlansExercises
-        selectedExercise={activeSelectedExercise}
-        theme={theme}
-        planId={id}
-        categories={categories}
-        planPanel={planPanel}
-        setPlanPanel={setPlanPanel}
-        isLoading={isLoading}
-        refreshData={refreshData}
-      />
-      <PlansPanel
-        bottomSheet={addExercisePanel}
-        bottomSheet={bottomSheet}
-        setBottomSheet={setBottomSheet}
-        setAssignExercises={setAssignExercises}
-        allExercises={allExercises}
-        selectedExercise={activeSelectedExercise}
-        theme={theme}
-        planId={id}
-        categories={categories}
-        isLoading={isLoading}
-        refreshData={refreshData}
-      />
+        <PlansPanel
+          bottomSheet={addExercisePanel}
+          bottomSheet={bottomSheet}
+          setBottomSheet={setBottomSheet}
+          setAssignExercises={setAssignExercises}
+          selectedExercise={activeSelectedExercise}
+          theme={theme}
+          planId={id}
+          categories={categories}
+          refreshData={refreshPlanExerciseData}
+        />
     </>
   );
 };

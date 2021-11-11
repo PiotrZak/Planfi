@@ -17,6 +17,7 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import { PlanPanelExercises } from './PlanPanelExercises';
 import Loader from 'components/atoms/Loader';
 import Heading from 'components/atoms/Heading';
+import {getUniqueListBy} from 'utils/common.util'
 
 const Categories = (props) => {
   const { theme } = useThemeContext();
@@ -131,14 +132,8 @@ const Categories = (props) => {
   };
 
 
-  const getUniqueListBy = (arr, key) => {
-    return [...new Map(arr.map(item => [item[key], item])).values()]
-  }
-
-
-
   return (
-    <>
+    <> 
       <GlobalTemplate>
         <Nav>
           <Heading>{translate('ExercisesTitle')}</Heading>

@@ -141,6 +141,7 @@ namespace PlanfiApi.Services.Plans
             if (exercise != null)
             {
                 exercise.ExerciseId = Guid.NewGuid().ToString();
+                exercise.Name = exerciseId[0];
                 exercise.Times = exerciseModel.Times;
                 exercise.Weight = exerciseModel.Weight;
                 exercise.Series = exerciseModel.Series;
