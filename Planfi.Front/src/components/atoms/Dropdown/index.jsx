@@ -2,6 +2,8 @@ import React from "react";
 import { Input } from "reactstrap";
 import { Row, Col } from "reactstrap";
 import { Spinner } from "reactstrap";
+import styled from "styled-components";
+
 
 export const DropdownInput = ({
   id,
@@ -17,21 +19,20 @@ export const DropdownInput = ({
   isLoading,
   onChange,
 }) => (
-    <>
-      {label}
-      <DropdownWithSpinner
-        className={hasError ? "form-control input-error" : "form-control"}
-        id={id}
-        name={name}
-        list={list}
-        placeholder={placeholder}
-        displayValue={displayValue}
-        optionValue={optionValue}
-        isLoading={isLoading}
-        defaultValue={defaultValue}
-        onChange={onChange}
-        hasError={hasError}
-      />
+  <>
+    <DropdownWithSpinner
+      className={hasError ? "form-control input-error" : "form-control"}
+      id={id}
+      name={name}
+      list={list}
+      placeholder={placeholder}
+      displayValue={displayValue}
+      optionValue={optionValue}
+      isLoading={isLoading}
+      defaultValue={defaultValue}
+      onChange={onChange}
+      hasError={hasError}
+    />
   </>
 );
 
@@ -77,7 +78,9 @@ const Dropdown = ({
         onChange={onChange}
         className={hasError ? "form-control input-error" : "form-control"}
       >
-        <option value="">{placeholder ? placeholder : "SELECT"}</option>
+        {placeholder &&
+          <option value="">{placeholder ? placeholder : "SELECT"}</option>
+        }
         {mapValues().map((option) => (
           <option
             key={option.value}

@@ -5,22 +5,18 @@ import styled, { css } from 'styled-components';
 import { UserInfo } from 'components/molecules/UserInfo/UserInfo';
 import { useThemeContext } from 'support/context/ThemeContext';
 import { userService } from 'services/userServices';
-import { TrainerClients } from 'modules/Users/UserProfile/TrainerClients';
-import { UserPlans } from 'modules/Users/UserProfile/UserPlans';
 import { MyProfilePanel } from 'modules/MyProfile/MyProfilePanel';
 import EditUserPasswordModal from 'modules/MyProfile/EditProfile/EditUserPassword';
 import EditUserEmailModal from 'modules/MyProfile/EditProfile/EditUserEmail';
 import EditUserDataModal from 'modules/MyProfile/EditProfile/EditUserData';
 import MyProfileTemplate from 'templates/MyProfileTemplate';
 import Icon from 'components/atoms/Icon';
-import { translate } from 'utils/Translation';
 import UserInfoBackground from 'components/molecules/UserInfoBackground';
 import { Role } from 'utils/role';
-import { ClientTrainers } from 'modules/Users/UserProfile/ClientTrainers';
-import { TrainerPlans } from 'modules/Users/UserProfile/TrainerPlans';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
 import { Tabs } from 'antd';
+import { trainerTabs, clientTabs} from '../Users/ProfileTabs'
 
 const { TabPane } = Tabs;
 
@@ -57,36 +53,6 @@ const TabItemComponent = ({
     </div>
   )
 };
-
-
-const trainerTabs = [{
-  id: 1,
-  title: translate('MyPlans'),
-  icon: 'tabitem__icon fas fa-child',
-  content: <TrainerPlans />,
-},
-{
-  id: 2,
-  title: translate('MyClients'),
-  icon: 'tabitem__icon fas fa-child',
-  content: <TrainerClients />,
-},
-];
-
-const clientTabs = [{
-  id: 1,
-  title: translate('MyPlans'),
-  icon: 'tabitem__icon fas fa-child',
-  content: <UserPlans />,
-},
-{
-  id: 2,
-  title: translate('MyTrainers'),
-  icon: 'tabitem__icon fas fa-child',
-  content: <ClientTrainers />,
-},
-];
-
 
 const MyProfile = ({ toggleTheme, toggleLanguage }) => {
   const { theme } = useThemeContext();

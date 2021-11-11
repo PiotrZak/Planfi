@@ -72,7 +72,7 @@ const Plan = (props) => {
           },
         });
       });
-    }, [selectedPlans]);
+  }, [selectedPlans]);
 
 
   useEffect(() => {
@@ -92,11 +92,11 @@ const Plan = (props) => {
   const filterPlans = (event) => {
     setSearchTerm(event.target.value);
   };
-  
+
   let results;
-  if(data){
+  if (data) {
     console.log(data)
-   results = filterDataByTerm(searchTerm, data.plans, ['name']);
+    results = filterDataByTerm(searchTerm, data.plans, ['name']);
   }
 
   if (loading) return <Loader isLoading={loading} />;
@@ -107,18 +107,18 @@ const Plan = (props) => {
       <GlobalTemplate>
         <Nav>
           <Heading>{translate('PlansTitle')}</Heading>
-          <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
+          <SmallButton buttonShape="circle" iconName="plus" onClick={() => setOpenModal(true)} />
         </Nav>
-          <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
-          {data.plans.length >= 1 ? (
-            <CheckboxGenericComponent
-              dataType="plans"
-              displayedValue="title"
-              dataList={results}
-              onSelect={submissionHandleElement}
-            />
-          )
-            : <p>{translate('NoPlans')}</p>}
+        <Search callBack={filterPlans} placeholder={translate('PlanSearch')} />
+        {data.plans.length >= 1 ? (
+          <CheckboxGenericComponent
+            dataType="plans"
+            displayedValue="title"
+            dataList={results}
+            onSelect={submissionHandleElement}
+          />
+        )
+          : <p>{translate('NoPlans')}</p>}
       </GlobalTemplate>
       <AddPlanModal theme={theme} openModal={openModal} onClose={closeModal} />
       <PlansPanel

@@ -113,9 +113,25 @@ namespace PlanfiApi.Services.Exercises
             return exercisesBase;
         }
         
-        public Task<Exercise> GetById(string id)
+        public async Task<Exercise> GetById(string id)
         {
-            return _context.exercises.FirstOrDefaultAsync(x => x.ExerciseId == id);
+            var exercise = await _context.exercises
+                .FirstOrDefaultAsync(x => x.ExerciseId == id);
+
+            if (exercise.Series == 0 && exercise.Weight == 0 && exercise.Repeats == 0 && exercise.Times == 0)
+            {
+                return exercise;
+            }
+            
+            var baseExercise = await _context.exercises
+                .FirstOrDefaultAsync(x => x.ExerciseId == exercise.Name);
+
+            exercise.Name = baseExercise.Name;
+            exercise.Description = baseExercise.Description;
+            exercise.Files = baseExercise.Files;
+            
+            return exercise;
+
         }
 
         public IEnumerable<Exercise> GetAll()
@@ -134,6 +150,7 @@ namespace PlanfiApi.Services.Exercises
             var exercisesInstances = new List<ExerciseViewModel>();
             try
             {
+                //workaround here
                 const string exerciseInstancesQuery = @"SELECT
                     e.name,
                     e.exercise_id as ExerciseId,
@@ -160,8 +177,7 @@ namespace PlanfiApi.Services.Exercises
             {
                 await connection.CloseAsync();
             }
-
-
+            
             var exercisesViewModels = new List<ExerciseViewModel>();
             
             foreach(var exercise in exercisesInstances)
@@ -169,6 +185,8 @@ namespace PlanfiApi.Services.Exercises
                 var exerciseBaseOfThisExercise = baseExercises
                     .SingleOrDefault(x => x.ExerciseId == exercise.Name);
 
+                if (exerciseBaseOfThisExercise == null) continue;
+                
                 var exerciseViewModel = new ExerciseViewModel()
                 {
                     ExerciseId = exercise.ExerciseId,

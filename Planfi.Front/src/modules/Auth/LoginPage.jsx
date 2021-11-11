@@ -87,10 +87,7 @@ const detectBrowser = () => {
 }
 
 const saveJWTInCookies = (data) => {
-  setCookie('JWT', data.token,
-    {
-      path: '/',
-    })
+  setCookie('JWT', data.token,{path: '/',})
 }
 
 const authenticateUser = (loginModelData) => {

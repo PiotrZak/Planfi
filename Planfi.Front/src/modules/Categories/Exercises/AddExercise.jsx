@@ -357,13 +357,14 @@ const AddExerciseRefactor = (props) => {
               {renderAttachmentsPreview(selectedFiles)}
               {results && results.length > 1 &&
               <>
+                <Label text={translate("Category")}></Label>
                 <DropdownInput
                   required={true}
                   id="category"
                   name="category"
                   list={results}
-                  defaultValue={results.title}
-                  placeholder={results.title}
+                  defaultValue={results[0].categoryId}
+                  placeholder={results[0].title}
                   displayValue="title"
                   optionValue="categoryId"
                   label="Category"
@@ -371,6 +372,7 @@ const AddExerciseRefactor = (props) => {
                   onChange={handleInputChange}
                 />
                 <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
+                {translate("AddCategory")}
                 <AddCategoryModal
                 theme={theme}
                 openModal={openModal}

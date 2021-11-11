@@ -54,7 +54,7 @@ const Plan = (props) => {
   const [assignExercise, setAssignExercises] = useState('none');
   const [bottomSheet, setBottomSheet] = useState('none')
 
-  const [planPanel, setPlanPanel] = useState('none')
+const [planPanel, setPlanPanel] = useState('none')
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState();

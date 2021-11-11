@@ -51,8 +51,9 @@ export const filterDataByTerm = (searchTerm, data, dataProperty) => {
 	}
 };
 
-export default commonUtil;
-
 export const getUniqueListBy = (arr, key) => {
   return [...new Map(arr.map(item => [item[key], item])).values()]
 }
+
+export default commonUtil;
+

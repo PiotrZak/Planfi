@@ -1,8 +1,9 @@
 import React from "react";
 import { translate } from "utils/Translation";
-import Icon from "components/atoms/Icon";
 import styled from "styled-components";
 import { withLazyComponent } from "utils/lazyComponent";
+import SmallButton from 'components/atoms/SmallButton';
+
 const Paragraph = withLazyComponent(
   React.lazy(() => import("components/atoms/Paragraph"))
 );
@@ -24,7 +25,7 @@ const StyledParagraph = styled(Paragraph)`
 const AddFiles = ({triggerFileUploadButton, handleImageChange}) => {
     return (
       <WrapperAttachments onClick={triggerFileUploadButton}>
-        <Icon name="image-plus" fill="white" height="1.5rem" width="1.5rem" />
+         <SmallButton iconName="plus"/>
         <StyledParagraph>{translate("AddAttachments")}</StyledParagraph>
         <FileUploadButton
           id="choose-file-button"

@@ -31,7 +31,7 @@ export const UserPlans = ({ id }) => {
             <RenderType theme={theme} type={'plans'} element={element} i={i} />
         </div>
       ))
-        : <h2>No Plans</h2>}
+        : <h2>No Plsans</h2>}
     </div>
   );
 };
