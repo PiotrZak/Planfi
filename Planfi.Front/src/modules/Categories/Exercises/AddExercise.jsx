@@ -288,8 +288,8 @@ const AddExerciseRefactor = (props) => {
   };
 
 
-
   const closeModal = () => {
+    refreshData();
     setOpenModal(false);
   };
 
@@ -355,32 +355,33 @@ const AddExerciseRefactor = (props) => {
                 handleImageChange={handleImageChange}
               />
               {renderAttachmentsPreview(selectedFiles)}
-              {results && results.length > 1 &&
-              <>
-                <Label text={translate("Category")}></Label>
-                <DropdownInput
-                  required={true}
-                  id="category"
-                  name="category"
-                  list={results}
-                  defaultValue={results[0].categoryId}
-                  placeholder={results[0].title}
-                  displayValue="title"
-                  optionValue="categoryId"
-                  label="Category"
-                  isLoading={loadingCategory}
-                  onChange={handleInputChange}
-                />
-                <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
-                {translate("AddCategory")}
-                <AddCategoryModal
+              {results && results.length > 0 ?
+                <>
+                  <Label text={translate("Category")}></Label>
+                  <DropdownInput
+                    required={true}
+                    id="category"
+                    name="category"
+                    list={results}
+                    defaultValue={results[0].categoryId}
+                    placeholder={results[0].title}
+                    displayValue="title"
+                    optionValue="categoryId"
+                    label="Category"
+                    isLoading={loadingCategory}
+                    onChange={handleInputChange}
+                  />
+                </>
+                : <p>No category - add</p>
+              }
+              <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
+              {translate("AddCategory")}
+              <AddCategoryModal
                 theme={theme}
                 openModal={openModal}
                 onClose={closeModal}
               />
               {errors.category && <div>{errors.category}</div>}
-              </>
-              }
               <ContainerDescription>
                 <Label text={translate("AddExerciseDescription")}>
                   <Field

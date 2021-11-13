@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PlanfiApi.Data.Entities;
 
 namespace PlanfiApi.Models.ViewModels
 {
@@ -10,10 +11,7 @@ namespace PlanfiApi.Models.ViewModels
         public string CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public string PlanId { get; set; }
-        public int? Series { get; set; } 
-        public int? Repeats { get; set; }
-        public int? Times { get; set; }
-        public int? Weight { get; set; }
+        public List<Serie>? Series { get; set; }
     }
 
 }

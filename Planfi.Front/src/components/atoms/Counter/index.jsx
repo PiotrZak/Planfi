@@ -19,7 +19,7 @@ const CounterContainer = styled.div`
 
 
 
-const Counter = ({defaultValue, resetCounter, setResetCounter, fill, initialValueToChange, handleData, initialUnit }) => {
+const Counter = ({propertyName, index, defaultValue, resetCounter, setResetCounter, fill, initialValueToChange, handleData, initialUnit }) => {
 
   const [value, setValue] = useState(defaultValue ? defaultValue : 0);
   const [unit, setUnit] = useState(initialUnit)
@@ -37,13 +37,13 @@ const Counter = ({defaultValue, resetCounter, setResetCounter, fill, initialValu
 
   const increment = () => {
     setValue(value + valueToChange);
-    handleData(value + valueToChange);
+    handleData(value + valueToChange, index, propertyName);
   };
 
   const decrement = () => {
     if (value > 0) {
       setValue(value - valueToChange);
-      handleData(value - valueToChange);
+      handleData(value - valueToChange, index, propertyName);
     }
   };
 

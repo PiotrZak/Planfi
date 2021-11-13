@@ -56,11 +56,8 @@ namespace PlanfiApi.Services.Exercises
                 var exercises = _context.exercises
                     .Where(
                         x => x.CategoryId == category.CategoryId &&
-                             x.Repeats == 0 &&
-                             x.Series == 0 &&
-                             x.Weight == 0 &&
-                             x.Repeats == 0
-                        );
+                             x.Series == null
+                    );
 
                 var transformCategoryModel = new CategoryViewModel
                 {

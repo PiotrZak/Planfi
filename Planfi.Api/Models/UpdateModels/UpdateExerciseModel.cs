@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
+using PlanfiApi.Data.Entities;
 
 namespace PlanfiApi.Models.UpdateModels
 {
@@ -12,10 +13,7 @@ namespace PlanfiApi.Models.UpdateModels
 
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Repeats { get; set; }
-        public int Times { get; set; }
-        public int Series { get; set; }
-        public int Weight { get; set; }
+        public List<Serie>? Series { get; set; }
         public List<IFormFile>? Files { get; set; }
         public List<byte[]>? FilesToDelete { get; set; }
     }

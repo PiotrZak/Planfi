@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlanfiApi.Data.Entities;
-using WebApi.Data.Entities;
 
-namespace WebApi.Entities
+namespace PlanfiApi.Data.Entities
 {
     public class Category
     {

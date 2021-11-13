@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { categoryService } from 'services/categoryService';
 import { exerciseService } from 'services/exerciseService';
 import { routes } from 'utils/routes';
 import { useHistory, withRouter } from 'react-router-dom';
@@ -26,12 +25,8 @@ const Categories = (props) => {
   const [selectedExercise, setselectedExercise] = useState([]);
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');
-
   const [filteredData, setFilteredData] = useState([])
   const [filters, setFilters] = useState([])
-
-  // const  id  = props.match.params.id;
-  // const  title  = props.location.state.title;
 
   const CATEGORYEXERCISES = gql`{
     allBaseExercises
@@ -98,7 +93,6 @@ const Categories = (props) => {
 
   let results;
   if (data) {
-
     if (filteredData.length > 0) {
       results = !searchTerm
         ? filteredData

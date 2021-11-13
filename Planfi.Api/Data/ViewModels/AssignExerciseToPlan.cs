@@ -1,4 +1,5 @@
-﻿using WebApi.Models;
+﻿using System.Collections.Generic;
+using PlanfiApi.Data.Entities;
 
 namespace PlanfiApi.Data.ViewModels
 {
@@ -6,7 +7,6 @@ namespace PlanfiApi.Data.ViewModels
     {
         public string PlanId { get; set; }
         public string[] ExerciseId { get; set; }
-
-        public ExerciseUpdateModel ExerciseModel;
+        public List<Serie> Series { get; set; }
     }
 }

@@ -23,10 +23,7 @@ namespace WebApi.Tests
                     Name = "Diamond pumps",
                     Description =
                     "Push-ups are an exercise performed to build strength and muscle mass in the arms, back, and chest. Modifications of push-ups resulted in personal coaches offering players various types of exercises with additional accessories. Which type of push-ups to train? Diamond pumps, wide or classic?",
-                    Times = 5,
-                    Series = 2,
-                    Weight = 50,
-                    Repeats = 15,
+                    Series = null,
                     Files = null,
                     CategoryId = "9af099ac-32d9-4fc9-bca7-27ef680464bd",
                     PlanId = "07caffc2-d88d-4c23-a754-584f4b103fc1",

@@ -19,6 +19,7 @@ import { useUserContext } from "support/context/UserContext";
 import ReactPlayer from "react-player";
 import { Role } from "utils/role";
 import { http } from "services/http.service";
+import { Breakpoints } from 'support/magicVariables';
 
 const InfoTab = styled.div`
   display: flex;
@@ -74,21 +75,6 @@ const Exercise = (props) => {
           },
         });
       });
-  };
-
-  const Breakpoints = {
-    desktop: {
-      breakpoint: { max: 5000, min: 768 },
-      items: 1,
-    },
-    laptop: {
-      breakpoint: { max: 1024, min: 0 },
-      items: 1,
-    },
-    mobile: {
-      breakpoint: { max: 768, min: 0 },
-      items: 1,
-    },
   };
 
   return (

@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using PlanfiApi.Data.ViewModels;
 using WebApi.Data.Entities;
 using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
 
 namespace PlanfiApi.Data.Entities.Users
 {

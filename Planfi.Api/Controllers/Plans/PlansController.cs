@@ -1,19 +1,17 @@
-using Microsoft.AspNetCore.Mvc;
-using WebApi.Helpers;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
-using AutoMapper;
-using WebApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
-using WebApi.Data.Entities;
-using WebApi.Interfaces;
+using WebApi.Helpers;
+using WebApi.Models;
 
-namespace WebApi.Controllers
+namespace PlanfiApi.Controllers.Plans
 {
     [Authorize]
     [ApiController]
@@ -90,7 +88,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                await _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId, model.ExerciseModel);
+                await _planService.AssignExercisesToPlan(model.PlanId, model.ExerciseId, model.Series);
                 return Ok();
             }
             catch (AppException ex)
@@ -124,9 +122,9 @@ namespace WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("usersplan")]
-        public async Task<IActionResult> GetUserPlans()
+        public async Task<IActionResult> GetUserPlans(string userId)
         {
-            var plans = await _planService.GetUserPlans();
+            var plans = await _planService.GetUserPlans(userId);
 
             if (plans == null)
                 return NotFound();

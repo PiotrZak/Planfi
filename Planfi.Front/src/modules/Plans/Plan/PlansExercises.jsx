@@ -17,7 +17,7 @@ export const PlansExercises = ({
     selectedExercise,
     theme,
     planPanel,
-    setPlanPanel,
+setPlanPanel,
     planId,
     refreshData,
 }) => {

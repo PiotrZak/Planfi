@@ -22,3 +22,18 @@ export const acceptedVideoFileType = [
 ];
 
 export const acceptedFiles =acceptedImageFileType.concat(acceptedVideoFileType)
+
+export const Breakpoints = {
+  desktop: {
+    breakpoint: { max: 5000, min: 768 },
+    items: 1,
+  },
+  laptop: {
+    breakpoint: { max: 1024, min: 0 },
+    items: 1,
+  },
+  mobile: {
+    breakpoint: { max: 768, min: 0 },
+    items: 1,
+  },
+};

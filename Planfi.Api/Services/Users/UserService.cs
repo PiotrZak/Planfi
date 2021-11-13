@@ -35,12 +35,12 @@ namespace PlanfiApi.Services.Users{
             _context = context;
             _mapper = mapper;
         }
-        
+
         public User Register(string Email)
         {
             if (_context.users.Any(x => x.Email == Email))
-                throw new AppException("Email \"" + Email + "\" is already taken"); 
-            
+                throw new AppException("Email \"" + Email + "\" is already taken");
+
             var user = _mapper.Map<User>(Email);
 
             _context.users.Add(user);
@@ -48,7 +48,72 @@ namespace PlanfiApi.Services.Users{
 
             return user;
         }
+
+        public class UserDetailsViewModel
+        {
+            
+        }
+
+        //todo - get all important info for that user!
+        // public async Task<UserDetailsViewModel> GetUserDetails()
+        // {
+        //     var context = new HttpContextAccessor().HttpContext;
+        //     var userId = context?.User.FindFirst(ClaimTypes.Name)?.Value;
+        //     var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+        //     await connection.OpenAsync();
+        //     
         
+        
+        // Get User Plans Query
+        
+        // SELECT DISTINCT 
+        //     p.plan_id,
+        //     p.title,
+        //     p.creator_id,
+        //     p.creator_name,
+        //     p.organization_id
+        //     FROM public.plans as p
+        //     JOIN public.usersplans as up
+        //     ON up.user_id = '9ccb50f0-f118-4d24-84a3-bd7114e73482'
+        
+        
+        // Get User Trainers
+        
+        // SELECT DISTINCT 
+        //     u.user_id,
+        //     u.avatar,
+        //     u.first_name,
+        //     u.last_name
+        //     FROM public.usersTrainers as ut
+        //     JOIN public.users as u
+        //     ON u.user_id = ut.trainer_id
+        //     WHERE ut.client_id = '9ccb50f0-f118-4d24-84a3-bd7114e73482'
+        
+        
+            
+        //     const string trainerClientsQuery = @"SELECT 
+	       //      u.user_id, 
+	       //      ut.client_id,
+	       //      u.avatar, 
+	       //      r.name as role,
+	       //      u.first_name, 
+	       //      u.last_name, 
+	       //      u.email, 
+	       //      u.phone_number, 
+	       //      u.organization_id,
+	       //      u.is_activated
+	       //      FROM public.users as u
+	       //      JOIN public.role as r
+	       //      ON u.role_id = r.id
+	       //      FULL JOIN public.userstrainers as ut
+	       //      ON ut.client_id = u.user_id
+	       //      WHERE ut.trainer_id = @userId";
+        //
+        //     var trainerClients = (await connection.QueryAsync<OrganizationService.UserSqlProjection>(trainerClientsQuery, new {userId})).ToList();
+        //
+        //     return trainerClients.ToList();
+        // }
+
         public async Task<User> Authenticate(string email, string? password)
         {
             var user = await GetUserWithoutPassword(email);
@@ -277,7 +342,6 @@ namespace PlanfiApi.Services.Users{
 
         public async Task<IEnumerable<OrganizationService.UserSqlProjection>>GetClientsByTrainer()
         {
-
             var context = new HttpContextAccessor().HttpContext;
             var userId = context?.User.FindFirst(ClaimTypes.Name)?.Value;
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));

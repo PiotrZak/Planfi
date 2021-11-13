@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -128,7 +129,7 @@ namespace PlanfiApi.Services.Plans
             return 1;
         }
 
-        public async Task AssignExercisesToPlan(string planId, string[] exerciseId, ExerciseUpdateModel exerciseModel)
+        public async Task AssignExercisesToPlan(string planId, string[] exerciseId, List<Serie> series)
         {
             var plan = await GetById(planId);
             
@@ -142,10 +143,7 @@ namespace PlanfiApi.Services.Plans
             {
                 exercise.ExerciseId = Guid.NewGuid().ToString();
                 exercise.Name = exerciseId[0];
-                exercise.Times = exerciseModel.Times;
-                exercise.Weight = exerciseModel.Weight;
-                exercise.Series = exerciseModel.Series;
-                exercise.Repeats = exerciseModel.Repeats;
+                exercise.Series = series;
             }
 
             _exerciseService.CreateInstance(exercise);
@@ -178,9 +176,10 @@ namespace PlanfiApi.Services.Plans
 
         }
 
-        public async Task<List<ResultPlan>> GetUserPlans()
+        public async Task<List<ResultPlan>> GetUserPlans(string? id)
         {
-            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = id ?? new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
 
@@ -198,7 +197,7 @@ namespace PlanfiApi.Services.Plans
                     ON u.user_id = up.user_id
                     JOIN public.plans as p
                     ON p.plan_id = up.plan_id
-                    WHERE u.user_id = @userId";
+                    WHERE u.user_id = @id";
 
                 userPlans = (await connection.QueryAsync<ResultPlan>(userPlansQuery, new {userId})).ToList();
             }

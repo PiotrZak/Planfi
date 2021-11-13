@@ -57,16 +57,17 @@ namespace PlanfiApi.Services.Exercises
             try
             {
                 const string baseExerciseQuery = @"SELECT
-                    e.exercise_Id as ExerciseId,
-                    e.name,
-                    c.title as CategoryName,
-                    c.category_id as CategoryId,
-                    e.description,
-                    e.files
-                    FROM public.exercises as e
-                    JOIN public.categories as c
-                    ON e.category_id = c.category_id
-                    WHERE e.series = 0 AND repeats = 0 AND weight = 0 and times = 0";
+	                e.exercise_Id as ExerciseId,
+	                e.name,
+	                c.title as CategoryName,
+	                c.category_id as CategoryId,
+	                e.description,
+	                e.files
+	                FROM public.exercises as e
+	                JOIN public.categories as c
+	                ON e.category_id = c.category_id
+	                WHERE NOT EXISTS (SELECT * FROM public.series as s WHERE e.exercise_id = s.exercise_id)
+                ";
             
                 exercisesBase = (await connection.QueryAsync<ExerciseViewModel>(baseExerciseQuery)).ToList();
             }
@@ -98,7 +99,8 @@ namespace PlanfiApi.Services.Exercises
                     FROM public.exercises as e
                     JOIN public.categories as c
                     ON e.category_id = c.category_id
-                    WHERE e.series = 0 AND repeats = 0 AND weight = 0 and times = 0";
+	                WHERE NOT EXISTS (SELECT * FROM public.series as s WHERE e.exercise_id = s.exercise_id)
+                ";
             
                 exercisesBase = (await connection.QueryAsync<ExerciseViewModel>(baseExerciseQuery)).ToList();
             }
@@ -118,7 +120,7 @@ namespace PlanfiApi.Services.Exercises
             var exercise = await _context.exercises
                 .FirstOrDefaultAsync(x => x.ExerciseId == id);
 
-            if (exercise.Series == 0 && exercise.Weight == 0 && exercise.Repeats == 0 && exercise.Times == 0)
+            if (exercise != null && exercise.Series.Count == 0)
             {
                 return exercise;
             }
@@ -138,6 +140,20 @@ namespace PlanfiApi.Services.Exercises
         {
             return _context.exercises;
         }
+
+        public class ExerciseSqlProjection
+        {
+            public string ExerciseId { get; set; }
+            public string Name { get; set; }
+            public byte[][] Files { get; set; }
+            public string CategoryId { get; set; }
+            public string? CategoryName { get; set; }
+            public string PlanId { get; set; }
+            public string SerieId { get; set; }
+            public int Times { get; set; }
+            public int Weight { get; set; }
+            public int Repeats { get; set; }
+        }
         
 
         public async Task<List<ExerciseViewModel>> GetSerializedExercisesInstances()
@@ -147,28 +163,25 @@ namespace PlanfiApi.Services.Exercises
 
             var baseExercises = await GetBaseExercise();
             
-            var exercisesInstances = new List<ExerciseViewModel>();
+            var exercisesInstances = new List<ExerciseSqlProjection>();
             try
             {
                 //workaround here
                 const string exerciseInstancesQuery = @"SELECT
-                    e.name,
-                    e.exercise_id as ExerciseId,
-                    e.category_id as CategoryId,
-                    e.plan_id as PlanId,
-                    e.series,
-                    e.repeats,
-                    e.weight,
-                    e.times
-                    FROM public.exercises as e
-                    JOIN (SELECT name, COUNT(*)
-		                    FROM public.exercises
-		                    GROUP BY name
-		                    HAVING count(*) > 1 ) as b
-		                    ON e.name = b.name
-                    WHERE plan_id IS NOT NULL";
+	                e.name,
+	                e.exercise_id as ExerciseId,
+	                e.category_id as CategoryId,
+	                e.plan_id as PlanId,
+                    s.serie_id,
+	                s.weight,
+	                s.times,
+	                s.repeats
+	                FROM public.exercises as e
+	                JOIN public.series as s
+	                ON s.exercise_Id = e.exercise_id
+	                WHERE plan_id IS NOT NULL";
             
-                exercisesInstances = (await connection.QueryAsync<ExerciseViewModel>(exerciseInstancesQuery)).ToList();
+                exercisesInstances = (await connection.QueryAsync<ExerciseSqlProjection>(exerciseInstancesQuery)).ToList();
             }
             catch (Exception exp) {
                 Console.Write(exp.Message);
@@ -179,26 +192,45 @@ namespace PlanfiApi.Services.Exercises
             }
             
             var exercisesViewModels = new List<ExerciseViewModel>();
+
+            var exercisesDuplicates = exercisesInstances
+                .GroupBy(x => x.ExerciseId)
+                .ToList();
             
-            foreach(var exercise in exercisesInstances)
+            var seriesPerExercise = new Dictionary<string, List<Serie>>();
+            
+            foreach (var instance in exercisesDuplicates)
             {
+                var serieList = instance.Select(x => 
+                    new Serie()
+                    {
+                        Repeats = x.Repeats,
+                        Times = x.Times,
+                        Weight = x.Weight,
+                    }).ToList();
+                seriesPerExercise.Add(instance.Key, serieList);
+            }
+            
+            //todo 
+            foreach(var exercise in exercisesDuplicates)
+            {
+                var exerciseList = exercise.ToList();
+                
                 var exerciseBaseOfThisExercise = baseExercises
-                    .SingleOrDefault(x => x.ExerciseId == exercise.Name);
+                    .SingleOrDefault(x => x.ExerciseId == exerciseList[0].Name);
 
                 if (exerciseBaseOfThisExercise == null) continue;
-                
+
                 var exerciseViewModel = new ExerciseViewModel()
                 {
-                    ExerciseId = exercise.ExerciseId,
+                    ExerciseId = exerciseList[0].ExerciseId,
                     Name = exerciseBaseOfThisExercise.Name,
                     Files = exerciseBaseOfThisExercise.Files,
-                    CategoryId = exercise.CategoryId,
+                    CategoryId = exerciseList[0].CategoryId,
                     CategoryName = exerciseBaseOfThisExercise.CategoryName,
-                    PlanId = exercise.PlanId,
-                    Series = exercise.Series,
-                    Repeats = exercise.Repeats,
-                    Times = exercise.Times,
-                    Weight = exercise.Weight,
+                    PlanId = exerciseList[0].PlanId,
+                    Series = seriesPerExercise
+                        .FirstOrDefault(x => x.Key == exerciseList[0].ExerciseId).Value,
                 };
                     
                 exercisesViewModels.Add(exerciseViewModel);
@@ -293,26 +325,12 @@ namespace PlanfiApi.Services.Exercises
                 exercise.Description = updateExercise.Description;
             }
             
-            if (updateExercise.Repeats != exercise.Repeats)
-            {
-                exercise.Repeats = updateExercise.Repeats;
-            }
-
             if (updateExercise.Series != exercise.Series)
             {
                 exercise.Series = updateExercise.Series;
             }
-
-            if (updateExercise.Times != exercise.Times)
-            {
-                exercise.Times = updateExercise.Times;
-            }
-
-            if (updateExercise.Weight != exercise.Weight)
-            {
-                exercise.Weight = updateExercise.Weight;
-            }
-
+            
+            
             _context.exercises.Update(exercise);
             await _context.SaveChangesAsync();
 

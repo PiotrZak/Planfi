@@ -10,10 +10,12 @@ import { Headline, MainHeadline } from 'components/typography';
 import { useNotificationContext, ADD } from 'support/context/NotificationContext';
 import Paragraph from "components/atoms/Paragraph";
 import { translate } from 'utils/Translation';
-import { weightToChange, timesToChange, seriesToChange, repeatsToChange } from 'support/magicVariables';
+import { weightToChange, timesToChange, Breakpoints, repeatsToChange } from 'support/magicVariables';
 import { withLazyComponent } from "utils/lazyComponent";
 import { Formik, Form } from "formik";
 import { useThemeContext } from 'support/context/ThemeContext';
+import Carousel from "react-multi-carousel";
+import {uuidv4} from 'utils/common.util'
 
 const Checkbox = withLazyComponent(
     React.lazy(() => import("components/atoms/Checkbox"))
@@ -55,23 +57,18 @@ export const ExerciseDetailsPanel = ({
 
     const { theme } = useThemeContext();
     const { notificationDispatch } = useNotificationContext();
-    const [exerciseData, setExerciseData] = useState([])
     const [defaultValue, setDefaultValue] = useState(0)
-
     const [resetCounter, setResetCounter] = useState(false)
+    const [series, setSeries] = useState([])
 
     const onSubmit = (values) => {
 
         const exerciseModel = {
-            exerciseModel: {
-                repeats: exerciseData.repeat,
-                times: exerciseData.times,
-                series: exerciseData.series,
-                weight: exerciseData.weight,
-            },
+            series: series,
             planId: planId,
             exerciseId: [exercise.exerciseId],
         }
+
         planService
             .assignExercises(exerciseModel)
             .then(() => {
@@ -83,12 +80,7 @@ export const ExerciseDetailsPanel = ({
                     },
                 });
                 refreshData()
-                setExerciseData({
-                    repeats: null,
-                    times: null,
-                    series: null,
-                    weight: null,
-                })
+                setSeries([])
                 values.addNextExercise === true ? returnToExercises() : returnToPlan()
             })
             .catch((error) => {
@@ -102,17 +94,21 @@ export const ExerciseDetailsPanel = ({
             });
     }
 
-    const handleRepeat = (data) => {
-        setExerciseData({ ...exerciseData, repeat: data })
+    const addSerie = () => {
+        setSeries([...series, {
+            serieId: uuidv4(),
+            weight: 0,
+            times: 0,
+            repeats: 0,
+        }]);
+
     }
-    const handleSeries = (data) => {
-        setExerciseData({ ...exerciseData, series: data })
-    }
-    const handleTime = (data) => {
-        setExerciseData({ ...exerciseData, times: data })
-    }
-    const handleWeight = (data) => {
-        setExerciseData({ ...exerciseData, weight: data })
+
+    const handleSerie = (data, index, propertyName) => {
+        console.log(propertyName)
+        const updatedSeries = [...series];
+        updatedSeries[index][propertyName] = data;
+        setSeries(updatedSeries);
     }
 
     const returnToExercises = () => {
@@ -136,8 +132,8 @@ export const ExerciseDetailsPanel = ({
             appendCancelBtn={false}>
             <BottomNav>
                 <BottomNavItem onClick={() => returnToExercises()}>
-                <IconWrapper>
-                    <Icon name="union" fill={theme.colorGray70} />
+                    <IconWrapper>
+                        <Icon name="union" fill={theme.colorGray70} />
                     </IconWrapper>
                 </BottomNavItem>
                 <BottomNavItem>
@@ -145,26 +141,53 @@ export const ExerciseDetailsPanel = ({
                 </BottomNavItem>
             </BottomNav>
 
-            <ExerciseAddItem>
-                <Headline>{translate('Repeat')}</Headline>
-                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter}  defaultValue={defaultValue} initialValueToChange={repeatsToChange} handleData={handleRepeat} initialUnit={''} />
-            </ExerciseAddItem>
 
-            <ExerciseAddItem>
-                <Headline>{translate('ExerciseTime')}</Headline>
-                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter}  defaultValue={defaultValue} initialValueToChange={timesToChange} handleData={handleTime} initialUnit={'s'} />
-            </ExerciseAddItem>
+            <Headline onClick={() => addSerie()}>Add new serie</Headline>
 
-            <ExerciseAddItem>
-                <Headline>{translate('Series')}</Headline>
-                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter} defaultValue={defaultValue} initialValueToChange={seriesToChange} handleData={handleSeries} initialUnit={''} />
-            </ExerciseAddItem>
+            <Carousel swipeable={true} responsive={Breakpoints}>
+                {series.map((serie, index) => (
+                    <div key={index}>
+                        <ExerciseAddItem>
+                            <Headline>{translate('Weight')}</Headline>
+                            <Counter
+                                index={index}
+                                propertyName={'weight'}
+                                setResetCounter={setResetCounter}
+                                resetCounter={resetCounter}
+                                defaultValue={defaultValue}
+                                initialValueToChange={weightToChange}
+                                handleData={handleSerie}
+                                initialUnit={'kg'} />
+                        </ExerciseAddItem>
+                        <ExerciseAddItem>
+                            <Headline>{translate('ExerciseTime')}</Headline>
+                            <Counter
+                                index={index}
+                                propertyName={'times'}
+                                setResetCounter={setResetCounter}
+                                resetCounter={resetCounter}
+                                defaultValue={defaultValue}
+                                initialValueToChange={timesToChange}
+                                handleData={handleSerie}
+                                initialUnit={'s'} />
+                        </ExerciseAddItem>
+                        <ExerciseAddItem>
+                            <Headline>{translate('Repeat')}</Headline>
+                            <Counter
+                                index={index}
+                                propertyName={'repeats'}
+                                setResetCounter={setResetCounter}
+                                resetCounter={resetCounter}
+                                defaultValue={defaultValue}
+                                initialValueToChange={repeatsToChange}
+                                handleData={handleSerie}
+                                initialUnit={''} />
+                        </ExerciseAddItem>
+                        <p>{serie.repeats}</p>
+                    </div>
+                ))}
+            </Carousel>
 
-            <ExerciseAddItem>
-                <Headline>{translate('Weight')}</Headline>
-                <Counter setResetCounter={setResetCounter} resetCounter={resetCounter}  defaultValue={defaultValue} initialValueToChange={weightToChange} handleData={handleWeight} initialUnit={'kg'} />
-            </ExerciseAddItem>
-            
             <Formik
                 initialValues={initialValues}
                 onSubmit={onSubmit}
@@ -183,10 +206,10 @@ export const ExerciseDetailsPanel = ({
                             </Paragraph>
                         </CheckboxContainer>
 
-                <ModalButtonContainer>
-                    <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('AssignToPlan')}</Button>
-                </ModalButtonContainer>
-                </Form>
+                        <ModalButtonContainer>
+                            <Button type="submit" buttonType="primary" size="lg" buttonPlace="auth">{translate('AssignToPlan')}</Button>
+                        </ModalButtonContainer>
+                    </Form>
                 )}
             </Formik>
         </StyledReactBottomSheetExtended>

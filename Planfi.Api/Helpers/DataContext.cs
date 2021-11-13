@@ -41,6 +41,8 @@ namespace WebApi.Helpers
         public DbSet<UsersTrainers> userstrainers { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<Exercise> exercises { get; set; }
+        
+        public DbSet<Serie> series { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -56,18 +58,20 @@ namespace WebApi.Helpers
             // Plans <-> Users relationship
             modelBuilder.Entity<UsersPlans>()
                 .HasKey(bc => new { bc.UserId, bc.PlanId });  
+            
             modelBuilder.Entity<UsersPlans>()
                 .HasOne(bc => bc.User)
                 .WithMany(b => b.Plans)
                 .HasForeignKey(bc => bc.UserId);  
+            
             modelBuilder.Entity<UsersPlans>()
                 .HasOne(bc => bc.Plan)
                 .WithMany(c => c.Users)
                 .HasForeignKey(bc => bc.PlanId);
             
-            //todo - verify if it will work
             modelBuilder.Entity<UsersTrainers>()
                 .HasKey(bc => new { bc.ClientId, bc.TrainerId });  
+            
             modelBuilder.Entity<UsersTrainers>()
                 .HasOne(bc => bc.Client)
                 .WithMany(b => b.UsersTrainers) 
@@ -81,7 +85,11 @@ namespace WebApi.Helpers
                 .HasMany(b => b.Exercises)
                 .WithOne();
             
+            modelBuilder.Entity<Exercise>()
+                .HasMany(b => b.Series)
+                .WithOne();
             
+
             modelBuilder.Entity<Organization>().HasData(
                     new Organization
                     {
@@ -125,9 +133,7 @@ namespace WebApi.Helpers
                     ExerciseId = "a",
                     Name = "Podciąganie nad chwyt",
                     Description = "W podciąganiu na drążku podchwytem, sam chwyt nie różni się od tego w innych ćwiczeniach wielostawowych z obciążeniem. Podchwyt to oczywiście ustawienie rąk w supinacji, czyli wewnętrzną częścią dłoni w naszą stronę. Drążek chwytamy jak najmocniej i oplatając go kciukiem.",
-                    Times = 4,
-                    Series = 7,
-                    Weight = 0,
+                    Series = null,
                     Files = null,
                     CategoryId = "1",
                 },
@@ -136,9 +142,7 @@ namespace WebApi.Helpers
                     ExerciseId = "b",
                     Name = "Przysiady ze sztangą (high bar)",
                     Description = "Nasze mięśnie czworogłowe dają z siebie wszystko już na samym dole przysiadu, jako że przy siadach high bar ciężar jest mniejszy, kolana mogą wysunąć się trochę bardziej do przodu, bo moment siły potrzebny do wyprostowania kolana jest taki sam, jak przy siadzie low bar z cięższą sztangą.",
-                    Times = 4,
-                    Series = 7,
-                    Weight = 45,
+                    Series = null,
                     Files = null,
                     CategoryId = "1",
                 },
@@ -147,9 +151,7 @@ namespace WebApi.Helpers
                     ExerciseId = "c",
                     Name = "Glut bridge jednorożec",
                     Description = "Hip thrust, czyli wypychanie bioder w podporze grzbietem o ławeczkę oraz glute bridge, czyli unoszenie bioder w pozycji leżącej to aktualnie jedne z najskuteczniejszych ćwiczeń na mięśnie pośladkowe!",
-                    Times = 3,
-                    Series = 9,
-                    Weight = 15,
+                    Series = null,
                     Files = null,
                     CategoryId = "1",
                 },
@@ -158,9 +160,7 @@ namespace WebApi.Helpers
                     ExerciseId = "d",
                     Name = "Deska bokiem",
                     Description = "Utrzymuj prawidłową pozycję wyjściową, napinaj mocno mięśnie nóg, pośladki oraz brzuch, utrzymaj pozycję przez wyznaczony czas, wykonaj izometryczny skurcz mięśni oraz oddychaj głęboko.",
-                    Times = 2,
-                    Series = 27,
-                    Weight = 0,
+                    Series = null,
                     Files = null,
                     CategoryId = "1",
                 },
@@ -169,9 +169,7 @@ namespace WebApi.Helpers
                     ExerciseId = "e",
                     Name = "Spiętki",
                     Description = "Dziękuję bardzo za odpowiedź! czy mogę wykonywać wznosy bokiem hantlami bo chce zacząć chodzić na siłownie,mialem przerwę i chce znowu zacząć chodzić. Czy jakoś te wznosy mogą przyhamowac wzrost czy coś i czy mogę je wykonywać?",
-                    Times = 4,
-                    Series = 7,
-                    Weight = 0,
+                    Series = null,
                     Files = null,
                     CategoryId = "1",
                 },
@@ -181,9 +179,7 @@ namespace WebApi.Helpers
                     ExerciseId = "f",
                     Name = "Spacer farmera",
                     Description = "Spacer farmera (ang. Farmer's Walk) – konkurencja zawodów siłaczy. Zadaniem zawodnika jest podniesienie z podłoża dwóch ciężarów (tzw. „walizek”) – po jednym w każdej z dłoni – i pokonaniu z obydwoma dystansu.",
-                    Times = 0, 
-                    Series = 0,
-                    Weight = 25,
+                    Series = null,
                     Files = null,
                     CategoryId = "2",
                 },
@@ -192,9 +188,7 @@ namespace WebApi.Helpers
                     ExerciseId = "g",
                     Name = "Martwy ciąg sumo",
                     Description = "",
-                    Times = 0,
-                    Series = 0,
-                    Weight = 35,
+                    Series = null,
                     Files = null,
                     CategoryId = "2",
                 },
@@ -203,9 +197,7 @@ namespace WebApi.Helpers
                     ExerciseId = "h",
                     Name = "Martwy Ciąg",
                     Description = "Najprościej można powiedzieć, że martwy ciąg klasyczny wykonujemy rozstawiając nogi na szerokość bioder, a martwy ciąg sumo robimy na nogach rozstawionych szeroko, pilnując, aby ręce znajdowały się wewnątrz ich nawisu.",
-                    Times = 0,
-                    Series = 0,
-                    Weight = 43,
+                    Series = null,
                     Files = null,
                     CategoryId = "2",
                 },
@@ -214,9 +206,7 @@ namespace WebApi.Helpers
                     ExerciseId = "i",
                     Name = "Uginanie na łydki stojąc",
                     Description = "W pozycji górnej ćwiczenia napnij łydki.Powoli opuść się z powrotem do pozycji wyjściowej, abyś czuł pełne rozciąganie w łydkach.Nie uginaj kolan, by wytworzyć pęd podczas unoszenia się na palcach stóp.",
-                    Times = 2,
-                    Series = 27,
-                    Weight = 35,
+                    Series = null,
                     Files = null,
                     CategoryId = "2",
                 },
@@ -225,9 +215,7 @@ namespace WebApi.Helpers
                     ExerciseId = "j",
                     Name = "Wyciskanie na płaskiej",
                     Description = "1) Połóż się na ławce płaskiej. 2) Stopy ustaw w lekkim rozkroku i mocno zaprzyj o podłoże. 3) Chwyć sztangę nachwytem (palce wskazują przód, kciuki skierowane do środka) na taką szerokość, aby w połowie wykonywania ruchu kąt między ramieniem a przedramieniem wynosił 90 stopni.",
-                    Times = 5,
-                    Series = 2,
-                    Weight = 60,
+                    Series = null,
                     Files = null,
                     CategoryId = "3",
                 },
@@ -236,9 +224,7 @@ namespace WebApi.Helpers
                     ExerciseId = "k",
                     Name = "Wznosy bokiem",
                     Description = "Wznosy bokiem, wznosy sztangielek bokiem, lub odwodzenie ramion w bok ze sztangielkami (ang. Shoulder Fly, dumbbell deltoid raise) - ćwiczenie fizyczne polegające na podnoszeniu ramionami ciężaru (najczęściej hantli) stosowane podczas treningu kulturystycznego.",
-                    Times = 5,
-                    Series = 3,
-                    Weight = 25,
+                    Series = null,
                     Files = null,
                     CategoryId = "3",
                 },
@@ -247,9 +233,7 @@ namespace WebApi.Helpers
                     ExerciseId = "l",
                     Name = "Martwy ciąg sumo",
                     Description = "Najprościej można powiedzieć, że martwy ciąg klasyczny wykonujemy rozstawiając nogi na szerokość bioder, a martwy ciąg sumo robimy na nogach rozstawionych szeroko, pilnując, aby ręce znajdowały się wewnątrz ich nawisu.",
-                    Times = 0,
-                    Series = 0,
-                    Weight = 35,
+                    Series = null,
                     Files = null,
                     CategoryId = "3",
                 },
@@ -258,9 +242,7 @@ namespace WebApi.Helpers
                     ExerciseId = "m",
                     Name = "Uginanie na dwójki na maszynie",
                     Description = "1) Zajmij miejsce na maszynie, dostosowując ją do swojego wzrostu.Kończyny dolne wyprostowane, wałek maszyny znajduje się kilka centymetrów poniżej łydek.Chwyć za uchwyty znajdujące się po bokach siedziska.",
-                    Times = 0,
-                    Series = 0,
-                    Weight = 43,
+                    Series = null,
                     Files = null,
                     CategoryId = "3",
                 },
@@ -269,9 +251,7 @@ namespace WebApi.Helpers
                     ExerciseId = "n",
                     Name = "Uginanie na łydki stojąc",
                     Description = " Z pozycji, w której stopa jest mocno zadarta do góry, pięta skrajnie obniżona, palce wskazują sufit, a łydka jest mocno rozciągnięta, odpychaj się od podwyższenia poprzez mocne wspięcie na palce i napięcie łydek.",
-                    Times = 2,
-                    Series = 27,
-                    Weight = 35,
+                    Series = null,
                     Files = null,
                     CategoryId = "3",
                 },
@@ -280,9 +260,7 @@ namespace WebApi.Helpers
                     ExerciseId = "o",
                     Name = "Triceps",
                     Description = "musculus triceps brachii) - mięsień zajmujący całą powierzchnię tylną ramienia i należący do tylnej grupy mięśni ramienia, rozpięty między łopatką i kością",
-                    Times = 1,
-                    Series = 5,
-                    Weight = 7,
+                    Series = null,
                     Files = null,
                     CategoryId = "3",
                 }

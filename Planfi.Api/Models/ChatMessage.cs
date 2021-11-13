@@ -15,7 +15,7 @@ namespace PlanfiApi.Models
         public Guid RoomId { get; set; }
         public string Contents { get; set; }
         public string UserName { get; set; }
-        public DateTimeOffset PostedAt { get; set; }
+        public DateTime PostedAt { get; set; }
     }
     
     public class MessageViewModel
@@ -26,7 +26,7 @@ namespace PlanfiApi.Models
         public string Contents { get; set; }
         public string User_Name { get; set; }
         public string User_Id { get; set; }
-        public DateTimeOffset Posted_At { get; set; }
+        public DateTime Posted_At_Utc{ get; set; }
     }
     
     public class ChatMessage
@@ -34,14 +34,14 @@ namespace PlanfiApi.Models
         public ChatMessage(Guid id)
         {
             Id = id.ToString("X");
-            Date = DateTimeOffset.Now;
+            Date_Utc = DateTime.UtcNow;
         }
         public ChatMessage() { }
         
         //connection with chatroom
         public Guid RoomId { get; set; }
         public string Id { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTime Date_Utc { get; set; }
         public string Message { get; set; }
         public string Sender { get; set; }
     }

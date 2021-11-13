@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { exerciseService } from 'services/exerciseService';
 import { commonUtil } from 'utils/common.util';
 import 'react-multi-carousel/lib/styles.css';
 import Search from 'components/molecules/Search';
@@ -9,14 +8,11 @@ import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
 import GlobalTemplate from 'templates/GlobalTemplate';
 import Nav from 'components/atoms/Nav';
 import { useThemeContext } from 'support/context/ThemeContext';
-import { categoryService } from 'services/categoryService';
 import SmallButton from 'components/atoms/SmallButton';
 import { useQuery, gql } from '@apollo/client';
 import { Role } from 'utils/role';
 import { PlansPanel } from './microModules/PlansPanel';
-import { PlansExercises } from './PlansExercises';
 import Loader from 'components/atoms/Loader';
-import { useUserContext } from 'support/context/UserContext';
 
 const Plan = (props) => {
 
@@ -32,10 +28,12 @@ const Plan = (props) => {
       exerciseId
       name
       files
-      series
-      repeats
-      times
-      weight
+      series{
+        serieId,
+        times,
+        weight,
+        repeats,
+      }
      }
     }
   `;
@@ -55,7 +53,6 @@ const Plan = (props) => {
   const [bottomSheet, setBottomSheet] = useState('none')
 
 const [planPanel, setPlanPanel] = useState('none')
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [categories, setCategories] = useState();
 
@@ -115,7 +112,6 @@ const [planPanel, setPlanPanel] = useState('none')
           selectedExercise={activeSelectedExercise}
           theme={theme}
           planId={id}
-          categories={categories}
           refreshData={refreshPlanExerciseData}
         />
     </>
