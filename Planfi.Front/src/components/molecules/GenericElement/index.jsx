@@ -140,6 +140,9 @@ const ImageContainer = styled.img`
 
 
 const Avatar = (type, url, theme) => {
+
+  const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(url)));
+
   if(type == 'initials'){
     return null
   }
@@ -155,7 +158,7 @@ const Avatar = (type, url, theme) => {
   }
   else{
     return(
-      <ImageContainer src={`data:image/jpeg;base64,${url}`} />
+      <ImageContainer src={`data:image/jpeg;base64,${base64String}`} />
     )
   }
 };

@@ -272,7 +272,8 @@ namespace PlanfiApi.Services.Users{
                         var validation = new ValidationInfo()
                         {
                             UserId = userId,
-                            TrainerId = trainer?.UserId
+                            TrainerId = trainer?.UserId,
+                            TrainerName = trainer?.FirstName,
                         };
                         elementsNotAssigned.Add(validation);
                     }
@@ -287,7 +288,9 @@ namespace PlanfiApi.Services.Users{
         public class ValidationInfo
         {
             public string UserId { get; set; }
+            public string UserName { get; set; }
             public string? TrainerId { get; set; }
+            public string TrainerName { get; set; }
             public string? PlanId { get; set; }
         }
 
@@ -318,6 +321,7 @@ namespace PlanfiApi.Services.Users{
                                 var validation = new ValidationInfo()
                                 {
                                     UserId = clientId,
+                                    UserName = client?.FirstName,
                                     PlanId = planId
                                 };
                                 elementsNotAssigned.Add(validation);
@@ -336,7 +340,7 @@ namespace PlanfiApi.Services.Users{
         private void GenerateValidationInfo(List<ValidationInfo> info)
         {
             throw new ValidationException(
-                 $"The client {info[0].UserId} is already assigned to {info[0].UserId}");
+                 $"The client {info[0].UserName} is already assigned to {info[0].UserName}");
         }
 
 
