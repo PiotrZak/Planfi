@@ -49,7 +49,6 @@ const LoginPage = ({setUser}) => {
   const history = useHistory();
 
   useEffect(() => {
-    window.location.reload();
     detectBrowser()
   }, []);
 
