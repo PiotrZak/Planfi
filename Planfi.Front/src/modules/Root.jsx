@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import { darkTheme } from 'theme/darkTheme';
 import { lightTheme } from 'theme/lightTheme';
@@ -33,7 +33,7 @@ import Plans from 'modules/Plans/Plans';
 import Plan from 'modules/Plans/Plan/Plan';
 
 import MyProfile from 'modules/MyProfile/MyProfile';
-import User  from 'modules/Users/User';
+import User from 'modules/Users/User';
 
 import { ThemeContext } from 'support/context/ThemeContext';
 import { LanguageContext } from 'support/context/LanguageContext';
@@ -49,10 +49,11 @@ import OrganizationTrainers from './Users/OrganizationTrainers';
 export const history = createBrowserHistory();
 
 const Root = () => {
-  
+
   const [user, setUser] = useState(JSON.parse((localStorage.getItem('user'))));
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [theme, setTheme] = useState(lightTheme);
+  const routerRef = React.useRef();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -61,11 +62,12 @@ const Root = () => {
     if (currentLanguage == null) {
       localStorage.setItem('language', 'en-GB');
     }
-    if(user != null ){
-      history.push(routes.myProfile);
-    }else{
-      history.push(routes.login);
-    }
+
+    const history = routerRef.current.history;
+    user != null
+      ? history.push(routes.myProfile)
+      : history.push(routes.login);
+
   }, [setUser]);
 
   const toggleTheme = () => {
@@ -83,42 +85,39 @@ const Root = () => {
       <ThemeContext.Provider value={{ theme }}>
         <ThemeProvider theme={theme}>
           <userContext.Provider value={{ user }}>
-            <BrowserRouter history={history}>
+            <BrowserRouter ref={routerRef} history={history}>
               <MainTemplate>
                 <Switch>
                   {/* <Route path ="/stripe" component={StripeContainer} />
                   <Route path ="/stripeSuccess" component={StripeSuccess} />
                   <Route path ="/stripeCancel" component={StripeCancel} />*/}
-                  <Route path ="/chat" component={ChatContainer} /> 
-                  
-                  <Route path={routes.login} component={() => 
-                          <LoginPage setUser = {setUser}/>} />
+                  <Route path="/chat" component={ChatContainer} />
+
+                  <Route path={routes.login} component={() =>
+                    <LoginPage setUser={setUser} />} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
                   <Route path="/test" component={TestPage} />
-                 <MenuTemplate>
-
-
-
-                  <PrivateRoute path="/user/:id" component={User} />
+                  <MenuTemplate>
+                    <PrivateRoute path="/user/:id" component={User} />
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationTrainers} component={OrganizationTrainers} />
-                    <PrivateRoute roles ={[Role.Owner, Role.Trainer]} path={routes.clients} component={Clients} />
+                    <PrivateRoute roles={[Role.Owner, Role.Trainer]} path={routes.clients} component={Clients} />
                     <PrivateRoute path={routes.addExercise} component={AddExercise} />
                     <PrivateRoute path={routes.editExercise} component={EditExercise} />
                     <PrivateRoute path={routes.exercise} component={Exercise} />
                     <PrivateRoute path={routes.categories} component={Categories} />
-                    <PrivateRoute path={routes.myProfile} component={() => 
-                          <MyProfile 
-                              setUser ={setUser} 
-                              toggleLanguage ={toggleLanguage} 
-                              toggleTheme ={toggleTheme}
-                              />} 
+                    <PrivateRoute path={routes.myProfile} component={() =>
+                      <MyProfile
+                        setUser={setUser}
+                        toggleLanguage={toggleLanguage}
+                        toggleTheme={toggleTheme}
+                      />}
                     />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
-                  </MenuTemplate>            
+                  </MenuTemplate>
                 </Switch>
               </MainTemplate>
             </BrowserRouter>
@@ -129,4 +128,4 @@ const Root = () => {
   );
 };
 
-export default Root;
+export default Root

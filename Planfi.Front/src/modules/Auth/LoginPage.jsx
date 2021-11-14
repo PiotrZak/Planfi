@@ -10,6 +10,7 @@ import InputContainer from 'components/atoms/InputContainerForm';
 import { userService } from 'services/userServices';
 import { useHistory } from 'react-router-dom';
 import { translate } from 'utils/Translation';
+import { withRouter } from 'react-router-dom';
 import {
   Formik, Field, Form,
 } from 'formik';
@@ -141,4 +142,4 @@ return (
 );
 };
 
-export default LoginPage;
+export default withRouter(LoginPage);
