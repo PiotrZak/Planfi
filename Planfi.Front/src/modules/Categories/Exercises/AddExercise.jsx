@@ -34,6 +34,7 @@ import axios from "axios";
 import { EXERCISES_URL } from "../../../services/utils";
 import { DropdownInput } from 'components/atoms/Dropdown'
 import SmallButton from "components/atoms/SmallButton";
+import Cookies from 'js-cookie'
 
 const Checkbox = withLazyComponent(
   React.lazy(() => import("components/atoms/Checkbox"))
@@ -172,6 +173,8 @@ const AddExerciseRefactor = (props) => {
     setLoading(true);
 
     const options = {
+      headers: { Authorization: `Bearer ${Cookies.get('JWT')}` },
+
       onUploadProgress: (progressEvent) => {
         const { loaded, total } = progressEvent;
         let percent = Math.floor((loaded * 100) / total);
@@ -182,6 +185,8 @@ const AddExerciseRefactor = (props) => {
         }
       },
     };
+
+//carefull todo - there is authorization outside of http layer - cause there is onUpload Progress - refator when applying to edit.
 
     axios
       .post(`${EXERCISES_URL}/create`, formData, options)

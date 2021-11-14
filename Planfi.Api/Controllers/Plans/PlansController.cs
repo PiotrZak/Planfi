@@ -20,16 +20,13 @@ namespace PlanfiApi.Controllers.Plans
     {
         private IPlanService _planService;
         private IMapper _mapper;
-        private readonly AppSettings _appSettings;
-       
+
         public PlansController(
             IPlanService planService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IMapper mapper)
         {
             _planService = planService;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
