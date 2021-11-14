@@ -54,7 +54,7 @@ const TabItemComponent = ({
   )
 };
 
-const MyProfile = ({ toggleTheme, toggleLanguage }) => {
+const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
   const { theme } = useThemeContext();
   const [toRender, setToRender] = useState(null);
 
@@ -156,6 +156,7 @@ const MyProfile = ({ toggleTheme, toggleLanguage }) => {
         onClose={() => setOpenEditUserPasswordModal(false)}
       />
       <MyProfilePanel
+        setUser={setUser}
         toggleTheme={toggleTheme}
         toggleLanguage={toggleLanguage}
         userId={user.userId}

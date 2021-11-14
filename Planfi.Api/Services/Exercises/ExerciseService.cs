@@ -29,6 +29,27 @@ namespace PlanfiApi.Services.Exercises
             Configuration = configuration;
         }
 
+        public async Task<ExerciseViewModel> GetById(string id)
+        {
+            var baseExercise = await GetBaseExercise(id);
+
+            
+            if(IsGuid(baseExercise.Name))
+            {
+                var planExercise = await GetSerializedExercise(id);
+                return planExercise;
+            }
+            
+            return baseExercise;
+        }
+        
+        public static bool IsGuid(string value)
+        {
+            Guid x;
+            return Guid.TryParse(value, out x);
+        }
+        
+
         public Exercise Create(Exercise exercise)
         {
             // throw error if the new plan is already taken
@@ -66,7 +87,8 @@ namespace PlanfiApi.Services.Exercises
 	                FROM public.exercises as e
 	                JOIN public.categories as c
 	                ON e.category_id = c.category_id
-	                WHERE NOT EXISTS (SELECT * FROM public.series as s WHERE e.exercise_id = s.exercise_id)
+	                WHERE NOT EXISTS (SELECT * FROM public.series as s 
+	                WHERE e.exercise_id = s.exercise_id)
                 ";
             
                 exercisesBase = (await connection.QueryAsync<ExerciseViewModel>(baseExerciseQuery)).ToList();
@@ -82,11 +104,11 @@ namespace PlanfiApi.Services.Exercises
             return exercisesBase;
         }
         
-        public async Task<List<ExerciseViewModel>> GetBaseExercise()
+        public async Task<ExerciseViewModel> GetBaseExercise(string exerciseId)
         {
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-            var exercisesBase = new List<ExerciseViewModel>();
+            var exerciseBase = new ExerciseViewModel();
             
             try
             {
@@ -99,10 +121,13 @@ namespace PlanfiApi.Services.Exercises
                     FROM public.exercises as e
                     JOIN public.categories as c
                     ON e.category_id = c.category_id
-	                WHERE NOT EXISTS (SELECT * FROM public.series as s WHERE e.exercise_id = s.exercise_id)
+		            LEFT JOIN public.series as s
+		            ON s.exercise_Id = e.exercise_Id
+	                WHERE e.exercise_id = @exerciseId
                 ";
-            
-                exercisesBase = (await connection.QueryAsync<ExerciseViewModel>(baseExerciseQuery)).ToList();
+
+                exerciseBase =
+                    (await connection.QueryFirstOrDefaultAsync<ExerciseViewModel>(baseExerciseQuery, new { exerciseId }));
             }
             catch (Exception exp) {
                 Console.Write(exp.Message);
@@ -112,30 +137,9 @@ namespace PlanfiApi.Services.Exercises
                 await connection.CloseAsync();
             }
             
-            return exercisesBase;
+            return exerciseBase;
         }
         
-        public async Task<Exercise> GetById(string id)
-        {
-            var exercise = await _context.exercises
-                .FirstOrDefaultAsync(x => x.ExerciseId == id);
-
-            if (exercise != null && exercise.Series.Count == 0)
-            {
-                return exercise;
-            }
-            
-            var baseExercise = await _context.exercises
-                .FirstOrDefaultAsync(x => x.ExerciseId == exercise.Name);
-
-            exercise.Name = baseExercise.Name;
-            exercise.Description = baseExercise.Description;
-            exercise.Files = baseExercise.Files;
-            
-            return exercise;
-
-        }
-
         public IEnumerable<Exercise> GetAll()
         {
             return _context.exercises;
@@ -154,6 +158,48 @@ namespace PlanfiApi.Services.Exercises
             public int Weight { get; set; }
             public int Repeats { get; set; }
         }
+
+        private async Task<ExerciseViewModel> GetSerializedExercise(string exerciseId)
+        {
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+            
+            var baseExercises = await GetAllBaseExercises();
+            
+            var exerciseInstance = new List<ExerciseSqlProjection>();
+            try
+            {
+                const string exerciseInstancesQuery = @"SELECT
+	                e.name,
+	                e.exercise_id as ExerciseId,
+	                e.category_id as CategoryId,
+	                e.plan_id as PlanId,
+                    s.serie_id,
+	                s.weight,
+	                s.times,
+	                s.repeats
+	                FROM public.exercises as e
+	                JOIN public.series as s
+	                ON s.exercise_Id = e.exercise_id
+	                WHERE plan_id IS NOT NULL
+	                AND e.exercise_Id = @exerciseId";
+            
+                exerciseInstance =  (await connection.QueryAsync<ExerciseSqlProjection>(exerciseInstancesQuery, new { exerciseId })).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            //what if only 1 serie
+            var exercisesViewModels = await ConstructSeriesExercise(exerciseInstance, baseExercises);
+            
+            // flatten
+            return exercisesViewModels[0];
+        }
         
 
         public async Task<List<ExerciseViewModel>> GetSerializedExercisesInstances()
@@ -161,12 +207,11 @@ namespace PlanfiApi.Services.Exercises
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
 
-            var baseExercises = await GetBaseExercise();
+            var baseExercises = await GetAllBaseExercises();
             
             var exercisesInstances = new List<ExerciseSqlProjection>();
             try
             {
-                //workaround here
                 const string exerciseInstancesQuery = @"SELECT
 	                e.name,
 	                e.exercise_id as ExerciseId,
@@ -190,9 +235,14 @@ namespace PlanfiApi.Services.Exercises
             {
                 await connection.CloseAsync();
             }
-            
-            var exercisesViewModels = new List<ExerciseViewModel>();
 
+            var exerciseViewModels = await ConstructSeriesExercise(exercisesInstances, baseExercises);
+            return exerciseViewModels;
+        }
+
+        public async Task<List<ExerciseViewModel>> ConstructSeriesExercise(List<ExerciseSqlProjection> exercisesInstances, List<ExerciseViewModel> baseExercises)
+        {
+            var exercisesViewModels = new List<ExerciseViewModel>();
             var exercisesDuplicates = exercisesInstances
                 .GroupBy(x => x.ExerciseId)
                 .ToList();
@@ -211,7 +261,6 @@ namespace PlanfiApi.Services.Exercises
                 seriesPerExercise.Add(instance.Key, serieList);
             }
             
-            //todo 
             foreach(var exercise in exercisesDuplicates)
             {
                 var exerciseList = exercise.ToList();
@@ -235,8 +284,7 @@ namespace PlanfiApi.Services.Exercises
                     
                 exercisesViewModels.Add(exerciseViewModel);
             }
-            
-            
+
             return exercisesViewModels;
         }
         

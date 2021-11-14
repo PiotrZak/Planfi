@@ -43,7 +43,7 @@ const validationSchema = Yup.object({
   password: Yup.string().required(translate('ThisFieldIsRequired')),
 });
 
-const LoginPage = () => {
+const LoginPage = ({setUser}) => {
   const { notificationDispatch } = useNotificationContext();
   const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
   const history = useHistory();
@@ -99,6 +99,7 @@ const authenticateUser = (loginModelData) => {
       localStorage.removeItem('user');
       delete data.token;
       localStorage.setItem('user', JSON.stringify(data));
+      setUser(data)
     })
     .catch((error) => {
       notificationDispatch({

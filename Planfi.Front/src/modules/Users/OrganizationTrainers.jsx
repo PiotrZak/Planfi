@@ -33,12 +33,12 @@ const OrganizationTrainers = () => {
   const user = JSON.parse((localStorage.getItem('user')));
 
   const Trainers = gql`{
-    users(where: {organizationId: "${user.organizationId}" role: "${Role.Trainer}"})
+    users(where: {organization_Id: "${user.organizationId}" role: "${Role.Trainer}"})
     {
-        userId
+        user_Id
         avatar
-        firstName
-        lastName
+        first_Name
+        last_Name
         role
      }
     }

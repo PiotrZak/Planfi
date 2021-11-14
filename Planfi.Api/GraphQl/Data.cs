@@ -33,9 +33,8 @@ namespace PlanfiApi.GraphQl
         }
         
         [UseFiltering]
-        public Exercise GetExercise(
-           [Service] DataContext dbContext, string id) =>
-               dbContext.exercises.FirstOrDefault(x => x.ExerciseId == id);
+        public async Task<ExerciseViewModel> GetExercise([Service] DataContext dbContext, string id) =>
+            await _exerciseService.GetById(id);
         
         [UseFiltering]
         public List<CategoryViewModel> GetCategories([Service] DataContext dbContext) =>

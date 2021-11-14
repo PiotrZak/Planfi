@@ -1,5 +1,7 @@
 import config from '../../config.json'
 
+const bucketName = "planfi-movies";
+export const movieUrl  = `https://storage.cloud.google.com/${bucketName}`;
 const localHostApiUrl = 'http://localhost:9001';
 const developmentApiUrl = config.apps.PlanfiApi.url;
 

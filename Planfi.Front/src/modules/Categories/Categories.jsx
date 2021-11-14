@@ -19,9 +19,9 @@ import Heading from 'components/atoms/Heading';
 import {getUniqueListBy} from 'utils/common.util'
 
 const Categories = (props) => {
+  
   const { theme } = useThemeContext();
   const [searchTerm, setSearchTerm] = React.useState('');
-
   const [selectedExercise, setselectedExercise] = useState([]);
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
   const [bottomSheet, setBottomSheet] = useState('none');

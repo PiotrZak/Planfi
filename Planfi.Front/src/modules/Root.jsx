@@ -49,8 +49,8 @@ import OrganizationTrainers from './Users/OrganizationTrainers';
 export const history = createBrowserHistory();
 
 const Root = () => {
-  const [user] = useState(JSON.parse((localStorage.getItem('user'))));
-
+  
+  const [user, setUser] = useState(JSON.parse((localStorage.getItem('user'))));
   const [selectedLanguage, setSelectedLanguage] = useState('en');
   const [theme, setTheme] = useState(lightTheme);
 
@@ -66,7 +66,7 @@ const Root = () => {
     }else{
       history.push(routes.login);
     }
-  }, []);
+  }, [setUser]);
 
   const toggleTheme = () => {
     setTheme(theme == darkTheme ? lightTheme : darkTheme);
@@ -91,13 +91,17 @@ const Root = () => {
                   <Route path ="/stripeCancel" component={StripeCancel} />*/}
                   <Route path ="/chat" component={ChatContainer} /> 
                   
-                  <Route path={routes.login} component={LoginPage} />
+                  <Route path={routes.login} component={() => 
+                          <LoginPage setUser = {setUser}/>} />
                   <Route path={routes.forgotPassword} component={ForgotPasswordPage} />
                   <Route path={routes.resetPassword} component={ResetPasswordPage} />
                   <Route path={routes.activate} component={ActivateAccountPage} />
                   <Route path={routes.confirmation} component={ConfirmationPage} />
                   <Route path="/test" component={TestPage} />
                  <MenuTemplate>
+
+
+
                   <PrivateRoute path="/user/:id" component={User} />
                     <PrivateRoute roles={[Role.Owner]} path={routes.organizationTrainers} component={OrganizationTrainers} />
                     <PrivateRoute roles ={[Role.Owner, Role.Trainer]} path={routes.clients} component={Clients} />
@@ -105,7 +109,13 @@ const Root = () => {
                     <PrivateRoute path={routes.editExercise} component={EditExercise} />
                     <PrivateRoute path={routes.exercise} component={Exercise} />
                     <PrivateRoute path={routes.categories} component={Categories} />
-                    <PrivateRoute path={routes.myProfile} component={() => <MyProfile toggleLanguage ={toggleLanguage} toggleTheme ={toggleTheme}/>} />
+                    <PrivateRoute path={routes.myProfile} component={() => 
+                          <MyProfile 
+                              setUser ={setUser} 
+                              toggleLanguage ={toggleLanguage} 
+                              toggleTheme ={toggleTheme}
+                              />} 
+                    />
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
                   </MenuTemplate>            

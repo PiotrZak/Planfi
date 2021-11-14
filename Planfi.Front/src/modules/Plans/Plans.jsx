@@ -19,14 +19,13 @@ import PlansPanel from './PlansPanel';
 import Loader from 'components/atoms/Loader';
 import { filterDataByTerm } from '../../utils/common.util';
 
-
 const Plan = (props) => {
   const { notificationDispatch } = useNotificationContext();
   const { theme } = useThemeContext();
   const { user } = useUserContext();
 
   const PLANS = gql`{
-    plans(where: {organizationId: "${user.organizationId}"})
+    plans(where: {organizationId: "${user.organizationId}" })
     {
       creatorName
       planId
@@ -86,7 +85,9 @@ const Plan = (props) => {
   const submissionHandleElement = (selectedData) => {
     const selectedPlans = commonUtil.getCheckedData(selectedData, 'planId');
     setSelectedPlans(selectedPlans);
-    selectedPlans.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
+    selectedPlans.length > 0 
+      ? setBottomSheet('flex') 
+      : setBottomSheet('none');
   };
 
   const filterPlans = (event) => {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
 using WebApi.Helpers;
 using WebApi.Models;
 

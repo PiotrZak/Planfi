@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { exerciseService } from "services/exerciseService";
 import { useHistory, Link } from "react-router-dom";
 import Carousel from "react-multi-carousel";
@@ -8,6 +8,9 @@ import SmallButton from "components/atoms/SmallButton";
 import Nav from "components/atoms/Nav";
 import BackTopNav from "components/molecules/BackTopNav";
 import { Headline, Subline } from "components/typography";
+import { Role } from "utils/role";
+import { useUserContext } from "support/context/UserContext";
+import { useQuery, gql } from '@apollo/client';
 import { translate } from "utils/Translation";
 import styled from "styled-components";
 import {
@@ -15,10 +18,9 @@ import {
   ADD,
 } from "support/context/NotificationContext";
 import ExercisePanel from "./ExercisePanel";
-import { useUserContext } from "support/context/UserContext";
-import ReactPlayer from "react-player";
-import { Role } from "utils/role";
-import { http } from "services/http.service";
+import Slide from "components/molecules/Slide"
+import Loader from 'components/atoms/Loader';
+
 import { Breakpoints } from 'support/magicVariables';
 
 const InfoTab = styled.div`
@@ -30,28 +32,48 @@ const InfoTab = styled.div`
 `;
 
 const Exercise = (props) => {
+
   const { user } = useUserContext();
   const { notificationDispatch } = useNotificationContext();
-  const [exercise, setExercise] = useState();
   const [bottomSheet, setBottomSheet] = useState("none");
   const history = useHistory();
-
   const { match } = props;
   let id = match.params.id;
 
-  useEffect(() => {
-    getExercise(id);
-  }, [id]);
+  const EXERCISE = gql`{
+    exercise(id: "${id}")
+    {
+      exerciseId
+      name
+      files
+      series{
+        serieId,
+        times,
+        weight,
+        repeats,
+      }
+     }
+    }
+  `;
 
-  const getExercise = (id) => {
-    exerciseService
-      .getExerciseById(id)
-      .then((data) => {
-        setExercise(data);
-        console.log(data);
-      })
-      .catch((error) => {});
-  };
+  const {
+    loading, error, data, refetch: _refetch,
+  } = useQuery(EXERCISE);
+  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
+
+
+  useEffect(() => {
+    refreshData();
+  }, []);
+
+  if (loading) return <Loader isLoading={loading} />;
+  if (error) return <p>Error :(</p>;
+
+
+  let exercise;
+  if (data) {
+    exercise = data.exercise;
+  }
 
   const deleteExercise = () => {
     exerciseService
@@ -79,19 +101,19 @@ const Exercise = (props) => {
 
   return (
     <>
-      <GlobalTemplate>
-        <Nav>
-          {exercise && <BackTopNav text={exercise.name} />}
-          {user.role.name != Role.User && exercise && (
+      {exercise &&
+        <GlobalTemplate>
+
+          <Nav>
+            <BackTopNav text={exercise.name} />
+            {user.role.name != Role.User && exercise && (
             <SmallButton
               onClick={() => setBottomSheet("flex")}
               iconName="plus"
             />
           )}
-        </Nav>
-
-        {exercise && exercise.files && (
-          <>
+          </Nav>
+          {exercise.files &&
             <Carousel swipeable={true} responsive={Breakpoints}>
               {exercise.files.map((file, index) => (
                 <>
@@ -99,46 +121,21 @@ const Exercise = (props) => {
                 </>
               ))}
             </Carousel>
-          </>
-        )}
-        {exercise && (
+          }
           <>
             <h1>{exercise.name}</h1>
-            {exercise.series > 0 && (
-              <InfoTab>
-                <Headline>{translate("Series")}</Headline>{" "}
-                <Subline>{exercise.series} times</Subline>
-              </InfoTab>
-            )}
-            {exercise.times > 0 && (
-              <InfoTab>
-                <Headline>{translate("ExerciseTime")}</Headline>
-                <Subline>{exercise.times} s</Subline>
-              </InfoTab>
-            )}
-            {exercise.repeats > 0 && (
-              <InfoTab>
-                <Headline>{translate("Repeat")}</Headline>
-                <Subline>{exercise.repeats} x</Subline>
-              </InfoTab>
-            )}
-            {exercise.weight > 0 && (
-              <InfoTab>
-                <Headline>{translate("Weight")}</Headline>
-                <Subline>{exercise.weight} kg</Subline>
-              </InfoTab>
-            )}
-
+            {exercise.series  && exercise.series.map((serie, index) => (
+              <div key={index}>
+                <p>{translate("Weight")} {serie.weight}</p>
+                <p>{translate("ExerciseTime")} {serie.times}</p>
+                <p>{translate("Repeat")}{serie.repeats}</p>
+              </div>
+            ))}
             <h3>Description:</h3>
             <p>{exercise.description}</p>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
           </>
-        )}
-      </GlobalTemplate>
+        </GlobalTemplate>
+      }
       <ExercisePanel
         props={props}
         bottomSheet={bottomSheet}
@@ -146,32 +143,10 @@ const Exercise = (props) => {
         exercise={exercise}
         deleteExercise={deleteExercise}
       />
-    </>
-  );
-};
+    </>)
+}
 
-const ExerciseImageContainer = styled.img`
-  height: 400px;
-  width: auto;
-  object-fit: cover;
-`;
 
-const Slide = ({ videoName, index, img }) => {
-  return img.length > 100 ? (
-    <ExerciseImageContainer
-      key={index}
-      alt={index}
-      src={`data:image/jpeg;base64,${img}`}
-    />
-  ) : (
-    <ReactPlayer
-      controls={true}
-      playsinline
-      url={`https://storage.cloud.google.com/planfi-movies/${
-        videoName + 1 + atob(img)
-      }?authuser=1`}
-    />
-  );
-};
+
 
 export default Exercise;

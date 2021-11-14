@@ -47,6 +47,7 @@ namespace PlanfiApi.Controllers.Plans
                     plan.Title,
                     plan.CreatorId,
                     plan.CreatorName,
+                    plan.OrganizationId,
                 });
             }
             catch (AppException ex)

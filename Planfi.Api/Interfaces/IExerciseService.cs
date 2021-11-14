@@ -10,13 +10,11 @@ namespace PlanfiApi.Interfaces
     
     public interface IExerciseService
     {
-        Task<Exercise> GetById(string id);
+        Task<ExerciseViewModel> GetById(string id);
         Exercise Create(Exercise exercise);
         Exercise CreateInstance(Exercise exercise);
         IEnumerable<Exercise> GetAll();
         
-        
-        //todo - exclude model
         // Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId);
         Task<List<ExerciseViewModel>> GetSerializedExercisesInstances();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);

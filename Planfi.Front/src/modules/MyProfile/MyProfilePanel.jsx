@@ -11,6 +11,7 @@ import {
   ADD,
 } from "support/context/NotificationContext";
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import Cookies from 'js-cookie'
 
 const timeToRedirectLogin = 1000;
 const FileUploadButton = styled.input.attrs({ type: "file" })`
@@ -18,6 +19,7 @@ const FileUploadButton = styled.input.attrs({ type: "file" })`
 `;
 
 export const MyProfilePanel = ({
+  setUser,
   toggleTheme,
   toggleLanguage,
   setOpenEditUserData,
@@ -30,7 +32,10 @@ export const MyProfilePanel = ({
   const { notificationDispatch } = useNotificationContext();
 
   const logout = () => {
+    setUser(null)
     localStorage.removeItem('user');
+    Cookies.remove('JWT')
+
     setTimeout(() => {
       history.push('/login/');
     }, timeToRedirectLogin);
