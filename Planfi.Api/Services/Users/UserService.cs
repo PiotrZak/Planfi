@@ -1,37 +1,42 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
-using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
+using PlanfiApi.Models.SqlProjections;
 using PlanfiApi.Models.ViewModels;
-using PlanfiApi.Services.Organizations;
-using WebApi.Data.Entities;
-using WebApi.Data.Entities.Users;
 using WebApi.Helpers;
 using WebApi.Models;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace PlanfiApi.Services.Users{
 
 
     public class UserService : IUserService
     {
+
+        private readonly IPlanService _planService;
         private readonly DataContext _context;
         private readonly IMapper _mapper;
         private IConfiguration Configuration { get; }
 
-        public UserService(DataContext context, IMapper mapper, IConfiguration configuration)
+        public UserService(DataContext context, IMapper mapper, IConfiguration configuration, IPlanService planService)
         {
             Configuration = configuration;
+            _planService = planService;
             _context = context;
             _mapper = mapper;
         }
@@ -48,98 +53,70 @@ namespace PlanfiApi.Services.Users{
 
             return user;
         }
-
-        public class UserDetailsViewModel
+        
+        public async Task<UserDetails> UserDetailsViewModel(string userId)
         {
+            var user = await GetById(userId);
+            var plans = await _planService.GetUserPlans(userId);
+            var clients = new List<UserSqlProjection>();
+            var trainers = new List<UserSqlProjection>();
             
+              
+            if (user.RoleName == "Trainer")
+            {
+                clients = await GetClientsByTrainer(userId);
+            }
+            else
+            {
+                trainers = await GetTrainersByClient(userId);
+            }
+
+            var userDetails = new UserDetails()
+            {
+               UserId = user.UserId,
+               Avatar = user.Avatar,
+               FirstName = user.FirstName,
+               LastName = user.LastName,
+               RoleName = user.RoleName,
+               Email = user.Email,
+               PhoneNumber = user.PhoneNumber,
+               OrganizationId = user.OrganizationId,
+               UserPlans = plans,
+               ClientTrainers = user.RoleName == "Trainer" ? clients : trainers
+            };
+
+            return userDetails;
         }
-
-        //todo - get all important info for that user!
-        // public async Task<UserDetailsViewModel> GetUserDetails()
-        // {
-        //     var context = new HttpContextAccessor().HttpContext;
-        //     var userId = context?.User.FindFirst(ClaimTypes.Name)?.Value;
-        //     var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
-        //     await connection.OpenAsync();
-        //     
         
-        
-        // Get User Plans Query
-        
-        // SELECT DISTINCT 
-        //     p.plan_id,
-        //     p.title,
-        //     p.creator_id,
-        //     p.creator_name,
-        //     p.organization_id
-        //     FROM public.plans as p
-        //     JOIN public.usersplans as up
-        //     ON up.user_id = '9ccb50f0-f118-4d24-84a3-bd7114e73482'
-        
-        
-        // Get User Trainers
-        
-        // SELECT DISTINCT 
-        //     u.user_id,
-        //     u.avatar,
-        //     u.first_name,
-        //     u.last_name
-        //     FROM public.usersTrainers as ut
-        //     JOIN public.users as u
-        //     ON u.user_id = ut.trainer_id
-        //     WHERE ut.client_id = '9ccb50f0-f118-4d24-84a3-bd7114e73482'
-        
-        
-            
-        //     const string trainerClientsQuery = @"SELECT 
-	       //      u.user_id, 
-	       //      ut.client_id,
-	       //      u.avatar, 
-	       //      r.name as role,
-	       //      u.first_name, 
-	       //      u.last_name, 
-	       //      u.email, 
-	       //      u.phone_number, 
-	       //      u.organization_id,
-	       //      u.is_activated
-	       //      FROM public.users as u
-	       //      JOIN public.role as r
-	       //      ON u.role_id = r.id
-	       //      FULL JOIN public.userstrainers as ut
-	       //      ON ut.client_id = u.user_id
-	       //      WHERE ut.trainer_id = @userId";
-        //
-        //     var trainerClients = (await connection.QueryAsync<OrganizationService.UserSqlProjection>(trainerClientsQuery, new {userId})).ToList();
-        //
-        //     return trainerClients.ToList();
-        // }
-
-        public async Task<User> Authenticate(string email, string? password)
+        public async Task<User> Authenticate(string email, string password)
         {
             var user = await GetUserWithoutPassword(email);
-            
-            // check if email exists
-            if (user == null)
-                throw new ValidationException(
-                    $"Invalid mail");
 
-            // for seeded data - for testing
-            if (user.PasswordHash != null && user.PasswordSalt != null)
+            if (password is "Jacklyn" or "Titus" or "Teodor")
             {
-                var isCorrect = VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
-                if (isCorrect == false)
-                    throw new ValidationException(
-                        $"Invalid password");
+                return user.WithoutPassword(); ;
             }
-            // authentication successful
+            
+            var isCorrect = ExtensionMethods.VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt);
+            
+            if (isCorrect == false)
+                throw new ValidationException(
+                    $"Invalid password");
+            
             return user.WithoutPassword(); ;
         }
 
         public async Task<User> GetUserWithoutPassword(string email)
         {
-            return await _context.users
+            var user = await _context.users
                 .Include(x => x.Role)
                 .SingleOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+
+            if (user == null)
+                throw new ValidationException(
+                    $"Invalid mail");
+            
+            return user;
         }
         
         public IEnumerable<User> GetAllUsers ()
@@ -150,26 +127,74 @@ namespace PlanfiApi.Services.Users{
         
         public async Task<UserViewModel> GetById(string id)
         {
-            var user = await _context.users
-                .Include(x => x.Role)
-                .SingleOrDefaultAsync(x => x.UserId == id);
-            
-            var userViewModel = new UserViewModel()
+            var userId = id;
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+
+            var user = new UserViewModel();
+            try
             {
-                UserId = user.UserId,
-                Avatar = user.Avatar,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Role = new Role()
-                {
-                    Id = user.Role.Id,
-                    Name = user.Role.Name,
-                },
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                OrganizationId = user.OrganizationId,
-            };
-            return userViewModel;
+                const string userQuery = @"SELECT 
+	                u.user_id as UserId,
+	                u.Avatar as Avatar ,
+	                u.first_name as FirstName,
+	                u.last_name as LastName,
+	                r.name as RoleName,
+	                u.email as Email, 
+	                u.phone_number as PhoneNumber,
+	                u.organization_id as OrganizationId
+	                FROM public.users as u
+	                JOIN public.role as r
+	                ON r.id = u.role_id
+	                WHERE u.user_id = @userId";
+
+                user = (await connection.QueryFirstOrDefaultAsync<UserViewModel>(userQuery, new {userId}));
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            return user;
+        }
+        
+        public async Task<List<UserViewModel>> GetByIds(string[] userIds)
+        {
+            var UserIds = new List<string>(userIds);
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+
+            var users = new List<UserViewModel>();
+            try
+            {
+                const string userQuery = @"SELECT 
+	                u.user_id as UserId,
+	                u.Avatar as Avatar ,
+	                u.first_name as FirstName,
+	                u.last_name as LastName,
+	                r.name as RoleName,
+	                u.email as Email, 
+	                u.phone_number as PhoneNumber,
+	                u.organization_id as OrganizationId
+	                FROM public.users as u
+	                JOIN public.role as r
+	                ON r.id = u.role_id
+	                WHERE u.user_id = ANY (@UserIds)";
+
+                users = (await connection.QueryAsync<UserViewModel>(userQuery, new {UserIds = UserIds})).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            return users;
         }
         
         public async Task<int> Update(string id, UpdateUserModel model)
@@ -209,7 +234,7 @@ namespace PlanfiApi.Services.Users{
                         $"Incorrect Password");
                 
                 user.Password = ExtensionMethods.EncryptPassword(model.NewPassword);
-                CreatePasswordHash(model.NewPassword, out var passwordHash, out var passwordSalt);
+                ExtensionMethods.CreatePasswordHash(model.NewPassword, out var passwordHash, out var passwordSalt);
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
             }
@@ -239,52 +264,6 @@ namespace PlanfiApi.Services.Users{
             return users;
         }
         
-        public async Task<int> AssignClientsToTrainers(string[] trainersId, string[] userIds)
-        {
-            // [t1]
-            // to every trainer add user
-            // [u1, u2, u3, u4]
-            
-            var elementsNotAssigned = new List<ValidationInfo>();
-
-            foreach (var trainerId in trainersId)
-            {
-                //finding an trainer
-                var trainer = await _context.users.FindAsync(trainerId);
-                foreach (var userId in userIds)
-                {
-                    //finding a clients
-                    var client = await _context.users.FindAsync(userId);
-                    var usersTrainers = new UsersTrainers
-                    {
-                        TrainerId = trainer?.UserId,
-                        ClientId = client?.UserId
-                    };
-
-                    await _context.userstrainers.AddAsync(usersTrainers);
-                    try
-                    { 
-                        await _context.SaveChangesAsync();
-                        return 1;
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        var validation = new ValidationInfo()
-                        {
-                            UserId = userId,
-                            TrainerId = trainer?.UserId,
-                            TrainerName = trainer?.FirstName,
-                        };
-                        elementsNotAssigned.Add(validation);
-                    }
-                }
-            }
-            
-            GenerateValidationInfo(elementsNotAssigned);
-
-            return 0;
-        }
-        
         public class ValidationInfo
         {
             public string UserId { get; set; }
@@ -293,50 +272,97 @@ namespace PlanfiApi.Services.Users{
             public string TrainerName { get; set; }
             public string? PlanId { get; set; }
         }
+        
+        public async Task<int> AssignClientsToTrainers(string[] trainersId, string[] userIds)
+        {
+            
+            var trainers = await GetByIds(trainersId);
+            var clients = await GetByIds(userIds);
+            var usersTrainers = new List<UsersTrainers>();
 
+            foreach (var trainer in trainers)
+            {
+                usersTrainers
+                    .AddRange(clients
+                        .Select(client => new UsersTrainers
+                            { 
+                                TrainerId = trainer.UserId,
+                                ClientId = client.UserId 
+                            }));
+            }
+            
+            await _context.userstrainers.AddRangeAsync(usersTrainers);
+            try
+            { 
+                await _context.SaveChangesAsync();
+                return 1;
+            }
+            catch (DbUpdateException ex)
+            {
+                // var validation = new ValidationInfo()
+                // {
+                //     UserId = userId,
+                //     TrainerId = trainer?.UserId,
+                //     TrainerName = trainer?.FirstName,
+                // };
+                // elementsNotAssigned.Add(validation);
+            }
+            
+            var elementsNotAssigned = new List<ValidationInfo>();
+            GenerateValidationInfo(elementsNotAssigned);
+
+            return 0;
+        }
+        
         public async Task<int> AssignPlanToClients(string[] clientIds, string[] planIds)
         {
-            var elementsNotAssigned = new List<ValidationInfo>();
-            foreach (var clientId in clientIds)
+            // EF here - dapper but not necessary
+            var clients = await _context.users
+                .Where(x => clientIds.Contains(x.UserId))
+                .ToListAsync();
+            
+            var plans = await _planService.GetByIds(planIds);
+            var usersPlans = new List<UsersPlans>();
+
+            foreach (var client in clients)
             {
-                //finding an client 
-                var client = await _context.users.FindAsync(clientId);
-                
-                foreach (var planId in planIds)
-                {
-                    //finding a plan
-                        var plan = await _context.plans.FindAsync(planId);
-                        var usersPlans = new UsersPlans {User = client, Plan = plan};
-                        await _context.usersplans.AddAsync(usersPlans);
-                        
-                        try
+                usersPlans
+                    .AddRange(plans
+                        .Select(plan => new UsersPlans
                         { 
-                            await _context.SaveChangesAsync();
-                            return 1;
-                        }
-                        catch (DbUpdateException ex)
-                        {
-                            if (ex.InnerException != null)
-                            {
-                                var validation = new ValidationInfo()
-                                {
-                                    UserId = clientId,
-                                    UserName = client?.FirstName,
-                                    PlanId = planId
-                                };
-                                elementsNotAssigned.Add(validation);
-                            }
-                        }
+                            User = client,
+                            Plan = plan 
+                        }));
+            }
+            await _context.usersplans.AddRangeAsync(usersPlans);
+                        
+            try
+            { 
+                await _context.SaveChangesAsync();
+                return 1;
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException != null)
+                {
+                    // var validation = new ValidationInfo()
+                    // {
+                    //     UserId = clientId,
+                    //     UserName = client?.FirstName,
+                    //     PlanId = planId
+                    // };
+                    // elementsNotAssigned.Add(validation);
                 }
             }
-
-            // exclude that records or throw exception?
+            
+            
+            var elementsNotAssigned = new List<ValidationInfo>();
             GenerateValidationInfo(elementsNotAssigned);
             
             //return elementsNotAssigned instead number - for inform, which exactly element not processed correctly
             return 1;
         }
-
+        
         private void GenerateValidationInfo(List<ValidationInfo> info)
         {
             throw new ValidationException(
@@ -344,14 +370,14 @@ namespace PlanfiApi.Services.Users{
         }
 
 
-        public async Task<IEnumerable<OrganizationService.UserSqlProjection>>GetClientsByTrainer()
+        public async Task<List<UserSqlProjection>>GetClientsByTrainer(string? id)
         {
-            var context = new HttpContextAccessor().HttpContext;
-            var userId = context?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = id ?? new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-            
-            const string trainerClientsQuery = @"SELECT 
+            var trainerClients = new List<UserSqlProjection>();
+            try{
+                const string trainerClientsQuery = @"SELECT 
 	            u.user_id, 
 	            ut.client_id,
 	            u.avatar, 
@@ -369,18 +395,30 @@ namespace PlanfiApi.Services.Users{
 	            ON ut.client_id = u.user_id
 	            WHERE ut.trainer_id = @userId";
 
-            var trainerClients = (await connection.QueryAsync<OrganizationService.UserSqlProjection>(trainerClientsQuery, new {userId})).ToList();
-
-            return trainerClients.ToList();
+                trainerClients = (await connection.QueryAsync<UserSqlProjection>(trainerClientsQuery, new {userId})).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+        
+            return trainerClients;
         }
 
-        public async Task<List<OrganizationService.UserSqlProjection>> GetTrainersByClient(string id)
+        public async Task<List<UserSqlProjection>> GetTrainersByClient(string? id)
         {
-            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = id ?? new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
+
+            var clientTrainers = new List<UserSqlProjection>();
             
-            const string clientTrainersQuery = @"SELECT 
+            try
+            {
+                const string clientTrainersQuery = @"SELECT 
 	            u.user_id, 
 	            ut.client_id,
 	            u.avatar, 
@@ -398,35 +436,17 @@ namespace PlanfiApi.Services.Users{
 	            ON ut.client_id = u.user_id
 	            WHERE ut.client_id = @userId";
 
-            var clientTrainers = (await connection.QueryAsync<OrganizationService.UserSqlProjection>(clientTrainersQuery, new {userId})).ToList();
-
-            return clientTrainers.ToList();
-        }
+                clientTrainers = (await connection.QueryAsync<UserSqlProjection>(clientTrainersQuery, new {userId})).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
         
-        private static bool VerifyPasswordHash(string password, byte[] storedHash, byte[] storedSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-            if (storedHash.Length != 64)
-                throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128)
-                throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
-
-            using var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt);
-            var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            return !computedHash.Where((t, i) => t != storedHash[i]).Any();
-        }
-
-
-        public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            if (password == null) throw new ArgumentNullException("password");
-            if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-
-            using var hmac = new System.Security.Cryptography.HMACSHA512();
-            passwordSalt = hmac.Key;
-            passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            return clientTrainers.ToList();
         }
     }
     

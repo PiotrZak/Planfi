@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
-using WebApi.Data.Entities.Users;
+using PlanfiApi.Models.SqlProjections;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -88,28 +90,17 @@ namespace PlanfiApi.Services.Organizations
             var clients = usersInOrganization.Where(x => x.Role.Name == "User");
             return clients;
         }
-
-        public class UserSqlProjection
-        {
-            public string User_Id { get; set; }
-            public string Role { get; set; }
-            public byte[]? Avatar { get; set; }
-            public string First_Name { get; set; }
-            public string Last_Name { get; set; }
-            public string Email { get; set; }
-            public string Phone_Number { get; set; }
-            public string Organization_Id { get; set; }
-            public bool Is_Activated { get; set; }
-        }
-
+        
         public async Task<List<UserSqlProjection>> GetUsers()
         {
-            //dapper query
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-            
-            var users = await connection.QueryAsync<UserSqlProjection>(
-                @"SELECT 
+
+            var users = new List<UserSqlProjection>();
+            try
+            {
+                users = await connection.QueryAsync<UserSqlProjection>(
+            @"SELECT 
                 u.user_id, 
                 u.avatar, 
 				r.name as role,
@@ -124,7 +115,15 @@ namespace PlanfiApi.Services.Organizations
 				ON u.role_id = r.id
                 WHERE is_activated = true
                 "
-                );
+                ) as List<UserSqlProjection>;
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
             
             return users.ToList();
         }

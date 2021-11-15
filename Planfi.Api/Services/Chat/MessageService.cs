@@ -7,6 +7,7 @@ using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using PlanfiApi.Helpers;
 using PlanfiApi.Models;
 using WebApi.Helpers;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -36,8 +37,10 @@ namespace PlanfiApi.Services.Chat
         {
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-            
-            const string messagesQuery = @"SELECT 
+
+            var messages = new List<MessageViewModel>();
+            try{
+	            const string messagesQuery = @"SELECT 
 	            m.id,
 	            CONCAT(u.first_name, u.last_name) as user_name,
 	            u.avatar,
@@ -48,8 +51,17 @@ namespace PlanfiApi.Services.Chat
 	            FROM public.messages as m
 	            JOIN public.users as u
 	            ON u.user_id = m.user_name";
+	            messages = (await connection.QueryAsync<MessageViewModel>(messagesQuery)).ToList();
+            }
+            catch (Exception exp) {
+	            Console.Write(exp.Message);
+            }
+            finally
+            {
+	            await connection.CloseAsync();
+            }
 
-            var messages = (await connection.QueryAsync<MessageViewModel>(messagesQuery)).ToList();
+
             return messages;
         }
 
@@ -57,21 +69,30 @@ namespace PlanfiApi.Services.Chat
         {
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-            
-            const string messagesQuery = @"SELECT 
-	            m.id,
-	            CONCAT(u.first_name, ' ', u.last_name) as user_name,
-	            u.avatar,
-	            m.contents,
-	            m.room_id,
-	            m.user_name as user_id,
-	            m.posted_at
-	            FROM public.messages as m
-	            JOIN public.users as u
-	            ON u.user_id = m.user_name
-	            WHERE m.room_id = @roomId";
 
-            var messages = (await connection.QueryAsync<MessageViewModel>(messagesQuery, new {roomId})).ToList();
+            var messages = new List<MessageViewModel>();
+            try{
+	            const string messagesQuery = @"SELECT 
+		            m.id,
+		            CONCAT(u.first_name, ' ', u.last_name) as user_name,
+		            u.avatar,
+		            m.contents,
+		            m.room_id,
+		            m.user_name as user_id,
+		            m.posted_at
+		            FROM public.messages as m
+		            JOIN public.users as u
+		            ON u.user_id = m.user_name
+		            WHERE m.room_id = @roomId";
+	            messages = (await connection.QueryAsync<MessageViewModel>(messagesQuery, new {roomId})).ToList();
+	        }
+	        catch (Exception exp) {
+		        Console.Write(exp.Message);
+	        }
+	        finally
+	        {
+		        await connection.CloseAsync();
+	        }
             return messages;
         }
 

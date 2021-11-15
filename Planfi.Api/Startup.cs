@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlanfiApi.GraphQl;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Middlewares;
 using PlanfiApi.Models;
@@ -70,7 +71,12 @@ namespace PlanfiApi
             // Use a PostgreSQL database
             var sqlConnectionString = Configuration.GetConnectionString("WebApiDatabase");
             services.AddDbContext<DataContext>(options =>
-                options.UseNpgsql(sqlConnectionString));
+            options.UseNpgsql(sqlConnectionString,
+                optionsAction =>
+                {
+                    optionsAction.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+                }));
+                
 
             services.Configure<FormOptions>(options => options.ValueCountLimit = 20000); 
             
