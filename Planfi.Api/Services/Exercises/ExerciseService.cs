@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.UpdateModels;
 using PlanfiApi.Models.ViewModels;

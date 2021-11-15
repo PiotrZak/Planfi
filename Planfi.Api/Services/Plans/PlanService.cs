@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using WebApi.Helpers;
 using WebApi.Models;
@@ -48,11 +49,16 @@ namespace PlanfiApi.Services.Plans
         {
             var plan = await _context.plans
                 .FirstOrDefaultAsync(x => x.PlanId == id);
+
+            if (plan == null)
+            {
+                throw new Exception("No plan found");
+            }
             
             return plan;
         }
 
-        public async Task<List<Plan>> GetByIds(List<string> ids)
+        public async Task<List<Plan>> GetByIds(string[] ids)
         {
             var plans = await _context.plans
                 .Where(x => ids.Contains(x.PlanId))
@@ -177,7 +183,6 @@ namespace PlanfiApi.Services.Plans
         public async Task<List<ResultPlan>> GetUserPlans(string? id)
         {
             var userId = id ?? new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
-
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
 
@@ -189,13 +194,13 @@ namespace PlanfiApi.Services.Plans
                     p.title,
                     p.creator_id AS CreatorId,
                     p.organization_id as OrganizationId,
-                    CONCAT(u.first_name, + ' ' + u.last_name) as CreatorName
+                    CONCAT(u.first_name, ' ', u.last_name) as CreatorName
                     FROM public.users as u
                     JOIN public.usersplans as up
                     ON u.user_id = up.user_id
                     JOIN public.plans as p
                     ON p.plan_id = up.plan_id
-                    WHERE u.user_id = @id";
+                    WHERE u.user_id = @userId";
 
                 userPlans = (await connection.QueryAsync<ResultPlan>(userPlansQuery, new {userId})).ToList();
             }

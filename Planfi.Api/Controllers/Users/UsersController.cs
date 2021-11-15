@@ -16,7 +16,6 @@ using PlanfiApi.Interfaces;
 using PlanfiApi.Models;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Common;
-using WebApi.Data.Entities.Users;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -107,6 +106,19 @@ namespace PlanfiApi.Controllers.Users
         public async Task<IActionResult> GetById(string id)
         {
             var user = await  _userService.GetById(id);
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
+        
+        [AllowAnonymous]
+        /*[Authorize(Roles = Role.Admin + "," + Role.Owner)]*/
+        [HttpGet("details/{id}")]
+        public async Task<IActionResult> GetUserDetails(string id)
+        {
+            var user = await  _userService.UserDetailsViewModel(id);
 
             if (user == null)
                 return NotFound();
@@ -204,27 +216,22 @@ namespace PlanfiApi.Controllers.Users
             _userService.Delete(id);
             return Ok();
         }
+        
 
         [AllowAnonymous]
         [HttpGet("trainerClients")]
-        public async Task<IActionResult>  GetClientsByTrainer()
+        public async Task<IActionResult>  GetClientsByTrainer(string? id)
         {
-            var clients = await _userService.GetClientsByTrainer();
-            
-            if (clients == null)
-                return NotFound();
+            var clients = await _userService.GetClientsByTrainer(id);
 
             return Ok(clients);
         }
 
         [AllowAnonymous]
         [HttpGet("clientTrainers/{id}")]
-        public async Task<IActionResult>  GetTrainersByClient(string id)
+        public async Task<IActionResult>  GetTrainersByClient(string? id)
         {
             var trainers = await _userService.GetTrainersByClient(id);
-
-            if (trainers == null)
-                return NotFound();
 
             return Ok(trainers);
         }

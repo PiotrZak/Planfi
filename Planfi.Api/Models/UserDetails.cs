@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Models.SqlProjections;
+using WebApi.Models;
 
-namespace PlanfiApi.Models.ViewModels
+namespace PlanfiApi.Models
 {
-    //todo - realize what is really needed here
-    public class UserViewModel
+    public class UserDetails
     {
         [Key]
         public string UserId { get; set; }
@@ -13,9 +14,10 @@ namespace PlanfiApi.Models.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string RoleName { get; set; }
-        public Role Role { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string OrganizationId { get; set; }
+        public string OrganizationId { get; set; }   
+        public List<ResultPlan> UserPlans;
+        public List<UserSqlProjection> ClientTrainers;
     }
 }

@@ -9,7 +9,7 @@ namespace PlanfiApi.Interfaces
     public interface IPlanService
     {
         Task<List<ResultPlan>> GetUserPlans(string? userId);
-        Task<List<Plan>> GetByIds(List<string> ids);
+        Task<List<Plan>> GetByIds(string[] ids);
         Task<Plan> GetById(string id);
         Task<Plan> Create(Plan plan);
         Task<List<Plan>> GetAll();

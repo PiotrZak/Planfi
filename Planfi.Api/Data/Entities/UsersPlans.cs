@@ -1,8 +1,6 @@
-using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
-using WebApi.Data.Entities.Users;
 
-namespace WebApi.Data.Entities
+namespace PlanfiApi.Data.Entities
 {
     public class UsersPlans
     {

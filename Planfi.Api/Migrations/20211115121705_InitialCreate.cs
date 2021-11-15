@@ -15,7 +15,7 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true)
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,8 +28,8 @@ namespace PlanfiApi.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     room_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    contents = table.Column<string>(type: "text", nullable: true),
-                    user_name = table.Column<string>(type: "text", nullable: true),
+                    contents = table.Column<string>(type: "text", nullable: false),
+                    user_name = table.Column<string>(type: "text", nullable: false),
                     posted_at = table.Column<DateTime>(type: "date", nullable: false)
                 },
                 constraints: table =>
@@ -42,7 +42,7 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     organization_id = table.Column<string>(type: "text", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true)
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,7 +54,7 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "text", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: true)
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,8 +66,8 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     category_id = table.Column<string>(type: "text", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    organization_id = table.Column<string>(type: "text", nullable: true)
+                    title = table.Column<string>(type: "text", nullable: false),
+                    organization_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,7 +76,8 @@ namespace PlanfiApi.Migrations
                         name: "FK_categories_organizations_organization_id",
                         column: x => x.organization_id,
                         principalTable: "organizations",
-                        principalColumn: "organization_id");
+                        principalColumn: "organization_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,10 +85,10 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     plan_id = table.Column<string>(type: "text", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    creator_id = table.Column<string>(type: "text", nullable: true),
-                    creator_name = table.Column<string>(type: "text", nullable: true),
-                    organization_id = table.Column<string>(type: "text", nullable: true)
+                    title = table.Column<string>(type: "text", nullable: false),
+                    creator_id = table.Column<string>(type: "text", nullable: false),
+                    creator_name = table.Column<string>(type: "text", nullable: false),
+                    organization_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -96,7 +97,8 @@ namespace PlanfiApi.Migrations
                         name: "FK_plans_organizations_organization_id",
                         column: x => x.organization_id,
                         principalTable: "organizations",
-                        principalColumn: "organization_id");
+                        principalColumn: "organization_id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,22 +106,22 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     user_id = table.Column<string>(type: "text", nullable: false),
-                    organization_id = table.Column<string>(type: "text", nullable: true),
-                    role_id = table.Column<string>(type: "text", nullable: true),
+                    organization_id = table.Column<string>(type: "text", nullable: false),
                     avatar = table.Column<byte[]>(type: "bytea", nullable: true),
-                    first_name = table.Column<string>(type: "text", nullable: true),
-                    last_name = table.Column<string>(type: "text", nullable: true),
-                    email = table.Column<string>(type: "text", nullable: true),
-                    phone_number = table.Column<string>(type: "text", nullable: true),
-                    password = table.Column<string>(type: "text", nullable: true),
-                    password_hash = table.Column<byte[]>(type: "bytea", nullable: true),
-                    password_salt = table.Column<byte[]>(type: "bytea", nullable: true),
-                    token = table.Column<string>(type: "text", nullable: true),
+                    first_name = table.Column<string>(type: "text", nullable: false),
+                    last_name = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
+                    phone_number = table.Column<string>(type: "text", nullable: false),
+                    password = table.Column<string>(type: "text", nullable: false),
+                    password_hash = table.Column<byte[]>(type: "bytea", nullable: false),
+                    password_salt = table.Column<byte[]>(type: "bytea", nullable: false),
+                    token = table.Column<string>(type: "text", nullable: false),
                     reset_token = table.Column<string>(type: "text", nullable: true),
                     reset_token_expires = table.Column<DateTime>(type: "date", nullable: true),
                     password_reset = table.Column<DateTime>(type: "date", nullable: false),
                     verification_token = table.Column<string>(type: "text", nullable: true),
-                    is_activated = table.Column<bool>(type: "boolean", nullable: false)
+                    is_activated = table.Column<bool>(type: "boolean", nullable: false),
+                    role_id = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,12 +130,14 @@ namespace PlanfiApi.Migrations
                         name: "FK_users_organizations_organization_id",
                         column: x => x.organization_id,
                         principalTable: "organizations",
-                        principalColumn: "organization_id");
+                        principalColumn: "organization_id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_users_role_role_id",
                         column: x => x.role_id,
                         principalTable: "role",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -141,10 +145,10 @@ namespace PlanfiApi.Migrations
                 columns: table => new
                 {
                     exercise_id = table.Column<string>(type: "text", nullable: false),
-                    name = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: true),
-                    description = table.Column<string>(type: "character varying(3600000)", maxLength: 3600000, nullable: true),
+                    name = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    description = table.Column<string>(type: "character varying(3600000)", maxLength: 3600000, nullable: false),
                     files = table.Column<List<byte[]>>(type: "bytea[]", nullable: true),
-                    category_id = table.Column<string>(type: "text", nullable: true),
+                    category_id = table.Column<string>(type: "text", nullable: false),
                     plan_id = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -154,7 +158,8 @@ namespace PlanfiApi.Migrations
                         name: "FK_exercises_categories_category_id",
                         column: x => x.category_id,
                         principalTable: "categories",
-                        principalColumn: "category_id");
+                        principalColumn: "category_id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_exercises_plans_plan_id",
                         column: x => x.plan_id,
@@ -231,16 +236,6 @@ namespace PlanfiApi.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "categories",
-                columns: new[] { "category_id", "organization_id", "title" },
-                values: new object[,]
-                {
-                    { "1", null, "Amatorskie" },
-                    { "2", null, "Średnio-Zaawansowane" },
-                    { "3", null, "Profesjonalistyczne" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "organizations",
                 columns: new[] { "organization_id", "name" },
                 values: new object[,]
@@ -258,6 +253,26 @@ namespace PlanfiApi.Migrations
                     { "1", "Trainer" },
                     { "2", "User" },
                     { "3", "Owner" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "categories",
+                columns: new[] { "category_id", "organization_id", "title" },
+                values: new object[,]
+                {
+                    { "1", "O1", "Amatorskie" },
+                    { "2", "O1", "Średnio-Zaawansowane" },
+                    { "3", "O1", "Profesjonalistyczne" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "user_id", "avatar", "email", "first_name", "is_activated", "last_name", "organization_id", "password", "password_hash", "password_reset", "password_salt", "phone_number", "reset_token", "reset_token_expires", "role_id", "token", "verification_token" },
+                values: new object[,]
+                {
+                    { "o2u1", null, "jmeachem0@eventbrite.com", "Jacklyn", true, "Meachem", "O2", "Jacklyn", new byte[] { 0, 0 }, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new byte[] { 0, 0, 0, 0, 0 }, "555555555", null, null, "1", "t-user", null },
+                    { "o3u1", null, "thilldrupe@berkeley.edu", "Titus", true, "Hilldrup", "O3", "Titus", new byte[] { 0, 0 }, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new byte[] { 0, 0, 0, 0, 0 }, "555555555", null, null, "1", "t-user", null },
+                    { "u1", null, "tgianelli0@eventbrite.com", "Teodoor", true, "Gianelli", "O1", "Teodor", new byte[] { 0, 0 }, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new byte[] { 0, 0, 0, 0, 0 }, "555555555", null, null, "1", "t-user", null }
                 });
 
             migrationBuilder.InsertData(
@@ -280,16 +295,6 @@ namespace PlanfiApi.Migrations
                     { "m", "3", "1) Zajmij miejsce na maszynie, dostosowując ją do swojego wzrostu.Kończyny dolne wyprostowane, wałek maszyny znajduje się kilka centymetrów poniżej łydek.Chwyć za uchwyty znajdujące się po bokach siedziska.", null, "Uginanie na dwójki na maszynie", null },
                     { "n", "3", " Z pozycji, w której stopa jest mocno zadarta do góry, pięta skrajnie obniżona, palce wskazują sufit, a łydka jest mocno rozciągnięta, odpychaj się od podwyższenia poprzez mocne wspięcie na palce i napięcie łydek.", null, "Uginanie na łydki stojąc", null },
                     { "o", "3", "musculus triceps brachii) - mięsień zajmujący całą powierzchnię tylną ramienia i należący do tylnej grupy mięśni ramienia, rozpięty między łopatką i kością", null, "Triceps", null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "users",
-                columns: new[] { "user_id", "avatar", "email", "first_name", "is_activated", "last_name", "organization_id", "password", "password_hash", "password_reset", "password_salt", "phone_number", "reset_token", "reset_token_expires", "role_id", "token", "verification_token" },
-                values: new object[,]
-                {
-                    { "o2u1", null, "jmeachem0@eventbrite.com", "Jacklyn", true, "Meachem", "O2", "Jacklyn", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, null, "t-user", null },
-                    { "o3u1", null, "thilldrupe@berkeley.edu", "Titus", true, "Hilldrup", "O3", "Titus", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, null, "t-user", null },
-                    { "u1", null, "tgianelli0@eventbrite.com", "Teodoor", true, "Gianelli", "O1", "Teodor", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "555555555", null, null, null, "t-user", null }
                 });
 
             migrationBuilder.CreateIndex(

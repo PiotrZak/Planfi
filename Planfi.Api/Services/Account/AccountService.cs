@@ -12,9 +12,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using WebApi.Controllers.ViewModels;
-using WebApi.Data.Entities.Users;
 using WebApi.Data.ViewModels;
 using WebApi.Helpers;
 
@@ -28,17 +28,13 @@ namespace PlanfiApi.Services.Account
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly DataContext _context;
-        private readonly IUserService _userService;
-        private readonly IMapper _mapper;
         private const string SenderName = "Planfi";
         private const string SenderEmail = "planfi.contact@gmail.com";
 
-        public AccountService(IEmailService emailService, DataContext context, IUserService userService, IMapper mapper, IConfiguration configuration)
+        public AccountService(IEmailService emailService, DataContext context, IConfiguration configuration)
         {
             _emailService = emailService;
             _context = context;
-            _userService = userService;
-            _mapper = mapper;
             _configuration = configuration;
         }
         
@@ -56,7 +52,7 @@ namespace PlanfiApi.Services.Account
             selectedUser.LastName = user.LastName;
             selectedUser.PhoneNumber = user.PhoneNumber;
 
-            _userService.CreatePasswordHash(user.Password, out var passwordHash, out var passwordSalt);
+            ExtensionMethods.CreatePasswordHash(user.Password, out var passwordHash, out var passwordSalt);
 
             selectedUser.Password = ExtensionMethods.EncryptPassword(user.Password);
             selectedUser.PasswordHash = passwordHash;
@@ -141,7 +137,7 @@ namespace PlanfiApi.Services.Account
             _emailService.Send(messageData);
         }
 
-        private static string RandomTokenString()
+        private static string? RandomTokenString()
         {
             using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
             var randomBytes = new byte[40];
@@ -160,11 +156,10 @@ namespace PlanfiApi.Services.Account
                     throw new AppException("Invalid token");
 
                 // update password and remove reset token
-                _userService.CreatePasswordHash(model.Password, out var passwordHash, out var passwordSalt);
+                ExtensionMethods.CreatePasswordHash(model.Password, out var passwordHash, out var passwordSalt);
                 
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
-                
                 user.PasswordReset = DateTime.UtcNow.ToUniversalTime();
                 user.ResetToken = null;
                 user.ResetTokenExpires = null;

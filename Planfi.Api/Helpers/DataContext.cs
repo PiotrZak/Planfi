@@ -1,19 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Models;
-using WebApi.Data.Entities;
-using WebApi.Data.Entities.Users;
-using WebApi.Data.ViewModels;
-using WebApi.Entities;
-using WebApi.Models;
 
-namespace WebApi.Helpers
+namespace PlanfiApi.Helpers
 {
     public class DataContext : DbContext
     {
@@ -113,16 +107,19 @@ namespace WebApi.Helpers
                 {
                     CategoryId = "1",
                     Title = "Amatorskie",
+                    OrganizationId = "O1",
                 },
                 new Category
                 {
                     CategoryId = "2",
                     Title = "Średnio-Zaawansowane",
+                    OrganizationId = "O1",
                 },
                 new Category
                 {
                     CategoryId = "3",
                     Title = "Profesjonalistyczne",
+                    OrganizationId = "O1",
                 }
             );
 
@@ -293,11 +290,13 @@ namespace WebApi.Helpers
                     Avatar = null,
                     FirstName = "Teodoor",
                     LastName = "Gianelli",
+                    //Role = new Role() { Id = "1", Name = "Trainer" },
+                    RoleId = "1",
                     Email = "tgianelli0@eventbrite.com",
                     PhoneNumber = "555555555",
                     Password = "Teodor",
-                    PasswordHash = null,
-                    PasswordSalt = null,
+                    PasswordHash = new byte[2],
+                    PasswordSalt = new byte[5],
                     Token = "t-user",
                     IsActivated = true,
                 },
@@ -308,11 +307,13 @@ namespace WebApi.Helpers
                     Avatar = null,
                     FirstName = "Jacklyn",
                     LastName = "Meachem",
+                    //Role = new Role() { Id = "1", Name = "Trainer" },
+                    RoleId = "1",
                     Email = "jmeachem0@eventbrite.com",
                     PhoneNumber = "555555555",
                     Password = "Jacklyn",
-                    PasswordHash = null,
-                    PasswordSalt = null,
+                    PasswordHash = new byte[2],
+                    PasswordSalt = new byte[5],
                     Token = "t-user",
                     IsActivated = true,
                 },
@@ -323,11 +324,13 @@ namespace WebApi.Helpers
                     Avatar = null,
                     FirstName = "Titus",
                     LastName = "Hilldrup",
+                    //Role = new Role() { Id = "1", Name = "Trainer" },
+                    RoleId = "1",
                     Email = "thilldrupe@berkeley.edu",
                     PhoneNumber = "555555555",
                     Password = "Titus",
-                    PasswordHash = null,
-                    PasswordSalt = null,
+                    PasswordHash = new byte[2],
+                    PasswordSalt = new byte[5],
                     Token = "t-user",
                     IsActivated = true,
                 }

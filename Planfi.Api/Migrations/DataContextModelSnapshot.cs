@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WebApi.Helpers;
+using PlanfiApi.Helpers;
 
 #nullable disable
 
@@ -30,10 +30,12 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("category_id");
 
                     b.Property<string>("OrganizationId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("organization_id");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("title");
 
@@ -47,16 +49,19 @@ namespace PlanfiApi.Migrations
                         new
                         {
                             CategoryId = "1",
+                            OrganizationId = "O1",
                             Title = "Amatorskie"
                         },
                         new
                         {
                             CategoryId = "2",
+                            OrganizationId = "O1",
                             Title = "Średnio-Zaawansowane"
                         },
                         new
                         {
                             CategoryId = "3",
+                            OrganizationId = "O1",
                             Title = "Profesjonalistyczne"
                         });
                 });
@@ -68,10 +73,12 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("exercise_id");
 
                     b.Property<string>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("category_id");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(3600000)
                         .HasColumnType("character varying(3600000)")
                         .HasColumnName("description");
@@ -81,6 +88,7 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("files");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(160)
                         .HasColumnType("character varying(160)")
                         .HasColumnName("name");
@@ -205,6 +213,39 @@ namespace PlanfiApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Organization", b =>
+                {
+                    b.Property<string>("OrganizationId")
+                        .HasColumnType("text")
+                        .HasColumnName("organization_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("OrganizationId");
+
+                    b.ToTable("organizations");
+
+                    b.HasData(
+                        new
+                        {
+                            OrganizationId = "O1",
+                            Name = "Apple"
+                        },
+                        new
+                        {
+                            OrganizationId = "O2",
+                            Name = "Google"
+                        },
+                        new
+                        {
+                            OrganizationId = "O3",
+                            Name = "Microsoft"
+                        });
+                });
+
             modelBuilder.Entity("PlanfiApi.Data.Entities.Plan", b =>
                 {
                     b.Property<string>("PlanId")
@@ -212,18 +253,22 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("plan_id");
 
                     b.Property<string>("CreatorId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("creator_id");
 
                     b.Property<string>("CreatorName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("creator_name");
 
                     b.Property<string>("OrganizationId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("organization_id");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("title");
 
@@ -263,6 +308,39 @@ namespace PlanfiApi.Migrations
                     b.ToTable("series");
                 });
 
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.Role", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Trainer"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "User"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Owner"
+                        });
+                });
+
             modelBuilder.Entity("PlanfiApi.Data.Entities.Users.User", b =>
                 {
                     b.Property<string>("UserId")
@@ -274,10 +352,12 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("avatar");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
@@ -286,18 +366,22 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("is_activated");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("last_name");
 
                     b.Property<string>("OrganizationId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("organization_id");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("password");
 
                     b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
                         .HasColumnType("bytea")
                         .HasColumnName("password_hash");
 
@@ -306,10 +390,12 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("password_reset");
 
                     b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
                         .HasColumnType("bytea")
                         .HasColumnName("password_salt");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("phone_number");
 
@@ -322,10 +408,12 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("reset_token_expires");
 
                     b.Property<string>("RoleId")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("role_id");
 
                     b.Property<string>("Token")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("token");
 
@@ -351,8 +439,11 @@ namespace PlanfiApi.Migrations
                             LastName = "Gianelli",
                             OrganizationId = "O1",
                             Password = "Teodor",
+                            PasswordHash = new byte[] { 0, 0 },
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PasswordSalt = new byte[] { 0, 0, 0, 0, 0 },
                             PhoneNumber = "555555555",
+                            RoleId = "1",
                             Token = "t-user"
                         },
                         new
@@ -364,8 +455,11 @@ namespace PlanfiApi.Migrations
                             LastName = "Meachem",
                             OrganizationId = "O2",
                             Password = "Jacklyn",
+                            PasswordHash = new byte[] { 0, 0 },
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PasswordSalt = new byte[] { 0, 0, 0, 0, 0 },
                             PhoneNumber = "555555555",
+                            RoleId = "1",
                             Token = "t-user"
                         },
                         new
@@ -377,10 +471,30 @@ namespace PlanfiApi.Migrations
                             LastName = "Hilldrup",
                             OrganizationId = "O3",
                             Password = "Titus",
+                            PasswordHash = new byte[] { 0, 0 },
                             PasswordReset = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PasswordSalt = new byte[] { 0, 0, 0, 0, 0 },
                             PhoneNumber = "555555555",
+                            RoleId = "1",
                             Token = "t-user"
                         });
+                });
+
+            modelBuilder.Entity("PlanfiApi.Data.Entities.UsersPlans", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
+                    b.Property<string>("PlanId")
+                        .HasColumnType("text")
+                        .HasColumnName("plan_id");
+
+                    b.HasKey("UserId", "PlanId");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("usersplans");
                 });
 
             modelBuilder.Entity("PlanfiApi.Data.ViewModels.UsersTrainers", b =>
@@ -408,6 +522,7 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
@@ -424,6 +539,7 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Contents")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("contents");
 
@@ -436,6 +552,7 @@ namespace PlanfiApi.Migrations
                         .HasColumnName("room_id");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("user_name");
 
@@ -444,99 +561,22 @@ namespace PlanfiApi.Migrations
                     b.ToTable("messages");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.Users.Role", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            Name = "Trainer"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            Name = "User"
-                        },
-                        new
-                        {
-                            Id = "3",
-                            Name = "Owner"
-                        });
-                });
-
-            modelBuilder.Entity("WebApi.Data.Entities.UsersPlans", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text")
-                        .HasColumnName("user_id");
-
-                    b.Property<string>("PlanId")
-                        .HasColumnType("text")
-                        .HasColumnName("plan_id");
-
-                    b.HasKey("UserId", "PlanId");
-
-                    b.HasIndex("PlanId");
-
-                    b.ToTable("usersplans");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.Organization", b =>
-                {
-                    b.Property<string>("OrganizationId")
-                        .HasColumnType("text")
-                        .HasColumnName("organization_id");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("organizations");
-
-                    b.HasData(
-                        new
-                        {
-                            OrganizationId = "O1",
-                            Name = "Apple"
-                        },
-                        new
-                        {
-                            OrganizationId = "O2",
-                            Name = "Google"
-                        },
-                        new
-                        {
-                            OrganizationId = "O3",
-                            Name = "Microsoft"
-                        });
-                });
-
             modelBuilder.Entity("PlanfiApi.Data.Entities.Category", b =>
                 {
-                    b.HasOne("WebApi.Entities.Organization", null)
+                    b.HasOne("PlanfiApi.Data.Entities.Organization", null)
                         .WithMany("Categories")
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PlanfiApi.Data.Entities.Exercise", b =>
                 {
                     b.HasOne("PlanfiApi.Data.Entities.Category", null)
                         .WithMany("Exercises")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PlanfiApi.Data.Entities.Plan", null)
                         .WithMany("Exercises")
@@ -545,9 +585,11 @@ namespace PlanfiApi.Migrations
 
             modelBuilder.Entity("PlanfiApi.Data.Entities.Plan", b =>
                 {
-                    b.HasOne("WebApi.Entities.Organization", null)
+                    b.HasOne("PlanfiApi.Data.Entities.Organization", null)
                         .WithMany("Plans")
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PlanfiApi.Data.Entities.Serie", b =>
@@ -559,15 +601,38 @@ namespace PlanfiApi.Migrations
 
             modelBuilder.Entity("PlanfiApi.Data.Entities.Users.User", b =>
                 {
-                    b.HasOne("WebApi.Entities.Organization", null)
+                    b.HasOne("PlanfiApi.Data.Entities.Organization", null)
                         .WithMany("Users")
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("WebApi.Data.Entities.Users.Role", "Role")
+                    b.HasOne("PlanfiApi.Data.Entities.Users.Role", "Role")
                         .WithMany("Users")
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("PlanfiApi.Data.Entities.UsersPlans", b =>
+                {
+                    b.HasOne("PlanfiApi.Data.Entities.Plan", "Plan")
+                        .WithMany("Users")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PlanfiApi.Data.Entities.Users.User", "User")
+                        .WithMany("Plans")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PlanfiApi.Data.ViewModels.UsersTrainers", b =>
@@ -589,25 +654,6 @@ namespace PlanfiApi.Migrations
                     b.Navigation("Trainer");
                 });
 
-            modelBuilder.Entity("WebApi.Data.Entities.UsersPlans", b =>
-                {
-                    b.HasOne("PlanfiApi.Data.Entities.Plan", "Plan")
-                        .WithMany("Users")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PlanfiApi.Data.Entities.Users.User", "User")
-                        .WithMany("Plans")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Plan");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("PlanfiApi.Data.Entities.Category", b =>
                 {
                     b.Navigation("Exercises");
@@ -618,10 +664,24 @@ namespace PlanfiApi.Migrations
                     b.Navigation("Series");
                 });
 
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Organization", b =>
+                {
+                    b.Navigation("Categories");
+
+                    b.Navigation("Plans");
+
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("PlanfiApi.Data.Entities.Plan", b =>
                 {
                     b.Navigation("Exercises");
 
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("PlanfiApi.Data.Entities.Users.Role", b =>
+                {
                     b.Navigation("Users");
                 });
 
@@ -630,20 +690,6 @@ namespace PlanfiApi.Migrations
                     b.Navigation("Plans");
 
                     b.Navigation("UsersTrainers");
-                });
-
-            modelBuilder.Entity("WebApi.Data.Entities.Users.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.Organization", b =>
-                {
-                    b.Navigation("Categories");
-
-                    b.Navigation("Plans");
-
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

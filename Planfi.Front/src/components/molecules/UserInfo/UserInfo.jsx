@@ -23,7 +23,7 @@ const StyledParagraph = styled(Paragraph)`
 export const UserInfo = ({ user }) => {
   const {
     // eslint-disable-next-line react/prop-types
-    firstName, lastName, role, phoneNumber,
+    firstName, lastName, roleName, phoneNumber,
   } = user;
 
   return (
@@ -33,7 +33,7 @@ export const UserInfo = ({ user }) => {
         <StyledParagraph type="Label-Button">
           {`${firstName} ${lastName}`}
         </StyledParagraph>
-        <StyledParagraph type="body-3-regular" notFirst>{role.name}</StyledParagraph>
+        <StyledParagraph type="body-3-regular" notFirst>{roleName}</StyledParagraph>
         <StyledParagraph type="body-3-regular" notFirst>{phoneNumber}</StyledParagraph>
       </Container>
     </UserInfoContainer>

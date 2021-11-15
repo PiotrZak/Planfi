@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using HotChocolate;
 using HotChocolate.Types;
 using PlanfiApi.Data.Entities;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models.SqlProjections;
 using PlanfiApi.Models.ViewModels;
-using PlanfiApi.Services.Organizations;
 using WebApi.Helpers;
 
 namespace PlanfiApi.GraphQl
@@ -53,25 +54,7 @@ namespace PlanfiApi.GraphQl
             await _exerciseService.GetSerializedExercisesInstances();
         
         [UseFiltering]
-        public async Task<List<OrganizationService.UserSqlProjection>> GetUsers([Service] DataContext dbContext) => 
+        public async Task<List<UserSqlProjection>> GetUsers([Service] DataContext dbContext) => 
             await _organizationService.GetUsers();
     }
-    
-    public static class ExtensionMethods
-    {
-        public static IEnumerable<Exercise> WithoutFiles(this IEnumerable<Exercise> exercises)
-        {
-            if (exercises == null) return null;
-            return exercises.Select(x => x.WithoutFile());
-        }
-
-        public static Exercise WithoutFile(this Exercise exercise)
-        {
-            if (exercise == null) return null;
-
-            exercise.Files = null;
-            return exercise;
-        }
-    }
-
 }

@@ -22,6 +22,6 @@ namespace PlanfiApi.Data.Entities
         public virtual ICollection<Serie> Series { get; set; }
         public List<byte[]>? Files { get; set; }
         public string CategoryId { get; set; }
-        public string PlanId { get; set; }
+        public string? PlanId { get; set; }
     }
 }
