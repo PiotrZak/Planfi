@@ -60,7 +60,7 @@ export const CheckboxGenericComponent = ({
     <>
       {dataList.map((element, i) =>
         isMobile ? (
-          <div onClick={() => interaction != undefined && handleClick(element)}>
+          <div key ={i} onClick={() => interaction != undefined && handleClick(element)}>
             <Holdable
               key={i}
               isActive={element.isActive}

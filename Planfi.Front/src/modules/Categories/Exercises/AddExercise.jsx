@@ -69,12 +69,6 @@ const triggerFileUploadButton = () => {
   document.getElementById("choose-file-button").click();
 };
 
-const initialValues = {
-  exerciseName: "",
-  exerciseDescription: "",
-  addNextExercise: false,
-};
-
 const validationSchema = Yup.object({
   exerciseName: Yup.string().required(translate("ThisFieldIsRequired")),
   exerciseDescription: Yup.string()
@@ -123,7 +117,7 @@ const AddExerciseRefactor = (props) => {
   const { theme } = useThemeContext();
   const [uploadPercentage, setUploadPercentage] = useState(0);
 
-  const [selectedCategoryId, setSelectedCategoryId] = useState([])
+  const [selectedCategoryId, setSelectedCategoryId] = useState()
   const [openModal, setOpenModal] = useState(false);
 
   const user = JSON.parse((localStorage.getItem('user')));
@@ -309,7 +303,15 @@ const AddExerciseRefactor = (props) => {
 
   const validate = (values) => {
     const errors = {};
-    if (selectedCategoryId.length === 0) {
+
+    console.log(selectedCategoryId);
+
+    if(results[0].categoryId && selectedCategoryId == undefined){
+      setSelectedCategoryId(results[0].categoryId)
+    }
+
+
+    if (selectedCategoryId === undefined) {
       errors.category = 'Required';
     }
     return errors;
@@ -327,7 +329,11 @@ const AddExerciseRefactor = (props) => {
       ) : (
         <Formik
           validate={validate}
-          initialValues={initialValues}
+          initialValues={{
+            exerciseName: "",
+            exerciseDescription: "",
+            addNextExercise: false,
+          }}
           validationSchema={validationSchema}
           onSubmit={onSubmit}
           validateOnChange={false}
@@ -375,6 +381,7 @@ const AddExerciseRefactor = (props) => {
                     label="Category"
                     isLoading={loadingCategory}
                     onChange={handleInputChange}
+                    hasError={errors.category }
                   />
                 </>
                 : <p>No category - add</p>

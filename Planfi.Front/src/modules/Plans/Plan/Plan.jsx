@@ -39,23 +39,16 @@ const Plan = (props) => {
   `;
 
 
-
   const {
     loading, error, data, refetch: _refetch,
   } = useQuery(PLANSEXERCISES);
   const refreshPlanExerciseData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
 
-
-
-  const [allExercises, setAllExercises] = useState([])
   const [activeSelectedExercise, setActiveSelectedExercise] = useState([]);
   const [assignExercise, setAssignExercises] = useState('none');
   const [bottomSheet, setBottomSheet] = useState('none')
-
-const [planPanel, setPlanPanel] = useState('none')
+  const [planPanel, setPlanPanel] = useState('none')
   const [searchTerm, setSearchTerm] = useState('');
-  const [categories, setCategories] = useState();
-
 
   useEffect(() => {
     refreshPlanExerciseData();

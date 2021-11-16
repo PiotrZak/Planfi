@@ -7,7 +7,6 @@ import GlobalTemplate from "templates/GlobalTemplate";
 import SmallButton from "components/atoms/SmallButton";
 import Nav from "components/atoms/Nav";
 import BackTopNav from "components/molecules/BackTopNav";
-import { Headline, Subline } from "components/typography";
 import { Role } from "utils/role";
 import { useUserContext } from "support/context/UserContext";
 import { useQuery, gql } from '@apollo/client';

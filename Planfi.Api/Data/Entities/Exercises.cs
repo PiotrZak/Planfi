@@ -18,7 +18,7 @@ namespace PlanfiApi.Data.Entities
         [MaxLength(160)]
         public string Name { get; set; }
         [MaxLength(3600000)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public virtual ICollection<Serie> Series { get; set; }
         public List<byte[]>? Files { get; set; }
         public string CategoryId { get; set; }

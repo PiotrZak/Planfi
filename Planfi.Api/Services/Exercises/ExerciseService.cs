@@ -10,6 +10,7 @@ using Npgsql;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models.SqlProjections;
 using PlanfiApi.Models.UpdateModels;
 using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Files;
@@ -116,6 +117,7 @@ namespace PlanfiApi.Services.Exercises
                 const string baseExerciseQuery = @"SELECT
                     e.exercise_Id as ExerciseId,
                     e.name,
+                    c.category_Id as CategoryId,
                     c.title as CategoryName,
                     e.description,
                     e.files
@@ -146,19 +148,7 @@ namespace PlanfiApi.Services.Exercises
             return _context.exercises;
         }
 
-        public class ExerciseSqlProjection
-        {
-            public string ExerciseId { get; set; }
-            public string Name { get; set; }
-            public byte[][] Files { get; set; }
-            public string CategoryId { get; set; }
-            public string? CategoryName { get; set; }
-            public string PlanId { get; set; }
-            public string SerieId { get; set; }
-            public int Times { get; set; }
-            public int Weight { get; set; }
-            public int Repeats { get; set; }
-        }
+
 
         private async Task<ExerciseViewModel> GetSerializedExercise(string exerciseId)
         {
@@ -175,7 +165,7 @@ namespace PlanfiApi.Services.Exercises
 	                e.exercise_id as ExerciseId,
 	                e.category_id as CategoryId,
 	                e.plan_id as PlanId,
-                    s.serie_id,
+                    s.serie_id as SerieId,
 	                s.weight,
 	                s.times,
 	                s.repeats
@@ -205,10 +195,10 @@ namespace PlanfiApi.Services.Exercises
 
         public async Task<List<ExerciseViewModel>> GetSerializedExercisesInstances()
         {
+            var baseExercises = await GetAllBaseExercises();
+
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-
-            var baseExercises = await GetAllBaseExercises();
             
             var exercisesInstances = new List<ExerciseSqlProjection>();
             try
@@ -218,7 +208,7 @@ namespace PlanfiApi.Services.Exercises
 	                e.exercise_id as ExerciseId,
 	                e.category_id as CategoryId,
 	                e.plan_id as PlanId,
-                    s.serie_id,
+                    s.serie_id as SerieId,
 	                s.weight,
 	                s.times,
 	                s.repeats
@@ -255,6 +245,7 @@ namespace PlanfiApi.Services.Exercises
                 var serieList = instance.Select(x => 
                     new Serie()
                     {
+                        SerieId = x.SerieId,
                         Repeats = x.Repeats,
                         Times = x.Times,
                         Weight = x.Weight,

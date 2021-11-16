@@ -138,7 +138,7 @@ const Categories = (props) => {
           <>
             <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
             {getUniqueListBy(data.allBaseExercises, "categoryName")
-              .map(x => <p className={filters.includes(x.categoryName) ? "bold" : ""} onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
+              .map((x, i) => <p key ={i} className={filters.includes(x.categoryName) ? "bold" : ""} onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
             <CheckboxGenericComponent
               dataType="exercises"
               displayedValue="name"

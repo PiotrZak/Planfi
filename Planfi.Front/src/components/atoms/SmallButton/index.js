@@ -45,6 +45,7 @@ const SmallButton = ({
   color,
 
 }) => {
+  
   const iconJSX = <Icon name={iconName} fill={fill} size={size} />;
 
   return (
