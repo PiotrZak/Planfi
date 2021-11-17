@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Models.ViewModels;
 
 namespace PlanfiApi.Data.Entities.Users
 {

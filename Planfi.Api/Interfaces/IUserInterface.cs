@@ -16,7 +16,7 @@ namespace PlanfiApi.Interfaces
         IEnumerable<User> GetAllUsers();
         Task<UserViewModel> GetById(string id);
 
-        Task<UserDetails> UserDetailsViewModel(string userId);
+        Task<UserDetailsViewModel> UserDetailsViewModel(string userId);
         Task<int> Update(string id, UpdateUserModel model);
         Task Delete(string[] id);
         IEnumerable<User> GetByRole(string role);

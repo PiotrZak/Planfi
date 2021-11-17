@@ -54,7 +54,7 @@ namespace PlanfiApi.Services.Users{
             return user;
         }
         
-        public async Task<UserDetails> UserDetailsViewModel(string userId)
+        public async Task<UserDetailsViewModel> UserDetailsViewModel(string userId)
         {
             var user = await GetById(userId);
 
@@ -73,7 +73,7 @@ namespace PlanfiApi.Services.Users{
                 users = await GetTrainersByClient(userId);
             }
 
-            var userDetails = new UserDetails()
+            var userDetails = new UserDetailsViewModel()
             {
                UserId = user.UserId,
                Avatar = user.Avatar,

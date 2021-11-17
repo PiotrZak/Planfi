@@ -198,10 +198,6 @@ namespace TsGenerator
                     imports.Add($"import {{ {convertedType} }} from './{convertedTypeSource}';");
                 }
                 
-                if (convertedType == "Guid")
-                {
-                    imports.Add($"import Guid from '../../../../../guid/Guid';");
-                }
                 exports.Add($"\t{CamelCaseName(property.Name)}: {convertedType}{suffix}");
             }
             

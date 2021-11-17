@@ -6,7 +6,14 @@ const breakPoints = {
   xl: '1440px',
 }
 
-const breakPointSize = {
+interface IBreakPoints {
+  xs: string,
+  sm: string,
+  md: string,
+  lg: string,
+}
+
+const breakPointSize: IBreakPoints = {
   xs: `(max-width: ${breakPoints.sm})`,
   sm: `(max-width: ${breakPoints.md})`,
   md: `(max-width: ${breakPoints.lg})`,
