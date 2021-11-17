@@ -2,22 +2,26 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PlanfiApi.Data.Entities.Users;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.ViewModels;
 using WebApi.Helpers;
-using WebApi.Interfaces;
 using WebApi.Models;
 using WebApi.Services.Account;
 
 namespace PlanfiApi.Controllers.Account
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AccountController : ApiControllerBase
@@ -48,10 +52,10 @@ namespace PlanfiApi.Controllers.Account
             [Required]
             public string OrganizationId { get; set; }
             [Required]
-            public List<string> Emails { get; set; }
+            public string Email { get; set; }
             public string Role { get; set; }
             //todo
-            public string ImageUrl { get; set; }
+            public string? ImageUrl { get; set; }
             
         }
         
@@ -61,13 +65,30 @@ namespace PlanfiApi.Controllers.Account
         {
             try
             {
-                var user = await _userService.GetUserWithoutPassword(model.Emails[0]);
-
-                var success = ApiCommonResponse.Create()
-                    .WithSuccess()
-                    .WithData(user)
-                    .Build();
-                return CommonResponse(success);
+                var user = await _userService.GetUserWithoutPassword(model.Email);
+                var token = ExtensionMethods.GenerateJwt(user);
+                
+                var result = new ObjectResult(new UserViewModel
+                {
+                    UserId = user.UserId,
+                    OrganizationId = user.OrganizationId,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Avatar = user.Avatar,
+                    Role = new Role
+                    {
+                        Id = user.Role.Id,
+                        Name = user.Role.Name,
+                    },
+                    Token = token
+                })
+                {
+                    StatusCode = (int)HttpStatusCode.OK
+                };
+                
+                Response.Headers.Add("JWT", token);
+                return result;
 
             }
             catch(Exception e)
@@ -79,9 +100,9 @@ namespace PlanfiApi.Controllers.Account
                 
                 return CommonResponse(failure);
             }
-
-            return null;
         }
+        
+        
 
         [AllowAnonymous]
         [HttpPost("uploadAvatar")]

@@ -1,4 +1,6 @@
 import { uniqBy } from 'lodash';
+import Cookies from 'js-cookie'
+
 export const commonUtil = {
   getCheckedData,
   getUnique,
@@ -82,6 +84,7 @@ export const detectBrowser = () => {
     localStorage.setItem('browser', 'Chrome');
   }
 }
+
 
 
 export default commonUtil;

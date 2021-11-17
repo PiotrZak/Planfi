@@ -20,6 +20,7 @@ import { useNotificationContext, ADD } from 'support/context/NotificationContext
 import { useCookies } from 'react-cookie';
 import { detectBrowser } from '../../utils/common.util';
 import Loader from 'components/atoms/Loader';
+import LoginHooks from './Google/LoginHooks';
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -123,7 +124,7 @@ const LoginPage = ({ setUser }) => {
           </Form>
         )}
       </Formik>
-      {/* <LoginHooks /> */}
+      <LoginHooks />
       <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   );

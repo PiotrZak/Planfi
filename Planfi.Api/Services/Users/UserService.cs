@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -116,7 +115,7 @@ namespace PlanfiApi.Services.Users{
                 throw new ValidationException(
                     $"Invalid mail");
             
-            return user;
+            return user.WithoutPassword();
         }
         
         public IEnumerable<User> GetAllUsers ()
