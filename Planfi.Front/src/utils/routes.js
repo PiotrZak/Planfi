@@ -7,17 +7,17 @@ const accountRoutes = {
   resetPassword: '/account/reset:resetToken',
   login: '/login',
   confirmation: '/confirmation',
-};
+}
 
 const categoriesRoutes = {
   categories: '/categories',
   category: '/category/:id',
-};
+}
 
 const plansRoutes = {
   plans: '/plans',
   plan: '/plan/:id',
-};
+}
 
 export const routes = {
   register: accountRoutes.register,
@@ -55,4 +55,4 @@ export const routes = {
   clients: '/clients',
 
   privacy: '/privacy',
-};
+}
