@@ -3,4 +3,4 @@ export const Role = {
   Trainer: 'Trainer',
   Owner: 'Owner',
   User: 'User',
-};
+}
