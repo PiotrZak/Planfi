@@ -1,19 +1,17 @@
-import {
-  RECEIVE_MESSAGE
-} from "./actionTypes";
+import { RECEIVE_MESSAGE } from './actionTypes'
 
 export function receiveMessage(
-  userName = "",
-  message = "",
+  userName = '',
+  message = '',
   roomId = null,
   id = null,
   postedAt = null,
   currentRoomId = null
 ) {
   const filteredMessage = message
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
   return {
     type: RECEIVE_MESSAGE,
     payload: {
@@ -22,9 +20,9 @@ export function receiveMessage(
         id,
         roomId,
         postedAt,
-        contents: filteredMessage
+        contents: filteredMessage,
       },
-      currentRoomId
-    }
-  };
+      currentRoomId,
+    },
+  }
 }

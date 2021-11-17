@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     font-size: 1.6rem;
     font-family: "Montserrat", sans-serif;
-    background: ${({theme}) => theme.colorGray90};
+    background: ${({ theme }) => theme.colorGray90};
   }
   
   h1,
@@ -64,6 +64,6 @@ const GlobalStyle = createGlobalStyle`
   p{
     font-size:1.4rem;
   }
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle

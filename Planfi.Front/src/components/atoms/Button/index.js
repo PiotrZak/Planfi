@@ -1,20 +1,20 @@
-import styled from 'styled-components';
-import handleButtonType from 'support/ButtonType';
-import handleButtonPlace from 'support/handleButtonPlace';
+import styled from 'styled-components'
+import handleButtonType from 'support/ButtonType'
+import handleButtonPlace from 'support/handleButtonPlace'
 
 // Set button size
 const handleButtonSize = (size) => {
   switch (size) {
     case 'sm':
-      return '2.4rem';
+      return '2.4rem'
     case 'md':
-      return '3.2rem';
+      return '3.2rem'
     case 'lg':
-      return '4.8rem';
+      return '4.8rem'
     default:
-      return '2.4rem';
+      return '2.4rem'
   }
-};
+}
 
 const Button = styled.button`
   //button default styles
@@ -29,7 +29,7 @@ const Button = styled.button`
   height: ${({ size }) => handleButtonSize(size)};
   ${({ buttonPlace }) => handleButtonPlace(buttonPlace)};
 
-  :disabled{
+  :disabled {
     color: ${({ theme }) => theme.colorDisabled};
     background: ${({ theme }) => theme.colorGray30};
     cursor: default;
@@ -39,6 +39,6 @@ const Button = styled.button`
   }
 
   ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};
-`;
+`
 
-export default Button;
+export default Button
