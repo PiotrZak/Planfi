@@ -12,11 +12,12 @@ import EditUserDataModal from 'modules/MyProfile/EditProfile/EditUserData';
 import MyProfileTemplate from 'templates/MyProfileTemplate';
 import Icon from 'components/atoms/Icon';
 import UserInfoBackground from 'components/molecules/UserInfoBackground';
-import { Role } from 'utils/role';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
 import { Tabs } from 'antd';
-import { trainerTabs, clientTabs} from '../Users/ProfileTabs'
+import { profileTabs } from '../Users/ProfileTabs'
+import { Plans } from 'modules/Users/UserProfile/Plans';
+import { Users } from 'modules/Users/UserProfile/Users';
 
 const { TabPane } = Tabs;
 
@@ -70,6 +71,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
     userService
       .getUserById(user.userId)
       .then((data) => {
+        console.log(data)
         setUpdatedUser(data);
       })
       .catch((error) => {
@@ -80,7 +82,6 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
   const [openEditUserData, setOpenEditUserData] = useState(false);
   const [openEditMailModal, setOpenEditMailModal] = useState(false);
   const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
-  const role = user.role.name;
 
   const Wrapper = styled.div`
       display: flex;
@@ -93,11 +94,20 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
       }
     `;
 
-  const selectRole = () => {
-    return role === Role.User ? clientTabs : trainerTabs;
-  }
 
   const [active, setActive] = useState(0);
+
+  const renderTab = () => {
+
+    if (active === 1) {
+      return <Plans plans={updatedUser.userPlans} />;
+    }
+    if (active === 2) {
+      return <Users users={updatedUser.clientTrainers} />;
+    }
+    return null;
+
+  }
 
   return (
     <>
@@ -115,22 +125,17 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
 
 
             <div className="tabs">
-              {selectRole().map(({ id, icon, title }) => <TabItemComponent
-                key={title}
-                icon={icon}
-                title={title}
-                onItemClicked={() => setActive(id)}
-                isActive={active === id}
-              />
+              {profileTabs.map(({ id, icon, titleTrainer, titleClient }) =>
+                <TabItemComponent
+                  key={updatedUser.roleName == "Trainer" ? titleTrainer : titleClient}
+                  icon={icon}
+                  title={updatedUser.roleName == "Trainer" ? titleTrainer : titleClient}
+                  onItemClicked={() => setActive(id)}
+                  isActive={active === id}
+                />
               )}
             </div>
-            <div className="content">
-              {trainerTabs.map(({ id, content }) => {
-                return active === id ? content : ''
-              })}
-            </div>
-
-
+            {renderTab()}
           </Container>
         </UserInfoBackground>
         <Container type="entry">

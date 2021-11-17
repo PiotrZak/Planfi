@@ -12,7 +12,10 @@ import styled, { css } from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
 import Loader from 'components/atoms/Loader';
-import { trainerTabs, clientTabs } from '../Users/ProfileTabs'
+import { profileTabs } from '../Users/ProfileTabs'
+import { Plans } from 'modules/Users/UserProfile/Plans';
+import { Users } from 'modules/Users/UserProfile/Users';
+
 
 const Container = styled.div`
   margin: auto;
@@ -57,8 +60,16 @@ export const User = (props) => {
       });
   };
 
-  const selectRole = () => {
-    return user && user.role.name === Role.User ? clientTabs : trainerTabs;
+  const renderTab = () => {
+
+    if (active === 1) {
+      return <Plans plans={user.userPlans} />;
+    }
+    if (active === 2) {
+      return <Users users={user.clientTrainers} />;
+    }
+    return null;
+
   }
 
   const [active, setActive] = useState(0);
@@ -76,19 +87,18 @@ export const User = (props) => {
                 {user && <UserInfo user={user} />}
               </ContainerCentred>
               <div className="tabs">
-                {/* {selectRole().map(({ id, icon, title }) => <TabItemComponent
-                  key={title}
-                  icon={icon}
-                  title={title}
-                  onItemClicked={() => setActive(id)}
-                  isActive={active === id}
-                />
-                )} */}
+                {profileTabs.map(({ id, icon, titleTrainer, titleClient }) =>
+                  <TabItemComponent
+                    key={user && user.roleName == "Trainer" ? titleTrainer : titleClient}
+                    icon={icon}
+                    title={user && user.roleName == "Trainer" ? titleTrainer : titleClient}
+                    onItemClicked={() => setActive(id)}
+                    isActive={active === id}
+                  />
+                )}
               </div>
               <div className="content">
-                {trainerTabs.map(({ id, content }) => {
-                  return active === id ? content : ''
-                })}
+                {renderTab()}
               </div>
             </Container>
           </Loader>

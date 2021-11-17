@@ -57,18 +57,20 @@ namespace PlanfiApi.Services.Users{
         public async Task<UserDetails> UserDetailsViewModel(string userId)
         {
             var user = await GetById(userId);
-            var plans = await _planService.GetUserPlans(userId);
-            var clients = new List<UserSqlProjection>();
-            var trainers = new List<UserSqlProjection>();
-            
-              
+
+            List<ResultPlan> plans;
+            List<UserSqlProjection> users;
+
+
             if (user.RoleName == "Trainer")
             {
-                clients = await GetClientsByTrainer(userId);
+                plans = await _planService.GetTrainerPlans(userId);
+                users = await GetClientsByTrainer(userId);
             }
             else
             {
-                trainers = await GetTrainersByClient(userId);
+                plans = await _planService.GetUserPlans(userId);
+                users = await GetTrainersByClient(userId);
             }
 
             var userDetails = new UserDetails()
@@ -82,7 +84,7 @@ namespace PlanfiApi.Services.Users{
                PhoneNumber = user.PhoneNumber,
                OrganizationId = user.OrganizationId,
                UserPlans = plans,
-               ClientTrainers = user.RoleName == "Trainer" ? clients : trainers
+               ClientTrainers = users
             };
 
             return userDetails;
@@ -433,7 +435,7 @@ namespace PlanfiApi.Services.Users{
 	            JOIN public.role as r
 	            ON u.role_id = r.id
 	            FULL JOIN public.userstrainers as ut
-	            ON ut.client_id = u.user_id
+	            ON ut.trainer_id = u.user_id
 	            WHERE ut.client_id = @userId";
 
                 clientTrainers = (await connection.QueryAsync<UserSqlProjection>(clientTrainersQuery, new {userId})).ToList();

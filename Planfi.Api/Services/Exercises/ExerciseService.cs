@@ -34,15 +34,11 @@ namespace PlanfiApi.Services.Exercises
         public async Task<ExerciseViewModel> GetById(string id)
         {
             var baseExercise = await GetBaseExercise(id);
+            if (!IsGuid(baseExercise.Name)) return baseExercise;
+            
+            var planExercise = await GetSerializedExercise(id);
+            return planExercise;
 
-            
-            if(IsGuid(baseExercise.Name))
-            {
-                var planExercise = await GetSerializedExercise(id);
-                return planExercise;
-            }
-            
-            return baseExercise;
         }
         
         public static bool IsGuid(string value)
