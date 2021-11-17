@@ -63,5 +63,26 @@ export const uuidv4 = () => {
   );
 }
 
+export const detectBrowser = () => {
+  const isFirefox = typeof InstallTrigger !== 'undefined';
+  const isIE = /* @cc_on!@ */false || !!document.documentMode;
+  const isEdge = !isIE && !!window.StyleMedia;
+  const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+  if (isFirefox) {
+    localStorage.setItem('browser', 'Firefox');
+  }
+  if (isIE) {
+    localStorage.setItem('browser', 'IE');
+  }
+  if (isEdge) {
+    localStorage.setItem('browser', 'Edge');
+  }
+  if (isChrome) {
+    localStorage.setItem('browser', 'Chrome');
+  }
+}
+
+
 export default commonUtil;
 
