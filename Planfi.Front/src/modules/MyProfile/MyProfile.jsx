@@ -80,9 +80,6 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
   const [openEditUserData, setOpenEditUserData] = useState(false);
   const [openEditMailModal, setOpenEditMailModal] = useState(false);
   const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
-
-
-  const userId = user.userId;
   const role = user.role.name;
 
   const Wrapper = styled.div`

@@ -113,7 +113,6 @@ namespace PlanfiApi.Services.Organizations
                 FROM public.users as u
 				JOIN public.role as r
 				ON u.role_id = r.id
-                WHERE is_activated = true
                 "
                 ) as List<UserSqlProjection>;
             }

@@ -62,11 +62,18 @@ const Root = () => {
     if (currentLanguage == null) {
       localStorage.setItem('language', 'en-GB');
     }
-
     const history = routerRef.current.history;
-    user != null
-      ? history.push(routes.myProfile)
-      : history.push(routes.login);
+    const currentUrl = window.location.href;
+    if (currentUrl.toString().includes('account')) {
+      return;
+    }
+    else {
+      user != null
+        ? history.push(routes.myProfile)
+        : history.push(routes.login);
+    }
+
+
 
   }, [setUser]);
 

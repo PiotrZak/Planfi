@@ -25,8 +25,8 @@ export const RenderType = ({
 }) => {
   const history = useHistory();
 
-  if(interaction == undefined){
-  interaction = true;
+  if (interaction == undefined) {
+    interaction = true;
   }
 
   const redirectToItem = (itemCase, id, title) => {
@@ -71,7 +71,9 @@ export const RenderType = ({
             version={theme}
             avatarType="circle"
             avatarUrl={element.avatar && element.avatar}
-            headline={`${element.first_Name}  ${element.last_Name}`}
+            headline={element.is_Activated
+              ? `${element.first_Name}  ${element.last_Name}`
+              : `${element.email}`}
             user={element}
             subline={element.is_Activated ? element.role : 'Pending'}
           />
