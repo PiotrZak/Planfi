@@ -216,7 +216,7 @@ namespace PlanfiApi.Services.Account
         public async Task<int> SendVerificationEmail(RegisterModel model, string origin)
         {
             var userRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "User");
-            var trainerRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "Trainer");
+            //var trainerRole = await _context.role.FirstOrDefaultAsync(x => x.Name == "Trainer");
             
             try
             {
@@ -228,12 +228,19 @@ namespace PlanfiApi.Services.Account
                     var user = new User
                     {
                         UserId = Guid.NewGuid().ToString(),
-                        Role = model.Role is "User" or "Trainer"
-                            ? userRole
-                            : new Role { Id = Guid.NewGuid().ToString(), Name = model.Role },
+                        FirstName = "",
+                        LastName = "",
+                        PhoneNumber = "",
+                        Password = "",
+                        PasswordHash = new byte[] {2,3},
+                        PasswordSalt = new byte[] {2,3},
+                        Token = "",
+                        RoleId = userRole.Id,
+                        Role = userRole,
                         OrganizationId = model.OrganizationId,
                         Email = email,
                         VerificationToken = RandomTokenString(),
+                        IsActivated = false,
                     };
                     var result = await ConstructMessage(user, origin);
                     if (result == 1)

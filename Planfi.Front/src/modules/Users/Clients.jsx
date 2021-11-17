@@ -50,6 +50,7 @@ const Clients = () => {
     {
       user_Id
       role
+      email
       avatar
       first_Name
       last_Name
