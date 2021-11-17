@@ -1,16 +1,18 @@
-import { SET_USERNAME } from '../actions/actionTypes'
+import {
+  SET_USERNAME
+} from '../actions/actionTypes';
 
 const initialState = {
-  userName: '',
+  userName: ''
 }
 
 export const userInfo = (state = initialState, action) => {
   switch (action.type) {
     case SET_USERNAME:
       return Object.assign({}, state, {
-        userName: action.payload,
+        userName: action.payload
       })
     default:
-      return state
+      return state;
   }
 }

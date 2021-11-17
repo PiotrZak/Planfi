@@ -23,4 +23,4 @@ export const routes = {
   trainers: '/trainers',
   clients: '/clients',
   myProfile: '/myprofile',
-}
+};

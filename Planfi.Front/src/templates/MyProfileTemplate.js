@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import breakPointSize from 'utils/rwd'
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import breakPointSize from 'utils/rwd';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,12 +17,16 @@ const Wrapper = styled.div`
     width: 100%;
     margin-left: 0;
   }
-`
+`;
 
-const MyProfileTemplate = ({ children }) => <Wrapper>{children}</Wrapper>
+const MyProfileTemplate = ({ children }) => (
+  <Wrapper>
+    {children}
+  </Wrapper>
+);
 
 MyProfileTemplate.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default MyProfileTemplate
+export default MyProfileTemplate;

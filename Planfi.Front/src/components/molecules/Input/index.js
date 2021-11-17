@@ -1,197 +1,187 @@
-import React from 'react'
-import styled, { withTheme } from 'styled-components'
-import PropTypes from 'prop-types'
-import handleTextType from 'support/TextType'
-import Icon from 'components/atoms/Icon'
+import React from 'react';
+import styled, { withTheme } from 'styled-components';
+import PropTypes from 'prop-types';
+import handleTextType from 'support/TextType';
+import Icon from 'components/atoms/Icon';
 
 // Detect input status
 const handleBorderColor = (theme, disabled, error) => {
   if (disabled) {
-    return theme.colorGray90
+    return theme.colorGray90;
   }
   if (error) {
-    return theme.colorErrorDefault
+    return theme.colorErrorDefault;
   }
-  return theme.colorDisabled
-}
+  return theme.colorDisabled;
+};
 
 // basic input
 const StyledInput = styled.input`
   outline: none;
-  padding: 0.6rem 1.6rem;
+  padding: .6rem 1.6rem;
   border-radius: 3px;
 
   ${() => handleTextType('body-3-regular')};
-  color: ${({ disabled, theme }) =>
-    disabled ? theme.fontColor : theme.fontColor};
-  /* color: ${({ disabled, theme }) =>
-    disabled ? theme.colorDisabled : theme.colorPrimary}; */
-  background: ${({ disabled, theme }) =>
-    disabled ? theme.colorGray90 : theme.colorGray80};
-  border: 1px solid
-    ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
+  color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
+  /* color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)}; */
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
+  border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
 
-  :focus {
+  :focus{
     border: 1px solid ${({ theme }) => theme.colorNeutralDark};
     background: ${({ theme }) => theme.colorGray70};
-    color: ${({ disabled, theme }) =>
-      disabled ? theme.fontColor : theme.fontColor};
+    color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
   }
-`
+`;
 
 const StyledLightInput = styled.input`
   outline: none;
-  padding: 0.6rem 1.6rem;
-  border-radius: 3px;
-
+  padding: .6rem 1.6rem;
+  border-radius: 3px;  
+  
   ${() => handleTextType('body-3-regular')};
 
-  color: ${({ disabled, theme }) =>
-    disabled ? theme.fontColor : theme.fontColor};
-  background: ${({ disabled, theme }) =>
-    disabled ? theme.colorWhite : theme.colorWhite};
+  color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorWhite : theme.colorWhite)};
   border: 1px solid ${({ theme }) => theme.colorGray30};
-
-  :focus {
-    color: ${({ disabled, theme }) =>
-      disabled ? theme.fontColor : theme.fontColor};
+  
+  :focus{
+    color: ${({ disabled, theme }) => ((disabled) ? theme.fontColor : theme.fontColor)};
     border: 1px solid ${({ theme }) => theme.colorNeutralDark};
     background: ${({ theme }) => theme.colorGray10};
   }
-`
+`;
 
 // icon-left icon-right icon-both
 const StyledInputContainer = styled.input`
   outline: none;
   border: none;
 
-  border-radius: ${({ disabled }) => (disabled ? 'none' : '3px')};
+  border-radius: ${({ disabled }) => ((disabled) ? 'none' : '3px')};
 
   ${() => handleTextType('body-3-regular')};
 
-  padding: 0.6rem 1.6rem;
+  padding: .6rem 1.6rem;
 
-  color: ${({ disabled, theme }) =>
-    disabled ? theme.colorDisabled : theme.colorPrimary};
-  background: ${({ disabled, theme }) =>
-    disabled ? theme.colorGray90 : theme.colorGray80};
-`
+  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
+`;
 
 const CenterIcon = styled.div`
-  padding: 0.85rem;
+  padding: .85rem;
 
-  color: ${({ disabled, theme }) =>
-    disabled ? theme.colorDisabled : theme.colorPrimary};
-  background: ${({ disabled, theme }) =>
-    disabled ? theme.colorGray90 : theme.colorGray80};
-`
+  color: ${({ disabled, theme }) => ((disabled) ? theme.colorDisabled : theme.colorPrimary)};
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
+`;
 
 const Container = styled.div`
   display: flex;
 
-  background: ${({ disabled, theme }) =>
-    disabled ? theme.colorGray90 : theme.colorGray80};
-  border: 1px solid
-    ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
+  background: ${({ disabled, theme }) => ((disabled) ? theme.colorGray90 : theme.colorGray80)};
+  border: 1px solid ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
   border-radius: 3px;
 
-  ${StyledInputContainer}:focus {
+  ${StyledInputContainer}:focus{
     background: ${({ theme }) => theme.colorGray70};
   }
-`
+`;
 
 const ContainerLeft = styled(Container)`
   flex-direction: row-reverse;
 
-  ${StyledInputContainer} + ${CenterIcon} {
+  ${StyledInputContainer} + ${CenterIcon}{
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
   }
 
-  ${StyledInputContainer} {
+  ${StyledInputContainer}{
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
   }
 
-  ${StyledInputContainer} {
-    padding: 0.6rem 1.6rem 0.6rem 0;
+  ${StyledInputContainer}{
+    padding: .6rem 1.6rem .6rem 0;
   }
-`
+`;
 
 const ContainerRight = styled(Container)`
-  ${StyledInputContainer} + ${CenterIcon} {
+
+  ${StyledInputContainer} + ${CenterIcon}{
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
   }
 
-  ${StyledInputContainer} {
+  ${StyledInputContainer}{
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
   }
 
-  ${StyledInputContainer} {
-    padding: 0.6rem 0 0.6rem 1.6rem;
+  ${StyledInputContainer}{
+    padding: .6rem 0 .6rem 1.6rem;
   }
-`
+`;
 
 const ContainerBoth = styled(Container)`
-  ${CenterIcon}:first-child {
+
+  ${CenterIcon}:first-child{
     border-bottom-left-radius: 3px;
     border-top-left-radius: 3px;
   }
 
-  ${CenterIcon}:last-child {
+  ${CenterIcon}:last-child{
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
   }
 
-  ${StyledInputContainer} {
+  ${StyledInputContainer}{
     border-radius: 0;
     padding: 0;
   }
-`
+`;
 
 const Input = (props) => {
   const TYPE_BORDER = {
     ADD: 'add',
     REMOVE: 'remove',
-  }
+  };
 
-  const { theme } = props
+  const { theme } = props;
 
   const changeBorder = (e, toChange) => {
     // check id of Container
-    const ContainerID = 'Container'
-    const targetContainer = e.target.parentElement
+    const ContainerID = 'Container';
+    const targetContainer = e.target.parentElement;
 
     const changeCenterIconBgColor = (element, bgColor) => {
-      const centerIcon = element.querySelectorAll('#CenterIcon')
+      const centerIcon = element.querySelectorAll('#CenterIcon');
       if (centerIcon) {
         centerIcon.forEach((el) => {
           // eslint-disable-next-line no-param-reassign
-          el.style.background = bgColor
-        })
+          el.style.background = bgColor;
+        });
       }
-    }
+    };
 
     if (targetContainer.id === ContainerID) {
       if (toChange === TYPE_BORDER.ADD) {
-        targetContainer.style.border = `1px solid ${theme.colorNeutralDark}`
-        changeCenterIconBgColor(targetContainer, `${theme.colorGray70}`)
+        targetContainer.style.border = `1px solid ${theme.colorNeutralDark}`;
+        changeCenterIconBgColor(targetContainer, `${theme.colorGray70}`);
       } else if (toChange === TYPE_BORDER.REMOVE) {
-        targetContainer.style.border = `1px solid ${theme.colorInputBorder}`
-        changeCenterIconBgColor(targetContainer, `${theme.colorGray80}`)
+        targetContainer.style.border = `1px solid ${theme.colorInputBorder}`;
+        changeCenterIconBgColor(targetContainer, `${theme.colorGray80}`);
       }
     }
-  }
+  };
 
-  const { typeInput, disabled, error, icon } = props
+  const {
+    typeInput, disabled, error, icon,
+  } = props;
 
   switch (typeInput) {
     case 'basic':
-      return <StyledInput {...props} />
-    case 'light':
-      return <StyledLightInput {...props} />
+      return <StyledInput {...props} />;
+      case 'light':
+      return <StyledLightInput {...props}/>;
     case 'left':
       return (
         <ContainerLeft disabled={disabled} error={error} id="Container">
@@ -201,14 +191,10 @@ const Input = (props) => {
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon
-              name={icon || 'circle'}
-              fill={theme.colorPrimary}
-              cursorType="default"
-            />
+            <Icon name={icon || 'circle'} fill={theme.colorPrimary} cursorType="default" />
           </CenterIcon>
         </ContainerLeft>
-      )
+      );
     case 'right':
       return (
         <ContainerRight disabled={disabled} error={error} id="Container">
@@ -218,23 +204,15 @@ const Input = (props) => {
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon
-              name={icon || 'circle'}
-              fill={theme.colorPrimary}
-              cursorType="default"
-            />
+            <Icon name={icon || 'circle'} fill={theme.colorPrimary} cursorType="default" />
           </CenterIcon>
         </ContainerRight>
-      )
+      );
     case 'both':
       return (
         <ContainerBoth disabled={disabled} error={error} id="Container">
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon
-              name={icon || 'circle'}
-              fill={theme.colorPrimary}
-              cursorType="default"
-            />
+            <Icon name={icon || 'circle'} fill={theme.colorPrimary} cursorType="default" />
           </CenterIcon>
           <StyledInputContainer
             {...props}
@@ -242,31 +220,27 @@ const Input = (props) => {
             onBlur={(e) => changeBorder(e, TYPE_BORDER.REMOVE)}
           />
           <CenterIcon disabled={disabled} id="CenterIcon">
-            <Icon
-              name={icon || 'circle'}
-              fill={theme.colorPrimary}
-              cursorType="default"
-            />
+            <Icon name={icon || 'circle'} fill={theme.colorPrimary} cursorType="default" />
           </CenterIcon>
         </ContainerBoth>
-      )
+      );
     default:
-      return <StyledInput {...props} />
+      return <StyledInput {...props} />;
   }
-}
+};
 
 Input.propTypes = {
   typeInput: PropTypes.oneOf(['basic', 'right', 'left', 'both']),
   disabled: PropTypes.bool,
   error: PropTypes.bool,
   icon: PropTypes.string,
-}
+};
 
 Input.defaultProps = {
   typeInput: 'basic',
   disabled: false,
   error: false,
   icon: 'circle',
-}
+};
 
-export default withTheme(Input)
+export default withTheme(Input);

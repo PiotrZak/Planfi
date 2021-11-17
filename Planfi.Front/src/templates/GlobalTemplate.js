@@ -1,10 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+flex-direction: column;
   text-align: left;
   background-color: ${({ theme }) => theme.colorGray90};
   width: calc(100% - 3.2rem);
@@ -16,12 +16,16 @@ const Container = styled.div`
     max-width: 100rem;
     margin: auto;
   }
-`
+`;
 
-const GlobalTemplate = ({ children }) => <Container>{children}</Container>
+const GlobalTemplate = ({ children }) => (
+  <Container>
+    {children}
+  </Container>
+);
 
 GlobalTemplate.propTypes = {
   children: PropTypes.node.isRequired,
-}
+};
 
-export default GlobalTemplate
+export default GlobalTemplate;

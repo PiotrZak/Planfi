@@ -2,35 +2,35 @@ import {
   REQUEST_MESSAGES_PENDING,
   REQUEST_MESSAGES_SUCCESS,
   REQUEST_MESSAGES_FAILED,
-  RECEIVE_MESSAGE,
-} from '../actions/actionTypes'
+  RECEIVE_MESSAGE
+} from "../actions/actionTypes";
 
 const initialState = {
   messages: [],
-  currentRoomId: null,
-}
+  currentRoomId: null
+};
 
 export const requestMessages = (state = initialState, action = {}) => {
   switch (action.type) {
     case REQUEST_MESSAGES_PENDING:
-      return Object.assign({}, state, { isPending: true })
+      return Object.assign({}, state, { isPending: true });
     case REQUEST_MESSAGES_SUCCESS:
       return Object.assign({}, state, {
         messages: action.payload,
-        isPending: false,
-      })
+        isPending: false
+      });
     case REQUEST_MESSAGES_FAILED:
-      return Object.assign({}, state, { error: action.payload })
+      return Object.assign({}, state, { error: action.payload });
     case RECEIVE_MESSAGE:
       if (action.payload.currentRoomId === action.payload.message.roomId) {
         return {
           ...state,
-          messages: [...state.messages, action.payload.message],
-        }
+          messages: [...state.messages, action.payload.message]
+        };
       } else {
-        return state
+        return state;
       }
     default:
-      return state
+      return state;
   }
-}
+};

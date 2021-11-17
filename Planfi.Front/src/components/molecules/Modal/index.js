@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import Modal from 'styled-react-modal'
+import styled from 'styled-components';
+import Modal from 'styled-react-modal';
 
 export const SpecialModalBackground = styled.div`
   display: flex;
@@ -19,20 +19,20 @@ export const SpecialModalBackground = styled.div`
     opacity: 0.25;
 }
 }
-`
+`;
 
 export const IconContainer = styled.div`
   position: absolute;
   top: 1rem;
   right: 1rem;
-`
+`;
 
 export const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
   right: 2rem;
-  margin: 0 0 2rem 0;
-`
+  margin:0 0 2rem 0;
+`;
 
 export const StyledModal = Modal.styled`
   top: 0 ;
@@ -49,4 +49,4 @@ export const StyledModal = Modal.styled`
   align-self: center;
   color: ${({ theme }) => theme.colorGray110};
   background: ${({ theme }) => theme.colorWhite};
-`
+`;

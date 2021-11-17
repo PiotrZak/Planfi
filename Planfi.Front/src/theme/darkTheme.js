@@ -14,6 +14,7 @@ export const mainColors = {
 }
 
 export const darkTheme = {
+
   colorPrimary: mainColors.white,
   colorSecondary: '#C3C3CF',
   colorDisabled: '#666674',
@@ -76,4 +77,4 @@ export const darkTheme = {
   colorWhiteBorder: '#FFFFFF',
 
   colorDividerBorderDisabled: '#31313D',
-}
+};

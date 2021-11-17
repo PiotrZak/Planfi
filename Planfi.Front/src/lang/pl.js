@@ -20,8 +20,7 @@ export const pl = {
   RepeatPassword: 'Powtórz hasło',
   EnterNewPassword: 'Podaj nowe hasło',
   RepeatNewPassword: 'Powtórz nowe hasło',
-  PasswordRequirements:
-    'Hasło musi mieć conajmniej 8 znaków w tym jedną dużą literę i jeden znak specjalny',
+  PasswordRequirements: 'Hasło musi mieć conajmniej 8 znaków w tym jedną dużą literę i jeden znak specjalny',
   PasswordRecovery: 'Przywracanie hasła',
 
   FillAllFields: 'Uzupełnij wszystkie pola',
@@ -38,38 +37,32 @@ export const pl = {
   MustAcceptPrivacy: 'Musisz zaakceptować regulamin, aby aktywować konto',
 
   ActivateAccount: 'Aktywacja konta',
-  EmailLoginInfo:
-    'Do logowania będzie wykorzystywany adres e-mail na który otrzymałeś zaproszenie.',
+  EmailLoginInfo: 'Do logowania będzie wykorzystywany adres e-mail na który otrzymałeś zaproszenie.',
   EnterYourFirstNameAndLastName: 'Podaj swoje imię i nazwisko',
   FirstNameAndLastNameMustSpace: 'Imię i Nazwisko musi być oddzielone spacją',
   EnterPhoneNumber: 'Podaj numer telefonu',
-  PolicyPrivacy:
-    'Zakładając konto akceptujesz naszą politykę prywatności - poznasz ją',
+  PolicyPrivacy: 'Zakładając konto akceptujesz naszą politykę prywatności - poznasz ją',
   Here: 'tutaj.',
 
   NoCategories: 'Brak kategorii',
   CategoriesTitle: 'Kategorie',
   CategoryAdded: 'Kategoria dodana pomyślnie!',
   CategoriesDeleted: 'Kategorie usunięte!',
-  AddExerciseToCategory:
-    'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
+  AddExerciseToCategory: 'Aby móc dodawać ćwiczenia, musisz najpierw dodać kategorię',
   DeleteCategory: 'Usuń kategorię',
-  DeleteCategoryText:
-    'Usunięcie kategorii jest nieodwracalne i zostanie usunieta w raz z ćwiczeniami.',
+  DeleteCategoryText: 'Usunięcie kategorii jest nieodwracalne i zostanie usunieta w raz z ćwiczeniami.',
   EditCategory: 'Edytuj kategorię',
   Selected: 'wybrane',
 
   AddExercise: 'Dodaj ćwiczenie',
-  AddExerciseInfo:
-    'Tutaj możesz dodać wszelkie materiały i informację, które mogą być pomocne odnośnie tego ćwiczenia.',
+  AddExerciseInfo: 'Tutaj możesz dodać wszelkie materiały i informację, które mogą być pomocne odnośnie tego ćwiczenia.',
   ExerciseName: 'Nazwa ćwiczenia',
   AddAttachments: 'Dodaj załączniki',
   AddExerciseDescription: 'Opis ćwiczenia',
   NotExercises: 'Nie ma jeszcze ćwiczeń',
 
   AddCategoryTitle: 'Dodaj kategorie',
-  AddCategoryTip:
-    'Nazywając kategorię warto posługiwać się nazwami związanymi z określonymi częściami ciała, np. Plecys',
+  AddCategoryTip: 'Nazywając kategorię warto posługiwać się nazwami związanymi z określonymi częściami ciała, np. Plecys',
   AddCategoryButton: 'Utwórz kategorie',
   AddPlanButton: 'Utwórz plan',
 
@@ -85,8 +78,7 @@ export const pl = {
   DeleteExercise: 'Usuń ćwiczenie',
   UnassignExercise: 'Wypisz ćwiczenie z planu',
   DeleteExercises: 'Usuń ćwiczenia',
-  EditExerciseDescription:
-    'Tutaj możesz dodać wszelkie materiały i informację, które mogą być pomocne odnośnie tego ćwiczenia.',
+  EditExerciseDescription: 'Tutaj możesz dodać wszelkie materiały i informację, które mogą być pomocne odnośnie tego ćwiczenia.',
   ExercisesDeleted: 'Gratulacje! Ćwiczenie pomyślnie usunięte!',
   EditUserDetails: 'Edytuj swoje dane',
   SaveChanges: 'Zapisz zmiany',
@@ -130,8 +122,7 @@ export const pl = {
   PlansDeleted: 'Gratulacje! Plany pomyślnie usunięte!',
   PlanTitle: 'Dodaj plan',
   PlanAdded: 'Gratulacje! Plan pomyślnie utworzony!',
-  AddPlanModalDescription:
-    'Nazywając Plan warto użyć nazw związanych z określonymi częściami ciała, np. Plecy',
+  AddPlanModalDescription: 'Nazywając Plan warto użyć nazw związanych z określonymi częściami ciała, np. Plecy',
   EnterPlanTitle: 'Wpisz tytuł planu',
   EditPlanTitle: 'Edytuj tytuł planu',
   PlanEdited: 'Gratulacje! Plan pomyślnie zmieniony!',
@@ -144,8 +135,7 @@ export const pl = {
   SelectPlan: 'Wybierz plan',
   AssignPlanToUsers: 'Przypisz plany do klientów',
   PlansAssignedToUser: 'Gratulacje! Plany pomyślnie przypisany do klientów!',
-  AssignPlanToUserNotification:
-    'Gratulacje! Klienci pomyślnie przypisany do trenerów!',
+  AssignPlanToUserNotification: 'Gratulacje! Klienci pomyślnie przypisany do trenerów!',
   NoUsers: 'Aktualnie nie ma użytkowników',
   SelectTrainers: 'Wybierz trenerów',
   AssignTrainersToClients: 'Przypisz trenerów do klientów',
@@ -160,8 +150,7 @@ export const pl = {
   InviteTrainers: 'Zaproś trenerów',
   SeparateMails: 'Poszczególne adresy e-mail oddziel przecinkami',
   InviteUsersButton: 'Wyślij zaproszenie',
-  EmailNotSent:
-    'E-maile nie wysyłane do klientów! - prawdopodobnie jest duplikat',
+  EmailNotSent: 'E-maile nie wysyłane do klientów! - prawdopodobnie jest duplikat',
   Clients: 'Klienci',
   AddPlanTitle: 'Dodaj plan',
   PlansTitle: 'Plany',
@@ -170,8 +159,7 @@ export const pl = {
   NoExerciseInPlan: 'W tym planie nie ma ćwiczeń',
   Exercises: 'Ćwiczenia',
   Exercise: 'Ćwiczenie',
-  AddCategoryModalDescription:
-    'Nazywając kategorię warto używać nazw zwiazanych z konkretnymi partiami ciała na przykład “Plecy”.',
+  AddCategoryModalDescription: 'Nazywając kategorię warto używać nazw zwiazanych z konkretnymi partiami ciała na przykład “Plecy”.',
   Add: 'Dodaj',
   Find: 'Jakich elementów szukasz?',
   MyClients: 'Moi klienci',
@@ -191,9 +179,10 @@ export const pl = {
   ChangeTheme: 'Zmień design',
   Logout: 'Wyloguj',
 
-  TrainerPlans: 'Plany trenera',
-  TrainerClients: 'Klienci trenera',
-  ClientPlans: 'Plany klienta',
-  UserTrainers: 'Trenerzy klienta',
-  TrainersAssignedToUser: 'Trenerzy przypisani do kllentów',
-}
+  TrainerPlans: "Plany trenera",
+  TrainerClients: "Klienci trenera",
+  ClientPlans: "Plany klienta",
+  UserTrainers: "Trenerzy klienta",
+  TrainersAssignedToUser: "Trenerzy przypisani do kllentów"
+
+};

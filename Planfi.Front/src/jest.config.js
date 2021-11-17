@@ -9,10 +9,10 @@ module.exports = {
   transformIgnorePatterns: ['node_modules/(?!(jest-)?react-native)'],
   coveragePathIgnorePatterns: ['/node_modules/', '/jest'],
   testEnvironment: 'jsdom',
-}
+};
 
 module.exports = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
-}
+};
