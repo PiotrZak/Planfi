@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.ViewModels;
@@ -39,22 +42,33 @@ namespace PlanfiApi.Controllers.Account
             await _emailService.SendEmail(message);
             return Ok(message);
         }
+
+        public class RegisterGmailModel
+        {
+            [Required]
+            public string OrganizationId { get; set; }
+            [Required]
+            public List<string> Emails { get; set; }
+            public string Role { get; set; }
+            //todo
+            public string ImageUrl { get; set; }
+            
+        }
         
         [AllowAnonymous]
         [HttpPost("gmailSignUp")]
-        public async Task<IActionResult> GmailSignUp([FromBody] RegisterModel model)
+        public async Task<IActionResult> GmailSignUp([FromBody] RegisterGmailModel model)
         {
             try
             {
                 var user = await _userService.GetUserWithoutPassword(model.Emails[0]);
-                if (user != null)
-                {
-                    var success = ApiCommonResponse.Create()
-                        .WithSuccess()
-                        .WithData(user)
-                        .Build();
-                    return CommonResponse(success);
-                }
+
+                var success = ApiCommonResponse.Create()
+                    .WithSuccess()
+                    .WithData(user)
+                    .Build();
+                return CommonResponse(success);
+
             }
             catch(Exception e)
             {

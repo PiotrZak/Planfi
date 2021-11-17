@@ -223,7 +223,6 @@ namespace PlanfiApi.Controllers.Users
         public async Task<IActionResult>  GetClientsByTrainer(string? id)
         {
             var clients = await _userService.GetClientsByTrainer(id);
-
             return Ok(clients);
         }
 

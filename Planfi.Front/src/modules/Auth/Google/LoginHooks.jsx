@@ -1,34 +1,37 @@
 import React from 'react';
-import { useGoogleLogin } from 'react-google-login';
+import { GoogleLogin, useGoogleLogin } from 'react-google-login';
 import { accountService } from 'services/accountServices';
 
 const clientId =
-  '330292086297-rocc6he3rn68thtoddg4m202h64haqhl.apps.googleusercontent.com';
+  '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com';
 
-  const refreshTokenSetup = (res) => {
-    let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
-  
-    const refreshToken = async () => {
-      const newAuthRes = await res.reloadAuthResponse();
-      refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
-      localStorage.setItem('authToken', newAuthRes.id_token);
-      setTimeout(refreshToken, refreshTiming);
-    };
+const clientSecret = "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";
 
-    setTimeout(refreshToken, refreshTiming);
-  };
+// const refreshTokenSetup = (res) => {
+//   let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
 
-function LoginHooks() {
+//   const refreshToken = async () => {
+//     const newAuthRes = await res.reloadAuthResponse();
+//     refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
+//     localStorage.setItem('authToken', newAuthRes.id_token);
+//     setTimeout(refreshToken, refreshTiming);
+//   };
+//   setTimeout(refreshToken, refreshTiming);
+// };
+
+const LoginHooks = ()  => {
+
+  console.log('test')
   const onSuccess = (res) => {
     console.log('Login Success: currentUser:', res.profileObj);
     const emails = [];
     emails.push(res.profileObj.email);
 
     const inviteModel = {
-        organizationId: 'O1',
-        emails,
-        role: 'User'
-      };
+      organizationId: 'O1',
+      emails,
+      role: 'User'
+    };
 
     accountService.gmailSignUp(inviteModel)
       .then((data) => {
@@ -38,32 +41,32 @@ function LoginHooks() {
         console.log(error)
       });
 
-    refreshTokenSetup(res);
+    //refreshTokenSetup(res);
   };
 
   const onFailure = (res) => {
     console.log('Login failed: res:', res);
-    alert(
-      `Failed to login.`
-    );
   };
 
-  const { signIn } = useGoogleLogin({
-    onSuccess,
-    onFailure,
-    clientId,
-    isSignedIn: true,
-    accessType: 'offline',
-    // responseType: 'code',
-    // prompt: 'consent',
-  });
+  // const { signIn } = useGoogleLogin({
+  //   onSuccess,
+  //   onFailure,
+  //   clientId,
+  //   isSignedIn: true,
+  //   accessType: 'offline',
+  //   prompt: 'consent'
+  // });
 
   return (
-    <button onClick={signIn} className="button">
-      <img src="icons/google.svg" alt="google login" className="icon"></img>
-
-      <span className="buttonText">Sign in with Google</span>
-    </button>
+    <div className="gm-container">
+      <GoogleLogin
+        clientId={clientId}
+        onSuccess={onSuccess}
+        onFailure={onFailure}
+        cookiePolicy={'single_host_origin'}
+      />
+      {/* <img onClick={signIn} src="/icons/library/gmail.svg" alt="google login" className="gm-icon"></img> */}
+    </div>
   );
 }
 
