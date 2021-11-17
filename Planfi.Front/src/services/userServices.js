@@ -39,6 +39,8 @@ export const userService = {
     return http.put(`${USER_URL}${id}`, body);
   }
 
+
+  // get user details with plans 
   function getUserById(id) {
     return http.get(`${USER_URL}details/${id}`);
   }

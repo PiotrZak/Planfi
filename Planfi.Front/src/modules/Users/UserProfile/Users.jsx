@@ -13,7 +13,7 @@ export const Users = ({ users }) => {
   return (
     <div>
       <Search placeholder={translate('Find')} callBack={(e) => setSearchTerm(e.target.value)} />
-      {users.length >= 1 ? results.map((element, i) => (
+      {users ? results.map((element, i) => (
         <div key={i.toString()}>
           <RenderType theme={theme} type={'users'} element={element} i={i} />
         </div>

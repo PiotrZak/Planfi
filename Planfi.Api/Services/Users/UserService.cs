@@ -435,7 +435,7 @@ namespace PlanfiApi.Services.Users{
 	            JOIN public.role as r
 	            ON u.role_id = r.id
 	            FULL JOIN public.userstrainers as ut
-	            ON ut.client_id = u.user_id
+	            ON ut.trainer_id = u.user_id
 	            WHERE ut.client_id = @userId";
 
                 clientTrainers = (await connection.QueryAsync<UserSqlProjection>(clientTrainersQuery, new {userId})).ToList();

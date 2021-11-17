@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlanfiApi.Data.Entities;
-using PlanfiApi.Models;
 using WebApi.Models;
 
 namespace PlanfiApi.Interfaces
