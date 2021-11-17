@@ -9,6 +9,7 @@ namespace PlanfiApi.Interfaces
     public interface IPlanService
     {
         Task<List<ResultPlan>> GetUserPlans(string? userId);
+        Task<List<ResultPlan>> GetTrainerPlans(string? userId);
         Task<List<Plan>> GetByIds(string[] ids);
         Task<Plan> GetById(string id);
         Task<Plan> Create(Plan plan);

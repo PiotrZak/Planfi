@@ -40,7 +40,7 @@ export const userService = {
   }
 
   function getUserById(id) {
-    return http.get(`${USER_URL}${id}`);
+    return http.get(`${USER_URL}details/${id}`);
   }
 
   function getUserByRole(role) {
