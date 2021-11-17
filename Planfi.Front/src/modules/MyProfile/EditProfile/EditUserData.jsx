@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Label from 'components/atoms/Label';
 import styled from 'styled-components';
 import PhoneInput from 'react-phone-input-2'
@@ -18,9 +18,9 @@ import 'react-phone-input-2/lib/style.css'
 import { darkTheme } from 'theme/darkTheme';
 
 const initialValues = {
-  firstName: '',
-  lastName: '',
-  phone: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
 };
 
 const validationSchema = Yup.object().shape({
@@ -31,8 +31,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const EditUserDataModal = ({ id, openModal, onClose }) => {
-  const { notificationDispatch } = useNotificationContext();
-  const [phoneNumber, setPhoneNumber] = useState();
+    const { notificationDispatch } = useNotificationContext();
+    const [phoneNumber, setPhoneNumber] = useState();
 
     const onSubmit = (values) => {
         const transformedUserData = { firstName: values.firstName, lastName: values.lastName, phoneNumber: Number(phoneNumber) }
@@ -73,7 +73,7 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
             onEscapeKeydown={onClose}
         >
             <IconContainer>
-            <Icon fill ={darkTheme.colorGray80} name="union" size="1.2" cursorType="pointer" onClick={onClose} />
+                <Icon fill={darkTheme.colorGray80} name="union" size="1.2" cursorType="pointer" onClick={onClose} />
             </IconContainer>
             <ModalHeading toggle={onClose}>
                 <h2>
@@ -107,26 +107,26 @@ const EditUserDataModal = ({ id, openModal, onClose }) => {
                             <ValidationHint name="lastName" />
                         </InputContainer>
                         <InputContainer>
-                        <Label type="top" text={translate('Phone')}>
-                        <PhoneInput
-                            enableSearch = {true}
-                            typeInput="light"
-                            country={'pl'}
-                            type="text" name="phone"
-                            value={'test'}
-                            as={Input}
-                            error={errors.name && touched.name}
-                            onChange={phone => setPhoneNumber(phone)}
-                            />
+                            <Label type="top" text={translate('Phone')}>
+                                <PhoneInput
+                                    enableSearch={true}
+                                    typeInput="light"
+                                    country={'pl'}
+                                    type="text" name="phone"
+                                    value={'test'}
+                                    as={Input}
+                                    error={errors.name && touched.name}
+                                    onChange={phone => setPhoneNumber(phone)}
+                                />
                             </Label>
                             <ValidationHint name="phone" />
                         </InputContainer>
                         <ButtonContainer>
-                        <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
+                            <Button type="submit" buttonType="primary" size="lg">{translate('SaveChanges')}</Button>
                         </ButtonContainer>
                     </Form>
                 )}
-        </Formik>
+            </Formik>
         </StyledModal>
     );
 }

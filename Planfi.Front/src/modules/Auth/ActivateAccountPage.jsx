@@ -21,14 +21,6 @@ import Heading from 'components/atoms/Heading';
 import { accountService } from 'services/accountServices';
 import PhoneInput from 'react-phone-input-2'
 
-const initialValues = {
-  name: '',
-  phone: '',
-  password: '',
-  confirmPassword: '',
-  privacy: false,
-};
-
 //todo exclude Regexes to common function
 const nameRegex = /^[a-zA-Z]{3,20} [a-zA-Z]{2,32}$/;
 const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
@@ -57,29 +49,6 @@ const Container = styled.div`
   margin-bottom:2.6rem;
 `;
 
-const PhoneInputContainer = styled.div`
-  input{
-    width:100% !important;
-    outline: none !important;
-    border-radius: 3px !important;
-    font-weight: 400 !important;
-    font-size: 1.4rem !important;
-    line-height: 2.1rem !important;
-    color: #FFFFFF !important;
-    background: ${({ theme }) => theme.colorGray80} !important;
-    border: 1px solid #666674 !important;
-}
-li.search, ul.country-list, .selected-flag{
-  background: ${({ theme }) => theme.colorGray80} !important;
-}
-li.country.highlight {
-  background: ${({ theme }) => theme.colorGray60} !important;
-}
-  .flag-dropdown{
-    border: 1px solid #666674 !important;
-  }
-  }
-`
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorPrimaryDefault};
@@ -155,11 +124,33 @@ const ActivateAccountPage = () => {
       });
   };
 
+  const validate = (values) => {
+    const errors = {};
+
+    // if(phoneNumber.test(phoneRegex)){
+    //   errors.phoneNumber = 'Wrong format';
+    // }
+
+    if (phoneNumber === undefined) {
+      errors.phoneNumber = 'PhoneNumber is required';
+    }
+    return errors;
+  };
+
   return (
     <AuthTemplate>
       <Heading>{translate('ActivateAccount')}</Heading>
       <Paragraph type="body-2-regular">{translate('EmailLoginInfo')}</Paragraph>
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+      <Formik validate={validate} initialValues={{
+        name: '',
+        phone: '',
+        password: '',
+        confirmPassword: '',
+        privacy: false,
+      }}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        validateOnChange={false}>
         {({ errors, touched, values }) => (
           <Center place="auth">
             <Form>
@@ -182,7 +173,6 @@ const ActivateAccountPage = () => {
                 <ErrorMessageForm name="confirmPassword" />
               </InputContainer>
               <InputContainer>
-              <PhoneInputContainer>
                 <Label type="top" text={translate('Phone')}>
                   <PhoneInput
                     enableSearch={true}
@@ -194,8 +184,8 @@ const ActivateAccountPage = () => {
                     error={errors.name && touched.name}
                     onChange={phone => setPhoneNumber(phone)}
                   />
-                   </Label>
-                  </PhoneInputContainer>
+                  {errors.phoneNumber && <p>{errors.phoneNumber}</p>}
+                </Label>
                 <ValidationHint name="phone" />
               </InputContainer>
               <Container>
@@ -211,7 +201,7 @@ const ActivateAccountPage = () => {
                   errors={errors}
                   touched={touched}
                   text={translate('Required')}
-                  />
+                />
                 <Paragraph
                   type="small-tag"
                   inputName="privacy"
@@ -220,7 +210,7 @@ const ActivateAccountPage = () => {
                   type="small-tag"
                   inputName="privacy"
                 >
-                {translate('PolicyPrivacy')}
+                  {translate('PolicyPrivacy')}
                 </Paragraph>
                 <Link href={routes.privacy}>{translate('Here')}</Link>
               </Container>
@@ -229,7 +219,7 @@ const ActivateAccountPage = () => {
           </Center>
         )}
       </Formik>
-    </AuthTemplate>
+    </AuthTemplate >
   );
 };
 
