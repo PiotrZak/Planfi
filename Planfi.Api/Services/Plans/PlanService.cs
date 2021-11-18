@@ -120,11 +120,17 @@ namespace PlanfiApi.Services.Plans
                 .OrderBy(x => x.PlanId)
                 .ToListAsync();
             
+            var series = await _context.series
+              .Where(x => exercises.Select(x => x.ExerciseId).ToList().Contains(x.ExerciseId))
+              .OrderBy(x => x.ExerciseId)
+              .ToListAsync();
+            
             var plans = await _context.plans
                 .Where(x => ids.Contains(x.PlanId))
                 .OrderBy(x => x.PlanId)
                 .ToListAsync();
-            
+
+            _context.series.RemoveRange(series);
             _context.exercises.RemoveRange(exercises);
             _context.plans.RemoveRange(plans);
             
