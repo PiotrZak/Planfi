@@ -15,14 +15,12 @@ env:
 jobs:
   e2eTests:
       runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./Planfi.Front
       steps: 
         - name: Install node
           uses: actions/setup-node@v2
           with:
               node:version: '14'
+        - uses: actions/checkout@v2
         - name: Install dependencies
           run: |
             cd ./Planfi.Front/
