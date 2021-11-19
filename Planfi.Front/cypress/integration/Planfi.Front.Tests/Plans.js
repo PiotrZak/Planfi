@@ -1,6 +1,8 @@
+const url = 'https://plan-fi.pl/';
+
 describe('Test Network', () => {
   it('Test Network', () => {
-    cy.visit('http://localhost:3000/, { timeout: 30000 }')
+    cy.visit(url, { timeout: 30000 })
   })
 })
 
@@ -19,7 +21,7 @@ describe('Account Issues', () => {
   })
 
   it('Forget Pasword with wrong email should display alert', () => {
-    cy.visit('http://localhost:3000/')
+    cy.visit(url)
     cy.get('.sc-kfzAmx').click()
 
     cy.get('.sc-gKsewC').type('test@gmail.com')
@@ -56,7 +58,7 @@ describe('Plan Issues', () => {
   })
 
   it('Login', () => {
-    cy.visit('http://localhost:3000')
+    cy.visit(url)
     cy.get(':nth-child(1) > .sc-gsTCUz > .sc-gKsewC').type(
       'jmeachem0@eventbrite.com'
     )
