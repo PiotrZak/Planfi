@@ -47,17 +47,16 @@ namespace PlanfiApi.Services.Exercises
         }
         
         //check performance
-        public IEnumerable<CategoryViewModel> GetAll()
+        public async Task <List<CategoryViewModel>> GetAll()
         {
-            var allCategories = _context.categories.ToList();
+            var allCategories = await _context.categories.ToListAsync();
             var transformModel = new List<CategoryViewModel>();
             
             foreach (var category in allCategories)
             {
                 var exercises = _context.exercises
                     .Where(
-                        x => x.CategoryId == category.CategoryId &&
-                             x.Series == null
+                        x => x.CategoryId == category.CategoryId && x.Series.Count == 0
                     );
 
                 var transformCategoryModel = new CategoryViewModel
@@ -69,7 +68,8 @@ namespace PlanfiApi.Services.Exercises
                 };
                 transformModel.Add(transformCategoryModel);
             }
-            return transformModel;
+            
+              return transformModel;
         }
         
 

@@ -38,8 +38,8 @@ namespace PlanfiApi.GraphQl
             await _exerciseService.GetById(id);
         
         [UseFiltering]
-        public List<CategoryViewModel> GetCategories([Service] DataContext dbContext) =>
-            _categoryService.GetAll().ToList();
+        public async Task<List<CategoryViewModel>> GetCategories([Service] DataContext dbContext) =>
+            await _categoryService.GetAll();
         
         [UseFiltering]
         public async Task<List<Plan>> GetPlans([Service] DataContext dbContext) =>

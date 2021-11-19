@@ -11,7 +11,7 @@ namespace PlanfiApi.Interfaces
     {
         Category GetById(string id);
         Category Create(Category category);
-        IEnumerable<CategoryViewModel> GetAll();
+        Task<List<CategoryViewModel>> GetAll();
         Task<int> Delete(string[] id);
         Task<int> AssignExercise(string id, Exercise exercise);
         void AssignExercisesToCategory(string categoryId, IEnumerable<string> id);
