@@ -13,22 +13,25 @@ env:
   ENVIRONMENT: true
 
 jobs:
-  e2eTests:
+ E2E:
     runs-on: ubuntu-latest
-    steps:
+    defaults:  
+      run:  
+        working-directory: ./Planfi.Front/
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node:version: '14'
-      - uses: actions/checkout@v2
+            node:version: '14'
       - name: Install dependencies
-        run: |
-          cd ./Planfi.Front/
-          npm install
-          Cypress run
+        run: npm install       
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
 
   build:
-    needs: e2eTests
+    needs: E2E
     runs-on: ubuntu-latest
     steps:
       - name: Setup Cloud SDK
