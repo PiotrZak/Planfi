@@ -15,14 +15,20 @@ env:
 jobs:
   cypress-run:
       runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./Planfi.Front
       steps: 
         - name: Checkout
           uses: actions/checkout@v2
-        - uses: cypress-io/github-action@v2
+        - name: Install node
+          uses: actions/setup-node@v2
+          with:
+              node:version: '14'
         - name: Install dependencies
-          run: |
-            cd ./Planfi.Front/
-            Cypress run
+          run: npm install       
+        - name: Cypress run
+          uses: cypress-io/github-action@v2
 
 
   build:
