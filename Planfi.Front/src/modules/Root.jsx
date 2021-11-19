@@ -64,7 +64,7 @@ const Root = () => {
     }
     const history = routerRef.current.history;
     const currentUrl = window.location.href;
-    if (currentUrl.toString().includes('account')) {
+    if (currentUrl.toString().includes('account') || currentUrl.toString().includes('forgot')) {
       return;
     }
     else {
