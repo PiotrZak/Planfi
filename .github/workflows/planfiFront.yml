@@ -7,33 +7,26 @@ on:
   workflow_dispatch:
 
 env:
-  API_URL: 'https://planfi-api-g3lfmgrpmq-uc.a.run.app'
-  Domain: 'plan-fi.pl'
-  BUCKET: 'planfi'
+  API_URL: "https://planfi-api-g3lfmgrpmq-uc.a.run.app"
+  Domain: "plan-fi.pl"
+  BUCKET: "planfi"
   ENVIRONMENT: true
 
 jobs:
-  cypress-run:
+ cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node12.18.3-chrome87-ff82
-    steps:
+    steps: 
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Download the build folders
-        uses: actions/download-artifact@v2
+      - name: Install node
+        uses: actions/setup-node@v2
         with:
-          name: build
-          path: build
-
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          # Specify Browser since container image is compile with Firefox
-          browser: firefox
-          build: npm build
+            node:version: '14'
+      - name: Install dependencies
+        run: |
+          cd ./Planfi.Front/
+          Cypress run
+      uses: cypress-io/github-action@v2
 
   build:
     runs-on: ubuntu-latest
@@ -49,13 +42,13 @@ jobs:
 
       - uses: microsoft/variable-substitution@v1
         with:
-          files: 'Planfi.Front/config.json'
+          files: "Planfi.Front/config.json"
         env:
           apps.PlanfiApi.url: ${{ env.API_URL }}
           apps.PlanfiApi.isProduction: ${{ env.ENVIRONMENT }}
 
       - name: Read config.json from Planfi.Front
-        run: 'cat Planfi.Front/config.json'
+        run: "cat Planfi.Front/config.json"
 
       - name: Build and deploy frontend to static GCP Cloud Storage
         run: |
