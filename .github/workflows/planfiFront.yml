@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cypress run
+      - name: Planfi.Front/Cypress run
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
