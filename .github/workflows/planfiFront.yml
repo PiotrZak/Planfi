@@ -21,7 +21,7 @@ jobs:
       - name: Change Directory
         run: |
           pwd
-          cd Planfi.Front
+          cd ./Planfi.Front/
           pwd
       - name: Install node
         uses: actions/setup-node@v2
