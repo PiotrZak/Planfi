@@ -7,26 +7,26 @@ on:
   workflow_dispatch:
 
 env:
-  API_URL: "https://planfi-api-g3lfmgrpmq-uc.a.run.app"
-  Domain: "plan-fi.pl"
-  BUCKET: "planfi"
+  API_URL: 'https://planfi-api-g3lfmgrpmq-uc.a.run.app'
+  Domain: 'plan-fi.pl'
+  BUCKET: 'planfi'
   ENVIRONMENT: true
 
 jobs:
   e2eTests:
-      runs-on: ubuntu-latest
-      steps: 
-        - name: Install node
-          uses: actions/setup-node@v2
-          with:
-              node:version: '14'
-        - uses: actions/checkout@v2
-        - name: Install dependencies
-          run: |
-            cd ./Planfi.Front/
-            npm install
-        - name: Cypress run
-          uses: cypress-io/github-action@v2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node:version: '14'
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v2
+      - name: Install dependencies
+        run: |
+          cd ./Planfi.Front/
+          npm install
+          Cypress run
 
   build:
     needs: e2eTests
@@ -43,13 +43,13 @@ jobs:
 
       - uses: microsoft/variable-substitution@v1
         with:
-          files: "Planfi.Front/config.json"
+          files: 'Planfi.Front/config.json'
         env:
           apps.PlanfiApi.url: ${{ env.API_URL }}
           apps.PlanfiApi.isProduction: ${{ env.ENVIRONMENT }}
 
       - name: Read config.json from Planfi.Front
-        run: "cat Planfi.Front/config.json"
+        run: 'cat Planfi.Front/config.json'
 
       - name: Build and deploy frontend to static GCP Cloud Storage
         run: |
