@@ -1,3 +1,9 @@
+describe('Test Network', () => {
+  it('Test Network', () => {
+    cy.visit('http://localhost:3000/, { timeout: 30000 }')
+  })
+})
+
 describe('Account Issues', () => {
   before(() => {
     cy.clearLocalStorageSnapshot()
@@ -86,12 +92,10 @@ describe('Plan Issues', () => {
 
   // todo - do that test after design is done
   //correlated with srie
-  
+
   //   it('Assign exercise to plan', () => {
   //     cy.get('.sc-AzgDb').click()
   //     cy.get('.sc-ehSCib').click()
   //     cy.get('.bottom-sheet > :nth-child(6)').click()
   //   })
-
-
 })
