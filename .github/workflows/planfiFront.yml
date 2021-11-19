@@ -13,6 +13,16 @@ env:
   ENVIRONMENT: true
 
 jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
   build:
     runs-on: ubuntu-latest
 
@@ -45,12 +55,3 @@ jobs:
           gsutil iam ch allUsers:legacyObjectReader gs://${{ env.BUCKET }}
           gsutil -h "Cache-Control:public, max-age=0, no-transform" rsync -d -r ./build gs://${{env.BUCKET}}
           gcloud compute url-maps invalidate-cdn-cache planfi-lb --path '/${{env.Domain}}/*'
-
-
-      # gsutil web set -m index.html -e index.html gs://${{ env.Domain }}
-      # gsutil iam ch allUsers:legacyObjectReader gs://${{ env.Domain }}
-      # gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
-      # gsutil -h "Cache-Control:public, max-age=60, no-transform" rsync -d -r ./build gs://${{env.Domain}}
-
-      #create bucket - aready exist already after 1 execution
-      #gsutil mb -p ${{secrets.GCP_PROJECT_ID}} -b on gs://${{ env.Domain }}
