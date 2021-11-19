@@ -3,9 +3,10 @@ using System.ComponentModel.DataAnnotations;
 using PlanfiApi.Models.SqlProjections;
 using WebApi.Models;
 
-namespace PlanfiApi.Models
+namespace PlanfiApi.Models.ViewModels
 {
-    public class UserDetails
+    [GenerateTypeScriptInterface]
+    public class UserDetailsViewModel
     {
         [Key]
         public string UserId { get; set; }
@@ -17,7 +18,7 @@ namespace PlanfiApi.Models
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string OrganizationId { get; set; }   
-        public List<ResultPlan> UserPlans;
-        public List<UserSqlProjection> ClientTrainers;
-    }
+        public List<ResultPlan> UserPlans { get; set; }
+        public List<UserSqlProjection> ClientTrainers { get; set; }
+    } 
 }

@@ -11,6 +11,7 @@ using Npgsql;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -200,7 +201,7 @@ namespace PlanfiApi.Services.Plans
                     p.title,
                     p.creator_id AS CreatorId,
                     p.organization_id as OrganizationId,
-                    CONCAT(u.first_name, ' ', u.last_name) as CreatorName
+                    p.creator_name as CreatorName
                     FROM public.users as u
                     JOIN public.usersplans as up
                     ON u.user_id = up.user_id
@@ -220,6 +221,40 @@ namespace PlanfiApi.Services.Plans
             
             return userPlans;
         }
+        
+        public async Task<List<ResultPlan>> GetTrainerPlans(string? id)
+        {
+            var userId = id ?? new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+            await connection.OpenAsync();
+
+            var userPlans = new List<ResultPlan>();
+            try
+            {
+                const string userPlansQuery = @"SELECT 
+		            p.plan_id,
+		            p.title,
+		            p.creator_id AS CreatorId,
+		            p.organization_id as OrganizationId,
+		            CONCAT(u.first_name, ' ', u.last_name) as CreatorName
+		            FROM public.users as u
+		            JOIN public.plans as p
+		            ON p.creator_id = @userId
+		            WHERE u.user_id = @userId";
+
+                userPlans = (await connection.QueryAsync<ResultPlan>(userPlansQuery, new {userId})).ToList();
+            }
+            catch (Exception exp) {
+                Console.Write(exp.Message);
+            }
+            finally
+            {
+                await connection.CloseAsync();
+            }
+            
+            return userPlans;
+        }
+        
     }
 }
 

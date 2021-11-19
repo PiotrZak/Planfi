@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Models.SqlProjections;
+using PlanfiApi.Models.ViewModels;
 using PlanfiApi.Services.Organizations;
 using WebApi.Entities;
 

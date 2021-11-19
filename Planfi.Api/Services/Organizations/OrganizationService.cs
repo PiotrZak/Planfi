@@ -10,6 +10,7 @@ using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.SqlProjections;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Entities;
 using WebApi.Helpers;
 

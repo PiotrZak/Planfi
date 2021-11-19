@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models
+namespace PlanfiApi.Models.ViewModels
 {
+    [GenerateTypeScriptInterface]
     public class ResultPlan
     {
         public ResultPlan()
