@@ -12,26 +12,22 @@ import EditUserDataModal from 'modules/MyProfile/EditProfile/EditUserData';
 import MyProfileTemplate from 'templates/MyProfileTemplate';
 import Icon from 'components/atoms/Icon';
 import UserInfoBackground from 'components/molecules/UserInfoBackground';
-import { Role } from 'utils/role';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
-import { Tabs } from 'antd';
-import { trainerTabs, clientTabs} from '../Users/ProfileTabs'
+import { profileTabs } from '../Users/ProfileTabs'
+import { Plans } from 'modules/Users/UserProfile/Plans';
+import { Users } from 'modules/Users/UserProfile/Users';
+import TabItemComponent from 'components/molecules/TabItemComponent/TabItemComponent';
 
-const { TabPane } = Tabs;
 
 const Container = styled.div`
   margin: auto;
   width: 74%;
 
-  @media screen and ${breakPointSize.xs} {
+  @media screen and (${breakPointSize.xs}) {
     width: 100%;
-
-    ${({ type }) => type === 'entry' && css`
-      width: calc(100% - 3.2rem);
-      margin: 0 1.6rem;
-    `
-  }
+    width: calc(100% - 3.2rem);
+    margin: 0 1.6rem;
   }
 `;
 
@@ -40,26 +36,18 @@ const ContainerCentred = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-const TabItemComponent = ({
-  icon = '',
-  title = '',
-  onItemClicked = () => console.error('You passed no action to the component'),
-  isActive = false,
-}) => {
-  return (
-    <div className={isActive ? 'tabitem' : 'tabitem tabitem--inactive'} onClick={onItemClicked}>
-      <i className={icon}></i>
-      <p className="tabitem__title">{title}</p>
-    </div>
-  )
-};
+interface IMyProfile {
+  setUser: () => void;
+  toggleTheme: () => void;
+  toggleLanguage: () => void;
+}
 
-const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
+const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
   const { theme } = useThemeContext();
-  const [toRender, setToRender] = useState(null);
-
+  // @ts-ignore-start
   const user = JSON.parse((localStorage.getItem('user')));
   const [updatedUser, setUpdatedUser] = useState(user);
+  // @ts-ignore-end
 
   useEffect(() => {
     setUpdatedUser(user);
@@ -70,34 +58,42 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
     userService
       .getUserById(user.userId)
       .then((data) => {
+        console.log(data)
         setUpdatedUser(data);
       })
       .catch((error) => {
       });
   };
 
-  const [bottomSheet, setBottomSheet] = useState('none');
+  const [bottomSheet, setBottomSheet] = useState<string>('none');
   const [openEditUserData, setOpenEditUserData] = useState(false);
   const [openEditMailModal, setOpenEditMailModal] = useState(false);
   const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
-  const role = user.role.name;
 
   const Wrapper = styled.div`
       display: flex;
       justify-content: flex-start;
       padding: 1rem 0;
       color: ${({ theme }) => theme.colorGray10};
-
       &:hover {
           cursor: pointer;
       }
     `;
 
-  const selectRole = () => {
-    return role === Role.User ? clientTabs : trainerTabs;
-  }
 
   const [active, setActive] = useState(0);
+
+  const renderTab = () => {
+
+    if (active === 1) {
+      return <Plans plans={updatedUser.userPlans} />;
+    }
+    if (active === 2) {
+      return <Users users={updatedUser.clientTrainers} />;
+    }
+    return null;
+
+  }
 
   return (
     <>
@@ -106,36 +102,26 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
           <Container>
             <Nav>
               <Wrapper>
-                <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} />
+                <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(bottomSheet)} cursorType={undefined} />
               </Wrapper>
             </Nav>
             <ContainerCentred>
               <UserInfo user={updatedUser} />
             </ContainerCentred>
-
-
             <div className="tabs">
-              {selectRole().map(({ id, icon, title }) => <TabItemComponent
-                key={title}
-                icon={icon}
-                title={title}
-                onItemClicked={() => setActive(id)}
-                isActive={active === id}
-              />
+              {profileTabs.map(({ id, icon, titleTrainer, titleClient }) =>
+                <TabItemComponent
+                  key={updatedUser.roleName == "Trainer" ? titleTrainer : titleClient}
+                  icon={icon}
+                  title={updatedUser.roleName == "Trainer" ? titleTrainer : titleClient}
+                  onItemClicked={() => setActive(id)}
+                  isActive={active === id}
+                />
               )}
             </div>
-            <div className="content">
-              {trainerTabs.map(({ id, content }) => {
-                return active === id ? content : ''
-              })}
-            </div>
-
-
+            {renderTab()}
           </Container>
         </UserInfoBackground>
-        <Container type="entry">
-          {toRender}
-        </Container>
       </MyProfileTemplate>
       <EditUserDataModal
         id={user.userId}
@@ -156,11 +142,9 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }) => {
         setUser={setUser}
         toggleTheme={toggleTheme}
         toggleLanguage={toggleLanguage}
-        userId={user.userId}
         setOpenEditUserData={setOpenEditUserData}
         setOpenEditMailModal={setOpenEditMailModal}
         setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}
-        theme={theme}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
       />

@@ -4,6 +4,7 @@ using PlanfiApi.Data.Entities.Users;
 namespace PlanfiApi.Models.ViewModels
 {
     //todo - realize what is really needed here
+    [GenerateTypeScriptInterface]
     public class UserViewModel
     {
         [Key]

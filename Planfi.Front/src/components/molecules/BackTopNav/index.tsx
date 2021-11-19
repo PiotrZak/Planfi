@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import ReturnWithTitle from 'components/molecules/ReturnWithTitle'
-import { history as historyPropTypes } from 'history-prop-types'
-import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 const Wrapper = styled.div`
@@ -16,7 +14,13 @@ const Wrapper = styled.div`
   }
 `
 
-const BackTopNav = ({ text, history, route }) => {
+interface IBackTopNav {
+  text: any,
+  history: any,
+  route: any,
+}
+
+const BackTopNav = ({ text, history, route }: any) => {
   return (
     <>
       {route ? (
@@ -30,11 +34,6 @@ const BackTopNav = ({ text, history, route }) => {
       )}
     </>
   )
-}
-
-BackTopNav.propTypes = {
-  history: PropTypes.shape(historyPropTypes).isRequired,
-  text: PropTypes.string.isRequired,
 }
 
 export default withRouter(BackTopNav)

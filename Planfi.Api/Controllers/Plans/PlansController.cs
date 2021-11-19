@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Helpers;
 using WebApi.Models;
 

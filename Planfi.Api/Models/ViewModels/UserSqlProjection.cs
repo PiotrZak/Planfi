@@ -1,5 +1,7 @@
-namespace PlanfiApi.Models.SqlProjections
+namespace PlanfiApi.Models.ViewModels
 {
+  //todo -not exactly view model
+    [GenerateTypeScriptInterface]
     public class UserSqlProjection
     {
         public string User_Id { get; set; }

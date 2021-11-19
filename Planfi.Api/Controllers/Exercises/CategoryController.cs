@@ -61,13 +61,8 @@ namespace PlanfiApi.Controllers.Exercises
         [HttpGet("{id}")]
         public IActionResult GetById(string id)
         {
-
-            var Category = _categoryService.GetById(id);
-
-            if (Category == null)
-                return NotFound();
-
-            return Ok(Category);
+            var category = _categoryService.GetById(id);
+            return Ok(category);
         }
 
         [AllowAnonymous]

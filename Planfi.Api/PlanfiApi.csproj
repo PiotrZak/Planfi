@@ -64,4 +64,9 @@
     <Folder Include="GraphQl\" />
     <Folder Include="wwwroot\Movies" />
   </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="TypeScript\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="TypeScript\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="TypeScript\obj\TypeScript.csproj.nuget.dgspec.json" />
+  </ItemGroup>
 </Project>

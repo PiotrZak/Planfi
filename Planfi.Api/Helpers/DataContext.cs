@@ -6,6 +6,7 @@ using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Models;
+using PlanfiApi.Models.ViewModels;
 
 namespace PlanfiApi.Helpers
 {
