@@ -85,6 +85,8 @@ describe('Plan Issues', () => {
   })
 
   // todo - do that test after design is done
+  //correlated with srie
+  
   //   it('Assign exercise to plan', () => {
   //     cy.get('.sc-AzgDb').click()
   //     cy.get('.sc-ehSCib').click()
