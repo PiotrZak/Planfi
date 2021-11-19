@@ -24,7 +24,7 @@ const Slide = ({ videoName, index, img }) => {
   ) : (
     <ReactPlayer
       controls={true}
-      playsinline
+      playsinline={true}
       url={`${movieUrl}/${
         videoNameWithoutSpace + 1 + atob(base64String)
       }?authuser=1`}
