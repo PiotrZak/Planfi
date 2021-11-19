@@ -11,6 +11,7 @@ env:
   Domain: 'plan-fi.pl'
   BUCKET: 'planfi'
   ENVIRONMENT: true
+  Working-Directory: ./Planfi.Front/
 
 jobs:
   E2E:
@@ -18,18 +19,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Change Directory
-        run: |
-          pwd
-          cd ./Planfi.Front/
-          pwd
       - name: Install node
         uses: actions/setup-node@v2
+        working-directory: ${{env.Working-Directory}}
         with:
           node:version: '14'
       - name: Install dependencies
+        working-directory: ${{env.Working-Directory}}
         run: npm install
       - name: Cypress run
+        working-directory: ${{env.Working-Directory}}
         uses: cypress-io/github-action@v2
 
   build:
