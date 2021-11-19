@@ -13,14 +13,12 @@ env:
   ENVIRONMENT: true
 
 jobs:
-  cypress-run:
+  e2eTests:
       runs-on: ubuntu-latest
       defaults:
         run:
           working-directory: ./Planfi.Front
       steps: 
-        - name: Checkout
-          uses: actions/checkout@v2
         - name: Install node
           uses: actions/setup-node@v2
           with:
@@ -30,8 +28,8 @@ jobs:
         - name: Cypress run
           uses: cypress-io/github-action@v2
 
-
   build:
+    needs: e2eTests
     runs-on: ubuntu-latest
     steps:
       - name: Setup Cloud SDK
