@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
 
 env:
-  API_URL: "https://planfi-api-g3lfmgrpmq-uc.a.run.app"
-  Domain: "plan-fi.pl"
-  BUCKET: "planfi"
+  API_URL: 'https://planfi-api-g3lfmgrpmq-uc.a.run.app'
+  Domain: 'plan-fi.pl'
+  BUCKET: 'planfi'
   ENVIRONMENT: true
 
 jobs:
@@ -18,7 +18,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Planfi.Front/Cypress run
+      - name: Change Directory
+        run: |
+          cd Planfi.Front
+      - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
@@ -38,13 +41,13 @@ jobs:
 
       - uses: microsoft/variable-substitution@v1
         with:
-          files: "Planfi.Front/config.json"
+          files: 'Planfi.Front/config.json'
         env:
           apps.PlanfiApi.url: ${{ env.API_URL }}
           apps.PlanfiApi.isProduction: ${{ env.ENVIRONMENT }}
 
       - name: Read config.json from Planfi.Front
-        run: "cat Planfi.Front/config.json"
+        run: 'cat Planfi.Front/config.json'
 
       - name: Build and deploy frontend to static GCP Cloud Storage
         run: |
