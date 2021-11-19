@@ -24,9 +24,9 @@ jobs:
           with:
               node:version: '14'
         - name: Install dependencies
-            run: |
-              cd ./Planfi.Front/
-              npm install
+          run: |
+            cd ./Planfi.Front/
+            npm install
         - name: Cypress run
           uses: cypress-io/github-action@v2
 
