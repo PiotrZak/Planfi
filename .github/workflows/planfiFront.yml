@@ -22,11 +22,12 @@ jobs:
           uses: actions/setup-node@v2
           with:
               node:version: '14'
+        - uses: cypress-io/github-action@v2
         - name: Install dependencies
           run: |
             cd ./Planfi.Front/
             Cypress run
-        uses: cypress-io/github-action@v2
+
 
   build:
     runs-on: ubuntu-latest
