@@ -50,26 +50,15 @@ namespace PlanfiApi.Services.Exercises
         public async Task <List<CategoryViewModel>> GetAll()
         {
             var allCategories = await _context.categories.ToListAsync();
-            var transformModel = new List<CategoryViewModel>();
-            
-            foreach (var category in allCategories)
-            {
-                var exercises = _context.exercises
-                    .Where(
-                        x => x.CategoryId == category.CategoryId && x.Series.Count == 0
-                    );
 
-                var transformCategoryModel = new CategoryViewModel
+            return allCategories
+              .Select(category => 
+                new CategoryViewModel
                 {
-                    CategoryId = category.CategoryId,
-                    Title = category.Title,
-                    Exercises = exercises.Count(),
-                    OrganizationId = category.OrganizationId
-                };
-                transformModel.Add(transformCategoryModel);
-            }
-            
-              return transformModel;
+                  CategoryId = category.CategoryId,
+                  Title = category.Title,
+                  OrganizationId = category.OrganizationId
+                }).ToList();
         }
         
 
