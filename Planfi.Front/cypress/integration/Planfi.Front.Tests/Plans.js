@@ -6,43 +6,43 @@ describe('Test Network', () => {
   })
 })
 
-// describe('Account Issues', () => {
-//   before(() => {
-//     cy.clearLocalStorageSnapshot()
-//   })
+describe('Account Issues', () => {
+  before(() => {
+    cy.clearLocalStorageSnapshot()
+  })
 
-//   beforeEach(() => {
-//     cy.viewport(1280, 720)
-//     cy.restoreLocalStorage()
-//   })
+  beforeEach(() => {
+    cy.viewport(1280, 720)
+    cy.restoreLocalStorage()
+  })
 
-//   afterEach(() => {
-//     cy.saveLocalStorage()
-//   })
+  afterEach(() => {
+    cy.saveLocalStorage()
+  })
 
-//   it('Forget Pasword with wrong email should display alert', () => {
-//     cy.visit(url)
-//     cy.get('.sc-kfzAmx').click()
+  it('Forget Pasword with wrong email should display alert', () => {
+    cy.visit(url)
+    cy.get('.sc-kfzAmx').click()
 
-//     cy.get('.sc-gKsewC').type('test@gmail.com')
-//     cy.get('.sc-dQppl').click()
-//     cy.wait(1500)
-//     cy.get('.sc-idOhPF').should('contain', 'Something gone wrong')
-//     cy.get('.sc-dIUggk > .sc-bdfBwQ').click()
-//     cy.get('.sc-idOhPF').should('not.exist')
+    cy.get('.sc-gKsewC').type('test@gmail.com')
+    cy.get('.sc-dQppl').click()
+    cy.wait(1500)
+    cy.get('.sc-idOhPF').should('contain', 'Something gone wrong')
+    cy.get('.sc-dIUggk > .sc-bdfBwQ').click()
+    cy.get('.sc-idOhPF').should('not.exist')
 
-//     cy.wait(1500)
+    cy.wait(1500)
 
-//     cy.get('.sc-gKsewC').clear()
-//     cy.get('.sc-gKsewC').type('jmeachem0@eventbrite.com')
-//     cy.get('.sc-dQppl').click()
-//     cy.get('.sc-bkzZxe').should('contain', 'The message has been')
-//     cy.get('.sc-dIUggk > .sc-bdfBwQ').click()
-//     cy.get('.sc-idOhPF').should('not.exist')
-//     cy.url().should('eq', 'https://plan-fi.pl/login')
-//     cy.wait(2500)
-//   })
-// })
+    cy.get('.sc-gKsewC').clear()
+    cy.get('.sc-gKsewC').type('jmeachem0@eventbrite.com')
+    cy.get('.sc-dQppl').click()
+    cy.get('.sc-bkzZxe').should('contain', 'The message has been')
+    cy.get('.sc-dIUggk > .sc-bdfBwQ').click()
+    cy.get('.sc-idOhPF').should('not.exist')
+    cy.url().should('eq', 'https://plan-fi.pl/login')
+    cy.wait(2500)
+  })
+})
 
 describe('Plan Issues', () => {
   before(() => {
