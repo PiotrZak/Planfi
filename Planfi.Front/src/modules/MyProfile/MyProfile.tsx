@@ -1,5 +1,5 @@
 import React, {
-  useState, useEffect,
+  useState, useEffect, SetStateAction,
 } from 'react';
 import styled, { css } from 'styled-components';
 import { UserInfo } from 'components/molecules/UserInfo/UserInfo';
@@ -65,7 +65,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
       });
   };
 
-  const [bottomSheet, setBottomSheet] = useState<string>('none');
+  const [bottomSheet, setBottomSheet] = useState<string | SetStateAction<string> | any>('none');
   const [openEditUserData, setOpenEditUserData] = useState(false);
   const [openEditMailModal, setOpenEditMailModal] = useState(false);
   const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
@@ -102,7 +102,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
           <Container>
             <Nav>
               <Wrapper>
-                <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(bottomSheet)} cursorType={undefined} />
+                <Icon fill={theme.colorGray10} name="cog" size="2rem" onClick={() => setBottomSheet(!bottomSheet)} cursorType={undefined} />
               </Wrapper>
             </Nav>
             <ContainerCentred>
