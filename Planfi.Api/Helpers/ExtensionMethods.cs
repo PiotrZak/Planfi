@@ -1,7 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using PlanfiApi.Data.Entities.Users;
 
 namespace PlanfiApi.Helpers
@@ -11,6 +16,29 @@ namespace PlanfiApi.Helpers
         public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users) 
         {
             return users?.Select(x => x.WithoutPassword());
+        }
+        
+        public static string GenerateJwt(User user)
+        {
+            var appSettings = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build().GetSection("AppSettings")["Secret"];
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(appSettings);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, user.UserId),
+                    new Claim(ClaimTypes.Role, user.Role.Name)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return tokenString;
         }
 
         public static User WithoutPassword(this User user) 

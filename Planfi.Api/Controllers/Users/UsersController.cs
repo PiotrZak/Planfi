@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using PlanfiApi.Data;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
+using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models;
 using PlanfiApi.Models.ViewModels;
@@ -44,7 +45,7 @@ namespace PlanfiApi.Controllers.Users
             try
             {
                 var user = await _userService.Authenticate(model.Email, model.Password);
-                var token = GenerateJwt(user);
+                var token = ExtensionMethods.GenerateJwt(user);
                 
                 var result = new ObjectResult(new UserViewModel
                 {
@@ -223,7 +224,6 @@ namespace PlanfiApi.Controllers.Users
         public async Task<IActionResult>  GetClientsByTrainer(string? id)
         {
             var clients = await _userService.GetClientsByTrainer(id);
-
             return Ok(clients);
         }
 
@@ -235,29 +235,5 @@ namespace PlanfiApi.Controllers.Users
 
             return Ok(trainers);
         }
-        
-        [AllowAnonymous]
-        [HttpGet("jwt")]
-        public string GenerateJwt(User user)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.Name, user.UserId),
-                    new Claim(ClaimTypes.Role, user.Role.Name)
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return tokenString;
-        }
-
     }
 }

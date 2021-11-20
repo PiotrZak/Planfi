@@ -14,6 +14,7 @@ using Npgsql;
 using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
+using PlanfiApi.Models;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.ViewModels;
 using WebApi.Helpers;

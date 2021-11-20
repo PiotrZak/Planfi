@@ -1,4 +1,6 @@
 import { uniqBy } from 'lodash';
+import Cookies from 'js-cookie'
+
 export const commonUtil = {
   getCheckedData,
   getUnique,
@@ -62,6 +64,28 @@ export const uuidv4 = () => {
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 }
+
+export const detectBrowser = () => {
+  const isFirefox = typeof InstallTrigger !== 'undefined';
+  const isIE = /* @cc_on!@ */false || !!document.documentMode;
+  const isEdge = !isIE && !!window.StyleMedia;
+  const isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+  if (isFirefox) {
+    localStorage.setItem('browser', 'Firefox');
+  }
+  if (isIE) {
+    localStorage.setItem('browser', 'IE');
+  }
+  if (isEdge) {
+    localStorage.setItem('browser', 'Edge');
+  }
+  if (isChrome) {
+    localStorage.setItem('browser', 'Chrome');
+  }
+}
+
+
 
 export default commonUtil;
 

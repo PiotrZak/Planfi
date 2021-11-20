@@ -16,21 +16,18 @@ using Microsoft.OpenApi.Models;
 using PlanfiApi.GraphQl;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
-using PlanfiApi.Middlewares;
 using PlanfiApi.Models;
+using PlanfiApi.Services.Account;
 using PlanfiApi.Services.Chat;
 using PlanfiApi.Services.Exercises;
 using PlanfiApi.Services.Files;
 using PlanfiApi.Services.Organizations;
+using PlanfiApi.Services.Plans;
 using PlanfiApi.Services.Users;
 using WebApi.Helpers;
-using WebApi.Interfaces;
-using WebApi.Models;
 using WebApi.Services.Account;
 using WebApi.Services.Chat;
-using AccountService = PlanfiApi.Services.Account.AccountService;
 using Path = System.IO.Path;
-using PlanService = PlanfiApi.Services.Plans.PlanService;
 
 namespace PlanfiApi
 {

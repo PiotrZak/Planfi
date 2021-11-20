@@ -27,3 +27,14 @@
 .input-error{
     border-color:#BC324C;
 }
+
+.gm-container{
+    width:100%;
+}
+
+.gm-icon{
+    display:flex;
+    justify-content: center;
+    width:62px;
+    height:62px;
+}
