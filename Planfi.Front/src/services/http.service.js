@@ -9,17 +9,21 @@ export const http = {
   put,
 }
 
-const config = {
-  headers: { Authorization: `Bearer ${Cookies.get('JWT')}` },
-}
-
 function get(url) {
+  const config = {
+    headers: { Authorization: `Bearer ${Cookies.get('JWT')}` },
+  }
+
   return axios.get(url, config).then((response) => {
     return handleResponseError(response)
   })
 }
 
 function post(url, body) {
+  const config = {
+    headers: { Authorization: `Bearer ${Cookies.get('JWT')}` },
+  }
+
   return axios
     .post(url, body, config)
     .then((response) => {

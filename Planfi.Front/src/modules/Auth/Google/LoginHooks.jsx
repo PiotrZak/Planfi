@@ -3,6 +3,7 @@ import { GoogleLogin, useGoogleLogin } from 'react-google-login';
 import { accountService } from 'services/accountServices';
 import { routes } from 'routes';
 import { useHistory } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const clientId =
   '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com';
@@ -13,19 +14,26 @@ const timeToRedirectLogin = 1000;
 
 const LoginHooks = () => {
 
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
   const history = useHistory();
-  console.log('test')
-  const onSuccess = (res) => {
-    console.log('Login Success: currentUser:', res.profileObj);
 
+  const onSuccess = (res) => {
+
+    //refactoring
     const inviteModel = {
       organizationId: 'O1',
       email: res.profileObj.email,
-      role: 'User'
+      role: 'User',
+      imageUrl: res.profileObj.imageUrl
     };
+
+    const saveJWTInCookies = (data) => {
+      setCookie('JWT', data.token, { path: '/', })
+    }
 
     accountService.gmailSignUp(inviteModel)
       .then((data) => {
+        saveJWTInCookies(data)
         redirectToPage(data);
         localStorage.removeItem('user');
         delete data.token;

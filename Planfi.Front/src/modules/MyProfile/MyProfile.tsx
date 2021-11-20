@@ -31,6 +31,16 @@ const Container = styled.div`
   }
 `;
 
+const Wrapper = styled.div`
+display: flex;
+justify-content: flex-start;
+padding: 1rem 0;
+color: ${({ theme }) => theme.colorGray10};
+&:hover {
+    cursor: pointer;
+}
+`;
+
 const ContainerCentred = styled.div`
   margin-top: 4.8rem;
   margin-bottom: 1.2rem;
@@ -46,13 +56,20 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
   const { theme } = useThemeContext();
   // @ts-ignore-start
   const user = JSON.parse((localStorage.getItem('user')));
+    // @ts-ignore-end
+  const [active, setActive] = useState(0);
   const [updatedUser, setUpdatedUser] = useState(user);
-  // @ts-ignore-end
+  const [bottomSheet, setBottomSheet] = useState<string | SetStateAction<string> | any>('none');
+  const [avatarUpdated, setAvatarUpdated] = useState<boolean>();
+  const [openEditUserData, setOpenEditUserData] = useState(false);
+  const [openEditMailModal, setOpenEditMailModal] = useState(false);
+  const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
+
 
   useEffect(() => {
     setUpdatedUser(user);
     getUserById();
-  }, []);
+  }, [avatarUpdated]);
 
   const getUserById = () => {
     userService
@@ -65,23 +82,6 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
       });
   };
 
-  const [bottomSheet, setBottomSheet] = useState<string | SetStateAction<string> | any>('none');
-  const [openEditUserData, setOpenEditUserData] = useState(false);
-  const [openEditMailModal, setOpenEditMailModal] = useState(false);
-  const [openEditUserPasswordModal, setOpenEditUserPasswordModal] = useState(false);
-
-  const Wrapper = styled.div`
-      display: flex;
-      justify-content: flex-start;
-      padding: 1rem 0;
-      color: ${({ theme }) => theme.colorGray10};
-      &:hover {
-          cursor: pointer;
-      }
-    `;
-
-
-  const [active, setActive] = useState(0);
 
   const renderTab = () => {
 
@@ -92,7 +92,6 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
       return <Users users={updatedUser.clientTrainers} />;
     }
     return null;
-
   }
 
   return (
@@ -147,6 +146,8 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
         setOpenEditUserPasswordModal={setOpenEditUserPasswordModal}
         bottomSheet={bottomSheet}
         setBottomSheet={setBottomSheet}
+        setAvatarUpdated={setAvatarUpdated}
+        avatarUpdated={avatarUpdated}
       />
     </>
   );

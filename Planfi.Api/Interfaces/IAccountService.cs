@@ -9,7 +9,7 @@ namespace PlanfiApi.Interfaces
 {
     public interface IAccountService
     {
-        Task<int> UploadAvatar(byte[] avatar);
+        Task<int> UploadAvatar(byte[] avatar, string? userId);
         Task<bool> ForgotPassword(ForgotPassword model, string origin);
         Task<int> ResetPassword(ResetPasswordRequest model);
         Task<int> SendVerificationEmail(RegisterModel register, string origin);

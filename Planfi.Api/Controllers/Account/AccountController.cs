@@ -54,7 +54,6 @@ namespace PlanfiApi.Controllers.Account
             [Required]
             public string Email { get; set; }
             public string Role { get; set; }
-            //todo
             public string? ImageUrl { get; set; }
             
         }
@@ -68,6 +67,15 @@ namespace PlanfiApi.Controllers.Account
                 var user = await _userService.GetUserWithoutPassword(model.Email);
                 var token = ExtensionMethods.GenerateJwt(user);
                 
+                byte[] avatarFromGoogle = { };
+                
+                if (user.Avatar == null && model.ImageUrl != null)
+                {
+                  var webClient = new WebClient();
+                  avatarFromGoogle = webClient.DownloadData(model.ImageUrl);
+                  await _accountService.UploadAvatar(avatarFromGoogle, user.UserId);
+                }
+                
                 var result = new ObjectResult(new UserViewModel
                 {
                     UserId = user.UserId,
@@ -75,7 +83,7 @@ namespace PlanfiApi.Controllers.Account
                     Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Avatar = user.Avatar,
+                    Avatar = user.Avatar ?? avatarFromGoogle,
                     Role = new Role
                     {
                         Id = user.Role.Id,
@@ -115,7 +123,7 @@ namespace PlanfiApi.Controllers.Account
 
             try
             {
-                await _accountService.UploadAvatar(avatarBytes);
+                await _accountService.UploadAvatar(avatarBytes, null);
                 return Ok();
             }
             catch (AppException ex)

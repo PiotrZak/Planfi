@@ -83,9 +83,9 @@ namespace PlanfiApi.Services.Account
             return true;
         }
 
-        public async Task<int>  UploadAvatar(byte[] avatar)
+        public async Task<int>  UploadAvatar(byte[] avatar, string? UserId)
         {
-            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? UserId;
             var connection = new NpgsqlConnection(_configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
             

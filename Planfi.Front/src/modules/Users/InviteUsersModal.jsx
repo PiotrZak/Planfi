@@ -9,13 +9,17 @@ import { StyledModal, ButtonContainer } from 'components/molecules/Modal';
 import { useUserContext } from 'support/context/UserContext';
 import { accountService } from 'services/accountServices';
 import { Role } from 'utils/role';
+import Loader from 'components/atoms/Loader';
 
 const InviteUserModal = ({ openModal, onClose, role }) => {
   const { user } = useUserContext();
+  const [isLoading, setLoading] = useState(false);
   const { notificationDispatch } = useNotificationContext();
   const [emails, setEmails] = useState([]);
 
   const submitForm = () => {
+
+    setLoading(true)
 
     const inviteModel = {
       organizationId: user.organizationId,
@@ -26,6 +30,7 @@ const InviteUserModal = ({ openModal, onClose, role }) => {
     accountService
       .sendInvitation(inviteModel)
       .then((data) => {
+        setLoading(false)
         notificationDispatch({
           type: ADD,
           payload: {
@@ -35,6 +40,7 @@ const InviteUserModal = ({ openModal, onClose, role }) => {
         });
       })
       .catch((error) => {
+        setLoading(false)
         notificationDispatch({
           type: ADD,
           payload: {
@@ -52,15 +58,20 @@ const InviteUserModal = ({ openModal, onClose, role }) => {
       onBackgroundClick={onClose}
       onEscapeKeydown={onClose}
     >
-      {role.name == Role.Trainer
-        ? <ModalHeading>{translate('InviteTrainers')}</ModalHeading>
-        : <ModalHeading>{translate('InviteUsers')}</ModalHeading>
-      }
-      <MultiInviteForm emails={emails} setEmails={setEmails} />
-      <br/>
-      <ButtonContainer>
-        <Button disabled = {emails.length == 0} onClick={submitForm} type="submit" buttonType="primary" size="md">{translate('InviteUsersButton')}</Button>
-      </ButtonContainer>
+      <>
+        {isLoading ? <Loader isLoading={isLoading} /> :
+          <>
+            {role.name == Role.Trainer
+              ? <ModalHeading>{translate('InviteTrainers')}</ModalHeading>
+              : <ModalHeading>{translate('InviteUsers')}</ModalHeading>
+            }
+            <MultiInviteForm emails={emails} setEmails={setEmails} />
+            <br />
+            <ButtonContainer>
+              <Button disabled={emails.length == 0} onClick={submitForm} type="submit" buttonType="primary" size="md">{translate('InviteUsersButton')}</Button>
+            </ButtonContainer>
+          </>
+        }</>
     </StyledModal>
   );
 };
@@ -80,13 +91,13 @@ const MultiInviteForm = ({ emails, setEmails }) => (
       index,
       removeEmail,
     ) => (
-        <div data-tag key={index}>
-          {email}
-          <span data-tag-handle onClick={() => removeEmail(index)}>
-            ×
+      <div data-tag key={index}>
+        {email}
+        <span data-tag-handle onClick={() => removeEmail(index)}>
+          ×
         </span>
-        </div>
-      )}
+      </div>
+    )}
   />
 );
 

@@ -27,6 +27,8 @@ export const MyProfilePanel = ({
   setOpenEditUserPasswordModal,
   bottomSheet,
   setBottomSheet,
+  setAvatarUpdated,
+  avatarUpdated,
 }) => {
   const history = useHistory();
   const { notificationDispatch } = useNotificationContext();
@@ -60,7 +62,6 @@ export const MyProfilePanel = ({
 
     const formData = new FormData();
     formData.append('avatar', selectedFiles);
-    console.log(selectedFiles)
 
     accountService
       .uploadAvatar(formData)
@@ -73,11 +74,11 @@ export const MyProfilePanel = ({
           },
         });
 
-        //todo - transform it into bytes
         const currentUser = JSON.parse(localStorage.getItem("user"));
         currentUser.avatar = null;
         localStorage.setItem('user', JSON.stringify(currentUser));
         setBottomSheet('none');
+        setAvatarUpdated(!avatarUpdated)
       })
       .catch((error) => {
         notificationDispatch({
