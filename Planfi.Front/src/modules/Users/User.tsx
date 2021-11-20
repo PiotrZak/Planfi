@@ -12,20 +12,19 @@ import styled, { css } from 'styled-components';
 import breakPointSize from 'utils/rwd';
 import Nav from 'components/atoms/Nav';
 import Loader from 'components/atoms/Loader';
-import { trainerTabs, clientTabs } from '../Users/ProfileTabs'
+import { profileTabs } from './ProfileTabs'
+import { Plans } from 'modules/Users/UserProfile/Plans';
+import { Users } from 'modules/Users/UserProfile/Users';
+import { UserDetailsViewModel } from '../../../src/Types/PlanfiApi/Models/ViewModels/UserDetailsViewModel';
+import TabItemComponent from 'components/molecules/TabItemComponent/TabItemComponent';
 
 const Container = styled.div`
   margin: auto;
   width: 74%;
-
-  @media screen and ${breakPointSize.xs} {
+  @media screen and (${breakPointSize.xs}) {
     width: 100%;
-
-    ${({ type }) => type === 'entry' && css`
-      width: calc(100% - 3.2rem);
-      margin: 0 1.6rem;
-    `
-  }
+    width: calc(100% - 3.2rem);
+    margin: 0 1.6rem;
   }
 `;
 
@@ -34,22 +33,20 @@ const ContainerCentred = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-export const User = (props) => {
+export const User = (props: { location: { state: { id: string; }; }; }) => {
 
-  const [user, setUser] = useState()
+  const [user, setUser] = useState<UserDetailsViewModel>()
   const [isLoading, setIsLoading] = useState(true);
-  const [toRender, setToRender] = useState(null);
-  const userId = props.location.state.id
-  const currentUser = JSON.parse((localStorage.getItem('user')));
+  const userId: string = props.location.state.id
 
   useEffect(() => {
-    getUserById(userId);
+    getUserById();
   }, []);
 
   const getUserById = () => {
     userService
       .getUserById(userId)
-      .then((data) => {
+      .then((data: UserDetailsViewModel) => {
         setUser(data);
         setIsLoading(false);
       })
@@ -57,8 +54,16 @@ export const User = (props) => {
       });
   };
 
-  const selectRole = () => {
-    return user && user.role.name === Role.User ? clientTabs : trainerTabs;
+  const renderTab = () => {
+
+    if (active === 1) {
+      return user && <Plans plans={user.userPlans} />;
+    }
+    if (active === 2) {
+      return user && <Users users={user.clientTrainers} />;
+    }
+    return null;
+
   }
 
   const [active, setActive] = useState(0);
@@ -76,26 +81,22 @@ export const User = (props) => {
                 {user && <UserInfo user={user} />}
               </ContainerCentred>
               <div className="tabs">
-                {/* {selectRole().map(({ id, icon, title }) => <TabItemComponent
-                  key={title}
-                  icon={icon}
-                  title={title}
-                  onItemClicked={() => setActive(id)}
-                  isActive={active === id}
-                />
-                )} */}
+                {profileTabs.map(({ id, icon, titleTrainer, titleClient }) =>
+                  <TabItemComponent
+                    key={user && user.roleName == "Trainer" ? titleTrainer : titleClient}
+                    icon={icon}
+                    title={user && user.roleName == "Trainer" ? titleTrainer : titleClient}
+                    onItemClicked={() => setActive(id)}
+                    isActive={active === id}
+                  />
+                )}
               </div>
               <div className="content">
-                {trainerTabs.map(({ id, content }) => {
-                  return active === id ? content : ''
-                })}
+                {renderTab()}
               </div>
             </Container>
           </Loader>
         </UserInfoBackground>
-        <Container type="entry">
-          {toRender}
-        </Container>
       </MyProfileTemplate>
     </>
   );

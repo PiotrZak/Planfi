@@ -9,5 +9,6 @@ namespace PlanfiApi.Data.Entities
         public int Times { get; set; }
         public int Weight { get; set; }
         public int Repeats { get; set; }
+        public string ExerciseId { get; set; }
     }
 }

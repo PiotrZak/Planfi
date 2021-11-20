@@ -3,6 +3,7 @@ using PlanfiApi.Data.Entities;
 
 namespace PlanfiApi.Models.ViewModels
 {
+    [GenerateTypeScriptInterface]
     public class ExerciseViewModel
     {
         public string ExerciseId { get; set; }

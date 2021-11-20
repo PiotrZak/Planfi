@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import React from 'react'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const IconsCode = {
   'ellipsis-h': 'e900',
@@ -28,46 +28,75 @@ const IconsCode = {
   'user-circle': 'e90c',
   cog: 'e918',
   'image-slash': 'e919',
-  'youtube': 'e920',
-};
+  youtube: 'e920',
+}
 
 const FontIcon = styled.span`
-    font-family: 'icomoon', sans-serif;
-    font-size: ${({ size }) => size};
-    color: ${({ fill }) => fill};
-    cursor: ${({ cursorType }) => cursorType};
-    speak: none;
+  font-family: 'icomoon', sans-serif;
+  font-size: ${({ size }) => size};
+  color: ${({ fill }) => fill};
+  cursor: ${({ cursorType }) => cursorType};
+  speak: none;
 
-    :before{
-      ${({ name }) => `content: "\\${IconsCode[name]}"`};
-    }
-  `;
+  :before {
+    ${({ name }) => `content: "\\${IconsCode[name]}"`};
+  }
+`
 
 const Icon = ({
-  size, fill, name, cursorType, ...rest
-// eslint-disable-next-line react/jsx-props-no-spreading
+  size,
+  fill,
+  name,
+  cursorType,
+  ...rest
+  // eslint-disable-next-line react/jsx-props-no-spreading
 }) => (
-  <FontIcon size={size} fill={fill} name={name} cursorType={cursorType} {...rest} />
-);
+  <FontIcon
+    size={size}
+    fill={fill}
+    name={name}
+    cursorType={cursorType}
+    {...rest}
+  />
+)
 
 Icon.propTypes = {
   name: PropTypes.oneOf([
-    'ellipsis-h', 'angle-down', 'angle-up', 'arrow-circle-right', 'arrow-left',
-    'arrow-right', 'check', 'check-circle', 'clipboard-notes', 'draggabledots',
-    'dumbbell', 'exclamation-triangle', 'heart', 'image-plus',
-    'list-ul', 'minus-circle', 'paperclip', 'plus', 'plus-circle',
-    'question-circle', 'search', 'union', 'user-circle',
-    'cog', 'image-slash',
+    'ellipsis-h',
+    'angle-down',
+    'angle-up',
+    'arrow-circle-right',
+    'arrow-left',
+    'arrow-right',
+    'check',
+    'check-circle',
+    'clipboard-notes',
+    'draggabledots',
+    'dumbbell',
+    'exclamation-triangle',
+    'heart',
+    'image-plus',
+    'list-ul',
+    'minus-circle',
+    'paperclip',
+    'plus',
+    'plus-circle',
+    'question-circle',
+    'search',
+    'union',
+    'user-circle',
+    'cog',
+    'image-slash',
   ]).isRequired,
   size: PropTypes.string,
   fill: PropTypes.string,
   cursorType: PropTypes.string,
-};
+}
 
 Icon.defaultProps = {
   size: '1.5rem',
   fill: ({ theme }) => theme.colorPrimary,
   cursorType: 'pointer',
-};
+}
 
-export default Icon;
+export default Icon

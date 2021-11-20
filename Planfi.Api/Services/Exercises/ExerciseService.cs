@@ -34,15 +34,11 @@ namespace PlanfiApi.Services.Exercises
         public async Task<ExerciseViewModel> GetById(string id)
         {
             var baseExercise = await GetBaseExercise(id);
+            if (!IsGuid(baseExercise.Name)) return baseExercise;
+            
+            var planExercise = await GetSerializedExercise(id);
+            return planExercise;
 
-            
-            if(IsGuid(baseExercise.Name))
-            {
-                var planExercise = await GetSerializedExercise(id);
-                return planExercise;
-            }
-            
-            return baseExercise;
         }
         
         public static bool IsGuid(string value)
@@ -84,8 +80,7 @@ namespace PlanfiApi.Services.Exercises
 	                e.name,
 	                c.title as CategoryName,
 	                c.category_id as CategoryId,
-	                e.description,
-	                e.files
+	                e.description
 	                FROM public.exercises as e
 	                JOIN public.categories as c
 	                ON e.category_id = c.category_id

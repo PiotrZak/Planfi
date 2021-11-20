@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components'
 
 const handleCenterPlace = (place) => {
   switch (place) {
@@ -9,22 +9,22 @@ const handleCenterPlace = (place) => {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;          
-      `;
+        flex-direction: column;
+      `
     case 'authForm':
       return css`
         display: flex;
         height: calc(100vh - 12rem);
         flex-direction: column;
         justify-content: center;
-      `;
+      `
     default:
-      return null;
+      return null
   }
-};
+}
 
 const Center = styled.div`
   ${({ place }) => handleCenterPlace(place)};
-`;
+`
 
-export default Center;
+export default Center

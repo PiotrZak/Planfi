@@ -1,5 +1,5 @@
-import { http } from "./http.service";
-import { USER_URL } from "./utils"
+import { http } from './http.service'
+import { USER_URL } from './utils'
 
 export const userService = {
     activate,
@@ -39,8 +39,10 @@ export const userService = {
     return http.put(`${USER_URL}${id}`, body);
   }
 
+
+  // get user details with plans 
   function getUserById(id) {
-    return http.get(`${USER_URL}${id}`);
+    return http.get(`${USER_URL}details/${id}`);
   }
 
   function getUserByRole(role) {

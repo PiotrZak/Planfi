@@ -111,9 +111,6 @@ namespace PlanfiApi.Controllers.Exercises
         {
             var exercise = await _exerciseService.GetById(id);
 
-            if (exercise == null)
-                return NotFound();
-
             return Ok(exercise);
         }
 

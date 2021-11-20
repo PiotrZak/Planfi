@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlanfiApi.Data.Entities;
-using PlanfiApi.Models;
+using PlanfiApi.Models.ViewModels;
 using WebApi.Models;
 
 namespace PlanfiApi.Interfaces
@@ -9,6 +9,7 @@ namespace PlanfiApi.Interfaces
     public interface IPlanService
     {
         Task<List<ResultPlan>> GetUserPlans(string? userId);
+        Task<List<ResultPlan>> GetTrainerPlans(string? userId);
         Task<List<Plan>> GetByIds(string[] ids);
         Task<Plan> GetById(string id);
         Task<Plan> Create(Plan plan);

@@ -1,5 +1,6 @@
 namespace PlanfiApi.Models.ViewModels
 {
+    [GenerateTypeScriptInterface]
     public class CategoryViewModel
     {
         public string CategoryId { get; set; }

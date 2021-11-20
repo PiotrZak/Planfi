@@ -60,6 +60,7 @@ jobs:
             --region "$RUN_REGION" \
             --image "eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api" \
             --platform "managed" \
+            --memory "4092Mi" \
             --port 9001
 
       - name: Cloud run serve traffic
