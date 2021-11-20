@@ -18,7 +18,8 @@ namespace PlanfiApi.Services.Files
     public class FileService : IFileService
     {
         private readonly IWebHostEnvironment _environment;
-        private readonly string _bucketName = "planfi-movies";
+        private readonly string _movieBucketName = "planfi-movies";
+        private readonly string _filesBucketName = "planfi-files";
 
         public FileService(DataContext context, IWebHostEnvironment environment)
         {
@@ -55,45 +56,59 @@ namespace PlanfiApi.Services.Files
         {
             var filesList = new List<byte[]>();
 
-            if (files != null)
+            //todo - only one movie per exercise for now.
+            foreach (var (formFile, iterator) in files.Select((c, i) => (c, i)))
             {
-                //todo - only one movie per exercise for now.
-                foreach (var (formFile, iterator) in files.Select((c, i) => (c, i)))
-                {
-                    if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
-                    {
-                        var ext = Path.GetExtension(formFile.FileName);
-                        await using var memoryStream = new MemoryStream();
-                        await formFile.CopyToAsync(memoryStream);
-                        var fileNameWithExtensionAndNumber = fileName+1+ext;
+              if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
+              {
+                var ext = Path.GetExtension(formFile.FileName);
+                await using var memoryStream = new MemoryStream();
+                await formFile.CopyToAsync(memoryStream);
+                var fileNameWithExtensionAndNumber = fileName+1+ext;
                         
-                        var path = await SaveMovieToDirectory(formFile, fileNameWithExtensionAndNumber);
-                        await SaveMovieToGoogleStorage(fileNameWithExtensionAndNumber, path);
-                        filesList.Add(Encoding.ASCII.GetBytes(ext));
-                    }
-                    else
-                    {
-                        await using var memoryStream = new MemoryStream();
-                        await formFile.CopyToAsync(memoryStream);
-                        filesList.Add(memoryStream.ToArray());
-                    }
-                }
+                var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Movie);
+                await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileType.Movie);
+                filesList.Add(Encoding.ASCII.GetBytes(ext));
+              }
+              else
+              {
+                var ext = Path.GetExtension(formFile.FileName);
+                await using var memoryStream = new MemoryStream();
+                await formFile.CopyToAsync(memoryStream);
+                var fileNameWithExtensionAndNumber = fileName+1+ext;
+                
+                var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Image);
+                await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileType.Image);
+                filesList.Add(Encoding.ASCII.GetBytes(ext));
+              }
             }
 
             return filesList;
         }
-        
-        public async Task<string> SaveMovieToDirectory(IFormFile formFile, string name)
+
+        public enum FileType
         {
-            var path = Path.Combine(_environment.WebRootPath, "Movies");
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            var fileName = Path.GetFileName(name);
-            await using var stream = new FileStream(Path.Combine(path, fileName), FileMode.Create);
-            await formFile.CopyToAsync(stream);
-            return Path.Combine(path, fileName);
+          Movie,
+          Image
+        }
+        
+        public async Task<string> SaveFileToDirectory(IFormFile formFile, string name, FileType type)
+        {
+          string path = type switch
+          {
+            FileType.Image => Path.Combine(_environment.WebRootPath, "Images"),
+            FileType.Movie => Path.Combine(_environment.WebRootPath, "Movies"),
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+          };
+
+          if (!Directory.Exists(path))
+          {
+            Directory.CreateDirectory(path);
+          }
+          var fileName = Path.GetFileName(name);
+          await using var stream = new FileStream(Path.Combine(path, fileName), FileMode.Create);
+          await formFile.CopyToAsync(stream);
+          return Path.Combine(path, fileName);
         }
 
         private GZipStream CompressThis (string path, string fileName)
@@ -105,26 +120,42 @@ namespace PlanfiApi.Services.Files
             return output;
         }
 
-        public async Task SaveMovieToGoogleStorage(string fileName, string path)
+        public async Task SaveFileToGoogleStorage(string fileName, string path, FileType type)
         {
             var gcsStorage = await StorageClient.CreateAsync();
             var stream = new FileStream(path, FileMode.Open);
-            var isExist = IsObjectExist(fileName);
+            var isExist = IsObjectExist(fileName, type);
             
             if (!isExist)
             {
-                await gcsStorage.UploadObjectAsync(_bucketName, fileName, null, stream);
+              var uploadObjectAsync = type switch
+              {
+                FileType.Image => await gcsStorage.UploadObjectAsync(_filesBucketName, fileName, null, stream),
+                FileType.Movie => await gcsStorage.UploadObjectAsync(_movieBucketName, fileName, null, stream),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+              };
             }
         }
-
-        public async Task DeleteMovieFromGoogleStorage(string fileName)
+        
+        public async Task DeleteFileFromGoogleStorage(string fileName, FileType type)
         {
             var storage = await StorageClient.CreateAsync();
 
-            var isExist = IsObjectExist(fileName);
+            var isExist = IsObjectExist(fileName, type);
             if (isExist)
             {
-                await storage.DeleteObjectAsync(_bucketName, fileName);
+              switch(type)
+              {
+                case FileType.Movie:
+                  await storage.DeleteObjectAsync(_movieBucketName, fileName);
+                  break;
+                case FileType.Image:
+                  await storage.DeleteObjectAsync(_filesBucketName, fileName);
+                  break;
+                default:
+                  throw new ArgumentOutOfRangeException(nameof(type), type, null);
+              }
+                  
             }
         }
 
@@ -133,18 +164,30 @@ namespace PlanfiApi.Services.Files
             for (var i = 0; i < filesToDelete.Count; i++)
             {
                 var result = Encoding.UTF8.GetString(filesToDelete[i]);
-                if (result.Length >= 10) continue;
+                if (result.Length >= 10)
+                {
+                  await DeleteFileFromGoogleStorage(exerciseName + 1 + result, FileType.Image);
+                }
+                else
+                {
+                  await DeleteFileFromGoogleStorage(exerciseName + 1 + result, FileType.Movie);
+                }
                 
-                await DeleteMovieFromGoogleStorage(exerciseName + 1 + result);
             }
         }
 
-        private bool IsObjectExist(string objectName)
+        private bool IsObjectExist(string objectName, FileType type)
         {
             try
             {
                 var client = StorageClient.Create();
-                client.GetObject(_bucketName, objectName);
+                var isExist = type switch
+                {
+                  FileType.Image => client.GetObject(_filesBucketName, objectName),
+                  FileType.Movie => client.GetObject(_movieBucketName, objectName),
+                  _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+                };
+
                 return true;
             }
             catch (Exception e)
@@ -157,9 +200,9 @@ namespace PlanfiApi.Services.Files
     public interface IFileService
     {
         Task<List<byte[]>> ProcessFileExercise(List<IFormFile> files, string fileName);
-        Task<string> SaveMovieToDirectory(IFormFile formFile, string name);
-        Task SaveMovieToGoogleStorage(string fileName, string path);
-        Task DeleteMovieFromGoogleStorage(string fileName);
+        Task<string> SaveFileToDirectory(IFormFile formFile, string name, FileService.FileType type);
+        Task SaveFileToGoogleStorage(string fileName, string path, FileService.FileType type);
+        Task DeleteFileFromGoogleStorage(string fileName, FileService.FileType type);
         Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles);
     }
 }

@@ -13,6 +13,10 @@ export const acceptedImageFileType = [
   "image/jpg",
   "image/png",
   "image/gif",
+  ".png",
+  ".jpg",
+  ".jpeg",
+  ".gif",
 ];
 export const acceptedVideoFileType = [
   "video/mp4",

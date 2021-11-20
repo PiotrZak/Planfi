@@ -99,7 +99,7 @@ export const RenderType = ({
             avatarUrl={element.file}
             onClick={() => redirectToItem(possibleTypes.exercises, element.exerciseId)}
             headline={element.name}
-            subline={element.series ? `${element.series}  /  ${element.repeats}` : undefined}
+            subline={element.series ? `${element.series.length} serie` : undefined}
             exercise={element}
           />
         );

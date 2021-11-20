@@ -6,10 +6,8 @@ using PlanfiApi.Models.ViewModels;
 
 namespace PlanfiApi.Interfaces
 {
-    //todo - rethink bussiness value
-    
     public interface IExerciseService
-    {
+      {
         Task<ExerciseViewModel> GetById(string id);
         Exercise Create(Exercise exercise);
         Exercise CreateInstance(Exercise exercise);

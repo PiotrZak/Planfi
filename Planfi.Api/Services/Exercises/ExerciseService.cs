@@ -306,7 +306,8 @@ namespace PlanfiApi.Services.Exercises
                     .Select(file => Encoding.Default.GetString(file))
                     .Where(ext => ext is ".mp4" or ".mov" or ".avi" or "quicktime"))
                 {
-                    await _fileService.DeleteMovieFromGoogleStorage(exercises[i].Name + 1 + ext);
+                    //todo!
+                    //await _fileService.DeleteMovieFromGoogleStorage(exercises[i].Name + 1 + ext);
                 }
             }
 

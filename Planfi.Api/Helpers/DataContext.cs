@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
@@ -128,7 +129,7 @@ namespace PlanfiApi.Helpers
             modelBuilder.Entity<Exercise>().HasData(
                 new Exercise
                 {
-                    ExerciseId = "a",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Podciąganie nad chwyt",
                     Description = "W podciąganiu na drążku podchwytem, sam chwyt nie różni się od tego w innych ćwiczeniach wielostawowych z obciążeniem. Podchwyt to oczywiście ustawienie rąk w supinacji, czyli wewnętrzną częścią dłoni w naszą stronę. Drążek chwytamy jak najmocniej i oplatając go kciukiem.",
                     Series = null,
@@ -137,7 +138,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "b",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Przysiady ze sztangą (high bar)",
                     Description = "Nasze mięśnie czworogłowe dają z siebie wszystko już na samym dole przysiadu, jako że przy siadach high bar ciężar jest mniejszy, kolana mogą wysunąć się trochę bardziej do przodu, bo moment siły potrzebny do wyprostowania kolana jest taki sam, jak przy siadzie low bar z cięższą sztangą.",
                     Series = null,
@@ -146,7 +147,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "c",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Glut bridge jednorożec",
                     Description = "Hip thrust, czyli wypychanie bioder w podporze grzbietem o ławeczkę oraz glute bridge, czyli unoszenie bioder w pozycji leżącej to aktualnie jedne z najskuteczniejszych ćwiczeń na mięśnie pośladkowe!",
                     Series = null,
@@ -155,7 +156,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "d",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Deska bokiem",
                     Description = "Utrzymuj prawidłową pozycję wyjściową, napinaj mocno mięśnie nóg, pośladki oraz brzuch, utrzymaj pozycję przez wyznaczony czas, wykonaj izometryczny skurcz mięśni oraz oddychaj głęboko.",
                     Series = null,
@@ -164,7 +165,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "e",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Spiętki",
                     Description = "Dziękuję bardzo za odpowiedź! czy mogę wykonywać wznosy bokiem hantlami bo chce zacząć chodzić na siłownie,mialem przerwę i chce znowu zacząć chodzić. Czy jakoś te wznosy mogą przyhamowac wzrost czy coś i czy mogę je wykonywać?",
                     Series = null,
@@ -174,7 +175,7 @@ namespace PlanfiApi.Helpers
 
                 new Exercise
                  {
-                    ExerciseId = "f",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Spacer farmera",
                     Description = "Spacer farmera (ang. Farmer's Walk) – konkurencja zawodów siłaczy. Zadaniem zawodnika jest podniesienie z podłoża dwóch ciężarów (tzw. „walizek”) – po jednym w każdej z dłoni – i pokonaniu z obydwoma dystansu.",
                     Series = null,
@@ -183,7 +184,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "g",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Martwy ciąg sumo",
                     Description = "",
                     Series = null,
@@ -192,7 +193,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "h",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Martwy Ciąg",
                     Description = "Najprościej można powiedzieć, że martwy ciąg klasyczny wykonujemy rozstawiając nogi na szerokość bioder, a martwy ciąg sumo robimy na nogach rozstawionych szeroko, pilnując, aby ręce znajdowały się wewnątrz ich nawisu.",
                     Series = null,
@@ -201,7 +202,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "i",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Uginanie na łydki stojąc",
                     Description = "W pozycji górnej ćwiczenia napnij łydki.Powoli opuść się z powrotem do pozycji wyjściowej, abyś czuł pełne rozciąganie w łydkach.Nie uginaj kolan, by wytworzyć pęd podczas unoszenia się na palcach stóp.",
                     Series = null,
@@ -210,7 +211,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "j",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Wyciskanie na płaskiej",
                     Description = "1) Połóż się na ławce płaskiej. 2) Stopy ustaw w lekkim rozkroku i mocno zaprzyj o podłoże. 3) Chwyć sztangę nachwytem (palce wskazują przód, kciuki skierowane do środka) na taką szerokość, aby w połowie wykonywania ruchu kąt między ramieniem a przedramieniem wynosił 90 stopni.",
                     Series = null,
@@ -219,7 +220,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "k",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Wznosy bokiem",
                     Description = "Wznosy bokiem, wznosy sztangielek bokiem, lub odwodzenie ramion w bok ze sztangielkami (ang. Shoulder Fly, dumbbell deltoid raise) - ćwiczenie fizyczne polegające na podnoszeniu ramionami ciężaru (najczęściej hantli) stosowane podczas treningu kulturystycznego.",
                     Series = null,
@@ -228,7 +229,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "l",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Martwy ciąg sumo",
                     Description = "Najprościej można powiedzieć, że martwy ciąg klasyczny wykonujemy rozstawiając nogi na szerokość bioder, a martwy ciąg sumo robimy na nogach rozstawionych szeroko, pilnując, aby ręce znajdowały się wewnątrz ich nawisu.",
                     Series = null,
@@ -237,7 +238,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "m",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Uginanie na dwójki na maszynie",
                     Description = "1) Zajmij miejsce na maszynie, dostosowując ją do swojego wzrostu.Kończyny dolne wyprostowane, wałek maszyny znajduje się kilka centymetrów poniżej łydek.Chwyć za uchwyty znajdujące się po bokach siedziska.",
                     Series = null,
@@ -246,7 +247,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "n",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Uginanie na łydki stojąc",
                     Description = " Z pozycji, w której stopa jest mocno zadarta do góry, pięta skrajnie obniżona, palce wskazują sufit, a łydka jest mocno rozciągnięta, odpychaj się od podwyższenia poprzez mocne wspięcie na palce i napięcie łydek.",
                     Series = null,
@@ -255,7 +256,7 @@ namespace PlanfiApi.Helpers
                 },
                 new Exercise
                 {
-                    ExerciseId = "o",
+                    ExerciseId = Guid.NewGuid().ToString(),
                     Name = "Triceps",
                     Description = "musculus triceps brachii) - mięsień zajmujący całą powierzchnię tylną ramienia i należący do tylnej grupy mięśni ramienia, rozpięty między łopatką i kością",
                     Series = null,
