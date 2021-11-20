@@ -56,7 +56,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
   const { theme } = useThemeContext();
   // @ts-ignore-start
   const user = JSON.parse((localStorage.getItem('user')));
-    // @ts-ignore-end
+  // @ts-ignore-end
   const [active, setActive] = useState(0);
   const [updatedUser, setUpdatedUser] = useState(user);
   const [bottomSheet, setBottomSheet] = useState<string | SetStateAction<string> | any>('none');
