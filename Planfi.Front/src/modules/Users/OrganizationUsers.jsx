@@ -1,43 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { commonUtil } from 'utils/common.util';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import { useUserContext } from 'support/context/UserContext';
-import { userService } from 'services/userServices';
-import GlobalTemplate from 'templates/GlobalTemplate';
-import { useThemeContext } from 'support/context/ThemeContext';
-import SmallButton from 'components/atoms/SmallButton';
-import { translate } from 'utils/Translation';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import Loader from 'components/atoms/Loader';
-import Nav from 'components/atoms/Nav';
-import Search from 'components/molecules/Search';
-import styled from 'styled-components';
-import Heading from 'components/atoms/Heading';
-import { organizationService } from 'services/organizationServices';
-import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers';
-import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan';
-import { UsersPanel } from './micromodules/UsersPanel';
-import InviteUserModal from './InviteUsersModal';
+import React, { useState, useEffect } from 'react'
+import { commonUtil } from 'utils/common.util'
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric'
+import { useUserContext } from 'support/context/UserContext'
+import { userService } from 'services/userServices'
+import GlobalTemplate from 'templates/GlobalTemplate'
+import { useThemeContext } from 'support/context/ThemeContext'
+import SmallButton from 'components/atoms/SmallButton'
+import { translate } from 'utils/Translation'
+import {
+  useNotificationContext,
+  ADD,
+} from 'support/context/NotificationContext'
+import Loader from 'components/atoms/Loader'
+import Nav from 'components/atoms/Nav'
+import Search from 'components/molecules/Search'
+import styled from 'styled-components'
+import Heading from 'components/atoms/Heading'
+import { organizationService } from 'services/organizationServices'
+import { AssignUsersToTrainers } from './micromodules/AssignUsersToTrainers'
+import { AssignUsersToPlans } from './micromodules/AssignUsersToPlan'
+import { UsersPanel } from './micromodules/UsersPanel'
+import InviteUserModal from './InviteUsersModal'
 
 const Container = styled.div`
-  margin-bottom: .8rem;
-`;
+  margin-bottom: 0.8rem;
+`
 
 const OrganizationUsers = () => {
-  const { theme } = useThemeContext();
-  const { user } = useUserContext();
-  const { notificationDispatch } = useNotificationContext();
+  const { theme } = useThemeContext()
+  const { user } = useUserContext()
+  const { notificationDispatch } = useNotificationContext()
 
-  const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeUsers, setActiveUsers] = useState([]);
+  const [users, setUsers] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [activeUsers, setActiveUsers] = useState([])
 
-  const [bottomSheet, setBottomSheet] = useState('none');
-  const [assignPlan, setAssignPlan] = useState('none');
-  const [assignTrainer, setAssignTrainer] = useState('none');
+  const [bottomSheet, setBottomSheet] = useState('none')
+  const [assignPlan, setAssignPlan] = useState('none')
+  const [assignTrainer, setAssignTrainer] = useState('none')
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [openInviteUserModal, setOpenInviteUserModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const [openInviteUserModal, setOpenInviteUserModal] = useState(false)
 
   const deleteUser = () => {
     userService
@@ -49,7 +52,7 @@ const OrganizationUsers = () => {
             content: { success: 'OK', message: translate('UserDeleted') },
             type: 'positive',
           },
-        });
+        })
       })
       .catch((error) => {
         notificationDispatch({
@@ -58,73 +61,79 @@ const OrganizationUsers = () => {
             content: { error, message: translate('ErrorAlert') },
             type: 'error',
           },
-        });
-      });
-  };
+        })
+      })
+  }
 
   const getAllUsers = () => {
-    setIsLoading(true);
+    setIsLoading(true)
     organizationService
       .getOrganizationUsers(user.organizationId)
       .then((data) => {
-        setUsers(data);
-        setIsLoading(false);
+        setUsers(data)
+        setIsLoading(false)
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
   useEffect(() => {
-    getAllUsers();
-  }, []);
+    getAllUsers()
+  }, [])
 
   const submissionHandleElement = (selectedData) => {
-    const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId');
-    setActiveUsers(selectedUsers);
+    const selectedUsers = commonUtil.getCheckedData(selectedData, 'userId')
+    setActiveUsers(selectedUsers)
     if (selectedUsers.length > 0) {
-      setBottomSheet('flex');
+      setBottomSheet('flex')
     } else {
-      setBottomSheet('none');
-      setAssignPlan('none');
+      setBottomSheet('none')
+      setAssignPlan('none')
     }
-  };
+  }
 
   const filterUsers = (event) => {
-    setSearchTerm(event.target.value);
-  };
+    setSearchTerm(event.target.value)
+  }
 
   const results = !searchTerm
     ? users
     : users.filter((User) => {
-      const userName = `${User.firstName} ${User.lastName}`;
+        const userName = `${User.firstName} ${User.lastName}`
 
-      return userName.toLowerCase().includes(searchTerm.toLowerCase());
-    });
+        return userName.toLowerCase().includes(searchTerm.toLowerCase())
+      })
 
   return (
     <>
       <GlobalTemplate>
         <Nav>
           <Heading>{translate('Trainers')}</Heading>
-          <SmallButton iconName="plus" onClick={() => setOpenInviteUserModal(true)} />
+          <SmallButton
+            iconName="plus"
+            onClick={() => setOpenInviteUserModal(true)}
+          />
         </Nav>
-        <InviteUserModal openModal={openInviteUserModal} onClose={() => setOpenInviteUserModal(false)} />
+        <InviteUserModal
+          openModal={openInviteUserModal}
+          onClose={() => setOpenInviteUserModal(false)}
+        />
         <Container>
           <Search placeholder={translate('Find')} callBack={filterUsers} />
         </Container>
-          <Loader isLoading={isLoading}>
-            {users
-              ? (
-                <CheckboxGenericComponent
-                  dataType="users"
-                  displayedValue="firstName"
-                  dataList={results}
-                  onSelect={submissionHandleElement}
-                />
-              )
-              : <h1>{translate('NoUsers')}</h1>}
-          </Loader>
+        <Loader isLoading={isLoading}>
+          {users ? (
+            <CheckboxGenericComponent
+              dataType="users"
+              displayedValue="firstName"
+              dataList={results}
+              onSelect={submissionHandleElement}
+            />
+          ) : (
+            <h1>{translate('NoUsers')}</h1>
+          )}
+        </Loader>
       </GlobalTemplate>
       <UsersPanel
         deleteUser={deleteUser}
@@ -154,7 +163,7 @@ const OrganizationUsers = () => {
         activeUsers={activeUsers}
       />
     </>
-  );
-};
+  )
+}
 
-export default OrganizationUsers;
+export default OrganizationUsers

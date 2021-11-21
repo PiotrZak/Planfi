@@ -15,9 +15,9 @@ const Wrapper = styled.div`
 `
 
 interface IBackTopNav {
-  text: any,
-  history: any,
-  route: any,
+  text: any
+  history: any
+  route: any
 }
 
 const BackTopNav = ({ text, history, route }: any) => {

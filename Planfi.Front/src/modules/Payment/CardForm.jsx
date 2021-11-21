@@ -1,54 +1,54 @@
-import React, { useMemo } from "react";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import React, { useMemo } from 'react'
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 
-import useResponsiveFontSize from "../../useResponsiveFontSize";
+import useResponsiveFontSize from '../../useResponsiveFontSize'
 
 const useOptions = () => {
-  const fontSize = useResponsiveFontSize();
+  const fontSize = useResponsiveFontSize()
   const options = useMemo(
     () => ({
       style: {
         base: {
           fontSize,
-          color: "#424770",
-          letterSpacing: "0.025em",
-          fontFamily: "Source Code Pro, monospace",
-          "::placeholder": {
-            color: "#aab7c4"
-          }
+          color: '#424770',
+          letterSpacing: '0.025em',
+          fontFamily: 'Source Code Pro, monospace',
+          '::placeholder': {
+            color: '#aab7c4',
+          },
         },
         invalid: {
-          color: "#9e2146"
-        }
-      }
+          color: '#9e2146',
+        },
+      },
     }),
     [fontSize]
-  );
+  )
 
-  return options;
-};
+  return options
+}
 
 const CardForm = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const options = useOptions();
+  const stripe = useStripe()
+  const elements = useElements()
+  const options = useOptions()
 
-  const handleSubmit = async event => {
-    event.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault()
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet. Make sure to disable
       // form submission until Stripe.js has loaded.
-      return;
+      return
     }
 
     const payload = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement)
-    });
+      type: 'card',
+      card: elements.getElement(CardElement),
+    })
 
-    console.log("[PaymentMethod]", payload);
-  };
+    console.log('[PaymentMethod]', payload)
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -57,16 +57,16 @@ const CardForm = () => {
         <CardElement
           options={options}
           onReady={() => {
-            console.log("CardElement [ready]");
+            console.log('CardElement [ready]')
           }}
-          onChange={event => {
-            console.log("CardElement [change]", event);
+          onChange={(event) => {
+            console.log('CardElement [change]', event)
           }}
           onBlur={() => {
-            console.log("CardElement [blur]");
+            console.log('CardElement [blur]')
           }}
           onFocus={() => {
-            console.log("CardElement [focus]");
+            console.log('CardElement [focus]')
           }}
         />
       </label>
@@ -74,7 +74,7 @@ const CardForm = () => {
         Pay
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default CardForm;
+export default CardForm

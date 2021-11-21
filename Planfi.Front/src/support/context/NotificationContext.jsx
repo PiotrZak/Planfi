@@ -1,15 +1,14 @@
-import React, { createContext, useReducer, useContext } from 'react';
-import { createPortal } from 'react-dom';
-import Alert from 'components/molecules/Alert';
+import React, { createContext, useReducer, useContext } from 'react'
+import { createPortal } from 'react-dom'
+import Alert from 'components/molecules/Alert'
 
+export const NotificationContext = createContext()
 
-export const NotificationContext = createContext();
+const initialState = []
 
-const initialState = [];
-
-export const ADD = 'ADD';
-export const REMOVE = 'REMOVE';
-export const REMOVE_ALL = 'REMOVE_ALL';
+export const ADD = 'ADD'
+export const REMOVE = 'REMOVE'
+export const REMOVE_ALL = 'REMOVE_ALL'
 
 export const NotificationReducer = (state, action) => {
   switch (action.type) {
@@ -21,26 +20,29 @@ export const NotificationReducer = (state, action) => {
           content: action.payload.content,
           type: action.payload.type,
         },
-      ];
+      ]
     case REMOVE:
-      return state.filter((t) => t.id !== action.payload.id);
+      return state.filter((t) => t.id !== action.payload.id)
     case REMOVE_ALL:
-      return initialState;
+      return initialState
     default:
-      return state;
+      return state
   }
-};
+}
 
 export const NotificationProvider = (props) => {
-  const [notification, notificationDispatch] = useReducer(NotificationReducer, initialState);
-  const notificationData = { notification, notificationDispatch };
+  const [notification, notificationDispatch] = useReducer(
+    NotificationReducer,
+    initialState
+  )
+  const notificationData = { notification, notificationDispatch }
 
   return (
     <NotificationContext.Provider value={notificationData}>
       {props.children}
       {createPortal(<Alert notification={notification} />, document.body)}
     </NotificationContext.Provider>
-  );
-};
+  )
+}
 
-export const useNotificationContext = () => useContext(NotificationContext);
+export const useNotificationContext = () => useContext(NotificationContext)
