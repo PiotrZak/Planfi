@@ -1,61 +1,61 @@
-import React, { useState, useCallback } from "react";
-import styled from "styled-components";
-import BackTopNav from "components/molecules/BackTopNav";
-import { translate } from "utils/Translation";
-import AddCategoryModal from "modules/Categories/AddCategoryModal";
-import Button from "components/atoms/Button";
-import Paragraph from "components/atoms/Paragraph";
-import Label from "components/atoms/Label";
-import Input from "components/molecules/Input";
-import { Formik, Field, Form } from "formik";
-import * as Yup from "yup";
-import { useQuery, gql } from '@apollo/client';
-import { useThemeContext } from "support/context/ThemeContext";
-import { routes } from "utils/routes";
-import AttachmentPreview from "components/molecules/AttachmentPreview";
-import Nav from "components/atoms/Nav";
-import TextArea from "components/molecules/TextArea";
+import React, { useState, useCallback } from 'react'
+import styled from 'styled-components'
+import BackTopNav from 'components/molecules/BackTopNav'
+import { translate } from 'utils/Translation'
+import AddCategoryModal from 'modules/Categories/AddCategoryModal'
+import Button from 'components/atoms/Button'
+import Paragraph from 'components/atoms/Paragraph'
+import Label from 'components/atoms/Label'
+import Input from 'components/molecules/Input'
+import { Formik, Field, Form } from 'formik'
+import * as Yup from 'yup'
+import { useQuery, gql } from '@apollo/client'
+import { useThemeContext } from 'support/context/ThemeContext'
+import { routes } from 'utils/routes'
+import AttachmentPreview from 'components/molecules/AttachmentPreview'
+import Nav from 'components/atoms/Nav'
+import TextArea from 'components/molecules/TextArea'
 import {
   useNotificationContext,
   ADD,
-} from "support/context/NotificationContext";
-import GlobalTemplate from "templates/GlobalTemplate";
-import { useHistory } from "react-router-dom";
-import { withLazyComponent } from "utils/lazyComponent";
-import Loader from "components/atoms/Loader";
+} from 'support/context/NotificationContext'
+import GlobalTemplate from 'templates/GlobalTemplate'
+import { useHistory } from 'react-router-dom'
+import { withLazyComponent } from 'utils/lazyComponent'
+import Loader from 'components/atoms/Loader'
 import {
   acceptedFiles,
   acceptedImageFileType,
   maxPhotoSize,
   maxVideoSize,
   acceptedVideoFileType,
-} from "support/magicVariables";
-import axios from "axios";
-import { EXERCISES_URL } from "../../../services/utils";
+} from 'support/magicVariables'
+import axios from 'axios'
+import { EXERCISES_URL } from '../../../services/utils'
 import { DropdownInput } from 'components/atoms/Dropdown'
-import SmallButton from "components/atoms/SmallButton";
+import SmallButton from 'components/atoms/SmallButton'
 import Cookies from 'js-cookie'
 
 const Checkbox = withLazyComponent(
-  React.lazy(() => import("components/atoms/Checkbox"))
-);
+  React.lazy(() => import('components/atoms/Checkbox'))
+)
 const AddFiles = withLazyComponent(
-  React.lazy(() => import("components/molecules/AddFiles"))
-);
+  React.lazy(() => import('components/molecules/AddFiles'))
+)
 
 const StyledTextArea = styled(TextArea)`
   height: 28.3rem;
-`;
+`
 
 const ContainerDescription = styled.div`
   margin-top: 2rem;
-`;
+`
 
 const CheckboxContainer = styled.div`
   display: flex;
   margin-top: 2rem;
   align-items: center;
-`;
+`
 
 const ImagePreviewContainer = styled.div`
   margin-top: 2rem;
@@ -63,37 +63,37 @@ const ImagePreviewContainer = styled.div`
   grid-template-columns: repeat(4, 5rem);
   grid-template-rows: 5rem;
   grid-gap: 0.8rem;
-`;
+`
 
 const triggerFileUploadButton = () => {
-  document.getElementById("choose-file-button").click();
-};
+  document.getElementById('choose-file-button').click()
+}
 
 const validationSchema = Yup.object({
-  exerciseName: Yup.string().required(translate("ThisFieldIsRequired")),
-  exerciseDescription: Yup.string()
-});
+  exerciseName: Yup.string().required(translate('ThisFieldIsRequired')),
+  exerciseDescription: Yup.string(),
+})
 
 const ProgressBar = ({ bgcolor, progress, height }) => {
   const Parentdiv = {
     height: height,
-    width: "100%",
-    backgroundColor: "whitesmoke",
-  };
+    width: '100%',
+    backgroundColor: 'whitesmoke',
+  }
 
   const Childdiv = {
-    height: "100%",
+    height: '100%',
     width: `${progress}%`,
     backgroundColor: bgcolor,
-  };
+  }
 
   const Center = {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
-    fontSize: "1.6rem",
-  };
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    fontSize: '1.6rem',
+  }
 
   return (
     <div style={Parentdiv}>
@@ -107,20 +107,20 @@ const ProgressBar = ({ bgcolor, progress, height }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const AddExerciseRefactor = (props) => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const { notificationDispatch } = useNotificationContext();
-  const { theme } = useThemeContext();
-  const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [selectedFiles, setSelectedFiles] = useState([])
+  const [loading, setLoading] = useState(false)
+  const { notificationDispatch } = useNotificationContext()
+  const { theme } = useThemeContext()
+  const [uploadPercentage, setUploadPercentage] = useState(0)
 
   const [selectedCategoryId, setSelectedCategoryId] = useState()
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false)
 
-  const user = JSON.parse((localStorage.getItem('user')));
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const CATEGORY = gql`{
     categories(where: {organizationId: "${user.organizationId}"})
@@ -130,101 +130,100 @@ const AddExerciseRefactor = (props) => {
         exercises
     }
   }
-`;
+`
 
-  const { loadingCategory, error, data, refetch: _refetch } = useQuery(CATEGORY);
+  const { loadingCategory, error, data, refetch: _refetch } = useQuery(CATEGORY)
 
   const refreshData = useCallback(() => {
-    setTimeout(() => _refetch(), 200);
-  }, [_refetch]);
-
+    setTimeout(() => _refetch(), 200)
+  }, [_refetch])
 
   const fileNotification = (message) => {
     notificationDispatch({
       type: ADD,
       payload: {
-        content: { success: "OK", message },
-        type: "error",
+        content: { success: 'OK', message },
+        type: 'error',
       },
-    });
-  };
+    })
+  }
 
-  const history = useHistory();
+  const history = useHistory()
 
   const resetFileInput = () => {
-    document.getElementById("choose-file-button").value = "";
-  };
+    document.getElementById('choose-file-button').value = ''
+  }
 
   const onSubmit = (values) => {
-    const formData = new FormData();
-    formData.append("Name", values.exerciseName);
-    formData.append("Description", values.exerciseDescription);
+    const formData = new FormData()
+    formData.append('Name', values.exerciseName)
+    formData.append('Description', values.exerciseDescription)
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append("Files", selectedFiles[i]);
+      formData.append('Files', selectedFiles[i])
     }
-    formData.append("CategoryId", selectedCategoryId);
+    formData.append('CategoryId', selectedCategoryId)
 
-    setLoading(true);
+    setLoading(true)
 
     const options = {
       headers: { Authorization: `Bearer ${Cookies.get('JWT')}` },
 
       onUploadProgress: (progressEvent) => {
-        const { loaded, total } = progressEvent;
-        let percent = Math.floor((loaded * 100) / total);
-        console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+        const { loaded, total } = progressEvent
+        let percent = Math.floor((loaded * 100) / total)
+        console.log(`${loaded}kb of ${total}kb | ${percent}%`)
 
         if (percent < 100) {
-          setUploadPercentage(percent);
+          setUploadPercentage(percent)
         }
       },
-    };
+    }
 
-//carefull todo - there is authorization outside of http layer - cause there is onUpload Progress - refator when applying to edit.
+    //carefull todo - there is authorization outside of http layer - cause there is onUpload Progress - refator when applying to edit.
 
     axios
       .post(`${EXERCISES_URL}/create`, formData, options)
       .then((res) => {
         setUploadPercentage(100, () => {
           setTimeout(() => {
-            setUploadPercentage(0);
-          }, 1000);
-        });
+            setUploadPercentage(0)
+          }, 1000)
+        })
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: "OK", message: translate("ExerciseAdded") },
-            type: "positive",
+            content: { success: 'OK', message: translate('ExerciseAdded') },
+            type: 'positive',
           },
-        });
+        })
 
-        setLoading(false);
+        setLoading(false)
 
         if (values.addNextExercise) {
-          values.exerciseName = "";
-          values.exerciseDescription = "";
-          values.addNextExercise = "";
-          setSelectedFiles([]);
+          values.exerciseName = ''
+          values.exerciseDescription = ''
+          values.addNextExercise = ''
+          setSelectedFiles([])
           history.push({
             pathname: routes.addExercise,
-          });
+          })
         } else {
           history.push({
-            pathname: routes.categories
-          });
+            pathname: routes.categories,
+          })
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
         notificationDispatch({
           type: ADD,
           payload: {
             content: { error, message: error.data.message },
-            type: "error",
+            type: 'error',
           },
-        });
-      });
-  };
+        })
+      })
+  }
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files).map((File) => {
@@ -232,9 +231,9 @@ const AddExerciseRefactor = (props) => {
         if (acceptedImageFileType.includes(File.type)) {
           fileNotification(
             `File size is too big ${File.name}. Photo size limit is 10 MB`
-          );
-          resetFileInput();
-          return;
+          )
+          resetFileInput()
+          return
         }
       }
 
@@ -242,30 +241,30 @@ const AddExerciseRefactor = (props) => {
         if (acceptedVideoFileType.includes(File.type)) {
           fileNotification(
             `File size is too big ${File.name}. Video size limit is 30 MB`
-          );
-          resetFileInput();
-          return;
+          )
+          resetFileInput()
+          return
         }
       }
 
       if (!acceptedFiles.includes(File.type)) {
         fileNotification(
-          "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
-        );
-        resetFileInput();
-        return;
+          'Invalid file type. allowed files mp4, jpeg, jpg, png, gif'
+        )
+        resetFileInput()
+        return
       }
 
-      setSelectedFiles((prevState) => prevState.concat(File));
-    });
-  };
+      setSelectedFiles((prevState) => prevState.concat(File))
+    })
+  }
 
   function removeFile(currentPhoto) {
     const listWithRemovedElement = selectedFiles.filter(
       (file) => file !== currentPhoto
-    );
-    setSelectedFiles(listWithRemovedElement);
-    resetFileInput();
+    )
+    setSelectedFiles(listWithRemovedElement)
+    resetFileInput()
   }
 
   const renderAttachmentsPreview = (selectedFiles) => {
@@ -282,41 +281,38 @@ const AddExerciseRefactor = (props) => {
             />
           ))}
         </ImagePreviewContainer>
-      );
+      )
     }
-  };
-
+  }
 
   const closeModal = () => {
-    refreshData();
-    setOpenModal(false);
-  };
+    refreshData()
+    setOpenModal(false)
+  }
 
-  let results;
+  let results
   if (data) {
-    results = data.categories;
+    results = data.categories
   }
 
   const handleInputChange = (e) => {
-    setSelectedCategoryId(e.target.value);
+    setSelectedCategoryId(e.target.value)
   }
 
   const validate = (values) => {
-    const errors = {};
+    const errors = {}
 
-    console.log(selectedCategoryId);
+    console.log(selectedCategoryId)
 
-    if(results[0].categoryId && selectedCategoryId == undefined){
+    if (results[0].categoryId && selectedCategoryId == undefined) {
       setSelectedCategoryId(results[0].categoryId)
     }
 
-
     if (selectedCategoryId === undefined) {
-      errors.category = 'Required';
+      errors.category = 'Required'
     }
-    return errors;
-  };
-
+    return errors
+  }
 
   return (
     <GlobalTemplate>
@@ -330,8 +326,8 @@ const AddExerciseRefactor = (props) => {
         <Formik
           validate={validate}
           initialValues={{
-            exerciseName: "",
-            exerciseDescription: "",
+            exerciseName: '',
+            exerciseDescription: '',
             addNextExercise: false,
           }}
           validationSchema={validationSchema}
@@ -341,19 +337,15 @@ const AddExerciseRefactor = (props) => {
           {({ errors, touched, isValid }) => (
             <Form>
               <Nav>
-                <BackTopNav text={translate("AddExercise")} />
-                <Button
-                  size="sm"
-                  buttonType="primary"
-                  type="submit"
-                >
-                  {translate("Save")}
+                <BackTopNav text={translate('AddExercise')} />
+                <Button size="sm" buttonType="primary" type="submit">
+                  {translate('Save')}
                 </Button>
               </Nav>
               <Paragraph type="body-3-regular">
-                {translate("AddExerciseInfo")}
+                {translate('AddExerciseInfo')}
               </Paragraph>
-              <Label text={translate("ExerciseName")}>
+              <Label text={translate('ExerciseName')}>
                 <Field
                   type="text"
                   name="exerciseName"
@@ -366,9 +358,9 @@ const AddExerciseRefactor = (props) => {
                 handleImageChange={handleImageChange}
               />
               {renderAttachmentsPreview(selectedFiles)}
-              {results && results.length > 0 ?
+              {results && results.length > 0 ? (
                 <>
-                  <Label text={translate("Category")}></Label>
+                  <Label text={translate('Category')}></Label>
                   <DropdownInput
                     required={true}
                     id="category"
@@ -381,13 +373,14 @@ const AddExerciseRefactor = (props) => {
                     label="Category"
                     isLoading={loadingCategory}
                     onChange={handleInputChange}
-                    hasError={errors.category }
+                    hasError={errors.category}
                   />
                 </>
-                : <p>No category - add</p>
-              }
+              ) : (
+                <p>No category - add</p>
+              )}
               <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
-              {translate("AddCategory")}
+              {translate('AddCategory')}
               <AddCategoryModal
                 theme={theme}
                 openModal={openModal}
@@ -395,7 +388,7 @@ const AddExerciseRefactor = (props) => {
               />
               {errors.category && <div>{errors.category}</div>}
               <ContainerDescription>
-                <Label text={translate("AddExerciseDescription")}>
+                <Label text={translate('AddExerciseDescription')}>
                   <Field
                     type="text"
                     name="exerciseDescription"
@@ -410,7 +403,7 @@ const AddExerciseRefactor = (props) => {
                   name="addNextExercise"
                 />
                 <Paragraph type="body-2-medium">
-                  {translate("AddNextExercise")}
+                  {translate('AddNextExercise')}
                 </Paragraph>
               </CheckboxContainer>
             </Form>
@@ -418,7 +411,7 @@ const AddExerciseRefactor = (props) => {
         </Formik>
       )}
     </GlobalTemplate>
-  );
-};
+  )
+}
 
-export default AddExerciseRefactor;
+export default AddExerciseRefactor

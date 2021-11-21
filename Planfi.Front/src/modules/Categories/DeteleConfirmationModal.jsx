@@ -1,12 +1,15 @@
-import React from 'react';
-import { translate } from 'utils/Translation';
-import Button from 'components/atoms/Button';
-import { ModalHeading } from 'components/atoms/Heading';
-import { StyledModal, ButtonContainer, IconContainer } from 'components/molecules/Modal'
-import { useNotificationContext } from 'support/context/NotificationContext';
-import Icon from 'components/atoms/Icon';
-import { darkTheme } from 'theme/darkTheme';
-
+import React from 'react'
+import { translate } from 'utils/Translation'
+import Button from 'components/atoms/Button'
+import { ModalHeading } from 'components/atoms/Heading'
+import {
+  StyledModal,
+  ButtonContainer,
+  IconContainer,
+} from 'components/molecules/Modal'
+import { useNotificationContext } from 'support/context/NotificationContext'
+import Icon from 'components/atoms/Icon'
+import { darkTheme } from 'theme/darkTheme'
 
 const DeteleConfirmationModal = ({
   refreshData,
@@ -15,13 +18,12 @@ const DeteleConfirmationModal = ({
   deleteCategories,
   setOpenDeleteModal,
 }) => {
-
   const onDelete = () => {
-    deleteCategories();
+    deleteCategories()
     refreshData()
-    setOpenDeleteModal(false);
+    setOpenDeleteModal(false)
     onClose()
-  };
+  }
 
   return (
     <StyledModal
@@ -32,13 +34,21 @@ const DeteleConfirmationModal = ({
       <ModalHeading>{translate('DeleteCategory')}</ModalHeading>
       <p>{translate('DeleteCategoryText')}</p>
       <IconContainer>
-        <Icon fill ={darkTheme.colorGray80}name="union" size="1.2" cursorType="pointer" onClick={() =>setOpenDeleteModal(false)} />
+        <Icon
+          fill={darkTheme.colorGray80}
+          name="union"
+          size="1.2"
+          cursorType="pointer"
+          onClick={() => setOpenDeleteModal(false)}
+        />
       </IconContainer>
-            <ButtonContainer>
-              <Button onClick ={()=>onDelete()} buttonType="dangerous" size="lg">{translate('DeleteCategory')}</Button>
-            </ButtonContainer>
+      <ButtonContainer>
+        <Button onClick={() => onDelete()} buttonType="dangerous" size="lg">
+          {translate('DeleteCategory')}
+        </Button>
+      </ButtonContainer>
     </StyledModal>
-  );
-};
+  )
+}
 
-export default DeteleConfirmationModal;
+export default DeteleConfirmationModal

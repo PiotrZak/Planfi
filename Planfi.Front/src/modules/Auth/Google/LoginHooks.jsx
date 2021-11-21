@@ -1,61 +1,58 @@
-import React from 'react';
-import { GoogleLogin, useGoogleLogin } from 'react-google-login';
-import { accountService } from 'services/accountServices';
-import { routes } from 'routes';
-import { useHistory } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import React from 'react'
+import { GoogleLogin, useGoogleLogin } from 'react-google-login'
+import { accountService } from 'services/accountServices'
+import { routes } from 'routes'
+import { useHistory } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 const clientId =
-  '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com';
+  '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com'
 
-const clientSecret = "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";
+const clientSecret = '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'
 
-const timeToRedirectLogin = 1000;
+const timeToRedirectLogin = 1000
 
 const LoginHooks = () => {
-
-  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
-  const history = useHistory();
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name'])
+  const history = useHistory()
 
   const onSuccess = (res) => {
-
     //refactoring
     const inviteModel = {
       organizationId: 'O1',
       email: res.profileObj.email,
       role: 'User',
-      imageUrl: res.profileObj.imageUrl
-    };
-
-    const saveJWTInCookies = (data) => {
-      setCookie('JWT', data.token, { path: '/', })
+      imageUrl: res.profileObj.imageUrl,
     }
 
-    accountService.gmailSignUp(inviteModel)
+    const saveJWTInCookies = (data) => {
+      setCookie('JWT', data.token, { path: '/' })
+    }
+
+    accountService
+      .gmailSignUp(inviteModel)
       .then((data) => {
         saveJWTInCookies(data)
-        redirectToPage(data);
-        localStorage.removeItem('user');
-        delete data.token;
-        localStorage.setItem('user', JSON.stringify(data));
+        redirectToPage(data)
+        localStorage.removeItem('user')
+        delete data.token
+        localStorage.setItem('user', JSON.stringify(data))
         console.log(data)
-
       })
       .catch((error) => {
         console.log(error)
-      });
-
-  };
+      })
+  }
 
   const redirectToPage = (data) => {
     setTimeout(() => {
-      history.push(routes.myProfile);
-    }, timeToRedirectLogin);
+      history.push(routes.myProfile)
+    }, timeToRedirectLogin)
   }
 
   const onFailure = (res) => {
-    console.log('Login failed: res:', res);
-  };
+    console.log('Login failed: res:', res)
+  }
 
   return (
     <div className="gm-container">
@@ -66,7 +63,7 @@ const LoginHooks = () => {
         cookiePolicy={'single_host_origin'}
       />
     </div>
-  );
+  )
 }
 
-export default LoginHooks;
+export default LoginHooks

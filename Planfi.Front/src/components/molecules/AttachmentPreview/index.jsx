@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import Icon from "components/atoms/Icon";
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import Icon from 'components/atoms/Icon'
 import {
   acceptedImageFileType,
   acceptedVideoFileType,
-} from "support/magicVariables";
+} from 'support/magicVariables'
 
 const Container = styled.div`
   height: 4.8rem;
@@ -13,7 +13,7 @@ const Container = styled.div`
   border-radius: 2px;
   background: ${({ theme }) => theme.colorGray70};
   position: relative;
-`;
+`
 
 const Circle = styled.div`
   height: 1.6rem;
@@ -27,21 +27,22 @@ const Circle = styled.div`
   position: absolute;
   top: -0.5rem;
   right: -0.5rem;
-`;
+`
 
 const Image = styled.img`
   height: 4.8rem;
   width: 4.8rem;
   border-radius: 2px;
-`;
+`
 
 function isObject(val) {
-  if (val === null) { return false;}
-  return ( (typeof val === 'function') || (typeof val === 'object') );
+  if (val === null) {
+    return false
+  }
+  return typeof val === 'function' || typeof val === 'object'
 }
 
-const AttachmentPreview = ({ attachmentSrc, remove, key}) => {
-
+const AttachmentPreview = ({ attachmentSrc, remove, key }) => {
   return (
     <Container id={key}>
       <Circle onClick={remove} id={`img-prev-${key}`}>
@@ -56,7 +57,7 @@ const AttachmentPreview = ({ attachmentSrc, remove, key}) => {
         <img
           width="18px"
           height="18px"
-          src={require("../../../../public/icons/library/youtube.svg")}
+          src={require('../../../../public/icons/library/youtube.svg')}
         />
       ) : (
         <>
@@ -68,7 +69,7 @@ const AttachmentPreview = ({ attachmentSrc, remove, key}) => {
         </>
       )}
     </Container>
-  );
-};
+  )
+}
 
-export default AttachmentPreview;
+export default AttachmentPreview

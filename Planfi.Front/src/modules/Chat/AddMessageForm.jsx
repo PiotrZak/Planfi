@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react'
 
-const AddMessageForm = ({ room, setMessage, message, handleSubmit}) => {
-
+const AddMessageForm = ({ room, setMessage, message, handleSubmit }) => {
   return (
-   <form className="commentForm" onSubmit={(e) => handleSubmit(e)}>
-      {room &&
-      <>
-      <p>{room.id}</p>
-      <p>{room.name}</p>
-      </>}
-      
+    <form className="commentForm" onSubmit={(e) => handleSubmit(e)}>
+      {room && (
+        <>
+          <p>{room.id}</p>
+          <p>{room.name}</p>
+        </>
+      )}
+
       <input
         onChange={(e) => setMessage(e.target.value)}
         value={message}
@@ -20,7 +20,7 @@ const AddMessageForm = ({ room, setMessage, message, handleSubmit}) => {
         Submit
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default AddMessageForm;
+export default AddMessageForm
