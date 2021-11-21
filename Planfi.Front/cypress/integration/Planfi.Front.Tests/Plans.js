@@ -1,4 +1,4 @@
-const url = 'https://plan-fi.pl/';
+const url = 'https://plan-fi.pl/'
 
 describe('Test Network', () => {
   it('Test Network', () => {
@@ -26,7 +26,7 @@ describe('Account Issues', () => {
 
     cy.get('.sc-gKsewC').type('test@gmail.com')
     cy.get('.sc-dQppl').click()
-    cy.wait(1500)
+    cy.wait(3500)
     cy.get('.sc-idOhPF').should('contain', 'Something gone wrong')
     cy.get('.sc-dIUggk > .sc-bdfBwQ').click()
     cy.get('.sc-idOhPF').should('not.exist')
@@ -72,7 +72,7 @@ describe('Plan Issues', () => {
   it('Delete Added Plan', () => {
     cy.get('[href="/plans"] > .sc-jmhFOf > .sc-bdfBwQ').click()
     cy.wait(1500)
-    cy.get('.sc-kLgntA').click()
+    cy.get('.sc-kLgntA').click({ multiple: true })
     cy.get('.sc-fbkhIv > :nth-child(2)').click()
     cy.get('.sc-bkzZxe').should('be.visible')
     cy.wait(2500)
@@ -87,19 +87,19 @@ describe('Plan Issues', () => {
   })
 
   it('Update Plan', () => {
-    cy.get('.sc-kLgntA').click()
+    cy.get('.sc-kLgntA').click({ multiple: true })
     cy.get('.sc-fbkhIv > :nth-child(3)').click()
     cy.get('.sc-iBPRYJ').type('New Plan Updated')
     cy.get('.sc-dQppl').click()
     cy.wait(2500)
   })
 
-//   // todo - do that test after design is done
-//   //correlated with srie
+  //   // todo - do that test after design is done
+  //   //correlated with srie
 
-//   //   it('Assign exercise to plan', () => {
-//   //     cy.get('.sc-AzgDb').click()
-//   //     cy.get('.sc-ehSCib').click()
-//   //     cy.get('.bottom-sheet > :nth-child(6)').click()
-//   //   })
+  //   //   it('Assign exercise to plan', () => {
+  //   //     cy.get('.sc-AzgDb').click()
+  //   //     cy.get('.sc-ehSCib').click()
+  //   //     cy.get('.bottom-sheet > :nth-child(6)').click()
+  //   //   })
 })

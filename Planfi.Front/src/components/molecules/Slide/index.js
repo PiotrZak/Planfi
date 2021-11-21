@@ -13,14 +13,13 @@ const ExerciseImageContainer = styled.img`
 
 const Slide = ({ videoName, index, img }) => {
 
-
   const nameWithoutSpace = videoName.replaceAll(' ', '%20')
 
   return acceptedImageFileType.includes(atob(bytesArrToBase64(img))) ? (
     <ExerciseImageContainer
       key={index}
       alt={index}
-      src={`${imageUrl}/${nameWithoutSpace + 1 + atob(bytesArrToBase64(img))}?authuser=1`}
+      src={`${imageUrl}/${nameWithoutSpace + index + atob(bytesArrToBase64(img))}?authuser=1`}
     />
   ) : (
     <ReactPlayer

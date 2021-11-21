@@ -35,9 +35,10 @@ namespace PlanfiApi.Services.Exercises
         {
             var baseExercise = await GetBaseExercise(id);
             if (!IsGuid(baseExercise.Name)) return baseExercise;
-            
-            var planExercise = await GetSerializedExercise(id);
-            return planExercise;
+
+            var basePlanExercise = await GetBaseExercise(baseExercise.Name);
+            var planExerciseViewModel = await GetSerializedExercise(id, basePlanExercise);
+            return planExerciseViewModel;
 
         }
         
@@ -145,12 +146,10 @@ namespace PlanfiApi.Services.Exercises
 
 
 
-        private async Task<ExerciseViewModel> GetSerializedExercise(string exerciseId)
+        private async Task<ExerciseViewModel> GetSerializedExercise(string exerciseId, ExerciseViewModel baseExercise)
         {
             var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
-            
-            var baseExercises = await GetAllBaseExercises();
             
             var exerciseInstance = new List<ExerciseSqlProjection>();
             try
@@ -160,7 +159,8 @@ namespace PlanfiApi.Services.Exercises
 	                e.exercise_id as ExerciseId,
 	                e.category_id as CategoryId,
 	                e.plan_id as PlanId,
-                    s.serie_id as SerieId,
+                  e.files,
+                  s.serie_id as SerieId,
 	                s.weight,
 	                s.times,
 	                s.repeats
@@ -180,11 +180,38 @@ namespace PlanfiApi.Services.Exercises
                 await connection.CloseAsync();
             }
             
-            //what if only 1 serie
-            var exercisesViewModels = await ConstructSeriesExercise(exerciseInstance, baseExercises);
             
-            // flatten
-            return exercisesViewModels[0];
+            var exercisesDuplicates = exerciseInstance
+              .GroupBy(x => x.ExerciseId)
+              .ToList();
+            
+            var seriesPerExercise = new Dictionary<string, List<Serie>>();
+            
+            foreach (var instance in exercisesDuplicates)
+            {
+              var serieList = instance.Select(x => 
+                new Serie()
+                {
+                  SerieId = x.SerieId,
+                  Repeats = x.Repeats,
+                  Times = x.Times,
+                  Weight = x.Weight,
+                }).ToList();
+              seriesPerExercise.Add(instance.Key, serieList);
+            }
+            
+            var exerciseViewModel = new ExerciseViewModel()
+            {
+              ExerciseId = exerciseInstance[0].ExerciseId,
+              Name = baseExercise.Name,
+              Files = baseExercise.Files,
+              CategoryId = exerciseInstance[0].CategoryId,
+              CategoryName = baseExercise.CategoryName,
+              PlanId = exerciseInstance[0].PlanId,
+              Series = seriesPerExercise.FirstOrDefault(x => x.Key == exerciseInstance[0].ExerciseId).Value,
+            };
+
+            return exerciseViewModel;
         }
         
 

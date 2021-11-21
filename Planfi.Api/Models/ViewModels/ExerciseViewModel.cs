@@ -8,6 +8,7 @@ namespace PlanfiApi.Models.ViewModels
     {
         public string ExerciseId { get; set; }
         public string Name { get; set; }
+        
         public string? Description { get; set; }
         public byte[][]? Files { get; set; }
         public string CategoryId { get; set; }

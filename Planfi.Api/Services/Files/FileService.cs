@@ -75,7 +75,7 @@ namespace PlanfiApi.Services.Files
                 var ext = Path.GetExtension(formFile.FileName);
                 await using var memoryStream = new MemoryStream();
                 await formFile.CopyToAsync(memoryStream);
-                var fileNameWithExtensionAndNumber = fileName+1+ext;
+                var fileNameWithExtensionAndNumber = fileName+iterator+ext;
                 
                 var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Image);
                 await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileType.Image);
