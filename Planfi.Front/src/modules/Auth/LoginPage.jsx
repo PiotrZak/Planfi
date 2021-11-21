@@ -124,7 +124,7 @@ const LoginPage = ({ setUser }) => {
           </Form>
         )}
       </Formik>
-      <LoginHooks />
+      <LoginHooks setUser = {setUser}/>
       <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   );

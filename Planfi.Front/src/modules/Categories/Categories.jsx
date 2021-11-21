@@ -129,14 +129,17 @@ const Categories = (props) => {
   return (
     <> 
       <GlobalTemplate>
+
         <Nav>
           <Heading>{translate('ExercisesTitle')}</Heading>
           <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />
         </Nav>
+        <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+
         {results && results.length > 0
           ?
           <>
-            <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
+
             {getUniqueListBy(data.allBaseExercises, "categoryName")
               .map((x, i) => <p key ={i} className={filters.includes(x.categoryName) ? "bold" : ""} onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
             <CheckboxGenericComponent

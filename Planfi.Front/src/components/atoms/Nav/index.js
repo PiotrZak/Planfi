@@ -6,7 +6,6 @@ const Nav = styled.div`
   ${({ active }) =>
     active &&
     `
-    position:fixed;
     margin: 0 -1.6rem 0 -1.6rem;
     padding: 0 1.6rem 0 1.6rem;s
     background: ${({ theme }) => theme.colorGray80};

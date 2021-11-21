@@ -121,9 +121,6 @@ namespace PlanfiApi.Controllers.Users
         {
             var user = await  _userService.UserDetailsViewModel(id);
 
-            if (user == null)
-                return NotFound();
-
             return Ok(user);
         }
 

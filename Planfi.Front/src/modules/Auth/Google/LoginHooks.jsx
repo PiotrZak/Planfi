@@ -12,7 +12,7 @@ const clientSecret = "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";
 
 const timeToRedirectLogin = 1000;
 
-const LoginHooks = () => {
+const LoginHooks = ({setUser}) => {
 
   const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
   const history = useHistory();
@@ -38,7 +38,7 @@ const LoginHooks = () => {
         localStorage.removeItem('user');
         delete data.token;
         localStorage.setItem('user', JSON.stringify(data));
-        console.log(data)
+        setUser(data);
 
       })
       .catch((error) => {

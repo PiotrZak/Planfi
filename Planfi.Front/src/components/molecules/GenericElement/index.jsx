@@ -5,6 +5,7 @@ import Paragraph from 'components/atoms/Paragraph';
 import Icon from 'components/atoms/Icon';
 import { useThemeContext } from 'support/context/ThemeContext';
 import breakPointSize from 'utils/rwd';
+import { bytesArrToBase64 } from 'utils/common.util';
 
 const LightWrapper = styled.div`
   background: ${({ theme }) => theme.colorWhite};
@@ -141,7 +142,10 @@ const ImageContainer = styled.img`
 
 const Avatar = (type, url, theme) => {
 
-  const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(url)));
+  let base64String = [];
+  if(url){
+  base64String = bytesArrToBase64(url);
+  }
 
   if(type == 'initials'){
     return null
