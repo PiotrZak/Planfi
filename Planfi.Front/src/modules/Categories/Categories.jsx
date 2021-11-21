@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { exerciseService } from 'services/exerciseService'
 import { routes } from 'utils/routes'
+import styled from 'styled-components'
 import { useHistory, withRouter } from 'react-router-dom'
 import { commonUtil } from 'utils/common.util'
 import 'react-multi-carousel/lib/styles.css'
@@ -20,6 +21,16 @@ import { PlanPanelExercises } from './PlanPanelExercises'
 import Loader from 'components/atoms/Loader'
 import Heading from 'components/atoms/Heading'
 import { getUniqueListBy } from 'utils/common.util'
+
+//todo - discuss if we use styled components in some places or refactor everything into mui ?
+
+const Sticky = styled.div`
+position: -webkit-sticky; /* Safari */
+position: sticky;
+background-color:white;
+top: 0;
+`
+
 
 const Categories = (props) => {
   const { theme } = useThemeContext()
@@ -142,20 +153,21 @@ const Categories = (props) => {
   return (
     <>
       <GlobalTemplate>
-
-        <Nav>
-          <Heading>{translate('ExercisesTitle')}</Heading>
-          <SmallButton
-            onClick={() => redirectToAddExercise()}
-            iconName="plus"
+        <Sticky>
+          <Nav>
+            <Heading>{translate('ExercisesTitle')}</Heading>
+            <SmallButton
+              onClick={() => redirectToAddExercise()}
+              iconName="plus"
+            />
+          </Nav>
+          <Search
+            callBack={filterExercises}
+            placeholder={translate('ExerciseSearch')}
           />
-        </Nav>
+        </Sticky>
         {results && results.length > 0 ? (
           <>
-            <Search
-              callBack={filterExercises}
-              placeholder={translate('ExerciseSearch')}
-            />
             {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
               (x, i) => (
                 <p

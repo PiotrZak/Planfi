@@ -95,7 +95,7 @@ const handleavatarType = (type) => {
     case 'circle':
       return css`
         height: 4rem;
-        width: 4rem;s
+        width: 4rem;
         border-radius: 50%;
       `
     case 'square':
@@ -140,9 +140,6 @@ const ImageContainer = styled.img`
 `
 
 const Avatar = (type, url, theme) => {
-  const base64String = btoa(
-    String.fromCharCode.apply(null, new Uint8Array(url))
-  )
 
   let base64String = [];
   if(url){
