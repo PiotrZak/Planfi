@@ -1,9 +1,8 @@
-import React from "react";
-import { Input } from "reactstrap";
-import { Row, Col } from "reactstrap";
-import { Spinner } from "reactstrap";
-import styled from "styled-components";
-
+import React from 'react'
+import { Input } from 'reactstrap'
+import { Row, Col } from 'reactstrap'
+import { Spinner } from 'reactstrap'
+import styled from 'styled-components'
 
 export const DropdownInput = ({
   id,
@@ -21,7 +20,7 @@ export const DropdownInput = ({
 }) => (
   <>
     <DropdownWithSpinner
-      className={hasError ? "form-control input-error" : "form-control"}
+      className={hasError ? 'form-control input-error' : 'form-control'}
       id={id}
       name={name}
       list={list}
@@ -34,10 +33,7 @@ export const DropdownInput = ({
       hasError={hasError}
     />
   </>
-);
-
-
-
+)
 
 const Dropdown = ({
   id,
@@ -51,22 +47,22 @@ const Dropdown = ({
   onChange,
 }) => {
   function mapValues() {
-    let elements = list;
+    let elements = list
     elements.map((element) => {
-      element.value = element[value];
-      element.display = element[display];
-      return element;
-    });
-    return elements;
+      element.value = element[value]
+      element.display = element[display]
+      return element
+    })
+    return elements
   }
   function getSelectedDefaultValue() {
-    let elements = mapValues();
-    let value = placeholder ? placeholder : "SELECT";
+    let elements = mapValues()
+    let value = placeholder ? placeholder : 'SELECT'
     elements.map((element) => {
-      if (element.value === defaultValue) value = element.value;
-      return element;
-    });
-    return value;
+      if (element.value === defaultValue) value = element.value
+      return element
+    })
+    return value
   }
   return (
     <>
@@ -76,11 +72,11 @@ const Dropdown = ({
         id={id}
         name={name}
         onChange={onChange}
-        className={hasError ? "form-control input-error" : "form-control"}
+        className={hasError ? 'form-control input-error' : 'form-control'}
       >
-        {placeholder &&
-          <option value="">{placeholder ? placeholder : "SELECT"}</option>
-        }
+        {placeholder && (
+          <option value="">{placeholder ? placeholder : 'SELECT'}</option>
+        )}
         {mapValues().map((option) => (
           <option
             key={option.value}
@@ -93,8 +89,8 @@ const Dropdown = ({
       </Input>
       {/* <ValidationHint hasError={hasError} /> */}
     </>
-  );
-};
+  )
+}
 
 const DropdownWithSpinner = ({
   id,
@@ -118,7 +114,7 @@ const DropdownWithSpinner = ({
         list={[]}
         defaultValue={defaultValue}
       />
-    );
+    )
   }
   function showLoadedList() {
     return (
@@ -132,7 +128,7 @@ const DropdownWithSpinner = ({
         value={optionValue}
         onChange={onChange}
       />
-    );
+    )
   }
   function showSpinner() {
     return (
@@ -140,17 +136,17 @@ const DropdownWithSpinner = ({
         className="spinner-border spinner-border spinner-dropdown text-primary "
         role="status"
       ></Spinner>
-    );
+    )
   }
   function manageState() {
     if (isLoading) {
-      return showSpinner();
+      return showSpinner()
     } else if (!list || list.length === 0) {
-      return showEmptyList();
+      return showEmptyList()
     } else {
-      return showLoadedList();
+      return showLoadedList()
     }
   }
 
-  return <>{manageState()}</>;
-};
+  return <>{manageState()}</>
+}

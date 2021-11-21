@@ -1,50 +1,58 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { exerciseService } from 'services/exerciseService';
-import { routes } from 'utils/routes';
-import { useHistory, withRouter } from 'react-router-dom';
-import { commonUtil } from 'utils/common.util';
-import 'react-multi-carousel/lib/styles.css';
-import Search from 'components/molecules/Search';
-import { useQuery, gql } from '@apollo/client';
-import { translate } from 'utils/Translation';
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric';
-import GlobalTemplate from 'templates/GlobalTemplate';
-import { useThemeContext } from 'support/context/ThemeContext';
-import SmallButton from 'components/atoms/SmallButton';
-import Nav from 'components/atoms/Nav';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import { PlanPanelExercises } from './PlanPanelExercises';
-import Loader from 'components/atoms/Loader';
-import Heading from 'components/atoms/Heading';
-import {getUniqueListBy} from 'utils/common.util'
+import React, { useState, useEffect, useCallback } from 'react'
+import { exerciseService } from 'services/exerciseService'
+import { routes } from 'utils/routes'
+import { useHistory, withRouter } from 'react-router-dom'
+import { commonUtil } from 'utils/common.util'
+import 'react-multi-carousel/lib/styles.css'
+import Search from 'components/molecules/Search'
+import { useQuery, gql } from '@apollo/client'
+import { translate } from 'utils/Translation'
+import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric'
+import GlobalTemplate from 'templates/GlobalTemplate'
+import { useThemeContext } from 'support/context/ThemeContext'
+import SmallButton from 'components/atoms/SmallButton'
+import Nav from 'components/atoms/Nav'
+import {
+  useNotificationContext,
+  ADD,
+} from 'support/context/NotificationContext'
+import { PlanPanelExercises } from './PlanPanelExercises'
+import Loader from 'components/atoms/Loader'
+import Heading from 'components/atoms/Heading'
+import { getUniqueListBy } from 'utils/common.util'
 
 const Categories = (props) => {
-  
-  const { theme } = useThemeContext();
-  const [searchTerm, setSearchTerm] = React.useState('');
-  const [selectedExercise, setselectedExercise] = useState([]);
-  const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] = useState(false);
-  const [bottomSheet, setBottomSheet] = useState('none');
+  const { theme } = useThemeContext()
+  const [searchTerm, setSearchTerm] = React.useState('')
+  const [selectedExercise, setselectedExercise] = useState([])
+  const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] =
+    useState(false)
+  const [bottomSheet, setBottomSheet] = useState('none')
   const [filteredData, setFilteredData] = useState([])
   const [filters, setFilters] = useState([])
 
-  const CATEGORYEXERCISES = gql`{
-    allBaseExercises
+  const CATEGORYEXERCISES = gql`
     {
+      allBaseExercises {
         exerciseId
         categoryName
         name
         files
-     }
+      }
     }
-  `;
+  `
 
   const {
-    loading, error, data, refetch: _refetch,
-  } = useQuery(CATEGORYEXERCISES);
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
-  const history = useHistory();
-  const { notificationDispatch } = useNotificationContext();
+    loading,
+    error,
+    data,
+    refetch: _refetch,
+  } = useQuery(CATEGORYEXERCISES)
+  const refreshData = useCallback(() => {
+    setTimeout(() => _refetch(), 200)
+  }, [_refetch])
+  const history = useHistory()
+  const { notificationDispatch } = useNotificationContext()
 
   const deleteExercise = () => {
     exerciseService
@@ -54,91 +62,110 @@ const Categories = (props) => {
           type: ADD,
           payload: {
             content: { success: 'OK', message: translate('ExercisesDeleted') },
-            type: 'positive'
-          }
+            type: 'positive',
+          },
         })
         refreshData()
-        setBottomSheet('none');
+        setBottomSheet('none')
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
             content: { error: error, message: translate('ErrorAlert') },
-            type: 'error'
-          }
+            type: 'error',
+          },
         })
-      });
+      })
   }
 
   const filterByCategoryName = (categoryName) => {
-    const isMatch = filters.includes(categoryName);
-    let updatedFilters;
+    const isMatch = filters.includes(categoryName)
+    let updatedFilters
     isMatch
-      ? updatedFilters = filters.filter((item) => item != categoryName)
-      : updatedFilters = filters.concat([categoryName])
+      ? (updatedFilters = filters.filter((item) => item != categoryName))
+      : (updatedFilters = filters.concat([categoryName]))
 
     setFilters(updatedFilters)
-    setFilteredData(data.allBaseExercises.filter((exercise) => updatedFilters.includes(exercise.categoryName)))
+    setFilteredData(
+      data.allBaseExercises.filter((exercise) =>
+        updatedFilters.includes(exercise.categoryName)
+      )
+    )
   }
 
-
   useEffect(() => {
-    refreshData();
-  }, [filterByCategoryName]);
+    refreshData()
+  }, [filterByCategoryName])
 
   const filterExercises = (event) => {
-    setSearchTerm(event.target.value);
-  };
+    setSearchTerm(event.target.value)
+  }
 
-  let results;
+  let results
   if (data) {
     if (filteredData.length > 0) {
       results = !searchTerm
         ? filteredData
-        : filteredData.filter((exercise) => exercise.name
-          .toLowerCase()
-          .includes(searchTerm.toLocaleLowerCase()));
-    }
-    else {
+        : filteredData.filter((exercise) =>
+            exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+          )
+    } else {
       results = !searchTerm
         ? data.allBaseExercises
-        : data.allBaseExercises.filter((exercise) => exercise.name
-          .toLowerCase()
-          .includes(searchTerm.toLocaleLowerCase()));
+        : data.allBaseExercises.filter((exercise) =>
+            exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+          )
     }
   }
 
-  if (loading) return <Loader isLoading={loading} />;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Loader isLoading={loading} />
+  if (error) return <p>Error :(</p>
 
   const redirectToAddExercise = () => {
     history.push({
       pathname: routes.addExercise,
-    });
+    })
   }
 
-
   const submissionHandleElement = (selectedData) => {
-    const selectedExercises = commonUtil.getCheckedData(selectedData, 'exerciseId');
-    setselectedExercise(selectedExercises);
-    selectedExercises.length > 0 ? setBottomSheet('flex') : setBottomSheet('none');
-  };
-
+    const selectedExercises = commonUtil.getCheckedData(
+      selectedData,
+      'exerciseId'
+    )
+    setselectedExercise(selectedExercises)
+    selectedExercises.length > 0
+      ? setBottomSheet('flex')
+      : setBottomSheet('none')
+  }
 
   return (
-    <> 
+    <>
       <GlobalTemplate>
         <Nav>
           <Heading>{translate('ExercisesTitle')}</Heading>
-          <SmallButton onClick={() => redirectToAddExercise()} iconName="plus" />
+          <SmallButton
+            onClick={() => redirectToAddExercise()}
+            iconName="plus"
+          />
         </Nav>
-        {results && results.length > 0
-          ?
+        {results && results.length > 0 ? (
           <>
-            <Search callBack={filterExercises} placeholder={translate('ExerciseSearch')} />
-            {getUniqueListBy(data.allBaseExercises, "categoryName")
-              .map((x, i) => <p key ={i} className={filters.includes(x.categoryName) ? "bold" : ""} onClick={() => filterByCategoryName(x.categoryName)}>{x.categoryName}</p>)}
+            <Search
+              callBack={filterExercises}
+              placeholder={translate('ExerciseSearch')}
+            />
+            {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
+              (x, i) => (
+                <p
+                  key={i}
+                  className={filters.includes(x.categoryName) ? 'bold' : ''}
+                  onClick={() => filterByCategoryName(x.categoryName)}
+                >
+                  {x.categoryName}
+                </p>
+              )
+            )}
             <CheckboxGenericComponent
               dataType="exercises"
               displayedValue="name"
@@ -146,7 +173,9 @@ const Categories = (props) => {
               onSelect={submissionHandleElement}
             />
           </>
-          : <p>{translate('NoExercises')}</p>}
+        ) : (
+          <p>{translate('NoExercises')}</p>
+        )}
       </GlobalTemplate>
       <PlanPanelExercises
         deleteExercise={deleteExercise}
@@ -157,6 +186,6 @@ const Categories = (props) => {
         theme={theme}
       />
     </>
-  );
-};
-export default withRouter(Categories);
+  )
+}
+export default withRouter(Categories)

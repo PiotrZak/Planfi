@@ -1,22 +1,20 @@
-import { withLazyComponent } from "utils/lazyComponent";
-import React, { useState, useEffect, useCallback } from "react";
-import Button from "components/atoms/Button";
-import styled from "styled-components";
-import { exerciseService } from "services/exerciseService";
-import Counter from "components/atoms/Counter";
-import { useHistory } from "react-router-dom";
-import { Formik, Field, Form } from "formik";
-import * as Yup from "yup";
-import { Headline } from "components/typography";
-import { translate } from "utils/Translation";
-import Random from "utils/Random";
-import AttachmentPreview, {
-  TYPE,
-} from "components/molecules/AttachmentPreview";
+import { withLazyComponent } from 'utils/lazyComponent'
+import React, { useState, useEffect, useCallback } from 'react'
+import Button from 'components/atoms/Button'
+import styled from 'styled-components'
+import { exerciseService } from 'services/exerciseService'
+import Counter from 'components/atoms/Counter'
+import { useHistory } from 'react-router-dom'
+import { Formik, Field, Form } from 'formik'
+import * as Yup from 'yup'
+import { Headline } from 'components/typography'
+import { translate } from 'utils/Translation'
+import Random from 'utils/Random'
+import AttachmentPreview, { TYPE } from 'components/molecules/AttachmentPreview'
 import {
   useNotificationContext,
   ADD,
-} from "support/context/NotificationContext";
+} from 'support/context/NotificationContext'
 import {
   weightToChange,
   timesToChange,
@@ -27,33 +25,33 @@ import {
   maxPhotoSize,
   maxVideoSize,
   acceptedVideoFileType,
-} from "support/magicVariables";
+} from 'support/magicVariables'
 
-const Nav = withLazyComponent(React.lazy(() => import("components/atoms/Nav")));
+const Nav = withLazyComponent(React.lazy(() => import('components/atoms/Nav')))
 const GlobalTemplate = withLazyComponent(
-  React.lazy(() => import("templates/GlobalTemplate"))
-);
+  React.lazy(() => import('templates/GlobalTemplate'))
+)
 const BackTopNav = withLazyComponent(
-  React.lazy(() => import("components/molecules/BackTopNav"))
-);
+  React.lazy(() => import('components/molecules/BackTopNav'))
+)
 const Paragraph = withLazyComponent(
-  React.lazy(() => import("components/atoms/Paragraph"))
-);
+  React.lazy(() => import('components/atoms/Paragraph'))
+)
 const Label = withLazyComponent(
-  React.lazy(() => import("components/atoms/Label"))
-);
+  React.lazy(() => import('components/atoms/Label'))
+)
 const Input = withLazyComponent(
-  React.lazy(() => import("components/molecules/Input"))
-);
+  React.lazy(() => import('components/molecules/Input'))
+)
 const TextArea = withLazyComponent(
-  React.lazy(() => import("components/molecules/TextArea"))
-);
+  React.lazy(() => import('components/molecules/TextArea'))
+)
 const ErrorMessageForm = withLazyComponent(
-  React.lazy(() => import("components/atoms/ErrorMessageForm"))
-);
+  React.lazy(() => import('components/atoms/ErrorMessageForm'))
+)
 const AddFiles = withLazyComponent(
-  React.lazy(() => import("components/molecules/AddFiles"))
-);
+  React.lazy(() => import('components/molecules/AddFiles'))
+)
 
 const initialValues = {
   name: undefined,
@@ -63,7 +61,7 @@ const initialValues = {
   series: undefined,
   weight: undefined,
   files: undefined,
-};
+}
 
 const ImagePreviewContainer = styled.div`
   margin-top: 2rem;
@@ -75,120 +73,119 @@ const ImagePreviewContainer = styled.div`
     height: 4.2rem;
     width: 4.2rem;
   }
-`;
+`
 
 const StyledTextArea = styled(TextArea)`
   height: 28.3rem;
-`;
+`
 
 const ContainerDescription = styled.div`
   margin-top: 2rem;
-`;
+`
 
 const ExerciseEditItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 1.8rem 1.8rem;
-`;
+`
 
 const validationSchema = Yup.object({
   exerciseName: Yup.string(),
   exerciseDescription: Yup.string(),
-});
+})
 
 const EditExercise = (props) => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [previewFiles, setPreviewFiles] = useState([]);
-  const [filesToDelete, setFilesToDelete] = useState([]);
-  const { notificationDispatch } = useNotificationContext();
-  const [ifPlanEdited, setIfPlanEdited] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([])
+  const [previewFiles, setPreviewFiles] = useState([])
+  const [filesToDelete, setFilesToDelete] = useState([])
+  const { notificationDispatch } = useNotificationContext()
+  const [ifPlanEdited, setIfPlanEdited] = useState(false)
 
-  let id;
+  let id
 
   props.location.state.exercise !== undefined
     ? (id = props.location.state.exercise.exerciseId)
-    : (id = props.location.state.selectedExercise);
+    : (id = props.location.state.selectedExercise)
 
   const fileNotification = (message) => {
     notificationDispatch({
       type: ADD,
       payload: {
-        content: { success: "OK", message },
-        type: "error",
+        content: { success: 'OK', message },
+        type: 'error',
       },
-    });
-  };
+    })
+  }
 
   const getExercise = useCallback((id) => {
     exerciseService
       .getExerciseById(id)
       .then((data) => {
-        setExerciseData(data);
-        if(data.files.length == 0) {
-          setSelectedFiles([]);
+        setExerciseData(data)
+        if (data.files.length == 0) {
+          setSelectedFiles([])
+        } else {
+          setSelectedFiles(data.files)
         }
-        else{
-          setSelectedFiles(data.files);
-        }
-        setPreviewFiles(data.files);
+        setPreviewFiles(data.files)
       })
-      .catch((error) => {});
-  }, []);
+      .catch((error) => {})
+  }, [])
 
   useEffect(() => {
     if (props.location.state.ifPlanEdited) {
-      setIfPlanEdited(true);
+      setIfPlanEdited(true)
     }
-    getExercise(id);
-  }, []);
+    getExercise(id)
+  }, [])
 
   const resetFileInput = () => {
-    document.getElementById("choose-file-button").value = "";
-  };
+    document.getElementById('choose-file-button').value = ''
+  }
 
-  const [exerciseData, setExerciseData] = useState([]);
-  const history = useHistory();
+  const [exerciseData, setExerciseData] = useState([])
+  const history = useHistory()
 
   const onSubmit = (values) => {
-    const formData = new FormData();
+    const formData = new FormData()
     formData.append(
-      "Name",
+      'Name',
       values.name === undefined ? exerciseData.name : values.name
-    );
+    )
     formData.append(
-      "Description",
+      'Description',
       values.description === undefined
         ? exerciseData.description
         : values.description
-    );
+    )
     formData.append(
-      "Repeats",
+      'Repeats',
       values.repeats === undefined ? exerciseData.repeats : values.repeats
-    );
+    )
     formData.append(
-      "Times",
+      'Times',
       values.times === undefined ? exerciseData.times : values.times
-    );
+    )
     formData.append(
-      "Series",
+      'Series',
       values.series === undefined ? exerciseData.series : values.series
-    );
+    )
     formData.append(
-      "Weight",
+      'Weight',
       values.weight === undefined ? exerciseData.weight : values.weight
-    );
+    )
 
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append("Files", selectedFiles[i]);
+      formData.append('Files', selectedFiles[i])
     }
 
     for (let i = 0; i < filesToDelete.length; i++) {
-      formData.append("FilesToDelete", filesToDelete[i]);
+      formData.append('FilesToDelete', filesToDelete[i])
     }
 
-    formData.append("CategoryId", props.location.state.id);
-    console.log(formData);
+    formData.append('CategoryId', props.location.state.id)
+    console.log(formData)
 
     exerciseService
       .editExercise(id, formData)
@@ -196,58 +193,57 @@ const EditExercise = (props) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: "OK", message: translate("ExercisesEdited") },
-            type: "positive",
+            content: { success: 'OK', message: translate('ExercisesEdited') },
+            type: 'positive',
           },
-        });
+        })
         history.push({
           pathname: `/exercises/${id}`,
           state: { id: id },
-        });
+        })
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error: error, message: translate("AlertError") },
-            type: "error",
+            content: { error: error, message: translate('AlertError') },
+            type: 'error',
           },
-        });
-      });
-  };
+        })
+      })
+  }
 
   const handleSeries = (data) => {
-    setExerciseData({ ...exerciseData, series: data });
-  };
+    setExerciseData({ ...exerciseData, series: data })
+  }
 
   const handleTime = (data) => {
-    setExerciseData({ ...exerciseData, times: data });
-  };
+    setExerciseData({ ...exerciseData, times: data })
+  }
 
   const handleWeight = (data) => {
-    setExerciseData({ ...exerciseData, weight: data });
-  };
+    setExerciseData({ ...exerciseData, weight: data })
+  }
 
   const handleRepeat = (data) => {
-    setExerciseData({ ...exerciseData, repeats: data });
-  };
+    setExerciseData({ ...exerciseData, repeats: data })
+  }
 
   const triggerFileUploadButton = () => {
-    document.getElementById("choose-file-button").click();
-  };
+    document.getElementById('choose-file-button').click()
+  }
 
   const handleImageChange = (e) => {
-
-    const files =[];
+    const files = []
 
     Array.from(e.target.files).map((File) => {
       if (File.size > maxPhotoSize) {
         if (acceptedImageFileType.includes(File.type)) {
           fileNotification(
             `File size is too big ${File.name}. Photo size limit is 10 MB`
-          );
-          resetFileInput();
-          return;
+          )
+          resetFileInput()
+          return
         }
       }
 
@@ -255,30 +251,30 @@ const EditExercise = (props) => {
         if (acceptedVideoFileType.includes(File.type)) {
           fileNotification(
             `File size is too big ${File.name}. Video size limit is 30 MB`
-          );
-          resetFileInput();
-          return;
+          )
+          resetFileInput()
+          return
         }
       }
 
       if (!acceptedFiles.includes(File.type)) {
         fileNotification(
-          "Invalid file type. allowed files mp4, jpeg, jpg, png, gif"
-        );
-        resetFileInput();
-        return;
+          'Invalid file type. allowed files mp4, jpeg, jpg, png, gif'
+        )
+        resetFileInput()
+        return
       }
-      setSelectedFiles((x) => x.concat(File));
-    });
-  };
+      setSelectedFiles((x) => x.concat(File))
+    })
+  }
 
   function removeFile(currentPhoto) {
     const listWithRemovedElement = selectedFiles.filter(
       (file) => file !== currentPhoto
-    );
-    setFilesToDelete([...filesToDelete, currentPhoto]);
-    setSelectedFiles(listWithRemovedElement);
-    resetFileInput();
+    )
+    setFilesToDelete([...filesToDelete, currentPhoto])
+    setSelectedFiles(listWithRemovedElement)
+    resetFileInput()
   }
 
   const renderAttachmentsPreview = (source) => {
@@ -298,10 +294,10 @@ const EditExercise = (props) => {
               />
             ))}
           </ImagePreviewContainer>
-        );
+        )
       }
     }
-  };
+  }
 
   return (
     <>
@@ -315,7 +311,7 @@ const EditExercise = (props) => {
           {({ errors, touched, isValid }) => (
             <Form>
               <Nav>
-                <BackTopNav text={translate("EditExercise")} />
+                <BackTopNav text={translate('EditExercise')} />
                 <Button
                   size="sm"
                   buttonType="primary"
@@ -323,13 +319,13 @@ const EditExercise = (props) => {
                   onClick={onSubmit}
                   disabled={!isValid}
                 >
-                  {translate("Save")}
+                  {translate('Save')}
                 </Button>
               </Nav>
               <Paragraph type="body-3-regular">
-                {translate("EditExerciseDescription")}
+                {translate('EditExerciseDescription')}
               </Paragraph>
-              <Label text={translate("ExerciseName")}>
+              <Label text={translate('ExerciseName')}>
                 <Field
                   placeholder={exerciseData.name}
                   type="text"
@@ -345,7 +341,7 @@ const EditExercise = (props) => {
               />
               {renderAttachmentsPreview(selectedFiles)}
               <ContainerDescription>
-                <Label text={translate("AddExerciseDescription")}>
+                <Label text={translate('AddExerciseDescription')}>
                   <Field
                     placeholder={exerciseData.description}
                     type="text"
@@ -357,46 +353,46 @@ const EditExercise = (props) => {
               {ifPlanEdited && (
                 <>
                   <ExerciseEditItem>
-                    <Headline>{translate("Repeat")}</Headline>
+                    <Headline>{translate('Repeat')}</Headline>
                     <Counter
-                      fill={"#FFFFFF"}
+                      fill={'#FFFFFF'}
                       defaultValue={exerciseData.repeats}
                       initialValueToChange={repeatsToChange}
                       handleData={handleRepeat}
-                      initialUnit={""}
+                      initialUnit={''}
                     />
                   </ExerciseEditItem>
 
                   <ExerciseEditItem>
-                    <Headline>{translate("ExerciseTime")}</Headline>
+                    <Headline>{translate('ExerciseTime')}</Headline>
                     <Counter
-                      fill={"#FFFFFF"}
+                      fill={'#FFFFFF'}
                       defaultValue={exerciseData.times}
                       initialValueToChange={timesToChange}
                       handleData={handleTime}
-                      initialUnit={"s"}
+                      initialUnit={'s'}
                     />
                   </ExerciseEditItem>
 
                   <ExerciseEditItem>
-                    <Headline>{translate("Series")}</Headline>
+                    <Headline>{translate('Series')}</Headline>
                     <Counter
-                      fill={"#FFFFFF"}
+                      fill={'#FFFFFF'}
                       defaultValue={exerciseData.series}
                       initialValueToChange={seriesToChange}
                       handleData={handleSeries}
-                      initialUnit={""}
+                      initialUnit={''}
                     />
                   </ExerciseEditItem>
 
                   <ExerciseEditItem>
-                    <Headline>{translate("Weight")}</Headline>
+                    <Headline>{translate('Weight')}</Headline>
                     <Counter
-                      fill={"#FFFFFF"}
+                      fill={'#FFFFFF'}
                       defaultValue={exerciseData.weight}
                       initialValueToChange={weightToChange}
                       handleData={handleWeight}
-                      initialUnit={"kg"}
+                      initialUnit={'kg'}
                     />
                   </ExerciseEditItem>
                 </>
@@ -406,7 +402,7 @@ const EditExercise = (props) => {
         </Formik>
       </GlobalTemplate>
     </>
-  );
-};
+  )
+}
 
-export default EditExercise;
+export default EditExercise

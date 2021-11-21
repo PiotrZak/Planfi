@@ -7,10 +7,10 @@ const breakPoints = {
 }
 
 interface IBreakPoints {
-  xs: string,
-  sm: string,
-  md: string,
-  lg: string,
+  xs: string
+  sm: string
+  md: string
+  lg: string
 }
 
 const breakPointSize: IBreakPoints = {

@@ -1,32 +1,37 @@
-import React from 'react';
-import Label from 'components/atoms/Label';
-import Input from 'components/molecules/Input';
-import { useHistory } from 'react-router-dom';
-import Button from 'components/atoms/Button';
-import AuthTemplate from 'templates/AuthTemplate';
-import ErrorMessageForm from 'components/atoms/ErrorMessageForm';
-import InputContainer from 'components/atoms/InputContainerForm';
-import { Formik, Field, Form } from 'formik';
-import * as Yup from 'yup';
-import BackTopNav from 'components/molecules/BackTopNav';
-import Center from 'components/atoms/Center';
-import { translate } from 'utils/Translation';
-import { accountService } from 'services/accountServices';
-import { useNotificationContext, ADD } from 'support/context/NotificationContext';
-import { routes } from 'utils/routes';
-import GlobalTemplate from '../../templates/GlobalTemplate';
+import React from 'react'
+import Label from 'components/atoms/Label'
+import Input from 'components/molecules/Input'
+import { useHistory } from 'react-router-dom'
+import Button from 'components/atoms/Button'
+import AuthTemplate from 'templates/AuthTemplate'
+import ErrorMessageForm from 'components/atoms/ErrorMessageForm'
+import InputContainer from 'components/atoms/InputContainerForm'
+import { Formik, Field, Form } from 'formik'
+import * as Yup from 'yup'
+import BackTopNav from 'components/molecules/BackTopNav'
+import Center from 'components/atoms/Center'
+import { translate } from 'utils/Translation'
+import { accountService } from 'services/accountServices'
+import {
+  useNotificationContext,
+  ADD,
+} from 'support/context/NotificationContext'
+import { routes } from 'utils/routes'
+import GlobalTemplate from '../../templates/GlobalTemplate'
 
 const initialValues = {
   email: '',
-};
+}
 
 const validationSchema = Yup.object({
-  email: Yup.string().email(translate('EnterValidEmail')).required(translate('ThisFieldIsRequired')),
-});
+  email: Yup.string()
+    .email(translate('EnterValidEmail'))
+    .required(translate('ThisFieldIsRequired')),
+})
 
 const ForgotPasswordPage = () => {
-  const { notificationDispatch } = useNotificationContext();
-  const history = useHistory();
+  const { notificationDispatch } = useNotificationContext()
+  const history = useHistory()
 
   const onSubmit = (values) => {
     accountService
@@ -38,8 +43,10 @@ const ForgotPasswordPage = () => {
             content: { success: 'OK', message: translate('EmailSentToUser') },
             type: 'positive',
           },
-        });
-        setTimeout(() => { history.push(routes.login); }, 1000);
+        })
+        setTimeout(() => {
+          history.push(routes.login)
+        }, 1000)
       })
       .catch((error) => {
         notificationDispatch({
@@ -48,30 +55,48 @@ const ForgotPasswordPage = () => {
             content: { error, message: translate('ErrorAlert') },
             type: 'error',
           },
-        });
-      });
-  };
+        })
+      })
+  }
 
   return (
     <AuthTemplate>
       <BackTopNav text={translate('ForgotPassword')} />
-      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} validateOnChange={false}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        validateOnChange={false}
+      >
         {({ errors, touched, isValid }) => (
           <Center place="authForm">
             <Form>
               <InputContainer>
                 <Label type="top" text={translate('EmailAddress')}>
-                  <Field type="email" name="email" placeholder={translate('YourMail')} as={Input} error={errors.email && touched.email} />
+                  <Field
+                    type="email"
+                    name="email"
+                    placeholder={translate('YourMail')}
+                    as={Input}
+                    error={errors.email && touched.email}
+                  />
                 </Label>
                 <ErrorMessageForm name="email" />
               </InputContainer>
-              <Button type="submit" buttonType="primary" size="lg" buttonPlace="bottom">{translate('Send')}</Button>
+              <Button
+                type="submit"
+                buttonType="primary"
+                size="lg"
+                buttonPlace="bottom"
+              >
+                {translate('Send')}
+              </Button>
             </Form>
           </Center>
         )}
       </Formik>
     </AuthTemplate>
-  );
-};
+  )
+}
 
-export default ForgotPasswordPage;
+export default ForgotPasswordPage

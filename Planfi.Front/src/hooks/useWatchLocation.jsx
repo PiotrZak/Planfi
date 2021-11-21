@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 // export interface GeoLocationSensorState {
 //   accuracy: number,
@@ -21,9 +21,9 @@ const useGeolocation = () => {
     longitude: null,
     speed: null,
     timestamp: Date.now(),
-  });
-  let mounted = true;
-  let watchId;
+  })
+  let mounted = true
+  let watchId
 
   const onEvent = (event) => {
     if (mounted) {
@@ -36,21 +36,21 @@ const useGeolocation = () => {
         longitude: event.coords.longitude,
         speed: event.coords.speed,
         timestamp: event.timestamp,
-      });
+      })
     }
-  };
+  }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(onEvent);
-    watchId = navigator.geolocation.watchPosition(onEvent);
+    navigator.geolocation.getCurrentPosition(onEvent)
+    watchId = navigator.geolocation.watchPosition(onEvent)
 
     return () => {
-      mounted = false;
-      navigator.geolocation.clearWatch(watchId);
-    };
-  }, [0]);
+      mounted = false
+      navigator.geolocation.clearWatch(watchId)
+    }
+  }, [0])
 
-  return state;
-};
+  return state
+}
 
-export default useGeolocation;
+export default useGeolocation

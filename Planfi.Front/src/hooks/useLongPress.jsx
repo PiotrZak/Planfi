@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import styled from 'styled-components';
-import { darkTheme } from 'theme/darkTheme';
+import React, { useState, useEffect, useMemo } from 'react'
+import styled from 'styled-components'
+import { darkTheme } from 'theme/darkTheme'
 
 export const GenericMobile = styled.div`
-      width:100%;
-      height:80px;
-      position:initial;
-      ${({ active, }) => active && `
+  width: 100%;
+  height: 80px;
+  position: initial;
+  ${({ active }) =>
+    active &&
+    `
         &:after{
         content:'';
         position:absolute;
@@ -21,10 +23,12 @@ export const GenericMobile = styled.div`
 `
 
 export const GenericLightMobile = styled.div`
-      width:100%;
-      height:80px;
-      position:initial;
-      ${({ active, }) => active && `
+  width: 100%;
+  height: 80px;
+  position: initial;
+  ${({ active }) =>
+    active &&
+    `
         &:after{
         content:'';
         position:absolute;
@@ -39,16 +43,15 @@ export const GenericLightMobile = styled.div`
   `}
 `
 
-export const Holdable = ({isActive, theme, onHold, children, forx }) => {
-
+export const Holdable = ({ isActive, theme, onHold, children, forx }) => {
   const [timer, setTimer] = useState(null)
-  const  onPointerDown =(evt) => {
+  const onPointerDown = (evt) => {
     const event = { ...evt }
     const timeoutId = window.setTimeout(timesup.bind(null, event), 200)
     setTimer(timeoutId)
   }
 
-  const onPointerUp =(evt) => {
+  const onPointerUp = (evt) => {
     if (timer) {
       window.clearTimeout(timer)
       setTimer(null)
@@ -61,22 +64,25 @@ export const Holdable = ({isActive, theme, onHold, children, forx }) => {
     isActive = !isActive
   }
 
-  return useMemo(() => (
-    theme   ==  'light' ?
-    <GenericLightMobile
-      name ={forx}
-      active ={isActive}
-      onPointerDown={onPointerDown}
-      onPointerUp={onPointerUp}>
-      {children}
-    </GenericLightMobile>
-    :
-    <GenericMobile
-    name ={forx}
-    active ={isActive}
-    onPointerDown={onPointerDown}
-    onPointerUp={onPointerUp}>
-    {children}
-  </GenericMobile>
-  ))
+  return useMemo(() =>
+    theme == 'light' ? (
+      <GenericLightMobile
+        name={forx}
+        active={isActive}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+      >
+        {children}
+      </GenericLightMobile>
+    ) : (
+      <GenericMobile
+        name={forx}
+        active={isActive}
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+      >
+        {children}
+      </GenericMobile>
+    )
+  )
 }

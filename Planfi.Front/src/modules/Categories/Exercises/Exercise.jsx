@@ -1,26 +1,26 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { exerciseService } from "services/exerciseService";
-import { useHistory, Link } from "react-router-dom";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import GlobalTemplate from "templates/GlobalTemplate";
-import SmallButton from "components/atoms/SmallButton";
-import Nav from "components/atoms/Nav";
-import BackTopNav from "components/molecules/BackTopNav";
-import { Role } from "utils/role";
-import { useUserContext } from "support/context/UserContext";
-import { useQuery, gql } from '@apollo/client';
-import { translate } from "utils/Translation";
-import styled from "styled-components";
+import React, { useState, useEffect, useCallback } from 'react'
+import { exerciseService } from 'services/exerciseService'
+import { useHistory, Link } from 'react-router-dom'
+import Carousel from 'react-multi-carousel'
+import 'react-multi-carousel/lib/styles.css'
+import GlobalTemplate from 'templates/GlobalTemplate'
+import SmallButton from 'components/atoms/SmallButton'
+import Nav from 'components/atoms/Nav'
+import BackTopNav from 'components/molecules/BackTopNav'
+import { Role } from 'utils/role'
+import { useUserContext } from 'support/context/UserContext'
+import { useQuery, gql } from '@apollo/client'
+import { translate } from 'utils/Translation'
+import styled from 'styled-components'
 import {
   useNotificationContext,
   ADD,
-} from "support/context/NotificationContext";
-import ExercisePanel from "./ExercisePanel";
-import Slide from "components/molecules/Slide"
-import Loader from 'components/atoms/Loader';
+} from 'support/context/NotificationContext'
+import ExercisePanel from './ExercisePanel'
+import Slide from 'components/molecules/Slide'
+import Loader from 'components/atoms/Loader'
 
-import { Breakpoints } from 'support/magicVariables';
+import { Breakpoints } from 'support/magicVariables'
 
 const InfoTab = styled.div`
   display: flex;
@@ -28,16 +28,15 @@ const InfoTab = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 4.4rem;
-`;
+`
 
 const Exercise = (props) => {
-
-  const { user } = useUserContext();
-  const { notificationDispatch } = useNotificationContext();
-  const [bottomSheet, setBottomSheet] = useState("none");
-  const history = useHistory();
-  const { match } = props;
-  let id = match.params.id;
+  const { user } = useUserContext()
+  const { notificationDispatch } = useNotificationContext()
+  const [bottomSheet, setBottomSheet] = useState('none')
+  const history = useHistory()
+  const { match } = props
+  let id = match.params.id
 
   const EXERCISE = gql`{
     exercise(id: "${id}")
@@ -53,25 +52,23 @@ const Exercise = (props) => {
       }
      }
     }
-  `;
+  `
 
-  const {
-    loading, error, data, refetch: _refetch,
-  } = useQuery(EXERCISE);
-  const refreshData = useCallback(() => { setTimeout(() => _refetch(), 200); }, [_refetch]);
-
+  const { loading, error, data, refetch: _refetch } = useQuery(EXERCISE)
+  const refreshData = useCallback(() => {
+    setTimeout(() => _refetch(), 200)
+  }, [_refetch])
 
   useEffect(() => {
-    refreshData();
-  }, []);
+    refreshData()
+  }, [])
 
-  if (loading) return <Loader isLoading={loading} />;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Loader isLoading={loading} />
+  if (error) return <p>Error :(</p>
 
-
-  let exercise;
+  let exercise
   if (data) {
-    exercise = data.exercise;
+    exercise = data.exercise
   }
 
   const deleteExercise = () => {
@@ -81,38 +78,37 @@ const Exercise = (props) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { success: "OK", message: translate("ExerciseDeleted") },
-            type: "positive",
+            content: { success: 'OK', message: translate('ExerciseDeleted') },
+            type: 'positive',
           },
-        });
-        history.goBack();
+        })
+        history.goBack()
       })
       .catch((error) => {
         notificationDispatch({
           type: ADD,
           payload: {
-            content: { error, message: translate("ErrorAlert") },
-            type: "error",
+            content: { error, message: translate('ErrorAlert') },
+            type: 'error',
           },
-        });
-      });
-  };
+        })
+      })
+  }
 
   return (
     <>
-      {exercise &&
+      {exercise && (
         <GlobalTemplate>
-
           <Nav>
             <BackTopNav text={exercise.name} />
             {user.role.name != Role.User && exercise && (
-            <SmallButton
-              onClick={() => setBottomSheet("flex")}
-              iconName="plus"
-            />
-          )}
+              <SmallButton
+                onClick={() => setBottomSheet('flex')}
+                iconName="plus"
+              />
+            )}
           </Nav>
-          {exercise.files &&
+          {exercise.files && (
             <Carousel swipeable={true} responsive={Breakpoints}>
               {exercise.files.map((file, index) => (
                 <>
@@ -120,21 +116,29 @@ const Exercise = (props) => {
                 </>
               ))}
             </Carousel>
-          }
+          )}
           <>
             <h1>{exercise.name}</h1>
-            {exercise.series  && exercise.series.map((serie, index) => (
-              <div key={index}>
-                <p>{translate("Weight")} {serie.weight}</p>
-                <p>{translate("ExerciseTime")} {serie.times}</p>
-                <p>{translate("Repeat")}{serie.repeats}</p>
-              </div>
-            ))}
+            {exercise.series &&
+              exercise.series.map((serie, index) => (
+                <div key={index}>
+                  <p>
+                    {translate('Weight')} {serie.weight}
+                  </p>
+                  <p>
+                    {translate('ExerciseTime')} {serie.times}
+                  </p>
+                  <p>
+                    {translate('Repeat')}
+                    {serie.repeats}
+                  </p>
+                </div>
+              ))}
             <h3>Description:</h3>
             <p>{exercise.description}</p>
           </>
         </GlobalTemplate>
-      }
+      )}
       <ExercisePanel
         props={props}
         bottomSheet={bottomSheet}
@@ -142,10 +146,8 @@ const Exercise = (props) => {
         exercise={exercise}
         deleteExercise={deleteExercise}
       />
-    </>)
+    </>
+  )
 }
 
-
-
-
-export default Exercise;
+export default Exercise

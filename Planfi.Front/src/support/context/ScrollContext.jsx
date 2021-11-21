@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext } from 'react'
 
-export const ScrollContext = React.createContext();
+export const ScrollContext = React.createContext()
 
-export const useScrollContext = () => useContext(ScrollContext);
+export const useScrollContext = () => useContext(ScrollContext)
