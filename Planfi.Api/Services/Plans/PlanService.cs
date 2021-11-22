@@ -13,7 +13,6 @@ using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Helpers;
-using WebApi.Models;
 
 namespace PlanfiApi.Services.Plans
 {

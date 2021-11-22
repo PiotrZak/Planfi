@@ -60,13 +60,9 @@ export const StripeContainer = () => {
 
   return (
     <GlobalTemplate>
-      {/* <Elements stripe={stripePromise}>
-        <CheckoutForm />
-      </Elements> */}
-      <h1>Test</h1>
       <html>
         <head>
-          <title>Buy cool new product</title>
+          <title>Buy plan for your organization</title>
         </head>
         <body>
           <button onClick={() => startPayment()} type="submit">

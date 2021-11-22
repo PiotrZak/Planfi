@@ -90,9 +90,9 @@ const Root = () => {
             <BrowserRouter ref={routerRef} history={history}>
               <MainTemplate>
                 <Switch>
-                  {/* <Route path ="/stripe" component={StripeContainer} />
+                  <Route path ="/stripe" component={StripeContainer} />
                   <Route path ="/stripeSuccess" component={StripeSuccess} />
-                  <Route path ="/stripeCancel" component={StripeCancel} />*/}
+                  <Route path ="/stripeCancel" component={StripeCancel} />
                   <Route path="/chat" component={ChatContainer} />
 
                   <Route

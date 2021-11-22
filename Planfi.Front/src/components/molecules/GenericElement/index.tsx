@@ -81,14 +81,15 @@ const GenericElement = ({
   ...rest
 }: IGenericElement) => {
 
-  console.log(user)
   return (
     <>
       <Wrapper {...rest}>
         <Container>
           {user && <Avatar
             userId={user.user_Id}
-            avatar={user.avatar && bytesArrToBase64(user.avatar)}
+            avatar={user.avatar && typeof (user.avatar) === 'object'
+              ? bytesArrToBase64(user.avatar) 
+              : user.avatar}
             firstName={user.first_Name}
             lastName={user.last_Name}
             size="md"
