@@ -93,11 +93,11 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
   const { theme } = useThemeContext()
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])
   const [previewFiles, setPreviewFiles] = useState<any>([])
-  const [uploadPercentage, setUploadPercentage] = useState<any>()
+  const [uploadPercentage, setUploadPercentage] = useState<any>(0)
   const [filesToDelete, setFilesToDelete] = useState<string[]>([])
   const { notificationDispatch } = useNotificationContext()
   const [exerciseData, setExerciseData] = useState<ExerciseViewModel | any>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState<boolean>(false)
   const history = useHistory();
 
   let id: string;
@@ -165,14 +165,14 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
 
     formData.append('CategoryId', props.location.state.id)
 
+    setLoading(true)
+
     const options = {
       headers: { Authorization: `Bearer ${Cookies.get('JWT')}` },
 
       onUploadProgress: (progressEvent: { loaded: any; total: any }) => {
         const { loaded, total } = progressEvent
         let percent = Math.floor((loaded * 100) / total)
-        console.log(`${loaded}kb of ${total}kb | ${percent}%`)
-
         if (percent < 100) {
           setUploadPercentage(percent)
         }
@@ -191,6 +191,12 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
             type: 'positive',
           },
         })
+        setLoading(false)
+        history.push({
+          pathname: `/exercises/${id}`,
+          //@ts-ignore
+          state: { id: id },
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -202,9 +208,6 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
           },
         })
       })
-
-    setLoading(false)
-
   }
 
 
@@ -248,14 +251,9 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
   }
 
   const removeFile = (currentPhoto: string) => {
-    console.log(currentPhoto)
-
-    console.log(selectedFiles)
     const listWithRemovedElement = selectedFiles.filter(
       (file) => file !== currentPhoto
     )
-
-    console.log(listWithRemovedElement)
     setFilesToDelete([...filesToDelete, currentPhoto])
     setSelectedFiles(listWithRemovedElement)
     resetFileInput()
@@ -305,8 +303,10 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
                 <Nav>
                   <BackTopNav text={translate('EditExercise')} />
                   <Button
+                  //@ts-ignore
                     size = {"sm"}
                     buttonType="primary"
+                    type="submit"
                     onClick={onSubmit}
                     disabled={!isValid}
                   >

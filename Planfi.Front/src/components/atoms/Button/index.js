@@ -17,14 +17,12 @@ const handleButtonSize = (size) => {
 }
 
 const Button = styled.button`
-  //button default styles
   padding: 0 1.6rem;
   cursor: pointer;
   font-weight: bold;
   border-radius: 2px;
   outline: none;
   border: none;
-
   color: ${({ theme }) => theme.colorWhite};
   height: ${({ size }) => handleButtonSize(size)};
   ${({ buttonPlace }) => handleButtonPlace(buttonPlace)};
