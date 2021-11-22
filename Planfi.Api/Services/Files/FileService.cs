@@ -12,13 +12,16 @@ using PlanfiApi.Helpers;
 
 namespace PlanfiApi.Services.Files
 {
-    public class FileService : IFileService
-    {
-        private readonly IWebHostEnvironment _environment;
-        private readonly string _movieBucketName = "planfi-movies";
-        private readonly string _filesBucketName = "planfi-files";
+  public class FileService : IFileService
+  {
+    private readonly IWebHostEnvironment _environment;
+    private readonly string _movieBucketName = "planfi-movies";
+    private readonly string _filesBucketName = "planfi-files";
+    private readonly string[] _movieExtensions = { "video/mp4", "video/mov", "video/avi", "video/quicktime" };
+    private readonly string[] _imageExtensions = { "image/jpeg", "image/jpg", "image/png", "image/gif" };
+  
 
-        public FileService(DataContext context, IWebHostEnvironment environment)
+  public FileService(DataContext context, IWebHostEnvironment environment)
         {
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
         }
@@ -48,15 +51,14 @@ namespace PlanfiApi.Services.Files
                     fi.Name, fi.Length.ToString(), outFile.Length.ToString());
             }
         }
-
+        
         public async Task<List<byte[]>> ProcessFileExercise(List<IFormFile> files, string fileName)
         {
             var filesList = new List<byte[]>();
-
-            //todo - only one movie per exercise for now.
+            
             foreach (var (formFile, iterator) in files.Select((c, i) => (c, i)))
             {
-              if (formFile.ContentType is "video/mp4" or "video/mov" or "video/avi" or "video/quicktime")
+              if (_movieExtensions.Contains(formFile.ContentType)) 
               {
                 var ext = Path.GetExtension(formFile.FileName);
                 await using var memoryStream = new MemoryStream();
@@ -152,7 +154,6 @@ namespace PlanfiApi.Services.Files
                 default:
                   throw new ArgumentOutOfRangeException(nameof(type), type, null);
               }
-                  
             }
         }
 
@@ -161,15 +162,14 @@ namespace PlanfiApi.Services.Files
             for (var i = 0; i < filesToDelete.Count; i++)
             {
                 var result = Encoding.UTF8.GetString(filesToDelete[i]);
-                if (result.Length >= 10)
-                {
-                  await DeleteFileFromGoogleStorage(exerciseName + 1 + result, FileType.Image);
-                }
-                else
+                if (_movieExtensions.Contains(result)) 
                 {
                   await DeleteFileFromGoogleStorage(exerciseName + 1 + result, FileType.Movie);
                 }
-                
+                else
+                {
+                  await DeleteFileFromGoogleStorage(exerciseName + i + result, FileType.Image);
+                }
             }
         }
 

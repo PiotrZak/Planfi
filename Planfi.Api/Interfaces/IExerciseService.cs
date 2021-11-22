@@ -12,8 +12,6 @@ namespace PlanfiApi.Interfaces
         Exercise Create(Exercise exercise);
         Exercise CreateInstance(Exercise exercise);
         IEnumerable<Exercise> GetAll();
-        
-        // Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId);
         Task<List<ExerciseViewModel>> GetSerializedExercisesInstances();
         IEnumerable<Exercise> GetAllOfCategory(string categoryId);
         IEnumerable<Exercise> GetAllOfPlan(string planId);

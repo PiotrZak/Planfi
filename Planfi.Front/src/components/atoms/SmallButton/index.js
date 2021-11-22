@@ -4,26 +4,18 @@ import handleButtonType from 'support/ButtonType'
 import PropTypes from 'prop-types'
 import Icon from 'components/atoms/Icon'
 
-// set button type
 const SmallButtonStyled = styled.div`
   width: 3.2rem;
   height: 3.2rem;
-
   cursor: pointer;
-
   outline: none;
   border: none;
-
   color: ${({ theme }) => theme.colorWhite};
-
-  //center icon
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   ${({ buttonType, theme }) => handleButtonType(buttonType, theme)};
-
   ${({ color }) => color && `background: ${color} !important;`};
 `
 

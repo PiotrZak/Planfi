@@ -16,6 +16,7 @@ import { profileTabs } from '../Users/ProfileTabs'
 import { Plans } from 'modules/Users/UserProfile/Plans'
 import { Users } from 'modules/Users/UserProfile/Users'
 import TabItemComponent from 'components/molecules/TabItemComponent/TabItemComponent'
+import { NavLink } from 'react-router-dom'
 
 const Container = styled.div`
   margin: auto;
@@ -77,7 +78,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
         console.log(data)
         setUpdatedUser(data)
       })
-      .catch((error) => {})
+      .catch((error) => { })
   }
 
   const renderTab = () => {
@@ -110,6 +111,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
               <UserInfo user={updatedUser} />
             </ContainerCentred>
             <div className="tabs">
+              <NavLink to="/stripe">Pay</NavLink>
               {profileTabs.map(({ id, icon, titleTrainer, titleClient }) => (
                 <TabItemComponent
                   key={

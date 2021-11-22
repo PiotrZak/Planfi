@@ -35,23 +35,29 @@ const Image = styled.img`
   border-radius: 2px;
 `
 
-function isObject(val) {
+function isObject(val: null) {
   if (val === null) {
     return false
   }
   return typeof val === 'function' || typeof val === 'object'
 }
 
-const AttachmentPreview = ({ attachmentSrc, remove, key }) => {
+interface IAttachmentPreview {
+  attachmentSrc: any
+  type: string
+  remove: any
+  key: number
+}
+
+const AttachmentPreview = ({ attachmentSrc, type, remove, key }: IAttachmentPreview) => {
   return (
-    <Container id={key}>
+    <Container>
       <Circle onClick={remove} id={`img-prev-${key}`}>
         <Icon
           name="union"
           size=".7rem"
           onClick={remove}
-          id={`img-prev-${key}`}
-        />
+          id={`img-prev-${key}`} fill={undefined} cursorType={undefined} />
       </Circle>
       {acceptedVideoFileType.includes(attachmentSrc.type) ? (
         <img
@@ -64,7 +70,7 @@ const AttachmentPreview = ({ attachmentSrc, remove, key }) => {
           {isObject(attachmentSrc) ? (
             <Image src={URL.createObjectURL(attachmentSrc)} />
           ) : (
-            <Image src={`data:image/jpeg;base64,${attachmentSrc}`} />
+            <Image src={attachmentSrc} />
           )}
         </>
       )}

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import Paragraph from 'components/atoms/Paragraph'
 import { imageUrl } from 'services/utils'
 import { isValidURL } from 'utils/common.util'
@@ -68,11 +67,6 @@ const StyledParagraph = styled(Paragraph)`
 
 const Avatar = ({ userId, avatar, firstName, lastName, size }) => {
 
-  if(avatar){
-    console.log(avatar)
-    console.log(atob(avatar))
-    console.log(atob(bytesArrToBase64(avatar)))
-  }
   return (
     <>
       {avatar === null ? (

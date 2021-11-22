@@ -22,7 +22,7 @@ import {
 import GlobalTemplate from 'templates/GlobalTemplate'
 import { useHistory } from 'react-router-dom'
 import { withLazyComponent } from 'utils/lazyComponent'
-import Loader from 'components/atoms/Loader'
+import ProgressBar from 'components/molecules/ProgressBar';
 import {
   acceptedFiles,
   acceptedImageFileType,
@@ -74,41 +74,7 @@ const validationSchema = Yup.object({
   exerciseDescription: Yup.string(),
 })
 
-const ProgressBar = ({ bgcolor, progress, height }) => {
-  const Parentdiv = {
-    height: height,
-    width: '100%',
-    backgroundColor: 'whitesmoke',
-  }
 
-  const Childdiv = {
-    height: '100%',
-    width: `${progress}%`,
-    backgroundColor: bgcolor,
-  }
-
-  const Center = {
-    position: 'absolute',
-    left: '50%',
-    top: '50%',
-    transform: 'translate(-50%, -50%)',
-    fontSize: '1.6rem',
-  }
-
-  return (
-    <div style={Parentdiv}>
-      <div style={Childdiv}>
-        {progress < 90 ? (
-          <div style={Center}>Sending to cloud</div>
-        ) : (
-          <div style={Center}>
-            <Loader isLoading={true}></Loader>Processing in cloud
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
 
 const AddExerciseRefactor = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([])
@@ -255,7 +221,7 @@ const AddExerciseRefactor = (props) => {
         return
       }
 
-      setSelectedFiles((prevState) => prevState.concat(File))
+      setSelectedFiles((x) => x.concat(File))
     })
   }
 
