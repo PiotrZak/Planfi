@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
@@ -15,6 +17,7 @@ using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models;
+using PlanfiApi.Services.Files;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.ViewModels;
 using WebApi.Helpers;
@@ -29,14 +32,17 @@ namespace PlanfiApi.Services.Account
         private readonly IEmailService _emailService;
         private readonly IConfiguration _configuration;
         private readonly DataContext _context;
+        private readonly IFileService _fileService;
+        private readonly string _filesBucketName = "planfi-files";
         private const string SenderName = "Planfi";
         private const string SenderEmail = "planfi.contact@gmail.com";
 
-        public AccountService(IEmailService emailService, DataContext context, IConfiguration configuration)
+        public AccountService(IEmailService emailService, DataContext context, IConfiguration configuration, IFileService fileService)
         {
             _emailService = emailService;
             _context = context;
             _configuration = configuration;
+            _fileService = fileService;
         }
         
         public async Task<User> Activate(ActivateAccount user)
@@ -83,9 +89,25 @@ namespace PlanfiApi.Services.Account
             return true;
         }
 
-        public async Task<int>  UploadAvatar(byte[] avatar, string? UserId)
+        public async Task<int> ProcessAvatar(IFormFile avatar, string? UserId)
         {
-            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? UserId;
+          var ext = Path.GetExtension(avatar.FileName);
+          await using var memoryStream = new MemoryStream();
+          await avatar.CopyToAsync(memoryStream);
+
+          var avatarExtensionBytes = Encoding.ASCII.GetBytes(ext);
+          var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? UserId;
+          var fileNameWithExtensionAndNumber = userId+ext;
+          var path = await _fileService.SaveFileToDirectory(avatar, fileNameWithExtensionAndNumber, FileService.FileType.Image);
+
+          await _fileService.DeleteFileFromGoogleStorage(fileNameWithExtensionAndNumber, FileService.FileType.Image);
+          await _fileService.SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileService.FileType.Image);
+
+          return await UploadAvatar(avatarExtensionBytes, userId); 
+        }
+
+        public async Task<int> UploadAvatar(byte[] avatar, string? userId)
+        {
             var connection = new NpgsqlConnection(_configuration.GetConnectionString("WebApiDatabase"));
             await connection.OpenAsync();
             

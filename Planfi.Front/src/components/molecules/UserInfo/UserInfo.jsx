@@ -15,7 +15,6 @@ const Container = styled.div``
 
 const StyledParagraph = styled(Paragraph)`
   margin: 0;
-
   ${({ notFirst, theme }) => notFirst && `color: ${theme.colorSecondary};`}
 `
 
@@ -33,6 +32,7 @@ export const UserInfo = ({ user }) => {
     <UserInfoContainer>
       <Container>
         <Avatar
+          userId = {user.userId}
           avatar={user.avatar}
           firstName={user.firstName}
           lastName={user.lastName}

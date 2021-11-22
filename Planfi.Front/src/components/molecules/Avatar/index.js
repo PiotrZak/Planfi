@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import Paragraph from 'components/atoms/Paragraph'
+import { imageUrl } from 'services/utils'
+import { isValidURL } from 'utils/common.util'
 
 const handleTextSize = (size) => {
   if (size === 'sm') {
@@ -36,7 +38,6 @@ const handleAvatarSize = (size) => {
       width: 7.2rem;
     `
   }
-  // defualt return sm
   return `
       height: 3.2rem;
       width: 3.2rem;
@@ -64,29 +65,28 @@ const StyledParagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.colorPrimary};
 `
 
-const renderAvatar = (avatar, firstName, lastName, size) => {
-  if (avatar === null) {
-    const initials =
-      firstName.charAt(0).toUpperCase() + lastName.charAt(0).toUpperCase()
-
-    return (
-      <EmptyAvatar size={size}>
-        <StyledParagraph type={handleTextSize(size)}>
-          {initials}
-        </StyledParagraph>
-      </EmptyAvatar>
-    )
-  }
-  return <StyledAvatar src={`data:image/jpeg;base64,${avatar}`} size={size} />
-}
-
-const Avatar = ({ avatar, firstName, lastName, size }) => (
-  <>{renderAvatar(avatar, firstName, lastName, size)}</>
-)
-
-Avatar.propTypes = {
-  user: PropTypes.object.isRequired,
-  size: PropTypes.string,
+const Avatar = ({ userId, avatar, firstName, lastName, size }) => {
+  return (
+    <>
+      {avatar === null ? (
+        <EmptyAvatar size={size}>
+          <StyledParagraph type={handleTextSize(size)}>
+            {firstName.charAt(0).toUpperCase() +
+              lastName.charAt(0).toUpperCase()}
+          </StyledParagraph>
+        </EmptyAvatar>
+      ) : (
+        <StyledAvatar
+          size={size}
+          src={
+            isValidURL(atob(avatar))
+              ? atob(avatar)
+              : `${imageUrl}/${userId + atob(avatar)}?authuser=1`
+          }
+        />
+      )}
+    </>
+  )
 }
 
 export default Avatar

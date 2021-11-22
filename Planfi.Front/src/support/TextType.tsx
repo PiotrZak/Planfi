@@ -1,6 +1,6 @@
 import { css } from 'styled-components'
 
-const handleTextType = (type) => {
+const handleTextType = (type: any) => {
   switch (type) {
     case 'Label-Button':
       return css`

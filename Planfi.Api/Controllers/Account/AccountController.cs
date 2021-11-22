@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models;
 using PlanfiApi.Models.ViewModels;
+using PlanfiApi.Services.Files;
 using WebApi.Common;
 using WebApi.Controllers.ViewModels;
 using WebApi.Data.ViewModels;
@@ -29,13 +31,18 @@ namespace PlanfiApi.Controllers.Account
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
         private readonly IUserService _userService;
+        private readonly IFileService _fileService;
+
 
         public AccountController(
             IEmailService emailService,
-            IAccountService accountService, IUserService userService)
+            IAccountService accountService,
+            IUserService userService,
+            IFileService fileService)
         {
             _accountService = accountService;
             _userService = userService;
+            _fileService = fileService;
             _emailService = emailService;
             }
 
@@ -71,8 +78,7 @@ namespace PlanfiApi.Controllers.Account
                 
                 if (user.Avatar == null && model.ImageUrl != null)
                 {
-                  var webClient = new WebClient();
-                  avatarFromGoogle = webClient.DownloadData(model.ImageUrl);
+                  avatarFromGoogle = Encoding.ASCII.GetBytes(model.ImageUrl);
                   await _accountService.UploadAvatar(avatarFromGoogle, user.UserId);
                 }
                 
@@ -116,20 +122,15 @@ namespace PlanfiApi.Controllers.Account
         [HttpPost("uploadAvatar")]
         public async Task<IActionResult> UploadAvatar([FromForm]IFormFile avatar)
         {
-            await using var memoryStream = new MemoryStream();
-            await avatar.CopyToAsync(memoryStream);
-            memoryStream.ToArray();
-            var avatarBytes = memoryStream.ToArray();
-
-            try
-            {
-                await _accountService.UploadAvatar(avatarBytes, null);
-                return Ok();
-            }
-            catch (AppException ex)
-            {
-                return BadRequest(new {message = ex.Message});
-            }
+          try
+          {
+            await _accountService.ProcessAvatar(avatar, null);
+            return Ok();
+          }
+          catch (AppException ex)
+          {
+            return BadRequest(new {message = ex.Message});
+          }
         }
         
         [AllowAnonymous]
