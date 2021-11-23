@@ -80,16 +80,23 @@ describe('Plan Issues', () => {
   })
 
   it('Update Plan', () => {
+
+    const editedTitle = 'New Plan Updated';
     cy.get('.sc-jJEJSO').click({ multiple: true })
     cy.get('.sc-ehSCib > :nth-child(3)').click()
-    cy.get('.sc-iBPRYJ').type('New Plan Updated')
+    cy.get('.sc-iBPRYJ').type(editedTitle)
     cy.get('.sc-dQppl').click()
     cy.get('.sc-dIUggk > .sc-bdfBwQ').click({ multiple: true })
+    cy.get('.sc-hTZhsR').should(
+      "have.text",
+      editedTitle
+    );
+    
     cy.wait(3500)
   })
 
   it('Delete Added Plan', () => {
-    cy.get(':nth-child(3) > .sc-bYEvPH > .sc-jJEJSO').click({ multiple: true })
+    cy.get('.sc-jJEJSO').click({multiple: true})
     cy.get('.sc-ehSCib > :nth-child(2)').click({ multiple: true })
     cy.get('.sc-bkzZxe').should('be.visible')
     cy.wait(3500)
