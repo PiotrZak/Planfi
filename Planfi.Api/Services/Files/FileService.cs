@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
@@ -64,9 +65,9 @@ namespace PlanfiApi.Services.Files
                 await using var memoryStream = new MemoryStream();
                 await formFile.CopyToAsync(memoryStream);
                 var fileNameWithExtensionAndNumber = fileName+1+ext;
-                        
-                var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Movie);
-                await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileType.Movie);
+                
+                //var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Movie);
+                await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, memoryStream, FileType.Movie);
                 filesList.Add(Encoding.ASCII.GetBytes(ext));
               }
               else
@@ -74,10 +75,10 @@ namespace PlanfiApi.Services.Files
                 var ext = Path.GetExtension(formFile.FileName);
                 await using var memoryStream = new MemoryStream();
                 await formFile.CopyToAsync(memoryStream);
-                var fileNameWithExtensionAndNumber = fileName+iterator+ext;
                 
-                var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Image);
-                await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileType.Image);
+                var fileNameWithExtensionAndNumber = fileName+iterator+ext;
+                //var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Image);
+                await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, memoryStream, FileType.Image);
                 filesList.Add(Encoding.ASCII.GetBytes(ext));
               }
             }
@@ -110,7 +111,7 @@ namespace PlanfiApi.Services.Files
           return Path.Combine(path, fileName);
         }
 
-        private GZipStream CompressThis (string path, string fileName)
+        private GZipStream Compress (string path, string fileName)
         {
             using var sourceFile = File.OpenRead(path);
             using var destinationFile = File.Create(fileName);
@@ -119,10 +120,10 @@ namespace PlanfiApi.Services.Files
             return output;
         }
 
-        public async Task SaveFileToGoogleStorage(string fileName, string path, FileType type)
+        public async Task SaveFileToGoogleStorage(string fileName, MemoryStream stream, FileType type)
         {
             var gcsStorage = await StorageClient.CreateAsync();
-            var stream = new FileStream(path, FileMode.Open);
+            //var stream = new FileStream(path, FileMode.Open);
             var isExist = IsObjectExist(fileName, type);
             
             if (!isExist)
@@ -198,7 +199,7 @@ namespace PlanfiApi.Services.Files
     {
         Task<List<byte[]>> ProcessFileExercise(List<IFormFile> files, string fileName);
         Task<string> SaveFileToDirectory(IFormFile formFile, string name, FileService.FileType type);
-        Task SaveFileToGoogleStorage(string fileName, string path, FileService.FileType type);
+        Task SaveFileToGoogleStorage(string fileName, MemoryStream stream, FileService.FileType type);
         Task DeleteFileFromGoogleStorage(string fileName, FileService.FileType type);
         Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles);
     }

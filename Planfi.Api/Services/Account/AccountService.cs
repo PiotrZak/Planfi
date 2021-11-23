@@ -98,10 +98,10 @@ namespace PlanfiApi.Services.Account
           var avatarExtensionBytes = Encoding.ASCII.GetBytes(ext);
           var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value ?? UserId;
           var fileNameWithExtensionAndNumber = userId+ext;
-          var path = await _fileService.SaveFileToDirectory(avatar, fileNameWithExtensionAndNumber, FileService.FileType.Image);
+          //var path = await _fileService.SaveFileToDirectory(avatar, fileNameWithExtensionAndNumber, FileService.FileType.Image);
 
           await _fileService.DeleteFileFromGoogleStorage(fileNameWithExtensionAndNumber, FileService.FileType.Image);
-          await _fileService.SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, path, FileService.FileType.Image);
+          await _fileService.SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, memoryStream, FileService.FileType.Image);
 
           return await UploadAvatar(avatarExtensionBytes, userId); 
         }
