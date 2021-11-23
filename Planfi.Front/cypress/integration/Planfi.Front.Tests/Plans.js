@@ -66,34 +66,37 @@ describe('Plan Issues', () => {
     cy.get(':nth-child(2) > .sc-gsTCUz > .sc-gKsewC').type('Jacklyn')
     cy.get('.sc-dQppl').click()
     cy.saveLocalStorage()
-    cy.wait(2500)
-  })
-
-  it('Delete Added Plan', () => {
-
-    cy.get('[href="/plans"]').click()
-    cy.wait(1500)
-    cy.get(':nth-child(3) > .sc-bYEvPH > .sc-jJEJSO').click({ multiple: true })
-    cy.get('.sc-fbkhIv > :nth-child(2)').click()
-    cy.get('.sc-bkzZxe').should('be.visible')
-    cy.wait(2500)
+    cy.wait(4000)
   })
 
   it('Add Plan', () => {
-    cy.get('.sc-ehSCib').click()
+    cy.get('[href="/plans"]').click()
+    cy.get('.sc-jeGSBP').click()
     cy.get('.sc-iBPRYJ').type('Plan Created By E2E Tests')
     cy.get('.sc-dQppl').click()
     cy.get('.sc-idOhPF').should('be.visible')
-    cy.wait(2500)
+    cy.get('.sc-dIUggk > .sc-bdfBwQ').click()
+    cy.wait(3500)
   })
 
   it('Update Plan', () => {
-    cy.get(':nth-child(3) > .sc-bYEvPH > .sc-jJEJSO').click({ multiple: true })
-    cy.get('.sc-fbkhIv > :nth-child(3)').click()
+    cy.get('.sc-jJEJSO').click({ multiple: true })
+    cy.get('.sc-ehSCib > :nth-child(3)').click()
     cy.get('.sc-iBPRYJ').type('New Plan Updated')
     cy.get('.sc-dQppl').click()
-    cy.wait(2500)
+    cy.get('.sc-dIUggk > .sc-bdfBwQ').click({ multiple: true })
+    cy.wait(3500)
   })
+
+  it('Delete Added Plan', () => {
+    cy.get(':nth-child(3) > .sc-bYEvPH > .sc-jJEJSO').click({ multiple: true })
+    cy.get('.sc-ehSCib > :nth-child(2)').click({ multiple: true })
+    cy.get('.sc-bkzZxe').should('be.visible')
+    cy.wait(3500)
+  })
+
+
+
 
   //   // todo - do that test after design is done
   //   //correlated with srie
