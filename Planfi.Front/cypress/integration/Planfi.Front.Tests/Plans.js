@@ -22,7 +22,7 @@ describe('Account Issues', () => {
 
   it('Forget Pasword with wrong email should display alert', () => {
     cy.visit(url)
-    cy.get('.sc-kfzAmx').click()
+    cy.get('.sc-bBXqnf').click()
 
     cy.get('.sc-gKsewC').type('test@gmail.com')
     cy.get('.sc-dQppl').click()
@@ -70,9 +70,10 @@ describe('Plan Issues', () => {
   })
 
   it('Delete Added Plan', () => {
-    cy.get('[href="/plans"] > .sc-jmhFOf > .sc-bdfBwQ').click()
+
+    cy.get('[href="/plans"]').click()
     cy.wait(1500)
-    cy.get('.sc-kLgntA').click({ multiple: true })
+    cy.get(':nth-child(3) > .sc-bYEvPH > .sc-jJEJSO').click({ multiple: true })
     cy.get('.sc-fbkhIv > :nth-child(2)').click()
     cy.get('.sc-bkzZxe').should('be.visible')
     cy.wait(2500)
@@ -80,14 +81,14 @@ describe('Plan Issues', () => {
 
   it('Add Plan', () => {
     cy.get('.sc-ehSCib').click()
-    cy.get('.sc-iBPRYJ').type('New Plan')
+    cy.get('.sc-iBPRYJ').type('Plan Created By E2E Tests')
     cy.get('.sc-dQppl').click()
     cy.get('.sc-idOhPF').should('be.visible')
     cy.wait(2500)
   })
 
   it('Update Plan', () => {
-    cy.get('.sc-kLgntA').click({ multiple: true })
+    cy.get(':nth-child(3) > .sc-bYEvPH > .sc-jJEJSO').click({ multiple: true })
     cy.get('.sc-fbkhIv > :nth-child(3)').click()
     cy.get('.sc-iBPRYJ').type('New Plan Updated')
     cy.get('.sc-dQppl').click()
