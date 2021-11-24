@@ -22,6 +22,7 @@ const StyledInput = styled.input`
   border-radius: 3px;
 
   ${() => handleTextType('body-3-regular')};
+
   color: ${({ disabled, theme }) =>
     disabled ? theme.fontColor : theme.fontColor};
   /* color: ${({ disabled, theme }) =>
@@ -36,6 +37,31 @@ const StyledInput = styled.input`
     background: ${({ theme }) => theme.colorGray70};
     color: ${({ disabled, theme }) =>
       disabled ? theme.fontColor : theme.fontColor};
+  }
+`
+
+const StyledNoBorder = styled.input`
+  ${() => handleTextType('body-1-medium')};
+  border: 0;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 36px;
+  margin-bottom: 2.4rem;
+  :focus {
+    border: none;
+    outline: none;
+  }
+`
+
+const StyledNoBorderSm = styled.input`
+  ${() => handleTextType('body-3-regular')};
+  border: 0;
+  font-style: normal;
+  margin-bottom: 2.4rem;
+  :focus {
+    border: none;
+    outline: none;
   }
 `
 
@@ -89,12 +115,12 @@ const CenterIcon = styled.div`
 const Container = styled.div`
   display: flex;
 
+  ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
   background: ${({ disabled, theme }) =>
     disabled ? theme.colorGray90 : theme.colorGray80};
-  border: 1px solid
-    ${({ theme, disabled, error }) => handleBorderColor(theme, disabled, error)};
+  border: 1px solid;
   border-radius: 3px;
-
+  padding: 0.6rem 1.6rem;
   ${StyledInputContainer}:focus {
     background: ${({ theme }) => theme.colorGray70};
   }
@@ -190,6 +216,10 @@ const Input = (props) => {
   switch (typeInput) {
     case 'basic':
       return <StyledInput {...props} />
+    case 'no-border':
+      return <StyledNoBorder {...props} />
+    case 'no-border-sm':
+      return <StyledNoBorderSm {...props} />
     case 'light':
       return <StyledLightInput {...props} />
     case 'left':

@@ -24,6 +24,7 @@ export const en = {
   PasswordRecovery: 'Password Recovery',
 
   FillAllFields: 'Fill all fields',
+  Max24: 'This field cannot contain more than 24 characters!',
   PasswordMaxLength: 'The password cannot contain more than 32 characters !',
   PasswordsNotSame: 'Given passwords not same !',
   PasswordNeedsCondition: 'The password must meet the above condition',

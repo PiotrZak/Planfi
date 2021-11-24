@@ -14,19 +14,29 @@ const FileUploadButton = styled.input.attrs({ type: 'file' })`
 
 const WrapperAttachments = styled.div`
   display: flex;
+  width:100%;
   margin-top: 2.2rem;
+  margin-bottom: 2.2rem;
+  width: 100%;
+  height: 80px;
+  border: 2px dotted blue;
+  &:hover {
+      background: ${({ theme }) => theme.colorNeutralLight} !important;
+      cursor:pointer;
+    }
 `
 
 const StyledParagraph = styled(Paragraph)`
   line-height: 0;
-  margin: 0.8rem 0 0 0.5rem;
+  margin: auto;
 `
 
 const AddFiles = ({ triggerFileUploadButton, handleImageChange }) => {
   return (
     <WrapperAttachments onClick={triggerFileUploadButton}>
-      <SmallButton iconName="plus" />
-      <StyledParagraph>{translate('AddAttachments')}</StyledParagraph>
+      <StyledParagraph type="body-3-regular">
+        {translate('AddAttachments')}
+      </StyledParagraph>
       <FileUploadButton
         id="choose-file-button"
         onChange={handleImageChange}

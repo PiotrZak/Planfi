@@ -55,21 +55,21 @@ const Root = () => {
   const routerRef = React.useRef()
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {})
+    navigator.geolocation.getCurrentPosition((position) => { })
     const currentLanguage = localStorage.getItem('language')
     if (currentLanguage == null) {
       localStorage.setItem('language', 'en-GB')
     }
     const history = routerRef.current.history
     const currentUrl = window.location.href
-    if (
-      currentUrl.toString().includes('account') ||
-      currentUrl.toString().includes('forgot')
-    ) {
-      return
-    } else {
-      user != null ? history.push(routes.myProfile) : history.push(routes.login)
-    }
+    // if (
+    //   currentUrl.toString().includes('account') ||
+    //   currentUrl.toString().includes('forgot')
+    // ) {
+    //   return
+    // } else {
+    //   user != null ? history.push(routes.myProfile) : history.push(routes.login)
+    // }
   }, [setUser])
 
   const toggleTheme = () => {
@@ -90,9 +90,9 @@ const Root = () => {
             <BrowserRouter ref={routerRef} history={history}>
               <MainTemplate>
                 <Switch>
-                  <Route path ="/stripe" component={StripeContainer} />
-                  <Route path ="/stripeSuccess" component={StripeSuccess} />
-                  <Route path ="/stripeCancel" component={StripeCancel} />
+                  <Route path="/stripe" component={StripeContainer} />
+                  <Route path="/stripeSuccess" component={StripeSuccess} />
+                  <Route path="/stripeCancel" component={StripeCancel} />
                   <Route path="/chat" component={ChatContainer} />
 
                   <Route
@@ -129,12 +129,12 @@ const Root = () => {
                       component={Clients}
                     />
                     <PrivateRoute
-                      path={routes.addExercise}
-                      component={AddExercise}
-                    />
-                    <PrivateRoute
                       path={routes.editExercise}
                       component={EditExercise}
+                    />
+                    <PrivateRoute
+                      path={routes.addExercise}
+                      component={AddExercise}
                     />
                     <PrivateRoute path={routes.exercise} component={Exercise} />
                     <PrivateRoute
@@ -154,6 +154,7 @@ const Root = () => {
                     <PrivateRoute path={routes.plans} component={Plans} />
                     <PrivateRoute path={routes.plan} component={Plan} />
                   </MenuTemplate>
+
                 </Switch>
               </MainTemplate>
             </BrowserRouter>

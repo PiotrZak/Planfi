@@ -1,7 +1,9 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
+import Switch from '@mui/material/Switch';
 import styled from 'styled-components'
 import BackTopNav from 'components/molecules/BackTopNav'
 import { translate } from 'utils/Translation'
+import ValidationHint from 'components/atoms/ValidateInvalidData'
 import AddCategoryModal from 'modules/Categories/AddCategoryModal'
 import Button from 'components/atoms/Button'
 import Paragraph from 'components/atoms/Paragraph'
@@ -14,7 +16,6 @@ import { useThemeContext } from 'support/context/ThemeContext'
 import { routes } from 'utils/routes'
 import AttachmentPreview from 'components/molecules/AttachmentPreview'
 import Nav from 'components/atoms/Nav'
-import TextArea from 'components/molecules/TextArea'
 import {
   useNotificationContext,
   ADD,
@@ -33,32 +34,24 @@ import {
 import axios from 'axios'
 import { EXERCISES_URL } from '../../../services/utils'
 import { DropdownInput } from 'components/atoms/Dropdown'
-import SmallButton from 'components/atoms/SmallButton'
 import Cookies from 'js-cookie'
+import { ErrorText } from 'components/atoms/ValidateInvalidData';
 
-const Checkbox = withLazyComponent(
-  React.lazy(() => import('components/atoms/Checkbox'))
-)
+
 const AddFiles = withLazyComponent(
   React.lazy(() => import('components/molecules/AddFiles'))
 )
 
-const StyledTextArea = styled(TextArea)`
-  height: 28.3rem;
-`
-
-const ContainerDescription = styled.div`
-  margin-top: 2rem;
-`
-
 const CheckboxContainer = styled.div`
   display: flex;
   margin-top: 2rem;
+  margin-bottom:2rem;
   align-items: center;
 `
 
 const ImagePreviewContainer = styled.div`
   margin-top: 2rem;
+  margin-bottom:2rem;
   display: grid;
   grid-template-columns: repeat(4, 5rem);
   grid-template-rows: 5rem;
@@ -70,21 +63,24 @@ const triggerFileUploadButton = () => {
 }
 
 const validationSchema = Yup.object({
-  exerciseName: Yup.string().required(translate('ThisFieldIsRequired')),
+  exerciseName: Yup.string()
+    .max(24, translate('Max24'))
+    .required(translate('ThisFieldIsRequired')),
   exerciseDescription: Yup.string(),
 })
 
 
 
-const AddExerciseRefactor = (props) => {
+const AddExercise = (props) => {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const { notificationDispatch } = useNotificationContext()
   const { theme } = useThemeContext()
   const [uploadPercentage, setUploadPercentage] = useState(0)
-
   const [selectedCategoryId, setSelectedCategoryId] = useState()
   const [openModal, setOpenModal] = useState(false)
+  const [addExercise, setAddExercise] = useState(false)
+
 
   const user = JSON.parse(localStorage.getItem('user'))
 
@@ -165,7 +161,7 @@ const AddExerciseRefactor = (props) => {
 
         setLoading(false)
 
-        if (values.addNextExercise) {
+        if (addExercise) {
           values.exerciseName = ''
           values.exerciseDescription = ''
           values.addNextExercise = ''
@@ -238,13 +234,15 @@ const AddExerciseRefactor = (props) => {
       return (
         <ImagePreviewContainer id="image-preview-container">
           {selectedFiles.map((photo, i) => (
-            <AttachmentPreview
-              key={i}
-              attachmentSrc={photo}
-              alt=""
-              key={photo.ID}
-              remove={() => removeFile(photo)}
-            />
+            <React.Fragment key={i}>
+              <AttachmentPreview
+                key={i}
+                attachmentSrc={photo}
+                alt=""
+                key={photo.ID}
+                remove={() => removeFile(photo)}
+              />
+            </React.Fragment>
           ))}
         </ImagePreviewContainer>
       )
@@ -268,14 +266,16 @@ const AddExerciseRefactor = (props) => {
   const validate = (values) => {
     const errors = {}
 
-    console.log(selectedCategoryId)
+    if (!values.exerciseName) {
+      errors.exerciseName = 'Exercise name is required'
+    }
 
     if (results[0].categoryId && selectedCategoryId == undefined) {
       setSelectedCategoryId(results[0].categoryId)
     }
 
     if (selectedCategoryId === undefined) {
-      errors.category = 'Required'
+      errors.category = 'Category is required'
     }
     return errors
   }
@@ -304,26 +304,22 @@ const AddExerciseRefactor = (props) => {
             <Form>
               <Nav>
                 <BackTopNav text={translate('AddExercise')} />
-                <Button size="sm" buttonType="primary" type="submit">
-                  {translate('Save')}
-                </Button>
               </Nav>
-              <Paragraph type="body-3-regular">
-                {translate('AddExerciseInfo')}
-              </Paragraph>
-              <Label text={translate('ExerciseName')}>
-                <Field
-                  type="text"
-                  name="exerciseName"
-                  as={Input}
-                  error={errors.exerciseName && touched.exerciseName}
-                />
-              </Label>
-              <AddFiles
-                triggerFileUploadButton={triggerFileUploadButton}
-                handleImageChange={handleImageChange}
+              <Field
+                typeInput="no-border"
+                type="text"
+                placeholder="Exercise Name"
+                name="exerciseName"
+                as={Input}
+                error={errors.exerciseName && touched.exerciseName}
+                autofocus={true}
               />
-              {renderAttachmentsPreview(selectedFiles)}
+              <ValidationHint
+                errors={errors}
+                touched={touched}
+                text={errors.exerciseName}
+                inputName="exerciseName"
+              />
               {results && results.length > 0 ? (
                 <>
                   <Label text={translate('Category')}></Label>
@@ -343,35 +339,46 @@ const AddExerciseRefactor = (props) => {
                   />
                 </>
               ) : (
-                <p>No category - add</p>
-              )}
-              <SmallButton iconName="plus" onClick={() => setOpenModal(true)} />
-              {translate('AddCategory')}
-              <AddCategoryModal
-                theme={theme}
-                openModal={openModal}
-                onClose={closeModal}
-              />
-              {errors.category && <div>{errors.category}</div>}
-              <ContainerDescription>
-                <Label text={translate('AddExerciseDescription')}>
-                  <Field
-                    type="text"
-                    name="exerciseDescription"
-                    as={StyledTextArea}
+                <>
+                  <p onClick={() => setOpenModal(true)}>{translate('AddCategory')}</p>
+                  <AddCategoryModal
+                    theme={theme}
+                    openModal={openModal}
+                    onClose={closeModal}
                   />
-                </Label>
-              </ContainerDescription>
+                </>
+              )}
+              {errors.category && <ErrorText>{errors.category}</ErrorText>}
+              <AddFiles
+                triggerFileUploadButton={triggerFileUploadButton}
+                handleImageChange={handleImageChange}
+              />
+              {renderAttachmentsPreview(selectedFiles)}
+              <Field
+                typeInput="no-border-sm"
+                placeholder="Description"
+                type="text"
+                as={Input}
+                name="exerciseDescription"
+              />
               <CheckboxContainer>
-                <Checkbox
-                  checkboxType="formik"
-                  type="checkbox"
-                  name="addNextExercise"
+                <Switch
+                  checked={addExercise}
+                  onChange={() => setAddExercise(!addExercise)}
+                  inputProps={{ 'aria-label': 'controlled' }}
                 />
                 <Paragraph type="body-2-medium">
                   {translate('AddNextExercise')}
                 </Paragraph>
               </CheckboxContainer>
+              <Button
+                type="submit"
+                buttonType="primary"
+                size="lg"
+                buttonPlace="bottom"
+              >
+                {translate('Save')}
+              </Button>
             </Form>
           )}
         </Formik>
@@ -380,4 +387,4 @@ const AddExerciseRefactor = (props) => {
   )
 }
 
-export default AddExerciseRefactor
+export default AddExercise

@@ -3,7 +3,7 @@ import Paragraph from 'components/atoms/Paragraph'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-const ErrorText = styled.div`
+export const ErrorText = styled.div`
   color: ${({ theme }) => theme.colorErrorDefault};
   font-size: 1.2rem !important;
   margin-top: 1.2rem;
