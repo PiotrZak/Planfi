@@ -12,6 +12,8 @@ import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric'
 import GlobalTemplate from 'templates/GlobalTemplate'
 import { useThemeContext } from 'support/context/ThemeContext'
 import SmallButton from 'components/atoms/SmallButton'
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
 import Nav from 'components/atoms/Nav'
 import {
   useNotificationContext,
@@ -21,6 +23,7 @@ import { PlanPanelExercises } from './PlanPanelExercises'
 import Loader from 'components/atoms/Loader'
 import Heading from 'components/atoms/Heading'
 import { getUniqueListBy } from 'utils/common.util'
+import { ExerciseViewModel } from "../../Types/PlanfiApi/Models/ViewModels/ExerciseViewModel";
 
 //todo - discuss if we use styled components in some places or refactor everything into mui ?
 
@@ -32,10 +35,11 @@ top: 0;
 `
 
 
-const Categories = (props) => {
+const Categories = (_props: any) => {
   const { theme } = useThemeContext()
   const [searchTerm, setSearchTerm] = React.useState('')
-  const [selectedExercise, setselectedExercise] = useState([])
+  const [selectedExercise, setselectedExercise] = useState<any>([])
+  const [categoriesOpen, setCategoriesOpen] = useState<boolean>(false);
   const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] =
     useState(false)
   const [bottomSheet, setBottomSheet] = useState('none')
@@ -68,7 +72,7 @@ const Categories = (props) => {
   const deleteExercise = () => {
     exerciseService
       .deleteExerciseById(selectedExercise)
-      .then((data) => {
+      .then((_data) => {
         notificationDispatch({
           type: ADD,
           payload: {
@@ -90,16 +94,16 @@ const Categories = (props) => {
       })
   }
 
-  const filterByCategoryName = (categoryName) => {
+  const filterByCategoryName = (categoryName: never) => {
     const isMatch = filters.includes(categoryName)
-    let updatedFilters
+    let updatedFilters: any = [] //todo - fix this
     isMatch
       ? (updatedFilters = filters.filter((item) => item != categoryName))
       : (updatedFilters = filters.concat([categoryName]))
 
     setFilters(updatedFilters)
     setFilteredData(
-      data.allBaseExercises.filter((exercise) =>
+      data.allBaseExercises.filter((exercise: any) =>
         updatedFilters.includes(exercise.categoryName)
       )
     )
@@ -109,7 +113,7 @@ const Categories = (props) => {
     refreshData()
   }, [filterByCategoryName])
 
-  const filterExercises = (event) => {
+  const filterExercises = (event: { target: { value: React.SetStateAction<string> } }) => {
     setSearchTerm(event.target.value)
   }
 
@@ -118,19 +122,19 @@ const Categories = (props) => {
     if (filteredData.length > 0) {
       results = !searchTerm
         ? filteredData
-        : filteredData.filter((exercise) =>
+        : filteredData.filter((exercise: { name: string }) =>
           exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         )
     } else {
       results = !searchTerm
         ? data.allBaseExercises
-        : data.allBaseExercises.filter((exercise) =>
+        : data.allBaseExercises.filter((exercise: { name: string }) =>
           exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         )
     }
   }
 
-  if (loading) return <Loader isLoading={loading} />
+  if (loading) return <Loader isLoading={loading} children={undefined} />
   if (error) return <p>Error :(</p>
 
   const redirectToAddExercise = () => {
@@ -139,7 +143,7 @@ const Categories = (props) => {
     })
   }
 
-  const submissionHandleElement = (selectedData) => {
+  const submissionHandleElement = (selectedData: any) => {
     const selectedExercises = commonUtil.getCheckedData(
       selectedData,
       'exerciseId'
@@ -150,6 +154,39 @@ const Categories = (props) => {
       : setBottomSheet('none')
   }
 
+  const list = () => {
+    return (
+      <>
+        {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
+          (x: any, i: number) => (
+            <p
+              key={i}
+              //@ts-ignore
+              className={filters.includes(x.categoryName) ? 'bold' : ''}
+              //@ts-ignore
+              onClick={() => filterByCategoryName(x.categoryName)}
+            >
+              {x.categoryName}
+            </p>
+          )
+        )
+        })
+      </>
+    )
+  }
+
+  const toggleDrawer =
+    (_anchor: any, _open: boolean) =>
+      (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+          event.type === 'keydown' &&
+          ((event as React.KeyboardEvent).key === 'Tab' ||
+            (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+          return;
+        }
+      };
+
   return (
     <>
       <GlobalTemplate>
@@ -158,46 +195,51 @@ const Categories = (props) => {
             <Heading>{translate('ExercisesTitle')}</Heading>
             <SmallButton
               onClick={() => redirectToAddExercise()}
-              iconName="plus"
-            />
+              iconName="plus" fill={undefined} size={undefined} buttonType={undefined} buttonShape={undefined} color={undefined} />
           </Nav>
           <Search
             callBack={filterExercises}
-            placeholder={translate('ExerciseSearch')}
-          />
+            placeholder={translate('ExerciseSearch')} typeInput={undefined} />
         </Sticky>
         {results && results.length > 0 ? (
           <>
-            {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
-              (x, i) => (
-                <p
-                  key={i}
-                  className={filters.includes(x.categoryName) ? 'bold' : ''}
-                  onClick={() => filterByCategoryName(x.categoryName)}
-                >
-                  {x.categoryName}
-                </p>
-              )
-            )}
+            <Button onClick={() => setCategoriesOpen(!categoriesOpen)}>click</Button>
+            {/* {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
+            (x, i) => (
+              <p
+                key={i}
+                className={filters.includes(x.categoryName) ? 'bold' : ''}
+                onClick={() => filterByCategoryName(x.categoryName)}
+              >
+                {x.categoryName}
+              </p>
+            )
+          )} */}
             <CheckboxGenericComponent
               dataType="exercises"
               displayedValue="name"
               dataList={results}
-              onSelect={submissionHandleElement}
-            />
+              onSelect={submissionHandleElement} theme={undefined} onClick={undefined} interaction={undefined} refresh={undefined} checkboxVisible={undefined} />
           </>
         ) : (
           <p>{translate('NoExercises')}</p>
         )}
       </GlobalTemplate>
-      <PlanPanelExercises
+      <Drawer
+        anchor={'bottom'}
+        open={categoriesOpen}
+        onClose={() => setCategoriesOpen(!categoriesOpen)}
+      >
+        {list()}
+      </Drawer>
+      {/* <PlanPanelExercises
         deleteExercise={deleteExercise}
         selectedExercise={selectedExercise}
         bottomSheet={bottomSheet}
         setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}
         selectedElementsBottomSheet={selectedElementsBottomSheet}
         theme={theme}
-      />
+      /> */}
     </>
   )
 }
