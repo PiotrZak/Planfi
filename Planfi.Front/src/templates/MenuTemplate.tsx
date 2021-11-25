@@ -9,7 +9,7 @@ const Wrapper = styled.div`
 
 const MenuTemplate = ({ children }: any) => {
 
-  const notVisibleUrls = [routes.addExercise]
+  const notVisibleUrls = [routes.addExercise, routes.editExercise]
   //@ts-ignore
   const currentUser = JSON.parse(localStorage.getItem('user'))
   const currentUrl = window.location.href

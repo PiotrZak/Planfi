@@ -38,6 +38,7 @@ const Exercise = (props) => {
   const { match } = props
   let id = match.params.id
 
+
   const EXERCISE = gql`{
     exercise(id: "${id}")
     {

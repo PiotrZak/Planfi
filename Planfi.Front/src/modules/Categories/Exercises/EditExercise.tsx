@@ -75,14 +75,6 @@ const ImagePreviewContainer = styled.div`
   }
 `
 
-const StyledTextArea = styled(TextArea)`
-  height: 28.3rem;
-`
-
-const ContainerDescription = styled.div`
-  margin-top: 2rem;
-`
-
 const validationSchema = Yup.object({
   exerciseName: Yup.string(),
   exerciseDescription: Yup.string(),
@@ -100,11 +92,9 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
   const [loading, setLoading] = useState<boolean>(false)
   const history = useHistory();
 
-  let id: string;
+  const currentUrl = window.location.href
+  let id: string = currentUrl.substring(currentUrl.lastIndexOf('/') + 1)
 
-  props.location.state.exercise !== undefined
-    ? (id = props.location.state.exercise.exerciseId)
-    : (id = props.location.state.selectedExercise)
 
   const fileNotification = (message: string) => {
     notificationDispatch({
@@ -183,7 +173,7 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
       .put(`${EXERCISES_URL}/${exerciseData.exerciseId}`, formData, options)
       .then((res: any) => {
         //@ts-ignore
-        setUploadPercentage(100, () => {setTimeout(() => { setUploadPercentage(0) }, 1000)})
+        setUploadPercentage(100, () => { setTimeout(() => { setUploadPercentage(0) }, 1000) })
         notificationDispatch({
           type: ADD,
           payload: {
@@ -303,8 +293,8 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
                 <Nav>
                   <BackTopNav text={translate('EditExercise')} />
                   <Button
-                  //@ts-ignore
-                    size = {"sm"}
+                    //@ts-ignore
+                    size={"sm"}
                     buttonType="primary"
                     type="submit"
                     onClick={onSubmit}
@@ -314,33 +304,29 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
                   </Button>
                 </Nav>
                 <Paragraph type="body-3-regular">
-                  {translate('EditExerciseDescription')}
                 </Paragraph>
-                <Label text={translate('ExerciseName')}>
-                  <Field
-                    placeholder={exerciseData.name}
-                    type="text"
-                    name="name"
-                    as={Input}
-                    error={errors.name && touched.name}
-                  />
-                </Label>
+                <Field
+                  typeInput="no-border"
+                  placeholder={exerciseData ? exerciseData.name : "Exercise Name"}
+                  type="text"
+                  name="name"
+                  as={Input}
+                  error={errors.name && touched.name}
+                  autoFocus={true}
+                />
                 <ErrorMessageForm name="exerciseName" />
                 <AddFiles
                   triggerFileUploadButton={triggerFileUploadButton}
                   handleImageChange={handleImageChange}
                 />
                 {renderAttachmentsPreview(selectedFiles)}
-                <ContainerDescription>
-                  <Label text={translate('AddExerciseDescription')}>
-                    <Field
-                      placeholder={exerciseData.description}
-                      type="text"
-                      name="description"
-                      as={StyledTextArea}
-                    />
-                  </Label>
-                </ContainerDescription>
+                <Field
+                  typeInput="no-border-sm"
+                  placeholder={exerciseData ? exerciseData.description : 'Description'}
+                  type="text"
+                  name="description"
+                  as={Input}
+                />
               </Form>
             )}
           </Formik>

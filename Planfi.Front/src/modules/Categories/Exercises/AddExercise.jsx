@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React, { useState, useCallback, useEffect, useRef } from 'react'
 import Switch from '@mui/material/Switch';
 import styled from 'styled-components'
 import BackTopNav from 'components/molecules/BackTopNav'
@@ -80,8 +80,6 @@ const AddExercise = (props) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState()
   const [openModal, setOpenModal] = useState(false)
   const [addExercise, setAddExercise] = useState(false)
-
-
   const user = JSON.parse(localStorage.getItem('user'))
 
   const CATEGORY = gql`{
@@ -270,11 +268,13 @@ const AddExercise = (props) => {
       errors.exerciseName = 'Exercise name is required'
     }
 
-    if (results[0].categoryId && selectedCategoryId == undefined) {
+    let categoryId = null
+    if (results[0].categoryId && selectedCategoryId === undefined) {
       setSelectedCategoryId(results[0].categoryId)
+      categoryId = results[0].categoryId;
     }
 
-    if (selectedCategoryId === undefined) {
+    if (selectedCategoryId === undefined && categoryId === null) {
       errors.category = 'Category is required'
     }
     return errors
@@ -312,7 +312,7 @@ const AddExercise = (props) => {
                 name="exerciseName"
                 as={Input}
                 error={errors.exerciseName && touched.exerciseName}
-                autofocus={true}
+                autoFocus={true}
               />
               <ValidationHint
                 errors={errors}

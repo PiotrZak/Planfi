@@ -21,7 +21,7 @@ const WrapperAttachments = styled.div`
   height: 80px;
   border: 2px dotted blue;
   &:hover {
-      background: ${({ theme }) => theme.colorNeutralLight} !important;
+      background: ${({ theme }) => theme.colorPrimaryLightest} !important;
       cursor:pointer;
     }
 `

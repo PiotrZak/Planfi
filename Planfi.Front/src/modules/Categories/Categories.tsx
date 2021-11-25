@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef, MutableRefObject } from 'react'
 import { exerciseService } from 'services/exerciseService'
 import { routes } from 'utils/routes'
 import styled from 'styled-components'
 import { useHistory, withRouter } from 'react-router-dom'
 import { commonUtil } from 'utils/common.util'
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons/faEllipsisV';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 'react-multi-carousel/lib/styles.css'
 import Search from 'components/molecules/Search'
 import { useQuery, gql } from '@apollo/client'
 import { translate } from 'utils/Translation'
-import { CheckboxGenericComponent } from 'components/organisms/CheckboxGeneric'
 import GlobalTemplate from 'templates/GlobalTemplate'
 import { useThemeContext } from 'support/context/ThemeContext'
 import SmallButton from 'components/atoms/SmallButton'
@@ -24,6 +25,9 @@ import Loader from 'components/atoms/Loader'
 import Heading from 'components/atoms/Heading'
 import { getUniqueListBy } from 'utils/common.util'
 import { ExerciseViewModel } from "../../Types/PlanfiApi/Models/ViewModels/ExerciseViewModel";
+import { IconButton, List, ListItem, ListItemText, Menu, MenuItem } from '@mui/material'
+import Icon from 'components/atoms/Icon'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
 
 //todo - discuss if we use styled components in some places or refactor everything into mui ?
 
@@ -31,20 +35,38 @@ const Sticky = styled.div`
 position: -webkit-sticky; /* Safari */
 position: sticky;
 background-color:white;
+z-index:1;
 top: 0;
+`
+
+const DrawerParagraph = styled.div<{ background: any }>`
+  background-color: ${p => (p.background)};
+  height:40px;
+  margin-top: 10px;
+  text-align:center;
+  font-style: normal;
+  font-weight: 600;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 
 const Categories = (_props: any) => {
   const { theme } = useThemeContext()
   const [searchTerm, setSearchTerm] = React.useState('')
-  const [selectedExercise, setselectedExercise] = useState<any>([])
+  const [selectedExerciseId, setselectedExerciseId] = useState<string[]>([])
   const [categoriesOpen, setCategoriesOpen] = useState<boolean>(false);
-  const [selectedElementsBottomSheet, setSelectedElementsBottomSheet] =
-    useState(false)
-  const [bottomSheet, setBottomSheet] = useState('none')
+  const [exerciseInteraction, setExerciseInteraction] = useState<boolean>(false)
   const [filteredData, setFilteredData] = useState([])
   const [filters, setFilters] = useState([])
+
+  //menu
+  const menuId = 'primary-search-account-menu';
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const CATEGORYEXERCISES = gql`
     {
@@ -70,8 +92,10 @@ const Categories = (_props: any) => {
   const { notificationDispatch } = useNotificationContext()
 
   const deleteExercise = () => {
+
+    console.log(selectedExerciseId)
     exerciseService
-      .deleteExerciseById(selectedExercise)
+      .deleteExerciseById(selectedExerciseId)
       .then((_data) => {
         notificationDispatch({
           type: ADD,
@@ -81,7 +105,8 @@ const Categories = (_props: any) => {
           },
         })
         refreshData()
-        setBottomSheet('none')
+        handleMenuClose()
+        setExerciseInteraction(!exerciseInteraction);
       })
       .catch((error) => {
         notificationDispatch({
@@ -117,7 +142,8 @@ const Categories = (_props: any) => {
     setSearchTerm(event.target.value)
   }
 
-  let results
+  let results: ExerciseViewModel[] | any = [];
+
   if (data) {
     if (filteredData.length > 0) {
       results = !searchTerm
@@ -144,48 +170,84 @@ const Categories = (_props: any) => {
   }
 
   const submissionHandleElement = (selectedData: any) => {
-    const selectedExercises = commonUtil.getCheckedData(
+    const selectedExerciseIds = commonUtil.getCheckedData(
       selectedData,
       'exerciseId'
     )
-    setselectedExercise(selectedExercises)
-    selectedExercises.length > 0
-      ? setBottomSheet('flex')
-      : setBottomSheet('none')
+    //setselectedExerciseId(selectedExerciseIds)
+    selectedExerciseIds.length > 0
+      ? setExerciseInteraction(true)
+      : setExerciseInteraction(false)
   }
+
+
 
   const list = () => {
     return (
       <>
         {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
           (x: any, i: number) => (
-            <p
+            <DrawerParagraph
+              background={
+                //@ts-ignore
+                filters.includes(x.categoryName)
+                  ? theme.colorPrimaryLightest
+                  : theme.colorPrimary}
               key={i}
-              //@ts-ignore
-              className={filters.includes(x.categoryName) ? 'bold' : ''}
               //@ts-ignore
               onClick={() => filterByCategoryName(x.categoryName)}
             >
               {x.categoryName}
-            </p>
+            </DrawerParagraph>
           )
         )
-        })
+        }
+        <Button variant="contained" onClick={() => setCategoriesOpen(!categoriesOpen)}>Filter ({filters.length})</Button>
       </>
     )
   }
 
-  const toggleDrawer =
-    (_anchor: any, _open: boolean) =>
-      (event: React.KeyboardEvent | React.MouseEvent) => {
-        if (
-          event.type === 'keydown' &&
-          ((event as React.KeyboardEvent).key === 'Tab' ||
-            (event as React.KeyboardEvent).key === 'Shift')
-        ) {
-          return;
-        }
-      };
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>, id: string) => {
+
+    setselectedExerciseId([...selectedExerciseId, id])
+    setAnchorEl(event.currentTarget);
+  };
+
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={() => history.push({
+        pathname: `/edit-exercise/${selectedExerciseId}`,
+        //@ts-ignore
+        state: { selectedExerciseId: selectedExerciseId },
+      })}>Edit</MenuItem>
+      <MenuItem onClick={deleteExercise}>Delete</MenuItem>
+    </Menu>
+  );
 
   return (
     <>
@@ -203,28 +265,58 @@ const Categories = (_props: any) => {
         </Sticky>
         {results && results.length > 0 ? (
           <>
-            <Button onClick={() => setCategoriesOpen(!categoriesOpen)}>click</Button>
-            {/* {getUniqueListBy(data.allBaseExercises, 'categoryName').map(
-            (x, i) => (
-              <p
-                key={i}
-                className={filters.includes(x.categoryName) ? 'bold' : ''}
-                onClick={() => filterByCategoryName(x.categoryName)}
-              >
-                {x.categoryName}
-              </p>
-            )
-          )} */}
-            <CheckboxGenericComponent
-              dataType="exercises"
-              displayedValue="name"
-              dataList={results}
-              onSelect={submissionHandleElement} theme={undefined} onClick={undefined} interaction={undefined} refresh={undefined} checkboxVisible={undefined} />
+            <Button variant="outlined" onClick={() => setCategoriesOpen(!categoriesOpen)}>Categories</Button>
+            {filters.map((x, i) => (<p key={i}>{x}</p>))}
+            <List>
+              {results.map((exercise: ExerciseViewModel | any) => (
+                <ListItem
+                  secondaryAction={
+                    <IconButton
+                      size="large"
+                      edge="end"
+                      aria-label="account of current user"
+                      aria-controls={menuId}
+                      aria-haspopup="true"
+                      onClick={(e) => handleProfileMenuOpen(e, exercise.exerciseId)}
+                      color="inherit">
+                      <FontAwesomeIcon icon={faEllipsisV} />
+                    </IconButton>
+                  }
+                >
+                  <ListItemText
+                    sx={{
+                      '&:hover, &:focus': {
+                        cursor: 'pointer',
+                      },
+                    }}
+                    onClick={() =>
+                      history.push({
+                        pathname: `/exercises/${exercise.exerciseId}`,
+                        //@ts-ignore
+                        state: { id: exercise.exerciseId },
+                      })}
+                    primaryTypographyProps={{
+                      fontWeight: '600',
+                      variant: 'body2',
+                      fontSize: '1.675rem',
+                    }}
+                    secondaryTypographyProps={{
+                      fontWeight: '400',
+                      variant: 'body2',
+                      fontSize: '1.275rem',
+                    }}
+                    primary={exercise.name}
+                    secondary={exercise.categoryName}
+                  />
+                </ListItem>
+              ))}
+            </List>
           </>
         ) : (
           <p>{translate('NoExercises')}</p>
-        )}
-      </GlobalTemplate>
+        )
+        }
+      </GlobalTemplate >
       <Drawer
         anchor={'bottom'}
         open={categoriesOpen}
@@ -234,12 +326,12 @@ const Categories = (_props: any) => {
       </Drawer>
       {/* <PlanPanelExercises
         deleteExercise={deleteExercise}
-        selectedExercise={selectedExercise}
-        bottomSheet={bottomSheet}
-        setSelectedElementsBottomSheet={setSelectedElementsBottomSheet}
-        selectedElementsBottomSheet={selectedElementsBottomSheet}
+        selectedExerciseId={selectedExerciseId}
+        exerciseInteraction={exerciseInteraction}
+        setExerciseInteraction={setExerciseInteraction}
         theme={theme}
       /> */}
+      {renderMenu}
     </>
   )
 }
