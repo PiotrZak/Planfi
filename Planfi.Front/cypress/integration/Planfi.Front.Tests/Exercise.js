@@ -33,7 +33,7 @@ describe('Exercise Issues', () => {
   it('Add Exercise', () => {
     cy.get('[href="/categories"]').click()
     cy.get('.sc-cOajty').click()
-    cy.url().should('eq', `${url2}add-exercise`)
+    cy.url().should('eq', `${url}add-exercise`)
     cy.wait(1000)
     cy.get('.sc-kstrdz').click()
     cy.wait(1000)
