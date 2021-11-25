@@ -62,14 +62,14 @@ const Root = () => {
     }
     const history = routerRef.current.history
     const currentUrl = window.location.href
-    // if (
-    //   currentUrl.toString().includes('account') ||
-    //   currentUrl.toString().includes('forgot')
-    // ) {
-    //   return
-    // } else {
-    //   user != null ? history.push(routes.myProfile) : history.push(routes.login)
-    // }
+    if (
+      currentUrl.toString().includes('account') ||
+      currentUrl.toString().includes('forgot')
+    ) {
+      return
+    } else {
+      user != null ? history.push(routes.myProfile) : history.push(routes.login)
+    }
   }, [setUser])
 
   const toggleTheme = () => {
