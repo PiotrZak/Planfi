@@ -269,7 +269,7 @@ const AddExercise = (props) => {
     }
 
     let categoryId = null
-    if (results[0].categoryId && selectedCategoryId === undefined) {
+    if (results && results[0].categoryId && selectedCategoryId === undefined) {
       setSelectedCategoryId(results[0].categoryId)
       categoryId = results[0].categoryId;
     }
