@@ -12,7 +12,7 @@ env:
   BUCKET: 'planfi'
   ENVIRONMENT: true
 
-# jobs:
+jobs:
 #   E2E:
 #     runs-on: ubuntu-latest
 #     defaults:
