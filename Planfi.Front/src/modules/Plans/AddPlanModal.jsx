@@ -85,6 +85,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
             <InputContainer>
               <Label type="top" text={translate('PlanTitle')} required>
                 <Field
+                  id="add-plan-input"
                   typeInput="light"
                   type="text"
                   name="title"
@@ -99,6 +100,7 @@ const AddPlanModal = ({ openModal, onClose }) => {
             </Paragraph>
             <ButtonContainer>
               <Button
+                id="add-plan"
                 type="submit"
                 buttonType="primary"
                 size="md"

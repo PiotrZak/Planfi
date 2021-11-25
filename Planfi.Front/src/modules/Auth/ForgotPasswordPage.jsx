@@ -84,6 +84,7 @@ const ForgotPasswordPage = () => {
                 <ErrorMessageForm name="email" />
               </InputContainer>
               <Button
+                id="forget-password"
                 type="submit"
                 buttonType="primary"
                 size="lg"

@@ -256,6 +256,7 @@ const Categories = (_props: any) => {
           <Nav>
             <Heading>{translate('ExercisesTitle')}</Heading>
             <SmallButton
+              id="add-exercise"
               onClick={() => redirectToAddExercise()}
               iconName="plus" fill={undefined} size={undefined} buttonType={undefined} buttonShape={undefined} color={undefined} />
           </Nav>

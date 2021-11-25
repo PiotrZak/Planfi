@@ -108,6 +108,7 @@ const Plan = (props) => {
         <Nav>
           <Heading>{translate('PlansTitle')}</Heading>
           <SmallButton
+            id="add-plan"
             buttonShape="circle"
             iconName="plus"
             onClick={() => setOpenModal(true)}

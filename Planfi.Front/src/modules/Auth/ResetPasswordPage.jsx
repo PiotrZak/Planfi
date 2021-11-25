@@ -118,6 +118,7 @@ const ResetPasswordPage = () => {
                 <ErrorMessageForm name="confirmPassword" />
               </InputContainer>
               <Button
+                id="reset-password"
                 type="submit"
                 buttonType="primary"
                 size="lg"

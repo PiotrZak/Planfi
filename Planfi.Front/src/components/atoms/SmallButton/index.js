@@ -35,11 +35,13 @@ const SmallButton = ({
   buttonShape,
   onClick,
   color,
+  id,
 }) => {
   const iconJSX = <Icon name={iconName} fill={fill} size={size} />
 
   return buttonShape === 'circle' ? (
     <SmallButtonCircleStyled
+      id={id}
       buttonType={buttonType}
       onClick={onClick}
       color={color}
@@ -48,6 +50,7 @@ const SmallButton = ({
     </SmallButtonCircleStyled>
   ) : (
     <SmallButtonSquareStyled
+    id={id}
       buttonType={buttonType}
       onClick={onClick}
       color={color}

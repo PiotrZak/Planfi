@@ -113,7 +113,7 @@ const Alert = ({ notification }) => {
     <>
       {notification &&
         notification.map((n) => (
-          <Wrapper type={n.type} theme={theme} key={n.id}>
+          <Wrapper id ="notification" type={n.type} theme={theme} key={n.id}>
             <LeftContainer>
               <IconWrapper>
                 <Icon
@@ -127,6 +127,7 @@ const Alert = ({ notification }) => {
             </LeftContainer>
             <RightContainer>
               <Icon
+                id="remove-notification"
                 name="union"
                 size="1.2rem"
                 onClick={() =>

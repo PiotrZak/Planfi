@@ -140,6 +140,7 @@ const LoginPage = ({ setUser }) => {
               <ValidationHint name="password" />
             </InputContainer>
             <Button
+              id="login"
               type="submit"
               buttonType="primary"
               size="lg"
@@ -151,7 +152,7 @@ const LoginPage = ({ setUser }) => {
         )}
       </Formik>
       <LoginHooks setUser = {setUser}/>
-      <Link href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
+      <Link id ="forget-password" href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   )
 }
