@@ -87,6 +87,7 @@ describe('Plan Issues', () => {
     cy.get('.sc-iBPRYJ').type(editedTitle)
     cy.get('.sc-dQppl').click()
     cy.get('.sc-dIUggk > .sc-bdfBwQ').click({ multiple: true })
+    cy.wait(2500)
     cy.get('.sc-hTZhsR').should(
       "have.text",
       editedTitle
@@ -96,7 +97,7 @@ describe('Plan Issues', () => {
   })
 
   it('Delete Added Plan', () => {
-    cy.get('.sc-jJEJSO').click({multiple: true})
+    cy.get('.sc-jJEJSO').click()
     cy.get('.sc-ehSCib > :nth-child(2)').click({ multiple: true })
     cy.get('.sc-bkzZxe').should('be.visible')
     cy.wait(3500)
