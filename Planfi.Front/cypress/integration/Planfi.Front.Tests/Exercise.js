@@ -1,6 +1,6 @@
-//const url = 'https://plan-fi.pl/'
-const url = 'localhost:3000/login'
-const url2 = 'http://localhost:3000/'
+const url = 'https://plan-fi.pl/'
+// const url = 'localhost:3000/login'
+// const url2 = 'http://localhost:3000/'
 const longTitle = 'SpB8rhVtJlnNpXEdTy41STMPA'
 const shortTitle = 'Diamond Pomps'
 const anotherTitle = 'Death Lift'
@@ -53,13 +53,13 @@ describe('Exercise Issues', () => {
 
     cy.get('.sc-kstrdz').click()
     cy.get('.sc-bYEvPH').should('have.text', 'Sending to cloud')
-    cy.url().should('eq', `${url2}add-exercise`)
+    cy.url().should('eq', `${url}add-exercise`)
     cy.wait(3500)
     cy.get('.MuiSwitch-input').click()
     cy.get('.sc-iBPRYJ').type(anotherTitle)
     cy.get('.sc-kstrdz').click()
     cy.wait(3500)
-    cy.url().should('eq', `${url2}categories`)
+    cy.url().should('eq', `${url}categories`)
 
   })
 })
