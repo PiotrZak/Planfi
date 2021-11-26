@@ -15,8 +15,6 @@ using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
-using PlanfiApi.Models;
-using PlanfiApi.Models.SqlProjections;
 using PlanfiApi.Models.ViewModels;
 using WebApi.Helpers;
 using WebApi.Models;
@@ -273,6 +271,7 @@ namespace PlanfiApi.Services.Users{
             public string? TrainerId { get; set; }
             public string TrainerName { get; set; }
             public string? PlanId { get; set; }
+            public string? PlanName { get; set; }
         }
         
         public async Task<int> AssignClientsToTrainers(string[] trainersId, string[] userIds)
@@ -311,7 +310,7 @@ namespace PlanfiApi.Services.Users{
             }
             
             var elementsNotAssigned = new List<ValidationInfo>();
-            GenerateValidationInfo(elementsNotAssigned);
+            //GenerateValidationInfo(elementsNotAssigned);
 
             return 0;
         }
@@ -327,6 +326,10 @@ namespace PlanfiApi.Services.Users{
             var usersPlans = new List<UsersPlans>();
             var elementsNotAssigned = new List<ValidationInfo>();
             
+            var userId = new HttpContextAccessor().HttpContext?.User.FindFirst(ClaimTypes.Name)?.Value;
+            var assigned = await AssignTrainerIfNotExist(userId, clientIds[0]);
+
+          
             foreach (var client in clients)
             {
                 usersPlans
@@ -353,34 +356,76 @@ namespace PlanfiApi.Services.Users{
                   var limitedArray = splitArray.Where(x => x.Length >= 36);
                   List<string> listofGuid = new List<string>();
                   
+                  //works only per 1 to 1
                   foreach (var line in limitedArray)
                   {
                     string regexp = @"[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}";
                     if (Regex.IsMatch(line, regexp))
-                      listofGuid.Add(Regex.Match(line, regexp).Value);
+                    {
+                      var alreadyExist = listofGuid.Contains(Regex.Match(line, regexp).Value);
+                      if (!alreadyExist)
+                      {
+                        listofGuid.Add(Regex.Match(line, regexp).Value);
+                      }
+                    }
                   }
 
                   var validation = new ValidationInfo()
                   {
                       UserId = listofGuid[0],
                       UserName = clients.Where(x => x.UserId == listofGuid[0]).Select(x => x.FirstName).First(),
-                      PlanId = listofGuid[1]
+                      PlanId = listofGuid[1],
+                      PlanName = plans.Where(x => x.PlanId == listofGuid[1]).Select(x => x.Title).First(),
                   };
                   elementsNotAssigned.Add(validation);
                 }
             }
             
-            GenerateValidationInfo(elementsNotAssigned);
+            GeneratePlanValidationInfo(elementsNotAssigned);
           
             //return elementsNotAssigned instead number - for inform, which exactly element not processed correctly
             return 1;
         }
         
+        public async Task<bool> AssignTrainerIfNotExist(string trainerId, string clientId)
+        {
+          var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+          await connection.OpenAsync();
+          var execution  = 0;
+          
+          try
+          {
+            const string userQuery = @"INSERT INTO public.userstrainers (trainer_id, client_id)
+              SELECT @trainerId, @clientId
+              WHERE
+                  NOT EXISTS (
+		              SELECT  *
+                      FROM    public.userstrainers 
+                      WHERE   trainer_id = @trainerId
+                      AND     client_id =  @clientId
+                  );";
+            
+            execution =
+              await connection.ExecuteAsync(userQuery, new {trainerId, clientId});
+          }
+          catch (Exception exp) {
+            Console.Write(exp.Message);
+          }
+          finally
+          {
+            await connection.CloseAsync();
+          }
+            
+          if (execution == 0)
+            return false;
+
+          return true;
+        }
         
-        private void GenerateValidationInfo(List<ValidationInfo> info)
+        private void GeneratePlanValidationInfo(List<ValidationInfo> info)
         {
             throw new ValidationException(
-                 $"The client {info[0].UserName} is already assigned to {info[0].UserName}");
+                 $"The client {info[0].UserName} is already assigned to {info[0].PlanName}");
         }
 
 
