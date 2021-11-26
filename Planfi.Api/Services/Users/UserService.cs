@@ -280,7 +280,8 @@ namespace PlanfiApi.Services.Users{
             var trainers = await GetByIds(trainersId);
             var clients = await GetByIds(userIds);
             var usersTrainers = new List<UsersTrainers>();
-
+            var elementsNotAssigned = new List<ValidationInfo>();
+            
             foreach (var trainer in trainers)
             {
                 usersTrainers
@@ -300,18 +301,19 @@ namespace PlanfiApi.Services.Users{
             }
             catch (DbUpdateException ex)
             {
-                // var validation = new ValidationInfo()
-                // {
-                //     UserId = userId,
-                //     TrainerId = trainer?.UserId,
-                //     TrainerName = trainer?.FirstName,
-                // };
-                // elementsNotAssigned.Add(validation);
+              var guids = await GetGuidsFromException(ex.InnerException.ToString());
+
+              var validation = new ValidationInfo()
+              {
+                UserId = guids[0],
+                UserName = clients.Where(x => x.UserId == guids[0]).Select(x => x.FirstName).First(),
+                PlanId = guids[1],
+                PlanName = trainers.Where(x => x.UserId == guids[1]).Select(x => x.FirstName).First(),
+              };
+              elementsNotAssigned.Add(validation);
             }
             
-            var elementsNotAssigned = new List<ValidationInfo>();
-            //GenerateValidationInfo(elementsNotAssigned);
-
+            GenerateValidationInfo(elementsNotAssigned);
             return 0;
         }
         
@@ -351,40 +353,43 @@ namespace PlanfiApi.Services.Users{
             {
                 if (ex.InnerException != null)
                 {
-                  var detailException = ex.InnerException.ToString();
-                  string[] splitArray = detailException.Split();
-                  var limitedArray = splitArray.Where(x => x.Length >= 36);
-                  List<string> listofGuid = new List<string>();
-                  
-                  //works only per 1 to 1
-                  foreach (var line in limitedArray)
-                  {
-                    string regexp = @"[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}";
-                    if (Regex.IsMatch(line, regexp))
-                    {
-                      var alreadyExist = listofGuid.Contains(Regex.Match(line, regexp).Value);
-                      if (!alreadyExist)
-                      {
-                        listofGuid.Add(Regex.Match(line, regexp).Value);
-                      }
-                    }
-                  }
+                  var guids = await GetGuidsFromException(ex.InnerException.ToString());
 
                   var validation = new ValidationInfo()
                   {
-                      UserId = listofGuid[0],
-                      UserName = clients.Where(x => x.UserId == listofGuid[0]).Select(x => x.FirstName).First(),
-                      PlanId = listofGuid[1],
-                      PlanName = plans.Where(x => x.PlanId == listofGuid[1]).Select(x => x.Title).First(),
+                      UserId = guids[0],
+                      UserName = clients.Where(x => x.UserId == guids[0]).Select(x => x.FirstName).First(),
+                      PlanId = guids[1],
+                      PlanName = plans.Where(x => x.PlanId == guids[1]).Select(x => x.Title).First(),
                   };
                   elementsNotAssigned.Add(validation);
                 }
             }
-            
-            GeneratePlanValidationInfo(elementsNotAssigned);
-          
-            //return elementsNotAssigned instead number - for inform, which exactly element not processed correctly
+
+            GenerateValidationInfo(elementsNotAssigned);
             return 1;
+        }
+
+        private async Task<List<string>> GetGuidsFromException(string exception)
+        {
+          string[] splitArray = exception.Split();
+          var limitedArray = splitArray.Where(x => x.Length >= 36);
+          List<string> listofGuid = new();
+                  
+          //works only per 1 to 1
+          foreach (var line in limitedArray)
+          {
+            string regexp = @"[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}";
+            if (!Regex.IsMatch(line, regexp)) continue;
+            
+            var alreadyExist = listofGuid.Contains(Regex.Match(line, regexp).Value);
+            if (!alreadyExist)
+            {
+              listofGuid.Add(Regex.Match(line, regexp).Value);
+            }
+          }
+
+          return listofGuid;
         }
         
         public async Task<bool> AssignTrainerIfNotExist(string trainerId, string clientId)
@@ -422,7 +427,7 @@ namespace PlanfiApi.Services.Users{
           return true;
         }
         
-        private void GeneratePlanValidationInfo(List<ValidationInfo> info)
+        private void GenerateValidationInfo(List<ValidationInfo> info)
         {
             throw new ValidationException(
                  $"The client {info[0].UserName} is already assigned to {info[0].PlanName}");

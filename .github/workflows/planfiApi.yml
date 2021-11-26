@@ -12,7 +12,7 @@ on:
 
 env:
   # SSL encryption is recommended when using Public IP to connect to the instance.
-  CONNECTION_STRING: "Host=34.135.254.64;Port=5432;Username=postgres;Password=postgres;Database=postgres;"
+  CONNECTION_STRING: "Host=34.135.254.64;Port=5432;Username=postgres;Password=postgres;Database=postgres;IncludeErrorDetail=true;"
   RUN_REGION: us-central1
   SERVICE_NAME: planfi-api
   Origins: "https://plan-fi.pl,http://plan-fi.pl"
