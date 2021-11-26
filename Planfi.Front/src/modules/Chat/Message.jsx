@@ -14,8 +14,12 @@ const lastWord = (words) => {
 }
 
 const Message = (props) => {
+
   const firstName = props.userName.split(' ')[0]
   const lastName = lastWord(props.userName)
+
+  console.log(props.postedAtUtc)
+  console.log()
 
   return (
     <>
@@ -23,6 +27,7 @@ const Message = (props) => {
         author={<a>{props.userName}</a>}
         avatar={
           <Avatar
+            userId = {props.userId}
             avatar={props.avatar}
             firstName={firstName}
             lastName={lastName}
@@ -30,8 +35,8 @@ const Message = (props) => {
         }
         content={<p>{props.contents}</p>}
         datetime={
-          <Tooltip title={getDateString(props.postedAt)}>
-            <span>{formatDistance(parseISO(props.postedAt), new Date())}</span>
+          <Tooltip title={getDateString(props.postedAtUtc)}>
+            <span>{formatDistance(parseISO(props.postedAtUtc), new Date())}</span>
           </Tooltip>
         }
       />

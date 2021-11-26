@@ -111,6 +111,7 @@ const MyProfile = ({ setUser, toggleTheme, toggleLanguage }: IMyProfile) => {
               <UserInfo user={updatedUser} />
             </ContainerCentred>
             <div className="tabs">
+            <NavLink to="/chat">Chat</NavLink>
               <NavLink to="/stripe">Pay</NavLink>
               {profileTabs.map(({ id, icon, titleTrainer, titleClient }) => (
                 <TabItemComponent

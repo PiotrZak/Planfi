@@ -21,12 +21,12 @@ namespace PlanfiApi.Models
     public class MessageViewModel
     {
         public Guid Id { get; set; }
-        public Guid Room_Id { get; set; }
+        public Guid RoomId { get; set; }
         public byte[] Avatar { get; set; }
         public string Contents { get; set; }
-        public string User_Name { get; set; }
-        public string User_Id { get; set; }
-        public DateTime Posted_At_Utc{ get; set; }
+        public string UserName { get; set; }
+        public string UserId { get; set; }
+        public DateTime PostedAtUtc{ get; set; }
     }
     
     public class ChatMessage

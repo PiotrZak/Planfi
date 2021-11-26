@@ -2,14 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper.Configuration;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using PlanfiApi.Helpers;
 using PlanfiApi.Models;
-using WebApi.Helpers;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace PlanfiApi.Services.Chat
@@ -42,12 +39,11 @@ namespace PlanfiApi.Services.Chat
             try{
 	            const string messagesQuery = @"SELECT 
 	            m.id,
-	            CONCAT(u.first_name, u.last_name) as user_name,
+	            CONCAT(u.first_name, u.last_name) as UserName
 	            u.avatar,
 	            m.contents,
-	            m.room_id,
-	            m.user_name,
-	            m.posted_at
+	            m.room_id as RoomId,
+	            m.posted_at as Posted_At_Utc,
 	            FROM public.messages as m
 	            JOIN public.users as u
 	            ON u.user_id = m.user_name";
@@ -74,12 +70,12 @@ namespace PlanfiApi.Services.Chat
             try{
 	            const string messagesQuery = @"SELECT 
 		            m.id,
-		            CONCAT(u.first_name, ' ', u.last_name) as user_name,
+		            CONCAT(u.first_name, ' ', u.last_name) as UserName,
 		            u.avatar,
 		            m.contents,
-		            m.room_id,
-		            m.user_name as user_id,
-		            m.posted_at
+		            m.room_id as RoomId,
+		            m.user_name as UserId,
+	              m.posted_at as PostedAtUtc
 		            FROM public.messages as m
 		            JOIN public.users as u
 		            ON u.user_id = m.user_name

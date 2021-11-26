@@ -29,6 +29,7 @@ const MessageList = ({ roomId, connection }) => {
     axios
       .get(url, { cancelToken: source.token })
       .then((res) => {
+        console.log(res.data)
         setMessages(res.data)
       })
       .catch((err) => {
@@ -66,9 +67,10 @@ const MessageList = ({ roomId, connection }) => {
                 <Message
                   key={i}
                   avatar={message.avatar}
-                  userName={message.user_Name}
+                  userId={message.userId}
+                  userName={message.userName}
                   contents={message.contents}
-                  postedAt={message.posted_At}
+                  postedAtUtc={message.postedAtUtc}
                 />
               )
             })}
