@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
@@ -324,7 +325,8 @@ namespace PlanfiApi.Services.Users{
             
             var plans = await _planService.GetByIds(planIds);
             var usersPlans = new List<UsersPlans>();
-
+            var elementsNotAssigned = new List<ValidationInfo>();
+            
             foreach (var client in clients)
             {
                 usersPlans
@@ -346,23 +348,34 @@ namespace PlanfiApi.Services.Users{
             {
                 if (ex.InnerException != null)
                 {
-                    // var validation = new ValidationInfo()
-                    // {
-                    //     UserId = clientId,
-                    //     UserName = client?.FirstName,
-                    //     PlanId = planId
-                    // };
-                    // elementsNotAssigned.Add(validation);
+                  var detailException = ex.InnerException.ToString();
+                  string[] splitArray = detailException.Split();
+                  var limitedArray = splitArray.Where(x => x.Length >= 36);
+                  List<string> listofGuid = new List<string>();
+                  
+                  foreach (var line in limitedArray)
+                  {
+                    string regexp = @"[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}";
+                    if (Regex.IsMatch(line, regexp))
+                      listofGuid.Add(Regex.Match(line, regexp).Value);
+                  }
+
+                  var validation = new ValidationInfo()
+                  {
+                      UserId = listofGuid[0],
+                      UserName = clients.Where(x => x.UserId == listofGuid[0]).Select(x => x.FirstName).First(),
+                      PlanId = listofGuid[1]
+                  };
+                  elementsNotAssigned.Add(validation);
                 }
             }
             
-            
-            var elementsNotAssigned = new List<ValidationInfo>();
             GenerateValidationInfo(elementsNotAssigned);
-            
+          
             //return elementsNotAssigned instead number - for inform, which exactly element not processed correctly
             return 1;
         }
+        
         
         private void GenerateValidationInfo(List<ValidationInfo> info)
         {

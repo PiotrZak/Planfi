@@ -42,7 +42,6 @@ import MenuTemplate from 'templates/MenuTemplate'
 import Exercise from 'modules/Categories/Exercises/Exercise'
 import { PrivateRoute, Role } from 'utils/PrivateRoute'
 
-import TestPage from 'modules/Auth/Test'
 import Clients from 'modules/Users/Clients'
 import OrganizationTrainers from './Users/OrganizationTrainers'
 
@@ -115,7 +114,6 @@ const Root = () => {
                     path={routes.confirmation}
                     component={ConfirmationPage}
                   />
-                  <Route path="/test" component={TestPage} />
                   <MenuTemplate>
                     <PrivateRoute path="/user/:id" component={User} />
                     <PrivateRoute
