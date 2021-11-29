@@ -16,19 +16,11 @@ import SmallButton from 'components/atoms/SmallButton'
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Nav from 'components/atoms/Nav'
-import {
-  useNotificationContext,
-  ADD,
-} from 'support/context/NotificationContext'
-import { PlanPanelExercises } from './PlanPanelExercises'
 import Loader from 'components/atoms/Loader'
 import Heading from 'components/atoms/Heading'
 import { getUniqueListBy } from 'utils/common.util'
 import { ExerciseViewModel } from "../../Types/PlanfiApi/Models/ViewModels/ExerciseViewModel";
-import { IconButton, List, ListItem, ListItemText, Menu, MenuItem } from '@mui/material'
-import Icon from 'components/atoms/Icon'
-import { useOnClickOutside } from 'hooks/useOnClickOutside'
-
+import { Alert, IconButton, List, ListItem, ListItemText, Menu, MenuItem, Snackbar } from '@mui/material'
 //todo - discuss if we use styled components in some places or refactor everything into mui ?
 
 const Sticky = styled.div`
@@ -57,16 +49,15 @@ const Categories = (_props: any) => {
   const [searchTerm, setSearchTerm] = React.useState('')
   const [selectedExerciseId, setselectedExerciseId] = useState<string[]>([])
   const [categoriesOpen, setCategoriesOpen] = useState<boolean>(false);
-  const [exerciseInteraction, setExerciseInteraction] = useState<boolean>(false)
   const [filteredData, setFilteredData] = useState([])
   const [filters, setFilters] = useState([])
+  const [uploadPercentage, setUploadPercentage] = useState(0)
 
-  //menu
   const menuId = 'primary-search-account-menu';
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [isRunning, setIsRunning] = useState<boolean>(true)
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const CATEGORYEXERCISES = gql`
     {
@@ -89,33 +80,17 @@ const Categories = (_props: any) => {
     setTimeout(() => _refetch(), 200)
   }, [_refetch])
   const history = useHistory()
-  const { notificationDispatch } = useNotificationContext()
 
-  const deleteExercise = () => {
+  const deleteExercise = (selectedExerciseId: string[]) => {
 
-    console.log(selectedExerciseId)
     exerciseService
       .deleteExerciseById(selectedExerciseId)
       .then((_data) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('ExercisesDeleted') },
-            type: 'positive',
-          },
-        })
+        console.log('deleted')
         refreshData()
         handleMenuClose()
-        setExerciseInteraction(!exerciseInteraction);
       })
       .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error: error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        })
       })
   }
 
@@ -134,15 +109,16 @@ const Categories = (_props: any) => {
     )
   }
 
+  let results: ExerciseViewModel[] | any = [];
+
   useEffect(() => {
+    setIsRunning(true)
     refreshData()
-  }, [filterByCategoryName])
+  }, [filterByCategoryName, results, isRunning, setIsRunning])
 
   const filterExercises = (event: { target: { value: React.SetStateAction<string> } }) => {
     setSearchTerm(event.target.value)
   }
-
-  let results: ExerciseViewModel[] | any = [];
 
   if (data) {
     if (filteredData.length > 0) {
@@ -151,14 +127,66 @@ const Categories = (_props: any) => {
         : filteredData.filter((exercise: { name: string }) =>
           exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         )
+      if (deleteModal == true) {
+        results = results.filter((x: ExerciseViewModel) => !selectedExerciseId.includes(x.exerciseId));
+      }
     } else {
       results = !searchTerm
         ? data.allBaseExercises
         : data.allBaseExercises.filter((exercise: { name: string }) =>
           exercise.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         )
+      if (deleteModal == true) {
+        results = results.filter((x: ExerciseViewModel) => !selectedExerciseId.includes(x.exerciseId));
+      }
     }
   }
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  let intervalId: any = useRef(null)
+
+  const handleClose = useCallback(
+    () => {
+      refreshData()
+      handleMenuClose()
+      clearInterval(intervalId.current)
+      setIsRunning(false);
+      setDeleteModal(false)
+      setUploadPercentage(0)
+    }, [isRunning, setIsRunning]);
+
+  const initialDelete = useCallback(
+    (selectedExerciseId) => {
+      refreshData()
+      setIsRunning(true)
+      setDeleteModal(true)
+      handleMenuClose();
+      let timer = 3000;
+      let i = 0;
+      let interval: any = null;
+      if (isRunning) {
+        intervalId.current = setInterval(() => {
+          ++i
+          setUploadPercentage((prev) => prev + 1)
+          if (i == 99) {
+            deleteExercise(selectedExerciseId)
+            clearInterval(intervalId.current)
+            setDeleteModal(false)
+            setUploadPercentage(0)
+          }
+        }, timer / 100);
+      }
+      else {
+        console.log('isRunning is false')
+        clearInterval(interval);
+        setUploadPercentage(0)
+      }
+    },
+    [isRunning, setIsRunning],
+  );
 
   if (loading) return <Loader isLoading={loading} children={undefined} />
   if (error) return <p>Error :(</p>
@@ -168,19 +196,6 @@ const Categories = (_props: any) => {
       pathname: routes.addExercise,
     })
   }
-
-  const submissionHandleElement = (selectedData: any) => {
-    const selectedExerciseIds = commonUtil.getCheckedData(
-      selectedData,
-      'exerciseId'
-    )
-    //setselectedExerciseId(selectedExerciseIds)
-    selectedExerciseIds.length > 0
-      ? setExerciseInteraction(true)
-      : setExerciseInteraction(false)
-  }
-
-
 
   const list = () => {
     return (
@@ -207,20 +222,10 @@ const Categories = (_props: any) => {
     )
   }
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>, id: string) => {
-
-    setselectedExerciseId([...selectedExerciseId, id])
+  const openListItemMenu = (event: React.MouseEvent<HTMLElement>, id: string) => {
+    //setselectedExerciseId([...selectedExerciseId, id])
+    setselectedExerciseId([id])
     setAnchorEl(event.currentTarget);
-  };
-
-
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
 
@@ -245,9 +250,19 @@ const Categories = (_props: any) => {
         //@ts-ignore
         state: { selectedExerciseId: selectedExerciseId },
       })}>Edit</MenuItem>
-      <MenuItem onClick={deleteExercise}>Delete</MenuItem>
+      <MenuItem onClick={() => initialDelete(selectedExerciseId)}>Delete</MenuItem>
     </Menu>
   );
+
+  const progressBar = {
+    position: 'absolute',
+    height: '3px',
+    left: '0',
+    top: '0',
+    width: `${uploadPercentage}%`,
+    backgroundColor: theme.colorSuccessDefault,
+  }
+
 
   return (
     <>
@@ -267,10 +282,10 @@ const Categories = (_props: any) => {
         {results && results.length > 0 ? (
           <>
             <Button variant="outlined" onClick={() => setCategoriesOpen(!categoriesOpen)}>Categories</Button>
-            {filters.map((x, i) => (<p key={i}>{x}</p>))}
             <List>
               {results.map((exercise: ExerciseViewModel | any) => (
                 <ListItem
+                  sx={{ borderBottom: `1px solid ${theme.colorGray40}` }}
                   secondaryAction={
                     <IconButton
                       size="large"
@@ -278,7 +293,7 @@ const Categories = (_props: any) => {
                       aria-label="account of current user"
                       aria-controls={menuId}
                       aria-haspopup="true"
-                      onClick={(e) => handleProfileMenuOpen(e, exercise.exerciseId)}
+                      onClick={(e) => openListItemMenu(e, exercise.exerciseId)}
                       color="inherit">
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </IconButton>
@@ -325,14 +340,27 @@ const Categories = (_props: any) => {
       >
         {list()}
       </Drawer>
-      {/* <PlanPanelExercises
-        deleteExercise={deleteExercise}
-        selectedExerciseId={selectedExerciseId}
-        exerciseInteraction={exerciseInteraction}
-        setExerciseInteraction={setExerciseInteraction}
-        theme={theme}
-      /> */}
       {renderMenu}
+      <Snackbar
+        open={deleteModal}
+        autoHideDuration={200000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        key={'top' + 'center'}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          Exercise Deleted succesfully!
+          <React.Fragment>
+            {uploadPercentage > 0 && (
+              //@ts-ignore
+              <div style={progressBar}></div>
+            )}
+            <Button color="secondary" size="small" onClick={handleClose}>
+              UNDO
+            </Button>
+          </React.Fragment>
+        </Alert>
+      </Snackbar>
     </>
   )
 }

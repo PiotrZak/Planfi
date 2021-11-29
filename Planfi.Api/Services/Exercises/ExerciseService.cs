@@ -371,9 +371,11 @@ namespace PlanfiApi.Services.Exercises
             if (updateExercise.Files != null && updateExercise.Files.Any())
             {
                 var addedFiles = await _fileService.ProcessFileExercise(updateExercise.Files, updateExercise.Name);
-                files = files != null 
-                    ? files.Concat(addedFiles).ToList() 
-                    : addedFiles;
+                // files = files != null 
+                //     ? files.Concat(addedFiles).ToList() 
+                //     : addedFiles;
+                
+                
             }
 
             exercise.Files = files;

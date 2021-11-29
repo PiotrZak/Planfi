@@ -37,9 +37,11 @@ namespace PlanfiApi.Controllers.Exercises
         public async Task<IActionResult> CreateExercise([FromForm] CreateExercise model)
         {
             var files = new List<byte[]>();
+            var filesUrl = new List<string>();
             if (model.Files != null)
             {
-                files = await _fileService.ProcessFileExercise(model.Files, model.Name);
+              filesUrl = await _fileService.ProcessFileExercise(model.Files, model.Name);
+              
             }
 
             var exercise = new Exercise()
@@ -48,6 +50,7 @@ namespace PlanfiApi.Controllers.Exercises
                 Name = model.Name,
                 Description = model.Description,
                 Files = files.Any() ? files : null,
+                FilesUrl = files.Any() ? filesUrl : null,
                 CategoryId = model.CategoryId,
             };
                 

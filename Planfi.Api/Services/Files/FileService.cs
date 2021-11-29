@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
@@ -53,9 +52,10 @@ namespace PlanfiApi.Services.Files
             }
         }
         
-        public async Task<List<byte[]>> ProcessFileExercise(List<IFormFile> files, string fileName)
+    
+        public async Task<List<string>?> ProcessFileExercise(List<IFormFile> files, string fileName)
         {
-            var filesList = new List<byte[]>();
+          var filesUrl = new List<string>();
             
             foreach (var (formFile, iterator) in files.Select((c, i) => (c, i)))
             {
@@ -68,7 +68,12 @@ namespace PlanfiApi.Services.Files
                 
                 //var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Movie);
                 await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, memoryStream, FileType.Movie);
-                filesList.Add(Encoding.ASCII.GetBytes(ext));
+                
+                var nameWithoutSpaces = System.Web.HttpUtility.UrlPathEncode(fileNameWithExtensionAndNumber);
+                // generate url for movie
+                var url = "https://storage.cloud.google.com/" + _movieBucketName + nameWithoutSpaces + "?authuser=1";
+
+                filesUrl.Add(url);
               }
               else
               {
@@ -79,11 +84,16 @@ namespace PlanfiApi.Services.Files
                 var fileNameWithExtensionAndNumber = fileName+iterator+ext;
                 //var path = await SaveFileToDirectory(formFile, fileNameWithExtensionAndNumber, FileType.Image);
                 await SaveFileToGoogleStorage(fileNameWithExtensionAndNumber, memoryStream, FileType.Image);
-                filesList.Add(Encoding.ASCII.GetBytes(ext));
+                
+                var nameWithoutSpaces = System.Web.HttpUtility.UrlPathEncode(fileNameWithExtensionAndNumber);
+                // generate url for image
+                var url = "https://storage.cloud.google.com/" + _filesBucketName + nameWithoutSpaces + "?authuser=1";
+                
+                filesUrl.Add(url);
               }
             }
 
-            return filesList;
+            return filesUrl;
         }
 
         public enum FileType
@@ -197,7 +207,7 @@ namespace PlanfiApi.Services.Files
 
     public interface IFileService
     {
-        Task<List<byte[]>> ProcessFileExercise(List<IFormFile> files, string fileName);
+        Task<List<string>?> ProcessFileExercise(List<IFormFile> files, string fileName);
         Task<string> SaveFileToDirectory(IFormFile formFile, string name, FileService.FileType type);
         Task SaveFileToGoogleStorage(string fileName, MemoryStream stream, FileService.FileType type);
         Task DeleteFileFromGoogleStorage(string fileName, FileService.FileType type);
