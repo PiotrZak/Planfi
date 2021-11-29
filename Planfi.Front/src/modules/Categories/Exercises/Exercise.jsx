@@ -45,6 +45,7 @@ const Exercise = (props) => {
       exerciseId
       name
       files
+      filesUrl
       series{
         serieId,
         times,
@@ -70,6 +71,7 @@ const Exercise = (props) => {
   let exercise
   if (data) {
     exercise = data.exercise
+    console.log(data.exercise)
   }
 
   const deleteExercise = () => {
@@ -109,9 +111,9 @@ const Exercise = (props) => {
               />
             )}
           </Nav>
-          {exercise.files && (
+          {exercise.filesUrl && (
             <Carousel swipeable={true} responsive={Breakpoints}>
-              {exercise.files.map((file, index) => (
+              {exercise.filesUrl.map((file, index) => (
                 <>
                   <Slide videoName={exercise.name} index={index} img={file} />
                 </>

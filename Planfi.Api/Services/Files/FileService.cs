@@ -71,7 +71,7 @@ namespace PlanfiApi.Services.Files
                 
                 var nameWithoutSpaces = System.Web.HttpUtility.UrlPathEncode(fileNameWithExtensionAndNumber);
                 // generate url for movie
-                var url = "https://storage.cloud.google.com/" + _movieBucketName + nameWithoutSpaces + "?authuser=1";
+                var url = "https://storage.cloud.google.com/" + _movieBucketName + "/" +nameWithoutSpaces + "?authuser=1";
 
                 filesUrl.Add(url);
               }
@@ -87,7 +87,7 @@ namespace PlanfiApi.Services.Files
                 
                 var nameWithoutSpaces = System.Web.HttpUtility.UrlPathEncode(fileNameWithExtensionAndNumber);
                 // generate url for image
-                var url = "https://storage.cloud.google.com/" + _filesBucketName + nameWithoutSpaces + "?authuser=1";
+                var url = "https://storage.cloud.google.com/" + _filesBucketName + "/" + nameWithoutSpaces + "?authuser=1";
                 
                 filesUrl.Add(url);
               }

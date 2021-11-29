@@ -11,6 +11,7 @@ namespace PlanfiApi.Models.ViewModels
         
         public string? Description { get; set; }
         public byte[][]? Files { get; set; }
+        public string[]? FilesUrl { get; set; }
         public string CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public string? PlanId { get; set; }

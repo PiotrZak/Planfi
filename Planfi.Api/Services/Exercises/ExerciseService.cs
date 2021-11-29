@@ -116,7 +116,8 @@ namespace PlanfiApi.Services.Exercises
                     c.category_Id as CategoryId,
                     c.title as CategoryName,
                     e.description,
-                    e.files
+                    e.files,
+                    e.files_url as FilesUrl
                     FROM public.exercises as e
                     JOIN public.categories as c
                     ON e.category_id = c.category_id
@@ -160,6 +161,7 @@ namespace PlanfiApi.Services.Exercises
 	                e.category_id as CategoryId,
 	                e.plan_id as PlanId,
                   e.files,
+                  e.files_url as FilesUrl,
                   s.serie_id as SerieId,
 	                s.weight,
 	                s.times,
@@ -230,7 +232,7 @@ namespace PlanfiApi.Services.Exercises
 	                e.exercise_id as ExerciseId,
 	                e.category_id as CategoryId,
 	                e.plan_id as PlanId,
-                    s.serie_id as SerieId,
+                  s.serie_id as SerieId,
 	                s.weight,
 	                s.times,
 	                s.repeats
@@ -402,37 +404,6 @@ namespace PlanfiApi.Services.Exercises
             return 1;
         }
     }
-    
-    // public async Task<IEnumerable<ExerciseViewModel>> GetAllByOrganization(string organizationId)
-    // {
-    //     var organizationCategories = await _context.categories
-    //         .Where(x => x.OrganizationId == organizationId)
-    //         .ToListAsync();
-    //     
-    //     var organizationexercises = new List<ExerciseViewModel>();
-    //     
-    //     foreach(var organizationCategory in organizationCategories)
-    //     {
-    //         var categoryexercises = await _context.exercises
-    //             .Where(x => x.CategoryId == organizationCategory.CategoryId)
-    //             .ToListAsync();
-    //
-    //         organizationexercises
-    //             .AddRange(categoryexercises
-    //             .Select(exercise => new ExerciseViewModel
-    //         {
-    //             ExerciseId = exercise.ExerciseId,
-    //             Name = exercise.Name,
-    //             Files = exercise.Files != null && exercise.Files.Any()
-    //                 ? exercise.Files[0]
-    //                 : null,
-    //             CategoryId = exercise.CategoryId,
-    //             PlanId = exercise.PlanId
-    //         }));
-    //     }
-    //     return organizationexercises;
-    // }
-    
 }
 
 

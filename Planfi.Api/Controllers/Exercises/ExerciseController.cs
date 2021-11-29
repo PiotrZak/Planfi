@@ -50,7 +50,7 @@ namespace PlanfiApi.Controllers.Exercises
                 Name = model.Name,
                 Description = model.Description,
                 Files = files.Any() ? files : null,
-                FilesUrl = files.Any() ? filesUrl : null,
+                FilesUrl = filesUrl.Any() ? filesUrl : null,
                 CategoryId = model.CategoryId,
             };
                 
@@ -73,16 +73,6 @@ namespace PlanfiApi.Controllers.Exercises
             return Ok(exercises);
         }
         
-        // get organization clients testers
-        
-        // [AllowAnonymous]
-        // [HttpGet("organization/{organizationId}")]
-        // public async Task<IActionResult> GetAllByOrganization(string organizationId)
-        // {
-        //     var exercises = await _exerciseService.GetAllByOrganization(organizationId);
-        //     return Ok(exercises);
-        // }
-
         [AllowAnonymous]
         [HttpGet("category/{categoryId}")]
         public IActionResult GetExercisesByCategory(string categoryId)

@@ -164,7 +164,7 @@ const Categories = (_props: any) => {
       setIsRunning(true)
       setDeleteModal(true)
       handleMenuClose();
-      let timer = 3000;
+      let timer = 1500;
       let i = 0;
       let interval: any = null;
       if (isRunning) {
