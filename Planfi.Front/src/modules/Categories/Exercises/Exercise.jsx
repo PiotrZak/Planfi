@@ -22,14 +22,6 @@ import Loader from 'components/atoms/Loader'
 
 import { Breakpoints } from 'support/magicVariables'
 
-const InfoTab = styled.div`
-  display: flex;
-  border-bottom: 1px solid grey;
-  align-items: center;
-  justify-content: space-between;
-  height: 4.4rem;
-`
-
 const Exercise = (props) => {
   const { user } = useUserContext()
   const { notificationDispatch } = useNotificationContext()

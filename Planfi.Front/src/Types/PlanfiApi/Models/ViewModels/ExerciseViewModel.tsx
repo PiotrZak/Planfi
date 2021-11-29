@@ -7,6 +7,7 @@ export type ExerciseViewModel = {
 	name: string
 	description: string
 	files: string[][]
+	filesUrl: string[][]
 	categoryId: string
 	categoryName: string
 	planId: string

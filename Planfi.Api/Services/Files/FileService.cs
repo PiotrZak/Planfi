@@ -168,7 +168,7 @@ namespace PlanfiApi.Services.Files
             }
         }
 
-        public async Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles)
+        public async Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete)
         {
             for (var i = 0; i < filesToDelete.Count; i++)
             {
@@ -211,6 +211,6 @@ namespace PlanfiApi.Services.Files
         Task<string> SaveFileToDirectory(IFormFile formFile, string name, FileService.FileType type);
         Task SaveFileToGoogleStorage(string fileName, MemoryStream stream, FileService.FileType type);
         Task DeleteFileFromGoogleStorage(string fileName, FileService.FileType type);
-        Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete, List<byte[]> exerciseFiles);
+        Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete);
     }
 }

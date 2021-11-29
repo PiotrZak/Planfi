@@ -1,5 +1,5 @@
 import { withLazyComponent } from 'utils/lazyComponent'
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, SetStateAction } from 'react'
 import Button from 'components/atoms/Button'
 import styled from 'styled-components'
 import { exerciseService } from 'services/exerciseService'
@@ -83,7 +83,7 @@ const validationSchema = Yup.object({
 const EditExercise = (props: { location: { state: { exercise: { exerciseId: any } | undefined; selectedExercise: any; id: string | Blob } } }) => {
 
   const { theme } = useThemeContext()
-  const [selectedFiles, setSelectedFiles] = useState<string[]>([])
+  const [selectedFiles, setSelectedFiles] = useState<string[] | any>([])
   const [previewFiles, setPreviewFiles] = useState<any>([])
   const [uploadPercentage, setUploadPercentage] = useState<any>(0)
   const [filesToDelete, setFilesToDelete] = useState<string[]>([])
@@ -111,14 +111,16 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
       .getExerciseById(id)
       .then((data: ExerciseViewModel) => {
         setExerciseData(data)
-        if (data.files.length == 0) {
+        console.log(data)
+        if (data.filesUrl.length == 0) {
           setSelectedFiles([])
         } else {
-
-          const filesWithKeys = data.files.map((x: string[], i: number) => x + i.toString())
-          setSelectedFiles(filesWithKeys)
+          //const filesWithKeys = data.files.map((x: string[], i: number) => x + i.toString())
+          setSelectedFiles(data.filesUrl)
         }
-        setPreviewFiles(data.files)
+        setPreviewFiles(data.filesUrl)
+        console.log(data)
+        
       })
       .catch((error) => { })
   }, [])
@@ -236,13 +238,13 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
         return
       }
 
-      setSelectedFiles((x) => x.concat(File))
+      setSelectedFiles((x: string | any[]) => x.concat(File))
     })
   }
 
   const removeFile = (currentPhoto: string) => {
     const listWithRemovedElement = selectedFiles.filter(
-      (file) => file !== currentPhoto
+      (file: string) => file !== currentPhoto
     )
     setFilesToDelete([...filesToDelete, currentPhoto])
     setSelectedFiles(listWithRemovedElement)
@@ -256,11 +258,7 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
           <ImagePreviewContainer id="image-preview-container">
             {source.map((photo: any, i: number) => (
               <AttachmentPreview
-                attachmentSrc=
-                {previewFiles.includes(photo.slice(0, -1))
-                  ? `${imageUrl}/${exerciseData.name.replaceAll(' ', '%20') + i + atob(photo.slice(0, -1))}?authuser=1`
-                  : photo
-                }
+                attachmentSrc={photo}
                 type={photo.Type}
                 key={photo}
                 remove={() => removeFile(photo)}
