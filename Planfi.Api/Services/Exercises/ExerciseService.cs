@@ -353,36 +353,24 @@ namespace PlanfiApi.Services.Exercises
             if (exercise == null)
                 throw new AppException("Exercise not found!");
             
-            var files = exercise.Files;
             var filesUrl = exercise.FilesUrl;
-            
-            if (files != null)
-            {
-                if (updateExercise.FilesToDelete != null && updateExercise.FilesToDelete.Any())
-                {
-                    await _fileService.DeleteFilesFromExercise(exercise.Name, updateExercise.FilesToDelete);
 
-                    foreach (var fileToRemove in updateExercise.FilesToDelete
-                        .Select(file => files
-                        .Find(x => x.Length == file.Length)))
-                    {
-                        files.Remove(fileToRemove);
-                    }
-                }
+            if (updateExercise.FilesToDelete != null)
+            {
+              await _fileService.DeleteFilesFromExercise(exercise.Name, updateExercise.FilesToDelete);
+              if (filesUrl != null)
+                filesUrl = new List<string>(filesUrl.RemoveAll(l => updateExercise.FilesToDelete.Contains(l)));
             }
             
-            if (updateExercise.Files != null && updateExercise.Files.Any())
+            if (updateExercise.FilesToAdd != null)
             {
-                var addedFiles = await _fileService.ProcessFileExercise(updateExercise.Files, updateExercise.Name);
+                var addedFiles = await _fileService.ProcessFileExercise(updateExercise.FilesToAdd, updateExercise.Name);
                 
-                files = files != null 
-                    ? files.Concat(addedFiles).ToList() 
+                filesUrl = filesUrl != null 
+                    ? filesUrl.Concat(addedFiles).ToList() 
                     : addedFiles;
-                
-                
             }
-
-            exercise.Files = files;
+            
             exercise.FilesUrl = filesUrl;
             
             if (!string.IsNullOrWhiteSpace(updateExercise.Name))
@@ -395,12 +383,7 @@ namespace PlanfiApi.Services.Exercises
                 exercise.Description = updateExercise.Description;
             }
             
-            if (updateExercise.Series != exercise.Series)
-            {
-                exercise.Series = updateExercise.Series;
-            }
-            
-            
+          
             _context.exercises.Update(exercise);
             await _context.SaveChangesAsync();
 

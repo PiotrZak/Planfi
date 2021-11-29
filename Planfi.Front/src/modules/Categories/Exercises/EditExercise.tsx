@@ -111,16 +111,12 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
       .getExerciseById(id)
       .then((data: ExerciseViewModel) => {
         setExerciseData(data)
-        console.log(data)
         if (data.filesUrl.length == 0) {
           setSelectedFiles([])
         } else {
-          //const filesWithKeys = data.files.map((x: string[], i: number) => x + i.toString())
           setSelectedFiles(data.filesUrl)
         }
         setPreviewFiles(data.filesUrl)
-        console.log(data)
-        
       })
       .catch((error) => { })
   }, [])
@@ -134,7 +130,7 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
   }
 
   const onSubmit = (values: any) => {
-
+    console.log(values)
     const formData = new FormData()
     formData.append(
       'Name',
@@ -148,7 +144,13 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
     )
 
     for (let i = 0; i < selectedFiles.length; i++) {
-      formData.append('Files', selectedFiles[i])
+
+      if (typeof selectedFiles[i] === 'string') {
+        formData.append('Files', selectedFiles[i])
+      }
+      else {
+        formData.append('FilesToAdd', selectedFiles[i])
+      }
     }
 
     for (let i = 0; i < filesToDelete.length; i++) {
@@ -290,19 +292,7 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
               <Form>
                 <Nav>
                   <BackTopNav text={translate('EditExercise')} />
-                  <Button
-                    //@ts-ignore
-                    size={"sm"}
-                    buttonType="primary"
-                    type="submit"
-                    onClick={onSubmit}
-                    disabled={!isValid}
-                  >
-                    {translate('Save')}
-                  </Button>
                 </Nav>
-                <Paragraph type="body-3-regular">
-                </Paragraph>
                 <Field
                   typeInput="no-border"
                   placeholder={exerciseData ? exerciseData.name : "Exercise Name"}
@@ -325,6 +315,15 @@ const EditExercise = (props: { location: { state: { exercise: { exerciseId: any 
                   name="description"
                   as={Input}
                 />
+                <Button
+                  type="submit"
+                  //@ts-ignore
+                  buttonType="primary"
+                  size="lg"
+                  buttonPlace="bottom"
+                >
+                  {translate('Save')}
+                </Button>
               </Form>
             )}
           </Formik>

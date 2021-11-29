@@ -8,13 +8,14 @@ namespace PlanfiApi.Models.UpdateModels
     {
         public UpdateExerciseModel()
         {
-            Files = new List<IFormFile>();
+          FilesToAdd = new List<IFormFile>();
         }
 
         public string Name { get; set; }
         public string Description { get; set; }
         public List<Serie>? Series { get; set; }
-        public List<IFormFile>? Files { get; set; }
-        public List<byte[]>? FilesToDelete { get; set; }
+        public List<string>? Files { get; set; }
+        public List<IFormFile>? FilesToAdd { get; set; }
+        public List<string>? FilesToDelete { get; set; }
     }
 }

@@ -36,6 +36,7 @@ const Exercise = (props) => {
     {
       exerciseId
       name
+      description
       files
       filesUrl
       series{

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Hosting;
@@ -167,19 +166,20 @@ namespace PlanfiApi.Services.Files
               }
             }
         }
+        
 
-        public async Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete)
+        public async Task DeleteFilesFromExercise(string exerciseName, List<string> filesToDelete)
         {
             for (var i = 0; i < filesToDelete.Count; i++)
             {
-                var result = Encoding.UTF8.GetString(filesToDelete[i]);
-                if (_movieExtensions.Contains(result)) 
+              var extension = Path.GetExtension(filesToDelete[i]);
+               if (_movieExtensions.Contains(extension)) 
                 {
-                  await DeleteFileFromGoogleStorage(exerciseName + 1 + result, FileType.Movie);
+                  await DeleteFileFromGoogleStorage(exerciseName + 1 + extension, FileType.Movie);
                 }
                 else
                 {
-                  await DeleteFileFromGoogleStorage(exerciseName + i + result, FileType.Image);
+                  await DeleteFileFromGoogleStorage(exerciseName + i + extension, FileType.Image);
                 }
             }
         }
@@ -211,6 +211,6 @@ namespace PlanfiApi.Services.Files
         Task<string> SaveFileToDirectory(IFormFile formFile, string name, FileService.FileType type);
         Task SaveFileToGoogleStorage(string fileName, MemoryStream stream, FileService.FileType type);
         Task DeleteFileFromGoogleStorage(string fileName, FileService.FileType type);
-        Task DeleteFilesFromExercise(string exerciseName, List<byte[]> filesToDelete);
+        Task DeleteFilesFromExercise(string exerciseName, List<string> filesToDelete);
     }
 }
