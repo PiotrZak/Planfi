@@ -7,8 +7,8 @@ const RoutesList: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Categories />} />
-        <Route path="teams" element={<MyProfile />} />
+        <Route path="/" element={<MyProfile />} />
+        <Route path="categories" element={<Categories />} />
       </Routes>
     </BrowserRouter>
   )
