@@ -133,9 +133,9 @@ namespace PlanfiApi.Controllers.Plans
         
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var plans = _planService.GetAll();
+            var plans = await _planService.GetAll();
             return Ok(plans);
         }
 
