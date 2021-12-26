@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import ValidationHint from 'components/atoms/ErrorMessageForm'
-import { useParams, useHistory } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import Label from 'components/atoms/Label'
-import Input from 'components/molecules/Input'
-import Button from 'components/atoms/Button'
-import ErrorMessageForm from 'components/atoms/ErrorMessageForm'
-import InputContainer from 'components/atoms/InputContainerForm'
-import ValidateInvalidData from 'components/atoms/ValidateInvalidData'
+// mui
+import Button from '@mui/material/Button';
+
+// to mui ->
+import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox'
+import Heading from 'components/atoms/Heading'
+
+// auth components
+import Label from './AuthComponents/Label'
+import Input from './AuthComponents/Input'
+// not necessary
+import Center from './AuthComponents/Center'
+import Paragraph from 'components/atoms/Paragraph'
+import InputContainer from './AuthComponents/InputContainer'
+import ValidationHint from './AuthComponents/ErrorMessageForm'
+import ValidateInvalidData from './AuthComponents/ValidateInvalidData'
+
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import Center from 'components/atoms/Center'
-import Paragraph from 'components/atoms/Paragraph'
-import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox'
 import { translate } from 'utils/Translation'
 import {
   useNotificationContext,
   ADD,
 } from 'support/context/NotificationContext'
-import Heading from 'components/atoms/Heading'
+
 import { accountService } from 'services/accountServices'
 import PhoneInput from 'react-phone-input-2'
 import AuthTemplate from './AuthTemplate';
@@ -73,7 +80,7 @@ const ActivateAccountPage = () => {
   const [phoneNumber, setPhoneNumber] = useState()
   const { verificationToken } = useParams()
   const { notificationDispatch } = useNotificationContext()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const onSubmit = (values) => {
     const arrayOfSplitted = values.name.split(/[ ,]+/)
@@ -108,7 +115,7 @@ const ActivateAccountPage = () => {
           },
         })
         setTimeout(() => {
-          history.push({
+          navigate({
             pathname: '/confirmation',
             state: { message: 'Activation' },
           })

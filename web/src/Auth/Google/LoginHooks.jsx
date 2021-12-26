@@ -1,8 +1,8 @@
-import React from 'react'
+
 import { GoogleLogin, useGoogleLogin } from 'react-google-login'
 import { accountService } from 'services/accountServices'
-import { routes } from 'routes'
-import { useHistory } from 'react-router-dom'
+import {routes} from '/../routes/routes'
+import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 
 const clientId =
@@ -15,7 +15,7 @@ const timeToRedirectLogin = 1000
 const LoginHooks = ({setUser}) => {
 
   const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onSuccess = (res) => {
     //refactoring
@@ -48,7 +48,7 @@ const LoginHooks = ({setUser}) => {
 
   const redirectToPage = (data) => {
     setTimeout(() => {
-      history.push(routes.myProfile)
+      navigate(routes.myProfile)
     }, timeToRedirectLogin)
   }
 

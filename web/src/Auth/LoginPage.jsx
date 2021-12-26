@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { routes } from 'routes'
-import Label from 'components/atoms/Label'
-import Input from 'components/molecules/Input'
-import Button from 'components/atoms/Button'
+import Label from './AuthComponents/Label'
+import Input from './AuthComponents/Input'
+import Button from '@mui/material/Button';
 import AuthTemplate from './AuthTemplate';
-import ValidationHint from 'components/atoms/ErrorMessageForm'
-import InputContainer from 'components/atoms/InputContainerForm'
+import InputContainer from './AuthComponents/InputContainer'
+import ErrorMessageForm from './AuthComponents/ErrorMessageForm'
 import { userService } from 'services/userServices'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, withRouter } from 'react-router-dom';
 import { translate } from 'utils/Translation'
-import { withRouter } from 'react-router-dom'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import Logo from 'components/atoms/Logo'
 import {
   useNotificationContext,
   ADD,
@@ -106,7 +104,6 @@ const LoginPage = ({ setUser }) => {
 
   return (
     <AuthTemplate>
-      <Logo src="logo.png" />
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -125,7 +122,7 @@ const LoginPage = ({ setUser }) => {
                   error={errors.email && touched.email}
                 />
               </Label>
-              <ValidationHint name="pUemail" />
+              <ErrorMessageForm name="pUemail" />
             </InputContainer>
 
             <InputContainer>
@@ -138,7 +135,7 @@ const LoginPage = ({ setUser }) => {
                   error={errors.password && touched.password}
                 />
               </Label>
-              <ValidationHint name="password" />
+              <ErrorMessageForm name="password" />
             </InputContainer>
             <Button
               id="login"

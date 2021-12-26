@@ -1,19 +1,20 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useParams, useHistory } from 'react-router-dom'
-import Label from 'components/atoms/Label'
-import Input from 'components/molecules/Input'
-import Button from 'components/atoms/Button'
+import { useParams, useNavigate } from 'react-router-dom'
+
+import Button from '@mui/material/Button';
 import { routes } from 'utils/routes'
 import AuthTemplate from './AuthTemplate';
-import ErrorMessageForm from 'components/atoms/ErrorMessageForm'
-import InputContainer from 'components/atoms/InputContainerForm'
+
+import ValidateInvalidData from './AuthComponents/ValidateInvalidData'
+import Center from './AuthComponents/Center'
+
+import InputContainer from './AuthComponents/InputContainer'
+import ErrorMessageForm from './AuthComponents/ErrorMessageForm'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
+
+
 import BackTopNav from 'components/molecules/BackTopNav'
-import Center from 'components/atoms/Center'
 import { translate } from 'utils/Translation'
-import ValidateInvalidData from 'components/atoms/ValidateInvalidData'
 import {
   useNotificationContext,
   ADD,
@@ -42,7 +43,7 @@ const ResetPasswordPage = () => {
   const timeToRedirect = 1000
   const { resetToken } = useParams()
   const { notificationDispatch } = useNotificationContext()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const onSubmit = (values) => {
     const resetPasswordModel = {
@@ -61,7 +62,7 @@ const ResetPasswordPage = () => {
           },
         })
         setTimeout(() => {
-          history.push({
+          navigate({
             pathname: routes.confirmation,
             state: { message: 'ResetPassword' },
           })

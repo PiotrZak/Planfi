@@ -1,15 +1,19 @@
-import React from 'react'
-import Label from 'components/atoms/Label'
-import Input from 'components/molecules/Input'
-import { useHistory } from 'react-router-dom'
-import Button from 'components/atoms/Button'
+import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button';
 import AuthTemplate from './AuthTemplate';
-import ErrorMessageForm from 'components/atoms/ErrorMessageForm'
-import InputContainer from 'components/atoms/InputContainerForm'
+
+import Center from './AuthComponents/Center'
+import InputContainer from './AuthComponents/InputContainer'
+import ErrorMessageForm from './AuthComponents/ErrorMessageForm'
+import Label from './AuthComponents/Label'
+import Input from './AuthComponents/Input'
+
+import BackTopNav from 'components/molecules/BackTopNav'
+
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import BackTopNav from 'components/molecules/BackTopNav'
-import Center from 'components/atoms/Center'
+
+
 import { translate } from 'utils/Translation'
 import { accountService } from 'services/accountServices'
 import {
@@ -17,7 +21,6 @@ import {
   ADD,
 } from 'support/context/NotificationContext'
 import { routes } from 'utils/routes'
-import GlobalTemplate from '../../templates/GlobalTemplate'
 
 const initialValues = {
   email: '',
@@ -31,7 +34,7 @@ const validationSchema = Yup.object({
 
 const ForgotPasswordPage = () => {
   const { notificationDispatch } = useNotificationContext()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const onSubmit = (values) => {
     accountService
@@ -45,7 +48,7 @@ const ForgotPasswordPage = () => {
           },
         })
         setTimeout(() => {
-          history.push(routes.login)
+          navigate(routes.login)
         }, 1000)
       })
       .catch((error) => {

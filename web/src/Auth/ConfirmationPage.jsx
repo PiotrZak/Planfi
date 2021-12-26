@@ -1,11 +1,10 @@
-import React from 'react'
 import styled from 'styled-components'
-import Button from 'components/atoms/Button'
-import { useHistory } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom'
 import AuthTemplate from './AuthTemplate';
 import { translate } from 'utils/Translation'
 import { useThemeContext } from 'support/context/ThemeContext'
-import Icon from 'components/atoms/Icon'
+
 
 const ConfirmationWrapper = styled.div`
   position: absolute;
@@ -17,12 +16,12 @@ const ConfirmationWrapper = styled.div`
 `
 
 const ConfirmationPage = (props) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { theme } = useThemeContext()
   const { message } = props.location.state
 
   const redirectToLogin = () => {
-    history.push({
+    navigate({
       pathname: '/login',
     })
   }
@@ -31,7 +30,6 @@ const ConfirmationPage = (props) => {
     if (message == 'Activation') {
       return (
         <ConfirmationWrapper>
-          <Icon name="check" fill={theme.colorInputActive} />
           <h2>{translate('AccountActivated')}</h2>
           <Button
             onClick={() => redirectToLogin()}
@@ -48,7 +46,6 @@ const ConfirmationPage = (props) => {
     if (message == 'ResetPassword') {
       return (
         <ConfirmationWrapper>
-          <Icon name="check" fill={theme.colorInputActive} />
           <h2>{translate('PasswordResetted')}</h2>
           <Button
             onClick={() => redirectToLogin()}
