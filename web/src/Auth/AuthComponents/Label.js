@@ -1,7 +1,7 @@
 import styled, { withTheme } from 'styled-components'
 import PropTypes from 'prop-types'
-import handleTextType from 'support/TextType'
-import Icon from 'components/atoms/Icon'
+import handleTextType from './TextType'
+import Icon from './Icon'
 
 const StyledLabel = styled.label`
   display: flex;

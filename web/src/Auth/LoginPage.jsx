@@ -1,24 +1,19 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { routes } from 'routes'
+import { routes } from './../routes/routes'
 import Label from './AuthComponents/Label'
 import Input from './AuthComponents/Input'
 import Button from '@mui/material/Button';
 import AuthTemplate from './AuthTemplate';
 import InputContainer from './AuthComponents/InputContainer'
 import ErrorMessageForm from './AuthComponents/ErrorMessageForm'
-import { userService } from 'services/userServices'
-import { useNavigate, withRouter } from 'react-router-dom';
-import { translate } from 'utils/Translation'
+import { useNavigate } from 'react-router-dom';
+import { translate } from './Translation'
+import { userService } from './services/userService'
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import {
-  useNotificationContext,
-  ADD,
-} from 'support/context/NotificationContext'
 import { useCookies } from 'react-cookie'
-import { detectBrowser } from '../../utils/common.util'
-import Loader from 'components/atoms/Loader'
+import Loader from './AuthComponents/Loader'
 import LoginHooks from './Google/LoginHooks'
 
 const Link = styled.a`
@@ -49,12 +44,10 @@ const validationSchema = Yup.object({
 const LoginPage = ({ setUser }) => {
 
   const navigate = useNavigate();
-  const { notificationDispatch } = useNotificationContext()
   const [cookies, setCookie, removeCookie] = useCookies(['cookie-name'])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    detectBrowser()
   }, [])
 
   const onSubmit = (values) => {
@@ -89,13 +82,6 @@ const LoginPage = ({ setUser }) => {
         setLoading(false)
       })
       .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: error, message: 'Api send error' },
-            type: 'error',
-          },
-        })
         setLoading(false)
       })
   }
@@ -138,11 +124,6 @@ const LoginPage = ({ setUser }) => {
               <ErrorMessageForm name="password" />
             </InputContainer>
             <Button
-              id="login"
-              type="submit"
-              buttonType="primary"
-              size="lg"
-              buttonPlace="auth"
             >
               {translate('SignIn')}
             </Button>
@@ -155,4 +136,4 @@ const LoginPage = ({ setUser }) => {
   )
 }
 
-export default withRouter(LoginPage)
+export default LoginPage

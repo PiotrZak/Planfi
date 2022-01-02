@@ -8,19 +8,15 @@ import ErrorMessageForm from './AuthComponents/ErrorMessageForm'
 import Label from './AuthComponents/Label'
 import Input from './AuthComponents/Input'
 
-import BackTopNav from 'components/molecules/BackTopNav'
+import BackTopNav from './AuthComponents/BackTopNav'
 
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 
 
-import { translate } from 'utils/Translation'
-import { accountService } from 'services/accountServices'
-import {
-  useNotificationContext,
-  ADD,
-} from 'support/context/NotificationContext'
-import { routes } from 'utils/routes'
+import { translate } from './Translation'
+import { accountService } from './services/accountServices'
+import { routes } from '../routes/routes'
 
 const initialValues = {
   email: '',
@@ -33,32 +29,17 @@ const validationSchema = Yup.object({
 })
 
 const ForgotPasswordPage = () => {
-  const { notificationDispatch } = useNotificationContext()
   const navigate = useNavigate()
 
   const onSubmit = (values) => {
     accountService
       .forgotPassword({ email: values.email })
       .then(() => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('EmailSentToUser') },
-            type: 'positive',
-          },
-        })
         setTimeout(() => {
           navigate(routes.login)
         }, 1000)
       })
       .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        })
       })
   }
 
@@ -87,11 +68,6 @@ const ForgotPasswordPage = () => {
                 <ErrorMessageForm name="email" />
               </InputContainer>
               <Button
-                id="forget-password"
-                type="submit"
-                buttonType="primary"
-                size="lg"
-                buttonPlace="bottom"
               >
                 {translate('Send')}
               </Button>

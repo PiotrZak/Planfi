@@ -2,9 +2,7 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom'
 import AuthTemplate from './AuthTemplate';
-import { translate } from 'utils/Translation'
-import { useThemeContext } from 'support/context/ThemeContext'
-
+import { translate } from './Translation'
 
 const ConfirmationWrapper = styled.div`
   position: absolute;
@@ -17,7 +15,6 @@ const ConfirmationWrapper = styled.div`
 
 const ConfirmationPage = (props) => {
   const navigate = useNavigate()
-  const { theme } = useThemeContext()
   const { message } = props.location.state
 
   const redirectToLogin = () => {
@@ -32,11 +29,6 @@ const ConfirmationPage = (props) => {
         <ConfirmationWrapper>
           <h2>{translate('AccountActivated')}</h2>
           <Button
-            onClick={() => redirectToLogin()}
-            type="submit"
-            buttonType="primary"
-            size="lg"
-            buttonPlace="auth"
           >
             {translate('ReturnToLogin')}
           </Button>

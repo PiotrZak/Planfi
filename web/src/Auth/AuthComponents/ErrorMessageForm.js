@@ -2,7 +2,7 @@ import React from 'react'
 import { ErrorMessage } from 'formik'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import handleTextType from 'support/TextType'
+import handleTextType from './TextType'
 
 const StyledValidationHint = styled.p`
   color: ${({ theme }) => theme.colorErrorDefault};

@@ -1,5 +1,4 @@
 import React from 'react'
-import Paragraph from 'components/atoms/Paragraph'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 

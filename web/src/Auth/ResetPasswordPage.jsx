@@ -1,9 +1,11 @@
 import { useParams, useNavigate } from 'react-router-dom'
 
 import Button from '@mui/material/Button';
-import { routes } from 'utils/routes'
+import { routes } from '../routes/routes';
 import AuthTemplate from './AuthTemplate';
 
+import Label from './AuthComponents/Label'
+import Input from './AuthComponents/Input'
 import ValidateInvalidData from './AuthComponents/ValidateInvalidData'
 import Center from './AuthComponents/Center'
 
@@ -13,13 +15,10 @@ import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
 
 
-import BackTopNav from 'components/molecules/BackTopNav'
-import { translate } from 'utils/Translation'
-import {
-  useNotificationContext,
-  ADD,
-} from 'support/context/NotificationContext'
-import { accountService } from 'services/accountServices'
+import BackTopNav from './AuthComponents/BackTopNav'
+import { translate } from './Translation'
+import { accountService } from './services/accountServices'
+
 
 const initialValues = {
   password: '',
@@ -42,7 +41,6 @@ const validationSchema = Yup.object().shape({
 const ResetPasswordPage = () => {
   const timeToRedirect = 1000
   const { resetToken } = useParams()
-  const { notificationDispatch } = useNotificationContext()
   const navigate = useNavigate()
 
   const onSubmit = (values) => {
@@ -54,13 +52,6 @@ const ResetPasswordPage = () => {
     accountService
       .resetPassword(resetPasswordModel)
       .then(() => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { success: 'OK', message: translate('PasswordChanged') },
-            type: 'positive',
-          },
-        })
         setTimeout(() => {
           navigate({
             pathname: routes.confirmation,
@@ -69,13 +60,6 @@ const ResetPasswordPage = () => {
         }, timeToRedirect)
       })
       .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        })
       })
   }
 
@@ -119,11 +103,6 @@ const ResetPasswordPage = () => {
                 <ErrorMessageForm name="confirmPassword" />
               </InputContainer>
               <Button
-                id="reset-password"
-                type="submit"
-                buttonType="primary"
-                size="lg"
-                buttonPlace="bottom"
               >
                 {translate('Send')}
               </Button>

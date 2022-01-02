@@ -3,7 +3,7 @@ import Mobile from 'layouts/Mobile'
 import React from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactDOM from 'react-dom'
-import RoutesList from 'routes/routes'
+import RoutesList from './routes/routes'
 
 //todo - in react 18 - there is new hydrateRoot
 // reference: https://blog.saeloun.com/2021/07/15/react-18-adds-new-root-api.html

@@ -1,9 +1,10 @@
 
 import { GoogleLogin, useGoogleLogin } from 'react-google-login'
-import { accountService } from 'services/accountServices'
-import {routes} from '/../routes/routes'
+import { accountService } from '../services/accountServices'
+
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { routes } from '../../routes/routes';
 
 const clientId =
   '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com'

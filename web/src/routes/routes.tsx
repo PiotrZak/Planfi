@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Categories from 'pages/Categories'
 import MyProfile from 'pages/MyProfile'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
@@ -14,7 +15,6 @@ export const routes = {
   activate: '/activate',
   login: '/login',
   forgotPassword: '/forgot',
-  linkExpired: '/LinkExpired',
   resetPassword: '/reset',
   myProfile: '/myprofile',
   confirmation: '/confirmation',
@@ -22,10 +22,19 @@ export const routes = {
 
 const RoutesList: React.FC = () => {
 
+  //@ts-ignore
   const userInSession = JSON.parse(localStorage.getItem('user'))
 
+
+  // todo - reference to the previous project (everything is implemented there already)
+
+  // a) private routes
+  // b) roles
+
+
   const [user, setUser] = useState(userInSession)
-  const routerRef: any = React.useRef()
+ // const routerRef: any = React.useRef()
+  //const navigate = useNavigate()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => { })
@@ -33,17 +42,16 @@ const RoutesList: React.FC = () => {
     if (currentLanguage == null) {
       localStorage.setItem('language', 'en-GB')
     }
-    const history = routerRef.current.history
-    
+
     const currentUrl = window.location.href
-    if (
-      currentUrl.toString().includes('account') ||
-      currentUrl.toString().includes('forgot')
-    ) {
-      return
-    } else {
-      user != null ? history.push(routes.myProfile) : history.push(routes.login)
-    }
+    // if (
+    //   currentUrl.toString().includes('account') ||
+    //   currentUrl.toString().includes('forgot')
+    // ) {
+    //   return
+    // } else {
+    //   user != null ? navigate(routes.myProfile) : navigate(routes.login)
+    // }
   }, [setUser])
 
   return (
@@ -51,23 +59,23 @@ const RoutesList: React.FC = () => {
       <Routes>
         <Route
           path={routes.login}
-          element={() => <LoginPage setUser={setUser} />}
+          element={<LoginPage setUser={setUser} />}
         />
         <Route
           path={routes.forgotPassword}
-          element={ForgotPasswordPage}
+          element={<ForgotPasswordPage/>}
         />
         <Route
           path={routes.resetPassword}
-          element={ResetPasswordPage}
+          element={<ResetPasswordPage/>}
         />
         <Route
           path={routes.activate}
-          element={ActivateAccountPage}
+          element={<ActivateAccountPage/>}
         />
         <Route
           path={routes.confirmation}
-          element={ConfirmationPage}
+          element={<ConfirmationPage/>}
         />
         <Route path="/" element={<MyProfile />} />
         <Route path="categories" element={<Categories />} />

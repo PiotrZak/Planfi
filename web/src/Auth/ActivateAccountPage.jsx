@@ -4,29 +4,22 @@ import styled from 'styled-components'
 // mui
 import Button from '@mui/material/Button';
 
-// to mui ->
-import Checkbox, { CHECKBOX_TYPE } from 'components/atoms/Checkbox'
-import Heading from 'components/atoms/Heading'
-
-// auth components
+import { routes } from '../routes/routes'
+import Heading from './AuthComponents/Heading'
+import Paragraph from './AuthComponents/Paragraph'
 import Label from './AuthComponents/Label'
 import Input from './AuthComponents/Input'
-// not necessary
 import Center from './AuthComponents/Center'
-import Paragraph from 'components/atoms/Paragraph'
 import InputContainer from './AuthComponents/InputContainer'
+import Checkbox, { CHECKBOX_TYPE }  from './AuthComponents/Checkbox'
 import ValidationHint from './AuthComponents/ErrorMessageForm'
 import ValidateInvalidData from './AuthComponents/ValidateInvalidData'
 
 import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup'
-import { translate } from 'utils/Translation'
-import {
-  useNotificationContext,
-  ADD,
-} from 'support/context/NotificationContext'
+import { translate } from './Translation'
 
-import { accountService } from 'services/accountServices'
+import { accountService } from './services/accountServices'
 import PhoneInput from 'react-phone-input-2'
 import AuthTemplate from './AuthTemplate';
 
@@ -79,7 +72,6 @@ const ActivateAccountPage = () => {
 
   const [phoneNumber, setPhoneNumber] = useState()
   const { verificationToken } = useParams()
-  const { notificationDispatch } = useNotificationContext()
   const navigate = useNavigate()
 
   const onSubmit = (values) => {
@@ -104,16 +96,6 @@ const ActivateAccountPage = () => {
       .activate(activateUserModel)
       .then((data) => {
         localStorage.setItem('user', JSON.stringify(data))
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: {
-              success: 'OK',
-              message: translate('ActivateAccountSuccess'),
-            },
-            type: 'positive',
-          },
-        })
         setTimeout(() => {
           navigate({
             pathname: '/confirmation',
@@ -122,13 +104,6 @@ const ActivateAccountPage = () => {
         }, timeToRedirect)
       })
       .catch((error) => {
-        notificationDispatch({
-          type: ADD,
-          payload: {
-            content: { error, message: translate('ErrorAlert') },
-            type: 'error',
-          },
-        })
       })
   }
 
@@ -214,7 +189,7 @@ const ActivateAccountPage = () => {
                     error={errors.confirmPassword && touched.confirmPassword}
                   />
                 </Label>
-                <ErrorMessageForm name="confirmPassword" />
+                <ValidationHint name="confirmPassword" />
               </InputContainer>
               <InputContainer>
                 <Label type="top" text={translate('Phone')}>
@@ -253,10 +228,6 @@ const ActivateAccountPage = () => {
                 <Link href={routes.privacy}>{translate('Here')}</Link>
               </Container>
               <Button
-                type="submit"
-                buttonType="primary"
-                size="lg"
-                buttonPlace="bottom"
               >
                 {translate('Save')}
               </Button>
