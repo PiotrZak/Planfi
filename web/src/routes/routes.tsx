@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Categories from 'pages/Categories'
-import MyProfile from 'pages/MyProfile'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import LoginPage from 'Auth/LoginPage'
 import ActivateAccountPage from 'Auth/ActivateAccountPage'
 import ConfirmationPage from 'Auth/ConfirmationPage'
 import ForgotPasswordPage from 'Auth/ForgotPasswordPage'
+import LoginPage from 'Auth/LoginPage'
 import ResetPasswordPage from 'Auth/ResetPasswordPage'
+import Categories from 'pages/Categories'
+import MyProfile from 'pages/MyProfile'
+import React, { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 // import your route components too
 
 export const routes = {
@@ -55,7 +54,7 @@ const RoutesList: React.FC = () => {
   }, [setUser])
 
   return (
-    <BrowserRouter>
+
       <Routes>
         <Route
           path={routes.login}
@@ -80,7 +79,7 @@ const RoutesList: React.FC = () => {
         <Route path="/" element={<MyProfile />} />
         <Route path="categories" element={<Categories />} />
       </Routes>
-    </BrowserRouter>
+
   )
 }
 
