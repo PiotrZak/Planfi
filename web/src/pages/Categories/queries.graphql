@@ -1,0 +1,13 @@
+query allBaseExercises {
+  allBaseExercises {
+    exerciseId
+    name
+    files
+    series {
+      serieId
+      times
+      weight
+      repeats
+    }
+  }
+}

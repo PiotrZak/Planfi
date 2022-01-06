@@ -1,12 +1,17 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import DashboardIcon from '@mui/icons-material/Dashboard'
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize'
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import MenuIcon from '@mui/icons-material/Menu'
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt'
+import PersonPinCircleIcon from '@mui/icons-material/PersonPinCircle'
 import {
   Container,
   CssBaseline,
   Divider,
   Grid,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemIcon,
@@ -19,6 +24,7 @@ import MuiDrawer from '@mui/material/Drawer'
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles'
 import { Box } from '@mui/system'
 import { useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
 }
@@ -124,12 +130,45 @@ const Desktop: React.FC = ({ children }) => {
             </IconButton>
           </Toolbar>
           <Divider />
+
           <List>
+            <Link
+              to="/"
+              component={RouterLink}
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  <FitnessCenterIcon />
+                </ListItemIcon>
+                <ListItemText primary="Categories" />
+              </ListItem>
+            </Link>
+            <Link to="/categories" component={RouterLink}>
+              <ListItem button>
+                <ListItemIcon>
+                  <DashboardCustomizeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Plans" />
+              </ListItem>
+            </Link>
             <ListItem button>
               <ListItemIcon>
-                <DashboardIcon />
+                <PersonPinCircleIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary="Clients" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleAltIcon />
+              </ListItemIcon>
+              <ListItemText primary="Something" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <AccountCircleIcon />
+              </ListItemIcon>
+              <ListItemText primary="My profile" />
             </ListItem>
           </List>
         </Drawer>
@@ -147,7 +186,7 @@ const Desktop: React.FC = ({ children }) => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
+            <Grid container spacing={3} style={{ marginTop: 8 }}>
               {children}
             </Grid>
           </Container>
