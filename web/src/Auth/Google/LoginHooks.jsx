@@ -4,7 +4,7 @@ import { accountService } from '../services/accountServices'
 
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
-import { routes } from '../../routes/routes';
+import { routes } from 'index'
 
 const clientId =
   '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com'

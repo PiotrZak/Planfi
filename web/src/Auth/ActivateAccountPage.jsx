@@ -4,7 +4,7 @@ import styled from 'styled-components'
 // mui
 import Button from '@mui/material/Button';
 
-import { routes } from '../routes/routes'
+import { routes } from 'index'
 import Heading from './AuthComponents/Heading'
 import Paragraph from './AuthComponents/Paragraph'
 import Label from './AuthComponents/Label'

@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 
 import Button from '@mui/material/Button';
-import { routes } from '../routes/routes';
+import { routes } from 'index'
 import AuthTemplate from './AuthTemplate';
 
 import Label from './AuthComponents/Label'

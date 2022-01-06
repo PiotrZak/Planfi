@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { routes } from './../routes/routes'
+import { routes } from 'index'
 import Label from './AuthComponents/Label'
 import Input from './AuthComponents/Input'
 import Button from '@mui/material/Button';

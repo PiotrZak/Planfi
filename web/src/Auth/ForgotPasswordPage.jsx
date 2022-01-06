@@ -16,7 +16,7 @@ import * as Yup from 'yup'
 
 import { translate } from './Translation'
 import { accountService } from './services/accountServices'
-import { routes } from '../routes/routes'
+import { routes } from 'index'
 
 const initialValues = {
   email: '',

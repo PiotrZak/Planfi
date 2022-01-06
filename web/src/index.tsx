@@ -3,23 +3,93 @@ import { ThemeProvider } from '@mui/system'
 import { ApolloProviderContext } from 'contexts'
 import Desktop from 'layouts/Desktop'
 import Mobile from 'layouts/Mobile'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactDOM from 'react-dom'
-//todo - in react 18 - there is new hydrateRoot
-// reference: https://blog.saeloun.com/2021/07/15/react-18-adds-new-root-api.html
-// Create and render a root with hydration.
-// const container = document.getElementById('root');
-// const root = ReactDOM.hydrateRoot(container, <App name="Saeloun blog" />);
-import { BrowserRouter } from 'react-router-dom'
+
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import RoutesList from 'routes/routes'
 import { theme } from 'style'
+import ActivateAccountPage from 'Auth/ActivateAccountPage'
+import ConfirmationPage from 'Auth/ConfirmationPage'
+import ForgotPasswordPage from 'Auth/ForgotPasswordPage'
+import LoginPage from 'Auth/LoginPage'
+import ResetPasswordPage from 'Auth/ResetPasswordPage'
+
+export const routes = {
+  register: '/register',
+  activate: '/activate',
+  login: '/login',
+  forgotPassword: '/forgot',
+  resetPassword: '/reset',
+  myProfile: '/myprofile',
+  confirmation: '/confirmation',
+}
 
 
-ReactDOM.render(
+const Auth = () => {
+  //@ts-ignore
+  const userInSession = JSON.parse(localStorage.getItem('user'))
+
+
+  const [user, setUser] = useState(userInSession)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => { })
+    const currentLanguage = localStorage.getItem('language')
+    if (currentLanguage == null) {
+      localStorage.setItem('language', 'en-GB')
+    }
+
+    const currentUrl = window.location.href
+    if (
+      currentUrl.toString().includes('activate') ||
+      currentUrl.toString().includes('forgot') ||
+      currentUrl.toString().includes('register') ||
+      currentUrl.toString().includes('reset') ||
+      //for development purpose
+      currentUrl.toString().includes('categories')
+    ) {
+      return
+    } else {
+      user != null 
+        ? navigate(routes.myProfile) 
+        : navigate(routes.login)
+    }
+  }, [setUser])
+
+  return (
+    <Routes>
+      <Route
+        path={routes.login}
+        element={<LoginPage setUser={setUser} />}
+      />
+      <Route
+        path={routes.forgotPassword}
+        element={<ForgotPasswordPage />}
+      />
+      <Route
+        path={routes.resetPassword}
+        element={<ResetPasswordPage />}
+      />
+      <Route
+        path={routes.activate}
+        element={<ActivateAccountPage />}
+      />
+      <Route
+        path={routes.confirmation}
+        element={<ConfirmationPage />}
+      />
+    </Routes>
+  )
+}
+
+ReactDOM.hydrate(
   <React.StrictMode>
     <ApolloProviderContext>
       <BrowserRouter>
+        <Auth />
         <ThemeProvider theme={theme}>
           <CssBaseline />
           {isMobileOnly ? (

@@ -1,0 +1,67 @@
+name: Planfi Front
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  API_URL: 'https://planfi-api-g3lfmgrpmq-uc.a.run.app'
+  Domain: 'plan-fi.pl'
+  BUCKET: 'planfi'
+  ENVIRONMENT: true
+
+jobs:
+  # E2E:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./Planfi.Front/
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Install node
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node:version: '14'
+  #     - name: Install dependencies
+  #       run: npm install
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v2
+  #       with:
+  #         working-directory: ./Planfi.Front/
+  #         install-command: npm install
+
+  build:
+    # needs: E2E
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - uses: actions/checkout@v2
+
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: 'web/src/config.json'
+        env:
+          apps.PlanfiApi.url: ${{ env.API_URL }}
+          apps.PlanfiApi.isProduction: ${{ env.ENVIRONMENT }}
+
+      - name: Read config.json from Web
+        run: 'cat web/src/config.json'
+
+      - name: Build and deploy frontend to static GCP Cloud Storage
+        run: |
+          cd ./web/
+          npm install
+          CI=false npm run-script build
+          gsutil web set -m index.html -e index.html gs://${{ env.BUCKET }}
+          gsutil iam ch allUsers:legacyObjectReader gs://${{ env.BUCKET }}
+          gsutil -h "Cache-Control:public, max-age=0, no-transform" rsync -d -r ./build gs://${{env.BUCKET}}
+          gcloud compute url-maps invalidate-cdn-cache planfi-lb --path '/${{env.Domain}}/*'
