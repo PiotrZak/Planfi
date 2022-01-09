@@ -57,6 +57,7 @@ const CardExercise: React.FC<Props> = ({ name }) => {
                     key={option}
                     selected={option === 'Pyxis'}
                     onClick={handleClose}
+                    style={{ fontSize: '14px' }}
                   >
                     {option}
                   </MenuItem>
@@ -66,6 +67,10 @@ const CardExercise: React.FC<Props> = ({ name }) => {
           }
           title={name}
           subheader="Kategoria"
+          titleTypographyProps={{
+            fontSize: 16,
+          }}
+          subheaderTypographyProps={{ fontSize: 14 }}
         />
       </Card>
     </Grid>

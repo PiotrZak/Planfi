@@ -126,6 +126,15 @@ export default createTheme({
         }
       `,
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          boxShadow: 'none !important',
+          borderBottom: '1px solid rgba(17, 18, 20, 0.12)',
+          borderRadius: '0px',
+        },
+      },
+    },
     MuiButtonBase: {
       styleOverrides: {
         // Name of the slot
