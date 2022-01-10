@@ -3,15 +3,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Interfaces;
 using WebApi.Common;
-using WebApi.Controllers.ViewModels;
-using WebApi.Entities;
 using WebApi.Helpers;
-using WebApi.Interfaces;
 using WebApi.Models;
 
 namespace PlanfiApi.Controllers.Exercises
@@ -23,16 +19,13 @@ namespace PlanfiApi.Controllers.Exercises
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
-        private readonly AppSettings _appSettings;
-       
+
         public CategoryController(
             ICategoryService categoryService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+            IMapper mapper)
         {
             _categoryService = categoryService ;
             _mapper = mapper;
-            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
@@ -67,9 +60,9 @@ namespace PlanfiApi.Controllers.Exercises
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var category = _categoryService.GetAll();
+            var category = await _categoryService.GetAll();
             return Ok(category);
         }
         

@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 using PlanfiApi.Data.Entities;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;
 using PlanfiApi.Models.ViewModels;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Models;
 
@@ -16,10 +19,12 @@ namespace PlanfiApi.Services.Exercises
     public class CategoryService : ICategoryService
     {
         private readonly DataContext _context;
+        private IConfiguration Configuration { get; }
         private readonly IExerciseService _exerciseService;
 
-        public CategoryService(DataContext context, IExerciseService exerciseService)
+        public CategoryService(DataContext context, IConfiguration configuration, IExerciseService exerciseService)
         {
+            Configuration = configuration;
             _context = context;
             _exerciseService = exerciseService;
         }
@@ -27,8 +32,8 @@ namespace PlanfiApi.Services.Exercises
         public Category Create(Category category)
         {
             var duplication = _context.categories
-                .Where(x => x.OrganizationId == category.OrganizationId)
-                .Any(x => x.Title == category.Title);
+                  .Where(x => x.OrganizationId == category.OrganizationId)
+                  .Any(x => x.Title == category.Title);
             
             if (duplication)
                 throw new AppException("Category " + category.Title + " is already exist");
@@ -46,23 +51,38 @@ namespace PlanfiApi.Services.Exercises
             return category;
         }
         
-        //check performance
         public async Task <List<CategoryViewModel>> GetAll()
         {
-            var allCategories = await _context.categories.ToListAsync();
+          var connection = new NpgsqlConnection(Configuration.GetConnectionString("WebApiDatabase"));
+          await connection.OpenAsync();
 
-            return allCategories
-              .Select(category => 
-                new CategoryViewModel
-                {
-                  CategoryId = category.CategoryId,
-                  Title = category.Title,
-                  OrganizationId = category.OrganizationId
-                }).ToList();
+          var categories = new List<CategoryViewModel>();
+          try
+          {
+            const string categoriesQuery = @"SELECT 
+              c.category_id as CategoryId,
+              c.title as Title,
+              c.organization_id as OrganizationId,
+              Count(e) as Exercises
+              FROM public.categories as c
+              JOIN public.exercises as e
+              on e.category_id = c.category_id
+              GROUP BY c.category_id
+              ORDER BY Count(e) DESC";
+
+            categories = (await connection.QueryAsync<CategoryViewModel>(categoriesQuery)).ToList();
+          }
+          catch (Exception exp) {
+            Console.Write(exp.Message);
+          }
+          finally
+          {
+            await connection.CloseAsync();
+          }
+            
+          return categories.Where(x => x.Exercises > 0).ToList();
         }
         
-
-    
         public async Task<int> Delete(string[] ids)
         {
             var categories = await _context.categories
