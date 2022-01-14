@@ -11,7 +11,7 @@ import Label from './AuthComponents/Label'
 import Input from './AuthComponents/Input'
 import Center from './AuthComponents/Center'
 import InputContainer from './AuthComponents/InputContainer'
-import Checkbox, { CHECKBOX_TYPE }  from './AuthComponents/Checkbox'
+import Checkbox, { CHECKBOX_TYPE } from './AuthComponents/Checkbox'
 import ValidationHint from './AuthComponents/ErrorMessageForm'
 import ValidateInvalidData from './AuthComponents/ValidateInvalidData'
 
@@ -24,9 +24,12 @@ import PhoneInput from 'react-phone-input-2'
 import AuthTemplate from './AuthTemplate';
 
 //todo exclude Regexes to common function
+// eslint-disable-next-line
 const nameRegex = /^[a-zA-Z]{3,20} [a-zA-Z]{2,32}$/
+// eslint-disable-next-line
 const phoneRegex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
 const passwordRegex =
+// eslint-disable-next-line
   /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
 
 const validationSchema = Yup.object().shape({
@@ -68,7 +71,7 @@ const CheckboxContainer = styled.div`
 `
 
 const ActivateAccountPage = () => {
-  useEffect(() => {}, [])
+  useEffect(() => { }, [])
 
   const [phoneNumber, setPhoneNumber] = useState()
   const { verificationToken } = useParams()

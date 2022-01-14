@@ -71,7 +71,7 @@ export const lightTheme = {
   colorInputBorder: '#666674',
   colorInputHover: '#9898A5',
   colorDarkBorder: '#09090B',
-  colorWhiteBorder: '#FFFFFF',
+  //colorWhiteBorder: '#FFFFFF',
 
   colorDividerBorderDisabled: '#31313D',
 }

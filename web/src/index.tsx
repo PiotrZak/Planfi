@@ -57,6 +57,7 @@ const Auth = () => {
         ? navigate(routes.myProfile) 
         : navigate(routes.login)
     }
+    //@ts-ignore
   }, [setUser])
 
   return (

@@ -24,7 +24,7 @@ const ConfirmationPage = (props) => {
   }
 
   const renderConfirmation = () => {
-    if (message == 'Activation') {
+    if (message === 'Activation') {
       return (
         <ConfirmationWrapper>
           <h2>{translate('AccountActivated')}</h2>
@@ -35,7 +35,7 @@ const ConfirmationPage = (props) => {
         </ConfirmationWrapper>
       )
     }
-    if (message == 'ResetPassword') {
+    if (message === 'ResetPassword') {
       return (
         <ConfirmationWrapper>
           <h2>{translate('PasswordResetted')}</h2>

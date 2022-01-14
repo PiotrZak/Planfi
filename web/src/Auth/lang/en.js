@@ -121,8 +121,6 @@ export const en = {
   FirstName: 'First Name',
   LastName: 'Last Name',
   editUserDetails: 'Edit Your data',
-  NewPasswordPlaceholder: "What's your new password?",
-  RepeatNewPasswordPlaceholder: 'Repeat your new password',
   ReturnToSubMenuCategories: 'Return to categories',
   PlansSelected: 'Selected plans',
   ReturnToSubMenuExercises: 'Return to exercises',

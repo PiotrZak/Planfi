@@ -1,5 +1,5 @@
 
-import { GoogleLogin, useGoogleLogin } from 'react-google-login'
+import { GoogleLogin } from 'react-google-login'
 import { accountService } from '../services/accountServices'
 
 import { useNavigate } from 'react-router-dom'
@@ -9,13 +9,14 @@ import { routes } from 'index'
 const clientId =
   '732320092646-u673ggg0p7g5ellhhktfbidbutkpig3t.apps.googleusercontent.com'
 
-const clientSecret = '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'
+//const clientSecret = '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'
 
 const timeToRedirectLogin = 1000
 
 const LoginHooks = ({setUser}) => {
 
-  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+  //const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+  const [setCookie] = useCookies(['cookie-name']);
   const navigate = useNavigate();
 
   const onSuccess = (res) => {

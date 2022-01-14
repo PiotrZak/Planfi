@@ -64,11 +64,15 @@ async function handleResponseError(response) {
     }
     return response.data
   }
-  if (response.status === 409)
-    throw 'The data was modified in the meantime. Please refresh the page.'
-
+  if (response.status === 409) {
+    let error = await response
+    // eslint-disable-next-line
+    throw 'The data was modified in the meantime. Please refsresh the page.' + error;
+  }
   if (response.status === 401) {
-    throw 'Unathorized'
+    let error = await response
+    // eslint-disable-next-line
+    throw 'Unathorized' + error;
   }
 
   if (response.status === 400) {

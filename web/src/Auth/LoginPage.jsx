@@ -44,7 +44,8 @@ const validationSchema = Yup.object({
 const LoginPage = ({ setUser }) => {
 
   const navigate = useNavigate();
-  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name'])
+  //const [cookies, setCookie, removeCookie] = useCookies(['cookie-name'])
+  const [setCookie] = useCookies(['cookie-name'])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
