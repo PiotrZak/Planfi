@@ -899,21 +899,21 @@ export type UsersTrainersFilter = {
 export type AllBaseExercisesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllBaseExercisesQuery = { __typename?: 'Query', allBaseExercises: Array<{ __typename?: 'ExerciseViewModel', exerciseId: string, name: string, files?: Array<Array<any>> | null | undefined, series?: Array<{ __typename?: 'Serie', serieId: string, times: number, weight: number, repeats: number }> | null | undefined }> };
+export type AllBaseExercisesQuery = { __typename?: 'Query', allBaseExercises: Array<{ __typename?: 'ExerciseViewModel', exerciseId: string, categoryName?: string | null | undefined, categoryId: string, name: string }> };
+
+export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'CategoryViewModel', categoryId: string, title: string, exercises: number }> };
 
 
 export const AllBaseExercisesDocument = gql`
     query allBaseExercises {
   allBaseExercises {
     exerciseId
+    categoryName
+    categoryId
     name
-    files
-    series {
-      serieId
-      times
-      weight
-      repeats
-    }
   }
 }
     `;
@@ -944,3 +944,39 @@ export function useAllBaseExercisesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type AllBaseExercisesQueryHookResult = ReturnType<typeof useAllBaseExercisesQuery>;
 export type AllBaseExercisesLazyQueryHookResult = ReturnType<typeof useAllBaseExercisesLazyQuery>;
 export type AllBaseExercisesQueryResult = Apollo.QueryResult<AllBaseExercisesQuery, AllBaseExercisesQueryVariables>;
+export const CategoriesDocument = gql`
+    query categories {
+  categories {
+    categoryId
+    title
+    exercises
+  }
+}
+    `;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+      }
+export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        }
+export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
+export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
+export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;

@@ -10,14 +10,16 @@ const ITEM_HEIGHT = 25
 
 interface Props {
   name: string
+  categoryName: string
 }
 
-const CardExercise: React.FC<Props> = ({ name }) => {
+const CardExercise: React.FC<Props> = ({ name, categoryName }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -66,7 +68,7 @@ const CardExercise: React.FC<Props> = ({ name }) => {
             </>
           }
           title={name}
-          subheader="Kategoria"
+          subheader={categoryName}
           titleTypographyProps={{
             fontSize: 16,
           }}
