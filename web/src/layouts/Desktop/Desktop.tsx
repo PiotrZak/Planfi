@@ -25,6 +25,7 @@ import { createTheme, styled, ThemeProvider } from '@mui/material/styles'
 import { Box } from '@mui/system'
 import { useState } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
+import LanguageSelect from './LanguageSelect'
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean
 }
@@ -114,6 +115,7 @@ const Desktop: React.FC = ({ children }) => {
             >
               Dashboard
             </Typography>
+            <LanguageSelect />
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

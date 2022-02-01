@@ -1,0 +1,12 @@
+{
+  "title": "Witamy w i18n",
+  "description": {
+    "part1": "Pierwsza część translakcji.",
+    "part2": "Druga część translakcji."
+  },
+  "review_zero": "{{count}} opinii",
+  "review_one": "{{count}} opinia",
+  "review_few": "{{count}} opinie",
+  "review_many": "{{count}} opinii",
+  "postedOn": "Post dodano dnia {{ date, PPpp }}"
+}
