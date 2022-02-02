@@ -5,7 +5,7 @@ import {
   InMemoryCache,
 } from '@apollo/client'
 
-import config from '../../../Planfi.Front/config.json';
+import config from 'config.json';
 
 const ApolloProviderContext: React.FC = ({ children }) => {
 
