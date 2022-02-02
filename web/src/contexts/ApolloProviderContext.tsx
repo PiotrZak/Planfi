@@ -13,7 +13,6 @@ const ApolloProviderContext: React.FC = ({ children }) => {
   // if U wan't to shot into production database - set to true
   const productionUrl = config.apps.PlanfiApi.url;
   const isProduction = config.apps.PlanfiApi.isProduction;
-
   const localHostApiUrl = 'http://localhost:9001/graphql'
   const httpLink = createHttpLink({
     uri: isProduction ? productionUrl : localHostApiUrl,
