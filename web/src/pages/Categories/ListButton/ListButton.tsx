@@ -1,28 +1,55 @@
-import { FormControl, Select } from '@mui/material'
+import {
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Select,
+  SelectChangeEvent,
+} from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
-import * as React from 'react'
+import { CategoryViewModel } from 'generated/graphql'
+import React from 'react'
 
-export default function ListButton() {
-  const [age, setAge] = React.useState(1)
+interface Props {
+  categories: CategoryViewModel[]
+  selectedCategories: string[]
+  setCategories: (value: any) => void
+}
 
-  const handleChange = (event: any) => {
-    setAge(event.target.value)
+const ListButton: React.FC<Props> = ({
+  categories,
+  selectedCategories,
+  setCategories,
+}) => {
+  const handleChange = (
+    event: SelectChangeEvent<typeof selectedCategories>
+  ) => {
+    const {
+      target: { value },
+    } = event
+    setCategories(typeof value === 'string' ? value.split(',') : value)
   }
 
   return (
     <React.Fragment>
       <FormControl fullWidth variant="outlined">
+        <InputLabel>Kategoria</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
+          value={selectedCategories}
+          multiple
+          input={<OutlinedInput label="Kategoria" />}
           onChange={handleChange}
         >
-          <MenuItem value={1}>Category</MenuItem>
-          <MenuItem value={2}>Category 2</MenuItem>
-          <MenuItem value={3}>Category 3</MenuItem>
+          {categories?.map(({ categoryId, title }) => {
+            return (
+              <MenuItem key={categoryId} value={title}>
+                {title}
+              </MenuItem>
+            )
+          })}
         </Select>
       </FormControl>
     </React.Fragment>
   )
 }
+
+export default ListButton

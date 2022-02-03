@@ -1,13 +1,16 @@
 query allBaseExercises {
   allBaseExercises {
     exerciseId
+    categoryName
+    categoryId
     name
-    files
-    series {
-      serieId
-      times
-      weight
-      repeats
-    }
+  }
+}
+
+query categories {
+  categories {
+    categoryId
+    title
+    exercises
   }
 }

@@ -135,9 +135,15 @@ export default createTheme({
         },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '24px',
+        },
+      },
+    },
     MuiButtonBase: {
       styleOverrides: {
-        // Name of the slot
         root: {
           boxShadow: 'none !important',
         },
