@@ -4,16 +4,19 @@ import React from 'react'
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 // import your route components too
 
-
 const RoutesList: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<MyProfile />} />
-      <Route path='categories' element={<PrivateRouteTest roles={[Role.Owner, Role.Trainer, Role.User]} />}>
-          <Route path='/categories' element={<Categories/>}/>
-    </Route>
+      <Route
+        path="categories"
+        element={
+          <PrivateRouteTest roles={[Role.Owner, Role.Trainer, Role.User]} />
+        }
+      >
+        <Route path="/categories" element={<Categories />} />
+      </Route>
     </Routes>
-
   )
 }
 
@@ -27,10 +30,10 @@ export const Role = {
 //todo - add complicated logic to routes
 
 //@ts-ignore
-const PrivateRouteTest = ({roles}) => {
+const PrivateRouteTest = ({ roles }) => {
   //todo - fix with auth role / routing
-  const auth = true; 
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  const auth = true
+  return auth ? <Outlet /> : <Navigate to="/login" />
 }
 
 //@ts-ignore
@@ -61,4 +64,4 @@ const PrivateRouteTest = ({roles}) => {
 //   />
 // )
 
-export default RoutesList;
+export default RoutesList

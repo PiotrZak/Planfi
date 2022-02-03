@@ -2,8 +2,12 @@ import { CircularProgress, Container, Grid } from '@mui/material'
 import { Box } from '@mui/system'
 import { useCategoriesQuery } from 'generated/graphql'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import AddExercise from './AddExercise/AddExercise'
-import EmptyExercises from './EmptyExercises/EmptyExercises'
+import {
+  EmptyExercises as EmptyExercisesDesktop,
+  EmptyExercisesMobile,
+} from './EmptyExercises'
 import Exercises from './Exercises'
 import Header from './Header'
 import { ListButton } from './ListButton'
@@ -28,7 +32,11 @@ const Categories: React.FC = () => {
   }
 
   if (!categories.length) {
-    return <EmptyExercises />
+    const EmptyExercises = isMobile
+      ? EmptyExercisesMobile
+      : EmptyExercisesDesktop
+
+    return <EmptyExercises text="test" />
   }
 
   return (

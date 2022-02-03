@@ -7,7 +7,7 @@ interface Props {
   text: string
 }
 
-const EmptyExercises: React.FC<Props> = ({ text }) => {
+const EmptyExercisesMobile: React.FC<Props> = ({ text }) => {
   return (
     <Box
       sx={{
@@ -27,4 +27,4 @@ const EmptyExercises: React.FC<Props> = ({ text }) => {
   )
 }
 
-export default EmptyExercises
+export default EmptyExercisesMobile
