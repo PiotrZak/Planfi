@@ -1,4 +1,5 @@
 import Categories from 'pages/Categories'
+import Plans from 'pages/Plans'
 import MyProfile from 'pages/MyProfile'
 import React from 'react'
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
@@ -8,6 +9,7 @@ const RoutesList: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<MyProfile />} />
+      <Route path="/plans" element={<Plans />} />
       <Route
         path="categories"
         element={
