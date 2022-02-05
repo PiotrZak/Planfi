@@ -19,7 +19,7 @@ const Plans = () => {
   const [plansFilter, setPlansFilter] = useState('')
   const [authorsFilter, setAuthorsFilter] = useState('')
 
-  const { allPlans, filteredPlans, selectedAuthors, handleAuthorClick } =
+  const { allPlans, filteredPlans, filteredPlansLength, handleAuthorClick } =
     usePlans(plansFilter, authorsFilter)
 
   const [isAuthorsListVisible, setIsAuthorsListVisible] = useState(false)
@@ -42,7 +42,7 @@ const Plans = () => {
         onChange={(e) => setPlansFilter(e.target.value)}
       />
       <ListFilterButton
-        title={`Autor (${selectedAuthors.length})`}
+        title={`Autor (${filteredPlansLength})`}
         label="Autor"
         onFilterClick={() => setIsAuthorsListVisible(true)}
       />
@@ -78,8 +78,8 @@ const Plans = () => {
         />
       }
     >
-      {selectedAuthors.length > 0 ? (
-        selectedAuthors.map(({ creatorName, creatorId, isSelected }) => (
+      {allPlans.length > 0 ? (
+        allPlans.map(({ creatorName, creatorId, isSelected }) => (
           <SelectListItem
             name={creatorName}
             isSelected={isSelected}

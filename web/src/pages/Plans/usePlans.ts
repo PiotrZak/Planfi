@@ -5,12 +5,6 @@ interface PlansState extends Plan {
   isSelected: boolean
 }
 
-const getFilteredPlansByAuthors = (plans: PlansState[], input: string) => {
-  return plans.filter(({ creatorName }) =>
-    creatorName.toLowerCase().includes(input.trim().toLowerCase())
-  )
-}
-
 const getFilteredPlansByTitle = (plans: PlansState[], input: string) => {
   return plans.filter(({ title }) =>
     title.toLowerCase().includes(input.trim().toLowerCase())
@@ -52,12 +46,21 @@ const usePlans = (plansFilter: string, authorsFilter: string) => {
     plansFilter
   )
 
-  const selectedAuthors = getFilteredPlansByAuthors(allPlans, authorsFilter)
+  const filteredPlansLength = (() => {
+    const length = allPlans.reduce((acc, { isSelected }) => {
+      return acc + +isSelected
+    }, 0)
+    if (length > 0) {
+      return length
+    }
+
+    return allPlans.length
+  })()
 
   return {
     allPlans,
     filteredPlans,
-    selectedAuthors,
+    filteredPlansLength,
     handleAuthorClick,
   }
 }
