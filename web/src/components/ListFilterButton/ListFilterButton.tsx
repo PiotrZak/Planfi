@@ -7,15 +7,22 @@ import {
 } from '@mui/material'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 
-interface CategoryGroup {
-  onFilterClick: () => void
+interface ListFilterButtonProps {
+  title: string
+  label: string
+  onFilterClick?: () => void
 }
 
-const CategoryGroup = ({ onFilterClick }: CategoryGroup) => (
+const ListFilterButton = ({
+  title,
+  label,
+  onFilterClick = () => {},
+}: ListFilterButtonProps) => (
   <Box mt={2}>
     <ButtonGroup
-      aria-label="Szukaj kategorii"
+      aria-label={label}
       color="secondary"
+      fullWidth
       sx={{
         [`.${buttonClasses.root}`]: {
           borderRadius: '8px',
@@ -26,7 +33,6 @@ const CategoryGroup = ({ onFilterClick }: CategoryGroup) => (
           borderRightColor: 'transparent !important',
         },
       }}
-      fullWidth
     >
       <Button
         sx={{
@@ -36,7 +42,7 @@ const CategoryGroup = ({ onFilterClick }: CategoryGroup) => (
         }}
         size="large"
       >
-        Kategoria
+        {title}
       </Button>
       <Button
         size="small"
@@ -51,4 +57,4 @@ const CategoryGroup = ({ onFilterClick }: CategoryGroup) => (
   </Box>
 )
 
-export default CategoryGroup
+export default ListFilterButton

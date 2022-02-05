@@ -1,4 +1,4 @@
-import { TextField, Typography, Box, Fab } from '@mui/material'
+import { Typography, Box, Fab } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 
 const Header = () => (
@@ -16,13 +16,6 @@ const Header = () => (
         <AddIcon />
       </Fab>
     </Box>
-    <TextField
-      id="plan-search"
-      label="Szukaj"
-      variant="outlined"
-      size="small"
-      fullWidth
-    />
   </header>
 )
 
