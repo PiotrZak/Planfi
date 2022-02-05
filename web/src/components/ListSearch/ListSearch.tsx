@@ -2,13 +2,15 @@ import { TextField } from '@mui/material'
 
 interface ListSearch {
   label: string
+  value: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const ListSearch = ({ label, onChange }: ListSearch) => (
+const ListSearch = ({ label, value, onChange }: ListSearch) => (
   <TextField
     id={label.split(' ').join('-')}
     label={label}
+    value={value}
     variant="outlined"
     size="small"
     fullWidth

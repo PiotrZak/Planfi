@@ -1,83 +1,105 @@
 import { useState } from 'react'
-import { Container } from '@mui/material'
+import { Container, Typography } from '@mui/material'
 
 import {
   List,
   ListItem,
   ListFilterButton,
   ListSearch,
+  ListEmpty,
   SelectList,
   SelectListTextField,
   SelectListItem,
 } from 'components'
 
 import Header from './Header'
-import testPlans, { Plan } from './testPlans'
-
-const getFilteredAuthors = (plans: Plan[], input: string) => {
-  return plans.filter(({ creatorName }) =>
-    creatorName.toLowerCase().includes(input.trim().toLowerCase())
-  )
-}
-
-const getFilteredPlans = (plans: Plan[], input: string) => {
-  return plans.filter(({ title }) =>
-    title.toLowerCase().includes(input.trim().toLowerCase())
-  )
-}
+import usePlans from './usePlans'
 
 const Plans = () => {
-  const [plans] = useState(testPlans)
-  const [authorsFilter, setAuthorsFilter] = useState('')
   const [plansFilter, setPlansFilter] = useState('')
+  const [authorsFilter, setAuthorsFilter] = useState('')
+
+  const { allPlans, filteredPlans, selectedAuthors, handleAuthorClick } =
+    usePlans(plansFilter, authorsFilter)
 
   const [isAuthorsListVisible, setIsAuthorsListVisible] = useState(false)
 
-  const handleAuthorListOpen = () => setIsAuthorsListVisible(true)
+  if (allPlans.length === 0) {
+    return (
+      <ListEmpty
+        title=" Nie masz jeszcze żadnych planów!"
+        actionTitle="Dodaj plan"
+        onActionClick={() => console.log('adding plan')}
+      />
+    )
+  }
 
-  const handleAuthorListClose = () => setIsAuthorsListVisible(false)
-
-  return (
-    <Container>
-      <Header />
+  const plansList = (
+    <>
       <ListSearch
         label="Szukaj"
+        value={plansFilter}
         onChange={(e) => setPlansFilter(e.target.value)}
       />
       <ListFilterButton
-        title="Autor 1"
+        title={`Autor (${selectedAuthors.length})`}
         label="Autor"
-        onFilterClick={handleAuthorListOpen}
+        onFilterClick={() => setIsAuthorsListVisible(true)}
       />
       <List>
-        {getFilteredPlans(plans, plansFilter).map(
-          ({ title, exercisesCount, planId }) => (
+        {filteredPlans.length > 0 ? (
+          filteredPlans.map(({ title, exercisesCount, planId }) => (
             <ListItem
               key={planId}
               primaryContent={title}
               secondaryContent={`${exercisesCount} ćwiczenia`}
-              onClick={() => console.log('clicked')}
+              onClick={() => console.log('show bottom drawer')}
             />
-          )
+          ))
+        ) : (
+          <Typography sx={{ my: 0.5 }} align="center">
+            Taki plan nie istnieje
+          </Typography>
         )}
       </List>
-      <SelectList
-        isVisible={isAuthorsListVisible}
-        title="Autorzy"
-        onClose={handleAuthorListClose}
-        TextFieldComponent={
-          <SelectListTextField
-            onChange={(e) => setAuthorsFilter(e.target.value)}
-            label="Wyszukaj autora"
+    </>
+  )
+
+  const authorsFilterList = (
+    <SelectList
+      isVisible={isAuthorsListVisible}
+      title="Autorzy"
+      onClose={() => setIsAuthorsListVisible(false)}
+      TextFieldComponent={
+        <SelectListTextField
+          value={authorsFilter}
+          onChange={(e) => setAuthorsFilter(e.target.value)}
+          label="Wyszukaj autora"
+        />
+      }
+    >
+      {selectedAuthors.length > 0 ? (
+        selectedAuthors.map(({ creatorName, creatorId, isSelected }) => (
+          <SelectListItem
+            name={creatorName}
+            isSelected={isSelected}
+            onClick={() => handleAuthorClick(creatorId)}
+            key={creatorId}
           />
-        }
-      >
-        {getFilteredAuthors(plans, authorsFilter).map(
-          ({ creatorName, creatorId }) => (
-            <SelectListItem name={creatorName} key={creatorId} />
-          )
-        )}
-      </SelectList>
+        ))
+      ) : (
+        <Typography sx={{ my: 0.5 }} align="center">
+          Taki autor nie istnieje
+        </Typography>
+      )}
+    </SelectList>
+  )
+
+  return (
+    <Container>
+      <Header />
+      {plansList}
+      {authorsFilterList}
     </Container>
   )
 }
