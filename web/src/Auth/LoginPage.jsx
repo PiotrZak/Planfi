@@ -5,7 +5,6 @@ import Label from './AuthComponents/Label'
 import Input from './AuthComponents/Input'
 import Button from '@mui/material/Button';
 import AuthTemplate from './AuthTemplate';
-import InputContainer from './AuthComponents/InputContainer'
 import ErrorMessageForm from './AuthComponents/ErrorMessageForm'
 import { useNavigate } from 'react-router-dom';
 import { translate } from './Translation'
@@ -15,6 +14,8 @@ import * as Yup from 'yup'
 import { useCookies } from 'react-cookie'
 import Loader from './AuthComponents/Loader'
 import LoginHooks from './Google/LoginHooks'
+import { useContext } from 'react'
+import { UserContext } from 'contexts/UserContext'
 
 const Link = styled.a`
   color: ${({ theme }) => theme.colorGray10};
@@ -35,21 +36,19 @@ const validationSchema = Yup.object({
   password: Yup.string().required(translate('ThisFieldIsRequired')),
 })
 
-const LoginPage = ({ setUser }) => {
+const LoginPage = () => {
 
   const navigate = useNavigate();
-  const [setCookie] = useCookies(['cookie-name'])
+  const [setCookie] = useCookies(['cookie-names'])
   const [loading, setLoading] = useState(false)
+  const [user, setUser] = useContext(UserContext);
+  const [authenticatedData, setAuthenticatedData] = useState()
 
   const onSubmit = (values) => {
-    console.log(values)
     authenticateUser(values)
   }
 
   const authenticateUser = (loginModelData) => {
-
-    console.log(loginModelData)
-
     setLoading(true)
     userService
       .login({
@@ -57,25 +56,30 @@ const LoginPage = ({ setUser }) => {
         password: loginModelData.password,
       })
       .then((data) => {
+        setAuthenticatedData(data)
         setCookie('JWT', data.token, { path: '/' })
+        setLoading(false)
         setTimeout(() => {
           navigate(routes.myProfile)
         }, timeToRedirectLogin)
-        localStorage.removeItem('user')
-        delete data.token
-        localStorage.setItem('user', JSON.stringify(data))
-        setUser(data)
-        setLoading(false)
       })
       .catch((error) => {
         setLoading(false)
       })
   }
 
+  useEffect(() => {
+    console.log(authenticatedData)
+    if(authenticatedData){
+      setUser(authenticatedData)
+    }
+  }, [authenticateUser, authenticatedData, setAuthenticatedData])
+
   if (loading) return <Loader isLoading={loading} />
 
   return (
     <AuthTemplate>
+      {user && user.firstName}
       <Formik
         initialValues={{
           email: '',

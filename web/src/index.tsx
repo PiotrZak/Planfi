@@ -37,9 +37,6 @@ const Auth = () => {
 
   useEffect(() => {
 
-    console.log(userContext)
-    console.log(user)
-
     const currentUrl = window.location.href
     if (
       currentUrl.toString().includes('activate') ||
@@ -56,7 +53,7 @@ const Auth = () => {
 
   return (
     <Routes>
-      <Route path={routes.login} element={<LoginPage setUser={setUser} />} />
+      <Route path={routes.login} element={<LoginPage />} />
       <Route path={routes.forgotPassword} element={<ForgotPasswordPage />} />
       <Route path={routes.resetPassword} element={<ResetPasswordPage />} />
       <Route path={routes.activate} element={<ActivateAccountPage />} />
@@ -65,28 +62,41 @@ const Auth = () => {
   )
 }
 
+const App = () => {
+  const [user, setUser] = useState({firstName: 'test'});
+
+  console.log(user)
+
+  return (
+    <>
+      {/* @ts-ignore */}
+      <UserContext.Provider value={[user, setUser]}>
+        <Auth />
+        {isMobileOnly ? (
+          <Mobile>
+            <RoutesList />
+          </Mobile>
+        ) : (
+          <Desktop>
+            <RoutesList />
+          </Desktop>
+        )}
+      </UserContext.Provider>
+    </>
+  )
+}
+
 ReactDOM.hydrate(
   <React.StrictMode>
     <Suspense fallback="loading">
-      <UserContext.Provider value={{}}>
-        <ApolloProviderContext>
-          <BrowserRouter>
-            <Auth />
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {isMobileOnly ? (
-                <Mobile>
-                  <RoutesList />
-                </Mobile>
-              ) : (
-                <Desktop>
-                  <RoutesList />
-                </Desktop>
-              )}
-            </ThemeProvider>
-          </BrowserRouter>
-        </ApolloProviderContext>
-      </UserContext.Provider>
+      <ApolloProviderContext>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App />
+          </ThemeProvider>
+        </BrowserRouter>
+      </ApolloProviderContext>
     </Suspense>
   </React.StrictMode>,
   document.getElementById('root')

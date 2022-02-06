@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
+import { createContext, useContext } from 'react'
 
-export const UserContext = React.createContext({})
+export const UserContext = createContext(null);
 
 export const useUserContext = () => useContext(UserContext)
