@@ -12,6 +12,12 @@ import Exercises from './Exercises'
 import Header from './Header'
 import { ListButton } from './ListButton'
 
+interface Categories {
+  categoryId: string
+  title: string
+  exercises: number
+}
+
 const Categories: React.FC = () => {
   const { data, loading } = useCategoriesQuery()
   const [selectedCategories, setCategories] = React.useState<string[]>([])
@@ -31,7 +37,7 @@ const Categories: React.FC = () => {
     )
   }
 
-  if (!categories.length) {
+  if (!categories?.length) {
     const EmptyExercises = isMobile
       ? EmptyExercisesMobile
       : EmptyExercisesDesktop

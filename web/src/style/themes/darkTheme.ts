@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material'
-import { PoppinsLight, PoppinsMedium, PoppinsSemiBold } from './fonts'
+import { PoppinsLight, PoppinsMedium, PoppinsSemiBold } from '../fonts'
 
 export default createTheme({
   palette: {

@@ -6,9 +6,10 @@ import ForgotPasswordPage from 'Auth/ForgotPasswordPage'
 import LoginPage from 'Auth/LoginPage'
 import ResetPasswordPage from 'Auth/ResetPasswordPage'
 import { ApolloProviderContext } from 'contexts'
+import { UserContext } from 'contexts/UserContext'
 import Desktop from 'layouts/Desktop'
 import Mobile from 'layouts/Mobile'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useContext, useEffect, useState } from 'react'
 import { isMobileOnly } from 'react-device-detect'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
@@ -29,25 +30,28 @@ export const routes = {
 const Auth = () => {
   //@ts-ignore
   const userInSession = JSON.parse(localStorage.getItem('user'))
-
   const [user, setUser] = useState(userInSession)
   const navigate = useNavigate()
 
+  const userContext = useContext(UserContext)
+
   useEffect(() => {
+
+    console.log(userContext)
+    console.log(user)
+
     const currentUrl = window.location.href
     if (
       currentUrl.toString().includes('activate') ||
       currentUrl.toString().includes('forgot') ||
       currentUrl.toString().includes('register') ||
       currentUrl.toString().includes('reset') ||
-      //for development purpose
       currentUrl.toString().includes('categories')
     ) {
       return
     } else {
       user != null ? navigate(routes.myProfile) : navigate(routes.login)
     }
-    //@ts-ignore
   }, [setUser])
 
   return (
@@ -64,23 +68,25 @@ const Auth = () => {
 ReactDOM.hydrate(
   <React.StrictMode>
     <Suspense fallback="loading">
-      <ApolloProviderContext>
-        <BrowserRouter>
-          <Auth />
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {isMobileOnly ? (
-              <Mobile>
-                <RoutesList />
-              </Mobile>
-            ) : (
-              <Desktop>
-                <RoutesList />
-              </Desktop>
-            )}
-          </ThemeProvider>
-        </BrowserRouter>
-      </ApolloProviderContext>
+      <UserContext.Provider value={{}}>
+        <ApolloProviderContext>
+          <BrowserRouter>
+            <Auth />
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {isMobileOnly ? (
+                <Mobile>
+                  <RoutesList />
+                </Mobile>
+              ) : (
+                <Desktop>
+                  <RoutesList />
+                </Desktop>
+              )}
+            </ThemeProvider>
+          </BrowserRouter>
+        </ApolloProviderContext>
+      </UserContext.Provider>
     </Suspense>
   </React.StrictMode>,
   document.getElementById('root')

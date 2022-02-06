@@ -12,15 +12,15 @@ on:
 
 env:
   # SSL encryption is recommended when using Public IP to connect to the instance.
-  CONNECTION_STRING: "Host=34.135.254.64;Port=5432;Username=postgres;Password=postgres;Database=postgres;IncludeErrorDetail=true;"
+  CONNECTION_STRING: 'Host=34.135.254.64;Port=5432;Username=postgres;Password=postgres;Database=postgres;IncludeErrorDetail=true;'
   RUN_REGION: us-central1
   SERVICE_NAME: planfi-api
-  Origins: "https://plan-fi.pl,http://plan-fi.pl"
+  Origins: 'https://plan-fi.pl,http://plan-fi.pl, http://localhost:3000'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Setup Cloud SDK
         uses: google-github-actions/setup-gcloud@master
@@ -28,23 +28,23 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-          
+
       - uses: actions/checkout@v2
 
       - name: Use gcloud CLI
         run: gcloud info
 
-      - uses: microsoft/variable-substitution@v1 
+      - uses: microsoft/variable-substitution@v1
         with:
-          files: "Planfi.Api/appsettings.json"
+          files: 'Planfi.Api/appsettings.json'
         env:
           ConnectionStrings.WebApiDatabase: ${{ env.CONNECTION_STRING }}
           Origins: ${{ env.Origins }}
 
       - name: Read PlanfiApi -> appsettings.json
-        run: "cat Planfi.Api/appsettings.json"
+        run: 'cat Planfi.Api/appsettings.json'
 
-      - name: Build and tag image 
+      - name: Build and tag image
         run: docker build --platform linux/amd64 -f Planfi.Api/Dockerfile -t eu.gcr.io/${{secrets.GCP_PROJECT_ID}}/planfi-api .
 
       - name: Configure Docker to use Google Cloud Platform

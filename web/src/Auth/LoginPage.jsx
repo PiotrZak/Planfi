@@ -26,12 +26,6 @@ const Link = styled.a`
     color: ${({ theme }) => theme.colorGray10};
   }
 `
-
-const initialValues = {
-  email: '',
-  password: '',
-}
-
 const timeToRedirectLogin = 1000
 
 const validationSchema = Yup.object({
@@ -44,38 +38,29 @@ const validationSchema = Yup.object({
 const LoginPage = ({ setUser }) => {
 
   const navigate = useNavigate();
-  //const [cookies, setCookie, removeCookie] = useCookies(['cookie-name'])
   const [setCookie] = useCookies(['cookie-name'])
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-  }, [])
-
   const onSubmit = (values) => {
-    const loginModelData = {
-      email: values.email,
-      password: values.password,
-    }
-    authenticateUser(loginModelData)
-  }
-
-  const redirectToPage = (data) => {
-    setTimeout(() => {
-      navigate(routes.myProfile)
-    }, timeToRedirectLogin)
-  }
-
-  const saveJWTInCookies = (data) => {
-    setCookie('JWT', data.token, { path: '/' })
+    console.log(values)
+    authenticateUser(values)
   }
 
   const authenticateUser = (loginModelData) => {
+
+    console.log(loginModelData)
+
     setLoading(true)
     userService
-      .login(loginModelData)
+      .login({
+        email: loginModelData.email,
+        password: loginModelData.password,
+      })
       .then((data) => {
-        saveJWTInCookies(data)
-        redirectToPage(data)
+        setCookie('JWT', data.token, { path: '/' })
+        setTimeout(() => {
+          navigate(routes.myProfile)
+        }, timeToRedirectLogin)
         localStorage.removeItem('user')
         delete data.token
         localStorage.setItem('user', JSON.stringify(data))
@@ -92,47 +77,46 @@ const LoginPage = ({ setUser }) => {
   return (
     <AuthTemplate>
       <Formik
-        initialValues={initialValues}
+        initialValues={{
+          email: '',
+          password: ''
+        }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
         validateOnChange={false}
       >
         {({ errors, touched, isValid }) => (
           <Form>
-            <InputContainer>
-              <Label type="top" text={translate('YourMail')}>
-                <Field
-                  type="email"
-                  name="email"
-                  placeholder={translate('EmailAddress')}
-                  as={Input}
-                  error={errors.email && touched.email}
-                />
-              </Label>
-              <ErrorMessageForm name="pUemail" />
-            </InputContainer>
-
-            <InputContainer>
-              <Label type="top" text={translate('Password')}>
-                <Field
-                  type="password"
-                  name="password"
-                  placeholder={translate('EnterPassword')}
-                  as={Input}
-                  error={errors.password && touched.password}
-                />
-              </Label>
-              <ErrorMessageForm name="password" />
-            </InputContainer>
+            <Field
+              type="email"
+              name="email"
+              placeholder={translate('EmailAddress')}
+              as={Input}
+              error={errors.email && touched.email}
+            />
+            <ErrorMessageForm name="email" />
+            <Field
+              type="password"
+              name="password"
+              placeholder={translate('EnterPassword')}
+              as={Input}
+              error={errors.password && touched.password}
+            />
+            <ErrorMessageForm name="password" />
             <Button
+              id="login"
+              type="submit"
+              buttonType="primary"
+              size="lg"
+              buttonPlace="auth"
             >
               {translate('SignIn')}
             </Button>
           </Form>
         )}
       </Formik>
-      <LoginHooks setUser = {setUser}/>
-      <Link id ="forget-password" href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
+      <LoginHooks setUser={setUser} />
+      <Link id="forget-password" href={routes.forgotPassword}>{translate('ForgotPassword')}</Link>
     </AuthTemplate>
   )
 }
