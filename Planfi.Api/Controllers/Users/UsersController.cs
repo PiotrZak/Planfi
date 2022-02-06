@@ -1,16 +1,11 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using PlanfiApi.Data;
-using PlanfiApi.Data.Entities.Users;
 using PlanfiApi.Data.ViewModels;
 using PlanfiApi.Helpers;
 using PlanfiApi.Interfaces;

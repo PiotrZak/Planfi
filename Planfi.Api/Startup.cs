@@ -56,7 +56,7 @@ namespace PlanfiApi
                     builder =>
                     {
                         builder
-                            .WithOrigins(origins?.Split(','))
+                            .WithOrigins(origins?.Split(',') ?? Array.Empty<string>())
                             .AllowAnyHeader()
                             .AllowAnyMethod()
                             .AllowCredentials();
