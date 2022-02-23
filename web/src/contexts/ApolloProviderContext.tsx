@@ -5,14 +5,13 @@ import {
   InMemoryCache,
 } from '@apollo/client'
 
-import config from 'config.json';
+import config from 'config.json'
 
 const ApolloProviderContext: React.FC = ({ children }) => {
-
   // pipeline change this variables
   // if U wan't to shot into production database - set to true
-  const productionUrl = config.apps.PlanfiApi.url;
-  const isProduction = config.apps.PlanfiApi.isProduction;
+  const productionUrl = `${config.apps.PlanfiApi.url}/graphql`
+  const isProduction = config.apps.PlanfiApi.isProduction
   const localHostApiUrl = 'http://localhost:9001/graphql'
   const httpLink = createHttpLink({
     uri: isProduction ? productionUrl : localHostApiUrl,

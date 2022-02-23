@@ -1,0 +1,11 @@
+query plans {
+  plans {
+    planId
+    creatorId
+    creatorName
+    title
+    exercises {
+      exerciseId
+    }
+  }
+}

@@ -9,7 +9,14 @@ const RoutesList: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<MyProfile />} />
-      <Route path="/plans" element={<Plans />} />
+      <Route
+        path="plans"
+        element={
+          <PrivateRouteTest roles={[Role.Owner, Role.Trainer, Role.User]} />
+        }
+      >
+        <Route path="/plans" element={<Plans />} />
+      </Route>
       <Route
         path="categories"
         element={
