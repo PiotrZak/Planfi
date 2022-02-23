@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Container, Typography } from '@mui/material'
+import { PlansQuery } from 'generated/graphql'
 
 import {
   List,
@@ -14,12 +15,20 @@ import {
 
 import Header from './Header'
 import { usePlans } from './usePlans'
+import ActionDrawer from './ActionDrawer'
 
 const Plans = () => {
   const [plansFilter, setPlansFilter] = useState('')
   const [authorsFilter, setAuthorsFilter] = useState('')
 
   const [isAuthorsListVisible, setIsAuthorsListVisible] = useState(false)
+  const [actionDrawer, setActionDrawer] = useState<{
+    isVisible: boolean
+    plan: PlansQuery['plans'][number] | undefined
+  }>({
+    isVisible: false,
+    plan: undefined,
+  })
 
   const {
     allPlans,
@@ -55,12 +64,12 @@ const Plans = () => {
       />
       <List>
         {filteredPlans.length > 0 ? (
-          filteredPlans.map(({ title, planId, exercises }) => (
+          filteredPlans.map((plan) => (
             <ListItem
-              key={planId}
-              primaryContent={title}
-              secondaryContent={`${exercises.length} ćwiczenia`}
-              onClick={() => console.log('show bottom drawer')}
+              key={plan.planId}
+              primaryContent={plan.title}
+              secondaryContent={`${plan.exercises.length} ćwiczenia`}
+              onClick={() => setActionDrawer({ isVisible: true, plan })}
             />
           ))
         ) : (
@@ -114,6 +123,11 @@ const Plans = () => {
       <Header />
       {plansList}
       {authorsFilterList}
+      <ActionDrawer
+        isVisible={actionDrawer.isVisible}
+        plan={actionDrawer.plan}
+        onClose={() => setActionDrawer({ isVisible: false, plan: undefined })}
+      />
     </Container>
   )
 }
