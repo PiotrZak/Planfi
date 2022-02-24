@@ -82,7 +82,6 @@ const Plans = () => {
   )
 
   const filteredByCreator = filteredPlans.filter(({ creatorName }) => {
-    console.log(creatorName)
     return creatorName
       .toLowerCase()
       .includes(authorsFilter.trim().toLowerCase())
