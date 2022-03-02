@@ -906,6 +906,11 @@ export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'CategoryViewModel', categoryId: string, title: string, exercises: number }> };
 
+export type PlansQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PlansQuery = { __typename?: 'Query', plans: Array<{ __typename?: 'Plan', planId: string, creatorId: string, creatorName: string, title: string, exercises: Array<{ __typename?: 'Exercise', exerciseId: string }> }> };
+
 
 export const AllBaseExercisesDocument = gql`
     query allBaseExercises {
@@ -980,3 +985,43 @@ export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
 export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
 export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
+export const PlansDocument = gql`
+    query plans {
+  plans {
+    planId
+    creatorId
+    creatorName
+    title
+    exercises {
+      exerciseId
+    }
+  }
+}
+    `;
+
+/**
+ * __usePlansQuery__
+ *
+ * To run a query within a React component, call `usePlansQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePlansQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePlansQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePlansQuery(baseOptions?: Apollo.QueryHookOptions<PlansQuery, PlansQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PlansQuery, PlansQueryVariables>(PlansDocument, options);
+      }
+export function usePlansLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PlansQuery, PlansQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PlansQuery, PlansQueryVariables>(PlansDocument, options);
+        }
+export type PlansQueryHookResult = ReturnType<typeof usePlansQuery>;
+export type PlansLazyQueryHookResult = ReturnType<typeof usePlansLazyQuery>;
+export type PlansQueryResult = Apollo.QueryResult<PlansQuery, PlansQueryVariables>;

@@ -25,6 +25,8 @@ export const routes = {
   resetPassword: '/reset',
   myProfile: '/myprofile',
   confirmation: '/confirmation',
+  categories: '/categories',
+  plans: '/plans',
 }
 
 const Auth = () => {
@@ -36,17 +38,12 @@ const Auth = () => {
   const userContext = useContext(UserContext)
 
   useEffect(() => {
-
     const currentUrl = window.location.href
-    if (
-      currentUrl.toString().includes('activate') ||
-      currentUrl.toString().includes('forgot') ||
-      currentUrl.toString().includes('register') ||
-      currentUrl.toString().includes('reset') ||
-      currentUrl.toString().includes('categories')
-    ) {
-      return
-    } else {
+    const isCurrentUrlValid = Object.values(routes).some((url) =>
+      currentUrl.includes(url)
+    )
+
+    if (!isCurrentUrlValid) {
       user != null ? navigate(routes.myProfile) : navigate(routes.login)
     }
   }, [setUser])
@@ -63,7 +60,7 @@ const Auth = () => {
 }
 
 const App = () => {
-  const [user, setUser] = useState({firstName: 'test'});
+  const [user, setUser] = useState({ firstName: 'test' })
 
   console.log(user)
 

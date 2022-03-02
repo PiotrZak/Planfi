@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Container, Typography } from '@mui/material'
+import { PlansQuery } from 'generated/graphql'
 
 import {
   List,
@@ -13,16 +14,31 @@ import {
 } from 'components'
 
 import Header from './Header'
-import usePlans from './usePlans'
+import { usePlans } from './usePlans'
+import ActionDrawer from './ActionDrawer'
 
 const Plans = () => {
   const [plansFilter, setPlansFilter] = useState('')
   const [authorsFilter, setAuthorsFilter] = useState('')
 
-  const { allPlans, filteredPlans, filteredPlansLength, handleAuthorClick } =
-    usePlans(plansFilter, authorsFilter)
-
   const [isAuthorsListVisible, setIsAuthorsListVisible] = useState(false)
+  const [actionDrawer, setActionDrawer] = useState<{
+    isVisible: boolean
+    plan: PlansQuery['plans'][number] | undefined
+  }>({
+    isVisible: false,
+    plan: undefined,
+  })
+
+  const {
+    allPlans,
+    loading,
+    selectedPlansIds,
+    filteredPlans,
+    handleAuthorClick,
+  } = usePlans(plansFilter, authorsFilter)
+
+  if (!allPlans || loading) return <p>loading</p>
 
   if (allPlans.length === 0) {
     return (
@@ -42,18 +58,18 @@ const Plans = () => {
         onChange={(e) => setPlansFilter(e.target.value)}
       />
       <ListFilterButton
-        title={`Autor (${filteredPlansLength})`}
+        title={`Autor (${filteredPlans.length})`}
         label="Autor"
         onFilterClick={() => setIsAuthorsListVisible(true)}
       />
       <List>
         {filteredPlans.length > 0 ? (
-          filteredPlans.map(({ title, exercisesCount, planId }) => (
+          filteredPlans.map((plan) => (
             <ListItem
-              key={planId}
-              primaryContent={title}
-              secondaryContent={`${exercisesCount} ćwiczenia`}
-              onClick={() => console.log('show bottom drawer')}
+              key={plan.planId}
+              primaryContent={plan.title}
+              secondaryContent={`${plan.exercises.length} ćwiczenia`}
+              onClick={() => setActionDrawer({ isVisible: true, plan })}
             />
           ))
         ) : (
@@ -64,6 +80,12 @@ const Plans = () => {
       </List>
     </>
   )
+
+  const filteredByCreator = filteredPlans.filter(({ creatorName }) => {
+    return creatorName
+      .toLowerCase()
+      .includes(authorsFilter.trim().toLowerCase())
+  })
 
   const authorsFilterList = (
     <SelectList
@@ -78,11 +100,11 @@ const Plans = () => {
         />
       }
     >
-      {allPlans.length > 0 ? (
-        allPlans.map(({ creatorName, creatorId, isSelected }) => (
+      {filteredByCreator.length > 0 ? (
+        filteredByCreator.map(({ creatorName, creatorId }) => (
           <SelectListItem
             name={creatorName}
-            isSelected={isSelected}
+            isSelected={selectedPlansIds.includes(creatorId)}
             onClick={() => handleAuthorClick(creatorId)}
             key={creatorId}
           />
@@ -100,6 +122,11 @@ const Plans = () => {
       <Header />
       {plansList}
       {authorsFilterList}
+      <ActionDrawer
+        isVisible={actionDrawer.isVisible}
+        plan={actionDrawer.plan}
+        onClose={() => setActionDrawer({ isVisible: false, plan: undefined })}
+      />
     </Container>
   )
 }

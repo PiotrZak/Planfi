@@ -1,68 +1,48 @@
+import { usePlansQuery } from 'generated/graphql'
 import { useState } from 'react'
-import testPlans, { Plan } from './testPlans'
 
-interface PlansState extends Plan {
-  isSelected: boolean
-}
+export const usePlans = (plansFilter: string, creatorsFilter: string) => {
+  const { data, loading } = usePlansQuery()
+  const [selectedPlansIds, setSelectedPlansIds] = useState<string[]>([])
 
-const getFilteredPlansByTitle = (plans: PlansState[], input: string) => {
-  return plans.filter(({ title }) =>
-    title.toLowerCase().includes(input.trim().toLowerCase())
-  )
-}
+  const getFilteredPlans = () => {
+    if (!data?.plans) return []
 
-const initialPlans: PlansState[] = testPlans.map((plan) => ({
-  ...plan,
-  isSelected: false,
-}))
+    const filteredByTitle = data.plans.filter(({ title }) =>
+      title.toLowerCase().includes(plansFilter.trim().toLowerCase())
+    )
 
-const usePlans = (plansFilter: string, authorsFilter: string) => {
-  const [allPlans, setPlans] = useState(initialPlans)
-
-  const handleAuthorClick = (authorId: string) => {
-    const author = allPlans.find(({ creatorId }) => creatorId === authorId)
-
-    if (author) {
-      const authorIndex = allPlans.indexOf(author)
-      setPlans([
-        ...allPlans.slice(0, authorIndex),
-        { ...author, isSelected: !author.isSelected },
-        ...allPlans.slice(authorIndex + 1),
-      ])
+    if (selectedPlansIds.length === 0) {
+      return filteredByTitle
     }
+
+    return filteredByTitle.filter(({ creatorId }) =>
+      selectedPlansIds.includes(creatorId)
+    )
   }
 
-  const getSelectedAuthors = () => {
-    const selected = allPlans.filter(({ isSelected }) => isSelected)
-    if (selected.length === 0) {
-      return allPlans
-    }
+  const handleAuthorClick = (creatorId: string) => {
+    if (!data?.plans) return
 
-    return selected
+    const selectedPlan = data.plans.find((plan) => plan.creatorId === creatorId)
+
+    if (!selectedPlan?.creatorId) return
+
+    if (selectedPlansIds.includes(selectedPlan.creatorId)) {
+      const updatedPlans = selectedPlansIds.filter(
+        (creatorId) => creatorId !== selectedPlan.creatorId
+      )
+      setSelectedPlansIds(updatedPlans)
+    } else {
+      setSelectedPlansIds([...selectedPlansIds, creatorId])
+    }
   }
-
-  const filteredPlans = getFilteredPlansByTitle(
-    getSelectedAuthors(),
-    plansFilter
-  )
-
-  const filteredPlansLength = (() => {
-    const length = allPlans.reduce((acc, { isSelected }) => {
-      return acc + +isSelected
-    }, 0)
-    if (length > 0) {
-      return length
-    }
-
-    return allPlans.length
-  })()
 
   return {
-    allPlans,
-    filteredPlans,
-    filteredPlansLength,
+    loading,
+    allPlans: data?.plans,
+    selectedPlansIds,
+    filteredPlans: getFilteredPlans(),
     handleAuthorClick,
   }
 }
-
-export default usePlans
