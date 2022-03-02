@@ -76,15 +76,9 @@ const App = () => {
         <Auth />
         {user && user.firstName !== 'test' &&
           <>
-            {isMobileOnly ? (
               <Mobile>
                 <RoutesList />
               </Mobile>
-            ) : (
-              <Desktop>
-                <RoutesList />
-              </Desktop>
-            )}
           </>}
       </UserContext.Provider>
     </>
