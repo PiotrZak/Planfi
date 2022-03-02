@@ -5,6 +5,7 @@ import ConfirmationPage from 'Auth/ConfirmationPage'
 import ForgotPasswordPage from 'Auth/ForgotPasswordPage'
 import LoginPage from 'Auth/LoginPage'
 import ResetPasswordPage from 'Auth/ResetPasswordPage'
+import AuthBasic from 'Auth2/LoginPage'
 import { ApolloProviderContext } from 'contexts'
 import { UserContext } from 'contexts/UserContext'
 import Desktop from 'layouts/Desktop'
@@ -18,11 +19,15 @@ import { theme } from 'style'
 import 'utils/i18n'
 
 export const routes = {
+
+  login: '/login',
   register: '/register',
   activate: '/activate',
-  login: '/login',
   forgotPassword: '/forgot',
   resetPassword: '/reset',
+
+
+
   myProfile: '/myprofile',
   confirmation: '/confirmation',
   categories: '/categories',
@@ -50,7 +55,9 @@ const Auth = () => {
 
   return (
     <Routes>
-      <Route path={routes.login} element={<LoginPage />} />
+      {/* <Route path={routes.login} element={<LoginPage />} /> */}
+      <Route path={routes.login} element={<AuthBasic />} />
+
       <Route path={routes.forgotPassword} element={<ForgotPasswordPage />} />
       <Route path={routes.resetPassword} element={<ResetPasswordPage />} />
       <Route path={routes.activate} element={<ActivateAccountPage />} />
@@ -62,22 +69,23 @@ const Auth = () => {
 const App = () => {
   const [user, setUser] = useState({ firstName: 'test' })
 
-  console.log(user)
-
   return (
     <>
       {/* @ts-ignore */}
       <UserContext.Provider value={[user, setUser]}>
         <Auth />
-        {isMobileOnly ? (
-          <Mobile>
-            <RoutesList />
-          </Mobile>
-        ) : (
-          <Desktop>
-            <RoutesList />
-          </Desktop>
-        )}
+        {user && user.firstName !== 'test' &&
+          <>
+            {isMobileOnly ? (
+              <Mobile>
+                <RoutesList />
+              </Mobile>
+            ) : (
+              <Desktop>
+                <RoutesList />
+              </Desktop>
+            )}
+          </>}
       </UserContext.Provider>
     </>
   )

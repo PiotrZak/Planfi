@@ -25,8 +25,6 @@ namespace PlanfiApi.Data.Entities.Users
         [Key]
         public string UserId { get; set; }
         public Role Role { get; set; }
-        public ICollection<UsersPlans> Plans { get; set; }
-        public ICollection<UsersTrainers> UsersTrainers { get; set; }
         public byte[]? Avatar { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -42,5 +40,8 @@ namespace PlanfiApi.Data.Entities.Users
         public string? VerificationToken { get; set; }
         public bool IsActivated { get; set; }
         public string RoleId { get; set; }
+        
+        public ICollection<UsersPlans> Plans { get; set; }
+        public ICollection<UsersTrainers> UsersTrainers { get; set; }
     };
 }
