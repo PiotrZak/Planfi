@@ -3,7 +3,7 @@ name: Planfi Api
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
     inputs:
       version:
