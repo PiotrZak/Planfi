@@ -69,7 +69,6 @@ const LoginPage = () => {
   }
 
   useEffect(() => {
-    console.log(authenticatedData)
     if(authenticatedData){
       setUser(authenticatedData)
     }
