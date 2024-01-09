@@ -45,7 +45,7 @@
     <PackageReference Include="Stripe.net" Version="39.74.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0-rc.2.21480.5" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.34.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
